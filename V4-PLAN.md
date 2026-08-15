@@ -341,17 +341,74 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       the file invisible to it — comment-skipping belongs in **4.10**'s shared
       scanner, not in a rule.
 
-- [ ] **2.2 (M)** Finish vocabulary adoption on survivors (~30–40 components
-      via `scripts/codemod-declared-props.js`, hand-reviewed;
-      `inert-declarations.js` now catches the forgot-the-mixin trap). **This
-      item creates the `list()` array primitive** in `shared/props.js` and
-      teaches `scripts/prism-props.js` about it in the same PR (HANDOFF trap
-      #1: a helper prism can't read silently drops the prop from all six
-      wrappers) — without it, array-valued props have no vocabulary term and
-      this phase's 100%-of-survivors gate cannot pass. The 6 hand-rolled
-      JSON.parse converters in `navigation/` and `comparison.js`'s
-      JSON-as-String props migrate onto it here; the *sitewide* dialect
-      migration of the remaining array props is 4.3.
+- [x] **2.2 (M)** Finish vocabulary adoption on survivors. **This item creates
+      the `list()` array primitive** in `shared/props.js` and teaches
+      `scripts/prism-props.js` about it in the same PR (HANDOFF trap #1: a
+      helper prism can't read silently drops the prop from all six wrappers).
+      The 6 hand-rolled JSON.parse converters in `navigation/` and
+      `comparison.js`'s JSON-as-String props migrate onto it here; the
+      *sitewide* dialect migration of the remaining array props is 4.3.
+
+      **DONE 2026-08-15, in two commits.** Suite **4,455 → 4,492 passing**,
+      `pnpm check` 22/22, `pnpm generate` diff-clean, `props.js` mutation pair
+      **91.18% → 91.78%** (67/73, gate ≥90) — all five of `list()`'s mutants
+      die.
+
+      **`list()` landed with all four scripts taught in the same commit** —
+      prism-props, inert-declarations, manifest — and the wrapper half verified
+      by reading `items` back out of all six generated `BottomNav` files rather
+      than by trusting the hook. It settles three things the four dialects each
+      got wrong: a malformed attribute **falls back rather than throwing**
+      (which is why this could not be "just use `type: Array`" — Lit's converter
+      throws inside `attributeChangedCallback`, where nothing at the call site
+      can catch it); a **removed** attribute returns to the declared default
+      (all six hand-rolled converters returned `null`, because
+      `JSON.parse(null)` coerces to the string `"null"` and parses fine); and
+      the default is a **factory**, so two elements cannot share one mutable
+      array.
+
+      `conformance.test.js` needed two changes for it, both stated at the site:
+      the default assertion is deep rather than strict — a factory default
+      returns a fresh array per call, so strict would fail every list prop for
+      the reason the factory exists — and `normalizeValue` passes a valid array
+      through **by identity**, which the suite's fixed-point check depends on.
+
+      **The adoption half was a survey, not a sweep.** 27 components had a
+      `static properties` block and no vocabulary; **ten props** across five of
+      them carried a real constraint, and the rest are free-form strings where a
+      declaration enforces nothing. Same ratio as the earlier uncovered-sweep
+      (31 components, 7 constraints), and the same lesson: adopting on principle
+      is ceremony.
+
+      **`boolean-defaults.js` is rewritten to the end-state finding #20 wrote
+      down** while the vocabulary was still a proposal — assert that *every*
+      boolean prop is declared through `flag()`, and name the only two reasons
+      one may not be. Its BASELINE is **gone rather than emptied**. Exemptions
+      carry a `// NOT flag(): <reason>` comment in the source rather than being
+      inferred from a shape, because a check that guesses at intent is one a
+      component can satisfy by accident. Verified by fault injection.
+
+      Two things worth carrying:
+
+      1. **The rewrite found a defect the old rule could not see.**
+         `arc-clock.hour12` is a documented tri-state — 12-hour / 24-hour /
+         *let the locale decide* — and `flag()` collapses a non-boolean onto its
+         default, which would have deleted the third state. A rule that asks
+         "is this declared correctly?" finds things a rule that asks "is this
+         one known bad shape?" cannot.
+      2. **Two props were surveyed and deliberately not adopted**, both nullable
+         sentinels the vocabulary cannot express (`activity-heatmap.max`,
+         `arc-clock.hour12`). Two instances is the same bar `oneOf`'s numeric
+         members cleared, so a `nullable` option is a **candidate for 2.3**
+         rather than speculation now. `arc-aspect-ratio.ratio` is the third of
+         these — a *pattern*, normalised by hand in 2.1 — which makes three
+         distinct gaps for 2.3's survey to weigh together.
+
+      **Breaking changes recorded in MIGRATION.md as they landed**, not left for
+      4.11 to discover: `arc-comparison`'s `features`/`values` take real arrays
+      on the property path (markup unchanged), and the six navigation props
+      return their default rather than `null` when the attribute is removed.
+
 - [ ] **2.3 (M)** Finish the prose-constraint survey: ~70 remaining `@prop`
       prose constraints. Survey first (the uncovered-sweep discipline), adopt
       only real constraints; grep for the recurring shape — a constraint

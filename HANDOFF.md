@@ -31,7 +31,15 @@ see "What changed under the plan" below.
   ~3,400 tests with the *same* detection, after fault injection showed one
   broken mechanism was being reported 238 times. See "Test posture" in
   test-findings.md before reading any test-count trend as progress.
-- **V4-PLAN Phase 2 is done except 2.2, 2.3, 2.5 and 2.6.** 2.0 (mutation
+- **V4-PLAN Phase 2 is done except 2.3, 2.5 and 2.6.** 2.2 closed 2026-08-15:
+  `list()` is the vocabulary's array term, the four array dialects are named in
+  its docstring, and `boolean-defaults.js` now asserts that *every* boolean prop
+  is declared through `flag()` — its BASELINE is gone rather than emptied, and
+  the two exemptions carry a stated `// NOT flag():` reason in the source.
+  **Three gaps in the vocabulary are now on the table for 2.3 together**: a
+  string *pattern* (`arc-aspect-ratio.ratio`) and two *nullable sentinels*
+  (`activity-heatmap.max`, `arc-clock.hour12`), each currently handled by hand.
+- **Previously:** 2.0 (mutation
   referee in CI), 2.4a–e, and now **2.1 — the findings ledger is closed**
   (2026-08-15). Every finding in `test-findings.md` carries a disposition in
   its own heading; `BUG:` pins went **47 → 9**, and all nine are pinned by
