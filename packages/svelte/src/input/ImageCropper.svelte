@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { src = '', height = 320, aspect = 0, zoom, ...rest }: Props = $props();
+  let { src = '', height = 320, aspect, zoom, ...rest }: Props = $props();
 </script>
 
 <arc-image-cropper {src} {height} {aspect} {zoom} {...rest}>

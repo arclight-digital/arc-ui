@@ -288,6 +288,74 @@ describe('list()', () => {
   });
 });
 
+
+// ---------------------------------------------------------------------------
+// nullable — "unset" as a third state, across kinds
+// ---------------------------------------------------------------------------
+
+describe('nullable', () => {
+  const host = {};
+
+  it('makes a number default to null rather than 0', () => {
+    // 0 is a real value for a number, so a nullable prop cannot keep it as the
+    // "unset" default — arc-gauge.low at 0 would draw a zone nobody asked for.
+    expect(meta(num({ nullable: true })).default).to.equal(null);
+    expect(meta(num()).default, 'and an ordinary one is unchanged').to.equal(0);
+  });
+
+  it('lets a nullable number keep an explicit non-null default', () => {
+    // The override the implicit-null rule has to leave room for: a prop with
+    // both a null state and a real starting point.
+    expect(meta(num({ nullable: true, default: 5 })).default).to.equal(5);
+  });
+
+  it('makes a flag default to null rather than false', () => {
+    expect(meta(flag(false, { nullable: true })).default).to.equal(null);
+    expect(meta(flag()).default, 'and an ordinary one is unchanged').to.equal(false);
+  });
+
+  it('carries the option into the metadata for both kinds', () => {
+    expect(meta(num({ nullable: true })).nullable).to.equal(true);
+    expect(meta(flag(false, { nullable: true })).nullable).to.equal(true);
+    expect(meta(num()).nullable).to.equal(false);
+    expect(meta(flag()).nullable).to.equal(false);
+  });
+
+  it('passes null, undefined and the empty attribute through as null', () => {
+    // All three spell "nobody set this". The empty string is the one that is
+    // easy to miss: `<arc-gauge low="">` arrives as '', and Number('') is 0 —
+    // a real value, and the wrong one.
+    for (const kind of [num({ nullable: true }), flag(false, { nullable: true })]) {
+      for (const unset of [null, undefined, '']) {
+        expect(normalizeValue(host, meta(kind), unset), String(unset)).to.equal(null);
+      }
+    }
+  });
+
+  it('still normalises a value that is present', () => {
+    // Anti-vacuity: a nullable prop that returned null for *everything* would
+    // pass every test above.
+    const decl = num({ nullable: true, min: 0, max: 10, clamp: 'toRange' });
+    expect(normalizeValue(host, meta(decl), 5)).to.equal(5);
+    expect(normalizeValue(host, meta(decl), 99), 'bounds still apply').to.equal(10);
+    expect(normalizeValue(host, meta(decl), 'junk'), 'and so does the fallback').to.equal(null);
+
+    const bool = flag(false, { nullable: true });
+    expect(normalizeValue(host, meta(bool), true)).to.equal(true);
+    expect(normalizeValue(host, meta(bool), false)).to.equal(false);
+  });
+
+  it('does not swallow zero, false or the empty string on a non-nullable prop', () => {
+    // The guard is behind `meta.nullable` for a reason: 0 and false are
+    // ordinary values everywhere else, and '' has to keep falling through to
+    // each kind's own coercion.
+    expect(normalizeValue(host, meta(num()), 0)).to.equal(0);
+    expect(normalizeValue(host, meta(num()), '')).to.equal(0);
+    expect(normalizeValue(host, meta(flag()), false)).to.equal(false);
+    expect(normalizeValue(host, meta(flag(true, { negative: 'no-x' })), undefined)).to.equal(true);
+  });
+});
+
 // ---------------------------------------------------------------------------
 // normalizeValue() — the coercion every adopted component runs on
 // ---------------------------------------------------------------------------

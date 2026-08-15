@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<{
   separator?: number;
   label?: string;
 }>(), {
-  length: 4,
   value: '',
   name: '',
   disabled: false,

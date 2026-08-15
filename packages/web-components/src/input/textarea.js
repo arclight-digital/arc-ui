@@ -1,7 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 
 /**
  * Multi-line text input with integrated label, placeholder, resize control, and live character
@@ -36,7 +36,7 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
     placeholder: { type: String },
     label: { type: String },
     rows: { type: Number },
-    maxlength: { type: Number },
+    maxlength: int({ default: 0, min: 0, clamp: 'toRange' }),
     // NOT flag(): a form-associated custom element whose `disabled` content
     // attribute is merely *present* is "actually disabled" per the HTML spec,
     // so the platform calls formDisabledCallback(true) and the mixin sets the
@@ -165,7 +165,6 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
     this.placeholder = '';
     this.label = '';
     this.rows = 4;
-    this.maxlength = 0;
     this.disabled = false;
     this.error = '';
   }

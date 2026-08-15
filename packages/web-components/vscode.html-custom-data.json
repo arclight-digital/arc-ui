@@ -602,7 +602,7 @@
           "values": []
         },
         {
-          "name": "quiet-zone",
+          "name": "quietZone",
           "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
           "values": []
         },
@@ -1180,7 +1180,7 @@
           "values": []
         },
         {
-          "name": "row-height",
+          "name": "rowHeight",
           "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
           "values": []
         }
@@ -1222,7 +1222,7 @@
           "values": []
         },
         {
-          "name": "row-height",
+          "name": "rowHeight",
           "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
           "values": []
         }
@@ -2466,7 +2466,7 @@
           "values": []
         },
         {
-          "name": "queue-limit",
+          "name": "queueLimit",
           "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
           "values": []
         }
@@ -2964,7 +2964,7 @@
           "values": []
         },
         {
-          "name": "max-size",
+          "name": "maxSize",
           "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
           "values": []
         },
@@ -3885,7 +3885,7 @@
           "values": []
         },
         {
-          "name": "pen-width",
+          "name": "penWidth",
           "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
           "values": []
         },
@@ -4011,7 +4011,7 @@
           "values": []
         },
         {
-          "name": "max-tags",
+          "name": "maxTags",
           "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
           "values": []
         },
@@ -4674,12 +4674,12 @@
           "values": [{ "name": "horizontal" }, { "name": "vertical" }]
         },
         {
-          "name": "min-size",
+          "name": "minSize",
           "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
           "values": []
         },
         {
-          "name": "max-size",
+          "name": "maxSize",
           "description": "Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.",
           "values": []
         },
@@ -4753,12 +4753,12 @@
           "values": []
         },
         {
-          "name": "min-ratio",
+          "name": "minRatio",
           "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
           "values": []
         },
         {
-          "name": "max-ratio",
+          "name": "maxRatio",
           "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
           "values": []
         },
@@ -5762,7 +5762,7 @@
         },
         {
           "name": "decimals",
-          "description": "Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)",
+          "description": "Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.",
           "values": []
         },
         {

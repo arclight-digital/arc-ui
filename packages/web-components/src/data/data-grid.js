@@ -1,6 +1,6 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
 import { listen } from '../shared/subscriptions.js';
 
 /**
@@ -38,7 +38,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     manualSort: flag(false, { attribute: 'manual-sort', reflect: false }),
     selectable: flag(false),
     virtual: flag(false),
-    rowHeight: { type: Number, attribute: 'row-height' },
+    rowHeight: num({ default: 40, min: 1, clamp: 'toRange', attribute: 'row-height' }),
     _rows: { state: true },
     _selected: { state: true },
     _startIndex: { state: true },
@@ -272,7 +272,6 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     this.columns = [];
     this.rows = [];
     this.sort = [];
-    this.rowHeight = 40;
     this._rows = [];
     this._selected = new Set();
     this._startIndex = 0;

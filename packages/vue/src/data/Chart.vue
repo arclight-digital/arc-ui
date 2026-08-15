@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   series: () => ([]),
   labels: () => ([]),
-  height: 260,
   currency: 'USD',
 });
 

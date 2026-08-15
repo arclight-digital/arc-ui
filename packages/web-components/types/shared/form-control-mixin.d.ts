@@ -72,6 +72,7 @@ export declare const FormControlMixin: (superClass: any) => {
                 negative: string;
                 derived: any;
                 blockedBy: string | undefined;
+                nullable: any;
             };
         };
         readonly: {
@@ -88,6 +89,7 @@ export declare const FormControlMixin: (superClass: any) => {
                 negative: string;
                 derived: any;
                 blockedBy: string | undefined;
+                nullable: any;
             };
         };
     };

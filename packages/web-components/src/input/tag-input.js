@@ -5,7 +5,7 @@ import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DismissController } from '../shared/dismiss-controller.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 
 /**
  * Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and
@@ -42,7 +42,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
     value: { type: Array },
     suggestions: { type: Array },
     delimiter: { type: String },
-    maxTags: { type: Number, attribute: 'max-tags' },
+    maxTags: int({ default: 0, min: 0, clamp: 'toRange', attribute: 'max-tags' }),
     allowCustom: flag(true, { attribute: 'allow-custom', negative: 'no-custom', reflect: false }),
     label: { type: String },
     placeholder: { type: String },
@@ -275,7 +275,6 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
     this.value = [];
     this.suggestions = [];
     this.delimiter = ',';
-    this.maxTags = 0;
     this.label = '';
     this.placeholder = '';
     this.name = '';

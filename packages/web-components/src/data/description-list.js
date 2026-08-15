@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
 
 /**
  * Structured term/detail pair list in a responsive grid layout with optional dividers.
@@ -15,7 +15,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  */
 export class ArcDescriptionList extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    columns: { type: Number, reflect: true },
+    columns: int({ default: 1, min: 1, clamp: 'toRange', reflect: true }),
     dividers: flag(true, { negative: 'no-dividers' }),
   };
 
@@ -54,7 +54,6 @@ export class ArcDescriptionList extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.columns = 1;
   }
 
   _onSlotChange(e) {

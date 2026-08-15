@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 import { listen } from '../shared/subscriptions.js';
 
 /**
@@ -37,7 +37,7 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
     sortColumn: { type: String, attribute: 'sort-column' },
     sortDirection: oneOf(['asc', 'desc'], { attribute: 'sort-direction' }),
     virtual: flag(false),
-    rowHeight: { type: Number, attribute: 'row-height' },
+    rowHeight: num({ default: 40, min: 1, clamp: 'toRange', attribute: 'row-height' }),
     _columns: { state: true },
     _selectedRows: { state: true },
     _startIndex: { state: true },
@@ -228,7 +228,6 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
     super();
     this.rows = [];
     this.sortColumn = '';
-    this.rowHeight = 40;
     this._columns = [];
     this._selectedRows = new Set();
     this._startIndex = 0;

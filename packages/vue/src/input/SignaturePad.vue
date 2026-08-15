@@ -17,7 +17,6 @@ const props = withDefaults(defineProps<{
   label: '',
   disabled: false,
   penColor: '',
-  penWidth: 2,
 });
 
 const emit = defineEmits<{

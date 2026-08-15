@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   pauseOnHover?: boolean;
   gap?: string;
 }>(), {
-  speed: 40,
   gap: 'var(--space-xl)',
 });
 </script>

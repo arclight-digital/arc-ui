@@ -11,7 +11,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
 }>(), {
   accept: '',
-  maxSize: 0,
 });
 
 const emit = defineEmits<{

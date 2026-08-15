@@ -34,7 +34,7 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
   static properties = {
     src: { type: String, reflect: true },
     height: { type: Number, reflect: true },
-    aspect: { type: Number, reflect: true },
+    aspect: num({ default: 0, min: 0, clamp: 'toRange', reflect: true }),
     /**
      * The docs said "clamped to 1-4" and nothing clamped — finding #47. The
      * only bound was `min`/`max` on the range input, which constrains the
@@ -274,7 +274,6 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
     super();
     this.src = '';
     this.height = 320;
-    this.aspect = 0;
     // `zoom` is seeded from its declaration — see DeclaredPropsMixin.
     this._loaded = false;
     this._errored = false;

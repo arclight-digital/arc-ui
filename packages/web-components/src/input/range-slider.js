@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 /**
  * Dual-thumb range slider for selecting a numeric interval within a defined range, with
@@ -34,11 +34,11 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
   static properties = {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
-    min: { type: Number },
+    min: num({ default: 0 }),
     max: { type: Number },
-    step: { type: Number },
-    low: { type: Number, reflect: true },
-    high: { type: Number, reflect: true },
+    step: num({ default: 1, min: 0, clamp: 'toRange' }),
+    low: num({ default: 0, min: 'min', max: 'max', clamp: 'toRange', reflect: true }),
+    high: num({ default: 100, min: 'min', max: 'max', clamp: 'toRange', reflect: true }),
     name: { type: String, reflect: true },
     // NOT flag(): a form-associated custom element whose `disabled` content
     // attribute is merely *present* is "actually disabled" per the HTML spec,
@@ -167,11 +167,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   constructor() {
     super();
-    this.min = 0;
     this.max = 100;
-    this.step = 1;
-    this.low = 0;
-    this.high = 100;
     this.name = '';
     this.disabled = false;
     this.label = '';

@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size, min = 0, max = 100, step = 1, low = $bindable(0), high = $bindable(100), name = '', disabled = false, label = '', showValues, ...rest }: Props = $props();
+  let { size, min, max = 100, step, low = $bindable(), high = $bindable(), name = '', disabled = false, label = '', showValues, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

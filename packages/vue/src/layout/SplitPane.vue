@@ -11,8 +11,6 @@ const props = withDefaults(defineProps<{
   maxRatio?: number;
   label?: string;
 }>(), {
-  minRatio: 0.15,
-  maxRatio: 0.85,
   label: '',
 });
 

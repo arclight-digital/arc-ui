@@ -23,7 +23,6 @@ const props = withDefaults(defineProps<{
   placeholder: '',
   label: '',
   rows: 4,
-  maxlength: 0,
   disabled: false,
   error: '',
 });

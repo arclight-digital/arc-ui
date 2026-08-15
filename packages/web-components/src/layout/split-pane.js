@@ -25,8 +25,8 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
   static properties = {
     orientation: oneOf(['horizontal', 'vertical']),
     ratio: num({ default: 0.5, min: 'minRatio', max: 'maxRatio', clamp: 'toRange' }),
-    minRatio: { type: Number, attribute: 'min-ratio' },
-    maxRatio: { type: Number, attribute: 'max-ratio' },
+    minRatio: num({ default: 0.15, min: 0, max: 1, clamp: 'toRange', attribute: 'min-ratio' }),
+    maxRatio: num({ default: 0.85, min: 0, max: 1, clamp: 'toRange', attribute: 'max-ratio' }),
     label: { type: String },
   };
 
@@ -103,8 +103,6 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.minRatio = 0.15;
-    this.maxRatio = 0.85;
     this.label = '';
     this._dragging = false;
   }

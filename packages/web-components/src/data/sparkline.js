@@ -1,6 +1,6 @@
 import { LitElement, html, css, svg } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 /**
  * Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat
@@ -25,8 +25,8 @@ export class ArcSparkline extends DeclaredPropsMixin(LitElement) {
     data: { type: String },
     type: oneOf(['line', 'bar']),
     color: { type: String },
-    width: { type: Number },
-    height: { type: Number },
+    width: num({ default: 120, min: 1, clamp: 'toRange' }),
+    height: num({ default: 32, min: 1, clamp: 'toRange' }),
     fill: flag(false, { reflect: false }),
   };
 
@@ -97,8 +97,6 @@ export class ArcSparkline extends DeclaredPropsMixin(LitElement) {
     super();
     this.data = '';
     this.color = '';
-    this.width = 120;
-    this.height = 32;
   }
 
   /** Parse comma-separated data string into number array */

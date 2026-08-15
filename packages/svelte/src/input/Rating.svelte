@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size, value = $bindable(0), max = 5, name = '', label = '', disabled = false, readonly, ...rest }: Props = $props();
+  let { size, value = $bindable(), max, name = '', label = '', disabled = false, readonly, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise

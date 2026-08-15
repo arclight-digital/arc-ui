@@ -13,8 +13,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   readonly?: boolean;
 }>(), {
-  value: 0,
-  max: 5,
   name: '',
   label: '',
   disabled: false,

@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { accept = '', multiple, maxSize = 0, disabled, ...rest }: Props = $props();
+  let { accept = '', multiple, maxSize, disabled, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

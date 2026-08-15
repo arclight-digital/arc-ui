@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
   locale?: string;
 }>(), {
   value: 0,
-  duration: 1000,
   prefix: '',
   suffix: '',
   decimals: 0,

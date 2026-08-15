@@ -43,7 +43,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), name = '', placeholder = '', label = '', rows = 4, maxlength = 0, disabled = false, readonly, resize, size, autoResize, error = '', ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', placeholder = '', label = '', rows = 4, maxlength, disabled = false, readonly, resize, size, autoResize, error = '', ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

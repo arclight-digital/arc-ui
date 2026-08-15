@@ -1,7 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 
 /**
  * One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste
@@ -30,7 +30,7 @@ export class ArcPinInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
   static properties = {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
-    length: { type: Number },
+    length: int({ default: 4, min: 1, clamp: 'toRange' }),
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
     // NOT flag(): a form-associated custom element whose `disabled` content
@@ -149,7 +149,6 @@ export class ArcPinInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
 
   constructor() {
     super();
-    this.length = 4;
     this.value = '';
     this.name = '';
     this.disabled = false;

@@ -4,12 +4,10 @@ import '@arclux/arc-ui/description-list';
 
 defineOptions({ name: 'DescriptionList' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   columns?: number;
   dividers?: boolean;
-}>(), {
-  columns: 1,
-});
+}>();
 </script>
 
 <template>

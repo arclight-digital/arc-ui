@@ -92,8 +92,9 @@ const FALSEY = new Set(['false', '0', 'off']);
  */
 export function flag(
   fallback = false,
-  { negative = null, attribute, reflect = true, derived = false, blockedBy } = {},
+  { negative = null, attribute, reflect = true, derived = false, blockedBy, nullable = false } = {},
 ) {
+  if (nullable) fallback = fallback === false ? null : fallback;
   if (fallback && !negative) {
     throw new Error(
       'flag(true) needs a `negative` attribute name — a true default has no ' +
@@ -121,7 +122,7 @@ export function flag(
       // work, and the value survives a serialise/re-parse either way.
       toAttribute: (v) => (v ? '' : null),
     },
-    [ARC]: { kind: 'flag', default: fallback, negative, derived, blockedBy },
+    [ARC]: { kind: 'flag', default: fallback, negative, derived, blockedBy, nullable },
   };
 }
 
@@ -173,8 +174,22 @@ export function oneOf(values, { default: fallback = values[0], attribute, reflec
  * `selected` bounded by the tab count needs.
  */
 export function num(
-  { default: fallback = 0, min, max, step, clamp = null, int = false, attribute, reflect = false } = {},
+  {
+    default: fallback = 0,
+    min,
+    max,
+    step,
+    clamp = null,
+    int = false,
+    nullable = false,
+    attribute,
+    reflect = false,
+  } = {},
 ) {
+  // A nullable prop's "unset" state *is* its default, so `default: 0` would be
+  // a real value rather than an absence. Overridable, for the rare case that
+  // wants both a null state and a non-null starting point.
+  if (nullable && fallback === 0) fallback = null;
   if (clamp && clamp !== 'toRange') throw new Error(`unknown clamp mode ${clamp}`);
   if (clamp && min === undefined && max === undefined) {
     throw new Error('clamp: "toRange" needs a min and/or a max to clamp to');
@@ -183,7 +198,7 @@ export function num(
     type: Number,
     reflect,
     ...(attribute ? { attribute } : {}),
-    [ARC]: { kind: 'number', default: fallback, min, max, step, clamp, int },
+    [ARC]: { kind: 'number', default: fallback, min, max, step, clamp, int, nullable },
   };
 }
 
@@ -296,6 +311,24 @@ export function normalizeValue(el, meta, value) {
   // it to oneOf()/num() is a one-word pass-through when a case turns up, and
   // there is no second implementation to keep in step. See flag()'s docstring.
   if (meta.blockedBy && el[meta.blockedBy]) return defaultOf(el, meta);
+
+  // `nullable` is deliberately kind-agnostic and sits ahead of every branch,
+  // because the thing it expresses is not about numbers or booleans: it is that
+  // **unset is a third state with its own meaning**, distinct from the default.
+  //
+  // Thirteen numeric props had it and were each handling it by hand —
+  // arc-gauge's and arc-meter's `low`/`high`/`optimum` (unset ⇒ derive the zone
+  // from the range), `arc-number-input`'s `min`/`max` (unset ⇒ unbounded),
+  // `arc-waveform.duration` and `arc-level-meter.peak` (unset ⇒ nothing to
+  // show), `arc-activity-heatmap.max` (unset ⇒ quartile mapping rather than a
+  // linear scale), `arc-number-format.decimals` (unset ⇒ per-format default) —
+  // plus `arc-clock.hour12`, where unset means "let the viewer's locale
+  // decide". Without this, every one of them had to stay a raw
+  // `{ type: Number }` or `{ type: Boolean }`, because the vocabulary would
+  // have collapsed the third state onto the declared default. That is a real
+  // defect and not a stylistic one: it would have made every clock 24-hour and
+  // every gauge draw zones nobody asked for.
+  if (meta.nullable && (value === null || value === undefined || value === '')) return null;
 
   // A flag that was never initialised is `undefined`, not its declared default.
   // Every other kind already lands on its default here — an enum because

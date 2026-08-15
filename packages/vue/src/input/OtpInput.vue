@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   type?: 'number' | 'text';
 }>(), {
-  length: 6,
   value: '',
   name: '',
   disabled: false,

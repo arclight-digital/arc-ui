@@ -33,11 +33,11 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
     // See arc-meter: clamped against the sibling props, so `aria-valuenow`
     // cannot contradict the arc that is drawn (finding #70).
     value: num({ default: 0, min: 'min', max: 'max', clamp: 'toRange', reflect: true }),
-    min: { type: Number },
-    max: { type: Number },
-    low: { type: Number },
-    high: { type: Number },
-    optimum: { type: Number },
+    min: num({ default: 0 }),
+    max: num({ default: 100 }),
+    low: num({ nullable: true }),
+    high: num({ nullable: true }),
+    optimum: num({ nullable: true }),
     label: { type: String },
     unit: { type: String },
     variant: oneOf(['full', 'half']),
@@ -139,11 +139,7 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.min = 0;
-    this.max = 100;
-    this.low = undefined;
-    this.high = undefined;
-    this.optimum = undefined;
+    // Nullable declarations own their own "unset" default — see props.js.
     this.label = '';
     this.unit = '';
   }

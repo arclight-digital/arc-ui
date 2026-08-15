@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], rows = [], sort = $bindable([]), manualSort, selectable, virtual, rowHeight = 40, ...rest }: Props = $props();
+  let { columns = [], rows = [], sort = $bindable([]), manualSort, selectable, virtual, rowHeight, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

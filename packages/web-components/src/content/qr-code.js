@@ -1,7 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import qrcode from 'qrcode-generator';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 
 /**
  * Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes
@@ -25,7 +25,7 @@ export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
     size: { type: Number },
     level: oneOf(['L', 'M', 'Q', 'H'], { default: 'M' }),
     label: { type: String },
-    quietZone: { type: Number, attribute: 'quiet-zone' },
+    quietZone: int({ default: 2, min: 0, clamp: 'toRange', attribute: 'quiet-zone' }),
     contrast: flag(false),
     _path: { state: true },
     _count: { state: true },
@@ -77,7 +77,6 @@ export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
     this.value = '';
     this.size = 160;
     this.label = '';
-    this.quietZone = 2;
     this._path = '';
     this._count = 0;
   }
@@ -123,7 +122,7 @@ export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
   render() {
     if (!this._path) return nothing;
 
-    const qz = Math.max(0, this.quietZone);
+    const qz = this.quietZone;
     const total = this._count + qz * 2;
 
     // aria-label never falls back to `value` — it may be a secret (2FA URI etc.).

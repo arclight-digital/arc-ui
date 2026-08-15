@@ -323,7 +323,7 @@ declare module 'react' {
         manualSort?: boolean;
         selectable?: boolean;
         virtual?: boolean;
-        'row-height'?: number | string;
+        rowHeight?: number | string;
       };
       'arc-data-table': ArcBaseAttributes & {
         rows?: string;
@@ -332,7 +332,7 @@ declare module 'react' {
         'sort-column'?: string;
         sortDirection?: 'asc' | 'desc';
         virtual?: boolean;
-        'row-height'?: number | string;
+        rowHeight?: number | string;
       };
       'arc-date-picker': ArcBaseAttributes & {
         size?: 'sm' | 'md' | 'lg';
@@ -434,7 +434,7 @@ declare module 'react' {
       'arc-file-upload': ArcBaseAttributes & {
         accept?: string;
         multiple?: boolean;
-        'max-size'?: number | string;
+        maxSize?: number | string;
         disabled?: boolean;
       };
       'arc-float-bar': ArcBaseAttributes & {
@@ -852,7 +852,7 @@ declare module 'react' {
         size?: number | string;
         level?: 'L' | 'M' | 'Q' | 'H';
         label?: string;
-        'quiet-zone'?: number | string;
+        quietZone?: number | string;
         contrast?: boolean;
       };
       'arc-radio': ArcBaseAttributes & {
@@ -899,8 +899,8 @@ declare module 'react' {
       };
       'arc-resizable': ArcBaseAttributes & {
         direction?: 'horizontal' | 'vertical';
-        'min-size'?: number | string;
-        'max-size'?: number | string;
+        minSize?: number | string;
+        maxSize?: number | string;
         size?: number | string;
       };
       'arc-responsive-switcher': ArcBaseAttributes & {
@@ -998,7 +998,7 @@ declare module 'react' {
         label?: string;
         disabled?: boolean;
         'pen-color'?: string;
-        'pen-width'?: number | string;
+        penWidth?: number | string;
         required?: boolean;
         readonly?: boolean;
       };
@@ -1051,8 +1051,8 @@ declare module 'react' {
       'arc-split-pane': ArcBaseAttributes & {
         orientation?: 'horizontal' | 'vertical';
         ratio?: number | string;
-        'min-ratio'?: number | string;
-        'max-ratio'?: number | string;
+        minRatio?: number | string;
+        maxRatio?: number | string;
         label?: string;
       };
       'arc-spotlight': ArcBaseAttributes & {
@@ -1132,7 +1132,7 @@ declare module 'react' {
         value?: string;
         suggestions?: string;
         delimiter?: string;
-        'max-tags'?: number | string;
+        maxTags?: number | string;
         allowCustom?: boolean;
         label?: string;
         placeholder?: string;
@@ -1206,7 +1206,7 @@ declare module 'react' {
         duration?: number | string;
         'max-visible'?: number | string;
         dedupe?: boolean;
-        'queue-limit'?: number | string;
+        queueLimit?: number | string;
       };
       'arc-toggle': ArcBaseAttributes & {
         checked?: boolean;

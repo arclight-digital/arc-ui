@@ -16,8 +16,6 @@ const props = withDefaults(defineProps<{
   variant?: 'full' | 'half';
   showValue?: boolean;
 }>(), {
-  min: 0,
-  max: 100,
   label: '',
   unit: '',
 });

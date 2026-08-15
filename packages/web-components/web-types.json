@@ -1534,14 +1534,14 @@
           "js": {
             "properties": [
               {
-                "name": "speed",
-                "description": "Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.",
-                "type": "number"
-              },
-              {
                 "name": "gap",
                 "description": "CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property.",
                 "type": "string"
+              },
+              {
+                "name": "speed",
+                "description": "Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.",
+                "type": "number"
               },
               {
                 "name": "direction",
@@ -1595,7 +1595,7 @@
               }
             },
             {
-              "name": "quiet-zone",
+              "name": "quietZone",
               "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
               "value": {
                 "type": "number",
@@ -1631,14 +1631,14 @@
                 "type": "string"
               },
               {
-                "name": "quietZone",
-                "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
-                "type": "number"
-              },
-              {
                 "name": "level",
                 "description": "Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes.",
                 "type": "'L' | 'M' | 'Q' | 'H'"
+              },
+              {
+                "name": "quietZone",
+                "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
+                "type": "number"
               },
               {
                 "name": "contrast",
@@ -1866,14 +1866,14 @@
                 "type": "string"
               },
               {
-                "name": "count",
-                "description": "Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.",
-                "type": "number"
-              },
-              {
                 "name": "variant",
                 "description": "Shape of the skeleton: text for lines, circle for avatars, rect for blocks",
                 "type": "'text' | 'circle' | 'rect'"
+              },
+              {
+                "name": "count",
+                "description": "Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.",
+                "type": "number"
               }
             ],
             "events": []
@@ -2265,7 +2265,7 @@
               "description": "When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.",
               "value": {
                 "type": "number",
-                "default": "null"
+                "default": "0"
               }
             },
             {
@@ -2302,14 +2302,14 @@
                 "type": "'sunday' | 'monday'"
               },
               {
-                "name": "max",
-                "description": "When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.",
-                "type": "number"
-              },
-              {
                 "name": "legend",
                 "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
                 "type": "boolean"
+              },
+              {
+                "name": "max",
+                "description": "When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.",
+                "type": "number"
               }
             ],
             "events": []
@@ -2387,11 +2387,6 @@
                 "type": "number"
               },
               {
-                "name": "duration",
-                "description": "Animation duration in milliseconds",
-                "type": "number"
-              },
-              {
                 "name": "prefix",
                 "description": "String prepended before the number (e.g., \"$\")",
                 "type": "string"
@@ -2410,6 +2405,11 @@
                 "name": "locale",
                 "description": "BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks).",
                 "type": "string"
+              },
+              {
+                "name": "duration",
+                "description": "Animation duration in milliseconds",
+                "type": "number"
               },
               {
                 "name": "format",
@@ -2577,11 +2577,6 @@
                 "type": "string[]"
               },
               {
-                "name": "height",
-                "description": "Chart height in pixels. Width is fluid and tracked with a ResizeObserver.",
-                "type": "number"
-              },
-              {
                 "name": "currency",
                 "description": "ISO 4217 currency code used when value-format=\"currency\".",
                 "type": "string"
@@ -2605,6 +2600,11 @@
                 "name": "hideAxis",
                 "description": "Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip.",
                 "type": "boolean"
+              },
+              {
+                "name": "height",
+                "description": "Chart height in pixels. Width is fluid and tracked with a ResizeObserver.",
+                "type": "number"
               },
               {
                 "name": "valueFormat",
@@ -2663,7 +2663,7 @@
               "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
               "value": {
                 "type": "boolean",
-                "default": "undefined"
+                "default": "false"
               }
             },
             {
@@ -2690,11 +2690,6 @@
                 "type": "string"
               },
               {
-                "name": "hour12",
-                "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
-                "type": "boolean"
-              },
-              {
                 "name": "variant",
                 "description": "Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands.",
                 "type": "'digital' | 'analog'"
@@ -2702,6 +2697,11 @@
               {
                 "name": "showSeconds",
                 "description": "Show seconds on the digital face, or the second hand on the analog face.",
+                "type": "boolean"
+              },
+              {
+                "name": "hour12",
+                "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
                 "type": "boolean"
               },
               {
@@ -2930,7 +2930,7 @@
               }
             },
             {
-              "name": "row-height",
+              "name": "rowHeight",
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
               "value": {
                 "type": "number",
@@ -2974,11 +2974,6 @@
                 "type": "Array<{key:string,direction:'asc'|'desc'}>"
               },
               {
-                "name": "rowHeight",
-                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-                "type": "number"
-              },
-              {
                 "name": "manualSort",
                 "description": "Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.",
                 "type": "boolean"
@@ -2992,6 +2987,11 @@
                 "name": "virtual",
                 "description": "Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count.",
                 "type": "boolean"
+              },
+              {
+                "name": "rowHeight",
+                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
+                "type": "number"
               }
             ],
             "events": [
@@ -3067,7 +3067,7 @@
               }
             },
             {
-              "name": "row-height",
+              "name": "rowHeight",
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
               "value": {
                 "type": "number",
@@ -3106,11 +3106,6 @@
                 "type": "string"
               },
               {
-                "name": "rowHeight",
-                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-                "type": "number"
-              },
-              {
                 "name": "sortable",
                 "description": "Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.",
                 "type": "boolean"
@@ -3129,6 +3124,11 @@
                 "name": "virtual",
                 "description": "Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.",
                 "type": "boolean"
+              },
+              {
+                "name": "rowHeight",
+                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
+                "type": "number"
               }
             ],
             "events": [
@@ -3420,7 +3420,7 @@
               "description": "Threshold below which the value is considered low. Used for color zone calculation.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -3428,7 +3428,7 @@
               "description": "Threshold above which the value is considered high. Used for color zone calculation.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -3436,7 +3436,7 @@
               "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -3477,6 +3477,21 @@
           "js": {
             "properties": [
               {
+                "name": "label",
+                "description": "Label text displayed beneath the value and used as the accessible name.",
+                "type": "string"
+              },
+              {
+                "name": "unit",
+                "description": "Unit suffix rendered after the value (e.g. \"%\", \"ms\", \"GB\").",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Current gauge value. Clamped between `min` and `max`. Reflected as an attribute.",
+                "type": "number"
+              },
+              {
                 "name": "min",
                 "description": "Minimum value representing the empty end of the arc.",
                 "type": "number"
@@ -3499,21 +3514,6 @@
               {
                 "name": "optimum",
                 "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
-                "type": "number"
-              },
-              {
-                "name": "label",
-                "description": "Label text displayed beneath the value and used as the accessible name.",
-                "type": "string"
-              },
-              {
-                "name": "unit",
-                "description": "Unit suffix rendered after the value (e.g. \"%\", \"ms\", \"GB\").",
-                "type": "string"
-              },
-              {
-                "name": "value",
-                "description": "Current gauge value. Clamped between `min` and `max`. Reflected as an attribute.",
                 "type": "number"
               },
               {
@@ -3773,7 +3773,7 @@
               "description": "Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -3822,6 +3822,16 @@
           "js": {
             "properties": [
               {
+                "name": "label",
+                "description": "Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like \"Master left\" rather than \"Level\".",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min=\"-60\" max=\"0\"` it is a dB reading. Values outside the range are clamped.",
+                "type": "number"
+              },
+              {
                 "name": "min",
                 "description": "Value at the empty end of the meter. Defaults to 0.",
                 "type": "number"
@@ -3837,24 +3847,14 @@
                 "type": "number"
               },
               {
-                "name": "segments",
-                "description": "Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.",
-                "type": "number"
-              },
-              {
-                "name": "label",
-                "description": "Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like \"Master left\" rather than \"Level\".",
-                "type": "string"
-              },
-              {
-                "name": "value",
-                "description": "Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min=\"-60\" max=\"0\"` it is a dB reading. Values outside the range are clamped.",
-                "type": "number"
-              },
-              {
                 "name": "orientation",
                 "description": "Meter direction. Vertical (the default) fills bottom-up like a channel strip; horizontal fills from the inline start. Unknown values fall back to vertical.",
                 "type": "'vertical' | 'horizontal'"
+              },
+              {
+                "name": "segments",
+                "description": "Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.",
+                "type": "number"
               },
               {
                 "name": "warn",
@@ -4115,7 +4115,7 @@
               "description": "Threshold below which the value is considered low. Used for color zone calculation.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -4123,7 +4123,7 @@
               "description": "Threshold above which the value is considered high. Used for color zone calculation.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -4131,7 +4131,7 @@
               "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -4147,6 +4147,16 @@
           "events": [],
           "js": {
             "properties": [
+              {
+                "name": "label",
+                "description": "Label text displayed in the header row alongside the current percentage.",
+                "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Current meter value. Clamped between `min` and `max`. Reflected as an attribute.",
+                "type": "number"
+              },
               {
                 "name": "min",
                 "description": "Minimum value representing the left edge (empty) of the meter.",
@@ -4170,16 +4180,6 @@
               {
                 "name": "optimum",
                 "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
-                "type": "number"
-              },
-              {
-                "name": "label",
-                "description": "Label text displayed in the header row alongside the current percentage.",
-                "type": "string"
-              },
-              {
-                "name": "value",
-                "description": "Current meter value. Clamped between `min` and `max`. Reflected as an attribute.",
                 "type": "number"
               }
             ],
@@ -4255,6 +4255,11 @@
                 "type": "string"
               },
               {
+                "name": "type",
+                "description": "Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.",
+                "type": "'line' | 'bar'"
+              },
+              {
                 "name": "width",
                 "description": "SVG viewport width in pixels.",
                 "type": "number"
@@ -4263,11 +4268,6 @@
                 "name": "height",
                 "description": "SVG viewport height in pixels.",
                 "type": "number"
-              },
-              {
-                "name": "type",
-                "description": "Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.",
-                "type": "'line' | 'bar'"
               },
               {
                 "name": "fill",
@@ -4784,7 +4784,7 @@
               "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
               "value": {
                 "type": "number",
-                "default": "null"
+                "default": "0"
               }
             },
             {
@@ -4833,11 +4833,6 @@
                 "type": "Array"
               },
               {
-                "name": "duration",
-                "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
-                "type": "number"
-              },
-              {
                 "name": "label",
                 "description": "Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.",
                 "type": "string"
@@ -4845,6 +4840,11 @@
               {
                 "name": "position",
                 "description": "Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.",
+                "type": "number"
+              },
+              {
+                "name": "duration",
+                "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
                 "type": "number"
               },
               {
@@ -6611,14 +6611,14 @@
           "js": {
             "properties": [
               {
-                "name": "duration",
-                "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
-                "type": "number"
-              },
-              {
                 "name": "position",
                 "description": "Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.",
                 "type": "'bottom-center' | 'bottom-left' | 'bottom-right'"
+              },
+              {
+                "name": "duration",
+                "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
+                "type": "number"
               }
             ],
             "events": [
@@ -6738,7 +6738,7 @@
               }
             },
             {
-              "name": "queue-limit",
+              "name": "queueLimit",
               "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
               "value": {
                 "type": "number",
@@ -6777,11 +6777,6 @@
                 "type": "number"
               },
               {
-                "name": "queueLimit",
-                "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
-                "type": "number"
-              },
-              {
                 "name": "position",
                 "description": "Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.",
                 "type": "'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'"
@@ -6790,6 +6785,11 @@
                 "name": "dedupe",
                 "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a \"(×N)\" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable.",
                 "type": "boolean"
+              },
+              {
+                "name": "queueLimit",
+                "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
+                "type": "number"
               }
             ],
             "events": [
@@ -8100,11 +8100,6 @@
                 "type": "string"
               },
               {
-                "name": "months",
-                "description": "Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.",
-                "type": "number"
-              },
-              {
                 "name": "presets",
                 "description": "Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.",
                 "type": "Array<{label:string,days:number}>"
@@ -8123,6 +8118,11 @@
                 "name": "label",
                 "description": "Label text rendered above the input in uppercase accent font styling.",
                 "type": "string"
+              },
+              {
+                "name": "months",
+                "description": "Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.",
+                "type": "number"
               },
               {
                 "name": "required",
@@ -8274,7 +8274,7 @@
               }
             },
             {
-              "name": "max-size",
+              "name": "maxSize",
               "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
               "value": {
                 "type": "number",
@@ -8311,14 +8311,14 @@
                 "type": "string"
               },
               {
-                "name": "maxSize",
-                "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
-                "type": "number"
-              },
-              {
                 "name": "multiple",
                 "description": "When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.",
                 "type": "boolean"
+              },
+              {
+                "name": "maxSize",
+                "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
+                "type": "number"
               },
               {
                 "name": "disabled",
@@ -9248,21 +9248,6 @@
                 "type": "number"
               },
               {
-                "name": "min",
-                "description": "Minimum allowed value at the start of the arc sweep.",
-                "type": "number"
-              },
-              {
-                "name": "max",
-                "description": "Maximum allowed value at the end of the arc sweep.",
-                "type": "number"
-              },
-              {
-                "name": "step",
-                "description": "Increment granularity. The value snaps to multiples of this number.",
-                "type": "number"
-              },
-              {
                 "name": "name",
                 "type": "string"
               },
@@ -9285,6 +9270,21 @@
                 "name": "format",
                 "description": "`(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number.",
                 "type": "Function"
+              },
+              {
+                "name": "min",
+                "description": "Minimum allowed value at the start of the arc sweep.",
+                "type": "number"
+              },
+              {
+                "name": "max",
+                "description": "Maximum allowed value at the end of the arc sweep.",
+                "type": "number"
+              },
+              {
+                "name": "step",
+                "description": "Increment granularity. The value snaps to multiples of this number.",
+                "type": "number"
               },
               {
                 "name": "readonly",
@@ -9774,7 +9774,7 @@
               "description": "Minimum allowed value. The decrement button is disabled when the value reaches this limit.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -9782,7 +9782,7 @@
               "description": "Maximum allowed value. The increment button is disabled when the value reaches this limit.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -9852,16 +9852,6 @@
                 "type": "number"
               },
               {
-                "name": "min",
-                "description": "Minimum allowed value. The decrement button is disabled when the value reaches this limit.",
-                "type": "number"
-              },
-              {
-                "name": "max",
-                "description": "Maximum allowed value. The increment button is disabled when the value reaches this limit.",
-                "type": "number"
-              },
-              {
                 "name": "step",
                 "description": "Increment and decrement step size. Arrow keys use this value, Shift+Arrow uses 10x this value.",
                 "type": "number"
@@ -9879,6 +9869,16 @@
                 "name": "disabled",
                 "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
                 "type": "boolean"
+              },
+              {
+                "name": "min",
+                "description": "Minimum allowed value. The decrement button is disabled when the value reaches this limit.",
+                "type": "number"
+              },
+              {
+                "name": "max",
+                "description": "Maximum allowed value. The increment button is disabled when the value reaches this limit.",
+                "type": "number"
               },
               {
                 "name": "readonly",
@@ -10001,11 +10001,6 @@
           "js": {
             "properties": [
               {
-                "name": "length",
-                "description": "Number of individual character boxes to render. Reflected as an attribute.",
-                "type": "number"
-              },
-              {
                 "name": "value",
                 "description": "The concatenated value of all boxes. Reflected as an attribute and updated on every input.",
                 "type": "string"
@@ -10018,6 +10013,11 @@
                 "name": "disabled",
                 "description": "Disables all input boxes, reducing opacity to 40% and blocking pointer events.",
                 "type": "boolean"
+              },
+              {
+                "name": "length",
+                "description": "Number of individual character boxes to render. Reflected as an attribute.",
+                "type": "number"
               },
               {
                 "name": "readonly",
@@ -10370,11 +10370,6 @@
           "js": {
             "properties": [
               {
-                "name": "length",
-                "description": "Number of input boxes to render. Determines the expected code length.",
-                "type": "number"
-              },
-              {
                 "name": "value",
                 "description": "Current combined value across all boxes. Reflected as an attribute.",
                 "type": "string"
@@ -10397,6 +10392,11 @@
                 "name": "label",
                 "description": "Label text displayed above the input boxes in uppercase accent font.",
                 "type": "string"
+              },
+              {
+                "name": "length",
+                "description": "Number of input boxes to render. Determines the expected code length.",
+                "type": "number"
               },
               {
                 "name": "type",
@@ -10741,13 +10741,27 @@
           "js": {
             "properties": [
               {
-                "name": "min",
-                "description": "Minimum allowed value at the left edge of the track.",
+                "name": "max",
+                "description": "Maximum allowed value at the right edge of the track.",
                 "type": "number"
               },
               {
-                "name": "max",
-                "description": "Maximum allowed value at the right edge of the track.",
+                "name": "name",
+                "type": "string"
+              },
+              {
+                "name": "disabled",
+                "description": "Disables interaction, reducing opacity and blocking pointer events.",
+                "type": "boolean"
+              },
+              {
+                "name": "label",
+                "description": "Label text displayed above the slider with the range values shown on the right.",
+                "type": "string"
+              },
+              {
+                "name": "min",
+                "description": "Minimum allowed value at the left edge of the track.",
                 "type": "number"
               },
               {
@@ -10764,20 +10778,6 @@
                 "name": "high",
                 "description": "Upper bound value of the selected range. Reflected as an attribute.",
                 "type": "number"
-              },
-              {
-                "name": "name",
-                "type": "string"
-              },
-              {
-                "name": "disabled",
-                "description": "Disables interaction, reducing opacity and blocking pointer events.",
-                "type": "boolean"
-              },
-              {
-                "name": "label",
-                "description": "Label text displayed above the slider with the range values shown on the right.",
-                "type": "string"
               },
               {
                 "name": "showValues",
@@ -10900,16 +10900,6 @@
           "js": {
             "properties": [
               {
-                "name": "value",
-                "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
-                "type": "number"
-              },
-              {
-                "name": "max",
-                "description": "Maximum number of stars to render. Determines the upper bound of the rating scale.",
-                "type": "number"
-              },
-              {
                 "name": "name",
                 "type": "string"
               },
@@ -10922,6 +10912,16 @@
                 "name": "disabled",
                 "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
                 "type": "boolean"
+              },
+              {
+                "name": "value",
+                "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
+                "type": "number"
+              },
+              {
+                "name": "max",
+                "description": "Maximum number of stars to render. Determines the upper bound of the rating scale.",
+                "type": "number"
               },
               {
                 "name": "readonly",
@@ -11408,7 +11408,7 @@
               }
             },
             {
-              "name": "pen-width",
+              "name": "penWidth",
               "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
               "value": {
                 "type": "number",
@@ -11476,11 +11476,6 @@
                 "type": "string"
               },
               {
-                "name": "penWidth",
-                "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
-                "type": "number"
-              },
-              {
                 "name": "readonly",
                 "description": "Prevents drawing and hides the clear button while the pad stays focusable and the value still submits.",
                 "type": "boolean"
@@ -11489,6 +11484,11 @@
                 "name": "required",
                 "description": "When true and the pad is blank, the control is invalid with `valueMissing`.",
                 "type": "boolean"
+              },
+              {
+                "name": "penWidth",
+                "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
+                "type": "number"
               },
               {
                 "name": "form"
@@ -11877,7 +11877,7 @@
               }
             },
             {
-              "name": "max-tags",
+              "name": "maxTags",
               "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
               "value": {
                 "type": "number",
@@ -11978,11 +11978,6 @@
                 "type": "string"
               },
               {
-                "name": "maxTags",
-                "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
-                "type": "number"
-              },
-              {
                 "name": "label",
                 "description": "Visible label rendered above the field in a small uppercase style.",
                 "type": "string"
@@ -12006,6 +12001,11 @@
                 "name": "error",
                 "description": "Error message shown below the field; also applies error styling to the border.",
                 "type": "string"
+              },
+              {
+                "name": "maxTags",
+                "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
+                "type": "number"
               },
               {
                 "name": "allowCustom",
@@ -12200,11 +12200,6 @@
                 "type": "number"
               },
               {
-                "name": "maxlength",
-                "description": "Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached.",
-                "type": "number"
-              },
-              {
                 "name": "disabled",
                 "description": "Prevents user interaction and applies a muted visual treatment at 40% opacity. The field value is excluded from form submission when disabled.",
                 "type": "boolean"
@@ -12213,6 +12208,11 @@
                 "name": "error",
                 "description": "Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role=\"alert\"` for screen reader announcement.",
                 "type": "string"
+              },
+              {
+                "name": "maxlength",
+                "description": "Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached.",
+                "type": "number"
               },
               {
                 "name": "resize",
@@ -13777,7 +13777,7 @@
               }
             },
             {
-              "name": "min-size",
+              "name": "minSize",
               "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
               "value": {
                 "type": "number",
@@ -13785,11 +13785,11 @@
               }
             },
             {
-              "name": "max-size",
+              "name": "maxSize",
               "description": "Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.",
               "value": {
                 "type": "number",
-                "default": "Infinity"
+                "default": "0"
               }
             },
             {
@@ -13817,16 +13817,6 @@
           "js": {
             "properties": [
               {
-                "name": "minSize",
-                "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
-                "type": "number"
-              },
-              {
-                "name": "maxSize",
-                "description": "Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.",
-                "type": "number"
-              },
-              {
                 "name": "size",
                 "description": "Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property.",
                 "type": "number"
@@ -13835,6 +13825,16 @@
                 "name": "direction",
                 "description": "Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.",
                 "type": "'horizontal' | 'vertical'"
+              },
+              {
+                "name": "minSize",
+                "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
+                "type": "number"
+              },
+              {
+                "name": "maxSize",
+                "description": "Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.",
+                "type": "number"
               }
             ],
             "events": [
@@ -13980,7 +13980,7 @@
               }
             },
             {
-              "name": "min-ratio",
+              "name": "minRatio",
               "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
               "value": {
                 "type": "number",
@@ -13988,7 +13988,7 @@
               }
             },
             {
-              "name": "max-ratio",
+              "name": "maxRatio",
               "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
               "value": {
                 "type": "number",
@@ -14022,16 +14022,6 @@
           "js": {
             "properties": [
               {
-                "name": "minRatio",
-                "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
-                "type": "number"
-              },
-              {
-                "name": "maxRatio",
-                "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
-                "type": "number"
-              },
-              {
                 "name": "label",
                 "description": "Accessible name for the divider, applied as `aria-label`. Defaults to \"Resize panes\".",
                 "type": "string"
@@ -14044,6 +14034,16 @@
               {
                 "name": "ratio",
                 "description": "The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
+                "type": "number"
+              },
+              {
+                "name": "minRatio",
+                "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
+                "type": "number"
+              },
+              {
+                "name": "maxRatio",
+                "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
                 "type": "number"
               }
             ],
@@ -16870,10 +16870,10 @@
             },
             {
               "name": "decimals",
-              "description": "Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)",
+              "description": "Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.",
               "value": {
                 "type": "number",
-                "default": "undefined"
+                "default": "0"
               }
             },
             {
@@ -16890,11 +16890,6 @@
           "js": {
             "properties": [
               {
-                "name": "value",
-                "description": "The number to format",
-                "type": "number"
-              },
-              {
                 "name": "locale",
                 "description": "BCP 47 locale tag for locale-aware formatting",
                 "type": "string"
@@ -16905,14 +16900,19 @@
                 "type": "string"
               },
               {
-                "name": "decimals",
-                "description": "Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)",
+                "name": "value",
+                "description": "The number to format",
                 "type": "number"
               },
               {
                 "name": "type",
                 "description": "Formatting style to apply",
                 "type": "'number' | 'currency' | 'percent' | 'compact'"
+              },
+              {
+                "name": "decimals",
+                "description": "Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.",
+                "type": "number"
               },
               {
                 "name": "notation",

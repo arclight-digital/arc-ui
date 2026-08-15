@@ -4,12 +4,10 @@ import '@arclux/arc-ui/snackbar';
 
 defineOptions({ name: 'Snackbar' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
   duration?: number;
-}>(), {
-  duration: 5000,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-action': [event: CustomEvent];

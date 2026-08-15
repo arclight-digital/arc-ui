@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position, duration = 5000, ...rest }: Props = $props();
+  let { position, duration, ...rest }: Props = $props();
 </script>
 
 <arc-snackbar {position} {duration} {...rest}>

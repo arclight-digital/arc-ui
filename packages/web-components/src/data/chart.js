@@ -1,11 +1,17 @@
 import { LitElement, html, css, svg, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 const MAX_SERIES = 6; // --chart-1..6; extras fold into "Other"
 const CHAR_W = 6.2; // rough glyph width at --text-xs, for label-fit estimates
 const R = (v) => Math.round(v * 100) / 100;
-const num = (v) => {
+/**
+ * A finite number, or NaN — the chart's own coercion for *data* values, which
+ * is a different job from the `num()` declaration helper it now imports.
+ * Renamed from `num` when this component adopted the vocabulary, because the
+ * two would otherwise shadow each other.
+ */
+const finiteOrNaN = (v) => {
   const n = Number(v);
   return Number.isFinite(n) ? n : NaN;
 };
@@ -40,7 +46,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     stacked: flag(false),
     hideLegend: flag(false, { attribute: 'hide-legend' }),
     hideAxis: flag(false, { attribute: 'hide-axis' }),
-    height: { type: Number },
+    height: num({ default: 260, min: 1, clamp: 'toRange' }),
     valueFormat: oneOf(['number', 'percent', 'currency'], { attribute: 'value-format', reflect: false }),
     currency: { type: String },
     _width: { state: true },
@@ -235,7 +241,6 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     super();
     this.series = [];
     this.labels = [];
-    this.height = 260;
     this.currency = 'USD';
     this._width = 0;
     this._hover = null;
@@ -320,7 +325,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     const other = {
       label: `Other (${rest.length} series)`,
       data: Array.from({ length: len }, (_, i) =>
-        rest.reduce((a, s) => a + (num(s.data[i]) || 0), 0),
+        rest.reduce((a, s) => a + (finiteOrNaN(s.data[i]) || 0), 0),
       ),
     };
     return [...keep, other];
@@ -334,14 +339,14 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     if (src.length === 1) {
       segs = src[0].data.map((v, i) => ({
         label: this._labelAt(i),
-        value: Math.max(0, num(v) || 0),
+        value: Math.max(0, finiteOrNaN(v) || 0),
         seriesIndex: 0,
         index: i,
       }));
     } else {
       segs = src.map((s, i) => ({
         label: s.label ?? `Series ${i + 1}`,
-        value: (s.data || []).reduce((a, b) => a + Math.max(0, num(b) || 0), 0),
+        value: (s.data || []).reduce((a, b) => a + Math.max(0, finiteOrNaN(b) || 0), 0),
         seriesIndex: i,
         index: i,
       }));
@@ -465,7 +470,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
       let c = 0;
       let lastVisible = 0;
       for (let si = 0; si < list.length; si++) {
-        const v = Math.max(0, num(list[si].data[i]) || 0);
+        const v = Math.max(0, finiteOrNaN(list[si].data[i]) || 0);
         if (!v) continue;
         lastVisible = si;
         if (py >= geo.y(c + v) && py <= geo.y(c)) {
@@ -483,7 +488,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     } else {
       let best = Infinity;
       list.forEach((s, si) => {
-        const v = num(s.data[i]);
+        const v = finiteOrNaN(s.data[i]);
         if (!Number.isFinite(v)) return;
         const d = Math.abs(geo.y(v) - py);
         if (d < best) {
@@ -492,7 +497,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
         }
       });
     }
-    const value = num(list[k]?.data[i]);
+    const value = finiteOrNaN(list[k]?.data[i]);
     this._emit(k, i, Number.isFinite(value) ? value : null);
   }
 
@@ -521,13 +526,13 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
       lo = 0;
       for (let i = 0; i < n; i++) {
         let sum = 0;
-        for (const s of list) sum += Math.max(0, num(s.data[i]) || 0);
+        for (const s of list) sum += Math.max(0, finiteOrNaN(s.data[i]) || 0);
         hi = Math.max(hi, sum);
       }
     } else {
       for (const s of list) {
         for (let i = 0; i < n; i++) {
-          const v = num(s.data[i]);
+          const v = finiteOrNaN(s.data[i]);
           if (Number.isFinite(v)) {
             lo = Math.min(lo, v);
             hi = Math.max(hi, v);
@@ -595,7 +600,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
       marks = list.map((s, si) => {
         const color = `var(--chart-${si + 1})`;
         return svg`${Array.from({ length: n }, (_, i) => {
-          const v = num(s.data[i]);
+          const v = finiteOrNaN(s.data[i]);
           if (!Number.isFinite(v)) return nothing;
           const x = left + i * band + (band - gw) / 2 + si * (bw + 2);
           return svg`<path fill=${color} d=${this._barPath(x, bw, y(v), y(0))}></path>`;
@@ -607,7 +612,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
         const x0 = left + i * band + (band - bw) / 2;
         const segs = [];
         for (let si = 0; si < list.length; si++) {
-          const v = Math.max(0, num(list[si].data[i]) || 0);
+          const v = Math.max(0, finiteOrNaN(list[si].data[i]) || 0);
           if (v > 0) segs.push({ si, v });
         }
         let c = 0;
@@ -631,7 +636,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
         const color = `var(--chart-${si + 1})`;
         const pts = [];
         for (let i = 0; i < n; i++) {
-          const v = num(s.data[i]);
+          const v = finiteOrNaN(s.data[i]);
           if (Number.isFinite(v)) pts.push([xc(i), y(v)]);
         }
         if (!pts.length) return nothing;
@@ -652,7 +657,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
       hoverLayer = svg`
         <line class="crosshair" x1=${hx} x2=${hx} y1=${top} y2=${R(top + plotH)}></line>
         ${list.map((s, si) => {
-          const v = num(s.data[hv.index]);
+          const v = finiteOrNaN(s.data[hv.index]);
           if (!Number.isFinite(v)) return nothing;
           return svg`<circle class="dot" cx=${hx} cy=${R(y(v))} r="3.5" fill=${`var(--chart-${si + 1})`}></circle>`;
         })}`;
@@ -695,7 +700,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
       tableHead: ['Category', ...list.map((s, i) => s.label ?? `Series ${i + 1}`)],
       tableRows: Array.from({ length: n }, (_, i) => [
         this._labelAt(i),
-        ...list.map((s) => this._fmtValue(num(s.data[i]))),
+        ...list.map((s) => this._fmtValue(finiteOrNaN(s.data[i]))),
       ]),
     };
   }
@@ -776,7 +781,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
           <div class="tooltip-row">
             <span class="chip" style=${`background: var(--chart-${si + 1})`}></span>
             <span class="tooltip-label">${s.label ?? `Series ${si + 1}`}</span>
-            <span class="tooltip-value">${this._fmtValue(num(s.data[hv.index]))}</span>
+            <span class="tooltip-value">${this._fmtValue(finiteOrNaN(s.data[hv.index]))}</span>
           </div>
         `,
         )}

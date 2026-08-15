@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = $bindable(''), name = '', label = '', disabled = false, penColor = '', penWidth = 2, ...rest }: Props = $props();
+  let { value = $bindable(''), name = '', label = '', disabled = false, penColor = '', penWidth, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

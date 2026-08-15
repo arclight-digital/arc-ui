@@ -1,7 +1,7 @@
 import { LitElement, html, css, svg } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 /**
  * Rotary knob input for continuous parameters — the control a slider can't be when the panel
@@ -37,9 +37,9 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
     value: { type: Number, reflect: true },
-    min: { type: Number },
-    max: { type: Number },
-    step: { type: Number },
+    min: num({ default: 0 }),
+    max: num({ default: 100 }),
+    step: num({ default: 1, min: 0, clamp: 'toRange' }),
     name: { type: String, reflect: true },
     // NOT flag(): a form-associated custom element whose `disabled` content
     // attribute is merely *present* is "actually disabled" per the HTML spec,
@@ -189,9 +189,6 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   constructor() {
     super();
     this.value = 0;
-    this.min = 0;
-    this.max = 100;
-    this.step = 1;
     this.name = '';
     this.disabled = false;
     this.label = '';

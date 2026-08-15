@@ -28,7 +28,6 @@ const props = withDefaults(defineProps<{
   name: '',
   min: '',
   max: '',
-  months: 2,
   presets: () => ([]),
   placeholder: 'Select date range',
   disabled: false,

@@ -2,7 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import './icon-button.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
 
 /**
  * Canvas signature capture that participates in forms. A bordered drawing surface with a muted
@@ -50,7 +50,7 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
     // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     penColor: { type: String, attribute: 'pen-color' },
-    penWidth: { type: Number, attribute: 'pen-width' },
+    penWidth: num({ default: 2, min: 0.1, clamp: 'toRange', attribute: 'pen-width' }),
     /** @internal */ _hasInk: { state: true },
   };
 
@@ -159,7 +159,6 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
     this.label = '';
     this.disabled = false;
     this.penColor = '';
-    this.penWidth = 2;
     this._hasInk = false;
     // Canvas state lives here, never touched before firstUpdated — the
     // component must construct and render in Node, where no 2D context exists.

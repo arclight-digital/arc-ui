@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 
 /**
  * A one-time password input that renders a row of individual character boxes with auto-advance,
@@ -24,7 +24,7 @@ export class ArcOtpInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
   static properties = {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
-    length: { type: Number, reflect: true },
+    length: int({ default: 6, min: 1, clamp: 'toRange', reflect: true }),
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
     // NOT flag(): a form-associated custom element whose `disabled` content
@@ -98,7 +98,6 @@ export class ArcOtpInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
 
   constructor() {
     super();
-    this.length = 6;
     this.value = '';
     this.name = '';
     this.disabled = false;

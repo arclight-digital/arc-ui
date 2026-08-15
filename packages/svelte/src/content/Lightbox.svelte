@@ -34,7 +34,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { images, index = $bindable(0), open, ...rest }: Props = $props();
+  let { images, index = $bindable(), open, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise

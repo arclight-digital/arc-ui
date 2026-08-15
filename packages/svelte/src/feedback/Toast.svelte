@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position, duration = 4000, maxVisible = 3, dedupe, queueLimit = 20, ...rest }: Props = $props();
+  let { position, duration = 4000, maxVisible = 3, dedupe, queueLimit, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

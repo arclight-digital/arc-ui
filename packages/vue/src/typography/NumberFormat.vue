@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
   decimals?: number;
   notation?: 'standard' | 'compact';
 }>(), {
-  value: 0,
   locale: 'en-US',
   currency: 'USD',
 });

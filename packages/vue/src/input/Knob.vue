@@ -17,9 +17,6 @@ const props = withDefaults(defineProps<{
   format?: Function;
 }>(), {
   value: 0,
-  min: 0,
-  max: 100,
-  step: 1,
   name: '',
   disabled: false,
   label: '',

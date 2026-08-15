@@ -37,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = 0, type, locale = 'en-US', currency = 'USD', decimals, notation, ...rest }: Props = $props();
+  let { value, type, locale = 'en-US', currency = 'USD', decimals, notation, ...rest }: Props = $props();
 </script>
 
 <arc-number-format {value} {type} {locale} {currency} {decimals} {notation} {...rest}>

@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 
 /**
  * One star outline. Filled and empty are the same geometry — the `fill`
@@ -32,8 +32,8 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
   static properties = {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
-    value: { type: Number, reflect: true },
-    max: { type: Number, reflect: true },
+    value: int({ default: 0, min: 0, max: 'max', clamp: 'toRange', reflect: true }),
+    max: int({ default: 5, min: 1, clamp: 'toRange', reflect: true }),
     name: { type: String, reflect: true },
     label: { type: String },
     // NOT flag(): a form-associated custom element whose `disabled` content
@@ -118,8 +118,6 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
 
   constructor() {
     super();
-    this.value = 0;
-    this.max = 5;
     this.name = '';
     this.label = '';
     this.disabled = false;

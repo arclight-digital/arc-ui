@@ -2,7 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
 
 /**
  * Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery
@@ -38,7 +38,7 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     // Attribute is off: an array can't survive a round trip through one, and
     // leaving it on invites `images="[...]"` that silently sets a string.
     images: { attribute: false },
-    index: { type: Number },
+    index: int({ default: 0, min: 0, max: '_lastIndex', clamp: 'toRange' }),
     open: flag(false),
     _zoomed: { state: true },
     _loaded: { state: true },
@@ -169,7 +169,6 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   constructor() {
     super();
     this.images = [];
-    this.index = 0;
     this._zoomed = false;
     this._loaded = false;
     this._panX = 0;
@@ -186,11 +185,21 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     );
   }
 
-  /** The entry `index` resolves to, clamped into range. */
+  /** Upper bound for `index`; undefined while there is nothing to index. */
+  get _lastIndex() {
+    const total = this._normalized().length;
+    return total ? total - 1 : undefined;
+  }
+
+  /** The entry `index` resolves to. */
   _current() {
     const images = this._normalized();
     if (images.length === 0) return null;
-    return images[Math.max(0, Math.min(this.index, images.length - 1))];
+    // No clamp here any more: `index` is declared int({ max: '_lastIndex' }),
+    // so the property and the picture cannot disagree. They used to — the
+    // render clamped its own copy while `el.index` kept whatever it was handed
+    // (V4-PLAN 2.3, finding #70's shape).
+    return images[this.index];
   }
 
   /** Opens the viewer, optionally jumping to a specific image first. */

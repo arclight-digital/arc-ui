@@ -14,8 +14,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   data: '',
   color: '',
-  width: 120,
-  height: 32,
 });
 </script>
 

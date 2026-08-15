@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { observeResize } from '../shared/subscriptions.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 /**
  * Continuously scrolling content strip with configurable speed, direction, gap, and pause-on-hover
@@ -20,7 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  */
 export class ArcMarquee extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    speed: { type: Number },
+    speed: num({ default: 40, min: 0, clamp: 'toRange' }),
     direction: oneOf(['left', 'right']),
     pauseOnHover: flag(true, { attribute: 'pause-on-hover', negative: 'no-pause-on-hover' }),
     gap: { type: String },
@@ -83,7 +83,6 @@ export class ArcMarquee extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.speed = 40;
     this.gap = 'var(--space-xl)';
     this._animDuration = '10s';
     // Was set up in firstUpdated and torn down in disconnectedCallback, which do

@@ -30,13 +30,13 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
     timezone: { type: String },
     label: { type: String },
     showSeconds: flag(false, { attribute: 'show-seconds' }),
-    // NOT flag(): a documented tri-state, where *unset* is a third meaning
-    // rather than a synonym for false — true forces 12-hour, false forces
-    // 24-hour, and undefined lets the viewer's locale decide, which is what
-    // `_format()` reads on the line `if (typeof this.hour12 === 'boolean')`.
-    // flag() collapses a non-boolean onto the declared default, which would
-    // delete that third state and make every clock 24-hour everywhere.
-    hour12: { type: Boolean },
+    // A documented tri-state: true forces 12-hour, false forces 24-hour, and
+    // *unset* lets the viewer's locale decide. `nullable` is what lets the
+    // vocabulary say that — it was this prop's exemption from
+    // boolean-defaults.js until V4-PLAN 2.3 found thirteen more of the same
+    // shape and gave them all a term. Not reflected: a nullable flag has no
+    // attribute spelling that distinguishes false from unset.
+    hour12: flag(false, { nullable: true, reflect: false }),
     showTimezone: flag(false, { attribute: 'show-timezone' }),
     _now: { state: true },
   };
@@ -149,10 +149,10 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
+    // Nullable declarations own their own "unset" default — see props.js.
     this.timezone = '';
     this.label = '';
     // Left undefined so the locale decides; a boolean (either way) forces it.
-    this.hour12 = undefined;
     // Null until the first client-side tick. The server render (constructor,
     // willUpdate, render only — no connectedCallback) therefore shows the
     // static placeholder face and never touches Date or Intl.

@@ -31,10 +31,10 @@ export declare class ArcActivityHeatmap extends LitElement {
   weeks: number;
   /** Which day starts each column: "sunday" (default, the GitHub convention) or "monday". An unrecognised value falls back to sunday. @default 'sunday' */
   weekStart: 'sunday' | 'monday';
-  /** When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4. @default null */
-  max: number;
   /** Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend="false"`. @default true */
   legend: boolean;
+  /** When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4. @default 0 */
+  max: number;
 }
 
 /**
@@ -71,8 +71,6 @@ export declare class ArcAnchorNav extends LitElement {
 export declare class ArcAnimatedNumber extends LitElement {
   /** Target number to animate to @default 0 */
   value: number;
-  /** Animation duration in milliseconds @default 1000 */
-  duration: number;
   /** String prepended before the number (e.g., "$") @default '' */
   prefix: string;
   /** String appended after the number (e.g., "%") @default '' */
@@ -81,6 +79,8 @@ export declare class ArcAnimatedNumber extends LitElement {
   decimals: number;
   /** BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks). @default 'en-US' */
   locale: string;
+  /** Animation duration in milliseconds @default 1000 */
+  duration: number;
   /** Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %. @default 'number' */
   format: 'number' | 'currency' | 'percent';
 }
@@ -354,8 +354,6 @@ export declare class ArcChart extends LitElement {
   series: Array<{label:string,data:number[]}>;
   /** Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width. @default [] */
   labels: string[];
-  /** Chart height in pixels. Width is fluid and tracked with a ResizeObserver. @default 260 */
-  height: number;
   /** ISO 4217 currency code used when value-format="currency". @default 'USD' */
   currency: string;
   /** The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given). @default 'line' */
@@ -366,6 +364,8 @@ export declare class ArcChart extends LitElement {
   hideLegend: boolean;
   /** Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip. @default false */
   hideAxis: boolean;
+  /** Chart height in pixels. Width is fluid and tracked with a ResizeObserver. @default 260 */
+  height: number;
   /** How values are formatted in tooltips, the axis, and the accessible data table, via Intl.NumberFormat. Percent expects fractional data (0.24 → 24%). Axis numbers are abbreviated (1.2k, 3.4M). @default 'number' */
   valueFormat: 'number' | 'percent' | 'currency';
 }
@@ -425,12 +425,12 @@ export declare class ArcClock extends LitElement {
   timezone: string;
   /** Optional caption rendered under the face. @default '' */
   label: string;
-  /** Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display. @default undefined */
-  hour12: boolean;
   /** Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands. @default 'digital' */
   variant: 'digital' | 'analog';
   /** Show seconds on the digital face, or the second hand on the analog face. @default false */
   showSeconds: boolean;
+  /** Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display. @default false */
+  hour12: boolean;
   /** Render the timezone abbreviation, muted, beside the digital time. @default false */
   showTimezone: boolean;
 }
@@ -760,14 +760,14 @@ export declare class ArcDataGrid extends LitElement {
   rows: Array<Record<string, any>>;
   /** Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid. @default [] */
   sort: Array<{key:string,direction:'asc'|'desc'}>;
-  /** Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations. @default 40 */
-  rowHeight: number;
   /** Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting. @default false */
   manualSort: boolean;
   /** Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices. @default false */
   selectable: boolean;
   /** Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count. @default false */
   virtual: boolean;
+  /** Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations. @default 40 */
+  rowHeight: number;
 }
 
 /**
@@ -779,8 +779,6 @@ export declare class ArcDataTable extends LitElement {
   rows: Array<Record<string, any>>;
   /** The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header. @default '' */
   sortColumn: string;
-  /** Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations. @default 40 */
-  rowHeight: number;
   /** Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction. @default false */
   sortable: boolean;
   /** Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles. @default false */
@@ -789,6 +787,8 @@ export declare class ArcDataTable extends LitElement {
   sortDirection: 'asc' | 'desc';
   /** Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count. @default false */
   virtual: boolean;
+  /** Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations. @default 40 */
+  rowHeight: number;
 }
 
 /**
@@ -856,8 +856,6 @@ export declare class ArcDateRangePicker extends LitElement {
   min: string;
   /** Maximum selectable date as an ISO string. Later days are dimmed and non-interactive. @default '' */
   max: string;
-  /** Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow. @default 2 */
-  months: number;
   /** Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty. @default [] */
   presets: Array<{label:string,days:number}>;
   /** Placeholder text shown in the input when no range is selected. @default 'Select date range' */
@@ -866,6 +864,8 @@ export declare class ArcDateRangePicker extends LitElement {
   disabled: boolean;
   /** Label text rendered above the input in uppercase accent font styling. @default '' */
   label: string;
+  /** Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow. @default 2 */
+  months: number;
   /** Marks the control invalid (valueMissing) until a complete range is selected. @default false */
   required: boolean;
   /** Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`. @default false */
@@ -1047,10 +1047,10 @@ export declare class ArcFieldset extends LitElement {
 export declare class ArcFileUpload extends LitElement {
   /** Comma-separated list of accepted file types, passed directly to the native file input accept attribute. Examples: "image/*", ".pdf,.docx", "audio/mp3". @default '' */
   accept: string;
-  /** Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit. @default 0 */
-  maxSize: number;
   /** When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it. @default false */
   multiple: boolean;
+  /** Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit. @default 0 */
+  maxSize: number;
   /** Disables the dropzone, preventing drag-and-drop and click interactions. Reduces opacity to 0.4. @default false */
   disabled: boolean;
 }
@@ -1103,22 +1103,22 @@ export declare class ArcForm extends LitElement {
  * `<arc-gauge>`
  */
 export declare class ArcGauge extends LitElement {
-  /** Minimum value representing the empty end of the arc. @default 0 */
-  min: number;
-  /** Maximum value representing the full end of the arc. @default 100 */
-  max: number;
-  /** Threshold below which the value is considered low. Used for color zone calculation. @default undefined */
-  low: number;
-  /** Threshold above which the value is considered high. Used for color zone calculation. @default undefined */
-  high: number;
-  /** The optimal value. Determines which end of the range is "good" for color zone logic. @default undefined */
-  optimum: number;
   /** Label text displayed beneath the value and used as the accessible name. @default '' */
   label: string;
   /** Unit suffix rendered after the value (e.g. "%", "ms", "GB"). @default '' */
   unit: string;
   /** Current gauge value. Clamped between `min` and `max`. Reflected as an attribute. @default 0 */
   value: number;
+  /** Minimum value representing the empty end of the arc. @default 0 */
+  min: number;
+  /** Maximum value representing the full end of the arc. @default 100 */
+  max: number;
+  /** Threshold below which the value is considered low. Used for color zone calculation. @default 0 */
+  low: number;
+  /** Threshold above which the value is considered high. Used for color zone calculation. @default 0 */
+  high: number;
+  /** The optimal value. Determines which end of the range is "good" for color zone logic. @default 0 */
+  optimum: number;
   /** Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle. @default 'full' */
   variant: 'full' | 'half';
   /** Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property. @default true */
@@ -1486,12 +1486,6 @@ export declare class ArcKnob extends LitElement {
   DETENT_WINDOW: number;
   /** Current knob value. Reflected as an attribute and updated on user interaction. @default 0 */
   value: number;
-  /** Minimum allowed value at the start of the arc sweep. @default 0 */
-  min: number;
-  /** Maximum allowed value at the end of the arc sweep. @default 100 */
-  max: number;
-  /** Increment granularity. The value snaps to multiples of this number. @default 1 */
-  step: number;
   /** @default '' */
   name: string;
   /** Disables interaction, reducing opacity and blocking pointer events. @default false */
@@ -1502,6 +1496,12 @@ export declare class ArcKnob extends LitElement {
   detents: number[] | string;
   /** `(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number. @default undefined */
   format: Function;
+  /** Minimum allowed value at the start of the arc sweep. @default 0 */
+  min: number;
+  /** Maximum allowed value at the end of the arc sweep. @default 100 */
+  max: number;
+  /** Increment granularity. The value snaps to multiples of this number. @default 1 */
+  step: number;
   /** Prevents dragging, wheel, and key changes while the dial stays focusable and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the dial. @default 'md' */
@@ -1545,20 +1545,20 @@ export declare class ArcLabel extends LitElement {
  * `<arc-level-meter>`
  */
 export declare class ArcLevelMeter extends LitElement {
-  /** Value at the empty end of the meter. Defaults to 0. @default 0 */
-  min: number;
-  /** Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales. @default 1 */
-  max: number;
-  /** Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level. @default undefined */
-  peak: number;
-  /** Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar. @default 20 */
-  segments: number;
   /** Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like "Master left" rather than "Level". @default '' */
   label: string;
   /** Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min="-60" max="0"` it is a dB reading. Values outside the range are clamped. @default 0 */
   value: number;
+  /** Value at the empty end of the meter. Defaults to 0. @default 0 */
+  min: number;
+  /** Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales. @default 1 */
+  max: number;
+  /** Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level. @default 0 */
+  peak: number;
   /** Meter direction. Vertical (the default) fills bottom-up like a channel strip; horizontal fills from the inline start. Unknown values fall back to vertical. @default 'vertical' */
   orientation: 'vertical' | 'horizontal';
+  /** Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar. @default 20 */
+  segments: number;
   /** Fraction of the range (0..1) where the warning zone begins, regardless of units. Defaults to 0.75. @default 0.75 */
   warn: number;
   /** Fraction of the range (0..1) where the clip (error) zone begins. Defaults to 0.9. @default 0.9 */
@@ -1652,10 +1652,10 @@ export declare class ArcMarkdown extends LitElement {
  * `<arc-marquee>`
  */
 export declare class ArcMarquee extends LitElement {
-  /** Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value. @default 40 */
-  speed: number;
   /** CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property. @default 'var(--space-xl)' */
   gap: string;
+  /** Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value. @default 40 */
+  speed: number;
   /** Scroll direction. `left` scrolls content from right to left (default), `right` reverses the direction. @default 'left' */
   direction: 'left' | 'right';
   /** When true, the animation pauses while the cursor hovers over the marquee. @default true */
@@ -1767,20 +1767,20 @@ export declare class ArcMessage extends LitElement {
  * `<arc-meter>`
  */
 export declare class ArcMeter extends LitElement {
-  /** Minimum value representing the left edge (empty) of the meter. @default 0 */
-  min: number;
-  /** Maximum value representing the right edge (full) of the meter. @default 100 */
-  max: number;
-  /** Threshold below which the value is considered low. Used for color zone calculation. @default undefined */
-  low: number;
-  /** Threshold above which the value is considered high. Used for color zone calculation. @default undefined */
-  high: number;
-  /** The optimal value. Determines which end of the range is "good" for color zone logic. @default undefined */
-  optimum: number;
   /** Label text displayed in the header row alongside the current percentage. @default '' */
   label: string;
   /** Current meter value. Clamped between `min` and `max`. Reflected as an attribute. @default 0 */
   value: number;
+  /** Minimum value representing the left edge (empty) of the meter. @default 0 */
+  min: number;
+  /** Maximum value representing the right edge (full) of the meter. @default 100 */
+  max: number;
+  /** Threshold below which the value is considered low. Used for color zone calculation. @default 0 */
+  low: number;
+  /** Threshold above which the value is considered high. Used for color zone calculation. @default 0 */
+  high: number;
+  /** The optimal value. Determines which end of the range is "good" for color zone logic. @default 0 */
+  optimum: number;
 }
 
 /**
@@ -1878,16 +1878,16 @@ export declare class ArcNotificationPanel extends LitElement {
  * `<arc-number-format>`
  */
 export declare class ArcNumberFormat extends LitElement {
-  /** The number to format @default 0 */
-  value: number;
   /** BCP 47 locale tag for locale-aware formatting @default 'en-US' */
   locale: string;
   /** ISO 4217 currency code, used when type is "currency" @default 'USD' */
   currency: string;
-  /** Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent) @default undefined */
-  decimals: number;
+  /** The number to format @default 0 */
+  value: number;
   /** Formatting style to apply @default 'number' */
   type: 'number' | 'currency' | 'percent' | 'compact';
+  /** Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent. @default 0 */
+  decimals: number;
   /** Number notation — compact gives "12.3K", "1.2M" @default 'standard' */
   notation: 'standard' | 'compact';
 }
@@ -1899,10 +1899,6 @@ export declare class ArcNumberFormat extends LitElement {
 export declare class ArcNumberInput extends LitElement {
   /** Current numeric value. Reflected as an attribute and updated on user interaction. @default 0 */
   value: number;
-  /** Minimum allowed value. The decrement button is disabled when the value reaches this limit. @default undefined */
-  min: number;
-  /** Maximum allowed value. The increment button is disabled when the value reaches this limit. @default undefined */
-  max: number;
   /** Increment and decrement step size. Arrow keys use this value, Shift+Arrow uses 10x this value. @default 1 */
   step: number;
   /** Label text displayed above the control in uppercase accent font. @default '' */
@@ -1911,6 +1907,10 @@ export declare class ArcNumberInput extends LitElement {
   name: string;
   /** Disables interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
+  /** Minimum allowed value. The decrement button is disabled when the value reaches this limit. @default 0 */
+  min: number;
+  /** Maximum allowed value. The increment button is disabled when the value reaches this limit. @default 0 */
+  max: number;
   /** Prevents value changes from typing, stepper buttons, and arrow keys while keeping the field focusable and its value submitted. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the field padding. @default 'md' */
@@ -1947,14 +1947,14 @@ export declare class ArcOption extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcOtpInput extends LitElement {
-  /** Number of individual character boxes to render. Reflected as an attribute. @default 6 */
-  length: number;
   /** The concatenated value of all boxes. Reflected as an attribute and updated on every input. @default '' */
   value: string;
   /** @default '' */
   name: string;
   /** Disables all input boxes, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
+  /** Number of individual character boxes to render. Reflected as an attribute. @default 6 */
+  length: number;
   /** Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits. @default false */
   readonly: boolean;
   /** Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character. @default 'number' */
@@ -2069,8 +2069,6 @@ export declare class ArcPasswordInput extends LitElement {
  * Events: arc-input, arc-change, arc-complete
  */
 export declare class ArcPinInput extends LitElement {
-  /** Number of input boxes to render. Determines the expected code length. @default 4 */
-  length: number;
   /** Current combined value across all boxes. Reflected as an attribute. @default '' */
   value: string;
   /** @default '' */
@@ -2081,6 +2079,8 @@ export declare class ArcPinInput extends LitElement {
   separator: number;
   /** Label text displayed above the input boxes in uppercase accent font. @default '' */
   label: string;
+  /** Number of input boxes to render. Determines the expected code length. @default 4 */
+  length: number;
   /** Character validation mode. `number` allows digits only, `alphanumeric` allows letters and digits, `text` allows any character. @default 'number' */
   type: 'number' | 'alphanumeric' | 'text';
   /** When true, obscures entered characters with dots for sensitive codes. @default false */
@@ -2160,10 +2160,10 @@ export declare class ArcQrCode extends LitElement {
   size: number;
   /** Accessible description announced to screen readers (falls back to "QR code"). Describe the purpose, not the encoded value — the value is never exposed by default since it may be a secret. @default '' */
   label: string;
-  /** Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds. @default 2 */
-  quietZone: number;
   /** Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes. @default 'M' */
   level: 'L' | 'M' | 'Q' | 'H';
+  /** Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds. @default 2 */
+  quietZone: number;
   /** Renders the code on a white rounded card with forced dark modules, guaranteeing dark-on-light scanability in both themes. Overrides --qr-fg/--qr-bg. Recommended for scan-critical codes. @default false */
   contrast: boolean;
 }
@@ -2227,22 +2227,22 @@ export declare class ArcRail extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcRangeSlider extends LitElement {
-  /** Minimum allowed value at the left edge of the track. @default 0 */
-  min: number;
   /** Maximum allowed value at the right edge of the track. @default 100 */
   max: number;
-  /** Increment granularity. Values snap to multiples of this number. @default 1 */
-  step: number;
-  /** Lower bound value of the selected range. Reflected as an attribute. @default 0 */
-  low: number;
-  /** Upper bound value of the selected range. Reflected as an attribute. @default 100 */
-  high: number;
   /** @default '' */
   name: string;
   /** Disables interaction, reducing opacity and blocking pointer events. @default false */
   disabled: boolean;
   /** Label text displayed above the slider with the range values shown on the right. @default '' */
   label: string;
+  /** Minimum allowed value at the left edge of the track. @default 0 */
+  min: number;
+  /** Increment granularity. Values snap to multiples of this number. @default 1 */
+  step: number;
+  /** Lower bound value of the selected range. Reflected as an attribute. @default 0 */
+  low: number;
+  /** Upper bound value of the selected range. Reflected as an attribute. @default 100 */
+  high: number;
   /** Whether to display the numeric "low – high" readout in the header. @default true */
   showValues: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the track and thumbs. @default 'md' */
@@ -2267,16 +2267,16 @@ export declare class ArcRangeSlider extends LitElement {
  * Events: arc-change
  */
 export declare class ArcRating extends LitElement {
-  /** Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as "No rating", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction. @default 0 */
-  value: number;
-  /** Maximum number of stars to render. Determines the upper bound of the rating scale. @default 5 */
-  max: number;
   /** @default '' */
   name: string;
   /** Accessible name for the control. Several ratings on one page are indistinguishable without it. Defaults to "Rating". @default '' */
   label: string;
   /** Disables interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
+  /** Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as "No rating", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction. @default 0 */
+  value: number;
+  /** Maximum number of stars to render. Determines the upper bound of the rating scale. @default 5 */
+  max: number;
   /** Prevents interaction while maintaining full visual appearance. Useful for displaying existing ratings. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the star glyphs. @default 'md' */
@@ -2299,14 +2299,14 @@ export declare class ArcRating extends LitElement {
  * Events: arc-resize
  */
 export declare class ArcResizable extends LitElement {
-  /** Minimum allowed size in pixels. The panel cannot be dragged smaller than this value. @default 100 */
-  minSize: number;
-  /** Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit. @default Infinity */
-  maxSize: number;
   /** Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property. @default 300 */
   size: number;
   /** Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height. @default 'horizontal' */
   direction: 'horizontal' | 'vertical';
+  /** Minimum allowed size in pixels. The panel cannot be dragged smaller than this value. @default 100 */
+  minSize: number;
+  /** Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit. @default 0 */
+  maxSize: number;
 }
 
 /**
@@ -2567,12 +2567,12 @@ export declare class ArcSignaturePad extends LitElement {
   disabled: boolean;
   /** Pen color as any CSS color, including a `var()` expression, resolved against the canvas at stroke time. Attribute: `pen-color`. Defaults to the resolved value of `--text-primary`. @default '' */
   penColor: string;
-  /** Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2. @default 2 */
-  penWidth: number;
   /** Prevents drawing and hides the clear button while the pad stays focusable and the value still submits. @default false */
   readonly: boolean;
   /** When true and the pad is blank, the control is invalid with `valueMissing`. @default false */
   required: boolean;
+  /** Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2. @default 2 */
+  penWidth: number;
   /** @default true */
   formAssociated: boolean;
   /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
@@ -2592,10 +2592,10 @@ export declare class ArcSkeleton extends LitElement {
   width: string;
   /** CSS height value; circle auto-matches width when omitted @default '' */
   height: string;
-  /** Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists. @default 1 */
-  count: number;
   /** Shape of the skeleton: text for lines, circle for avatars, rect for blocks @default 'text' */
   variant: 'text' | 'circle' | 'rect';
+  /** Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists. @default 1 */
+  count: number;
 }
 
 /**
@@ -2647,10 +2647,10 @@ export declare class ArcSlider extends LitElement {
  * Events: arc-action, arc-close
  */
 export declare class ArcSnackbar extends LitElement {
-  /** Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed. @default 5000 */
-  duration: number;
   /** Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars. @default 'bottom-center' */
   position: 'bottom-center' | 'bottom-left' | 'bottom-right';
+  /** Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed. @default 5000 */
+  duration: number;
 }
 
 /**
@@ -2670,12 +2670,12 @@ export declare class ArcSparkline extends LitElement {
   data: string;
   /** CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set. @default '' */
   color: string;
+  /** Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles. @default 'line' */
+  type: 'line' | 'bar';
   /** SVG viewport width in pixels. @default 120 */
   width: number;
   /** SVG viewport height in pixels. @default 32 */
   height: number;
-  /** Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles. @default 'line' */
-  type: 'line' | 'bar';
   /** When true and type is "line", fills the area beneath the curve with a semi-transparent accent color. @default false */
   fill: boolean;
 }
@@ -2714,16 +2714,16 @@ export declare class ArcSplitPane extends LitElement {
   STEP: number;
   /** @default 0.2 */
   STEP_LARGE: number;
-  /** Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing. @default 0.15 */
-  minRatio: number;
-  /** Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing. @default 0.85 */
-  maxRatio: number;
   /** Accessible name for the divider, applied as `aria-label`. Defaults to "Resize panes". @default '' */
   label: string;
   /** Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider. @default 'horizontal' */
   orientation: 'horizontal' | 'vertical';
   /** The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode). @default 0.5 */
   ratio: number;
+  /** Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing. @default 0.15 */
+  minRatio: number;
+  /** Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing. @default 0.85 */
+  maxRatio: number;
 }
 
 /**
@@ -2918,8 +2918,6 @@ export declare class ArcTagInput extends LitElement {
   suggestions: string[];
   /** Character that commits the current text as a tag when typed; pasted text is split on it. @default ',' */
   delimiter: string;
-  /** Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a "-- max reached" hint. @default 0 */
-  maxTags: number;
   /** Visible label rendered above the field in a small uppercase style. @default '' */
   label: string;
   /** Hint text shown inside the field when no tags exist and the input is empty. @default '' */
@@ -2930,6 +2928,8 @@ export declare class ArcTagInput extends LitElement {
   disabled: boolean;
   /** Error message shown below the field; also applies error styling to the border. @default '' */
   error: string;
+  /** Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a "-- max reached" hint. @default 0 */
+  maxTags: number;
   /** When false, only values from `suggestions` can be added; free text is rejected. @default true */
   allowCustom: boolean;
   /** Prevents adding or removing tags while the field stays focusable and the tags still submit with the form. @default false */
@@ -2993,12 +2993,12 @@ export declare class ArcTextarea extends LitElement {
   label: string;
   /** The number of visible text rows that set the initial height of the textarea. Does not limit content length -- the user can scroll or resize beyond this height. @default 4 */
   rows: number;
-  /** Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached. @default 0 */
-  maxlength: number;
   /** Prevents user interaction and applies a muted visual treatment at 40% opacity. The field value is excluded from form submission when disabled. @default false */
   disabled: boolean;
   /** Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role="alert"` for screen reader announcement. @default '' */
   error: string;
+  /** Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached. @default 0 */
+  maxlength: number;
   /** Controls whether and in which direction the user can drag to resize the textarea. Defaults to vertical-only resizing. @default 'vertical' */
   resize: 'none' | 'vertical' | 'horizontal' | 'both';
   /** Allows the user to select and copy text but prevents editing. The field has a subtle background change to indicate its read-only state. @default false */
@@ -3118,12 +3118,12 @@ export declare class ArcToast extends LitElement {
   duration: number;
   /** Maximum toasts on screen at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss. Set to 0 for no cap. @default 3 */
   maxVisible: number;
-  /** Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count. @default 20 */
-  queueLimit: number;
   /** Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars. @default 'top-right' */
   position: 'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center';
   /** When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a "(×N)" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable. @default true */
   dedupe: boolean;
+  /** Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count. @default 20 */
+  queueLimit: number;
 }
 
 /**
@@ -3415,12 +3415,12 @@ export declare class ArcVirtualList extends LitElement {
 export declare class ArcWaveform extends LitElement {
   /** Peak amplitudes as a number array, each value 0 to 1. Property only (no attribute) — set it from script or a framework binding. Values outside the range are clamped. An empty or missing array renders an empty track. @default [] */
   peaks: Array;
-  /** Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages. @default null */
-  duration: number;
   /** Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise. @default '' */
   label: string;
   /** Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute. @default 0 */
   position: number;
+  /** Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages. @default 0 */
+  duration: number;
   /** Enables scrubbing. The waveform becomes a focusable slider: click or drag to seek, arrow keys to nudge, Home/End to jump. Without it the waveform is a static image. @default false */
   interactive: boolean;
   /** Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope. @default 'bars' */

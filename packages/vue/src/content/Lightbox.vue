@@ -4,13 +4,11 @@ import '@arclux/arc-ui/lightbox';
 
 defineOptions({ name: 'Lightbox' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   images?: string;
   index?: number;
   open?: boolean;
-}>(), {
-  index: 0,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];

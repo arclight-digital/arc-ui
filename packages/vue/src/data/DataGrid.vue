@@ -16,7 +16,6 @@ const props = withDefaults(defineProps<{
   columns: () => ([]),
   rows: () => ([]),
   sort: () => ([]),
-  rowHeight: 40,
 });
 
 const emit = defineEmits<{

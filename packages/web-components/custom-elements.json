@@ -2787,9 +2787,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image.",
-              "attribute": "index"
+              "attribute": "index",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -2833,9 +2833,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image.",
-              "fieldName": "index"
+              "fieldName": "index",
+              "default": "0"
             },
             {
               "name": "open",
@@ -2904,17 +2904,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "speed",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "40",
-              "description": "Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.",
-              "attribute": "speed"
-            },
-            {
-              "kind": "field",
               "name": "gap",
               "privacy": "public",
               "type": {
@@ -2923,6 +2912,17 @@
               "default": "'var(--space-xl)'",
               "description": "CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property.",
               "attribute": "gap"
+            },
+            {
+              "kind": "field",
+              "name": "speed",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.",
+              "attribute": "speed",
+              "default": "40"
             },
             {
               "kind": "field",
@@ -2955,9 +2955,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "40",
               "description": "Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.",
-              "fieldName": "speed"
+              "fieldName": "speed",
+              "default": "40"
             },
             {
               "name": "direction",
@@ -3065,17 +3065,6 @@
             },
             {
               "kind": "field",
-              "name": "quietZone",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "2",
-              "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
-              "attribute": "quiet-zone"
-            },
-            {
-              "kind": "field",
               "name": "level",
               "privacy": "public",
               "type": {
@@ -3085,6 +3074,17 @@
               "attribute": "level",
               "default": "'M'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "quietZone",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
+              "attribute": "quietZone",
+              "default": "2"
             },
             {
               "kind": "field",
@@ -3137,13 +3137,13 @@
               "fieldName": "label"
             },
             {
-              "name": "quiet-zone",
+              "name": "quietZone",
               "type": {
                 "text": "number"
               },
-              "default": "2",
               "description": "Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.",
-              "fieldName": "quietZone"
+              "fieldName": "quietZone",
+              "default": "2"
             },
             {
               "name": "contrast",
@@ -3575,17 +3575,6 @@
             },
             {
               "kind": "field",
-              "name": "count",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "description": "Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.",
-              "attribute": "count"
-            },
-            {
-              "kind": "field",
               "name": "variant",
               "privacy": "public",
               "type": {
@@ -3595,6 +3584,17 @@
               "attribute": "variant",
               "default": "'text'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "count",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.",
+              "attribute": "count",
+              "default": "1"
             }
           ],
           "attributes": [
@@ -3630,9 +3630,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "1",
               "description": "Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.",
-              "fieldName": "count"
+              "fieldName": "count",
+              "default": "1"
             }
           ],
           "mixins": [
@@ -4393,17 +4393,6 @@
             },
             {
               "kind": "field",
-              "name": "max",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "null",
-              "description": "When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.",
-              "attribute": "max"
-            },
-            {
-              "kind": "field",
               "name": "legend",
               "privacy": "public",
               "type": {
@@ -4413,6 +4402,17 @@
               "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
               "attribute": "legend",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.",
+              "attribute": "max",
+              "default": "0"
             }
           ],
           "attributes": [
@@ -4448,9 +4448,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "null",
               "description": "When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.",
-              "fieldName": "max"
+              "fieldName": "max",
+              "default": "0"
             },
             {
               "name": "legend",
@@ -4516,17 +4516,6 @@
             },
             {
               "kind": "field",
-              "name": "duration",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "1000",
-              "description": "Animation duration in milliseconds",
-              "attribute": "duration"
-            },
-            {
-              "kind": "field",
               "name": "prefix",
               "privacy": "public",
               "type": {
@@ -4571,6 +4560,17 @@
             },
             {
               "kind": "field",
+              "name": "duration",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Animation duration in milliseconds",
+              "attribute": "duration",
+              "default": "1000"
+            },
+            {
+              "kind": "field",
               "name": "format",
               "privacy": "public",
               "type": {
@@ -4597,9 +4597,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "1000",
               "description": "Animation duration in milliseconds",
-              "fieldName": "duration"
+              "fieldName": "duration",
+              "default": "1000"
             },
             {
               "name": "format",
@@ -4830,17 +4830,6 @@
             },
             {
               "kind": "field",
-              "name": "height",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "260",
-              "description": "Chart height in pixels. Width is fluid and tracked with a ResizeObserver.",
-              "attribute": "height"
-            },
-            {
-              "kind": "field",
               "name": "currency",
               "privacy": "public",
               "type": {
@@ -4897,6 +4886,17 @@
               "attribute": "hideAxis",
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "height",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Chart height in pixels. Width is fluid and tracked with a ResizeObserver.",
+              "attribute": "height",
+              "default": "260"
             },
             {
               "kind": "field",
@@ -4979,9 +4979,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "260",
               "description": "Chart height in pixels. Width is fluid and tracked with a ResizeObserver.",
-              "fieldName": "height"
+              "fieldName": "height",
+              "default": "260"
             },
             {
               "name": "valueFormat",
@@ -5110,17 +5110,6 @@
             },
             {
               "kind": "field",
-              "name": "hour12",
-              "privacy": "public",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "undefined",
-              "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
-              "attribute": "hour12"
-            },
-            {
-              "kind": "field",
               "name": "variant",
               "privacy": "public",
               "type": {
@@ -5142,6 +5131,17 @@
               "attribute": "showSeconds",
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "hour12",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
+              "attribute": "hour12",
+              "default": "false"
             },
             {
               "kind": "field",
@@ -5198,9 +5198,9 @@
               "type": {
                 "text": "boolean"
               },
-              "default": "undefined",
               "description": "Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.",
-              "fieldName": "hour12"
+              "fieldName": "hour12",
+              "default": "false"
             },
             {
               "name": "showTimezone",
@@ -5630,17 +5630,6 @@
             },
             {
               "kind": "field",
-              "name": "rowHeight",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "40",
-              "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-              "attribute": "row-height"
-            },
-            {
-              "kind": "field",
               "name": "manualSort",
               "privacy": "public",
               "type": {
@@ -5673,6 +5662,17 @@
               "attribute": "virtual",
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "rowHeight",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
+              "attribute": "rowHeight",
+              "default": "40"
             }
           ],
           "events": [
@@ -5754,13 +5754,13 @@
               "default": "false"
             },
             {
-              "name": "row-height",
+              "name": "rowHeight",
               "type": {
                 "text": "number"
               },
-              "default": "40",
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-              "fieldName": "rowHeight"
+              "fieldName": "rowHeight",
+              "default": "40"
             }
           ],
           "mixins": [
@@ -5847,17 +5847,6 @@
             },
             {
               "kind": "field",
-              "name": "rowHeight",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "40",
-              "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-              "attribute": "row-height"
-            },
-            {
-              "kind": "field",
               "name": "sortable",
               "privacy": "public",
               "type": {
@@ -5903,6 +5892,17 @@
               "attribute": "virtual",
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "rowHeight",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
+              "attribute": "rowHeight",
+              "default": "40"
             }
           ],
           "events": [
@@ -5977,13 +5977,13 @@
               "default": "false"
             },
             {
-              "name": "row-height",
+              "name": "rowHeight",
               "type": {
                 "text": "number"
               },
-              "default": "40",
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-              "fieldName": "rowHeight"
+              "fieldName": "rowHeight",
+              "default": "40"
             }
           ],
           "mixins": [
@@ -6106,9 +6106,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "1",
               "description": "Number of grid columns for laying out items side by side.",
               "attribute": "columns",
+              "default": "1",
               "reflects": true
             },
             {
@@ -6130,9 +6130,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "1",
               "description": "Number of grid columns for laying out items side by side.",
-              "fieldName": "columns"
+              "fieldName": "columns",
+              "default": "1"
             },
             {
               "name": "dividers",
@@ -6535,61 +6535,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "min",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Minimum value representing the empty end of the arc.",
-              "attribute": "min"
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
-              "description": "Maximum value representing the full end of the arc.",
-              "attribute": "max"
-            },
-            {
-              "kind": "field",
-              "name": "low",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "Threshold below which the value is considered low. Used for color zone calculation.",
-              "attribute": "low"
-            },
-            {
-              "kind": "field",
-              "name": "high",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "Threshold above which the value is considered high. Used for color zone calculation.",
-              "attribute": "high"
-            },
-            {
-              "kind": "field",
-              "name": "optimum",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
-              "attribute": "optimum"
-            },
-            {
-              "kind": "field",
               "name": "label",
               "privacy": "public",
               "type": {
@@ -6621,6 +6566,61 @@
               "attribute": "value",
               "default": "0",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum value representing the empty end of the arc.",
+              "attribute": "min",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum value representing the full end of the arc.",
+              "attribute": "max",
+              "default": "100"
+            },
+            {
+              "kind": "field",
+              "name": "low",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Threshold below which the value is considered low. Used for color zone calculation.",
+              "attribute": "low",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "high",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Threshold above which the value is considered high. Used for color zone calculation.",
+              "attribute": "high",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "optimum",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
+              "attribute": "optimum",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -6662,45 +6662,45 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Minimum value representing the empty end of the arc.",
-              "fieldName": "min"
+              "fieldName": "min",
+              "default": "0"
             },
             {
               "name": "max",
               "type": {
                 "text": "number"
               },
-              "default": "100",
               "description": "Maximum value representing the full end of the arc.",
-              "fieldName": "max"
+              "fieldName": "max",
+              "default": "100"
             },
             {
               "name": "low",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "Threshold below which the value is considered low. Used for color zone calculation.",
-              "fieldName": "low"
+              "fieldName": "low",
+              "default": "0"
             },
             {
               "name": "high",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "Threshold above which the value is considered high. Used for color zone calculation.",
-              "fieldName": "high"
+              "fieldName": "high",
+              "default": "0"
             },
             {
               "name": "optimum",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
-              "fieldName": "optimum"
+              "fieldName": "optimum",
+              "default": "0"
             },
             {
               "name": "label",
@@ -7220,50 +7220,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "min",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Value at the empty end of the meter. Defaults to 0.",
-              "attribute": "min"
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "description": "Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales.",
-              "attribute": "max"
-            },
-            {
-              "kind": "field",
-              "name": "peak",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level.",
-              "attribute": "peak"
-            },
-            {
-              "kind": "field",
-              "name": "segments",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "20",
-              "description": "Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.",
-              "attribute": "segments"
-            },
-            {
-              "kind": "field",
               "name": "label",
               "privacy": "public",
               "type": {
@@ -7286,6 +7242,39 @@
             },
             {
               "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Value at the empty end of the meter. Defaults to 0.",
+              "attribute": "min",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales.",
+              "attribute": "max",
+              "default": "1"
+            },
+            {
+              "kind": "field",
+              "name": "peak",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level.",
+              "attribute": "peak",
+              "default": "0"
+            },
+            {
+              "kind": "field",
               "name": "orientation",
               "privacy": "public",
               "type": {
@@ -7295,6 +7284,17 @@
               "attribute": "orientation",
               "default": "'vertical'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "segments",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.",
+              "attribute": "segments",
+              "default": "20"
             },
             {
               "kind": "field",
@@ -7334,27 +7334,27 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Value at the empty end of the meter. Defaults to 0.",
-              "fieldName": "min"
+              "fieldName": "min",
+              "default": "0"
             },
             {
               "name": "max",
               "type": {
                 "text": "number"
               },
-              "default": "1",
               "description": "Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales.",
-              "fieldName": "max"
+              "fieldName": "max",
+              "default": "1"
             },
             {
               "name": "peak",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "Externally supplied peak-hold level, in the same units as `value`. When set, the component renders the hold line exactly there and does no tracking of its own. When absent, the meter tracks its own peak from incoming values, holds it briefly, then decays it toward the current level.",
-              "fieldName": "peak"
+              "fieldName": "peak",
+              "default": "0"
             },
             {
               "name": "orientation",
@@ -7370,9 +7370,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "20",
               "description": "Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.",
-              "fieldName": "segments"
+              "fieldName": "segments",
+              "default": "20"
             },
             {
               "name": "warn",
@@ -7801,61 +7801,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "min",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Minimum value representing the left edge (empty) of the meter.",
-              "attribute": "min"
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
-              "description": "Maximum value representing the right edge (full) of the meter.",
-              "attribute": "max"
-            },
-            {
-              "kind": "field",
-              "name": "low",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "Threshold below which the value is considered low. Used for color zone calculation.",
-              "attribute": "low"
-            },
-            {
-              "kind": "field",
-              "name": "high",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "Threshold above which the value is considered high. Used for color zone calculation.",
-              "attribute": "high"
-            },
-            {
-              "kind": "field",
-              "name": "optimum",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
-              "attribute": "optimum"
-            },
-            {
-              "kind": "field",
               "name": "label",
               "privacy": "public",
               "type": {
@@ -7876,6 +7821,61 @@
               "attribute": "value",
               "default": "0",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum value representing the left edge (empty) of the meter.",
+              "attribute": "min",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum value representing the right edge (full) of the meter.",
+              "attribute": "max",
+              "default": "100"
+            },
+            {
+              "kind": "field",
+              "name": "low",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Threshold below which the value is considered low. Used for color zone calculation.",
+              "attribute": "low",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "high",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Threshold above which the value is considered high. Used for color zone calculation.",
+              "attribute": "high",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "optimum",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
+              "attribute": "optimum",
+              "default": "0"
             }
           ],
           "attributes": [
@@ -7893,45 +7893,45 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Minimum value representing the left edge (empty) of the meter.",
-              "fieldName": "min"
+              "fieldName": "min",
+              "default": "0"
             },
             {
               "name": "max",
               "type": {
                 "text": "number"
               },
-              "default": "100",
               "description": "Maximum value representing the right edge (full) of the meter.",
-              "fieldName": "max"
+              "fieldName": "max",
+              "default": "100"
             },
             {
               "name": "low",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "Threshold below which the value is considered low. Used for color zone calculation.",
-              "fieldName": "low"
+              "fieldName": "low",
+              "default": "0"
             },
             {
               "name": "high",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "Threshold above which the value is considered high. Used for color zone calculation.",
-              "fieldName": "high"
+              "fieldName": "high",
+              "default": "0"
             },
             {
               "name": "optimum",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
-              "fieldName": "optimum"
+              "fieldName": "optimum",
+              "default": "0"
             },
             {
               "name": "label",
@@ -8016,28 +8016,6 @@
             },
             {
               "kind": "field",
-              "name": "width",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "120",
-              "description": "SVG viewport width in pixels.",
-              "attribute": "width"
-            },
-            {
-              "kind": "field",
-              "name": "height",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "32",
-              "description": "SVG viewport height in pixels.",
-              "attribute": "height"
-            },
-            {
-              "kind": "field",
               "name": "type",
               "privacy": "public",
               "type": {
@@ -8047,6 +8025,28 @@
               "attribute": "type",
               "default": "'line'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "width",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "SVG viewport width in pixels.",
+              "attribute": "width",
+              "default": "120"
+            },
+            {
+              "kind": "field",
+              "name": "height",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "SVG viewport height in pixels.",
+              "attribute": "height",
+              "default": "32"
             },
             {
               "kind": "field",
@@ -8093,18 +8093,18 @@
               "type": {
                 "text": "number"
               },
-              "default": "120",
               "description": "SVG viewport width in pixels.",
-              "fieldName": "width"
+              "fieldName": "width",
+              "default": "120"
             },
             {
               "name": "height",
               "type": {
                 "text": "number"
               },
-              "default": "32",
               "description": "SVG viewport height in pixels.",
-              "fieldName": "height"
+              "fieldName": "height",
+              "default": "32"
             },
             {
               "name": "fill",
@@ -9222,17 +9222,6 @@
             },
             {
               "kind": "field",
-              "name": "duration",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "null",
-              "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
-              "attribute": "duration"
-            },
-            {
-              "kind": "field",
               "name": "label",
               "privacy": "public",
               "type": {
@@ -9253,6 +9242,17 @@
               "attribute": "position",
               "default": "0",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "duration",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
+              "attribute": "duration",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -9310,9 +9310,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "null",
               "description": "Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.",
-              "fieldName": "duration"
+              "fieldName": "duration",
+              "default": "0"
             },
             {
               "name": "interactive",
@@ -12447,17 +12447,6 @@
             },
             {
               "kind": "field",
-              "name": "duration",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "5000",
-              "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
-              "attribute": "duration"
-            },
-            {
-              "kind": "field",
               "name": "position",
               "privacy": "public",
               "type": {
@@ -12467,6 +12456,17 @@
               "attribute": "position",
               "default": "'bottom-center'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "duration",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
+              "attribute": "duration",
+              "default": "5000"
             }
           ],
           "events": [
@@ -12500,9 +12500,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "5000",
               "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
-              "fieldName": "duration"
+              "fieldName": "duration",
+              "default": "5000"
             }
           ],
           "mixins": [
@@ -12725,17 +12725,6 @@
             },
             {
               "kind": "field",
-              "name": "queueLimit",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "20",
-              "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
-              "attribute": "queue-limit"
-            },
-            {
-              "kind": "field",
               "name": "position",
               "privacy": "public",
               "type": {
@@ -12756,6 +12745,17 @@
               "description": "When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a \"(×N)\" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable.",
               "attribute": "dedupe",
               "default": "true"
+            },
+            {
+              "kind": "field",
+              "name": "queueLimit",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
+              "attribute": "queueLimit",
+              "default": "20"
             }
           ],
           "events": [
@@ -12819,13 +12819,13 @@
               "default": "true"
             },
             {
-              "name": "queue-limit",
+              "name": "queueLimit",
               "type": {
                 "text": "number"
               },
-              "default": "20",
               "description": "Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.",
-              "fieldName": "queueLimit"
+              "fieldName": "queueLimit",
+              "default": "20"
             }
           ],
           "mixins": [
@@ -15499,17 +15499,6 @@
             },
             {
               "kind": "field",
-              "name": "months",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "2",
-              "description": "Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.",
-              "attribute": "months"
-            },
-            {
-              "kind": "field",
               "name": "presets",
               "privacy": "public",
               "type": {
@@ -15552,6 +15541,17 @@
               "default": "''",
               "description": "Label text rendered above the input in uppercase accent font styling.",
               "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "months",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.",
+              "attribute": "months",
+              "default": "2"
             },
             {
               "kind": "field",
@@ -15800,9 +15800,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "2",
               "description": "Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.",
-              "fieldName": "months"
+              "fieldName": "months",
+              "default": "2"
             },
             {
               "name": "presets",
@@ -16112,17 +16112,6 @@
             },
             {
               "kind": "field",
-              "name": "maxSize",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
-              "attribute": "max-size"
-            },
-            {
-              "kind": "field",
               "name": "multiple",
               "privacy": "public",
               "type": {
@@ -16132,6 +16121,17 @@
               "attribute": "multiple",
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "maxSize",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
+              "attribute": "maxSize",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -16182,13 +16182,13 @@
               "default": "false"
             },
             {
-              "name": "max-size",
+              "name": "maxSize",
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.",
-              "fieldName": "maxSize"
+              "fieldName": "maxSize",
+              "default": "0"
             },
             {
               "name": "disabled",
@@ -16853,9 +16853,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping.",
               "attribute": "aspect",
+              "default": "0",
               "reflects": true
             },
             {
@@ -16904,9 +16904,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping.",
-              "fieldName": "aspect"
+              "fieldName": "aspect",
+              "default": "0"
             },
             {
               "name": "zoom",
@@ -17971,39 +17971,6 @@
             },
             {
               "kind": "field",
-              "name": "min",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Minimum allowed value at the start of the arc sweep.",
-              "attribute": "min"
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
-              "description": "Maximum allowed value at the end of the arc sweep.",
-              "attribute": "max"
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "description": "Increment granularity. The value snaps to multiples of this number.",
-              "attribute": "step"
-            },
-            {
-              "kind": "field",
               "name": "name",
               "privacy": "public",
               "type": {
@@ -18056,6 +18023,39 @@
                 "text": "Function"
               },
               "description": "`(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number."
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum allowed value at the start of the arc sweep.",
+              "attribute": "min",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum allowed value at the end of the arc sweep.",
+              "attribute": "max",
+              "default": "100"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Increment granularity. The value snaps to multiples of this number.",
+              "attribute": "step",
+              "default": "1"
             },
             {
               "kind": "field",
@@ -18246,27 +18246,27 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Minimum allowed value at the start of the arc sweep.",
-              "fieldName": "min"
+              "fieldName": "min",
+              "default": "0"
             },
             {
               "name": "max",
               "type": {
                 "text": "number"
               },
-              "default": "100",
               "description": "Maximum allowed value at the end of the arc sweep.",
-              "fieldName": "max"
+              "fieldName": "max",
+              "default": "100"
             },
             {
               "name": "step",
               "type": {
                 "text": "number"
               },
-              "default": "1",
               "description": "Increment granularity. The value snaps to multiples of this number.",
-              "fieldName": "step"
+              "fieldName": "step",
+              "default": "1"
             },
             {
               "name": "name",
@@ -19371,28 +19371,6 @@
             },
             {
               "kind": "field",
-              "name": "min",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "Minimum allowed value. The decrement button is disabled when the value reaches this limit.",
-              "attribute": "min"
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "undefined",
-              "description": "Maximum allowed value. The increment button is disabled when the value reaches this limit.",
-              "attribute": "max"
-            },
-            {
-              "kind": "field",
               "name": "step",
               "privacy": "public",
               "type": {
@@ -19435,6 +19413,28 @@
               "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum allowed value. The decrement button is disabled when the value reaches this limit.",
+              "attribute": "min",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum allowed value. The increment button is disabled when the value reaches this limit.",
+              "attribute": "max",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -19638,18 +19638,18 @@
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "Minimum allowed value. The decrement button is disabled when the value reaches this limit.",
-              "fieldName": "min"
+              "fieldName": "min",
+              "default": "0"
             },
             {
               "name": "max",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
               "description": "Maximum allowed value. The increment button is disabled when the value reaches this limit.",
-              "fieldName": "max"
+              "fieldName": "max",
+              "default": "0"
             },
             {
               "name": "step",
@@ -19760,18 +19760,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "length",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "6",
-              "description": "Number of individual character boxes to render. Reflected as an attribute.",
-              "attribute": "length",
-              "reflects": true
-            },
-            {
-              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -19803,6 +19791,18 @@
               "default": "false",
               "description": "Disables all input boxes, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "length",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Number of individual character boxes to render. Reflected as an attribute.",
+              "attribute": "length",
+              "default": "6",
               "reflects": true
             },
             {
@@ -20009,9 +20009,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "6",
               "description": "Number of individual character boxes to render. Reflected as an attribute.",
-              "fieldName": "length"
+              "fieldName": "length",
+              "default": "6"
             },
             {
               "name": "value",
@@ -20571,17 +20571,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "length",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "4",
-              "description": "Number of input boxes to render. Determines the expected code length.",
-              "attribute": "length"
-            },
-            {
-              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -20636,6 +20625,17 @@
               "default": "''",
               "description": "Label text displayed above the input boxes in uppercase accent font.",
               "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "length",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Number of input boxes to render. Determines the expected code length.",
+              "attribute": "length",
+              "default": "4"
             },
             {
               "kind": "field",
@@ -20861,9 +20861,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "4",
               "description": "Number of input boxes to render. Determines the expected code length.",
-              "fieldName": "length"
+              "fieldName": "length",
+              "default": "4"
             },
             {
               "name": "value",
@@ -21469,17 +21469,6 @@
             },
             {
               "kind": "field",
-              "name": "min",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Minimum allowed value at the left edge of the track.",
-              "attribute": "min"
-            },
-            {
-              "kind": "field",
               "name": "max",
               "privacy": "public",
               "type": {
@@ -21488,41 +21477,6 @@
               "default": "100",
               "description": "Maximum allowed value at the right edge of the track.",
               "attribute": "max"
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "1",
-              "description": "Increment granularity. Values snap to multiples of this number.",
-              "attribute": "step"
-            },
-            {
-              "kind": "field",
-              "name": "low",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Lower bound value of the selected range. Reflected as an attribute.",
-              "attribute": "low",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "high",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
-              "description": "Upper bound value of the selected range. Reflected as an attribute.",
-              "attribute": "high",
-              "reflects": true
             },
             {
               "kind": "field",
@@ -21557,6 +21511,52 @@
               "default": "''",
               "description": "Label text displayed above the slider with the range values shown on the right.",
               "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum allowed value at the left edge of the track.",
+              "attribute": "min",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Increment granularity. Values snap to multiples of this number.",
+              "attribute": "step",
+              "default": "1"
+            },
+            {
+              "kind": "field",
+              "name": "low",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Lower bound value of the selected range. Reflected as an attribute.",
+              "attribute": "low",
+              "default": "0",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "high",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Upper bound value of the selected range. Reflected as an attribute.",
+              "attribute": "high",
+              "default": "100",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -21749,9 +21749,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Minimum allowed value at the left edge of the track.",
-              "fieldName": "min"
+              "fieldName": "min",
+              "default": "0"
             },
             {
               "name": "max",
@@ -21767,27 +21767,27 @@
               "type": {
                 "text": "number"
               },
-              "default": "1",
               "description": "Increment granularity. Values snap to multiples of this number.",
-              "fieldName": "step"
+              "fieldName": "step",
+              "default": "1"
             },
             {
               "name": "low",
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Lower bound value of the selected range. Reflected as an attribute.",
-              "fieldName": "low"
+              "fieldName": "low",
+              "default": "0"
             },
             {
               "name": "high",
               "type": {
                 "text": "number"
               },
-              "default": "100",
               "description": "Upper bound value of the selected range. Reflected as an attribute.",
-              "fieldName": "high"
+              "fieldName": "high",
+              "default": "100"
             },
             {
               "name": "name",
@@ -21898,30 +21898,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "value",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
-              "attribute": "value",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "max",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "5",
-              "description": "Maximum number of stars to render. Determines the upper bound of the rating scale.",
-              "attribute": "max",
-              "reflects": true
-            },
-            {
-              "kind": "field",
               "name": "name",
               "privacy": "public",
               "type": {
@@ -21952,6 +21928,30 @@
               "default": "false",
               "description": "Disables interaction, reducing opacity to 40% and blocking pointer events.",
               "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
+              "attribute": "value",
+              "default": "0",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum number of stars to render. Determines the upper bound of the rating scale.",
+              "attribute": "max",
+              "default": "5",
               "reflects": true
             },
             {
@@ -22140,18 +22140,18 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
-              "fieldName": "value"
+              "fieldName": "value",
+              "default": "0"
             },
             {
               "name": "max",
               "type": {
                 "text": "number"
               },
-              "default": "5",
               "description": "Maximum number of stars to render. Determines the upper bound of the rating scale.",
-              "fieldName": "max"
+              "fieldName": "max",
+              "default": "5"
             },
             {
               "name": "name",
@@ -23291,17 +23291,6 @@
             },
             {
               "kind": "field",
-              "name": "penWidth",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "2",
-              "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
-              "attribute": "pen-width"
-            },
-            {
-              "kind": "field",
               "name": "readonly",
               "privacy": "public",
               "attribute": "readonly",
@@ -23331,6 +23320,17 @@
               },
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "penWidth",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
+              "attribute": "penWidth",
+              "default": "2"
             },
             {
               "kind": "field",
@@ -23508,13 +23508,13 @@
               "fieldName": "penColor"
             },
             {
-              "name": "pen-width",
+              "name": "penWidth",
               "type": {
                 "text": "number"
               },
-              "default": "2",
               "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
-              "fieldName": "penWidth"
+              "fieldName": "penWidth",
+              "default": "2"
             },
             {
               "name": "required",
@@ -24338,17 +24338,6 @@
             },
             {
               "kind": "field",
-              "name": "maxTags",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
-              "attribute": "max-tags"
-            },
-            {
-              "kind": "field",
               "name": "label",
               "privacy": "public",
               "type": {
@@ -24403,6 +24392,17 @@
               "default": "''",
               "description": "Error message shown below the field; also applies error styling to the border.",
               "attribute": "error"
+            },
+            {
+              "kind": "field",
+              "name": "maxTags",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
+              "attribute": "maxTags",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -24631,13 +24631,13 @@
               "fieldName": "delimiter"
             },
             {
-              "name": "max-tags",
+              "name": "maxTags",
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a \"-- max reached\" hint.",
-              "fieldName": "maxTags"
+              "fieldName": "maxTags",
+              "default": "0"
             },
             {
               "name": "allowCustom",
@@ -24832,17 +24832,6 @@
             },
             {
               "kind": "field",
-              "name": "maxlength",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached.",
-              "attribute": "maxlength"
-            },
-            {
-              "kind": "field",
               "name": "disabled",
               "privacy": "public",
               "type": {
@@ -24863,6 +24852,17 @@
               "default": "''",
               "description": "Error message string. When non-empty, the textarea border turns red and the message is displayed below the field with `role=\"alert\"` for screen reader announcement.",
               "attribute": "error"
+            },
+            {
+              "kind": "field",
+              "name": "maxlength",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached.",
+              "attribute": "maxlength",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -25117,9 +25117,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "Maximum number of characters allowed. When set to a value greater than 0, a live counter appears below the field showing current length vs. limit, turning red when the limit is reached.",
-              "fieldName": "maxlength"
+              "fieldName": "maxlength",
+              "default": "0"
             },
             {
               "name": "disabled",
@@ -28460,28 +28460,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "minSize",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "100",
-              "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
-              "attribute": "min-size"
-            },
-            {
-              "kind": "field",
-              "name": "maxSize",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "Infinity",
-              "description": "Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.",
-              "attribute": "max-size"
-            },
-            {
-              "kind": "field",
               "name": "size",
               "privacy": "public",
               "type": {
@@ -28502,6 +28480,28 @@
               "attribute": "direction",
               "default": "'horizontal'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "minSize",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
+              "attribute": "minSize",
+              "default": "100"
+            },
+            {
+              "kind": "field",
+              "name": "maxSize",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.",
+              "attribute": "maxSize",
+              "default": "0"
             }
           ],
           "events": [
@@ -28524,22 +28524,22 @@
               "default": "'horizontal'"
             },
             {
-              "name": "min-size",
+              "name": "minSize",
               "type": {
                 "text": "number"
               },
-              "default": "100",
               "description": "Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.",
-              "fieldName": "minSize"
+              "fieldName": "minSize",
+              "default": "100"
             },
             {
-              "name": "max-size",
+              "name": "maxSize",
               "type": {
                 "text": "number"
               },
-              "default": "Infinity",
               "description": "Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.",
-              "fieldName": "maxSize"
+              "fieldName": "maxSize",
+              "default": "0"
             },
             {
               "name": "size",
@@ -28861,28 +28861,6 @@
             },
             {
               "kind": "field",
-              "name": "minRatio",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.15",
-              "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
-              "attribute": "min-ratio"
-            },
-            {
-              "kind": "field",
-              "name": "maxRatio",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0.85",
-              "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
-              "attribute": "max-ratio"
-            },
-            {
-              "kind": "field",
               "name": "label",
               "privacy": "public",
               "type": {
@@ -28914,6 +28892,28 @@
               "description": "The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
               "attribute": "ratio",
               "default": "0.5"
+            },
+            {
+              "kind": "field",
+              "name": "minRatio",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
+              "attribute": "minRatio",
+              "default": "0.15"
+            },
+            {
+              "kind": "field",
+              "name": "maxRatio",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
+              "attribute": "maxRatio",
+              "default": "0.85"
             }
           ],
           "events": [
@@ -28945,22 +28945,22 @@
               "default": "0.5"
             },
             {
-              "name": "min-ratio",
+              "name": "minRatio",
               "type": {
                 "text": "number"
               },
-              "default": "0.15",
               "description": "Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.",
-              "fieldName": "minRatio"
+              "fieldName": "minRatio",
+              "default": "0.15"
             },
             {
-              "name": "max-ratio",
+              "name": "maxRatio",
               "type": {
                 "text": "number"
               },
-              "default": "0.85",
               "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
-              "fieldName": "maxRatio"
+              "fieldName": "maxRatio",
+              "default": "0.85"
             },
             {
               "name": "label",
@@ -34395,7 +34395,7 @@
               }
             },
             {
-              "name": "{ negative = null, attribute, reflect = true, derived = false, blockedBy }",
+              "name": "{ negative = null, attribute, reflect = true, derived = false, blockedBy, nullable = false }",
               "default": "{}"
             },
             {
@@ -34430,7 +34430,7 @@
           "name": "num",
           "parameters": [
             {
-              "name": "{ default: fallback = 0, min, max, step, clamp = null, int = false, attribute, reflect = false }",
+              "name": "{\n    default: fallback = 0,\n    min,\n    max,\n    step,\n    clamp = null,\n    int = false,\n    nullable = false,\n    attribute,\n    reflect = false,\n  }",
               "default": "{}"
             }
           ],
@@ -36073,17 +36073,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "value",
-              "privacy": "public",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "The number to format",
-              "attribute": "value"
-            },
-            {
-              "kind": "field",
               "name": "locale",
               "privacy": "public",
               "type": {
@@ -36106,14 +36095,14 @@
             },
             {
               "kind": "field",
-              "name": "decimals",
+              "name": "value",
               "privacy": "public",
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
-              "description": "Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)",
-              "attribute": "decimals"
+              "description": "The number to format",
+              "attribute": "value",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -36126,6 +36115,17 @@
               "attribute": "type",
               "default": "'number'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "decimals",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.",
+              "attribute": "decimals",
+              "default": "0"
             },
             {
               "kind": "field",
@@ -36145,9 +36145,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "0",
               "description": "The number to format",
-              "fieldName": "value"
+              "fieldName": "value",
+              "default": "0"
             },
             {
               "name": "type",
@@ -36181,9 +36181,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "undefined",
-              "description": "Number of decimal places (defaults: 0 for number, 2 for currency, 1 for percent)",
-              "fieldName": "decimals"
+              "description": "Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.",
+              "fieldName": "decimals",
+              "default": "0"
             },
             {
               "name": "notation",

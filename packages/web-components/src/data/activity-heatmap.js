@@ -1,5 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
-import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, int, num } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 import { monthNames, weekdayNames, defaultLocale } from '../shared/date-names.js';
 import { PositionController } from '../shared/position-controller.js';
@@ -65,7 +65,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
     endDate: { type: String, attribute: 'end-date' },
     weeks: int({ default: 52, min: 1, clamp: 'toRange' }),
     weekStart: oneOf(['sunday', 'monday'], { attribute: 'week-start' }),
-    max: { type: Number },
+    max: num({ nullable: true, min: 0, clamp: 'toRange' }),
     legend: flag(true, { negative: 'no-legend' }),
     _activeIndex: { state: true },
   };
@@ -272,11 +272,11 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
+    // Nullable declarations own their own "unset" default — see props.js.
     this.data = [];
     this.endDate = '';
     this.weeks = 52;
     this.weekStart = 'sunday';
-    this.max = null;
     this.legend = true;
     this._activeIndex = null;
     // The anchor is the hovered cell, not the grid: the detail should sit over

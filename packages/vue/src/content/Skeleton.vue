@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   width: '',
   height: '',
-  count: 1,
 });
 </script>
 

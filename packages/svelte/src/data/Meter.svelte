@@ -38,7 +38,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value, min = 0, max = 100, low, high, optimum, label = '', ...rest }: Props = $props();
+  let { value, min, max, low, high, optimum, label = '', ...rest }: Props = $props();
 </script>
 
 <arc-meter {value} {min} {max} {low} {high} {optimum} {label} {...rest}>

@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
 
 /**
  * Loading placeholder with shimmer animation.
@@ -18,7 +18,7 @@ export class ArcSkeleton extends DeclaredPropsMixin(LitElement) {
     variant: oneOf(['text', 'circle', 'rect']),
     width: { type: String },
     height: { type: String },
-    count: { type: Number },
+    count: int({ default: 1, min: 1, clamp: 'toRange' }),
   };
 
   static styles = [
@@ -68,7 +68,6 @@ export class ArcSkeleton extends DeclaredPropsMixin(LitElement) {
     super();
     this.width = '';
     this.height = '';
-    this.count = 1;
   }
 
   _renderOne() {
@@ -84,7 +83,7 @@ export class ArcSkeleton extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
-    const n = Math.max(1, this.count);
+    const n = this.count;
     if (n === 1) {
       return html`<div role="status" aria-label="Loading" aria-busy="true">${this._renderOne()}</div>`;
     }

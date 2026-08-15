@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
 
 /**
  * Drag-and-drop file upload zone with preview.
@@ -23,7 +23,7 @@ export class ArcFileUpload extends DeclaredPropsMixin(LitElement) {
   static properties = {
     accept: { type: String },
     multiple: flag(false),
-    maxSize: { type: Number, attribute: 'max-size' },
+    maxSize: num({ default: 0, min: 0, clamp: 'toRange', attribute: 'max-size' }),
     disabled: flag(false),
     _files: { state: true },
     _dragOver: { state: true },
@@ -171,7 +171,6 @@ export class ArcFileUpload extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this.accept = '';
-    this.maxSize = 0;
     this._files = [];
     this._dragOver = false;
     this._error = '';

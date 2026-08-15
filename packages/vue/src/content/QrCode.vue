@@ -15,7 +15,6 @@ const props = withDefaults(defineProps<{
   value: '',
   size: 160,
   label: '',
-  quietZone: 2,
 });
 </script>
 

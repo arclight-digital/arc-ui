@@ -20,7 +20,6 @@ const props = withDefaults(defineProps<{
   value: () => ([]),
   suggestions: () => ([]),
   delimiter: ',',
-  maxTags: 0,
   label: '',
   placeholder: '',
   name: '',

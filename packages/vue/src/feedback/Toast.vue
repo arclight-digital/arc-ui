@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   duration: 4000,
   maxVisible: 3,
-  queueLimit: 20,
 });
 
 const emit = defineEmits<{

@@ -16,11 +16,7 @@ const props = withDefaults(defineProps<{
   label?: string;
   showValues?: boolean;
 }>(), {
-  min: 0,
   max: 100,
-  step: 1,
-  low: 0,
-  high: 100,
   name: '',
   disabled: false,
   label: '',

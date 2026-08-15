@@ -309,7 +309,7 @@ export default {
    "size",
    "level",
    "label",
-   "quiet-zone",
+   "quietZone",
    "contrast"
   ],
   "enums": {
@@ -614,7 +614,7 @@ export default {
    "manualSort",
    "selectable",
    "virtual",
-   "row-height"
+   "rowHeight"
   ],
   "slug": "data-grid"
  },
@@ -626,7 +626,7 @@ export default {
    "sort-column",
    "sortDirection",
    "virtual",
-   "row-height"
+   "rowHeight"
   ],
   "enums": {
    "sortDirection": [
@@ -1247,7 +1247,7 @@ export default {
    "duration",
    "max-visible",
    "dedupe",
-   "queue-limit"
+   "queueLimit"
   ],
   "enums": {
    "position": [
@@ -1485,7 +1485,7 @@ export default {
   "attrs": [
    "accept",
    "multiple",
-   "max-size",
+   "maxSize",
    "disabled"
   ],
   "slug": "file-upload"
@@ -1904,7 +1904,7 @@ export default {
    "label",
    "disabled",
    "pen-color",
-   "pen-width",
+   "penWidth",
    "required",
    "readonly"
   ],
@@ -1970,7 +1970,7 @@ export default {
    "value",
    "suggestions",
    "delimiter",
-   "max-tags",
+   "maxTags",
    "allowCustom",
    "label",
    "placeholder",
@@ -2328,8 +2328,8 @@ export default {
  "arc-resizable": {
   "attrs": [
    "direction",
-   "min-size",
-   "max-size",
+   "minSize",
+   "maxSize",
    "size"
   ],
   "enums": {
@@ -2378,8 +2378,8 @@ export default {
   "attrs": [
    "orientation",
    "ratio",
-   "min-ratio",
-   "max-ratio",
+   "minRatio",
+   "maxRatio",
    "label"
   ],
   "enums": {

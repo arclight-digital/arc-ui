@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
+import { DeclaredPropsMixin, oneOf, num, int } from '../shared/props.js';
 
 /**
  * Segmented audio level meter with peak-hold — the live vertical sibling of arc-meter,
@@ -35,11 +35,11 @@ export class ArcLevelMeter extends DeclaredPropsMixin(LitElement) {
   static properties = {
     // See arc-meter (finding #70).
     value: num({ default: 0, min: 'min', max: 'max', clamp: 'toRange' }),
-    min: { type: Number },
-    max: { type: Number },
-    peak: { type: Number },
+    min: num({ default: 0 }),
+    max: num({ default: 1 }),
+    peak: num({ nullable: true }),
     orientation: oneOf(['vertical', 'horizontal']),
-    segments: { type: Number },
+    segments: int({ default: 20, min: 0, clamp: 'toRange' }),
     warn: num({ default: 0.75, min: 0, max: 1, clamp: 'toRange' }),
     clip: num({ default: 0.9, min: 0, max: 1, clamp: 'toRange' }),
     label: { type: String },
@@ -150,10 +150,7 @@ export class ArcLevelMeter extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.min = 0;
-    this.max = 1;
-    this.peak = undefined;
-    this.segments = 20;
+    // Nullable declarations own their own "unset" default — see props.js.
     this.label = '';
 
     /** @private Self-tracked peak, as a fraction of the range. */
@@ -250,7 +247,10 @@ export class ArcLevelMeter extends DeclaredPropsMixin(LitElement) {
     const f = this._toFraction(this.value);
     const explicitPeak = this.peak != null && Number.isFinite(this.peak);
     const peakF = explicitPeak ? this._toFraction(this.peak) : this._peakF;
-    const count = Number.isFinite(this.segments) ? Math.max(0, Math.floor(this.segments)) : 20;
+    // `segments` is declared int({ min: 0, clamp }), so the finite check, the
+    // floor and the floor-at-zero that used to live on this line are the
+    // declaration now (V4-PLAN 2.3).
+    const count = this.segments;
 
     const range = this.max - this.min;
     const valueNow = range > 0 ? Math.min(this.max, Math.max(this.min, this.value)) : this.min;

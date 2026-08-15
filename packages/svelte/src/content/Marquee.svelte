@@ -36,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { speed = 40, direction, pauseOnHover, gap = 'var(--space-xl)', children, ...rest }: Props = $props();
+  let { speed, direction, pauseOnHover, gap = 'var(--space-xl)', children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

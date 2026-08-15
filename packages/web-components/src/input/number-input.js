@@ -1,7 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 let numberInputIdCounter = 0;
 
@@ -33,8 +33,8 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
     value: { type: Number, reflect: true },
-    min: { type: Number },
-    max: { type: Number },
+    min: num({ nullable: true }),
+    max: num({ nullable: true }),
     step: { type: Number },
     label: { type: String },
     name: { type: String, reflect: true },
@@ -182,9 +182,8 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   constructor() {
     super();
+    // Nullable declarations own their own "unset" default — see props.js.
     this.value = 0;
-    this.min = undefined;
-    this.max = undefined;
     this.step = 1;
     this.label = '';
     this.name = '';

@@ -10,8 +10,6 @@ const props = withDefaults(defineProps<{
   maxSize?: number;
   size?: number;
 }>(), {
-  minSize: 100,
-  maxSize: Infinity,
   size: 300,
 });
 

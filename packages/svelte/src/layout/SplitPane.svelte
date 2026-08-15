@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { orientation, ratio = $bindable(), minRatio = 0.15, maxRatio = 0.85, label = '', primary, secondary, ...rest }: Props = $props();
+  let { orientation, ratio = $bindable(), minRatio, maxRatio, label = '', primary, secondary, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

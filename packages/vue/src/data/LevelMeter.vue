@@ -15,9 +15,6 @@ const props = withDefaults(defineProps<{
   clip?: number;
   label?: string;
 }>(), {
-  min: 0,
-  max: 1,
-  segments: 20,
   label: '',
 });
 </script>

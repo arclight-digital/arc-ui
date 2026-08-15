@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
 
 /**
  * Bottom-anchored single-line notification with optional action button. Darker than toast —
@@ -22,7 +22,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 export class ArcSnackbar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     position: oneOf(['bottom-center', 'bottom-left', 'bottom-right']),
-    duration: { type: Number },
+    duration: num({ default: 5000, min: 0, clamp: 'toRange' }),
     _snackbars: { state: true },
   };
 
@@ -99,7 +99,6 @@ export class ArcSnackbar extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.duration = 5000;
     this._snackbars = [];
     this._counter = 0;
   }

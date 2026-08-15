@@ -41,7 +41,7 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
     // long enough that nobody should be writing them into markup anyway.
     peaks: { attribute: false },
     position: num({ default: 0, min: 0, max: 1, clamp: 'toRange', reflect: true }),
-    duration: { type: Number },
+    duration: num({ nullable: true }),
     interactive: flag(false),
     variant: oneOf(['bars', 'mirror']),
     label: { type: String },
@@ -145,8 +145,8 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
+    // Nullable declarations own their own "unset" default — see props.js.
     this.peaks = [];
-    this.duration = null;
     this.label = '';
     this._onWindowPointerMove = this._onWindowPointerMove.bind(this);
     this._onWindowPointerUp = this._onWindowPointerUp.bind(this);
