@@ -32902,16 +32902,16 @@
             {
               "name": "arc-toggle",
               "type": {
-                "text": "CustomEvent"
+                "text": "CustomEvent<{ item: { label: string, icon: string }, path: string[], expanded: boolean }>"
               },
-              "description": "Fired when a tree node is expanded or collapsed"
+              "description": "Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label."
             },
             {
               "name": "arc-select",
               "type": {
-                "text": "CustomEvent"
+                "text": "CustomEvent<{ value: string, item: { label: string, icon: string }, path: string[] }>"
               },
-              "description": "Fired when a tree item is selected"
+              "description": "Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`."
             }
           ],
           "attributes": [],

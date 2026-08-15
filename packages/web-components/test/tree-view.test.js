@@ -282,10 +282,12 @@ describe('arc-tree-view duplicate labels', () => {
     </arc-tree-item>
   `;
 
-  // BUG: _selected is the label alone (tree-view.js:171), and the render
-  // compares against it, so every node sharing a label is marked selected.
-  // Clicking src/index.js highlights test/index.js too.
-  it('BUG: selecting one node also marks its same-named sibling elsewhere', async () => {
+  // Was three BUG pins (findings #21-#23). `_selected` and the expansion set
+  // were keyed on `item.label`, which is not an identity: `src/index.js` and
+  // `test/index.js` are two nodes called `index.js`. The component already
+  // computed a path key for its roving focus, so the identity existed and two
+  // of the three state maps simply were not using it.
+  it('selects only the node that was clicked', async () => {
     const el = await tree(DUPES);
     const dupes = rows(el).filter((r) => r.textContent.trim().startsWith('index.js'));
     expect(dupes, 'two nodes share the name').to.have.lengthOf(2);
@@ -293,27 +295,41 @@ describe('arc-tree-view duplicate labels', () => {
     dupes[0].click();
     await settle(el);
 
-    const selected = rows(el)
-      .filter((r) => r.getAttribute('aria-selected') === 'true')
-      .map((r) => r.textContent.trim());
-    expect(selected, 'only one node was clicked').to.have.lengthOf(2);
+    const selected = rows(el).filter((r) => r.getAttribute('aria-selected') === 'true');
+    expect(selected, 'exactly one').to.have.lengthOf(1);
+    expect(selected[0]).to.equal(dupes[0]);
   });
 
-  // BUG: the expansion set is keyed on the label too (tree-view.js:141, 148),
-  // so two branches with the same name expand and collapse together.
-  it('BUG: expanding one branch expands every branch with the same label', async () => {
-    const el = await tree(`
-      <arc-tree-item label="project">
-        <arc-tree-item label="assets">
-          <arc-tree-item label="logo.svg"></arc-tree-item>
-        </arc-tree-item>
+  it('moves the selection to the sibling when that one is clicked', async () => {
+    // Anti-vacuity: a tree that selected nothing would pass the test above.
+    const el = await tree(DUPES);
+    const dupes = rows(el).filter((r) => r.textContent.trim().startsWith('index.js'));
+
+    dupes[0].click();
+    await settle(el);
+    dupes[1].click();
+    await settle(el);
+
+    const selected = rows(el).filter((r) => r.getAttribute('aria-selected') === 'true');
+    expect(selected).to.have.lengthOf(1);
+    expect(selected[0].textContent.trim()).to.equal(dupes[1].textContent.trim());
+  });
+
+  const NESTED_DUPES = `
+    <arc-tree-item label="project">
+      <arc-tree-item label="assets">
+        <arc-tree-item label="logo.svg"></arc-tree-item>
       </arc-tree-item>
-      <arc-tree-item label="archive">
-        <arc-tree-item label="assets">
-          <arc-tree-item label="old.svg"></arc-tree-item>
-        </arc-tree-item>
+    </arc-tree-item>
+    <arc-tree-item label="archive">
+      <arc-tree-item label="assets">
+        <arc-tree-item label="old.svg"></arc-tree-item>
       </arc-tree-item>
-    `);
+    </arc-tree-item>
+  `;
+
+  it('expands only the branch that was clicked', async () => {
+    const el = await tree(NESTED_DUPES);
 
     rowFor(el, 'project').click();
     await settle(el);
@@ -326,22 +342,70 @@ describe('arc-tree-view duplicate labels', () => {
     assets[0].click();
     await settle(el);
 
-    expect(labels(el), 'both branches opened from one click')
-      .to.include.members(['logo.svg', 'old.svg']);
+    expect(labels(el), "the clicked branch's child is shown").to.include('logo.svg');
+    expect(labels(el), "and the same-named branch stays shut").to.not.include('old.svg');
   });
 
-  // BUG: arc-toggle reports only { label, icon }, so a consumer cannot tell
-  // which of two same-named branches moved — unlike arc-select, which carries
-  // `path` alongside.
-  it('BUG: arc-toggle carries no path, so duplicate labels are indistinguishable', async () => {
-    const el = await tree(DUPES);
-    const details = [];
-    el.addEventListener('arc-toggle', (e) => details.push(e.detail));
+  it('collapses only the branch that was clicked', async () => {
+    // The collapse path keeps its own `collapsed:` sentinel keys, so it needs
+    // its own assertion rather than riding on the expand one.
+    const el = await tree(NESTED_DUPES);
 
-    rowFor(el, 'src').click();
+    rowFor(el, 'project').click();
+    await settle(el);
+    rowFor(el, 'archive').click();
     await settle(el);
 
-    expect(details[0].path, 'arc-select carries a path here; arc-toggle does not')
-      .to.equal(undefined);
+    let assets = rows(el).filter((r) => r.textContent.trim().startsWith('assets'));
+    assets[0].click();
+    await settle(el);
+    assets = rows(el).filter((r) => r.textContent.trim().startsWith('assets'));
+    assets[1].click();
+    await settle(el);
+    expect(labels(el)).to.include.members(['logo.svg', 'old.svg']);
+
+    assets = rows(el).filter((r) => r.textContent.trim().startsWith('assets'));
+    assets[0].click();
+    await settle(el);
+
+    expect(labels(el), 'the clicked branch shut').to.not.include('logo.svg');
+    expect(labels(el), 'and the other stayed open').to.include('old.svg');
+  });
+
+  // Was a BUG pin (finding #23). arc-toggle reported only { label, icon }, so a
+  // consumer could not tell which of two same-named branches had moved — while
+  // arc-select carried `path` all along. The two events disagreed about what
+  // names a node.
+  it('arc-toggle carries the path, as arc-select always did', async () => {
+    const el = await tree(DUPES);
+    const toggles = [];
+    const selects = [];
+    el.addEventListener('arc-toggle', (e) => toggles.push(e.detail));
+    el.addEventListener('arc-select', (e) => selects.push(e.detail));
+
+    rowFor(el, 'test').click();
+    await settle(el);
+
+    expect(toggles[0].path, 'the identity, not just the label').to.deep.equal(['test']);
+    expect(toggles[0].path, 'and the two events agree').to.deep.equal(selects[0].path);
+  });
+
+  it('distinguishes two same-named branches in the event detail', async () => {
+    const el = await tree(NESTED_DUPES);
+    rowFor(el, 'project').click();
+    await settle(el);
+    rowFor(el, 'archive').click();
+    await settle(el);
+
+    const seen = [];
+    el.addEventListener('arc-toggle', (e) => seen.push(e.detail.path));
+    const assets = rows(el).filter((r) => r.textContent.trim().startsWith('assets'));
+
+    assets[0].click();
+    await settle(el);
+    assets[1].click();
+    await settle(el);
+
+    expect(seen).to.deep.equal([['project', 'assets'], ['archive', 'assets']]);
   });
 });

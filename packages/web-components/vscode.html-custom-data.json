@@ -5513,7 +5513,7 @@
     },
     {
       "name": "arc-tree-view",
-      "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed\n- **arc-select** - Fired when a tree item is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
+      "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.\n- **arc-select** - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
       "attributes": [],
       "references": []
     },

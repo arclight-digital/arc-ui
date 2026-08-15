@@ -30,7 +30,7 @@ marker are still open.
 |---|---|---|
 | 26 | `arc-list` | a value containing a comma is recorded but never marked selected |
 | 8 | `arc-rating` | **FIXED** — `required` was satisfied by an unrated control; the form submitted `"0"` |
-| 21-23 | `arc-tree-view` | expansion and selection keyed on label, so same-named nodes share state |
+| 21-23 | `arc-tree-view` | **FIXED** — expansion and selection keyed on label, so same-named nodes shared state |
 | 31 | `arc-context-menu` | a second right-click while open leaves the menu at the old point |
 | 19 | `arc-carousel` | **FIXED** — an arrow key at the rails announced a move that did not happen |
 | 14, 15 | `arc-theme-toggle` | **FIXED** — setting `theme` from script did not sync the page; two toggles desynced |
@@ -1078,7 +1078,31 @@ when C lands it is rewritten to flag any `type: Boolean` not declared through
 
 ## arc-tree-view
 
-### 21-23. Expansion and selection are keyed on the label, not the path — **correctness**
+### 21-23. Expansion and selection are keyed on the label, not the path — **correctness — FIXED**
+
+**Fixed with the key the component already had.** `_pathKey(path)` existed and
+was driving the roving focus; expansion and selection were the two state maps
+that were not using it. So this is three findings and no new machinery — the
+identity was computed on every render and thrown away twice.
+
+`arc-toggle` now carries `path` alongside `item`, matching `arc-select`, so the
+two events agree about what names a node (#23). Pinned by asserting the two
+details carry the *same* path rather than that each carries one.
+
+The collapse path is asserted separately from the expand path: it writes its
+own `collapsed:` sentinel keys, so it is a second keying that could have been
+missed while the first was fixed.
+
+**One trap, and it cost a `pnpm generate` failure with a misleading message.**
+`event-conventions.js` extracts each `new CustomEvent(...)` argument text by
+balancing parentheses while tracking quotes — and it does not skip comments. A
+comment *inside* the arguments containing an apostrophe (`arc-select's`) opened
+a string that never closed, so the scanner ran past the call and every later
+dispatch in the file went invisible to it. It reported
+`@fires "arc-select" but never dispatches it` about a dispatch sitting fifteen
+lines below. Worth carrying into **4.10**, which moves the four brace-balancing
+parsers onto a shared scanner: comment-skipping belongs in that scanner, not in
+a rule.
 
 `_isExpanded` (`navigation/tree-view.js:141`), `_toggleExpand` (`:148`) and
 `_selected` (`:171`) all key on `item.label`. Two nodes anywhere in the tree that
@@ -1093,9 +1117,8 @@ share a label share state. This is not exotic — it is `src/index.js` and
   even tell which of the two moved. `arc-select` does carry `path` — the two
   events disagree about what identifies a node.
 
-Pinned by three tests in `test/tree-view.test.js` under "arc-tree-view duplicate
-labels". The fix is the path key the component already computes for focus —
-`_pathKey(path)` (`:215`) — used for expansion and selection too.
+Was pinned by three tests in `test/tree-view.test.js` under "arc-tree-view
+duplicate labels"; now six regression tests in the same block.
 
 ### 24. Every leaf ships `aria-expanded=""` — **a11y — FIXED**
 

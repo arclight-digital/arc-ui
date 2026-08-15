@@ -8,8 +8,8 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  *
  * @tag arc-tree-view
  * @requires arc-tree-item
- * @fires arc-toggle - Fired when a tree node is expanded or collapsed
- * @fires arc-select - Fired when a tree item is selected
+ * @fires {CustomEvent<{ item: { label: string, icon: string }, path: string[], expanded: boolean }>} arc-toggle - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.
+ * @fires {CustomEvent<{ value: string, item: { label: string, icon: string }, path: string[] }>} arc-select - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.
  * @slot - Default content.
  * @csspart tree - The root list. The nested lists at deeper levels are `group`.
  * @csspart group - A nested list under an expanded branch.
@@ -139,16 +139,26 @@ export class ArcTreeView extends LitElement {
       .filter((el) => el.tagName === 'ARC-TREE-ITEM');
   }
 
-  _isExpanded(item) {
-    const key = item.label;
+  /**
+   * Expansion and selection are keyed on the node's **path**, not on its label
+   * (findings #21-#23).
+   *
+   * The label is not an identity: `src/index.js` and `test/index.js` are two
+   * nodes called `index.js`, and "General" under two different sections is one
+   * form. Keyed on the label, selecting one marked both, and expanding one
+   * `assets` folder opened every other. The component already computed a path
+   * key for its roving focus — `_pathKey(path)` — so the identity existed and
+   * two of the three state maps simply were not using it.
+   */
+  _isExpanded(item, key) {
     if (this._expandedSet.has(key)) return true;
     return item.expanded === true && !this._expandedSet.has(`collapsed:${key}`);
   }
 
-  _toggleExpand(item, e) {
+  _toggleExpand(item, path, e) {
     e.stopPropagation();
-    const key = item.label;
-    const wasExpanded = this._isExpanded(item);
+    const key = this._pathKey(path);
+    const wasExpanded = this._isExpanded(item, key);
 
     if (wasExpanded) {
       this._expandedSet.delete(key);
@@ -160,7 +170,13 @@ export class ArcTreeView extends LitElement {
 
     this.dispatchEvent(
       new CustomEvent('arc-toggle', {
-        detail: { item: { label: item.label, icon: item.icon }, expanded: !wasExpanded },
+        // `path` carries the identity, as the arc-select detail always did.
+        // The two events used to disagree about what names a node, so a
+        // consumer could not tell which of two same-named branches had moved
+        // (#23). No apostrophes in here: event-conventions.js balances quotes
+        // across the argument text and does not skip comments, so one turns
+        // every later dispatch in the file invisible to it.
+        detail: { item: { label: item.label, icon: item.icon }, path, expanded: !wasExpanded },
         bubbles: true,
         composed: true,
       }),
@@ -170,7 +186,7 @@ export class ArcTreeView extends LitElement {
   }
 
   _selectItem(item, path) {
-    this._selected = item.label;
+    this._selected = this._pathKey(path);
 
     this.dispatchEvent(
       new CustomEvent('arc-select', {
@@ -186,15 +202,16 @@ export class ArcTreeView extends LitElement {
   }
 
   _onKeyDown(e, item, path, hasChildren) {
+    const key = this._pathKey(path);
     switch (e.key) {
       case 'ArrowRight':
-        if (hasChildren && !this._isExpanded(item)) {
-          this._toggleExpand(item, e);
+        if (hasChildren && !this._isExpanded(item, key)) {
+          this._toggleExpand(item, path, e);
         }
         break;
       case 'ArrowLeft':
-        if (hasChildren && this._isExpanded(item)) {
-          this._toggleExpand(item, e);
+        if (hasChildren && this._isExpanded(item, key)) {
+          this._toggleExpand(item, path, e);
         }
         break;
       case 'ArrowDown':
@@ -221,8 +238,9 @@ export class ArcTreeView extends LitElement {
   _collectVisibleKeys(items, parentPath = [], keys = []) {
     for (const item of items || []) {
       const path = [...parentPath, item.label];
-      keys.push(this._pathKey(path));
-      if (item.items.length > 0 && this._isExpanded(item)) {
+      const key = this._pathKey(path);
+      keys.push(key);
+      if (item.items.length > 0 && this._isExpanded(item, key)) {
         this._collectVisibleKeys(item.items, path, keys);
       }
     }
@@ -235,10 +253,10 @@ export class ArcTreeView extends LitElement {
         ${(items || []).map((item, idx) => {
           const children = item.items;
           const hasChildren = children.length > 0;
-          const expanded = this._isExpanded(item);
-          const isSelected = this._selected === item.label;
           const path = [...parentPath, item.label];
           const key = this._pathKey(path);
+          const expanded = this._isExpanded(item, key);
+          const isSelected = this._selected === key;
 
           return html`
             <li class="tree__item" role="none" part="item">
@@ -255,7 +273,7 @@ export class ArcTreeView extends LitElement {
                 }}
                 @click=${(e) => {
                   this._selectItem(item, path);
-                  if (hasChildren) this._toggleExpand(item, e);
+                  if (hasChildren) this._toggleExpand(item, path, e);
                 }}
                 @keydown=${(e) => this._onKeyDown(e, item, path, hasChildren)}
                 part="row"
