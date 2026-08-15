@@ -5,10 +5,14 @@
  * and by the keyboard, arc-change reporting the new order as original indices
  * on detail.value, and `disabled` muting both input paths.
  *
- * Two tests are marked BUG. The component hides its slotted children and
- * renders a mirror of them — but the mirror is `item.node.textContent`, so all
- * markup inside an item is discarded; and the rows carry `aria-grabbed`, which
- * ARIA 1.1 deprecated. See test-findings.md.
+ * No BUG pins remain. The component hid its slotted children and rendered a
+ * mirror of them, and the mirror was `item.node.textContent` — so every element
+ * inside an item was discarded (#41); and the rows carried `aria-grabbed`,
+ * deprecated in ARIA 1.1 and implemented by nothing (#42). Rows project their
+ * child through a per-index named slot now, so read a row's content off the
+ * assigned nodes rather than off the shadow node — `labels()` below does, and a
+ * `<slot>` element's own textContent is always '', which is how an assertion
+ * against it passes for the wrong reason. See test-findings.md.
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, settle, keyOn, record } from './helpers.js';
@@ -30,7 +34,18 @@ async function list(attrs = '', items = ITEMS) {
 }
 
 const rows = (el) => [...el.shadowRoot.querySelectorAll('[part="item"]')];
-const labels = (el) => rows(el).map((r) => r.textContent.trim());
+
+/**
+ * What each row actually shows, read through its slot.
+ *
+ * The row's own textContent is '' — its content is a `<slot>`, and a slot
+ * element never has text of its own. Reading it directly is the trap that makes
+ * a rendering assertion unfalsifiable.
+ */
+const projected = (row) =>
+  [...row.querySelectorAll('slot')].flatMap((slot) => slot.assignedNodes({ flatten: true }));
+const labels = (el) =>
+  rows(el).map((r) => projected(r).map((n) => n.textContent).join('').trim());
 
 /** Drag row `from` onto row `to`, as the browser sequences it. */
 async function dragRow(el, from, to) {
@@ -75,28 +90,59 @@ describe('arc-sortable-list rendering', () => {
     expect(rows(el)).to.have.lengthOf(0);
   });
 
-  // BUG: the row content is `${item.node?.textContent ?? ''}`
-  // (sortable-list.js:350). The component hides the slotted children and
-  // renders a mirror of them, but the mirror is text only — every element
-  // inside an item is discarded. An item carrying an avatar, a badge, a link or
-  // any nested arc-* component renders as a bare string.
-  //
-  // check-slot-hydration.js describes exactly this hide-and-mirror shape; what
-  // it cannot see is that the mirror is lossy.
-  it('BUG: markup inside an item is discarded, leaving only its text', async () => {
+  // Was a BUG pin (finding #41). The row content was
+  // `${item.node?.textContent ?? ''}` — a text-only mirror of the slotted
+  // child, so an avatar, a badge, a link or any nested arc-* component rendered
+  // as a bare string. Nothing was lost permanently, since the original stayed
+  // in the light DOM behind the hidden slot host; it simply never reached the
+  // screen. check-slot-hydration.js describes exactly this hide-and-mirror
+  // shape, and what it cannot see is that a mirror is lossy.
+  it('projects the item itself, markup and all', async () => {
     const el = await list('', `
       <div><strong>Bold</strong> <em>and</em> more</div>
       <div>Plain</div>
     `);
 
-    const content = el.shadowRoot.querySelector('[part="content"]');
-    expect(content.textContent.replace(/\s+/g, ' ').trim()).to.equal('Bold and more');
-    expect(content.querySelector('strong') === null, 'the markup did not survive').to.equal(true);
-    expect(content.children.length, 'the row holds text, no elements at all').to.equal(0);
+    const assigned = projected(rows(el)[0]);
+    expect(assigned, 'the real element is what the row shows').to.have.lengthOf(1);
+    expect(assigned[0].querySelector('strong'), 'the markup survives').to.not.equal(null);
+    expect(assigned[0].textContent.replace(/\s+/g, ' ').trim()).to.equal('Bold and more');
+  });
 
-    // And the original markup is still in the light DOM, just hidden — so the
-    // information is present and simply not rendered.
-    expect(el.querySelector('strong'), 'the real item is intact underneath').to.not.equal(null);
+  it('projects a nested component, not its text', async () => {
+    // The case that actually motivated the finding: a component inside an item
+    // used to be flattened to whatever text it happened to contain.
+    const el = await list('', '<div><arc-tag>Draft</arc-tag></div><div>Plain</div>');
+    const assigned = projected(rows(el)[0]);
+    expect(assigned[0].querySelector('arc-tag')).to.not.equal(null);
+  });
+
+  it('keeps each row pointed at its own child after a reorder', async () => {
+    // The slots are named by *original* index and the rows are drawn in the
+    // current order, so a reorder must move the pairing rather than the names.
+    const el = await list();
+    await dragRow(el, 0, 2);
+    expect(labels(el)).to.deep.equal(['Bravo', 'Charlie', 'Alpha']);
+    expect(rows(el).every((r) => projected(r).length === 1), 'one child per row').to.equal(true);
+  });
+
+  it('adopts a child added after mount', async () => {
+    // The handler is additive rather than a rebuild — naming a child takes it
+    // out of the default slot, so the next slotchange reports an empty
+    // assignment and a rebuild would empty the list one frame after filling it.
+    const el = await list();
+    el.insertAdjacentHTML('beforeend', '<div>Delta</div>');
+    await settle(el);
+
+    expect(labels(el)).to.deep.equal(['Alpha', 'Bravo', 'Charlie', 'Delta']);
+  });
+
+  it('drops the row for a child that is removed', async () => {
+    const el = await list();
+    el.removeChild(el.children[1]);
+    await settle(el);
+
+    expect(labels(el)).to.deep.equal(['Alpha', 'Charlie']);
   });
 });
 
@@ -275,27 +321,62 @@ describe('arc-sortable-list disabled', () => {
 });
 
 describe('arc-sortable-list ARIA state', () => {
-  // BUG: aria-grabbed (sortable-list.js:337) was deprecated in ARIA 1.1 and is
-  // not implemented by current assistive technology — the drag-and-drop module
-  // it belonged to was withdrawn. It is rendered on every row, always, as
-  // "true" or "false".
+  // Was two BUG pins (finding #42). aria-grabbed was deprecated in ARIA 1.1
+  // along with the whole drag-and-drop module it belonged to, is implemented by
+  // no current assistive technology, and was rendered on every row always.
+  // Nothing else in the library used it.
   //
-  // The accessible replacement is what this component already does elsewhere:
-  // announce the state in the row's text or a live region. Nothing else in the
-  // library uses aria-grabbed.
-  it('BUG: rows carry the deprecated aria-grabbed attribute', async () => {
+  // It has no replacement attribute, and it needs none here: the component
+  // already announces every step of a keyboard move in a live region, and the
+  // rows already carry aria-roledescription="sortable item".
+  it('carries no aria-grabbed', async () => {
     const el = await list();
-    expect(rows(el).map((r) => r.getAttribute('aria-grabbed')))
-      .to.deep.equal(['false', 'false', 'false']);
+    expect(rows(el).some((r) => r.hasAttribute('aria-grabbed'))).to.equal(false);
   });
 
-  it('flips aria-grabbed on the picked-up row', async () => {
+  // What replaces aria-grabbed, and the reason removing it was not enough on
+  // its own: the attribute was dead, but it was the only ARIA state the rows
+  // carried, so the whole keyboard reorder protocol was announced by nothing.
+  // arc-kanban implements the identical protocol and announces every step.
+  const live = (el) => el.shadowRoot.querySelector('[aria-live]');
+
+  it('announces each step of a keyboard move', async () => {
+    const el = await list();
+    expect(live(el), 'there is a live region').to.not.equal(null);
+
+    keyOn(rows(el)[1], ' ');
+    await settle(el);
+    expect(live(el).textContent).to.contain('Bravo').and.to.contain('selected');
+
+    keyOn(rows(el)[1], 'Enter');
+    await settle(el);
+    expect(live(el).textContent).to.contain('picked up');
+
+    keyOn(rows(el)[1], 'ArrowDown');
+    await settle(el);
+    keyOn(rows(el)[2], 'Enter');
+    await settle(el);
+    expect(live(el).textContent).to.contain('dropped').and.to.contain('Position 3 of 3');
+
+    expect(rows(el).some((r) => r.hasAttribute('aria-grabbed'))).to.equal(false);
+  });
+
+  it('says a cancelled move was cancelled, and nothing about where', async () => {
+    // Escape abandons the move and restores the original order, so there is no
+    // position to report — saying one would be a lie about what happened.
     const el = await list();
     keyOn(rows(el)[1], ' ');
     await settle(el);
     keyOn(rows(el)[1], 'Enter');
     await settle(el);
+    keyOn(rows(el)[1], 'Escape');
+    await settle(el);
 
-    expect(rows(el)[1].getAttribute('aria-grabbed')).to.equal('true');
+    expect(live(el).textContent.trim()).to.equal('Move cancelled.');
+  });
+
+  it('stays quiet until something happens', async () => {
+    const el = await list();
+    expect(live(el).textContent.trim(), 'no announcement on mount').to.equal('');
   });
 });

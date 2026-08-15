@@ -20,6 +20,14 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
   static properties = {
     disabled: flag(false),
     _items: { state: true },
+    /**
+     * What the live region says. Removing `aria-grabbed` (finding #42) left the
+     * keyboard reorder protocol announced by nothing at all — the attribute was
+     * dead, but it was the only ARIA state the rows carried. arc-kanban is the
+     * library's reference for this exact protocol and announces every step, so
+     * this component does now too.
+     */
+    _announcement: { state: true },
     _dragIndex: { state: true },
     _overIndex: { state: true },
     _kbSelected: { state: true },
@@ -123,12 +131,25 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
 
       /* Hidden default slot for collecting children */
       .sortable__slot-host { display: none; }
+
+      .sortable__sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
     `,
   ];
 
   constructor() {
     super();
     this._items = [];
+    this._announcement = '';
     this._dragIndex = -1;
     this._overIndex = -1;
     this._kbSelected = -1;
@@ -137,12 +158,65 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
 
   /* ---- Slot management ---- */
 
+  /**
+   * Adopt children into per-row slots, and stop discarding their markup.
+   *
+   * The rows used to render `item.node.textContent`, so everything inside an
+   * item — an avatar, a badge, a link, a nested arc-* component — arrived as a
+   * bare string (finding #41). The original markup was never lost, since the
+   * light DOM kept it behind a hidden slot host; it simply never reached the
+   * screen. `arc-virtual-list` already renders per-index slots, so the shape
+   * was established; the difference is that its consumer writes the
+   * `slot="item-N"` attribute and here the component assigns it, because the
+   * consumer authors an ordinary list and this component is what reorders it.
+   *
+   * That makes the handler **additive** rather than a replace. Naming a child
+   * takes it out of the default slot, so the very next `slotchange` reports an
+   * empty assignment — rebuilding `_items` from it, as the old version did,
+   * would empty the list one frame after filling it.
+   */
   _onSlotChange(e) {
-    const children = e.target.assignedElements({ flatten: true });
-    this._items = children.map((el, i) => ({
-      node: el,
-      originalIndex: i,
-    }));
+    const incoming = e.target.assignedElements({ flatten: true });
+    if (incoming.length > 0) {
+      const from = this._items.length;
+      const added = incoming.map((el, i) => ({ node: el, originalIndex: from + i }));
+      for (const item of added) item.node.slot = `item-${item.originalIndex}`;
+      this._items = [...this._items, ...added];
+    }
+
+    this._pruneRemoved();
+  }
+
+  /**
+   * A row whose child has left the light DOM.
+   *
+   * The default slot cannot report this: the child sits in a *named* slot by
+   * then, so removing it fires slotchange on that row's slot and not on the
+   * collector. Each row listens, which is also the only event that arrives when
+   * a child is removed while nothing else changes.
+   */
+  _onRowSlotChange() {
+    this._pruneRemoved();
+  }
+
+  _pruneRemoved() {
+    const live = this._items.filter((item) => item.node.parentElement === this);
+    if (live.length !== this._items.length) this._items = live;
+  }
+
+  /** Row text, for the announcements. */
+  _labelAt(index) {
+    return this._items[index]?.node?.textContent?.trim() || `Item ${index + 1}`;
+  }
+
+  _announce(message) {
+    this._announcement = message;
+  }
+
+  _announcePlaced(index) {
+    this._announce(
+      `${this._labelAt(index)} dropped. Position ${index + 1} of ${this._items.length}.`,
+    );
   }
 
   /* ---- Drag and drop ---- */
@@ -193,12 +267,14 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
         if (this._kbMoving) {
           // Confirm placement
           this._kbMoving = false;
+          this._announcePlaced(index);
           this._kbSelected = -1;
           this._fireOrderChange();
         } else {
           // Select item for moving
           this._kbSelected = index;
           this._kbMoving = false;
+          this._announce(`${this._labelAt(index)} selected. Press Enter to pick it up.`);
         }
         break;
 
@@ -206,9 +282,11 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
         if (this._kbSelected === index && !this._kbMoving) {
           e.preventDefault();
           this._kbMoving = true;
+          this._announce(`${this._labelAt(index)} picked up. Use the arrow keys to move it.`);
         } else if (this._kbMoving) {
           e.preventDefault();
           this._kbMoving = false;
+          this._announcePlaced(index);
           this._kbSelected = -1;
           this._fireOrderChange();
         }
@@ -216,6 +294,9 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
 
       case 'Escape':
         e.preventDefault();
+        // Deliberately silent about *where* it landed: Escape abandons the move
+        // and the original order is restored, so there is nothing to report.
+        if (this._kbMoving || this._kbSelected >= 0) this._announce('Move cancelled.');
         this._kbMoving = false;
         this._kbSelected = -1;
         break;
@@ -309,6 +390,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
       <div class="sortable__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
+      <div class="sortable__sr" role="status" aria-live="polite">${this._announcement}</div>
       <div
         class="sortable"
         part="list"
@@ -334,7 +416,6 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
               part="item"
               role="option"
               tabindex="0"
-              aria-grabbed=${isDragging || isKbMoving ? 'true' : 'false'}
               aria-roledescription="sortable item"
               draggable="true"
               @dragstart=${(e) => this._onDragStart(e, i)}
@@ -348,7 +429,10 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
                 ${this._renderGripDots()}
               </div>
               <div class="sortable__content" part="content">
-                ${item.node?.textContent ?? ''}
+                <slot
+                  name="item-${item.originalIndex}"
+                  @slotchange=${this._onRowSlotChange}
+                ></slot>
               </div>
             </div>
           `;

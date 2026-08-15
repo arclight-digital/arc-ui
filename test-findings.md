@@ -1570,7 +1570,12 @@ which is exactly the gap the base mixin leaves open (audit bug 4). 25 tests.
 
 ## arc-file-upload
 
-### 40. `disabled` is drawn in CSS only, so the keyboard path stays live — **a11y / correctness**
+### 40. `disabled` is drawn in CSS only, so the keyboard path stays live — **a11y / correctness — FIXED as #61**
+
+Closed by the library-wide pass on the same shape: `disabled` enforced in the
+stylesheet, which the keyboard does not read. `arc-file-upload` was one of the
+seven components #61 fixed, and the guard is now
+`test/disabled-focus-sweep.test.js` rather than a per-component pin.
 
 `:host([disabled]) { opacity: .5; pointer-events: none }` (`input/file-upload.js:36`)
 is the whole of it. The dropzone's `tabindex="0"` is hardcoded
@@ -1612,7 +1617,31 @@ native input being cleared so the same file can be picked twice.
 
 ## arc-sortable-list
 
-### 41. The rendered mirror is text-only, so item markup is discarded — **correctness**
+### 41. The rendered mirror is text-only, so item markup is discarded — **correctness — FIXED**
+
+**Fixed with per-index named slots**, which is the `arc-virtual-list` shape the
+finding pointed at, with one difference: there the *consumer* writes
+`slot="item-N"`, and here the component assigns it — because a consumer of a
+sortable list authors an ordinary list and this component is what reorders it.
+Slots are named by **original** index and rows are drawn in the current order,
+so a reorder moves the pairing rather than the names.
+
+**That makes the slotchange handler additive rather than a rebuild**, and it is
+the part that would silently break a naive version: naming a child takes it out
+of the default slot, so the very next `slotchange` reports an empty assignment.
+Rebuilding `_items` from it — as the old handler did — would empty the list one
+frame after filling it.
+
+Removal needed a second listener for the same reason. Once a child is in a named
+slot, removing it fires `slotchange` on *that row's* slot and not on the
+collector, so each row listens too. Both directions are pinned: a child added
+after mount appears, a child removed leaves.
+
+**And the test had to change how it reads a row.** A `<slot>` element's own
+`textContent` is always `''`, so the pre-existing `labels()` helper started
+returning empty strings against a component that was now rendering correctly.
+Reading through `assignedNodes()` is the fix — and the same trap the `arc-tabs`
+tests already carry a note about.
 
 The component hides its slotted children and renders a mirror of them, but the
 mirror is `${item.node?.textContent ?? ''}` (`input/sortable-list.js:350`). Every
@@ -1631,7 +1660,27 @@ mirror is **lossy**.
 - Rendering the node itself, or a `<slot name="item-N">` per row the way
   `arc-virtual-list` does (`virtual-list.test.js:108-116`), would preserve it.
 
-### 42. Rows carry the deprecated `aria-grabbed` — **a11y**
+### 42. Rows carry the deprecated `aria-grabbed` — **a11y — FIXED, and it needed more than a deletion**
+
+Removing the attribute was one line. What that exposed is the finding worth
+recording: **`aria-grabbed` was dead, but it was the only ARIA state the rows
+carried**, so deleting it left the entire keyboard reorder protocol — Space
+selects, Enter picks up, arrows move, Enter confirms, Escape abandons —
+announced by nothing at all.
+
+The component's own entry in this ledger says that protocol "is real and
+complete" and "is what makes the component usable at all on a tablet". It was
+complete visually and silent to a screen reader.
+
+So the fix is the attribute's removal **plus a live region**, modelled on
+`arc-kanban`, which implements the identical protocol and announces every step.
+Escape says only "Move cancelled" and deliberately reports no position: it
+restores the original order, so naming one would describe something that did not
+happen.
+
+**The general shape, which is the third instance of it in this pass:** removing
+a wrong thing can leave a gap the wrong thing was standing in front of. Check
+what the defect was doing before deleting it.
 
 `aria-grabbed` (`sortable-list.js:337`) was deprecated in ARIA 1.1 along with the
 whole drag-and-drop module, and is not implemented by current assistive
