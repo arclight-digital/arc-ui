@@ -183,15 +183,18 @@ describe('arc-range-slider keyboard', () => {
     expect(el.low).to.equal(before);
   });
 
-  // BUG: _onKeyDown (range-slider.js:325-332) clamps and then calls
-  // _fireInput() and _fireChange() unconditionally — there is no check that the
-  // value actually moved. A press against a rail therefore emits a full
-  // edit-and-commit pair for a range that did not change.
+  // Was a BUG pin (finding #38). _onKeyDown clamped and then called
+  // _fireInput() and _fireChange() unconditionally, so a press against a rail
+  // emitted a full edit-and-commit pair for a range that had not moved — one
+  // pair per key repeat. arc-change is the expensive half of the v3 contract by
+  // this component's own docs ("persisting to a database or triggering an
+  // expensive operation"), which is what made this the costliest instance of
+  // the shape after #19.
   //
-  // Every sibling control guards this: arc-knob asserts "a step against a rail
-  // clamps and stays silent" (knob.test.js:101), and arc-rating does the same
-  // (rating.test.js, "an unchanged value announces nothing").
-  it('BUG: a key press at a rail still announces an input and a change', async () => {
+  // Every sibling control already guarded it: arc-knob asserts "a step against
+  // a rail clamps and stays silent" (knob.test.js:101), and arc-rating does the
+  // same.
+  it('a key at the low rail stays silent', async () => {
     const el = await slider('low="0" high="100" step="5"');
     const seen = record(el);
 
@@ -199,8 +202,51 @@ describe('arc-range-slider keyboard', () => {
     await settle(el);
 
     expect(el.low, 'the value did not move').to.equal(0);
-    expect(seen.map(([k]) => k), 'but a full commit pair was emitted')
-      .to.deep.equal(['input', 'change']);
+    expect(seen.map(([k]) => k), 'so neither event fires').to.deep.equal([]);
+  });
+
+  it('a key at the high rail stays silent', async () => {
+    const el = await slider('low="0" high="100" step="5"');
+    const seen = record(el);
+
+    keyOn(thumb(el, 'high'), 'ArrowRight');
+    await settle(el);
+
+    expect(el.high).to.equal(100);
+    expect(seen.map(([k]) => k)).to.deep.equal([]);
+  });
+
+  it('a thumb pinned against its sibling stays silent too', async () => {
+    // The bound that is not a rail: `low` cannot pass `high`. Same guard, and
+    // the case a min/max-only check would miss.
+    const el = await slider('low="50" high="50" step="5"');
+    const seen = record(el);
+
+    keyOn(thumb(el, 'low'), 'ArrowRight');
+    await settle(el);
+
+    expect(el.low).to.equal(50);
+    expect(seen.map(([k]) => k)).to.deep.equal([]);
+  });
+
+  it('still claims the key at a rail, so the page does not scroll', async () => {
+    const el = await slider('low="0" high="100" step="5"');
+    const event = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true });
+    thumb(el, 'low').dispatchEvent(event);
+    await settle(el);
+    expect(event.defaultPrevented).to.equal(true);
+  });
+
+  it('still announces a move that does happen', async () => {
+    // Anti-vacuity for all four above.
+    const el = await slider('low="20" high="100" step="5"');
+    const seen = record(el);
+
+    keyOn(thumb(el, 'low'), 'ArrowLeft');
+    await settle(el);
+
+    expect(el.low).to.equal(15);
+    expect(seen.map(([k]) => k)).to.deep.equal(['input', 'change']);
   });
 });
 

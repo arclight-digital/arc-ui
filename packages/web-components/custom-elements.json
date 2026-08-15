@@ -21673,16 +21673,16 @@
             {
               "name": "arc-input",
               "type": {
-                "text": "CustomEvent<{ low: number, high: number }>"
+                "text": "CustomEvent<{ value: [number, number], low: number, high: number }>"
               },
-              "description": "Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview."
+              "description": "Fired continuously as the user drags either thumb. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for real-time filtering or preview. Not fired when a key press leaves the range unchanged."
             },
             {
               "name": "arc-change",
               "type": {
-                "text": "CustomEvent<{ low: number, high: number }>"
+                "text": "CustomEvent<{ value: [number, number], low: number, high: number }>"
               },
-              "description": "Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation."
+              "description": "Fired once when the user releases a thumb, indicating the final committed range. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for persisting to a database or triggering an expensive operation. Not fired when a key press leaves the range unchanged."
             }
           ],
           "attributes": [

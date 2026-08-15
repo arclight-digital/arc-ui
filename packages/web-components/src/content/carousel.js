@@ -199,7 +199,16 @@ export class ArcCarousel extends DeclaredPropsMixin(LitElement) {
       next = Math.max(0, Math.min(index, slides.length - 1));
     }
 
-    if (next === this._current && index === next) return;
+    // The no-op guard, and it used to be `next === this._current && index ===
+    // next` — so when clamping *changed* the index the second condition was
+    // false, the guard did not fire, and the component re-assigned the same
+    // slide, scrolled to it again and announced a change that did not happen
+    // (finding #19). The arrow buttons were safe because they carry ?disabled
+    // at the rails; `_onKeydown` calls _prev()/_next() directly and reached it.
+    //
+    // Where the request pointed before clamping is not the component's
+    // business — only whether the slide moved is.
+    if (next === this._current) return;
     this._current = next;
 
     const viewport = this.shadowRoot.querySelector('.carousel__viewport');

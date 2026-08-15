@@ -233,16 +233,13 @@ describe('arc-carousel navigation', () => {
     expect(nextArrow(el).disabled).to.equal(false);
   });
 
-  // BUG: the no-op guard in _goTo (carousel.js:199) is
-  // `if (next === this._current && index === next) return;`. When clamping
-  // changes the index the second condition is false, so the guard does not
-  // fire: _goTo re-assigns the same index, scrolls again, and announces a
-  // change that did not happen.
-  //
-  // The arrow buttons are `?disabled` at the rails (carousel.js:313, 320), so
-  // that path is safe. _onKeydown (carousel.js:270) has no such guard — it
-  // calls _prev()/_next() directly — so the keyboard reaches it.
-  it('BUG: an arrow key at the rails announces a change that did not happen', async () => {
+  // Was a BUG pin (finding #19). The no-op guard read
+  // `next === this._current && index === next`, so when clamping *changed* the
+  // index the second condition was false and the guard did not fire: _goTo
+  // re-assigned the same slide, scrolled again, and announced a change that had
+  // not happened. The arrow buttons were safe (`?disabled` at the rails); the
+  // keyboard calls _prev()/_next() directly and reached it.
+  it('stays silent at the first rail', async () => {
     const el = await carousel();
     el.loop = false;
     await settle(el);
@@ -252,7 +249,35 @@ describe('arc-carousel navigation', () => {
     await settle(el);
 
     expect(el._current, 'the slide did not move').to.equal(0);
-    expect(seen, 'but a change was announced anyway').to.deep.equal([['change', 0]]);
+    expect(seen, 'so nothing is announced').to.deep.equal([]);
+  });
+
+  it('stays silent at the last rail', async () => {
+    const el = await carousel();
+    el.loop = false;
+    el._current = 2;
+    await settle(el);
+
+    const seen = record(el, ['arc-change']);
+    keyOn(viewport(el), 'ArrowRight');
+    await settle(el);
+
+    expect(el._current).to.equal(2);
+    expect(seen).to.deep.equal([]);
+  });
+
+  it('still announces a move that does happen', async () => {
+    // Anti-vacuity: a _goTo that returned early on everything would pass both.
+    const el = await carousel();
+    el.loop = false;
+    await settle(el);
+
+    const seen = record(el, ['arc-change']);
+    keyOn(viewport(el), 'ArrowRight');
+    await settle(el);
+
+    expect(el._current).to.equal(1);
+    expect(seen).to.deep.equal([['change', 1]]);
   });
 });
 

@@ -32,7 +32,7 @@ marker are still open.
 | 8 | `arc-rating` | **FIXED** — `required` was satisfied by an unrated control; the form submitted `"0"` |
 | 21-23 | `arc-tree-view` | expansion and selection keyed on label, so same-named nodes share state |
 | 31 | `arc-context-menu` | a second right-click while open leaves the menu at the old point |
-| 19 | `arc-carousel` | an arrow key at the rails announces a move that did not happen |
+| 19 | `arc-carousel` | **FIXED** — an arrow key at the rails announced a move that did not happen |
 | 14, 15 | `arc-theme-toggle` | setting `theme` from script does not sync the page; two toggles desync |
 
 ### Accessibility — invalid or unusable output
@@ -515,7 +515,15 @@ in DOM order, so `row` renders them to its left.
 
 ## arc-carousel
 
-### 19. An arrow key at the rails announces a move that did not happen — **correctness**
+### 19. An arrow key at the rails announces a move that did not happen — **correctness — FIXED**
+
+**Fixed by deleting the second clause**, exactly as the finding predicted:
+`if (next === this._current) return;`. What made the original wrong is worth
+stating, because it is a guard-design mistake rather than a typo — it asked
+*"did the request also land where it pointed?"* alongside *"did the slide
+move?"*. Where a request pointed before clamping is not the component's
+business; only whether anything moved is. Pinned at both rails now, with a
+move that does happen as the anti-vacuity pair.
 
 The no-op guard in `_goTo` (`content/carousel.js:199`) is:
 
@@ -1334,7 +1342,17 @@ Swept across the component sources — three occurrences, all two-member enums:
 
 ## arc-range-slider
 
-### 38. A key press at a rail announces a change that did not happen — **correctness**
+### 38. A key press at a rail announces a change that did not happen — **correctness — FIXED**
+
+**Fixed by clamping first, comparing, then announcing.** The order is the
+whole fix: the old code clamped *into* the property and fired unconditionally,
+so there was no un-clamped value left to compare against.
+
+Four cases pinned rather than the one the finding named — the low rail, the
+high rail, **a thumb pinned against its sibling** (`low` cannot pass `high`,
+which is a bound that is not a rail and which a min/max-only check would miss),
+and that the key is still `preventDefault`ed at a rail so the page does not
+scroll under a slider that correctly refused to move.
 
 `_onKeyDown` (`input/range-slider.js:325-332`) clamps the new value and then
 calls `_fireInput()` and `_fireChange()` unconditionally — nothing checks that
@@ -1354,7 +1372,15 @@ commit event rather than a notification.
 - Pinned by: `test/range-slider.test.js` — "BUG: a key press at a rail still
   announces an input and a change".
 
-### 39. The canonical `detail.value` is undocumented — **doc gap**
+### 39. The canonical `detail.value` is undocumented — **doc gap — FIXED**
+
+Both `@fires` annotations now declare
+`{ value: [number, number], low: number, high: number }`, so the manifest, the
+six generated wrappers and the docs site describe the detail the component
+actually emits. The runtime was always right; `event-conventions.js` requires
+`detail.value` and it was there — the docs were the half that understated it,
+which is the half a consumer reads. Both annotations also now say the events do
+not fire when a key press leaves the range unchanged (#38).
 
 Both events carry `detail.value` as `[low, high]` alongside the named keys
 (`range-slider.js:241, 252`), which is what `scripts/checks/event-conventions.js`

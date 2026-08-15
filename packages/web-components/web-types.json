@@ -10628,7 +10628,7 @@
         },
         {
           "name": "arc-range-slider",
-          "description": "Dual-thumb range slider for selecting a numeric interval within a defined range, with\naccent-primary fill between the thumbs and live value display.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview.\n- **arc-change** - Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation.\n\n### **CSS Parts:**\n - **range-slider**\n- **header**\n- **label**\n- **values**\n- **track**\n- **rail**\n- **fill**\n- **thumb-low**\n- **thumb-high**",
+          "description": "Dual-thumb range slider for selecting a numeric interval within a defined range, with\naccent-primary fill between the thumbs and live value display.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously as the user drags either thumb. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for real-time filtering or preview. Not fired when a key press leaves the range unchanged.\n- **arc-change** - Fired once when the user releases a thumb, indicating the final committed range. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for persisting to a database or triggering an expensive operation. Not fired when a key press leaves the range unchanged.\n\n### **CSS Parts:**\n - **range-slider**\n- **header**\n- **label**\n- **values**\n- **track**\n- **rail**\n- **fill**\n- **thumb-low**\n- **thumb-high**",
           "doc-url": "",
           "attributes": [
             {
@@ -10729,13 +10729,13 @@
           "events": [
             {
               "name": "arc-input",
-              "type": "CustomEvent<{ low: number, high: number }>",
-              "description": "Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview."
+              "type": "CustomEvent<{ value: [number, number], low: number, high: number }>",
+              "description": "Fired continuously as the user drags either thumb. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for real-time filtering or preview. Not fired when a key press leaves the range unchanged."
             },
             {
               "name": "arc-change",
-              "type": "CustomEvent<{ low: number, high: number }>",
-              "description": "Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation."
+              "type": "CustomEvent<{ value: [number, number], low: number, high: number }>",
+              "description": "Fired once when the user releases a thumb, indicating the final committed range. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for persisting to a database or triggering an expensive operation. Not fired when a key press leaves the range unchanged."
             }
           ],
           "js": {
@@ -10810,13 +10810,13 @@
             "events": [
               {
                 "name": "arc-input",
-                "type": "CustomEvent<{ low: number, high: number }>",
-                "description": "Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview."
+                "type": "CustomEvent<{ value: [number, number], low: number, high: number }>",
+                "description": "Fired continuously as the user drags either thumb. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for real-time filtering or preview. Not fired when a key press leaves the range unchanged."
               },
               {
                 "name": "arc-change",
-                "type": "CustomEvent<{ low: number, high: number }>",
-                "description": "Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation."
+                "type": "CustomEvent<{ value: [number, number], low: number, high: number }>",
+                "description": "Fired once when the user releases a thumb, indicating the final committed range. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for persisting to a database or triggering an expensive operation. Not fired when a key press leaves the range unchanged."
               }
             ]
           }

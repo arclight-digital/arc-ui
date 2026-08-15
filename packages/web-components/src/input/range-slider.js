@@ -17,8 +17,8 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} showValues - Whether to display the numeric "low – high" readout in the header.
  * @prop {boolean} disabled - Disables interaction, reducing opacity and blocking pointer events.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the track and thumbs.
- * @fires {CustomEvent<{ low: number, high: number }>} arc-input - Fired continuously as the user drags either thumb. Detail contains `{ low, high }`. Use for real-time filtering or preview.
- * @fires {CustomEvent<{ low: number, high: number }>} arc-change - Fired once when the user releases a thumb, indicating the final committed range. Detail contains `{ low, high }`. Use for persisting to a database or triggering an expensive operation.
+ * @fires {CustomEvent<{ value: [number, number], low: number, high: number }>} arc-input - Fired continuously as the user drags either thumb. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for real-time filtering or preview. Not fired when a key press leaves the range unchanged.
+ * @fires {CustomEvent<{ value: [number, number], low: number, high: number }>} arc-change - Fired once when the user releases a thumb, indicating the final committed range. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for persisting to a database or triggering an expensive operation. Not fired when a key press leaves the range unchanged.
  * @slot none
  * @csspart range-slider
  * @csspart header
@@ -330,11 +330,25 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
         return;
     }
     e.preventDefault();
-    if (thumb === 'low') {
-      this.low = this._snap(this._clamp(this.low + delta, this.min, this.high));
-    } else {
-      this.high = this._snap(this._clamp(this.high + delta, this.low, this.max));
-    }
+
+    // Clamp first, then compare, then announce — finding #38. This used to fire
+    // an input *and* a change unconditionally, so holding a key against a rail
+    // emitted a full edit-and-commit pair per repeat for a range that had not
+    // moved. arc-change is the expensive half of the v3 contract by its own
+    // docs ("persisting to a database or triggering an expensive operation"),
+    // which is what made this the costliest instance of the shape after #19.
+    //
+    // The key stays claimed above either way: at a rail it is still the
+    // slider's key, and letting it through would scroll the page.
+    const before = thumb === 'low' ? this.low : this.high;
+    const after =
+      thumb === 'low'
+        ? this._snap(this._clamp(this.low + delta, this.min, this.high))
+        : this._snap(this._clamp(this.high + delta, this.low, this.max));
+    if (after === before) return;
+
+    if (thumb === 'low') this.low = after;
+    else this.high = after;
     this._fireInput();
     this._fireChange();
   }
