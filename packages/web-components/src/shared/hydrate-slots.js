@@ -54,3 +54,42 @@ export function hydrateSlots(host) {
     document.addEventListener('DOMContentLoaded', fire, { once: true });
   }
 }
+
+/**
+ * Tell the component that renders this element that its state moved.
+ *
+ * The other half of the same problem this file is about. A component that
+ * mirrors its light-DOM children into its own markup reads their properties at
+ * *its* render time — `arc-tabs` reads `label` and `disabled` off its arc-tab
+ * children, `arc-segmented-control` reads `disabled` off its arc-options,
+ * `arc-context-menu` reads `label` off its arc-menu-items. Those children are
+ * light-DOM siblings, not reactive inputs of the owner, so changing one repaints
+ * nothing: the tab stays clickable after being disabled, the menu row keeps its
+ * old text.
+ *
+ * It was found three times in one pass (findings #4, #6 and #32) and is the
+ * same three lines each time, so it lives here rather than in three components.
+ *
+ * Guarded on the previous value being **defined**, which is the part that is
+ * easy to get wrong: on an element's first update every entry's old value is
+ * `undefined`, and asking the owner to re-render then would add a second render
+ * per child on every mount — during the owner's own render, at that.
+ *
+ * @param {Element} child - The element whose state changed.
+ * @param {Map<string, unknown>} changed - Lit's changed-properties map.
+ * @param {string[]} names - Properties the owner renders from.
+ */
+export function notifyOwner(child, changed, names) {
+  const moved = names.some((name) => changed.has(name) && changed.get(name) !== undefined);
+  if (!moved) return;
+
+  // The nearest Lit ancestor, rather than a tag name: arc-option has four
+  // different owners and arc-menu-item has two, so naming one would be wrong
+  // for the others and a per-component list would be a table to keep in step.
+  for (let node = child.parentElement; node; node = node.parentElement) {
+    if (typeof node.requestUpdate === 'function') {
+      node.requestUpdate();
+      return;
+    }
+  }
+}

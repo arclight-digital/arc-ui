@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} placeholder - Placeholder text displayed when the input is empty. Use it to communicate the scope of the search.
  * @prop {string} value - The current value of the input. Set externally to control the input state programmatically.
  * @prop {string} icon - Icon name displayed before the input. Accepts any Phosphor icon name.
+ * @prop {string} label - Accessible name for the input, applied as `aria-label`. Defaults to "Search". A placeholder is not a name: it is announced inconsistently and disappears the moment the user types.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every keystroke with detail: { value }.
  * @fires {CustomEvent<{ value: string }>} arc-submit - Fired when the user presses Enter with detail: { value }.
  * @slot hint
@@ -23,6 +24,7 @@ export class ArcCommandBar extends LitElement {
     placeholder: { type: String },
     value: { type: String },
     icon: { type: String, reflect: true },
+    label: { type: String },
   };
 
   static styles = [
@@ -90,6 +92,7 @@ export class ArcCommandBar extends LitElement {
     this.placeholder = 'Search…';
     this.value = '';
     this.icon = 'magnifying-glass';
+    this.label = '';
   }
 
   _onInput(e) {
@@ -105,6 +108,13 @@ export class ArcCommandBar extends LitElement {
 
   _onKeyDown(e) {
     if (e.key === 'Enter') {
+      // Claim the key. Inside a <form>, Enter in a text input also triggers the
+      // form's implicit submission, so one press produced both an arc-submit
+      // and a native submit — the form submitted underneath the component that
+      // had just handled the same keystroke (finding #30). arc-form settles the
+      // equivalent case deliberately for arc-input, so the intended behaviour
+      // was already decided; this component simply never claimed the key.
+      e.preventDefault();
       this.dispatchEvent(
         new CustomEvent('arc-submit', {
           detail: { value: this.value },
@@ -126,6 +136,7 @@ export class ArcCommandBar extends LitElement {
           part="input"
           type="text"
           .value=${this.value}
+          aria-label=${this.label || 'Search'}
           placeholder=${this.placeholder}
           @input=${this._onInput}
           @keydown=${this._onKeyDown}

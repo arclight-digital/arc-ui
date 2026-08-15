@@ -8,10 +8,12 @@ const props = withDefaults(defineProps<{
   placeholder?: string;
   value?: string;
   icon?: string;
+  label?: string;
 }>(), {
   placeholder: 'Search…',
   value: '',
   icon: 'magnifying-glass',
+  label: '',
 });
 
 const emit = defineEmits<{
@@ -41,6 +43,7 @@ function onArcSubmit(payload: CustomEvent) {
     :placeholder="props.placeholder"
     :value="props.value"
     :icon="props.icon"
+    :label="props.label"
     @arc-input="onArcInput"
     @arc-submit="onArcSubmit"
   >

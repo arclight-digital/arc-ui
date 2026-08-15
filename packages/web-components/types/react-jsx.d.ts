@@ -249,6 +249,7 @@ declare module 'react' {
         placeholder?: string;
         value?: string;
         icon?: string;
+        label?: string;
       };
       'arc-command-group': ArcBaseAttributes & {
         heading?: string;
@@ -689,6 +690,7 @@ declare module 'react' {
       };
       'arc-menu-divider': ArcBaseAttributes;
       'arc-menu-item': ArcBaseAttributes & {
+        label?: string;
         shortcut?: string;
         disabled?: boolean;
         icon?: string;

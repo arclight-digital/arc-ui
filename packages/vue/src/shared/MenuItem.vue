@@ -5,11 +5,13 @@ import '@arclux/arc-ui/menu-item';
 defineOptions({ name: 'MenuItem' });
 
 const props = withDefaults(defineProps<{
+  label?: string;
   shortcut?: string;
   disabled?: boolean;
   icon?: string;
   value?: string;
 }>(), {
+  label: '',
   shortcut: '',
   icon: '',
   value: '',
@@ -18,6 +20,7 @@ const props = withDefaults(defineProps<{
 
 <template>
   <arc-menu-item
+    :label="props.label"
     :shortcut="props.shortcut"
     :disabled="props.disabled"
     :icon="props.icon"

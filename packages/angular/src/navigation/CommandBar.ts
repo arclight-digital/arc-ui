@@ -37,6 +37,13 @@ export class CommandBar {
     return this._el.icon;
   }
 
+  @Input() set label(value: string) {
+    this._el.label = value;
+  }
+  get label(): string {
+    return this._el.label;
+  }
+
   @Output() valueChange = new EventEmitter<string>();
 
   _onArcInput(event: CustomEvent) {

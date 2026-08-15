@@ -462,23 +462,26 @@ describe('dismissal contract: Escape while closed is inert', () => {
 describe('dismissal contract: the guard that swallows Escape', () => {
   afterEach(cleanup);
 
-  // Finding #85. `arc-context-menu._handleKeydown` opens with
+  // Was a BUG pin (finding #85). `arc-context-menu._handleKeydown` opened with
   //
   //     const selectable = this._selectableItems;
   //     if (selectable.length === 0) return;
   //
   // which exists for the arrow-key cases below it — they index into
   // `selectable` and would throw on an empty list. Escape needs none of that
-  // and is blocked by it anyway, so a context menu with no items renders a
-  // full-viewport backdrop that the keyboard cannot dismiss. The backdrop's own
-  // click handler still works, so it is dismissible by mouse and not by
-  // keyboard, which is the half that matters.
+  // and was blocked by it anyway, so a context menu with no items rendered a
+  // full-viewport backdrop the keyboard could not dismiss. The backdrop's click
+  // handler still worked, so it was dismissible by mouse and not by keyboard,
+  // which is the half that matters.
   //
-  // Narrower than it first looked, and worth stating precisely: *disabled*
-  // items still count as selectable, so the common "every command is disabled
-  // in this context" menu is fine. The reachable case is a menu whose items
+  // Fixed by handling Escape *before* the guard: dismissal does not depend on
+  // there being anything to select.
+  //
+  // Narrower than it first looked, and worth keeping stated: *disabled* items
+  // still count as selectable, so the common "every command is disabled in this
+  // context" menu was never affected. The reachable case is a menu whose items
   // have not arrived yet.
-  it('BUG: an empty arc-context-menu cannot be dismissed by Escape (#85)', async () => {
+  it('an empty arc-context-menu closes on Escape (#85)', async () => {
     const el = mount('<arc-context-menu></arc-context-menu>');
     await el.updateComplete;
     el.open = true;
@@ -489,7 +492,7 @@ describe('dismissal contract: the guard that swallows Escape', () => {
     await el.updateComplete;
     await settle();
 
-    expect(el.open, 'fixed? move the Escape case above the guard').to.equal(true);
+    expect(el.open).to.equal(false);
   });
 
   it('the same menu with one item closes on Escape', async () => {

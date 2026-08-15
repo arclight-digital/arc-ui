@@ -2462,7 +2462,8 @@ export default {
   "attrs": [
    "placeholder",
    "value",
-   "icon"
+   "icon",
+   "label"
   ],
   "slug": "command-bar"
  },
@@ -2754,6 +2755,7 @@ export default {
  },
  "arc-menu-item": {
   "attrs": [
+   "label",
    "shortcut",
    "disabled",
    "icon",

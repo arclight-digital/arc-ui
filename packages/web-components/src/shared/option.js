@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { notifyOwner } from './hydrate-slots.js';
 
 /**
  * Whether an `arc-option` element refuses selection.
@@ -52,23 +53,12 @@ export class ArcOption extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * Consumers render an arc-option's state into *their* shadow DOM — the
-   * option itself is `display: none`. So a change here is invisible until the
-   * owner re-renders, and nothing else asks it to (finding #6).
-   *
-   * Guarded on the previous value being defined: on the first update every
-   * entry's old value is undefined, and the owner is mid-render anyway.
+   * Consumers render an arc-option's state into *their* shadow DOM — the option
+   * itself is `display: none` — so a change here is invisible until the owner
+   * re-renders, and nothing else asks it to (finding #6).
    */
   updated(changed) {
-    const moved = (name) => changed.has(name) && changed.get(name) !== undefined;
-    if (!moved('disabled') && !moved('value') && !moved('selected')) return;
-
-    for (let node = this.parentElement; node; node = node.parentElement) {
-      if (typeof node.requestUpdate === 'function') {
-        node.requestUpdate();
-        return;
-      }
-    }
+    notifyOwner(this, changed, ['disabled', 'value', 'selected']);
   }
 
   render() {

@@ -201,12 +201,21 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
   _handleContextMenu(e) {
     e.preventDefault();
 
+    const wasOpen = this.open;
     this._returnFocus = deepActiveElement();
     this._x = e.clientX;
     this._y = e.clientY;
     this._activeIndex = -1;
 
     this.open = true;
+
+    // A second right-click while the menu is already open changes nothing Lit
+    // can see: `open` is unchanged, and `_x`/`_y` are deliberately not reactive
+    // state (see the note by the property declarations), so `updated()` never
+    // ran and the menu stayed at the first click — now pointing at the wrong
+    // target (finding #31). Reposition explicitly; the menu is already
+    // rendered, so there is nothing to wait for.
+    if (wasOpen) this._position.show();
 
     this.dispatchEvent(
       new CustomEvent('arc-open', {
@@ -251,7 +260,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
         detail: {
           value: item.selectionValue,
           item: {
-            label: item.label,
+            label: item.displayLabel,
             shortcut: item.shortcut,
             icon: item.icon,
             value: item.selectionValue,
@@ -267,6 +276,17 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
   }
 
   _handleKeydown(e) {
+    // Escape first, and before the arrow-key guard below. That guard returns
+    // early when there is nothing to move between, which also swallowed
+    // Escape — so an empty menu could be opened and not dismissed by the
+    // keyboard at all (finding #85). Dismissal does not depend on there being
+    // anything to select.
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      this._close();
+      return;
+    }
+
     const selectable = this._selectableItems;
     if (selectable.length === 0) return;
 
@@ -301,11 +321,6 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
         if (this._activeIndex >= 0) {
           this._selectItem(this._children[this._activeIndex], this._activeIndex);
         }
-        break;
-      }
-      case 'Escape': {
-        e.preventDefault();
-        this._close();
         break;
       }
     }
@@ -355,7 +370,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
               }}
             >
               ${child.icon ? html`<arc-icon name=${child.icon} size="16" class="item-icon" aria-hidden="true"></arc-icon>` : ''}
-              <span class="item-label">${child.label}</span>
+              <span class="item-label">${child.displayLabel}</span>
               ${child.shortcut ? html`<span class="item-shortcut">${child.shortcut}</span>` : ''}
             </button>
           `;

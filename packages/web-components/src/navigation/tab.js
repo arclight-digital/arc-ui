@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { notifyOwner } from '../shared/hydrate-slots.js';
 
 /**
  * An individual tab panel within a Tabs group. Each Tab renders a button in the tab bar and owns
@@ -34,12 +35,7 @@ export class ArcTab extends DeclaredPropsMixin(LitElement) {
    * stays clickable after being disabled.
    */
   updated(changed) {
-    // A *change*, not the initial assignment: on the first update every entry's
-    // previous value is undefined, and the group is mid-render anyway.
-    const moved = (name) => changed.has(name) && changed.get(name) !== undefined;
-    if (moved('label') || moved('disabled')) {
-      this.closest('arc-tabs')?.requestUpdate();
-    }
+    notifyOwner(this, changed, ['label', 'disabled']);
   }
 
   render() {

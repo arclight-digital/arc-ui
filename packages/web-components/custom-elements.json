@@ -29798,6 +29798,17 @@
               "description": "Icon name displayed before the input. Accepts any Phosphor icon name.",
               "attribute": "icon",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the input, applied as `aria-label`. Defaults to \"Search\". A placeholder is not a name: it is announced inconsistently and disappears the moment the user types.",
+              "attribute": "label"
             }
           ],
           "events": [
@@ -29843,6 +29854,15 @@
               "default": "'magnifying-glass'",
               "description": "Icon name displayed before the input. Accepts any Phosphor icon name.",
               "fieldName": "icon"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the input, applied as `aria-label`. Defaults to \"Search\". A placeholder is not a name: it is announced inconsistently and disappears the moment the user types.",
+              "fieldName": "label"
             }
           ],
           "superclass": {
@@ -33723,6 +33743,34 @@
             }
           ],
           "description": "hydrate-slots.js — deliver the slotchange that declarative shadow DOM eats.\n\nUnder DSD the parser attaches the shadow root and assigns the light-DOM\nchildren to their slots before any script runs. The element then upgrades\nand Lit adopts that tree rather than constructing it, so no new slot element is\ncreated and no assignment ever changes — and `slotchange`, which fires on\nassignment changes, never fires at all.\n\nComponents that mirror their children into their own markup and hide the\noriginals depend on that event for their content. Client-side they build\ntheir own shadow root, the slot is new, the event arrives, everything works\n— which is also why no test caught it. Server-rendered, they upgrade with\nnothing and render an empty mirror over hidden children: arc-segmented-control\nas an 8px sliver, arc-navigation-menu as a top bar with no navigation.\n\nDispatching the event the component was already listening for is deliberately\ndumber than calling its reader directly: there is one contract here, not one\nper component, and a handler that changes shape keeps working. Handlers must\nbe idempotent — they are read-and-store, and re-reading the same assignment\nis a no-op — which they are, since a real slotchange can fire any number of\ntimes for reasons unrelated to hydration.\n\nEnforced by scripts/checks/slot-hydration.js: a component that hides its slot\nhost and reads only on slotchange fails the build."
+        },
+        {
+          "kind": "function",
+          "name": "notifyOwner",
+          "parameters": [
+            {
+              "name": "child",
+              "description": "The element whose state changed.",
+              "type": {
+                "text": "Element"
+              }
+            },
+            {
+              "name": "changed",
+              "description": "Lit's changed-properties map.",
+              "type": {
+                "text": "Map<string, unknown>"
+              }
+            },
+            {
+              "name": "names",
+              "description": "Properties the owner renders from.",
+              "type": {
+                "text": "string[]"
+              }
+            }
+          ],
+          "description": "Tell the component that renders this element that its state moved.\n\nThe other half of the same problem this file is about. A component that\nmirrors its light-DOM children into its own markup reads their properties at\n*its* render time — `arc-tabs` reads `label` and `disabled` off its arc-tab\nchildren, `arc-segmented-control` reads `disabled` off its arc-options,\n`arc-context-menu` reads `label` off its arc-menu-items. Those children are\nlight-DOM siblings, not reactive inputs of the owner, so changing one repaints\nnothing: the tab stays clickable after being disabled, the menu row keeps its\nold text.\n\nIt was found three times in one pass (findings #4, #6 and #32) and is the\nsame three lines each time, so it lives here rather than in three components.\n\nGuarded on the previous value being **defined**, which is the part that is\neasy to get wrong: on an element's first update every entry's old value is\n`undefined`, and asking the owner to re-render then would add a second render\nper child on every mount — during the owner's own render, at that."
         }
       ],
       "exports": [
@@ -33731,6 +33779,14 @@
           "name": "hydrateSlots",
           "declaration": {
             "name": "hydrateSlots",
+            "module": "src/shared/hydrate-slots.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "notifyOwner",
+          "declaration": {
+            "name": "notifyOwner",
             "module": "src/shared/hydrate-slots.js"
           }
         }
@@ -33884,18 +33940,26 @@
           "members": [
             {
               "kind": "field",
-              "name": "label",
-              "readonly": true,
-              "type": {
-                "text": "string"
-              },
-              "description": "Display text for the menu item."
+              "name": "displayLabel",
+              "description": "The text to draw.\n\n`label` was documented as a prop and implemented as a getter over\ntextContent with no setter and no attribute, so\n`<arc-menu-item label=\"Cut\"></arc-menu-item>` rendered a blank item —\nsilently, and the six generated wrappers exposed a writable `label` that\ndid nothing (finding #32). It is a real property now; the text-content form\nstays the fallback, so every existing consumer is unaffected.",
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "selectionValue",
               "description": "What arc-select reports. Falls back to the label so an item that never sets\n`value` behaves as it always did.",
               "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Display text for the menu item. Settable, and falls back to the element's text content when unset — `<arc-menu-item label=\"Cut\">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent.",
+              "attribute": "label"
             },
             {
               "kind": "field",
@@ -33945,6 +34009,15 @@
             }
           ],
           "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Display text for the menu item. Settable, and falls back to the element's text content when unset — `<arc-menu-item label=\"Cut\">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent.",
+              "fieldName": "label"
+            },
             {
               "name": "shortcut",
               "type": {

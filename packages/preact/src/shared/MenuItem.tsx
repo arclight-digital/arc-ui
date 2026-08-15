@@ -4,6 +4,7 @@ import { h, type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/menu-item';
 
 export interface MenuItemProps {
+  label?: string;
   shortcut?: string;
   disabled?: boolean;
   icon?: string;
@@ -36,5 +37,5 @@ export interface MenuItemProps {
   [key: `on${string}`]: unknown;
 }
 
-export const MenuItem: FunctionComponent<MenuItemProps> = ({ shortcut, disabled, icon, value, children, ...rest }) =>
-  h('arc-menu-item', { shortcut, disabled, icon, value, ...rest }, children);
+export const MenuItem: FunctionComponent<MenuItemProps> = ({ label, shortcut, disabled, icon, value, children, ...rest }) =>
+  h('arc-menu-item', { label, shortcut, disabled, icon, value, ...rest }, children);

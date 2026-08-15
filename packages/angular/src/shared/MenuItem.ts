@@ -12,6 +12,13 @@ import type { ArcMenuItem } from '@arclux/arc-ui/menu-item';
 export class MenuItem {
   private readonly _el: ArcMenuItem = inject(ElementRef).nativeElement;
 
+  @Input() set label(value: string) {
+    this._el.label = value;
+  }
+  get label(): string {
+    return this._el.label;
+  }
+
   @Input() set shortcut(value: string) {
     this._el.shortcut = value;
   }

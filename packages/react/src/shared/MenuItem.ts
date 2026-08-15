@@ -5,6 +5,7 @@ import { createComponent } from '@lit/react';
 import { ArcMenuItem } from '@arclux/arc-ui/menu-item';
 
 export interface MenuItemProps {
+  label?: string;
   shortcut?: string;
   disabled?: boolean;
   icon?: string;

@@ -31,7 +31,7 @@ marker are still open.
 | 26 | `arc-list` | **FIXED** — a value containing a comma was recorded but never marked selected |
 | 8 | `arc-rating` | **FIXED** — `required` was satisfied by an unrated control; the form submitted `"0"` |
 | 21-23 | `arc-tree-view` | **FIXED** — expansion and selection keyed on label, so same-named nodes shared state |
-| 31 | `arc-context-menu` | a second right-click while open leaves the menu at the old point |
+| 31 | `arc-context-menu` | **FIXED** — a second right-click while open left the menu at the old point |
 | 19 | `arc-carousel` | **FIXED** — an arrow key at the rails announced a move that did not happen |
 | 14, 15 | `arc-theme-toggle` | **FIXED** — setting `theme` from script did not sync the page; two toggles desynced |
 
@@ -40,7 +40,7 @@ marker are still open.
 | # | Component | Finding |
 |---|---|---|
 | 16 | `arc-speed-dial` | closed actions stay focusable and clickable — invisible tab stops |
-| 29 | `arc-command-bar` | the input has no accessible name and no way to give it one |
+| 29 | `arc-command-bar` | **FIXED** — the input had no accessible name and no way to give it one |
 | 28, 27 | `arc-list` | **FIXED** — items claimed `role="option"` inside a plain `role="list"`; stray `aria-multiselectable` |
 | 2 | `arc-tabs` | **FIXED** — `aria-controls` pointed at ids that do not exist |
 | 24, 25 | five components | **FIXED** — `aria-expanded=""` and four more attributes rendered empty instead of omitted |
@@ -54,9 +54,9 @@ marker are still open.
 | 20 | **library-wide** | 20 boolean props default `true` and cannot be disabled from markup |
 | 6 | `arc-option` | **FIXED** — `disabled` was documented and read by *none* of its four consumers |
 | 1 | `arc-tabs` | **FIXED** — `selected` documented as clamped; nothing clamped |
-| 32 | `arc-menu-item` | `label` documented as a prop, implemented as a read-only getter |
+| 32 | `arc-menu-item` | **FIXED** — `label` documented as a prop, implemented as a read-only getter |
 | 17, 18 | `arc-speed-dial` | unknown `position` anchors nowhere; documented per-item `value` never emitted |
-| 30 | `arc-command-bar` | Enter inside a form submits twice |
+| 30 | `arc-command-bar` | **FIXED** — Enter inside a form submitted twice |
 | 4, 5, 7, 13 | various | **4 FIXED, 5 CLOSED, 7 FIXED** — smaller doc/structure gaps, detailed below |
 
 ### Now enforced by a check
@@ -1268,7 +1268,12 @@ invalid; screen readers announce item counts and positions from these roles.
 
 ## arc-command-bar
 
-### 29. The input has no accessible name — **a11y**
+### 29. The input has no accessible name — **a11y — FIXED**
+
+A `label` prop with a `"Search"` fallback, matching every other input in the
+library. Pinned with the case that is the whole reason a placeholder is not a
+name: **the name survives typing.** A placeholder disappears on the first
+keystroke, which is exactly when a user most needs to know what the field is.
 
 The field carries no `aria-label`, no `aria-labelledby` and no associated
 `<label>` (`navigation/command-bar.js:124-133`) — only a placeholder. A
@@ -1282,7 +1287,13 @@ one, and an `aria-label` on the host does not reach into the shadow root.
   it. Adding a `label` prop is the fix, defaulting the `aria-label` to something
   like "Search" rather than leaving it unnamed.
 
-### 30. Enter inside a form submits twice — **correctness**
+### 30. Enter inside a form submits twice — **correctness — FIXED**
+
+One `preventDefault()`. The intended behaviour was already decided — `arc-form`
+handles the equivalent case deliberately for `arc-input` — and this component
+simply never claimed the key. Paired with an assertion that every *other* key is
+still left for the page, since a handler that claimed everything would pass the
+first test and break typing inside a form.
 
 `_onKeyDown` (`command-bar.js:106`) dispatches `arc-submit` and never calls
 `preventDefault`. Inside a `<form>`, Enter in a text input also triggers the
@@ -1300,7 +1311,19 @@ native `submit`.
 
 ## arc-context-menu / arc-menu-item
 
-### 31. A second right-click while open leaves the menu behind — **correctness**
+### 31. A second right-click while open leaves the menu behind — **correctness — FIXED**
+
+**Fixed by repositioning explicitly, not by making `_x`/`_y` reactive** — which
+was the finding's first suggestion and would have broken the component. The note
+at those fields says why: `PositionController` writes the menu's coordinates to
+its inline style, and a re-render driven by them would rewrite the whole `style`
+attribute and wipe what the controller just wrote. So `_handleContextMenu` calls
+`this._position.show()` when it was already open; the menu is rendered, so there
+is nothing to wait for.
+
+Pinned alongside "stays open across the re-anchor", because the cheap wrong fix
+is to close and reopen — which would lose the `arc-close`/`arc-open` contract
+and any veto a consumer put on it.
 
 `_x` and `_y` are plain fields, not reactive properties, and `updated()` only
 repositions when `open` itself changes (`feedback/context-menu.js:178-184`).
@@ -1316,7 +1339,17 @@ elsewhere without dismissing first.
 - Declaring `_x`/`_y` as reactive state, or calling `this._position.show()` from
   `_handleContextMenu`, fixes it.
 
-### 32. `arc-menu-item`'s `label` is documented as a prop but cannot be set — **doc-mismatch**
+### 32. `arc-menu-item`'s `label` is documented as a prop but cannot be set — **doc-mismatch — FIXED**
+
+`label` is a real reactive property now, and `displayLabel` resolves it against
+the slotted text — so `<arc-menu-item label="Cut">` and
+`<arc-menu-item>Cut</arc-menu-item>` are equivalent and every existing consumer
+is unaffected. Both of its owners (`arc-context-menu`, `arc-dropdown-menu`) read
+`displayLabel`, as does `selectionValue`, so the row and the `arc-select` detail
+cannot disagree about what an item is called.
+
+There was no BUG pin — there was no behaviour to pin — so this gained five
+regression tests rather than an inversion.
 
 `shared/menu-item.js:7` declares `@prop {string} label - Display text for the
 menu item.` It is a getter over `this.textContent` (`menu-item.js:33`) with no
@@ -4380,7 +4413,13 @@ The three real findings survived that filtering. The discipline that mattered
 was refusing to relax an expectation until the probe had been proven right —
 every one of the fifteen would have been a plausible-looking "known limitation".
 
-### 85. An empty `arc-context-menu` cannot be dismissed by the keyboard — **correctness**
+### 85. An empty `arc-context-menu` cannot be dismissed by the keyboard — **correctness — FIXED**
+
+Escape is handled **before** the arrow-key guard that swallowed it. The guard
+itself is correct and stays: the cases below it index into `selectable` and
+would throw on an empty list. What was wrong is that dismissal was sitting
+behind a precondition it does not have — closing a menu does not depend on there
+being anything in it to select.
 
 `_handleKeydown` opens with a guard belonging to the arrow-key cases below it:
 
@@ -4489,3 +4528,32 @@ has to make the same kind of argument.
 The two halves are complementary, not redundant: the static check fails
 **before** the 35-second prism step and names a source line; the runtime sweep
 sees what actually reached the DOM. Neither would have found all nine alone.
+
+
+---
+
+### 88. The same reactivity gap in three components, and now one helper — **FIXED**
+
+Not a finding in its own right; the shape behind **#4, #6 and #32**, extracted
+once it had turned up three times in one pass.
+
+A component that mirrors its light-DOM children into its own markup reads their
+properties at *its* render time — `arc-tabs` reads `label` and `disabled` off
+its arc-tabs children, `arc-segmented-control` reads `disabled` off its
+arc-options, `arc-context-menu` reads `label` off its arc-menu-items. Those
+children are light-DOM siblings, **not reactive inputs of the owner**, so
+changing one repaints nothing: the tab stays clickable after being disabled, the
+menu row keeps its old text. Every one of these components had the gap, and none
+of the three findings mentioned it — each was found by writing the regression
+test for the fix and watching it fail.
+
+`notifyOwner(child, changed, names)` lives in `hydrate-slots.js`, which is the
+module about exactly this relationship. Two details it encodes rather than
+leaving to each caller:
+
+- **Guarded on the previous value being defined.** On an element's first update
+  every entry's old value is `undefined`; asking the owner to re-render then
+  would add a render per child on every mount, *during the owner's own render*.
+- **The nearest Lit ancestor, not a tag name.** `arc-option` has four owners and
+  `arc-menu-item` has two, so naming one would be wrong for the others and a
+  per-component list would be another table to keep in step.

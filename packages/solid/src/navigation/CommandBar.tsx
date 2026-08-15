@@ -15,6 +15,7 @@ export interface CommandBarProps {
   placeholder?: string;
   value?: string;
   icon?: string;
+  label?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcSubmit?: (e: CustomEvent) => void;
   children?: JSX.Element;
@@ -46,9 +47,9 @@ export interface CommandBarProps {
 }
 
 export const CommandBar: Component<CommandBarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['placeholder', 'value', 'icon', 'onArcInput', 'onArcSubmit', 'children']);
+  const [local, rest] = splitProps(props, ['placeholder', 'value', 'icon', 'label', 'onArcInput', 'onArcSubmit', 'children']);
   return (
-    <arc-command-bar placeholder={local.placeholder} value={local.value} icon={local.icon} on:arc-input={local.onArcInput} on:arc-submit={local.onArcSubmit} {...rest}>
+    <arc-command-bar placeholder={local.placeholder} value={local.value} icon={local.icon} label={local.label} on:arc-input={local.onArcInput} on:arc-submit={local.onArcSubmit} {...rest}>
       {local.children}
     </arc-command-bar>
   );

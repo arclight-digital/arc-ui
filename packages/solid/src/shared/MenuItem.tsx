@@ -12,6 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface MenuItemProps {
+  label?: string;
   shortcut?: string;
   disabled?: boolean;
   icon?: string;
@@ -45,9 +46,9 @@ export interface MenuItemProps {
 }
 
 export const MenuItem: Component<MenuItemProps> = (props) => {
-  const [local, rest] = splitProps(props, ['shortcut', 'disabled', 'icon', 'value', 'children']);
+  const [local, rest] = splitProps(props, ['label', 'shortcut', 'disabled', 'icon', 'value', 'children']);
   return (
-    <arc-menu-item shortcut={local.shortcut} disabled={local.disabled} icon={local.icon} value={local.value} {...rest}>
+    <arc-menu-item label={local.label} shortcut={local.shortcut} disabled={local.disabled} icon={local.icon} value={local.value} {...rest}>
       {local.children}
     </arc-menu-item>
   );

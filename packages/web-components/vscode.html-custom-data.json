@@ -4928,6 +4928,11 @@
           "name": "icon",
           "description": "Icon name displayed before the input. Accepts any Phosphor icon name.",
           "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the input, applied as `aria-label`. Defaults to \"Search\". A placeholder is not a name: it is announced inconsistently and disappears the moment the user types.",
+          "values": []
         }
       ],
       "references": []
@@ -5527,6 +5532,11 @@
       "name": "arc-menu-item",
       "description": "A single action entry inside the context menu.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
       "attributes": [
+        {
+          "name": "label",
+          "description": "Display text for the menu item. Settable, and falls back to the element's text content when unset — `<arc-menu-item label=\"Cut\">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent.",
+          "values": []
+        },
         {
           "name": "shortcut",
           "description": "Keyboard shortcut hint displayed on the right side.",

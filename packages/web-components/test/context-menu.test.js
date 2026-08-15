@@ -22,8 +22,8 @@ import '../src/shared/menu-divider.register.js';
 
 afterEach(() => cleanup());
 
-// arc-menu-item takes its label from slotted text — `label` is a getter over
-// textContent (shared/menu-item.js:33), not a settable attribute.
+// arc-menu-item takes its label from slotted text *or* from the `label`
+// attribute — both work (finding #32); `displayLabel` is what resolves them.
 const ITEMS = `
   <arc-menu-item>Cut</arc-menu-item>
   <arc-menu-item value="copy">Copy</arc-menu-item>
@@ -130,24 +130,38 @@ describe('arc-context-menu opening', () => {
     expect(second - first, 'the menu tracks the click delta').to.be.closeTo(120, 2);
   });
 
-  // BUG: _x and _y are plain fields, not reactive properties, and updated()
-  // only repositions when `open` itself changes (context-menu.js:178-184).
-  // Right-clicking somewhere else while the menu is already open updates the
-  // coordinates but never re-runs the PositionController, so the menu stays
-  // where it was — pointing at the wrong target.
-  it('BUG: a second right-click while open leaves the menu at the old point', async () => {
+  // Was a BUG pin (finding #31). `_x`/`_y` are plain fields rather than
+  // reactive state — deliberately, since PositionController writes the menu's
+  // coordinates to its inline style and a re-render driven by them would wipe
+  // that — and `updated()` only repositioned when `open` itself changed. So a
+  // second right-click while the menu was already open recorded the new
+  // coordinates and left the menu at the first click, pointing at the wrong
+  // target. Reproducing it needed no unusual sequence: right-click, then
+  // right-click elsewhere without dismissing first.
+  it('follows a second right-click while already open', async () => {
     const { host, el } = await target();
     await rightClick(host, el, { clientX: 30, clientY: 30 });
-    const first = menu(el).getBoundingClientRect().left;
+    const first = (await stableRect(() => menu(el))).left;
 
     await rightClick(host, el, { clientX: 150, clientY: 100 });
 
-    // Asserted as "nowhere near the new click" rather than "within Npx of the
-    // old position": a re-measure can drift the box a few pixels, and the claim
-    // is that the menu did not follow the pointer at all.
     expect(el._x, 'the new coordinates were recorded').to.equal(150);
-    expect(menu(el).getBoundingClientRect().left, 'but the menu stayed at the first click')
-      .to.be.lessThan(first + 50);
+    const second = (await stableRect(() => menu(el))).left;
+    expect(second - first, 'and the menu moved with them').to.be.closeTo(120, 2);
+  });
+
+  it('stays open across the re-anchor', async () => {
+    // The cheap wrong fix is to close and reopen, which loses the arc-close /
+    // arc-open contract and any veto a consumer put on it.
+    const { host, el } = await target();
+    await rightClick(host, el, { clientX: 30, clientY: 30 });
+
+    let closes = 0;
+    el.addEventListener('arc-close', () => { closes += 1; });
+    await rightClick(host, el, { clientX: 150, clientY: 100 });
+
+    expect(el.open).to.equal(true);
+    expect(closes, 'a re-anchor is not a dismissal').to.equal(0);
   });
 
   it('takes focus on open', async () => {
@@ -419,5 +433,64 @@ describe('arc-context-menu closing', () => {
     await settle(el);
 
     expect(deepActive(), 'focus is not pulled back').to.not.equal(outside);
+  });
+});
+
+/**
+ * Finding #32: `label` was documented as a prop and implemented as a getter
+ * over textContent with no setter and no attribute, so
+ * `<arc-menu-item label="Cut"></arc-menu-item>` rendered a blank item —
+ * silently — and the six generated wrappers exposed a writable `label` that did
+ * nothing. It cost a debugging pass while the original tests were being
+ * written, which is a fair proxy for what it cost a consumer reading the docs.
+ *
+ * There was no BUG pin, because there was no behaviour to pin: the component's
+ * real contract was the text-content form and that is what the file exercised.
+ */
+describe('arc-menu-item label', () => {
+  const rowLabels = (el) =>
+    [...el.shadowRoot.querySelectorAll('.item-label')].map((n) => n.textContent.trim());
+
+  it('renders an item labelled by the attribute', async () => {
+    const { host, el } = await target('<arc-menu-item label="Cut"></arc-menu-item>');
+    await rightClick(host, el);
+    expect(rowLabels(el)).to.deep.equal(['Cut']);
+  });
+
+  it('still renders an item labelled by its text content', async () => {
+    const { host, el } = await target('<arc-menu-item>Cut</arc-menu-item>');
+    await rightClick(host, el);
+    expect(rowLabels(el)).to.deep.equal(['Cut']);
+  });
+
+  it('prefers the explicit label when both are given', async () => {
+    const { host, el } = await target('<arc-menu-item label="Cut">ignored</arc-menu-item>');
+    await rightClick(host, el);
+    expect(rowLabels(el)).to.deep.equal(['Cut']);
+  });
+
+  it('reports the attribute label on arc-select, with no value of its own', async () => {
+    // selectionValue falls back to the label, so the fallback has to resolve
+    // the same way the render does or the event and the row disagree.
+    const { host, el } = await target('<arc-menu-item label="Cut"></arc-menu-item>');
+    await rightClick(host, el);
+
+    const details = [];
+    el.addEventListener('arc-select', (e) => details.push(e.detail));
+    el.shadowRoot.querySelector('.menu-item').click();
+    await settle(el);
+
+    expect(details[0].value).to.equal('Cut');
+    expect(details[0].item.label).to.equal('Cut');
+  });
+
+  it('follows a label set after mount', async () => {
+    const { host, el } = await target('<arc-menu-item label="Cut"></arc-menu-item>');
+    await rightClick(host, el);
+
+    el.querySelector('arc-menu-item').label = 'Snip';
+    await settle(el);
+
+    expect(rowLabels(el)).to.deep.equal(['Snip']);
   });
 });

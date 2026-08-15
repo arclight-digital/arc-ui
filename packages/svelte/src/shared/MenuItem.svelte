@@ -4,6 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
+    label?: string;
     shortcut?: string;
     disabled?: boolean;
     icon?: string;
@@ -36,9 +37,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { shortcut = '', disabled, icon = '', value = '', children, ...rest }: Props = $props();
+  let { label = '', shortcut = '', disabled, icon = '', value = '', children, ...rest }: Props = $props();
 </script>
 
-<arc-menu-item {shortcut} {disabled} {icon} {value} {...rest}>
+<arc-menu-item {label} {shortcut} {disabled} {icon} {value} {...rest}>
   {@render children?.()}
 </arc-menu-item>

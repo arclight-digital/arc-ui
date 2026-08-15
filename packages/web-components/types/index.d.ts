@@ -575,6 +575,8 @@ export declare class ArcCommandBar extends LitElement {
   value: string;
   /** Icon name displayed before the input. Accepts any Phosphor icon name. @default 'magnifying-glass' */
   icon: string;
+  /** Accessible name for the input, applied as `aria-label`. Defaults to "Search". A placeholder is not a name: it is announced inconsistently and disappears the moment the user types. @default '' */
+  label: string;
 }
 
 /**
@@ -1718,10 +1720,12 @@ export declare class ArcMenuDivider extends LitElement {
  * `<arc-menu-item>`
  */
 export declare class ArcMenuItem extends LitElement {
-  /** Display text for the menu item. */
-  label: string;
+  /** The text to draw. `label` was documented as a prop and implemented as a getter over textContent with no setter and no attribute, so `<arc-menu-item label="Cut"></arc-menu-item>` rendered a blank item — silently, and the six generated wrappers exposed a writable `label` that did nothing (finding #32). It is a real property now; the text-content form stays the fallback, so every existing consumer is unaffected. */
+  displayLabel: unknown;
   /** What arc-select reports. Falls back to the label so an item that never sets `value` behaves as it always did. */
   selectionValue: unknown;
+  /** Display text for the menu item. Settable, and falls back to the element's text content when unset — `<arc-menu-item label="Cut">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent. @default '' */
+  label: string;
   /** Keyboard shortcut hint displayed on the right side. @default '' */
   shortcut: string;
   /** Name of the icon to display before the label. @default '' */

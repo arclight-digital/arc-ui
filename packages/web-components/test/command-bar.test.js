@@ -147,27 +147,36 @@ describe('arc-command-bar events', () => {
 });
 
 describe('arc-command-bar accessibility', () => {
-  // BUG: the input carries no aria-label, no aria-labelledby and no associated
-  // <label> (command-bar.js:124-133) — only a placeholder. A placeholder is
+  // Was a BUG pin (finding #29). The input carried no aria-label, no
+  // aria-labelledby and no associated <label> — only a placeholder, which is
   // explicitly not an accessible name: it is announced inconsistently and
-  // disappears as soon as the user types. There is no `label` prop to supply
-  // one either, and an aria-label on the host does not reach into the shadow
-  // root. axe reports this under its `label` rule.
-  it('BUG: the input has no accessible name, only a placeholder', async () => {
-    const el = await bar('aria-label="Search components"');
-    const field = input(el);
-
-    expect(field.hasAttribute('aria-label')).to.equal(false);
-    expect(field.hasAttribute('aria-labelledby')).to.equal(false);
-    expect(el.shadowRoot.querySelector('label') === null, 'and no label element').to.equal(true);
-    expect(field.placeholder, 'the placeholder is all there is').to.equal('Search…');
+  // disappears the moment the user types. There was no `label` prop to supply
+  // one, and an aria-label on the *host* does not reach into the shadow root.
+  it('names the input from the label prop', async () => {
+    const el = await bar('label="Search components"');
+    expect(input(el).getAttribute('aria-label')).to.equal('Search components');
   });
 
-  // BUG: _onKeyDown (command-bar.js:106) dispatches arc-submit but never calls
-  // preventDefault. Inside a <form>, Enter in a text input also triggers the
-  // form's own implicit submission, so the consumer gets both — one arc-submit
-  // and one native submit, for a single key press.
-  it('BUG: Enter inside a form submits the form as well as firing arc-submit', async () => {
+  it('falls back to a generic name rather than going unnamed', async () => {
+    const el = await bar();
+    expect(input(el).getAttribute('aria-label')).to.equal('Search');
+  });
+
+  it('keeps the name once the placeholder is gone', async () => {
+    // The whole reason a placeholder is not a name: it disappears on the first
+    // keystroke, and that is exactly when the user most needs to know what the
+    // field is.
+    const el = await bar('label="Search components"');
+    el.value = 'typed';
+    await settle(el);
+
+    expect(input(el).getAttribute('aria-label')).to.equal('Search components');
+  });
+
+  // Was a BUG pin (finding #30). _onKeyDown dispatched arc-submit and never
+  // called preventDefault, so inside a <form> a single Enter produced both an
+  // arc-submit and the form's own implicit submission.
+  it('claims Enter, so a form does not also submit', async () => {
     const form = mount('<form><arc-command-bar></arc-command-bar></form>');
     const el = form.querySelector('arc-command-bar');
     await settle(el);
@@ -181,6 +190,18 @@ describe('arc-command-bar accessibility', () => {
     await settle(el);
 
     expect(seen, 'arc-submit fires').to.have.lengthOf(1);
-    expect(event.defaultPrevented, 'but the key is not claimed').to.equal(false);
+    expect(event.defaultPrevented, 'and the key is claimed').to.equal(true);
+    expect(nativeSubmits, 'so one press is one submission').to.equal(0);
+  });
+
+  it('leaves every other key for the page', async () => {
+    // Anti-vacuity: a handler that claimed everything would pass the test
+    // above and break typing in a form.
+    const el = await bar();
+    const event = new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true });
+    input(el).dispatchEvent(event);
+    await settle(el);
+
+    expect(event.defaultPrevented).to.equal(false);
   });
 });

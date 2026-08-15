@@ -232,7 +232,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
       new CustomEvent('arc-select', {
         detail: {
           value: item.selectionValue,
-          item: { label: item.label, shortcut: item.shortcut, value: item.selectionValue },
+          item: { label: item.displayLabel, shortcut: item.shortcut, value: item.selectionValue },
           index,
         },
         bubbles: true,
@@ -262,7 +262,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         }}
         part="item"
       >
-        <span class="dropdown__item-label">${child.label || ''}</span>
+        <span class="dropdown__item-label">${child.displayLabel || ''}</span>
         ${child.shortcut ? html`<span class="dropdown__item-shortcut" part="shortcut">${child.shortcut}</span>` : ''}
       </button>
     `;
