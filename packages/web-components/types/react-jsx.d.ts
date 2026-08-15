@@ -1053,6 +1053,7 @@ declare module 'react' {
         ratio?: number | string;
         'min-ratio'?: number | string;
         'max-ratio'?: number | string;
+        label?: string;
       };
       'arc-spotlight': ArcBaseAttributes & {
         target?: string;

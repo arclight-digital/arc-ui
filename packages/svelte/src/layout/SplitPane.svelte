@@ -8,6 +8,7 @@
     ratio?: number;
     minRatio?: number;
     maxRatio?: number;
+    label?: string;
     /** <slot name="primary"> — put slot="primary" on the element inside. */
     primary?: Snippet;
     /** <slot name="secondary"> — put slot="secondary" on the element inside. */
@@ -39,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { orientation, ratio = $bindable(), minRatio = 0.15, maxRatio = 0.85, primary, secondary, ...rest }: Props = $props();
+  let { orientation, ratio = $bindable(), minRatio = 0.15, maxRatio = 0.85, label = '', primary, secondary, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -61,7 +62,7 @@
   }
 </script>
 
-<arc-split-pane {orientation} {ratio} bind:this={__el} {...rest}
+<arc-split-pane {orientation} {ratio} {label} bind:this={__el} {...rest}
   onarc-resize={__onArcResize}
 >
   {@render primary?.()}

@@ -75,7 +75,13 @@ describe('arc-resizable accessibility', () => {
 
     expect(h.getAttribute('role')).to.equal('separator');
     expect(h.getAttribute('tabindex'), 'keyboard reachable').to.equal('0');
-    expect(h.getAttribute('aria-orientation')).to.equal('horizontal');
+    // The separator axis, not the resize axis (finding #89): `direction`
+    // horizontal resizes width, so the handle is a *vertical* bar, and ARIA's
+    // aria-orientation describes the separator itself — it is what tells
+    // assistive tech which arrows move it. This component and arc-split-pane
+    // both reported the resize axis until 2.1 built split-pane's handle
+    // against this one and the two disagreed with the spec together.
+    expect(h.getAttribute('aria-orientation')).to.equal('vertical');
     expect(h.getAttribute('aria-valuenow')).to.equal('250');
     expect(h.getAttribute('aria-valuemin')).to.equal('100');
     expect(h.getAttribute('aria-valuemax')).to.equal('500');
@@ -89,9 +95,11 @@ describe('arc-resizable accessibility', () => {
     expect(handle(el).getAttribute('aria-valuenow')).to.equal('255');
   });
 
-  it('reports the axis it resizes', async () => {
+  it('reports the separator axis for the other direction too', async () => {
+    // Anti-vacuity for the assertion above: a handle hard-coded to "vertical"
+    // would pass it.
     const el = await panel('direction="vertical"');
-    expect(handle(el).getAttribute('aria-orientation')).to.equal('vertical');
+    expect(handle(el).getAttribute('aria-orientation')).to.equal('horizontal');
   });
 
   // Was a BUG pin (finding #36). `maxSize` defaults to Infinity, so the

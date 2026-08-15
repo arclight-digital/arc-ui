@@ -2708,10 +2708,16 @@ export declare class ArcSpinner extends LitElement {
  * Events: arc-resize
  */
 export declare class ArcSplitPane extends LitElement {
+  /** Keyboard step, and the larger Shift step — the same 5-and-20 as arc-resizable. @default 0.05 */
+  STEP: number;
+  /** @default 0.2 */
+  STEP_LARGE: number;
   /** Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing. @default 0.15 */
   minRatio: number;
   /** Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing. @default 0.85 */
   maxRatio: number;
+  /** Accessible name for the divider, applied as `aria-label`. Defaults to "Resize panes". @default '' */
+  label: string;
   /** Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider. @default 'horizontal' */
   orientation: 'horizontal' | 'vertical';
   /** The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode). @default 0.5 */
@@ -3668,7 +3674,7 @@ declare global {
     'arc-range-change': CustomEvent<{value: {start: number, end: number}, start: number, end: number}>;
     'arc-remove': CustomEvent;
     'arc-reset': CustomEvent<void>;
-    'arc-resize': CustomEvent<{ ratio: number }> | CustomEvent<{ size: number }>;
+    'arc-resize': CustomEvent<{ size: number }> | CustomEvent<{ value: number, ratio: number }>;
     'arc-scroll-away': CustomEvent<{value: number}>;
     'arc-scroll-return': CustomEvent<{value: number}>;
     'arc-select': CustomEvent;

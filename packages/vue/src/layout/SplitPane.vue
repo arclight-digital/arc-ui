@@ -9,9 +9,11 @@ const props = withDefaults(defineProps<{
   ratio?: number;
   minRatio?: number;
   maxRatio?: number;
+  label?: string;
 }>(), {
   minRatio: 0.15,
   maxRatio: 0.85,
+  label: '',
 });
 
 const emit = defineEmits<{
@@ -34,6 +36,7 @@ function onArcResize(payload: CustomEvent) {
     :ratio="props.ratio"
     :minRatio="props.minRatio"
     :maxRatio="props.maxRatio"
+    :label="props.label"
     @arc-resize="onArcResize"
   >
     <slot name="primary" />

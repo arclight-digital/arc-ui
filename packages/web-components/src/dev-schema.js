@@ -2373,7 +2373,8 @@ export default {
    "orientation",
    "ratio",
    "min-ratio",
-   "max-ratio"
+   "max-ratio",
+   "label"
   ],
   "enums": {
    "orientation": [

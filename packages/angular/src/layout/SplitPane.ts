@@ -43,6 +43,13 @@ export class SplitPane {
     return this._el.maxRatio;
   }
 
+  @Input() set label(value: string) {
+    this._el.label = value;
+  }
+  get label(): string {
+    return this._el.label;
+  }
+
   @Output() ratioChange = new EventEmitter<number>();
 
   _onArcResize(event: CustomEvent) {

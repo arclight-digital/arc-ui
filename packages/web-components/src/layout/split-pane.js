@@ -12,7 +12,8 @@ import { DeclaredPropsMixin, num, oneOf } from '../shared/props.js';
  *   assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).
  * @prop {number} minRatio - Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.
  * @prop {number} maxRatio - Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.
- * @fires {CustomEvent<{ ratio: number }>} arc-resize - Fired during divider drag with { ratio } detail
+ * @prop {string} label - Accessible name for the divider, applied as `aria-label`. Defaults to "Resize panes".
+ * @fires {CustomEvent<{ value: number, ratio: number }>} arc-resize - Fired on every step of a divider drag and on every keyboard step, with the new ratio on both `detail.value` and `detail.ratio`.
  * @slot primary
  * @slot secondary
  * @csspart base
@@ -26,7 +27,12 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
     ratio: num({ default: 0.5, min: 'minRatio', max: 'maxRatio', clamp: 'toRange' }),
     minRatio: { type: Number, attribute: 'min-ratio' },
     maxRatio: { type: Number, attribute: 'max-ratio' },
+    label: { type: String },
   };
+
+  /** Keyboard step, and the larger Shift step — the same 5-and-20 as arc-resizable. */
+  static STEP = 0.05;
+  static STEP_LARGE = 0.2;
 
   static styles = [
     tokenStyles,
@@ -71,6 +77,14 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
         background: var(--border-bright);
       }
 
+      /* The handle is a tab stop now (finding #33), so it needs a focus ring —
+         a 4px bar with no visible focus is a stop a keyboard user cannot see. */
+      .split-pane__handle:focus-visible {
+        outline: none;
+        box-shadow: var(--interactive-focus);
+        background: var(--interactive);
+      }
+
       :host([orientation='horizontal']) .split-pane__handle {
         width: 4px;
         cursor: col-resize;
@@ -91,60 +105,100 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
     super();
     this.minRatio = 0.15;
     this.maxRatio = 0.85;
+    this.label = '';
     this._dragging = false;
-    this._containerEl = null;
-    this._onMouseMove = this._onMouseMove.bind(this);
-    this._onMouseUp = this._onMouseUp.bind(this);
   }
 
-  _onMouseDown(e) {
-    e.preventDefault();
-    this._dragging = true;
-    this._containerEl = this.shadowRoot.querySelector('.split-pane');
-    window.addEventListener('mousemove', this._onMouseMove);
-    window.addEventListener('mouseup', this._onMouseUp);
-    this.requestUpdate();
+  _clamp(value) {
+    return Math.min(this.maxRatio, Math.max(this.minRatio, value));
   }
 
-  _onMouseMove(e) {
-    if (!this._dragging) return;
-
-    const container = this._containerEl;
-    if (!container) return;
-    const rect = container.getBoundingClientRect();
-    let newRatio;
-
-    if (this.orientation === 'horizontal') {
-      newRatio = (e.clientX - rect.left) / rect.width;
-    } else {
-      newRatio = (e.clientY - rect.top) / rect.height;
-    }
-
-    newRatio = Math.max(this.minRatio, Math.min(this.maxRatio, newRatio));
-    this.ratio = newRatio;
-  }
-
-  _onMouseUp() {
-    if (!this._dragging) return;
-    this._dragging = false;
-    this._containerEl = null;
-    window.removeEventListener('mousemove', this._onMouseMove);
-    window.removeEventListener('mouseup', this._onMouseUp);
-    this.requestUpdate();
-
+  /** Move the divider, and announce it only if it actually moved. */
+  _setRatio(next) {
+    const clamped = this._clamp(next);
+    if (clamped === this.ratio) return;
+    this.ratio = clamped;
     this.dispatchEvent(
       new CustomEvent('arc-resize', {
-        detail: { ratio: this.ratio },
+        detail: { value: this.ratio, ratio: this.ratio },
         bubbles: true,
         composed: true,
       }),
     );
   }
 
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    window.removeEventListener('mousemove', this._onMouseMove);
-    window.removeEventListener('mouseup', this._onMouseUp);
+  /**
+   * The drag, on pointer events (finding #34).
+   *
+   * It was wired to mousedown/mousemove/mouseup, which touch and pen never
+   * produce — so the divider could not be moved at all on a tablet. Every other
+   * draggable control in the library (arc-knob, arc-waveform, arc-image-compare,
+   * arc-signature-pad, arc-resizable) was already on pointer events; this was
+   * the only one that was not.
+   *
+   * Capture on the handle rather than listeners on `window`, matching
+   * arc-resizable: the capture follows the pointer outside the element without a
+   * second teardown path that has to pair correctly with disconnect.
+   */
+  _onPointerDown(e) {
+    e.preventDefault();
+    this._dragging = true;
+    const container = this.shadowRoot.querySelector('.split-pane');
+    const handle = e.currentTarget;
+    handle.setPointerCapture(e.pointerId);
+
+    const onMove = (ev) => {
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      // arc-resize fires from here, per move — its own docs say "fired during
+      // divider drag" and the dispatch used to sit in the mouseup handler, so a
+      // consumer syncing a layout live got nothing until the user let go
+      // (finding #35).
+      this._setRatio(
+        this.orientation === 'horizontal'
+          ? (ev.clientX - rect.left) / rect.width
+          : (ev.clientY - rect.top) / rect.height,
+      );
+    };
+
+    const onUp = (ev) => {
+      this._dragging = false;
+      handle.releasePointerCapture(ev.pointerId);
+      handle.removeEventListener('pointermove', onMove);
+      handle.removeEventListener('pointerup', onUp);
+      handle.removeEventListener('pointercancel', onUp);
+      this.requestUpdate();
+    };
+
+    handle.addEventListener('pointermove', onMove);
+    handle.addEventListener('pointerup', onUp);
+    handle.addEventListener('pointercancel', onUp);
+    this.requestUpdate();
+  }
+
+  /**
+   * Arrow keys move the divider (finding #33).
+   *
+   * The handle was a bare `<div>` with a single `@mousedown` — no role, no tab
+   * stop, no aria-value*, and no keydown handler anywhere in the file — so a
+   * keyboard user could not move it and a screen reader had nothing to
+   * announce. `arc-resizable` solved all of it one file away.
+   */
+  _onKeydown(e) {
+    const step = e.shiftKey ? ArcSplitPane.STEP_LARGE : ArcSplitPane.STEP;
+    const inline = this.orientation === 'horizontal';
+    let delta;
+
+    if (e.key === (inline ? 'ArrowRight' : 'ArrowDown')) delta = step;
+    else if (e.key === (inline ? 'ArrowLeft' : 'ArrowUp')) delta = -step;
+    else if (e.key === 'Home') delta = this.minRatio - this.ratio;
+    else if (e.key === 'End') delta = this.maxRatio - this.ratio;
+    else return;
+
+    // Claimed whether or not the divider can still move that way, or the page
+    // scrolls under a separator that correctly refused.
+    e.preventDefault();
+    this._setRatio(this.ratio + delta);
   }
 
   render() {
@@ -166,7 +220,15 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
         <div
           class="split-pane__handle ${handleDragging}"
           part="handle"
-          @mousedown=${this._onMouseDown}
+          role="separator"
+          tabindex="0"
+          aria-orientation=${this.orientation === 'horizontal' ? 'vertical' : 'horizontal'}
+          aria-valuenow=${Math.round(this.ratio * 100)}
+          aria-valuemin=${Math.round(this.minRatio * 100)}
+          aria-valuemax=${Math.round(this.maxRatio * 100)}
+          aria-label=${this.label || 'Resize panes'}
+          @pointerdown=${this._onPointerDown}
+          @keydown=${this._onKeydown}
         ></div>
         <div class="split-pane__secondary" part="secondary">
           <slot name="secondary"></slot>

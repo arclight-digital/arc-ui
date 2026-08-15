@@ -1378,12 +1378,31 @@ disabled items and wraps at each end; `aria-activedescendant` is omitted via
 
 ---
 
-## arc-split-pane
+## arc-split-pane — **ALL THREE FIXED**
 
 Read this section against `arc-resizable`, which solves the same problem in the
-same directory and gets three of the four right.
+same directory and got three of the four right.
 
-### 33. The divider is not operable by keyboard and invisible to assistive tech — **a11y**
+**Fixed by building the divider the way that component already builds its
+handle**, rather than by inventing anything: `role="separator"`, a tab stop,
+`aria-value*`, an arrow-key handler with a Shift step, pointer events with
+capture, and `arc-resize` per move. The whole of #33–#35 is one component being
+brought up to the standard of the file next to it.
+
+Two things it added that no finding named, because they only became reachable
+once the divider was operable at all:
+
+- **A focus ring.** The handle is a 4px bar and is now a tab stop; a tab stop a
+  keyboard user cannot see is not an improvement.
+- **A silent bound.** A key press at `minRatio`/`maxRatio` claims the key —
+  or the page scrolls under a separator that correctly refused to move — and
+  announces nothing, which is #19 and #38's rule applied to a third component
+  before it could become a fourth finding.
+
+`Home`/`End` go to `minRatio`/`maxRatio` rather than to 0 and 1: the bounds are
+what the divider can actually reach, and `aria-valuemin`/`max` report them.
+
+### 33. The divider is not operable by keyboard and invisible to assistive tech — **a11y — FIXED**
 
 The handle is a bare `<div>` with a single `@mousedown` (`layout/split-pane.js:164-168`):
 no `role`, no `tabindex`, no `aria-orientation`, no `aria-valuenow/min/max`, and
@@ -1398,7 +1417,7 @@ working reference sitting one file away.
 - Pinned by: `test/split-pane.test.js` — "BUG: the divider has no separator role
   and is not focusable" and "BUG: the divider cannot be moved by keyboard".
 
-### 34. Mouse-only, so it cannot be dragged on a touch device — **correctness**
+### 34. Mouse-only, so it cannot be dragged on a touch device — **correctness — FIXED**
 
 The drag is wired to `mousedown` / `mousemove` / `mouseup`
 (`split-pane.js:99-131`). Touch and pen never produce those events.
@@ -1409,7 +1428,7 @@ This is the only one that does not.
 
 - Pinned by: `test/split-pane.test.js` — "BUG: a pointer (touch) drag does nothing".
 
-### 35. `arc-resize` is documented as firing during the drag; it fires only on release — **doc-mismatch**
+### 35. `arc-resize` is documented as firing during the drag; it fires only on release — **doc-mismatch — FIXED**
 
 `split-pane.js:12` declares *"Fired during divider drag with { ratio } detail"*.
 The dispatch is in `_onMouseUp` (`split-pane.js:134`). `ratio` changes on every
@@ -1446,7 +1465,15 @@ after release. 23 tests, one finding.
 
 ---
 
-## 37. Enum defaults chosen by exact match in JS — **enum fallback, 3 instances**
+## 37. Enum defaults chosen by exact match in JS — **enum fallback, 3 instances — FIXED by the vocabulary**
+
+All three props — `arc-resizable.direction`, `arc-split-pane.orientation`,
+`arc-otp-input.type` — are `oneOf()` declarations now, so an unrecognised value
+never reaches the ternary: it is normalised to the documented default on both
+the attribute and the property path. The finding's own preferred fix was to
+invert the tests so the default catches everything; declaring the enum is
+strictly better, because it also fixes the *property* and everything else that
+reads the value, rather than the one ternary that was noticed.
 
 `scripts/checks/enum-fallbacks.js` catches a default selected by attribute
 *absence* in CSS. The same mistake in a JavaScript ternary is not covered:
@@ -4557,3 +4584,30 @@ leaving to each caller:
 - **The nearest Lit ancestor, not a tag name.** `arc-option` has four owners and
   `arc-menu-item` has two, so naming one would be wrong for the others and a
   per-component list would be another table to keep in step.
+
+
+---
+
+### 89. Both resize handles report the axis they resize, not the axis they are — **a11y — FIXED**
+
+Found by building `arc-split-pane`'s divider against `arc-resizable`'s (#33) and
+checking the reference rather than copying it.
+
+Both emitted `aria-orientation` equal to the *resize* direction:
+`direction="horizontal"` resizes width, so `arc-resizable` reported
+`aria-orientation="horizontal"`. But a handle that resizes width is a **vertical
+bar**, and ARIA's `aria-orientation` on a `separator` describes the separator
+itself — it is what tells assistive technology which arrow keys move it. A
+horizontal separator is moved with Up/Down; both components move with
+Left/Right in that mode. The attribute and the keyboard disagreed.
+
+Two components, one inversion, and it would have become three the moment
+split-pane copied its neighbour. Recorded as its own finding because it is not
+what #33 was about: #33 was "there is no separator semantics at all", and this
+is "the semantics that exist are wrong" — the second only became visible once
+the first was fixed.
+
+**The general point, which is the reusable part:** a component used as the
+reference for a fix has to be *checked*, not just copied. `arc-resizable` was
+cited three times in this ledger as the working example, and on the fourth
+reading it had a defect of its own.

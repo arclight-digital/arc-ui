@@ -4740,7 +4740,7 @@
     },
     {
       "name": "arc-split-pane",
-      "description": "Resizable split layout with two panes.\n---\n\n\n### **Events:**\n - **arc-resize** - Fired during divider drag with { ratio } detail\n\n### **Slots:**\n - **primary**\n- **secondary**\n\n### **CSS Parts:**\n - **base**\n- **primary**\n- **handle**\n- **secondary**",
+      "description": "Resizable split layout with two panes.\n---\n\n\n### **Events:**\n - **arc-resize** - Fired on every step of a divider drag and on every keyboard step, with the new ratio on both `detail.value` and `detail.ratio`.\n\n### **Slots:**\n - **primary**\n- **secondary**\n\n### **CSS Parts:**\n - **base**\n- **primary**\n- **handle**\n- **secondary**",
       "attributes": [
         {
           "name": "orientation",
@@ -4760,6 +4760,11 @@
         {
           "name": "max-ratio",
           "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the divider, applied as `aria-label`. Defaults to \"Resize panes\".",
           "values": []
         }
       ],

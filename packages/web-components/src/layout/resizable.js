@@ -213,7 +213,7 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
         part="handle"
         role="separator"
         tabindex="0"
-        aria-orientation=${this.direction}
+        aria-orientation=${this.direction === 'horizontal' ? 'vertical' : 'horizontal'}
         aria-valuenow=${this.size}
         aria-valuemin=${this.minSize}
         aria-valuemax=${isFinite(this.maxSize) ? this.maxSize : nothing}

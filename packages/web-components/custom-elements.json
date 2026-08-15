@@ -28793,6 +28793,25 @@
           "members": [
             {
               "kind": "field",
+              "name": "STEP",
+              "type": {
+                "text": "number"
+              },
+              "static": true,
+              "default": "0.05",
+              "description": "Keyboard step, and the larger Shift step — the same 5-and-20 as arc-resizable."
+            },
+            {
+              "kind": "field",
+              "name": "STEP_LARGE",
+              "type": {
+                "text": "number"
+              },
+              "static": true,
+              "default": "0.2"
+            },
+            {
+              "kind": "field",
               "name": "minRatio",
               "privacy": "public",
               "type": {
@@ -28812,6 +28831,17 @@
               "default": "0.85",
               "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
               "attribute": "max-ratio"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the divider, applied as `aria-label`. Defaults to \"Resize panes\".",
+              "attribute": "label"
             },
             {
               "kind": "field",
@@ -28841,9 +28871,9 @@
             {
               "name": "arc-resize",
               "type": {
-                "text": "CustomEvent<{ ratio: number }>"
+                "text": "CustomEvent<{ value: number, ratio: number }>"
               },
-              "description": "Fired during divider drag with { ratio } detail"
+              "description": "Fired on every step of a divider drag and on every keyboard step, with the new ratio on both `detail.value` and `detail.ratio`."
             }
           ],
           "attributes": [
@@ -28882,6 +28912,15 @@
               "default": "0.85",
               "description": "Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.",
               "fieldName": "maxRatio"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the divider, applied as `aria-label`. Defaults to \"Resize panes\".",
+              "fieldName": "label"
             }
           ],
           "mixins": [

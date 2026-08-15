@@ -3,15 +3,16 @@
  *
  * What this pins: the ratio drives both panes' sizes, dragging the divider
  * recomputes it against the container, minRatio/maxRatio clamp it, and the
- * window listeners are torn down on release and on disconnect.
+ * gesture is torn down on release and on disconnect.
  *
- * Four tests are marked BUG, and they are best read against arc-resizable,
- * which solves the same problem in the same directory and gets all four right:
+ * Four tests were marked BUG (findings #33-#35), and the fix is the component
+ * one file away: arc-resizable solves the same problem and got all four right —
  * a role="separator" handle with tabindex, aria-value* and a keydown handler,
- * driven by pointer events, emitting during the drag. See test-findings.md.
+ * driven by pointer events, emitting during the drag rather than on release.
+ * The divider is built that way now. See test-findings.md.
  */
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup, settle, keyOn, record } from './helpers.js';
+import { mount, cleanup, settle, keyOn, record, drag, pointerInit, deepActive } from './helpers.js';
 
 import '../src/layout/split-pane.register.js';
 
@@ -32,15 +33,24 @@ const handle = (el) => el.shadowRoot.querySelector('[part="handle"]');
 const primary = (el) => el.shadowRoot.querySelector('[part="primary"]');
 const base = (el) => el.shadowRoot.querySelector('[part="base"]');
 
-/** Drag the divider with mouse events — the only kind this component listens for. */
+/**
+ * Press the divider and move to a point, leaving the gesture open.
+ *
+ * Pointer events, and dispatched on the handle rather than on the window: the
+ * component captures the pointer, which is what follows it outside the element
+ * without a second teardown path to keep in step.
+ */
 async function dragTo(el, { clientX = 0, clientY = 0 } = {}) {
-  handle(el).dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
-  window.dispatchEvent(new MouseEvent('mousemove', { bubbles: true, clientX, clientY }));
+  const h = handle(el);
+  h.setPointerCapture = () => {};
+  h.releasePointerCapture = () => {};
+  h.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, cancelable: true, clientX, clientY }));
+  h.dispatchEvent(new PointerEvent('pointermove', { ...pointerInit, clientX, clientY }));
   await settle(el);
 }
 
 async function release(el) {
-  window.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+  handle(el).dispatchEvent(new PointerEvent('pointerup', pointerInit));
   await settle(el);
 }
 
@@ -141,7 +151,7 @@ describe('arc-split-pane dragging', () => {
     expect(el.ratio, 'a detached pane must not keep tracking').to.equal(before);
   });
 
-  it('announces the final ratio on release', async () => {
+  it('announces the ratio it moved to', async () => {
     const el = await pane();
     const rect = base(el).getBoundingClientRect();
     const details = [];
@@ -152,6 +162,25 @@ describe('arc-split-pane dragging', () => {
 
     expect(details).to.have.lengthOf(1);
     expect(details[0].ratio).to.be.closeTo(0.6, 0.02);
+    expect(details[0].value, 'detail.value is canonical').to.equal(details[0].ratio);
+  });
+
+  it('stays silent for a move that does not change the ratio', async () => {
+    const el = await pane();
+    const rect = base(el).getBoundingClientRect();
+
+    await dragTo(el, { clientX: rect.left + rect.width * 0.6 });
+    const seen = record(el, ['arc-resize']);
+
+    // The same point again, and then a point past the ceiling, which clamps
+    // back to where it already is.
+    handle(el).dispatchEvent(
+      new PointerEvent('pointermove', { ...pointerInit, clientX: rect.left + rect.width * 0.6 }),
+    );
+    await settle(el);
+    await release(el);
+
+    expect(seen).to.deep.equal([]);
   });
 
   it('bubbles and crosses the shadow boundary', async () => {
@@ -170,80 +199,174 @@ describe('arc-split-pane dragging', () => {
 });
 
 describe('arc-split-pane accessibility and input', () => {
-  // BUG: the divider is a bare <div> with a single @mousedown
-  // (split-pane.js:164-168) — no role, no tabindex, no aria-value*, no keydown
-  // handler. It cannot be operated by keyboard at all and is invisible to
-  // assistive tech. arc-resizable's handle, solving the identical problem in
-  // the same directory, is role="separator" tabindex="0" with aria-orientation,
-  // aria-valuenow/min/max and an arrow-key handler (resizable.js:213-222).
-  it('BUG: the divider has no separator role and is not focusable', async () => {
+  // Was four BUG pins (findings #33-#35). The divider was a bare <div> with a
+  // single @mousedown — no role, no tab stop, no aria-value*, no keydown
+  // handler anywhere in the file — driven by mouse events that touch and pen
+  // never produce, announcing only on release. arc-resizable solved every part
+  // of this one file away, and the divider is built the same way now.
+  it('is a separator, focusable, reporting its position', async () => {
     const el = await pane();
     const div = handle(el);
 
-    expect(div.tagName).to.equal('DIV');
-    expect(div.hasAttribute('role'), 'no role="separator"').to.equal(false);
-    expect(div.hasAttribute('tabindex'), 'not in the tab order').to.equal(false);
-    expect(div.hasAttribute('aria-valuenow'), 'no value reported').to.equal(false);
-    expect(div.hasAttribute('aria-orientation')).to.equal(false);
+    expect(div.getAttribute('role')).to.equal('separator');
+    expect(div.getAttribute('tabindex')).to.equal('0');
+    expect(div.getAttribute('aria-valuenow')).to.equal('50');
+    expect(div.getAttribute('aria-valuemin')).to.equal('15');
+    expect(div.getAttribute('aria-valuemax')).to.equal('85');
+    expect(div.getAttribute('aria-label')).to.equal('Resize panes');
   });
 
-  it('BUG: the divider cannot be moved by keyboard', async () => {
+  it('takes an accessible name of its own', async () => {
+    const el = await pane('label="Split editor and preview"');
+    expect(handle(el).getAttribute('aria-label')).to.equal('Split editor and preview');
+  });
+
+  it('reports the separator axis, not the split axis', async () => {
+    // Side-by-side panes are divided by a *vertical* separator, and ARIA's
+    // aria-orientation describes the separator itself — it is what tells
+    // assistive tech which arrows move it.
+    const el = await pane('orientation="horizontal"');
+    expect(handle(el).getAttribute('aria-orientation')).to.equal('vertical');
+
+    const stacked = await pane('orientation="vertical"');
+    expect(handle(stacked).getAttribute('aria-orientation')).to.equal('horizontal');
+  });
+
+  it('tracks aria-valuenow as the divider moves', async () => {
     const el = await pane();
-    const before = el.ratio;
+    keyOn(handle(el), 'ArrowRight');
+    await settle(el);
+    expect(handle(el).getAttribute('aria-valuenow')).to.equal('55');
+  });
+
+  it('is reachable by keyboard', async () => {
+    const el = await pane();
+    handle(el).focus();
+    expect(deepActive()).to.equal(handle(el));
+  });
+
+  it('moves with the inline arrows when horizontal', async () => {
+    const el = await pane();
     const seen = record(el, ['arc-resize']);
 
-    for (const key of ['ArrowRight', 'ArrowLeft', 'ArrowUp', 'ArrowDown', 'Home', 'End']) {
-      keyOn(handle(el), key);
-    }
+    keyOn(handle(el), 'ArrowRight');
     await settle(el);
+    expect(el.ratio).to.be.closeTo(0.55, 0.001);
 
-    expect(el.ratio, 'no key moves it').to.equal(before);
-    expect(seen).to.deep.equal([]);
+    keyOn(handle(el), 'ArrowLeft');
+    await settle(el);
+    expect(el.ratio).to.be.closeTo(0.5, 0.001);
+
+    expect(seen.map(([kind]) => kind), 'each step is announced').to.deep.equal(['resize', 'resize']);
   });
 
-  // BUG: the drag is wired to mousedown/mousemove/mouseup (split-pane.js:99-131).
-  // Touch and pen never produce those, so the splitter is undraggable on a
-  // touch device. Every other draggable control in the library — arc-knob,
-  // arc-waveform, arc-image-compare, arc-signature-pad and arc-resizable — uses
-  // pointer events.
-  it('BUG: a pointer (touch) drag does nothing', async () => {
-    const el = await pane();
-    const rect = base(el).getBoundingClientRect();
-    const before = el.ratio;
-    const pointer = { bubbles: true, pointerId: 1, isPrimary: true, pointerType: 'touch' };
+  it('moves with the block arrows when vertical', async () => {
+    const el = await pane('orientation="vertical"');
 
-    handle(el).dispatchEvent(new PointerEvent('pointerdown', { ...pointer, clientX: rect.left }));
-    window.dispatchEvent(
-      new PointerEvent('pointermove', { ...pointer, clientX: rect.left + rect.width * 0.8 }),
-    );
-    window.dispatchEvent(new PointerEvent('pointerup', pointer));
+    keyOn(handle(el), 'ArrowDown');
     await settle(el);
+    expect(el.ratio).to.be.closeTo(0.55, 0.001);
 
-    expect(el.ratio, 'touch cannot move the divider').to.equal(before);
+    keyOn(handle(el), 'ArrowRight');
+    await settle(el);
+    expect(el.ratio, 'the inline arrows are inert in vertical mode').to.be.closeTo(0.55, 0.001);
   });
 
-  // BUG: split-pane.js:12 documents arc-resize as "Fired during divider drag".
-  // It is dispatched only from _onMouseUp (split-pane.js:134), so `ratio`
-  // changes throughout the drag with no event at all — a consumer syncing a
-  // layout live gets nothing until release.
-  it('BUG: arc-resize is documented as firing during the drag but fires only on release', async () => {
+  it('takes a larger step with Shift', async () => {
     const el = await pane();
-    const rect = base(el).getBoundingClientRect();
+    keyOn(handle(el), 'ArrowRight', { shiftKey: true });
+    await settle(el);
+    expect(el.ratio).to.be.closeTo(0.7, 0.001);
+  });
+
+  it('Home and End go to the bounds, not to 0 and 1', async () => {
+    const el = await pane('min-ratio="0.3" max-ratio="0.7"');
+
+    keyOn(handle(el), 'End');
+    await settle(el);
+    expect(el.ratio).to.be.closeTo(0.7, 0.001);
+
+    keyOn(handle(el), 'Home');
+    await settle(el);
+    expect(el.ratio).to.be.closeTo(0.3, 0.001);
+  });
+
+  it('clamps at the bounds and stays silent there', async () => {
+    const el = await pane('min-ratio="0.3" max-ratio="0.7"');
+    keyOn(handle(el), 'End');
+    await settle(el);
+
     const seen = record(el, ['arc-resize']);
+    keyOn(handle(el), 'ArrowRight');
+    await settle(el);
 
-    handle(el).dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }));
+    expect(el.ratio).to.be.closeTo(0.7, 0.001);
+    expect(seen, 'a step that cannot move announces nothing').to.deep.equal([]);
+  });
+
+  it('claims the keys it handles even at a bound', async () => {
+    // Or the page scrolls under a separator that correctly refused to move.
+    const el = await pane('min-ratio="0.3" max-ratio="0.7"');
+    keyOn(handle(el), 'End');
+    await settle(el);
+
+    const event = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    handle(el).dispatchEvent(event);
+    await settle(el);
+    expect(event.defaultPrevented).to.equal(true);
+  });
+
+  it('leaves keys it does not handle for the page', async () => {
+    const el = await pane();
+    const event = new KeyboardEvent('keydown', { key: 'a', bubbles: true, cancelable: true });
+    handle(el).dispatchEvent(event);
+    await settle(el);
+    expect(event.defaultPrevented).to.equal(false);
+  });
+
+  it('is draggable by touch', async () => {
+    // The whole of finding #34: the drag was on mousedown/mousemove/mouseup,
+    // which touch and pen never produce, so the splitter could not be moved on
+    // a tablet at all.
+    const el = await pane();
+    const rect = base(el).getBoundingClientRect();
+    const h = handle(el);
+    h.setPointerCapture = () => {};
+    h.releasePointerCapture = () => {};
+
+    const touch = { ...pointerInit, pointerType: 'touch' };
+    h.dispatchEvent(new PointerEvent('pointerdown', { ...touch, cancelable: true, clientX: rect.left }));
+    h.dispatchEvent(new PointerEvent('pointermove', { ...touch, clientX: rect.left + rect.width * 0.8 }));
+    h.dispatchEvent(new PointerEvent('pointerup', touch));
+    await settle(el);
+
+    expect(el.ratio).to.be.closeTo(0.8, 0.02);
+  });
+
+  it('announces during the drag, not only on release', async () => {
+    // Finding #35: the docs said "fired during divider drag" and the dispatch
+    // sat in the mouseup handler, so `ratio` changed throughout with no event —
+    // a consumer syncing a layout live got nothing until the user let go.
+    const el = await pane();
+    const rect = base(el).getBoundingClientRect();
+    const h = handle(el);
+    h.setPointerCapture = () => {};
+    h.releasePointerCapture = () => {};
+
+    const seen = record(el, ['arc-resize']);
+    h.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, cancelable: true, clientX: rect.left }));
     for (const fraction of [0.6, 0.7, 0.8]) {
-      window.dispatchEvent(
-        new MouseEvent('mousemove', { bubbles: true, clientX: rect.left + rect.width * fraction }),
+      h.dispatchEvent(
+        new PointerEvent('pointermove', { ...pointerInit, clientX: rect.left + rect.width * fraction }),
       );
       await settle(el);
     }
 
     expect(el.ratio, 'the ratio moved three times').to.be.closeTo(0.8, 0.02);
-    expect(seen, 'and announced none of them').to.deep.equal([]);
+    expect(seen, 'and announced each of them').to.have.lengthOf(3);
 
     await release(el);
-    expect(seen, 'only the release is announced').to.have.lengthOf(1);
+    expect(seen, 'the release itself is not a fourth change').to.have.lengthOf(3);
   });
 });
 
