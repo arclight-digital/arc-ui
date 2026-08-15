@@ -1237,8 +1237,8 @@ export declare class ArcIconButton extends LitElement {
  * `<arc-icon-library>`
  */
 export declare class ArcIconLibrary extends LitElement {
-  /** @default 'phosphor' */
-  name: string;
+  /** Which icon library to resolve names against. An unrecognised value falls back to `phosphor`. @default 'phosphor' */
+  name: 'phosphor' | 'lucide';
 }
 
 /**
@@ -1288,7 +1288,7 @@ export declare class ArcImageCropper extends LitElement {
   height: number;
   /** Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping. @default 0 */
   aspect: number;
-  /** Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider. @default 1 */
+  /** Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider. @default 1 */
   zoom: number;
 }
 
@@ -2010,11 +2010,11 @@ export declare class ArcPageLayout extends LitElement {
  * Events: arc-change
  */
 export declare class ArcPagination extends LitElement {
-  /** Total number of pages. @default 1 */
+  /** Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1. @default 1 */
   total: number;
-  /** The currently active page number (1-based). Reflected as an attribute. @default 1 */
+  /** The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control. @default 1 */
   current: number;
-  /** Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. @default 1 */
+  /** Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative. @default 1 */
   siblings: number;
   /** Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers. @default false */
   compact: boolean;
@@ -2797,7 +2797,7 @@ export declare class ArcStepper extends LitElement {
 export declare class ArcStepperNav extends LitElement {
   /** Array of step labels displayed along the progress track. @default [] */
   steps: Array<string>;
-  /** Zero-based index of the currently active step. @default 0 */
+  /** Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have. @default 0 */
   active: number;
   /** When true, prevents jumping to future steps — the user must complete each step sequentially. @default false */
   linear: boolean;

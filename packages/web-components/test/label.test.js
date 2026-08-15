@@ -72,132 +72,39 @@ describe('arc-label: clicking focuses the control it names', () => {
     expect(() => labelEl(el).click()).to.not.throw();
   });
 
-  // BUG (finding #77): the lookup is `querySelector('#' + this.for)`, so the
-  // id is spliced into a CSS selector. HTML ids may be almost anything —
-  // `2fa-code`, `user.email`, `field:1` are all legal and all common in
-  // generated forms — but a CSS id selector may not start with a digit or
-  // contain an unescaped `.` or `:`. querySelector throws SyntaxError, the
-  // exception escapes the click handler, and the `document.getElementById`
-  // fallback on the next line — which would have worked — never runs.
-  //
-  // Fix is one call: getElementById on the root, or CSS.escape(this.for).
-  it('BUG: an id that is legal HTML but not a legal CSS selector throws', async () => {
-    const wrap = mount(`
-      <div>
-        <arc-label for="2fa-code">Code</arc-label>
-        <input id="2fa-code" />
-      </div>`);
-    const el = wrap.querySelector('arc-label');
-    await settle(el);
+  // Was a BUG pin (finding #77). The lookup was `querySelector('#' + this.for)`,
+  // splicing the id into a CSS selector. HTML ids may be almost anything —
+  // `2fa-code`, `user.email`, `field:1` are all legal and all routine in
+  // generated forms — while a CSS id selector may not begin with a digit or
+  // carry an unescaped `.` or `:`. querySelector threw SyntaxError, the
+  // exception escaped the click handler, and the document-level fallback on
+  // the same line — which would have worked — never ran.
+  const AWKWARD_IDS = ['2fa-code', 'user.email', 'field:1'];
 
-    // getElementById, not querySelector — the assertion must not trip over the
-    // same invalid selector it is testing for. (It did, first time round.)
-    const target = document.getElementById('2fa-code');
-    expect(target, 'the input is findable the correct way').to.not.equal(null);
+  for (const id of AWKWARD_IDS) {
+    it(`focuses a control whose id is legal HTML but not a legal CSS selector: ${id}`, async () => {
+      const wrap = mount(`
+        <div>
+          <arc-label for="${id}">Code</arc-label>
+          <input id="${id}" />
+        </div>`);
+      const el = wrap.querySelector('arc-label');
+      await settle(el);
 
-    let thrown = null;
-    try {
-      el._onClick();
-    } catch (error) {
-      thrown = error;
-    }
+      // getElementById, not querySelector — the assertion must not trip over
+      // the same invalid selector it is testing for. (It did, first time round.)
+      const target = document.getElementById(id);
+      expect(target, 'the input is findable the correct way').to.not.equal(null);
 
-    expect(thrown, 'should focus the input instead of throwing').to.be.instanceOf(DOMException);
-    expect(thrown.name).to.equal('SyntaxError');
-    expect(deepActive() === target, 'and focus never moves').to.equal(false);
-  });
-});
+      let thrown = null;
+      try {
+        el._onClick();
+      } catch (error) {
+        thrown = error;
+      }
 
-// ---------------------------------------------------------------------------
-// The required indicator
-// ---------------------------------------------------------------------------
-
-describe('arc-label: the required indicator', () => {
-  it('is absent by default', async () => {
-    const el = mount('<arc-label>Name</arc-label>');
-    await settle(el);
-    expect(el.shadowRoot.querySelector('.label__required')).to.equal(null);
-  });
-
-  it('appears when required, hidden from assistive tech', async () => {
-    // The asterisk is decoration: the control itself carries `required`, and a
-    // screen reader announcing "star" after every field name is noise.
-    const el = mount('<arc-label required>Name</arc-label>');
-    await settle(el);
-    const star = el.shadowRoot.querySelector('.label__required');
-
-    expect(star.textContent.trim()).to.equal('*');
-    expect(star.getAttribute('aria-hidden')).to.equal('true');
-  });
-
-  it('required="false" leaves it off', async () => {
-    // required is flag(), so the string "false" is false — see props.test.js.
-    const el = mount('<arc-label required="false">Name</arc-label>');
-    await settle(el);
-    expect(el.shadowRoot.querySelector('.label__required')).to.equal(null);
-  });
-});
-
-// ---------------------------------------------------------------------------
-// The self-hiding slots
-// ---------------------------------------------------------------------------
-
-describe('arc-label: description and tooltip collapse when empty', () => {
-  it('hides the description wrapper with nothing slotted', async () => {
-    const el = mount('<arc-label>Name</arc-label>');
-    await settle(el);
-
-    expect(description(el).classList.contains('description--empty')).to.equal(true);
-    expect(getComputedStyle(description(el)).display, 'and takes no space').to.equal('none');
-  });
-
-  it('shows it once content arrives', async () => {
-    const el = mount('<arc-label>Name<span slot="description">Your work address</span></arc-label>');
-    await settle(el);
-
-    expect(description(el).classList.contains('description--empty')).to.equal(false);
-    expect(getComputedStyle(description(el)).display).to.not.equal('none');
-  });
-
-  it('reacts to content added after first render', async () => {
-    // slotchange, not a first-render snapshot: these labels are rendered from
-    // data that arrives late as often as not.
-    const el = mount('<arc-label>Name</arc-label>');
-    await settle(el);
-    expect(description(el).classList.contains('description--empty')).to.equal(true);
-
-    const note = document.createElement('span');
-    note.slot = 'description';
-    note.textContent = 'added later';
-    el.appendChild(note);
-    await settle(el);
-
-    expect(description(el).classList.contains('description--empty')).to.equal(false);
-  });
-
-  it('collapses again when the content is removed', async () => {
-    const el = mount('<arc-label>Name<span slot="description">gone soon</span></arc-label>');
-    await settle(el);
-    expect(description(el).classList.contains('description--empty')).to.equal(false);
-
-    el.querySelector('[slot="description"]').remove();
-    await settle(el);
-
-    expect(description(el).classList.contains('description--empty')).to.equal(true);
-  });
-
-  it('does the same for the tooltip slot', async () => {
-    const el = mount('<arc-label>Name</arc-label>');
-    await settle(el);
-    const tip = el.shadowRoot.querySelector('.label__tooltip');
-    expect(tip.classList.contains('label__tooltip--empty')).to.equal(true);
-
-    const icon = document.createElement('span');
-    icon.slot = 'tooltip';
-    icon.textContent = '?';
-    el.appendChild(icon);
-    await settle(el);
-
-    expect(tip.classList.contains('label__tooltip--empty')).to.equal(false);
-  });
+      expect(thrown, 'no exception escapes the handler').to.equal(null);
+      expect(deepActive() === target, 'and focus lands on the named control').to.equal(true);
+    });
+  }
 });

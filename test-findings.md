@@ -1575,7 +1575,14 @@ both ends; and presets select the last N days and close.
 
 ## arc-image-cropper
 
-### 47. `zoom` is documented as clamped to 1-4 and is clamped nowhere — **doc-mismatch**
+### 47. `zoom` is documented as clamped to 1-4 and is clamped nowhere — **doc-mismatch — FIXED**
+
+**Fixed by the declaration**, as #70 fixed its five: `zoom: num({ default: 1,
+min: 1, max: 4, clamp: 'toRange' })`, and the `_zoomClamped` getter the render
+used is deleted — the render now reads `this.zoom`, which is the same number the
+component holds. `arc-image-cropper` was **not on `DeclaredPropsMixin`**, so the
+declaration would have been inert; that is #70's own stated trap, and it applied
+here too.
 
 `input/image-cropper.js:20` declares *"Image zoom factor, clamped to 1-4."*
 There is no setter guard, and `_onZoomInput` (`image-cropper.js:574`) simply
@@ -3774,7 +3781,17 @@ contract is props plus slots plus parts, which conformance already derives.
 All five are Phase-1 survivors, so the work was safe to do before the catalog
 decisions. Four findings, and **three of them are the same shape**.
 
-### 76. `arc-pagination` strands itself on an out-of-range `current` — **doc-mismatch**
+### 76. `arc-pagination` strands itself on an out-of-range `current` — **doc-mismatch — FIXED**
+
+**Fixed, and all three of `_getPageRange()`'s bounds moved with it**, not just
+`current`. That was not tidiness: `current` names `total` as its `max`, so
+`total` needed its own floor first — otherwise `total="0"` would clamp `current`
+to 0, below its own documented 1-based range. `siblings` had the third
+`Math.max` and came along. `_getPageRange()` is now a destructure.
+
+Naming `total` as a *property* bound rather than a literal is what makes
+shrinking the page count under a legal `current` pull it back down — pinned,
+because a remembered bound would pass every other test in the file.
 
 `current` is documented as "the currently active page number (1-based)" and is
 clamped in `_getPageRange()` — the *render* — while the property keeps whatever
@@ -3787,7 +3804,17 @@ page and holds another.
 `current: int({ default: 1, min: 1, max: 'total', clamp: 'toRange' })` fixes it
 in the declaration rather than the render, which is what the vocabulary is for.
 
-### 77. `arc-label` splices an id into a CSS selector — **correctness**
+### 77. `arc-label` splices an id into a CSS selector — **correctness — FIXED**
+
+**Fixed with `getElementById` on the root**, not `CSS.escape` — the fallback
+line already called `document.getElementById`, so the selector was the odd one
+out rather than the thing to preserve. Guarded with a `typeof` check because a
+`DocumentFragment` that is neither a document nor a shadow root has no
+`getElementById`, and `||` rather than `??` so a root that simply does not
+contain the id still falls through to the document, as it always did.
+
+Pinned across all three id shapes the finding named (`2fa-code`, `user.email`,
+`field:1`) rather than the one it happened to use.
 
 `_onClick` does `getRootNode().querySelector('#' + this.for)`. HTML ids may be
 almost anything — `2fa-code`, `user.email`, `field:1` are all legal and all
@@ -3798,7 +3825,18 @@ on the very next line — **which would have worked** — never runs.
 
 One call fixes it: `getElementById` on the root, or `CSS.escape(this.for)`.
 
-### 78. `arc-stepper-nav` has no bound on `active`, and its two guards disagree — **correctness**
+### 78. `arc-stepper-nav` has no bound on `active`, and its two guards disagree — **correctness — FIXED**
+
+**Neither guard changed.** `active` is
+`int({ min: 0, max: '_lastStep', clamp: 'toRange' })`, and the value can no
+longer reach a state where the button's `active === steps.length - 1` and
+`_next()`'s `active < steps.length - 1` disagree. Fixing the disagreement by
+editing one of the two conditions would have left the other free to drift
+again; bounding the value they both read is what makes them agree by
+construction.
+
+The below-zero half dissolved the same way: `?disabled=${active === 0}` only
+ever knew about exactly zero, which is now the only below-zero state there is.
 
 `active` is documented as "zero-based index of the currently active step" and is
 bounded nowhere — not in the declaration (`{ type: Number }`, no vocabulary),
@@ -3816,7 +3854,17 @@ Below zero the halves split the other way and it is only cosmetic: `_back()`'s
 `?disabled=${active === 0}` only knows about exactly zero — so Back renders as
 available and is inert. Pinned as such rather than as a state bug.
 
-### 79. `arc-icon-library` throws during upgrade on a typo — **correctness**
+### 79. `arc-icon-library` throws during upgrade on a typo — **correctness — FIXED**
+
+**Fixed by `name: oneOf(['phosphor', 'lucide'])`**, and the component joined
+`DeclaredPropsMixin` to make it real — it was the one component in the library
+with no declared contract at all, which is why it had no derived coverage
+either. It has both now.
+
+One ordering detail worth keeping: the mixin normalises in `hostUpdate`, which
+runs *after* `connectedCallback` — so the connect-time `use()` call reads a
+`_resolvedName` getter rather than the raw property. A declaration alone would
+still have thrown on the very call the finding is about.
 
 The one component with no declared contract is also the one whose untested path
 throws. `name` is a bare `{ type: String }`; `iconRegistry.use()` throws on
@@ -3839,6 +3887,28 @@ its documented range and look at what the component does with it — and each is
 fixed by moving the constraint into the declaration rather than by adding a
 guard. That is V4-PLAN 2.3's whole thesis, and it now has three more instances
 to point at.
+
+**All three fixed together with #47, in one pass, 2026-08-15** — and the batch
+sharpened the thesis rather than merely confirming it. Three things it taught
+that the individual write-ups did not:
+
+- **A bound that names another prop has to be declared bottom-up.** `current`
+  could not name `total` as its `max` until `total` had its own floor, or
+  `total="0"` would have clamped `current` below its documented range. A
+  declared bound is only as sound as the thing it points at.
+- **Fix the value both guards read, not either guard.** #78's two conditions
+  disagreed; editing one to match the other would have left the pair free to
+  drift again. Neither guard changed and they now agree by construction.
+- **The constraint has to be reachable at the moment it is needed.**
+  `arc-icon-library` throws from `connectedCallback`, and the mixin normalises
+  in `hostUpdate` — *after* connect. The declaration alone would still have
+  thrown on exactly the call the finding is about; it needed a resolved-value
+  getter beside it.
+
+And #70's own trap held for the fourth time: `arc-image-cropper` and
+`arc-icon-library` were both off `DeclaredPropsMixin`, so the declarations would
+have been inert. **Check the class extends the mixin whenever adding a
+declaration to a component that had none.**
 
 ### Two traps this batch re-taught
 

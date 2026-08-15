@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { observeResize } from '../shared/subscriptions.js';
+import { DeclaredPropsMixin, num } from '../shared/props.js';
 
 const MIN_SIZE = 32;
 const HANDLES = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
@@ -18,7 +19,7 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
  * @prop {string} src - Image URL, object URL, or data URL to crop. Must be same-origin or CORS-enabled for canvas export.
  * @prop {number} height - Fixed stage height in pixels. The image is letterboxed to fit.
  * @prop {number} aspect - Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping.
- * @prop {number} zoom - Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.
+ * @prop {number} zoom - Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider.
  * @fires arc-crop-change - Fired when the crop changes (drag, resize, keyboard, zoom, stage resize). `event.detail` is `{ x, y, width, height }` in natural image pixels, debounced to animation frames.
  * @slot none
  * @csspart stage
@@ -29,12 +30,19 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
  * @csspart handle
  * @csspart zoom
  */
-export class ArcImageCropper extends LitElement {
+export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
   static properties = {
     src: { type: String, reflect: true },
     height: { type: Number, reflect: true },
     aspect: { type: Number, reflect: true },
-    zoom: { type: Number, reflect: true },
+    /**
+     * The docs said "clamped to 1-4" and nothing clamped — finding #47. The
+     * only bound was `min`/`max` on the range input, which constrains the
+     * *widget* and not the property, so `el.zoom = 10` stuck and so did
+     * `el.zoom = -3`; the render then quietly used a different number than the
+     * one the component held. Third instance of that shape after #1 and #14.
+     */
+    zoom: num({ default: 1, min: 1, max: 4, clamp: 'toRange', reflect: true }),
     _loaded: { state: true },
     _errored: { state: true },
     _rect: { state: true },
@@ -267,7 +275,7 @@ export class ArcImageCropper extends LitElement {
     this.src = '';
     this.height = 320;
     this.aspect = 0;
-    this.zoom = 1;
+    // `zoom` is seeded from its declaration — see DeclaredPropsMixin.
     this._loaded = false;
     this._errored = false;
     this._rect = null;
@@ -339,18 +347,13 @@ export class ArcImageCropper extends LitElement {
     return Number.isFinite(a) && a > 0 ? a : 0;
   }
 
-  get _zoomClamped() {
-    const z = Number(this.zoom);
-    return Number.isFinite(z) ? Math.min(4, Math.max(1, z)) : 1;
-  }
-
   /** Letterbox + zoom geometry in stage coordinates, or null before load/measure. */
   get _geom() {
     if (!this._loaded || !this._stageW || !this._natW || !this._natH) return null;
     const stageW = this._stageW;
     const stageH = this.height;
     const baseScale = Math.min(stageW / this._natW, stageH / this._natH);
-    const scale = baseScale * this._zoomClamped;
+    const scale = baseScale * this.zoom;
     const dispW = this._natW * scale;
     const dispH = this._natH * scale;
     const imgX = (stageW - dispW) / 2;
@@ -692,7 +695,7 @@ export class ArcImageCropper extends LitElement {
   render() {
     const g = this._geom;
     const r = this._rect;
-    const zoom = this._zoomClamped;
+    const zoom = this.zoom;
     const fill = ((zoom - 1) / 3) * 100;
     const rectStyle = r ? `left:${r.x}px;top:${r.y}px;width:${r.width}px;height:${r.height}px` : '';
 

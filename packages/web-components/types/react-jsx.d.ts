@@ -513,7 +513,7 @@ declare module 'react' {
         type?: string;
       };
       'arc-icon-library': ArcBaseAttributes & {
-        name?: string;
+        name?: 'phosphor' | 'lucide';
       };
       'arc-image': ArcBaseAttributes & {
         src?: string;

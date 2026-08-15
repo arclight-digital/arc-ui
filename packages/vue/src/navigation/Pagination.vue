@@ -4,16 +4,12 @@ import '@arclux/arc-ui/pagination';
 
 defineOptions({ name: 'Pagination' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   total?: number;
   current?: number;
   siblings?: number;
   compact?: boolean;
-}>(), {
-  total: 1,
-  current: 1,
-  siblings: 1,
-});
+}>();
 
 const emit = defineEmits<{
   'arc-change': [event: CustomEvent];

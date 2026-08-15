@@ -181,40 +181,61 @@ describe('arc-pagination: compact', () => {
 // ---------------------------------------------------------------------------
 
 describe('arc-pagination: an out-of-range current', () => {
-  // BUG (finding #76): `current` is documented as "the currently active page
-  // number (1-based)" and is clamped in `_getPageRange()` — the *render* —
-  // while the property keeps whatever it was given. That is finding #70's
-  // shape exactly (clamping on the render instead of on the state), and here
-  // it strands the control: no page is marked current, and because _goToPage
-  // guards on `page > this.total`, Previous cannot get back into range either.
-  //
-  // Declaring `current: int({ default: 1, min: 1, max: 'total', clamp:
-  // 'toRange' })` would fix it in the vocabulary rather than in the render.
-  it('BUG: leaves no page marked as current', async () => {
+  // Was three BUG pins (finding #76). `current` is documented as "the currently
+  // active page number (1-based)" and was clamped in `_getPageRange()` — the
+  // *render* — while the property kept whatever it was handed. Finding #70's
+  // shape exactly, and here it stranded the control: nothing carried
+  // aria-current, and `_goToPage`'s `page > this.total` guard then refused to
+  // walk back in. All three bounds are declarations now.
+  it('clamps a page past the end onto the last page', async () => {
     const el = await page('total="5" current="99"');
-    expect(el.current, 'the property keeps the bad value').to.equal(99);
-    expect(active(el), 'and nothing is marked current').to.equal(null);
+    expect(el.current, 'the property, not just the render').to.equal(5);
+    expect(active(el).textContent.trim(), 'and it is marked current').to.equal('5');
   });
 
-  it('BUG: strands the control — previous cannot get back into range', async () => {
+  it('clamps a page below the start onto the first page', async () => {
+    const el = await page('total="5" current="0"');
+    expect(el.current).to.equal(1);
+    expect(active(el).textContent.trim()).to.equal('1');
+  });
+
+  it('leaves the control operable rather than stranded', async () => {
     const el = await page('total="5" current="99"');
     const seen = record(el, ['arc-change']);
 
-    expect(prev(el).disabled, 'Previous looks available').to.equal(false);
+    expect(prev(el).disabled, 'Previous is available').to.equal(false);
     prev(el).click();
     await settle(el);
 
-    expect(el.current, 'and does nothing').to.equal(99);
-    expect(only(seen, 'change')).to.eql([]);
+    expect(el.current, 'and moves').to.equal(4);
+    expect(only(seen, 'change')).to.eql([['change', 4]]);
   });
 
-  it('renders the range as though current were the last page', async () => {
-    // The one thing the render clamp does buy, and the clearest statement of
-    // the split: the *range* is computed from a clamped 5 — it truncates the
-    // near side exactly as `current="5"` would — while `el.current` is still
-    // 99. The component displays one page and holds another.
+  it('re-clamps when total shrinks under a legal current', async () => {
+    // Why `max` names the `total` *property* rather than a literal: the bound
+    // is itself reactive, so narrowing the page count has to pull `current`
+    // down with it. A remembered bound could not.
+    const el = await page('total="10" current="9"');
+    expect(el.current).to.equal(9);
+
+    el.total = 3;
+    await settle(el);
+    expect(el.current).to.equal(3);
+  });
+
+  it('holds total and siblings to their own floors', async () => {
+    // `_getPageRange()` clamped these two as well, on its local copies.
+    const el = await page('total="0" siblings="-4" current="1"');
+    expect(el.total, 'a pager with no pages is still page 1 of 1').to.equal(1);
+    expect(el.siblings).to.equal(0);
+    expect(rendered(el)).to.eql(['1']);
+  });
+
+  it('renders the range from the clamped current', async () => {
+    // The render used to compute from a clamped 5 while `el.current` stayed 99
+    // — the component displayed one page and held another. Now they agree.
     const el = await page('total="5" current="99" siblings="1"');
     expect(rendered(el)).to.eql(['1', '…', '4', '5']);
-    expect(el.current).to.equal(99);
+    expect(el.current).to.equal(5);
   });
 });

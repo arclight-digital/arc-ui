@@ -1923,7 +1923,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "",
+          "description": "Switches the icon set every arc-icon on the page resolves against. Renders nothing itself —\nput one anywhere in the document and it applies globally.",
           "name": "ArcIconLibrary",
           "members": [
             {
@@ -1931,10 +1931,11 @@
               "name": "name",
               "privacy": "public",
               "type": {
-                "text": "string"
+                "text": "'phosphor' | 'lucide'"
               },
-              "default": "'phosphor'",
+              "description": "Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.",
               "attribute": "name",
+              "default": "'phosphor'",
               "reflects": true
             }
           ],
@@ -1942,10 +1943,17 @@
             {
               "name": "name",
               "type": {
-                "text": "string"
+                "text": "'phosphor' | 'lucide'"
               },
-              "default": "'phosphor'",
-              "fieldName": "name"
+              "description": "Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.",
+              "fieldName": "name",
+              "default": "'phosphor'"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -16805,12 +16813,12 @@
               "kind": "field",
               "name": "zoom",
               "privacy": "public",
+              "description": "Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider.",
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.",
               "attribute": "zoom",
+              "default": "1",
               "reflects": true
             }
           ],
@@ -16853,12 +16861,18 @@
             },
             {
               "name": "zoom",
+              "description": "Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider.",
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.",
-              "fieldName": "zoom"
+              "fieldName": "zoom",
+              "default": "1"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -30741,20 +30755,20 @@
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "Total number of pages.",
-              "attribute": "total"
+              "description": "Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.",
+              "attribute": "total",
+              "default": "1"
             },
             {
               "kind": "field",
               "name": "current",
               "privacy": "public",
+              "description": "The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control.",
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "The currently active page number (1-based). Reflected as an attribute.",
               "attribute": "current",
+              "default": "1",
               "reflects": true
             },
             {
@@ -30764,9 +30778,9 @@
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.",
-              "attribute": "siblings"
+              "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative.",
+              "attribute": "siblings",
+              "default": "1"
             },
             {
               "kind": "field",
@@ -30796,27 +30810,27 @@
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "Total number of pages.",
-              "fieldName": "total"
+              "description": "Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.",
+              "fieldName": "total",
+              "default": "1"
             },
             {
               "name": "current",
+              "description": "The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control.",
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "The currently active page number (1-based). Reflected as an attribute.",
-              "fieldName": "current"
+              "fieldName": "current",
+              "default": "1"
             },
             {
               "name": "siblings",
               "type": {
                 "text": "number"
               },
-              "default": "1",
-              "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.",
-              "fieldName": "siblings"
+              "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative.",
+              "fieldName": "siblings",
+              "default": "1"
             },
             {
               "name": "compact",
@@ -32108,12 +32122,12 @@
               "kind": "field",
               "name": "active",
               "privacy": "public",
+              "description": "Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have.",
               "type": {
                 "text": "number"
               },
-              "default": "0",
-              "description": "Zero-based index of the currently active step.",
               "attribute": "active",
+              "default": "0",
               "reflects": true
             },
             {
@@ -32157,12 +32171,12 @@
             },
             {
               "name": "active",
+              "description": "Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have.",
               "type": {
                 "text": "number"
               },
-              "default": "0",
-              "description": "Zero-based index of the currently active step.",
-              "fieldName": "active"
+              "fieldName": "active",
+              "default": "0"
             },
             {
               "name": "linear",

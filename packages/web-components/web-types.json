@@ -1003,13 +1003,14 @@
         },
         {
           "name": "arc-icon-library",
-          "description": "\n---\n",
+          "description": "Switches the icon set every arc-icon on the page resolves against. Renders nothing itself —\nput one anywhere in the document and it applies globally.\n---\n",
           "doc-url": "",
           "attributes": [
             {
               "name": "name",
+              "description": "Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.",
               "value": {
-                "type": "string",
+                "type": "'phosphor' | 'lucide'",
                 "default": "'phosphor'"
               }
             }
@@ -1019,7 +1020,8 @@
             "properties": [
               {
                 "name": "name",
-                "type": "string"
+                "description": "Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.",
+                "type": "'phosphor' | 'lucide'"
               }
             ],
             "events": []
@@ -8686,7 +8688,7 @@
             },
             {
               "name": "zoom",
-              "description": "Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.",
+              "description": "Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider.",
               "value": {
                 "type": "number",
                 "default": "1"
@@ -8720,7 +8722,7 @@
               },
               {
                 "name": "zoom",
-                "description": "Image zoom factor, clamped to 1-4. Scales the image around its center; also settable via the built-in slider.",
+                "description": "Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider.",
                 "type": "number"
               }
             ],
@@ -15038,7 +15040,7 @@
           "attributes": [
             {
               "name": "total",
-              "description": "Total number of pages.",
+              "description": "Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.",
               "value": {
                 "type": "number",
                 "default": "1"
@@ -15046,7 +15048,7 @@
             },
             {
               "name": "current",
-              "description": "The currently active page number (1-based). Reflected as an attribute.",
+              "description": "The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control.",
               "value": {
                 "type": "number",
                 "default": "1"
@@ -15054,7 +15056,7 @@
             },
             {
               "name": "siblings",
-              "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.",
+              "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative.",
               "value": {
                 "type": "number",
                 "default": "1"
@@ -15081,17 +15083,17 @@
             "properties": [
               {
                 "name": "total",
-                "description": "Total number of pages.",
+                "description": "Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.",
                 "type": "number"
               },
               {
                 "name": "current",
-                "description": "The currently active page number (1-based). Reflected as an attribute.",
+                "description": "The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control.",
                 "type": "number"
               },
               {
                 "name": "siblings",
-                "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.",
+                "description": "Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative.",
                 "type": "number"
               },
               {
@@ -15796,7 +15798,7 @@
             },
             {
               "name": "active",
-              "description": "Zero-based index of the currently active step.",
+              "description": "Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have.",
               "value": {
                 "type": "number",
                 "default": "0"
@@ -15838,7 +15840,7 @@
               },
               {
                 "name": "active",
-                "description": "Zero-based index of the currently active step.",
+                "description": "Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have.",
                 "type": "number"
               },
               {

@@ -241,55 +241,64 @@ describe('arc-stepper-nav: the steps attribute', () => {
 // ---------------------------------------------------------------------------
 
 describe('arc-stepper-nav: an out-of-range active', () => {
-  // BUG (finding #78): `active` is documented as "zero-based index of the
-  // currently active step" and is never bounded — not in the declaration
-  // (`{ type: Number }`, no vocabulary), not in `_goTo`, not in the render.
-  // Same family as #70 and #76, one step further along: here nothing clamps at
-  // all, so the component renders a track with no active step *and* the
-  // controls read the out-of-range value.
-  it('BUG: an index past the end leaves no step marked current', async () => {
+  // Was four BUG pins (finding #78). `active` was bounded nowhere — not in the
+  // declaration (`{ type: Number }`, no vocabulary), not in `_goTo`, not in the
+  // render. Same family as #70 and #76, one step further along. It is
+  // `int({ min: 0, max: '_lastStep', clamp: 'toRange' })` now; neither guard
+  // below changed, the value simply can no longer reach a state where they
+  // disagree.
+  it('clamps an index past the end onto the last step', async () => {
     const el = await stepper('active="99"');
-    expect(indicators(el).filter((b) => b.getAttribute('aria-current') === 'step')).to.eql([]);
+    expect(el.active).to.equal(4);
+    const current = indicators(el).filter((b) => b.getAttribute('aria-current') === 'step');
+    expect(current, 'exactly one step is current').to.have.lengthOf(1);
   });
 
-  it('BUG: every step reads as completed past the end', async () => {
+  it('does not read every step as completed past the end', async () => {
     const el = await stepper('active="99"');
     const labels = indicators(el).map((b) => b.getAttribute('aria-label'));
-    expect(labels.every((l) => l.endsWith('(completed)'))).to.equal(true);
+    expect(labels.filter((l) => l.endsWith('(completed)')), 'all but the last').to.have.lengthOf(4);
   });
 
-  it('BUG: the button reads Next and fires arc-complete', async () => {
-    // The two conditions disagree, which is the sharpest form of this bug.
-    // The label asks `active === steps.length - 1` (99 === 4, false) so it says
-    // **Next**; `_next()` asks `active < steps.length - 1` (99 < 4, false) so
-    // it takes the *completion* branch. The user is told there is another step
-    // and the form submits.
+  it('the label and the action agree at the end of the wizard', async () => {
+    // The sharpest form of the old bug: the label asked
+    // `active === steps.length - 1` (99 === 4, false) and read **Next**, while
+    // `_next()` asked `active < steps.length - 1` (99 < 4, false) and took the
+    // *completion* branch. The user was told there was another step, clicked
+    // Next, and the wizard submitted.
     const el = await stepper('active="99"');
     let completed = 0;
     el.addEventListener('arc-complete', () => {
       completed += 1;
     });
 
-    const button = byText(el, 'Next');
-    expect(button, 'the control still offers a next step').to.not.equal(undefined);
+    expect(byText(el, 'Next'), 'there is no next step to offer').to.equal(undefined);
+    const button = byText(el, 'Complete');
+    expect(button, 'and the button says so').to.not.equal(undefined);
 
     button.click();
     await settle(el);
-    expect(completed, 'and finishes the wizard instead').to.equal(1);
+    expect(completed).to.equal(1);
   });
 
-  it('BUG: a negative index leaves Back enabled but inert', async () => {
-    // `_back()` guards on `active > 0`, so it correctly refuses to walk further
-    // below zero — but the button's own `?disabled=${active === 0}` only knows
-    // about exactly zero, so it renders as available. A control that looks
-    // usable and does nothing is the part worth pinning; the guard behind it
-    // is doing its job.
+  it('clamps a negative index onto the first step, and Back reads disabled', async () => {
+    // `_back()` always guarded on `active > 0` and correctly refused to move;
+    // it was the button's own `?disabled=${active === 0}` that only knew about
+    // exactly zero, so Back rendered as available and did nothing. Clamping
+    // makes the two agree without touching either.
     const el = await stepper('active="-3"');
-    const back = byText(el, 'Back');
-    expect(back.disabled, 'Back looks available below zero').to.equal(false);
+    expect(el.active).to.equal(0);
 
-    back.click();
+    const back = byText(el, 'Back');
+    expect(back.disabled, 'a control that looks usable must be usable').to.equal(true);
+  });
+
+  it('re-clamps when the step list shrinks under a legal active', async () => {
+    const el = await stepper('active="4"');
+    expect(el.active).to.equal(4);
+
+    el.steps = ['One', 'Two'];
     await settle(el);
-    expect(el.active, 'and correctly refuses to move').to.equal(-3);
+    expect(el.active, 'the bound is the step list, and it is reactive').to.equal(1);
   });
 });

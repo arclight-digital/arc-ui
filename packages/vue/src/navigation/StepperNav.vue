@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   linear?: boolean;
 }>(), {
   steps: () => ([]),
-  active: 0,
 });
 
 const emit = defineEmits<{

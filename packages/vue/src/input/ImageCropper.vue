@@ -13,7 +13,6 @@ const props = withDefaults(defineProps<{
   src: '',
   height: 320,
   aspect: 0,
-  zoom: 1,
 });
 
 const emit = defineEmits<{

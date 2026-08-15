@@ -2,10 +2,11 @@
  * arc-icon-library — the declarative form of `iconRegistry.use()`.
  *
  * This was the only one of 207 tags with **no coverage of any kind**: it
- * declares no props through the vocabulary, exposes no slots and no CSS parts,
+ * declared no props through the vocabulary, exposed no slots and no CSS parts,
  * so both derived suites had nothing to derive from, and no hand-written test
  * named it. Thirty-one lines, entirely side effect — `render()` returns
- * undefined and the element draws nothing.
+ * undefined and the element draws nothing. It has a declared `name` now
+ * (finding #79), so the derived suites see it too.
  *
  * Its whole observable contract is the call it makes, so that call is what is
  * asserted, by standing in for `iconRegistry.use`. The registry's active
@@ -114,26 +115,22 @@ describe('arc-icon-library', () => {
     expect(el.getAttribute('name')).to.equal('phosphor');
   });
 
-  // BUG (finding #79): `name` is a bare `{ type: String }`, and
+  // Was two BUG pins (finding #79). `name` was a bare `{ type: String }` and
   // `iconRegistry.use()` throws on anything that is not 'phosphor' or
-  // 'lucide'. The throw happens inside `connectedCallback`, so a single typo
-  // in markup raises during element upgrade — where there is no call site to
-  // catch it and the rest of that element's setup is abandoned.
-  //
-  // The vocabulary already has the answer: `name: oneOf(['phosphor',
-  // 'lucide'])` normalises an unknown value to the default instead, which is
-  // what every other enum in the library does. This is the inverse of finding
-  // #70's family — not a constraint enforced in the wrong place, but a
-  // constraint that never made it into the declaration at all, on the one
-  // component with no declared contract.
-  it('BUG: an unknown library name throws during upgrade', async () => {
+  // 'lucide' — from inside `connectedCallback`, where a custom-element
+  // reaction's exception is reported *globally* rather than propagated. One
+  // typo in markup therefore raised during element upgrade, nothing at the
+  // call site could catch it, and the element's connect was abandoned partway
+  // through. `oneOf(['phosphor', 'lucide'])` normalises the typo instead,
+  // which is what every other enum in the library already does.
+  it('normalises an unknown library name instead of throwing on upgrade', async () => {
     // The reaction is invoked directly rather than by putting the tag in
-    // markup. Appending it does reproduce the bug — that is how it would reach
-    // a user — but a custom-element reaction that throws is reported as a
-    // *global* error, and the runner's own uncaught handler is registered
-    // before any listener a test can add, so it claims the failure no matter
-    // what this test then asserts. Calling the callback is the same code path
-    // with a catchable stack.
+    // markup: a custom-element reaction that throws is reported as a *global*
+    // error, and the runner's own uncaught handler is registered before any
+    // listener a test can add, so it would claim the failure no matter what
+    // this test then asserted. Calling the callback is the same code path with
+    // a catchable stack.
+    const calls = spyUse();
     const el = document.createElement('arc-icon-library');
     el.name = 'feather';
 
@@ -144,23 +141,33 @@ describe('arc-icon-library', () => {
       thrown = error;
     }
 
-    expect(thrown, 'should normalise to the default instead of throwing').to.be.instanceOf(Error);
-    expect(thrown.message).to.match(/Unknown icon library/);
+    expect(thrown, 'no exception escapes the upgrade').to.equal(null);
+    expect(calls, 'and the registry is asked for the default').to.eql(['phosphor']);
   });
 
-  it('BUG: an unknown name assigned later throws from the update cycle', async () => {
+  it('normalises an unknown name assigned after mount', async () => {
     const el = mount('<arc-icon-library></arc-icon-library>');
     await settle(el);
+    const calls = spyUse();
 
     let thrown = null;
     try {
       el.name = 'feather';
-      await el.updateComplete;
+      await settle(el);
     } catch (error) {
       thrown = error;
     }
 
-    expect(thrown).to.be.instanceOf(Error);
-    expect(el.name, 'and the bad value is kept').to.equal('feather');
+    expect(thrown).to.equal(null);
+    expect(el.name, 'the property lands on the default, not on the typo').to.equal('phosphor');
+    expect(calls.every((c) => c === 'phosphor')).to.equal(true);
+  });
+
+  it('still honours a name it does know', async () => {
+    // Anti-vacuity: a component that normalised *everything* to phosphor would
+    // pass both tests above.
+    const el = mount('<arc-icon-library name="lucide"></arc-icon-library>');
+    await settle(el);
+    expect(el.name).to.equal('lucide');
   });
 });

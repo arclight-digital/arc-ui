@@ -133,25 +133,42 @@ describe('arc-image-cropper zoom', () => {
     expect(part(el, 'zoom')).to.not.equal(null);
   });
 
-  // BUG: image-cropper.js:20 documents `zoom` as "clamped to 1-4". Nothing
-  // clamps it. There is no setter guard, and _onZoomInput (image-cropper.js:574)
-  // simply assigns `Number(e.target.value)` — the only bound anywhere is the
-  // `min`/`max` on the range input, which constrains the slider UI and not the
-  // property. Assigning from script takes any value.
-  //
-  // Same shape as arc-tabs' unclamped `selected` (#1) and arc-theme-toggle's
-  // unsynced `theme` (#14): documented behaviour that holds on the interaction
-  // path and not on the property.
-  it('BUG: zoom is documented as clamped to 1-4 but accepts anything', async () => {
+  // Was a BUG pin (finding #47). The docs said "clamped to 1-4" and the only
+  // bound anywhere was `min`/`max` on the range input, which constrains the
+  // *widget* and not the property — so `el.zoom = 10` stuck, and the render
+  // then used a different number than the one the component held. Same shape
+  // as arc-tabs' unclamped `selected` (#1); fixed the same way, by declaring
+  // the bound instead of enforcing it where the value is used.
+  it('clamps a zoom past the documented ceiling', async () => {
     const el = await cropper();
-
     el.zoom = 10;
     await settle(el);
-    expect(el.zoom, 'well past the documented ceiling').to.equal(10);
+    expect(el.zoom).to.equal(4);
+  });
 
+  it('clamps a zoom below the floor', async () => {
+    const el = await cropper();
     el.zoom = -3;
     await settle(el);
-    expect(el.zoom, 'and below the floor').to.equal(-3);
+    expect(el.zoom).to.equal(1);
+  });
+
+  it('falls back to 1 for a value that is not a number at all', async () => {
+    const el = await cropper();
+    el.zoom = 'huge';
+    await settle(el);
+    expect(el.zoom).to.equal(1);
+  });
+
+  it('the geometry now reads the same number the property holds', async () => {
+    // The half a declaration cannot know, and the reason this is worth its own
+    // assertion: the render used to clamp its own local copy, so the property
+    // and the picture disagreed without either looking wrong on its own.
+    const el = await cropper();
+    el.zoom = 10;
+    await settle(el);
+    const fill = part(el, 'zoom').querySelector('input[type="range"]');
+    expect(Number(fill.value), 'the slider shows the clamped value').to.equal(4);
   });
 
   it('bounds the slider itself to the documented range', async () => {

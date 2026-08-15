@@ -1,15 +1,15 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
 
 /**
  * Page navigation control with previous/next arrows, numbered page buttons, and smart ellipsis
  * truncation.
  *
  * @tag arc-pagination
- * @prop {number} total - Total number of pages.
- * @prop {number} current - The currently active page number (1-based). Reflected as an attribute.
- * @prop {number} siblings - Number of page buttons to show on each side of the current page before ellipsis truncation kicks in.
+ * @prop {number} total - Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.
+ * @prop {number} current - The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control.
+ * @prop {number} siblings - Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative.
  * @prop {boolean} compact - Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the current page changes
  * @slot none
@@ -22,9 +22,22 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  */
 export class ArcPagination extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    total: { type: Number },
-    current: { type: Number, reflect: true },
-    siblings: { type: Number },
+    // All three bounds were in `_getPageRange()` — three `Math.max`/`Math.min`
+    // calls on the render's local copies. They are declarations now, so the
+    // property agrees with what is drawn (finding #76). `total` needs its own
+    // floor before `current` can name it as a bound: without it, `total="0"`
+    // would clamp `current` to 0, below its own documented 1-based range.
+    total: int({ default: 1, min: 1, clamp: 'toRange' }),
+    /**
+     * `max` names the `total` *property*, so narrowing the page count under a
+     * legal `current` re-clamps it. The bound has to live here rather than in
+     * `_getPageRange()`: clamping the render left the property out of range,
+     * no page carried `aria-current`, and `_goToPage`'s `page > this.total`
+     * guard then refused to walk back in — the control displayed one page and
+     * held another, with no way out (finding #76).
+     */
+    current: int({ default: 1, min: 1, max: 'total', clamp: 'toRange', reflect: true }),
+    siblings: int({ default: 1, min: 0, clamp: 'toRange' }),
     compact: flag(false),
   };
 
@@ -108,17 +121,11 @@ export class ArcPagination extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
-  constructor() {
-    super();
-    this.total = 1;
-    this.current = 1;
-    this.siblings = 1;
-  }
+  /* No constructor: total, current and siblings are seeded from their
+     declarations by DeclaredPropsMixin. */
 
   _getPageRange() {
-    const total = Math.max(1, this.total);
-    const current = Math.min(Math.max(1, this.current), total);
-    const siblings = Math.max(0, this.siblings);
+    const { total, current, siblings } = this;
 
     // Always show first, last, current, and siblings around current
     const pages = new Set();

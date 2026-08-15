@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { steps = [], active = 0, linear, children, ...rest }: Props = $props();
+  let { steps = [], active, linear, children, ...rest }: Props = $props();
 </script>
 
 <arc-stepper-nav {steps} {active} {linear} {...rest}>

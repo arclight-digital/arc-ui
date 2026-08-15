@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
 
 /**
  * Wizard navigation with back/next/skip controls and step validation gates. Steps connected by
@@ -9,7 +9,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @tag arc-stepper-nav
  * @requires arc-button
  * @prop {Array<string>} steps - Array of step labels displayed along the progress track.
- * @prop {number} active - Zero-based index of the currently active step.
+ * @prop {number} active - Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have.
  * @prop {boolean} linear - When true, prevents jumping to future steps — the user must complete each step sequentially.
  * @fires {CustomEvent<{ step: number }>} arc-change - Fired when the active step changes with detail: { step }.
  * @fires {CustomEvent<void>} arc-complete - Fired when the user confirms the final step.
@@ -34,7 +34,17 @@ export class ArcStepperNav extends DeclaredPropsMixin(LitElement) {
         },
       },
     },
-    active: { type: Number, reflect: true },
+    /**
+     * Bounded by the step list rather than by nothing (finding #78). The sharp
+     * form of the unbounded version was two conditions on the same value
+     * disagreeing: the button's label asked `active === steps.length - 1`
+     * (99 === 4, false) and read "Next", while `_next()` asked
+     * `active < steps.length - 1` (99 < 4, false) and took the *completion*
+     * branch — the user was told there was another step, clicked Next, and the
+     * wizard submitted. Neither guard changed; the value can no longer reach a
+     * state where they differ.
+     */
+    active: int({ default: 0, min: 0, max: '_lastStep', clamp: 'toRange', reflect: true }),
     linear: flag(false),
   };
 
@@ -129,7 +139,12 @@ export class ArcStepperNav extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this.steps = [];
-    this.active = 0;
+    // `active` is seeded from its declaration — see DeclaredPropsMixin.
+  }
+
+  /** Upper bound for `active`: the last real step, or 0 when there are none. */
+  get _lastStep() {
+    return Array.isArray(this.steps) ? Math.max(this.steps.length - 1, 0) : 0;
   }
 
   _goTo(index) {
