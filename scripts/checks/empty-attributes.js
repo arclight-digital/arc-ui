@@ -40,10 +40,12 @@
  *     function body). Those are read but not analysed — the aim is the common
  *     ternary, not a parser for arbitrary JavaScript.
  *
- * The five bindings that already ship this way are listed in BASELINE below, so
- * the rule blocks new occurrences without turning CI red on day one. check.js
- * discards a passing check's stdout, so `pnpm check` shows only `ok` — run this
- * file directly to print the outstanding list:
+ * BASELINE is now **empty**, so the rule is strict: any binding that falls back
+ * to undefined or null fails. It shipped with the five known occurrences listed
+ * there so it could block new ones from day one; findings #24, #25 and #36
+ * fixed all five, and the list shrank with the work exactly as intended.
+ * check.js discards a passing check's stdout, so `pnpm check` shows only `ok` —
+ * run this file directly to print the outstanding list:
  *
  *   node scripts/checks/empty-attributes.js
  *
@@ -58,21 +60,19 @@ const SRC = path.join(__dirname, '..', '..', 'packages', 'web-components', 'src'
 const TIERS = ['content', 'data', 'feedback', 'input', 'layout', 'navigation', 'typography', 'shared'];
 
 /**
- * Known occurrences, kept the same way boolean-defaults.js keeps its own and
- * rtl-intl.test.js keeps ALLOWED: the rule earns its place by stopping the next
- * one, and waiting for the backlog means it never lands.
+ * Empty, and meant to stay that way — the rule is strict.
  *
- * Fixing one means deleting its line here; an entry that no longer violates is
- * itself reported, so the list cannot go stale. Empty this array to make the
- * rule strict.
+ * It was seeded with the five known occurrences, the same device
+ * boolean-defaults.js uses and rtl-intl.test.js's ALLOWED: a rule earns its
+ * place by stopping the *next* occurrence, and holding it back until the
+ * backlog is burned down means it lands never. The backlog is burned down
+ * (#24, #25, #36), so nothing is exempt.
+ *
+ * If a genuine exception ever turns up, add it here with a reason — but read
+ * the "WHAT IS NOT A FAILURE" list above first. All four of those forms are
+ * already allowed by the scanner and need no entry.
  */
-const BASELINE = [
-  'input/textarea.js:maxlength',
-  'input/textarea.js:aria-labelledby',
-  'input/textarea.js:aria-describedby',
-  'layout/resizable.js:aria-valuemax',
-  'navigation/tree-view.js:aria-expanded',
-];
+const BASELINE = [];
 
 /**
  * Attribute bindings in a source file, as [name, expression] pairs.

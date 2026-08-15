@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
@@ -188,7 +188,7 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
       <div class="radio-group__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      <div class="radio-group" role="radiogroup" aria-label=${this.name} part="group">
+      <div class="radio-group" role="radiogroup" aria-label=${this.name || nothing} part="group">
         ${this._radios.map(
           (opt, i) => html`
           <div

@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 
@@ -247,7 +247,7 @@ export class ArcTreeView extends LitElement {
                 class="tree__row ${isSelected ? 'tree__row--selected' : ''}"
                 style="padding-inline-start: calc(var(--nav-row-inset) + ${level * 16}px)"
                 role="treeitem"
-                aria-expanded=${hasChildren ? String(expanded) : undefined}
+                aria-expanded=${hasChildren ? String(expanded) : nothing}
                 aria-selected=${isSelected ? 'true' : 'false'}
                 tabindex=${focusKey ? (key === focusKey ? '0' : '-1') : level === 0 && idx === 0 ? '0' : '-1'}
                 @focus=${() => {

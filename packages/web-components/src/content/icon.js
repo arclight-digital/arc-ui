@@ -146,7 +146,7 @@ export class ArcIcon extends DeclaredPropsMixin(LitElement) {
       <span
         class="icon"
         role=${this.label ? 'img' : 'presentation'}
-        aria-label=${this.label || ''}
+        aria-label=${this.label || nothing}
         aria-hidden=${this.label ? 'false' : 'true'}
         part="icon"
       >

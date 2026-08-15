@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
@@ -307,8 +307,8 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
             id=${this._fieldId}
             type="number"
             role="spinbutton"
-            aria-valuemin=${this.min ?? ''}
-            aria-valuemax=${this.max ?? ''}
+            aria-valuemin=${this.min ?? nothing}
+            aria-valuemax=${this.max ?? nothing}
             aria-valuenow=${this.value}
             aria-label=${this.label || 'Number'}
             .value=${String(this.value)}

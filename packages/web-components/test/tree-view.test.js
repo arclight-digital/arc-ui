@@ -129,18 +129,25 @@ describe('arc-tree-view expansion', () => {
     expect(event.composed).to.equal(true);
   });
 
-  // BUG: `aria-expanded=${hasChildren ? String(expanded) : undefined}`
-  // (tree-view.js:248). In Lit only `nothing` removes an attribute — `undefined`
-  // is stringified, so every leaf ships `aria-expanded=""`. That is not a valid
-  // value for an enumerated ARIA state, and it advertises leaves as expandable
-  // nodes. arc-chip:83 gets this right with `nothing`, so the idiom is already
-  // in the codebase.
-  it('BUG: a leaf renders aria-expanded="" instead of omitting the attribute', async () => {
+  // Was a BUG pin (finding #24). `undefined` is stringified by Lit — only
+  // `nothing` removes an attribute — so every leaf shipped `aria-expanded=""`,
+  // which is not a valid value for an enumerated ARIA state and advertises
+  // leaves as expandable nodes.
+  it('omits aria-expanded on a leaf entirely', async () => {
     const el = await tree();
     const leaf = rowFor(el, 'README.md');
+    expect(leaf.hasAttribute('aria-expanded')).to.equal(false);
+  });
 
-    expect(leaf.hasAttribute('aria-expanded'), 'a leaf should carry no aria-expanded').to.equal(true);
-    expect(leaf.getAttribute('aria-expanded'), 'and certainly not an empty one').to.equal('');
+  it('still carries it on a branch, in both states', async () => {
+    // Anti-vacuity: dropping the binding altogether would pass the test above.
+    const el = await tree();
+    const branch = rowFor(el, 'src');
+    expect(branch.getAttribute('aria-expanded')).to.equal('false');
+
+    branch.click();
+    await settle(el);
+    expect(rowFor(el, 'src').getAttribute('aria-expanded')).to.equal('true');
   });
 
   it('does not toggle a leaf', async () => {

@@ -43,7 +43,7 @@ marker are still open.
 | 29 | `arc-command-bar` | the input has no accessible name and no way to give it one |
 | 28, 27 | `arc-list` | items claim `role="option"` inside a plain `role="list"`; stray `aria-multiselectable` |
 | 2 | `arc-tabs` | **FIXED** — `aria-controls` pointed at ids that do not exist |
-| 24, 25 | five components | `aria-expanded=""` and four more attributes rendered empty instead of omitted |
+| 24, 25 | five components | **FIXED** — `aria-expanded=""` and four more attributes rendered empty instead of omitted |
 | 9-12 | `arc-rating` | **FIXED** — ArrowLeft raised the rating; no route back to unrated; value below its own min; hardcoded name |
 | 3 | `arc-tabs` | **FIXED** — an unknown `orientation` reached `aria-orientation` verbatim |
 
@@ -1051,7 +1051,7 @@ Pinned by three tests in `test/tree-view.test.js` under "arc-tree-view duplicate
 labels". The fix is the path key the component already computes for focus —
 `_pathKey(path)` (`:215`) — used for expansion and selection too.
 
-### 24. Every leaf ships `aria-expanded=""` — **a11y**
+### 24. Every leaf ships `aria-expanded=""` — **a11y — FIXED**
 
 `aria-expanded=${hasChildren ? String(expanded) : undefined}` (`:248`). In Lit
 only `nothing` removes an attribute; `undefined` is stringified, so the attribute
@@ -1063,7 +1063,7 @@ enumerated ARIA state, and its presence advertises leaves as expandable.
 - `arc-chip:83` already does this correctly with `nothing`, and five other
   components import it — the idiom is established, this file just missed it.
 
-### 25. The same `undefined`-instead-of-`nothing` slip in three more components
+### 25. The same `undefined`-instead-of-`nothing` slip in three more components — **FIXED**
 
 Verified by rendering each and reading the attribute back, not inferred:
 
@@ -1095,12 +1095,16 @@ It deliberately ignores the three forms where a nullish fallback is correct:
 - `.value=${… : undefined}` — a property assignment, not a rendered attribute
 - `?disabled=${…}` — presence is already driven by truthiness
 
-Same baseline device as `boolean-defaults.js`: the five known bindings are
-listed, so it is green today and fails on a new occurrence or on a BASELINE
-entry that has been fixed. Verified end-to-end — applying `nothing` (plus the
-import) to `arc-tree-view` in a scratch copy removes the attribute entirely,
-flips the pinning test to failing as it should, and leaves the other 24
-tree-view tests green.
+Same baseline device as `boolean-defaults.js`: the five known bindings were
+listed, so it was green on day one and failed on a new occurrence *or* on a
+BASELINE entry that had been fixed. Verified end-to-end — applying `nothing`
+(plus the import) to `arc-tree-view` in a scratch copy removed the attribute
+entirely, flipped the pinning test to failing as it should, and left the other
+24 tree-view tests green.
+
+**BASELINE is now empty and the rule is strict** (2026-08-15). All five are
+fixed; the list shrank with the work exactly as designed, and the check itself
+reported the last one as "no longer violates — delete it".
 
 ---
 
@@ -1278,7 +1282,7 @@ teardown of the window listeners on release *and* on disconnect mid-drag.
 
 ## arc-resizable
 
-### 36. An unbounded panel renders `aria-valuemax=""` — **a11y**
+### 36. An unbounded panel renders `aria-valuemax=""` — **a11y — FIXED**
 
 `aria-valuemax=${isFinite(this.maxSize) ? this.maxSize : undefined}`
 (`resizable.js:219`), and `maxSize` defaults to `Infinity` — so the *common*
@@ -4313,3 +4317,43 @@ for a stated reason: eight have no trigger of their own, `arc-context-menu`
 opens from a `contextmenu` event on a separate target, `arc-search` opens on
 typing, two are disclosures whose heading click is the only path there is, and
 two are layout affordances driven by hover or selection.
+
+---
+
+### 87. Four more empty ARIA attributes, written as `|| ''` rather than `undefined` — **a11y — FIXED**
+
+Found by generalising #24/#25/#36 rather than by looking: closing those five
+left the question of whether five was all of them, and the answer was no.
+
+`scripts/checks/empty-attributes.js` reads **source** and looks for a nullish
+fallback. These four were the same defect spelled out explicitly —
+
+| file | binding |
+|---|---|
+| `content/icon.js` | `aria-label=${this.label \|\| ''}` |
+| `input/checkbox.js` | `aria-label=${this.label \|\| ''}` |
+| `input/radio-group.js` | `aria-label=${this.name}`, and `name` defaults to `''` |
+| `input/number-input.js` | `aria-valuemin=${this.min ?? ''}`, `aria-valuemax` alongside |
+
+— and the check cannot see them, because `''` is a perfectly ordinary value to
+fall back to for most attributes. Only for ARIA is it wrong: an empty
+`aria-label` is not a name, and an empty `aria-valuemin` is not a bound.
+
+**So the assertion moved to where the evidence is.** `conformance-surface.test.js`
+already mounts every registered component bare — it is the file whose header
+exists to cover "the static check verifies the source, not the output" — and it
+now walks each rendered shadow tree for any `aria-*` attribute that is present
+and empty. Derived, so a new component is covered by existing, and it catches
+both spellings and the brace-containing expressions the static scanner
+explicitly declines to analyse.
+
+**One exemption, with its reason at the source.** `aria-activedescendant=""` is
+deliberate in `ListboxController`: an id pointing at an option that has been
+removed is worse than no attribute, because assistive technology then announces
+nothing at all. Four components take it that way. The sweep carries a one-entry
+`EMPTY_IS_MEANINGFUL` set rather than a silent skip, so the next addition to it
+has to make the same kind of argument.
+
+The two halves are complementary, not redundant: the static check fails
+**before** the 35-second prism step and names a source line; the runtime sweep
+sees what actually reached the DOM. Neither would have found all nine alone.

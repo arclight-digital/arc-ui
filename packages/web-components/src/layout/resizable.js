@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
@@ -216,7 +216,7 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
         aria-orientation=${this.direction}
         aria-valuenow=${this.size}
         aria-valuemin=${this.minSize}
-        aria-valuemax=${isFinite(this.maxSize) ? this.maxSize : undefined}
+        aria-valuemax=${isFinite(this.maxSize) ? this.maxSize : nothing}
         aria-label="Resize handle"
         @pointerdown=${this._onPointerDown}
         @keydown=${this._onKeydown}

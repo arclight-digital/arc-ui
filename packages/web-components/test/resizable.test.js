@@ -94,16 +94,19 @@ describe('arc-resizable accessibility', () => {
     expect(handle(el).getAttribute('aria-orientation')).to.equal('vertical');
   });
 
-  // BUG: aria-valuemax=${isFinite(this.maxSize) ? this.maxSize : undefined}
-  // (resizable.js:219). maxSize defaults to Infinity, so the common case takes
-  // the falsy branch — and in Lit only `nothing` removes an attribute, so the
-  // handle ships aria-valuemax="" rather than omitting it. Enforced by
-  // scripts/checks/empty-attributes.js.
-  it('BUG: an unbounded panel renders aria-valuemax="" instead of omitting it', async () => {
+  // Was a BUG pin (finding #36). `maxSize` defaults to Infinity, so the
+  // *common* case took the falsy branch — and only `nothing` removes an
+  // attribute in Lit, so an unbounded handle shipped `aria-valuemax=""`.
+  it('omits aria-valuemax on an unbounded panel', async () => {
     const el = await panel();
     expect(el.maxSize).to.equal(Infinity);
-    expect(handle(el).hasAttribute('aria-valuemax')).to.equal(true);
-    expect(handle(el).getAttribute('aria-valuemax')).to.equal('');
+    expect(handle(el).hasAttribute('aria-valuemax')).to.equal(false);
+  });
+
+  it('still reports a bound when there is one', async () => {
+    // Anti-vacuity: dropping the binding would pass the test above.
+    const el = await panel('max-size="400"');
+    expect(handle(el).getAttribute('aria-valuemax')).to.equal('400');
   });
 });
 

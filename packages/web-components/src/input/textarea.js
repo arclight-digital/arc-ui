@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
@@ -229,10 +229,10 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
           rows=${this.rows}
           ?disabled=${this.disabled}
           ?readonly=${this.readonly}
-          maxlength=${this.maxlength > 0 ? this.maxlength : undefined}
-          aria-labelledby=${this.label ? 'textarea-label' : undefined}
+          maxlength=${this.maxlength > 0 ? this.maxlength : nothing}
+          aria-labelledby=${this.label ? 'textarea-label' : nothing}
           aria-invalid=${hasError ? 'true' : 'false'}
-          aria-describedby=${hasError ? 'error-msg' : undefined}
+          aria-describedby=${hasError ? 'error-msg' : nothing}
           @input=${this._onInput}
           @change=${this._onChange}
         ></textarea>

@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
@@ -178,7 +178,7 @@ export class ArcCheckbox extends DeclaredPropsMixin(FormControlMixin(LitElement)
           class="checkbox__box"
           role="checkbox"
           aria-checked=${this.indeterminate ? 'mixed' : this.checked ? 'true' : 'false'}
-          aria-label=${this.label || ''}
+          aria-label=${this.label || nothing}
           tabindex=${this.disabled ? '-1' : '0'}
           @click=${this._toggle}
           @keydown=${this._handleKeydown}

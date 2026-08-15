@@ -55,6 +55,19 @@ const LIVE = components.filter((c) => customElements.get(c.tagName));
 
 afterEach(() => cleanup());
 
+/**
+ * ARIA attributes where an empty value is a deliberate statement rather than a
+ * slip, so the sweep below must not flag them.
+ *
+ * Only one so far, and its reasoning is in ListboxController: an
+ * `aria-activedescendant` pointing at an option that has been removed is worse
+ * than none at all — assistive technology then announces *nothing* — so the
+ * controller returns `''` when there is no active option rather than dropping
+ * the attribute. Four components take it that way. Anything added here needs a
+ * comparable argument written down at the source.
+ */
+const EMPTY_IS_MEANINGFUL = new Set(['aria-activedescendant']);
+
 describe('surface discovery', () => {
   it('discovers components to verify', () => {
     expect(LIVE.length, 'no components registered').to.be.greaterThan(ONLY ? 0 : 150);
@@ -79,6 +92,30 @@ for (const c of LIVE) {
       } finally {
         console.error = real;
       }
+    });
+
+    it('renders no empty ARIA attribute', async () => {
+      // The runtime half of scripts/checks/empty-attributes.js, and the reason
+      // it is here rather than there: that check reads source and states its own
+      // blind spots — it skips any expression containing braces of its own. In
+      // Lit only `nothing` removes an attribute; `undefined` and `null` are
+      // stringified, so `aria-expanded=${cond ? x : undefined}` ships
+      // `aria-expanded=""`. An empty string is not a valid value for an
+      // enumerated ARIA state and is an IDREF list pointing at nothing.
+      // Findings #24, #25 and #36 were five instances of it.
+      const el = mount(`<${tag}></${tag}>`);
+      await settle(el);
+      if (!el.shadowRoot) return;
+
+      const empty = [...el.shadowRoot.querySelectorAll('*')]
+        .flatMap((node) =>
+          [...node.attributes]
+            .filter((a) => a.name.startsWith('aria-') && a.value === '')
+            .filter((a) => !EMPTY_IS_MEANINGFUL.has(a.name))
+            .map((a) => `${node.localName}[${a.name}]`),
+        );
+
+      expect(empty, `${tag} renders ${empty.join(', ')}`).to.eql([]);
     });
 
     for (const slot of slots) {
