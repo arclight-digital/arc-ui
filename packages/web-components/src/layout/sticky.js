@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} stuck - Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state.
  * @fires arc-stuck - Fired when the stuck state changes. Event detail contains `{ stuck: boolean }` indicating whether the element is currently stuck.
  * @slot - Default content.
+ * @csspart base - The root element.
  */
 export class ArcSticky extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -98,7 +99,7 @@ export class ArcSticky extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="sentinel"></div>
+      <div part="base" class="sentinel"></div>
       <slot></slot>
     `;
   }

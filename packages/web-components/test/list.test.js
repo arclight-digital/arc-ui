@@ -36,9 +36,9 @@ async function list(attrs = '', items = ITEMS) {
   return el;
 }
 
-const container = (el) => el.shadowRoot.querySelector('[part="list"]');
+const container = (el) => el.shadowRoot.querySelector('[part~="list"]');
 const items = (el) => [...el.querySelectorAll('arc-list-item')];
-const rowOf = (item) => item.shadowRoot.querySelector('[part="item"]');
+const rowOf = (item) => item.shadowRoot.querySelector('[part~="item"]');
 const selected = (el) => items(el).filter((i) => i.selected).map((i) => i.value);
 
 /** Activate an item the way arc-list listens for it. */
@@ -71,7 +71,7 @@ describe('arc-list rendering', () => {
     expect(container(named).getAttribute('aria-label')).to.equal('Instruments');
 
     const bare = await list('selectable');
-    expect(bare.shadowRoot.querySelector('[part="list"]').hasAttribute('aria-label'))
+    expect(bare.shadowRoot.querySelector('[part~="list"]').hasAttribute('aria-label'))
       .to.equal(false);
   });
 });

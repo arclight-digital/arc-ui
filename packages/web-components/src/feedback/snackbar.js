@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * @fires arc-close - Fired when the snackbar is dismissed, either by auto-timeout or user interaction
  * @fires arc-action - Fired when the user clicks the action button (e.g. "Undo")
  * @slot none
+ * @csspart base - The root element.
  * @csspart container
  * @csspart snackbar
  * @csspart action
@@ -152,7 +153,7 @@ export class ArcSnackbar extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="snackbar-container" role="status" aria-live="polite" aria-atomic="false" part="container">
+      <div class="snackbar-container" role="status" aria-live="polite" aria-atomic="false" part="base container">
         ${this._snackbars.map(
           (s) => html`
           <div class="snackbar" data-snackbar-id=${s.id} part="snackbar">

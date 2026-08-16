@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'none' | 'ring' | 'read' | 'both'} progress - How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.
  * @fires arc-change - Fired when the active spy target changes during scroll
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart scroll-spy
  * @csspart heading
  * @csspart ring
@@ -422,7 +423,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
       ? this._links.findIndex((l) => l.target === this._active)
       : -1;
     return html`
-      <div class="scroll-spy__slot-host">
+      <div part="base" class="scroll-spy__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <nav class="scroll-spy" part="scroll-spy" aria-label="Table of contents">

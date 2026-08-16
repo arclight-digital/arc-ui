@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Size cascaded to all child buttons.
  * @prop {string} variant - Button variant cascaded to all children (e.g., "ghost", "outline").
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart group
  */
 export class ArcButtonGroup extends DeclaredPropsMixin(LitElement) {
@@ -125,7 +126,7 @@ export class ArcButtonGroup extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="button-group" role="group" part="group">
+      <div class="button-group" role="group" part="base group">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
     `;

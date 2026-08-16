@@ -26,6 +26,7 @@ import { listen } from '../shared/subscriptions.js';
  * @fires arc-cell-change - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array
  * @fires arc-select - Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array
  * @slot none
+ * @csspart base - The root element.
  * @csspart header-cell
  * @csspart cell
  * @csspart editor
@@ -857,7 +858,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     const order = this._orderedIndices;
 
     return html`
-      <div class="grid-wrapper ${this._scrolledX ? 'scrolled-x' : ''}" part="wrapper">
+      <div class="grid-wrapper ${this._scrolledX ? 'scrolled-x' : ''}" part="base wrapper">
         <table
           part="table"
           role="grid"

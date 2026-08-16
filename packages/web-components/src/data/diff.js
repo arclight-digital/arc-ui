@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {string} revised - The modified text to compare (split by newlines).
  * @prop {'inline' | 'side-by-side'} mode - Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.
  * @slot none
+ * @csspart base - The root element.
  * @csspart line
  * @csspart line-number
  * @csspart prefix
@@ -199,7 +200,7 @@ export class ArcDiff extends DeclaredPropsMixin(LitElement) {
       const addedOps = ops.filter((o) => o.type !== 'removed');
 
       return html`
-        <div class="diff" part="container">
+        <div class="diff" part="base container">
           <div class="diff__body">
             <div class="diff__pane">
               ${removedOps.map((op) => this._renderLine(op.type === 'unchanged' ? { ...op } : op))}
@@ -213,7 +214,7 @@ export class ArcDiff extends DeclaredPropsMixin(LitElement) {
     }
 
     return html`
-      <div class="diff" part="container">
+      <div class="diff" part="base container">
         <div class="diff__body">
           ${ops.map((op) => this._renderLine(op))}
         </div>

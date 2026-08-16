@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @prop {number} height - SVG viewport height in pixels.
  * @prop {boolean} fill - When true and type is "line", fills the area beneath the curve with a semi-transparent accent color.
  * @slot none
+ * @csspart base - The root element.
  * @csspart area
  * @csspart line
  * @csspart bar
@@ -219,7 +220,7 @@ export class ArcSparkline extends DeclaredPropsMixin(LitElement) {
 
     return html`
       <svg
-        part="svg"
+        part="base svg"
         width=${this.width}
         height=${this.height}
         viewBox="0 0 ${this.width} ${this.height}"

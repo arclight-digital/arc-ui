@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} hour12 - Force 12-hour display on the digital face. When unset, the viewer's locale decides. Set the property to false to force 24-hour display.
  * @prop {boolean} showTimezone - Render the timezone abbreviation, muted, beside the digital time.
  * @slot none
+ * @csspart base - The root element.
  * @csspart container
  * @csspart face
  * @csspart time
@@ -304,7 +305,7 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
     const accessible = this._accessibleTime();
 
     return html`
-      <div class="clock" part="container">
+      <div class="clock" part="base container">
         <div class="face" part="face" aria-hidden="true">
           ${analog ? this._renderAnalog() : this._renderDigital()}
         </div>

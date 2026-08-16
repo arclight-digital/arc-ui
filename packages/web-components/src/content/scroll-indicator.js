@@ -14,6 +14,7 @@ import { listen } from '../shared/subscriptions.js';
  * @prop {'sm' | 'md' | 'lg'} size - Bar thickness: sm (2px), md (3px), lg (4px).
  * @prop {'accent' | 'gradient'} color - Fill color mode. Accent uses `--accent-primary`. Gradient blends from primary to secondary.
  * @slot none
+ * @csspart base - The root element.
  * @csspart bar
  * @csspart fill
  */
@@ -147,7 +148,7 @@ export class ArcScrollIndicator extends DeclaredPropsMixin(LitElement) {
         aria-valuemin="0"
         aria-valuemax="100"
         aria-label="Scroll progress"
-        part="bar"
+        part="base bar"
       >
         <div
           class="bar__fill"

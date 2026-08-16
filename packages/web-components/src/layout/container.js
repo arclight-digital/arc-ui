@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg' | 'xl' | 'full'} size - Controls the maximum width.
  * @prop {'none' | 'sm' | 'md' | 'lg'} padding - Controls inline padding.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart container
  */
 export class ArcContainer extends DeclaredPropsMixin(LitElement) {
@@ -51,6 +52,6 @@ export class ArcContainer extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
-    return html`<div class="container" part="container"><slot></slot></div>`;
+    return html`<div class="container" part="base container"><slot></slot></div>`;
   }
 }

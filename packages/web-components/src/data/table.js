@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
  * @prop {boolean} striped - Alternating row backgrounds for improved scanability.
  * @prop {'default' | 'compact'} density - Row density. 'compact' reduces cell padding for dense data displays.
  * @slot none
+ * @csspart base - The root element.
  * @csspart table-wrap
  * @csspart table
  * @csspart head
@@ -116,7 +117,7 @@ export class ArcTable extends DeclaredPropsMixin(LitElement) {
     if (!this.columns.length) return '';
 
     return html`
-      <div class="table-wrap" part="table-wrap">
+      <div part="base" class="table-wrap" part="table-wrap">
         <table part="table">
           <thead part="head">
             <tr>

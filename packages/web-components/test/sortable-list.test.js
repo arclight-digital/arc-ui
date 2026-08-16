@@ -33,7 +33,7 @@ async function list(attrs = '', items = ITEMS) {
   return el;
 }
 
-const rows = (el) => [...el.shadowRoot.querySelectorAll('[part="item"]')];
+const rows = (el) => [...el.shadowRoot.querySelectorAll('[part~="item"]')];
 
 /**
  * What each row actually shows, read through its slot.
@@ -62,7 +62,7 @@ describe('arc-sortable-list rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await list();
     for (const part of ['list', 'item', 'handle', 'content']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 
@@ -73,7 +73,7 @@ describe('arc-sortable-list rendering', () => {
 
   it('is a listbox of options, described as sortable', async () => {
     const el = await list();
-    const box = el.shadowRoot.querySelector('[part="list"]');
+    const box = el.shadowRoot.querySelector('[part~="list"]');
     expect(box.getAttribute('role')).to.equal('listbox');
     expect(box.getAttribute('aria-roledescription')).to.equal('sortable list');
     expect(rows(el).every((r) => r.getAttribute('role') === 'option')).to.equal(true);
@@ -81,7 +81,7 @@ describe('arc-sortable-list rendering', () => {
 
   it('hides the decorative grip from assistive tech', async () => {
     const el = await list();
-    expect(el.shadowRoot.querySelector('[part="handle"]').getAttribute('aria-hidden'))
+    expect(el.shadowRoot.querySelector('[part~="handle"]').getAttribute('aria-hidden'))
       .to.equal('true');
   });
 

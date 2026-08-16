@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot - Default content.
  * @slot tooltip
  * @slot description
+ * @csspart base - The root element.
  * @csspart label
  * @csspart description
  */
@@ -123,7 +124,7 @@ export class ArcLabel extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <label class="label" for=${this.for || ''} @click=${this._onClick} part="label">
+      <label class="label" for=${this.for || ''} @click=${this._onClick} part="base label">
         <slot></slot>
         ${this.required ? html`<span class="label__required" aria-hidden="true">*</span>` : ''}
         <span class="label__tooltip ${this._hasTooltip ? '' : 'label__tooltip--empty'}">

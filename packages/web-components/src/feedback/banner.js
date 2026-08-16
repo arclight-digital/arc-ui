@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} sticky - When true, pins the banner to the top of the viewport with position: sticky so it remains visible as the user scrolls.
  * @fires {CustomEvent<void>} arc-close - Fired when a dismissible banner is closed by the user
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart banner
  * @csspart icon
  * @csspart message
@@ -94,7 +95,7 @@ export class ArcBanner extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="banner" role="alert" part="banner">
+      <div class="banner" role="alert" part="base banner">
         <span class="banner__icon" aria-hidden="true" part="icon">${getStatusIcon(this.variant)}</span>
         <span class="banner__message" part="message"><slot></slot></span>
         ${

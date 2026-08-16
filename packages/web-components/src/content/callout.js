@@ -20,6 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-close - Fired when the dismiss button is clicked on a dismissible callout.
  * @slot icon
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart callout
  * @csspart header
  * @csspart icon
@@ -129,7 +130,7 @@ export class ArcCallout extends DeclaredPropsMixin(LitElement) {
     if (this._dismissed) return html``;
 
     return html`
-      <div class="callout" part="callout" role="note">
+      <div class="callout" part="base callout" role="note">
         <div class="callout__header" part="header">
           <span class="callout__icon" part="icon" aria-hidden="true">
             <slot name="icon"><arc-icon name=${this._getDefaultIcon()} size="sm"></arc-icon></slot>

@@ -41,7 +41,7 @@ async function carousel(attrs = '', slides = SLIDES) {
   return el;
 }
 
-const dots = (el) => [...el.shadowRoot.querySelectorAll('[part="dot"]')];
+const dots = (el) => [...el.shadowRoot.querySelectorAll('[part~="dot"]')];
 /**
  * The slide the carousel is showing, read off its own dots.
  *
@@ -52,17 +52,17 @@ const dots = (el) => [...el.shadowRoot.querySelectorAll('[part="dot"]')];
  * `show-dots` is on by default, so it is available in every fixture here.
  */
 const current = (el) => dots(el).findIndex((d) => d.getAttribute('aria-selected') === 'true');
-const prevArrow = (el) => el.shadowRoot.querySelector('[part="arrow-prev"]');
-const nextArrow = (el) => el.shadowRoot.querySelector('[part="arrow-next"]');
-const viewport = (el) => el.shadowRoot.querySelector('[part="viewport"]');
+const prevArrow = (el) => el.shadowRoot.querySelector('[part~="arrow-prev"]');
+const nextArrow = (el) => el.shadowRoot.querySelector('[part~="arrow-next"]');
+const viewport = (el) => el.shadowRoot.querySelector('[part~="viewport"]');
 /** The listeners for hover/focus pausing live on the region, not on the host. */
-const region = (el) => el.shadowRoot.querySelector('[part="carousel"]');
+const region = (el) => el.shadowRoot.querySelector('[part~="carousel"]');
 
 describe('arc-carousel rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await carousel('show-dots show-arrows');
     for (const part of ['carousel', 'viewport', 'arrow-prev', 'arrow-next', 'dots', 'dot']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 
@@ -75,7 +75,7 @@ describe('arc-carousel rendering', () => {
 
   it('announces itself as a carousel region', async () => {
     const el = await carousel();
-    const region = el.shadowRoot.querySelector('[part="carousel"]');
+    const region = el.shadowRoot.querySelector('[part~="carousel"]');
     expect(region.getAttribute('role')).to.equal('region');
     expect(region.getAttribute('aria-roledescription')).to.equal('carousel');
   });
@@ -88,7 +88,7 @@ describe('arc-carousel rendering', () => {
   it('renders one dot per slide, as a tablist', async () => {
     const el = await carousel('show-dots');
     expect(dots(el)).to.have.lengthOf(3);
-    expect(el.shadowRoot.querySelector('[part="dots"]').getAttribute('role')).to.equal('tablist');
+    expect(el.shadowRoot.querySelector('[part~="dots"]').getAttribute('role')).to.equal('tablist');
     expect(dots(el).map((d) => d.getAttribute('aria-selected')))
       .to.deep.equal(['true', 'false', 'false']);
   });

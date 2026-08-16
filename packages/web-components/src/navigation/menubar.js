@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, list } from '../shared/props.js';
  * @prop {Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>} items - The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set as a property, or as a JSON attribute for a menu structure that is static.
  * @fires arc-select - Fired when a leaf menu item is activated. `detail.path` is the array of labels from the top-level menu to the selected leaf, e.g. `["File", "Export", "PNG"]`.
  * @slot none
+ * @csspart base - The root element.
  * @csspart menu
  * @csspart divider
  * @csspart item
@@ -734,7 +735,7 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
       <div
         class="menubar"
         role="menubar"
-        part="bar"
+        part="base bar"
         @keydown=${this._onKeydown}
         @focusout=${this._onFocusOut}
       >

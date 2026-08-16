@@ -34,13 +34,13 @@ const region = (el) => el.shadowRoot.querySelector('[role="region"]');
 describe('arc-collapsible rendering', () => {
   it('renders the heading in the trigger', async () => {
     const el = await collapsible();
-    expect(el.shadowRoot.querySelector('[part="heading"]').textContent.trim()).to.equal('Details');
+    expect(el.shadowRoot.querySelector('[part~="heading"]').textContent.trim()).to.equal('Details');
   });
 
   it('exposes the documented css parts', async () => {
     const el = await collapsible();
     for (const part of ['collapsible', 'trigger', 'heading', 'body']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

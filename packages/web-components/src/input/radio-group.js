@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Controls the radio button and label size.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selected radio value changes
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart group
  * @csspart circle
  * @csspart label
@@ -186,7 +187,7 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
 
   render() {
     return html`
-      <div class="radio-group__slot-host">
+      <div part="base" class="radio-group__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div class="radio-group" role="radiogroup" aria-label=${this.name || nothing} part="group">

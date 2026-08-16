@@ -60,7 +60,7 @@ describe('arc-scroll-spy', () => {
     const page = spyPage(attrs);
     const el = page.querySelector('arc-scroll-spy');
     await settle(el);
-    await until(() => el.shadowRoot.querySelectorAll('[part="link"], .scroll-spy__link').length === 3);
+    await until(() => el.shadowRoot.querySelectorAll('[part~="link"], .scroll-spy__link').length === 3);
     await settle(el);
     return { page, el };
   }

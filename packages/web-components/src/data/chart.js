@@ -34,6 +34,7 @@ const finiteOrNaN = (v) => {
  * @prop {string} currency - ISO 4217 currency code used when value-format="currency".
  * @fires arc-mark-click - Fired when a mark (bar, stacked segment, line point column, or donut segment) is clicked. detail: { seriesIndex, index, value }. Indices refer to displayed series after any "Other" folding; a folded donut segment reports seriesIndex -1.
  * @slot none
+ * @csspart base - The root element.
  * @csspart axis
  * @csspart tooltip
  * @csspart chart
@@ -794,7 +795,7 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="chart"
-        part="chart"
+        part="base chart"
         role="img"
         aria-label=${model.aria}
         style=${`height:${this.height}px`}

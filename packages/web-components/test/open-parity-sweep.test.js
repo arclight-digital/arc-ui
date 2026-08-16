@@ -66,14 +66,14 @@ const CASES = [
     tag: 'arc-select',
     markup:
       '<arc-select value="b"><arc-option value="a">A</arc-option><arc-option value="b">B</arc-option></arc-select>',
-    panel: '[part="dropdown"]',
-    field: '[part="trigger"]',
+    panel: '[part~="dropdown"]',
+    field: '[part~="trigger"]',
   },
   {
     tag: 'arc-tree-select',
     markup: '<arc-tree-select value="leaf"></arc-tree-select>',
-    panel: '[part="panel"]',
-    field: '[part="trigger"]',
+    panel: '[part~="panel"]',
+    field: '[part~="trigger"]',
     // "Branches containing the selected value auto-expand on open" — exactly the
     // kind of open-time preparation this sweep is looking for, so the fixture
     // has to have a branch to expand.
@@ -93,26 +93,26 @@ const CASES = [
     tag: 'arc-dropdown-menu',
     markup:
       '<arc-dropdown-menu label="Menu"><arc-menu-item>One</arc-menu-item><arc-menu-item>Two</arc-menu-item></arc-dropdown-menu>',
-    panel: '[part="panel"]',
-    field: '[part="trigger"]',
+    panel: '[part~="panel"]',
+    field: '[part~="trigger"]',
   },
   {
     tag: 'arc-popover',
     markup: '<arc-popover label="More"><p>Body</p></arc-popover>',
-    panel: '[part="panel"]',
-    field: '[part="trigger"]',
+    panel: '[part~="panel"]',
+    field: '[part~="trigger"]',
   },
   {
     tag: 'arc-hotspot',
     markup: '<arc-hotspot label="Pin"><p>Detail</p></arc-hotspot>',
-    panel: '[part="panel"]',
-    field: '[part="pin"]',
+    panel: '[part~="panel"]',
+    field: '[part~="pin"]',
   },
   {
     tag: 'arc-notification-panel',
     markup: '<arc-notification-panel></arc-notification-panel>',
-    panel: '[part="panel"]',
-    field: '[part="trigger"]',
+    panel: '[part~="panel"]',
+    field: '[part~="trigger"]',
   },
 ];
 

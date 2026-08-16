@@ -29,6 +29,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string, item: { label: string, shortcut: string, value: string } }>} arc-select - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.
  * @fires {CustomEvent<void>} arc-close - Fired when the palette closes
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart item
  * @csspart match
  * @csspart description
@@ -532,7 +533,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElemen
     const matches = this._matches;
 
     return html`
-      <div class="palette__slot-host">
+      <div part="base" class="palette__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div class="palette__backdrop" @click=${this._handleBackdropClick} part="backdrop"></div>

@@ -26,6 +26,7 @@ import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
  * @prop {boolean} open - Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. Held at `false` while `disabled`.
  * @fires arc-change - Fired when a leaf is selected. `detail.value` is the leaf value, `detail.label` its label, and `detail.path` the array of ancestor group values from root to parent.
  * @slot none
+ * @csspart base - The root element.
  * @csspart tree-select
  * @csspart label
  * @csspart trigger
@@ -482,7 +483,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
     let navIndex = -1;
 
     return html`
-      <div class="tree-select ${hasError ? 'tree-select--error' : ''}" part="tree-select">
+      <div class="tree-select ${hasError ? 'tree-select--error' : ''}" part="base tree-select">
         ${this.label ? html`<span id=${labelId} class="tree-select__label" part="label">${this.label}</span>` : ''}
         <button
           id=${triggerId}

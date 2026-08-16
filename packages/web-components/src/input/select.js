@@ -25,6 +25,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} open - Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. Held at `false` while `disabled`.
  * @fires arc-change - Fired when the selected option changes
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart select
  * @csspart label
  * @csspart trigger
@@ -347,7 +348,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
     const triggerId = `${this._selectId}-trigger`;
 
     return html`
-      <div class="select ${hasError ? 'select--error' : ''}" part="select">
+      <div class="select ${hasError ? 'select--error' : ''}" part="base select">
         <div class="select__slot-host">
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>

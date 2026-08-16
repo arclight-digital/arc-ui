@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  *   rendering an uncoloured dash that no `:host([trend=...])` rule matches.
  * @prop {string} change - Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.
  * @slot none
+ * @csspart base - The root element.
  * @csspart stat
  * @csspart value
  * @csspart label
@@ -105,7 +106,7 @@ export class ArcStat extends DeclaredPropsMixin(LitElement) {
     const dash = html`<svg class="stat__trend-arrow" viewBox="0 0 16 16" fill="currentColor"><rect x="3" y="7" width="10" height="2" rx="1"/></svg>`;
 
     return html`
-      <div class="stat" part="stat">
+      <div class="stat" part="base stat">
         <span class="stat__value" part="value">${this.value}</span>
         <span class="stat__rule"></span>
         <span class="stat__label" part="label">${this.label}</span>

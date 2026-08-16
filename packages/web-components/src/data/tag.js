@@ -17,6 +17,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} disabled - Disables the tag, reducing opacity to 40% and blocking pointer events including the remove button.
  * @fires {CustomEvent<void>} arc-remove - Fired when the remove button on a removable tag is clicked
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart tag
  * @csspart label
  * @csspart remove
@@ -176,7 +177,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
       : '';
 
     return html`
-      <span class="tag" part="tag" style=${colorStyle}
+      <span class="tag" part="base tag" style=${colorStyle}
         @mouseenter=${
           this.color
             ? (e) => {

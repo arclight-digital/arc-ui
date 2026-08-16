@@ -29,9 +29,9 @@ async function pane(attrs = '') {
   return el;
 }
 
-const handle = (el) => el.shadowRoot.querySelector('[part="handle"]');
-const primary = (el) => el.shadowRoot.querySelector('[part="primary"]');
-const base = (el) => el.shadowRoot.querySelector('[part="base"]');
+const handle = (el) => el.shadowRoot.querySelector('[part~="handle"]');
+const primary = (el) => el.shadowRoot.querySelector('[part~="primary"]');
+const base = (el) => el.shadowRoot.querySelector('[part~="base"]');
 
 /**
  * Press the divider and move to a point, leaving the gesture open.
@@ -58,7 +58,7 @@ describe('arc-split-pane rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await pane();
     for (const part of ['base', 'primary', 'handle', 'secondary']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

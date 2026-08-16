@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {string} message - Optional text displayed below the spinner. Use it to communicate what is loading or the current progress step.
  * @prop {boolean} global - When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.
  * @slot none
+ * @csspart base - The root element.
  * @csspart overlay
  * @csspart spinner
  * @csspart message
@@ -75,7 +76,7 @@ export class ArcLoadingOverlay extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="loading-overlay" role="status" aria-live="polite" part="overlay">
+      <div class="loading-overlay" role="status" aria-live="polite" part="base overlay">
         <arc-spinner size="lg" part="spinner"></arc-spinner>
         ${this.message ? html`<span class="loading-overlay__message" part="message">${this.message}</span>` : ''}
       </div>

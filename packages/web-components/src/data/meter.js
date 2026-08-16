@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, num } from '../shared/props.js';
  * @prop {number} optimum - The optimal value. Determines which end of the range is "good" for color zone logic.
  * @prop {string} label - Label text displayed in the header row alongside the current percentage.
  * @slot none
+ * @csspart base - The root element.
  * @csspart meter
  * @csspart header
  * @csspart label
@@ -151,7 +152,7 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="meter"
-        part="meter"
+        part="base meter"
         role="meter"
         aria-valuemin=${this.min}
         aria-valuemax=${this.max}

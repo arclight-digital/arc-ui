@@ -192,5 +192,44 @@ for (const c of LIVE) {
         ).to.have.lengthOf(0);
       });
     }
+
+    // `base` is the one part asserted forward, and the exception is earned
+    // rather than assumed: it is the only part every component is supposed to
+    // have, and unlike arc-carousel's `dot` or `arrow-prev` it is not
+    // conditional on data or on a prop. The claim it makes is the one V4-PLAN
+    // 4.3 sells to consumers — that `::part(base)` reaches the outer box of any
+    // component without looking its own name up — and a static check cannot
+    // make it, because the codemod that introduced `base` put it on one branch
+    // of thirteen multi-root components and the source read as correct.
+    //
+    // Driven by the docblock rather than by a list here: `scripts/checks/
+    // part-base.js` owns which components are exempt and why, so a component
+    // that legitimately has no root box simply declares no `base` and is not
+    // asserted. There is no second list to keep in step.
+    if (parts.includes('base')) {
+      it('renders its `base` part', async () => {
+        const el = mount(`<${tag}></${tag}>`);
+        await settle(el);
+
+        // A shadow root with nothing in it is a component with no data to show
+        // — arc-table and arc-json-tree render nothing until they are given
+        // rows. There is no root element to name, and saying so is honest.
+        const drawn = [...el.shadowRoot.children].filter((n) => n.tagName !== 'STYLE');
+        if (drawn.length === 0) return;
+
+        const carriers = [...el.shadowRoot.querySelectorAll('[part]')].filter((n) =>
+          n.getAttribute('part').split(/\s+/).includes('base'),
+        );
+        expect(
+          carriers.length,
+          `${tag} documents a base part but renders none — ::part(base) selects nothing`,
+        ).to.be.greaterThan(0);
+        expect(
+          carriers.length,
+          `${tag} renders ${carriers.length} elements named base; base is the root, and ` +
+            'a selector that matches several boxes is not a handle on one',
+        ).to.equal(1);
+      });
+    }
   });
 }

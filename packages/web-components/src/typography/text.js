@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code'} variant - Typography variant that controls font size, weight, letter-spacing, line-height, and color.
  * @prop {'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'} as - The HTML element to render. Allows semantic heading hierarchy to be set independently from the visual variant.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart text
  */
 export class ArcText extends DeclaredPropsMixin(LitElement) {
@@ -108,21 +109,21 @@ export class ArcText extends DeclaredPropsMixin(LitElement) {
     const tag = this.as;
     switch (tag) {
       case 'h1':
-        return html`<h1 class="text--${this.variant}" part="text"><slot></slot></h1>`;
+        return html`<h1 class="text--${this.variant}" part="base text"><slot></slot></h1>`;
       case 'h2':
-        return html`<h2 class="text--${this.variant}" part="text"><slot></slot></h2>`;
+        return html`<h2 class="text--${this.variant}" part="base text"><slot></slot></h2>`;
       case 'h3':
-        return html`<h3 class="text--${this.variant}" part="text"><slot></slot></h3>`;
+        return html`<h3 class="text--${this.variant}" part="base text"><slot></slot></h3>`;
       case 'h4':
-        return html`<h4 class="text--${this.variant}" part="text"><slot></slot></h4>`;
+        return html`<h4 class="text--${this.variant}" part="base text"><slot></slot></h4>`;
       case 'h5':
-        return html`<h5 class="text--${this.variant}" part="text"><slot></slot></h5>`;
+        return html`<h5 class="text--${this.variant}" part="base text"><slot></slot></h5>`;
       case 'h6':
-        return html`<h6 class="text--${this.variant}" part="text"><slot></slot></h6>`;
+        return html`<h6 class="text--${this.variant}" part="base text"><slot></slot></h6>`;
       case 'span':
-        return html`<span class="text--${this.variant}" part="text"><slot></slot></span>`;
+        return html`<span class="text--${this.variant}" part="base text"><slot></slot></span>`;
       default:
-        return html`<p class="text--${this.variant}" part="text"><slot></slot></p>`;
+        return html`<p class="text--${this.variant}" part="base text"><slot></slot></p>`;
     }
   }
 }

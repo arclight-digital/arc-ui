@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * @prop {string} gap - Gap between grid cells. Accepts any CSS length value or spacing token. Maps to the --gap CSS custom property.
  * @prop {string} minColumnWidth - Minimum column width in auto-fill mode. Controls the minmax() threshold at which columns wrap to the next row. Maps to the --min-col CSS custom property.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart grid
  */
 export class ArcDashboardGrid extends DeclaredPropsMixin(LitElement) {
@@ -62,7 +63,7 @@ export class ArcDashboardGrid extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="dashboard-grid" part="grid">
+      <div class="dashboard-grid" part="base grid">
         <slot></slot>
       </div>
     `;

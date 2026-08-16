@@ -17,6 +17,7 @@ import { observeIntersect } from '../shared/subscriptions.js';
  * @prop {boolean} disabled - Disables the component, disconnects the observer, and reduces opacity to 40%.
  * @fires {CustomEvent<void>} arc-load-more - Fired when the scroll sentinel enters the viewport, signaling more content should load
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart container
  * @csspart content
  * @csspart footer
@@ -110,7 +111,7 @@ export class ArcInfiniteScroll extends DeclaredPropsMixin(LitElement) {
       <div
         class="infinite-scroll"
         aria-busy=${this.loading ? 'true' : 'false'}
-        part="container"
+        part="base container"
       >
         <div class="infinite-scroll__content" part="content">
           <slot></slot>

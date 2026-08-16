@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag, int, oneOf } from '../shared/props.js';
  *   many *items* sit across — one item can be horizontal inside a three-column list.
  * @prop {boolean} dividers - Show horizontal dividers between rows and vertical dividers between columns.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart list
  */
 export class ArcDescriptionList extends DeclaredPropsMixin(LitElement) {
@@ -139,7 +140,7 @@ export class ArcDescriptionList extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="list"
-        part="list"
+        part="base list"
         role="list"
         style="--cols: ${this.columns}"
       >

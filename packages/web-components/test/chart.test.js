@@ -42,7 +42,7 @@ const cells = (el) => [...table(el).querySelectorAll('tbody td')].map((td) => td
 /** The values for one category, one per series. */
 const row = (el, i) =>
   [...[...table(el).querySelectorAll('tbody tr')][i].querySelectorAll('td')].map((td) => td.textContent.trim());
-const legend = (el) => el.shadowRoot.querySelector('[part="legend"]');
+const legend = (el) => el.shadowRoot.querySelector('[part~="legend"]');
 const legendItems = (el) => [...el.shadowRoot.querySelectorAll('.legend-item')].map((i) => i.textContent.trim());
 const svg = (el) => el.shadowRoot.querySelector('svg');
 
@@ -73,7 +73,7 @@ describe('arc-chart accessible surface', () => {
   it('exposes the documented css parts', async () => {
     const el = await chart();
     for (const part of ['chart', 'axis', 'legend']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 });
@@ -196,12 +196,12 @@ describe('arc-chart types', () => {
 describe('arc-chart axis', () => {
   it('draws the axis layer by default', async () => {
     const el = await chart();
-    expect(el.shadowRoot.querySelector('[part="axis"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="axis"]')).to.not.equal(null);
   });
 
   it('hide-axis removes it', async () => {
     const el = await chart('hide-axis');
-    expect(el.shadowRoot.querySelector('[part="axis"]') === null).to.equal(true);
+    expect(el.shadowRoot.querySelector('[part~="axis"]') === null).to.equal(true);
   });
 
   it('keeps the accessible table when the axis is hidden', async () => {
@@ -216,13 +216,13 @@ describe('arc-chart empty and degenerate data', () => {
   it('renders an empty frame with no series at all', async () => {
     const el = await chart('', { series: [] });
     // Nothing to draw, so no SVG — but the component itself still renders.
-    expect(el.shadowRoot.querySelector('[part="chart"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="chart"]')).to.not.equal(null);
   });
 
   it('survives never being handed series', async () => {
     const el = mount('<arc-chart style="width:400px;display:block"></arc-chart>');
     await settle(el);
-    expect(el.shadowRoot.querySelector('[part="chart"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="chart"]')).to.not.equal(null);
   });
 
   it('falls back to positional labels when labels are missing', async () => {
@@ -264,7 +264,7 @@ describe('arc-chart arc-mark-click', () => {
     const el = await chart('type="bar"');
     const seen = record(el, ['arc-mark-click']);
 
-    el.shadowRoot.querySelector('[part="chart"]').dispatchEvent(
+    el.shadowRoot.querySelector('[part~="chart"]').dispatchEvent(
       new MouseEvent('click', { bubbles: true, composed: true }),
     );
     await settle(el);

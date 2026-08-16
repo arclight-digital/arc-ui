@@ -45,9 +45,9 @@ async function menubar(items = ITEMS) {
   return el;
 }
 
-const triggers = (el) => [...el.shadowRoot.querySelectorAll('[part="trigger"]')];
+const triggers = (el) => [...el.shadowRoot.querySelectorAll('[part~="trigger"]')];
 const menus = (el) => [...el.shadowRoot.querySelectorAll('[role="menu"]')];
-const items = (el) => [...el.shadowRoot.querySelectorAll('[role="menuitem"]:not([part="trigger"])')];
+const items = (el) => [...el.shadowRoot.querySelectorAll('[role="menuitem"]:not([part~="trigger"])')];
 const labels = (el) => items(el).map((b) => b.querySelector('.item__label').textContent.trim());
 const active = (el) => el.shadowRoot.querySelector('.item.is-active');
 const activeLabel = (el) => active(el)?.querySelector('.item__label').textContent.trim() ?? null;
@@ -60,12 +60,12 @@ const focused = (el) =>
  * Send a key at the element that actually has focus, as a real press would.
  *
  * The fallback is the bar rather than the host: the keydown listener lives on
- * `[part="bar"]` inside the shadow root, and an event dispatched at the host
+ * `[part~="bar"]` inside the shadow root, and an event dispatched at the host
  * bubbles *outward*, so it would never reach the handler — a silently inert
  * press that reads as the component ignoring the key.
  */
 const press = (el, key, init) =>
-  keyOn(el.shadowRoot.activeElement ?? el.shadowRoot.querySelector('[part="bar"]'), key, init);
+  keyOn(el.shadowRoot.activeElement ?? el.shadowRoot.querySelector('[part~="bar"]'), key, init);
 
 describe('arc-menubar rendering', () => {
   it('exposes the documented css parts', async () => {
@@ -73,7 +73,7 @@ describe('arc-menubar rendering', () => {
     triggers(el)[0].click();
     await settle(el);
     for (const part of ['bar', 'trigger', 'menu', 'item', 'shortcut', 'divider']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 
@@ -113,7 +113,7 @@ describe('arc-menubar rendering', () => {
     const el = await menubar();
     triggers(el)[0].click();
     await settle(el);
-    const shortcuts = [...el.shadowRoot.querySelectorAll('[part="shortcut"]')];
+    const shortcuts = [...el.shadowRoot.querySelectorAll('[part~="shortcut"]')];
     expect(shortcuts).to.have.lengthOf(1);
     expect(shortcuts[0].textContent.trim()).to.equal('⌘N');
   });
@@ -552,7 +552,7 @@ describe('arc-menubar dismissal and state', () => {
     triggers(el)[0].click();
     await settle(el);
 
-    el.shadowRoot.querySelector('[part="bar"]').dispatchEvent(
+    el.shadowRoot.querySelector('[part~="bar"]').dispatchEvent(
       new FocusEvent('focusout', { relatedTarget: outside, bubbles: true }),
     );
     await settle(el);
@@ -564,7 +564,7 @@ describe('arc-menubar dismissal and state', () => {
     triggers(el)[0].click();
     await settle(el);
 
-    el.shadowRoot.querySelector('[part="bar"]').dispatchEvent(
+    el.shadowRoot.querySelector('[part~="bar"]').dispatchEvent(
       new FocusEvent('focusout', { relatedTarget: triggers(el)[1], bubbles: true }),
     );
     await settle(el);

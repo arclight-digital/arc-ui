@@ -17,6 +17,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot legend
  * @slot actions
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart fieldset
  * @csspart legend
  * @csspart description
@@ -145,7 +146,7 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
     const hasContent = this.legend || this._hasLegend || this._hasActions;
 
     return html`
-      <fieldset ?disabled=${this.disabled} part="fieldset">
+      <fieldset ?disabled=${this.disabled} part="base fieldset">
         ${html`
           <legend part="legend" class="${hasContent ? '' : 'fieldset__legend--empty'}">
             <div class="fieldset__header">

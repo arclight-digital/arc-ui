@@ -326,7 +326,7 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       const el = await render('<arc-toast></arc-toast>');
       el.show({ message: 'Deleted', actionLabel: 'Undo' });
       await el.updateComplete;
-      const action = el.shadowRoot.querySelector('[part="action"]');
+      const action = el.shadowRoot.querySelector('[part~="action"]');
       expect(action, 'the action button renders').to.exist;
       expect(action.textContent.trim()).to.equal('Undo');
     });
@@ -340,7 +340,7 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       el.addEventListener('arc-action', (e) => seen.push(e.detail.id));
       const id = el.show({ message: 'Deleted', actionLabel: 'Undo', action: () => (called += 1) });
       await el.updateComplete;
-      el.shadowRoot.querySelector('[part="action"]').click();
+      el.shadowRoot.querySelector('[part~="action"]').click();
       expect(called).to.equal(1);
       expect(seen).to.deep.equal([id]);
     });
@@ -416,7 +416,7 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       el.addEventListener('arc-close', () => events.push('close'));
       const id = el.show({ message: 'Uploading', progress: 20, onCancel: () => (cancelled += 1) });
       await el.updateComplete;
-      el.shadowRoot.querySelector('[part="cancel"]').click();
+      el.shadowRoot.querySelector('[part~="cancel"]').click();
       await new Promise((r) => setTimeout(r, 350));
       expect(cancelled).to.equal(1);
       expect(events).to.deep.equal([id]);
@@ -430,7 +430,7 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       el.addEventListener('arc-close', (e) => seen.push(e.detail.id));
       const id = el.show({ message: 'Saved' });
       await el.updateComplete;
-      el.shadowRoot.querySelector('[part="dismiss"]').click();
+      el.shadowRoot.querySelector('[part~="dismiss"]').click();
       await new Promise((r) => setTimeout(r, 350));
       expect(seen).to.deep.equal([id]);
     });

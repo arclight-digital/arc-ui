@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} heading - Card title
  * @prop {string} description - Card body text
  * @slot icon
+ * @csspart base - The root element.
  * @csspart card
  * @csspart icon
  * @csspart title
@@ -84,7 +85,7 @@ export class ArcValueCard extends LitElement {
 
   render() {
     return html`
-      <div class="card" part="card">
+      <div class="card" part="base card">
         <div class="card__icon" part="icon"><slot name="icon">${this.icon}</slot></div>
         <div class="card__text">
           <h3 class="card__title" part="title">${this.heading}</h3>

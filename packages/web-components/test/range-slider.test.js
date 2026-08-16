@@ -24,9 +24,9 @@ async function slider(attrs = '') {
   return el;
 }
 
-const thumb = (el, which) => el.shadowRoot.querySelector(`[part="thumb-${which}"]`);
-const track = (el) => el.shadowRoot.querySelector('[part="track"]');
-const fill = (el) => el.shadowRoot.querySelector('[part="fill"]');
+const thumb = (el, which) => el.shadowRoot.querySelector(`[part~="thumb-${which}"]`);
+const track = (el) => el.shadowRoot.querySelector('[part~="track"]');
+const fill = (el) => el.shadowRoot.querySelector('[part~="fill"]');
 
 /** Drag a thumb to a fraction of the track. */
 async function dragThumb(el, which, fraction) {
@@ -48,7 +48,7 @@ describe('arc-range-slider rendering', () => {
       'range-slider', 'header', 'label', 'values', 'track', 'rail', 'fill',
       'thumb-low', 'thumb-high',
     ]) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 
@@ -84,8 +84,8 @@ describe('arc-range-slider rendering', () => {
 
   it('shows the readout and the label', async () => {
     const el = await slider('label="Price" low="20" high="80"');
-    expect(el.shadowRoot.querySelector('[part="label"]').textContent).to.contain('Price');
-    expect(el.shadowRoot.querySelector('[part="values"]').textContent.replace(/\s+/g, ' '))
+    expect(el.shadowRoot.querySelector('[part~="label"]').textContent).to.contain('Price');
+    expect(el.shadowRoot.querySelector('[part~="values"]').textContent.replace(/\s+/g, ' '))
       .to.contain('20');
   });
 });
@@ -487,7 +487,7 @@ describe('arc-range-slider accessible names', () => {
 
 describe('arc-range-slider size', () => {
   it('each size renders distinctly and an unknown one lands on the default', async () => {
-    const height = (el) => getComputedStyle(el.shadowRoot.querySelector('[part="rail"]')).height;
+    const height = (el) => getComputedStyle(el.shadowRoot.querySelector('[part~="rail"]')).height;
 
     const def = await slider();
     const lg = await slider('size="lg"');

@@ -48,7 +48,7 @@ describe('arc-app-shell rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await shell();
     for (const part of ['shell', 'body', 'sidebar', 'main', 'content', 'toc']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

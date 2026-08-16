@@ -20,6 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @prop {'full' | 'half'} variant - Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle.
  * @prop {boolean} showValue - Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property.
  * @slot none
+ * @csspart base - The root element.
  * @csspart gauge
  * @csspart svg
  * @csspart track
@@ -242,7 +243,7 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="gauge gauge--${this._variant}"
-        part="gauge"
+        part="base gauge"
         role="meter"
         aria-valuemin=${this.min}
         aria-valuemax=${this.max}

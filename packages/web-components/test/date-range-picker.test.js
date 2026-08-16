@@ -23,9 +23,9 @@ async function picker(attrs = '') {
   return el;
 }
 
-const field = (el) => el.shadowRoot.querySelector('[part="input-wrapper"] input, input');
-const calendar = (el) => el.shadowRoot.querySelector('[part="calendar"]');
-const days = (el) => [...el.shadowRoot.querySelectorAll('[part="day"]')];
+const field = (el) => el.shadowRoot.querySelector('[part~="input-wrapper"] input, input');
+const calendar = (el) => el.shadowRoot.querySelector('[part~="calendar"]');
+const days = (el) => [...el.shadowRoot.querySelectorAll('[part~="day"]')];
 const dayFor = (el, iso) => days(el).find((d) => d.dataset.iso === iso);
 /** Days that can actually be picked, in calendar order. */
 const pickable = (el) => days(el).filter((d) => d.dataset.iso && !d.disabled);
@@ -39,13 +39,13 @@ describe('arc-date-range-picker rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await picker();
     for (const part of ['wrapper', 'label', 'input-wrapper']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 
   it('renders its label', async () => {
     const el = await picker();
-    expect(el.shadowRoot.querySelector('[part="label"]').textContent).to.contain('Dates');
+    expect(el.shadowRoot.querySelector('[part~="label"]').textContent).to.contain('Dates');
   });
 
   it('shows the placeholder while unset', async () => {
@@ -69,7 +69,7 @@ describe('arc-date-range-picker rendering', () => {
   it('renders the requested number of month panels', async () => {
     const el = await picker('months="2"');
     await open(el);
-    expect(el.shadowRoot.querySelectorAll('[part="panel-title"]')).to.have.lengthOf(2);
+    expect(el.shadowRoot.querySelectorAll('[part~="panel-title"]')).to.have.lengthOf(2);
   });
 });
 
@@ -251,7 +251,7 @@ describe('arc-date-range-picker presets', () => {
   it('renders no rail without presets', async () => {
     const el = await picker();
     await open(el);
-    expect(el.shadowRoot.querySelector('.preset, [part="preset"]') === null).to.equal(true);
+    expect(el.shadowRoot.querySelector('.preset, [part~="preset"]') === null).to.equal(true);
   });
 
   it('selects the last N days and closes', async () => {
@@ -368,11 +368,11 @@ describe('arc-date-range-picker week-edge keys', () => {
     return el;
   }
 
-  const stop = (el) => el.shadowRoot.querySelector('[part="day"][tabindex="0"]')?.dataset.iso;
+  const stop = (el) => el.shadowRoot.querySelector('[part~="day"][tabindex="0"]')?.dataset.iso;
 
   it('reaches the ends of a Monday-start week', async () => {
     const el = await openedOn(1);
-    expect(el.shadowRoot.querySelector('[part="dow"], .weekday')?.textContent.trim()).to.equal(
+    expect(el.shadowRoot.querySelector('[part~="dow"], .weekday')?.textContent.trim()).to.equal(
       'Mon',
     );
 

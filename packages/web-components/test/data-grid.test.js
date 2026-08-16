@@ -88,7 +88,7 @@ describe('arc-data-grid rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await grid({ selectable: true });
     for (const part of ['wrapper', 'table', 'header', 'body', 'header-cell', 'row', 'cell']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

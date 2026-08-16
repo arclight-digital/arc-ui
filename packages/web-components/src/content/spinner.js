@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Spinner dimensions: sm (16px), md (24px), lg (40px)
  * @prop {'primary' | 'secondary' | 'white'} variant - Color of the spinner ring
  * @slot none
+ * @csspart base - The root element.
  * @csspart spinner
  */
 export class ArcSpinner extends DeclaredPropsMixin(LitElement) {
@@ -65,7 +66,7 @@ export class ArcSpinner extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="spinner"
-        part="spinner"
+        part="base spinner"
         role="status"
         aria-label="Loading"
       ></div>

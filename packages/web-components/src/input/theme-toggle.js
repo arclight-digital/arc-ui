@@ -16,6 +16,7 @@ import { observeAttributes } from '../shared/subscriptions.js';
  * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.
  * @fires {CustomEvent<{ value: 'dark' | 'light' | 'auto' }>} arc-change - Fired when the theme is toggled, with { theme } detail
  * @slot none
+ * @csspart base - The root element.
  * @csspart button
  * @csspart icon
  * @csspart label
@@ -246,7 +247,7 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
         ?disabled=${this.disabled}
         aria-label="Toggle theme, current: ${this.theme}"
         title="Theme: ${this.theme}"
-        part="button"
+        part="base button"
       >
         <span class="btn__icon" part="icon">
           <!-- Sun -->

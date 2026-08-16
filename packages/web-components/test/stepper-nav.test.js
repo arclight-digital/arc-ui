@@ -30,8 +30,8 @@ async function stepper(attrs = '', steps = STEPS) {
   return el;
 }
 
-const indicators = (el) => [...el.shadowRoot.querySelectorAll('[part="indicator"]')];
-const controls = (el) => [...el.shadowRoot.querySelectorAll('[part="controls"] arc-button')];
+const indicators = (el) => [...el.shadowRoot.querySelectorAll('[part~="indicator"]')];
+const controls = (el) => [...el.shadowRoot.querySelectorAll('[part~="controls"] arc-button')];
 const byText = (el, text) =>
   controls(el).find((b) => b.textContent.trim().toLowerCase() === text.toLowerCase());
 
@@ -77,7 +77,7 @@ describe('arc-stepper-nav: the track', () => {
 
   it('renders one fewer connector than steps', async () => {
     const el = await stepper();
-    expect(el.shadowRoot.querySelectorAll('[part="connector"]').length).to.equal(4);
+    expect(el.shadowRoot.querySelectorAll('[part~="connector"]').length).to.equal(4);
   });
 
   it('renders nothing for an empty step list', async () => {

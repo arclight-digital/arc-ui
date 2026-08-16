@@ -28,6 +28,7 @@ import { listen } from '../shared/subscriptions.js';
  * @fires {CustomEvent<{ column: string, direction: 'asc' | 'desc' }>} arc-sort - Fired when a sortable column header is clicked
  * @fires arc-select - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart row
  * @csspart cell
  * @csspart wrapper
@@ -503,7 +504,7 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
     const rows = this._sortedRows;
 
     return html`
-      <div class="data-table__slot-host">
+      <div part="base" class="data-table__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div class="table-wrapper" part="wrapper" role="region" aria-label="Data table">

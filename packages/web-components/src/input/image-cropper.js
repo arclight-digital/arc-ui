@@ -23,6 +23,7 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
  * @prop {number} zoom - Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider.
  * @fires arc-crop-change - Fired when the crop changes (drag, resize, keyboard, zoom, stage resize). `event.detail` is `{ x, y, width, height }` in natural image pixels, debounced to animation frames.
  * @slot none
+ * @csspart base - The root element.
  * @csspart stage
  * @csspart image
  * @csspart skeleton
@@ -700,7 +701,7 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
     const rectStyle = r ? `left:${r.x}px;top:${r.y}px;width:${r.width}px;height:${r.height}px` : '';
 
     return html`
-      <div class="stage" part="stage" style="height:${this.height}px">
+      <div class="stage" part="base stage" style="height:${this.height}px">
         ${
           this.src && !this._errored
             ? html`

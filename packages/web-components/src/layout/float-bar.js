@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires arc-open - Fired when the float bar becomes visible after the open prop is set to true.
  * @fires arc-close - Fired when the float bar hides after the open prop is set to false.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart bar
  */
 export class ArcFloatBar extends DeclaredPropsMixin(LitElement) {
@@ -88,7 +89,7 @@ export class ArcFloatBar extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="float-bar" part="bar">
+      <div class="float-bar" part="base bar">
         <slot></slot>
       </div>
     `;

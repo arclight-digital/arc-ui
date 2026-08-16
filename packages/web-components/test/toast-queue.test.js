@@ -100,7 +100,7 @@ describe('arc-toast: visible cap and FIFO queue', () => {
     // Which two survived, shown rather than inspected: clearing the screen
     // releases them in order, and `q1` — the dropped one — never appears.
     const dismissVisible = () =>
-      el.shadowRoot.querySelector('[part="dismiss"]').click();
+      el.shadowRoot.querySelector('[part~="dismiss"]').click();
 
     dismissVisible();
     await until(() => messages(el).join() === 'q2', 'q2 released first');
@@ -178,7 +178,7 @@ describe('arc-toast: dedupe', () => {
     // And it was counted twice, which shows when it reaches the screen: the
     // "(×N)" suffix is what coalescing is *for*, so releasing the queue is the
     // honest way to ask whether the count survived.
-    el.shadowRoot.querySelector('[part="dismiss"]').click();
+    el.shadowRoot.querySelector('[part~="dismiss"]').click();
     await until(() => messages(el).join() === 'queued (×2)', 'released with its count');
   });
 

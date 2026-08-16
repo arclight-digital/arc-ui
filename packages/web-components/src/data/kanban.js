@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag, list } from '../shared/props.js';
  * @fires arc-card-move - Fired when a card is dropped in a new position (pointer or keyboard). detail: { cardId, fromColumn, toColumn, index } where index is the final position in the target column.
  * @fires arc-card-click - Fired when a card is clicked without being dragged. detail: { cardId, columnId }.
  * @slot none
+ * @csspart base - The root element.
  * @csspart card-label
  * @csspart card-description
  * @csspart card
@@ -743,7 +744,7 @@ export class ArcKanban extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="kanban" part="board">
+      <div class="kanban" part="base board">
         ${repeat(
           this._cols,
           (c) => c.id,

@@ -15,6 +15,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @status stable
  * @requires arc-hotspot
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart container
  */
 export class ArcImageHotspots extends LitElement {
@@ -85,7 +86,7 @@ export class ArcImageHotspots extends LitElement {
 
   render() {
     return html`
-      <div class="image-hotspots" part="container">
+      <div class="image-hotspots" part="base container">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
     `;

@@ -131,6 +131,7 @@ async function getHL(lang) {
  * @prop {string} filename - Optional filename displayed in the header in monospace font. When empty, the header shows only the language.
  * @prop {string} code - Code content to display. Used as the `<pre><code>` content and copied to clipboard when the copy button is clicked.
  * @slot none
+ * @csspart base - The root element.
  * @csspart titlebar
  * @csspart orbs
  * @csspart filename
@@ -502,7 +503,7 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="code-block" part="code-block">
+      <div class="code-block" part="base code-block">
         ${this._renderHeader()}
         <div class="code-block__body-wrap">
           <div class="code-block__copy ${this._lineCount() === 1 ? 'code-block__copy--centered' : ''} ${this._overflows ? 'code-block__copy--quiet' : ''}">

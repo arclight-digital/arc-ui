@@ -49,6 +49,7 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  * @prop {number} max - When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4.
  * @prop {boolean} legend - Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend="false"`.
  * @slot none
+ * @csspart base - The root element.
  * @csspart heatmap
  * @csspart months
  * @csspart month
@@ -524,7 +525,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
     const columns = `grid-template-columns: repeat(${Math.max(layout.weekCount, 1)}, var(--_cell));`;
 
     return html`
-      <div class="heatmap" part="heatmap">
+      <div class="heatmap" part="base heatmap">
         <div class="heatmap__months" part="months" style=${columns} aria-hidden="true">
           ${this._monthLabels(layout).map(
             (m) => html`

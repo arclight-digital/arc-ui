@@ -27,6 +27,7 @@ import { DeclaredPropsMixin, oneOf, num, int } from '../shared/props.js';
  * @prop {number} clip - Fraction of the range (0..1) where the clip (error) zone begins. Defaults to 0.9.
  * @prop {string} label - Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like "Master left" rather than "Level".
  * @slot none
+ * @csspart base - The root element.
  * @csspart meter - The outer wrapper carrying role="meter".
  * @csspart track - The tinted track containing segments or the continuous fill.
  * @csspart segment - Each discrete segment (segmented mode only).
@@ -272,7 +273,7 @@ export class ArcLevelMeter extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="meter"
-        part="meter"
+        part="base meter"
         role="meter"
         aria-valuemin=${this.min}
         aria-valuemax=${this.max}

@@ -21,6 +21,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * @fires {CustomEvent<{value: string | number}>} arc-open - Fired when the popover opens. detail.value carries the label, or the pin's index within its parent when no label is set.
  * @fires {CustomEvent<{value: string | number}>} arc-close - Fired before the popover closes and cancelable — preventDefault() vetoes the close. detail.value matches arc-open.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart pin
  * @csspart panel
  */
@@ -308,7 +309,7 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="hotspot" style="left: ${this._pct(this.x)}%; top: ${this._pct(this.y)}%;">
+      <div part="base" class="hotspot" style="left: ${this._pct(this.x)}%; top: ${this._pct(this.y)}%;">
         <button
           class="hotspot__pin"
           part="pin"

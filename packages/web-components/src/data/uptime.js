@@ -18,6 +18,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @prop {string} endLabel - Caption under the newest end of the track (e.g. "Today").
  * @prop {boolean} summary - Whether to render the overall percentage above the track (default true; set the attribute to the string "false" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless.
  * @slot none
+ * @csspart base - The root element.
  * @csspart uptime
  * @csspart summary
  * @csspart track
@@ -326,7 +327,7 @@ export class ArcUptime extends DeclaredPropsMixin(LitElement) {
     const detail = active ? this._detailOf(active, this._activeIndex, ticks.length) : null;
 
     return html`
-      <div class="uptime" part="uptime">
+      <div class="uptime" part="base uptime">
         ${
           this.summary && percent !== null
             ? html`

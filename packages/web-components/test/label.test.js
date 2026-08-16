@@ -13,8 +13,8 @@ import '../src/input/label.register.js';
 
 afterEach(cleanup);
 
-const labelEl = (el) => el.shadowRoot.querySelector('[part="label"]');
-const description = (el) => el.shadowRoot.querySelector('[part="description"]');
+const labelEl = (el) => el.shadowRoot.querySelector('[part~="label"]');
+const description = (el) => el.shadowRoot.querySelector('[part~="description"]');
 
 // ---------------------------------------------------------------------------
 // The for → focus bridge

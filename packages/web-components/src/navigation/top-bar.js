@@ -27,6 +27,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot subtitle
  * @slot center
  * @slot actions
+ * @csspart base - The root element.
  * @csspart menu-btn
  * @csspart content
  * @csspart brand
@@ -454,7 +455,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     const size = this._containerSize;
 
     return html`
-      <header class="topbar" part="topbar">
+      <header class="topbar" part="base topbar">
         ${
           size
             ? html`<arc-container size=${size}>${this._renderContent(menuLeft)}</arc-container>`

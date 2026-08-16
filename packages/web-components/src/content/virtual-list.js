@@ -34,6 +34,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {number} overscan - Rows rendered above and below the visible window to cover fast scrolling. Never negative.
  * @fires {CustomEvent<{value: {start: number, end: number}, start: number, end: number}>} arc-range-change - Fired when the visible range changes. `end` is exclusive.
  * @slot item-${index}
+ * @csspart base - The root element.
  * @csspart spacer
  * @csspart item
  */
@@ -169,7 +170,7 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
       this.items?.slice(this._startIndex, this._startIndex + this._visibleCount) || [];
 
     return html`
-      <div class="virtual-list__spacer" style="height:${totalHeight}px" part="spacer">
+      <div class="virtual-list__spacer" style="height:${totalHeight}px" part="base spacer">
         ${visibleItems.map((item, i) => {
           const index = this._startIndex + i;
           return html`

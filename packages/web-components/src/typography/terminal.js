@@ -37,6 +37,7 @@ const LOOP_PAUSE = 2000;
  * @prop {boolean} loop - Replay the transcript indefinitely, pausing briefly at the end of each cycle.
  * @fires {CustomEvent<void>} arc-complete - Fired when the whole sequence has finished printing (each cycle, when looping)
  * @slot none
+ * @csspart base - The root element.
  * @csspart terminal
  * @csspart titlebar
  * @csspart orbs
@@ -351,7 +352,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     const done = !this._started || this._complete;
 
     return html`
-      <div class="terminal" part="terminal">
+      <div class="terminal" part="base terminal">
         <div class="terminal__titlebar" part="titlebar">
           <div class="terminal__orbs" part="orbs">
             <span class="terminal__orb terminal__orb--close"></span>

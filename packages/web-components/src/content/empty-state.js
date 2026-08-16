@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @prop {string} description - Supporting text displayed below the heading, max-width 360px
  * @slot icon
  * @slot actions
+ * @csspart base - The root element.
  * @csspart container
  * @csspart icon
  * @csspart heading
@@ -76,7 +77,7 @@ export class ArcEmptyState extends LitElement {
 
   render() {
     return html`
-      <div class="empty" part="container" role="status">
+      <div class="empty" part="base container" role="status">
         <div class="empty__icon" part="icon" aria-hidden="true">
           <slot name="icon"></slot>
         </div>

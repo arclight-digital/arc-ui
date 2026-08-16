@@ -79,8 +79,8 @@ describe('arc-image-compare rendering', () => {
 
   it('label chips render only when their prop is set', async () => {
     const el = await mountCompare('before-label="Original" after-label="Edited"');
-    expect(el.shadowRoot.querySelector('[part="label-before"]').textContent.trim()).to.equal('Original');
-    expect(el.shadowRoot.querySelector('[part="label-after"]').textContent.trim()).to.equal('Edited');
+    expect(el.shadowRoot.querySelector('[part~="label-before"]').textContent.trim()).to.equal('Original');
+    expect(el.shadowRoot.querySelector('[part~="label-after"]').textContent.trim()).to.equal('Edited');
 
     const bare = await mountCompare();
     expect(bare.shadowRoot.querySelector('.compare__chip')).to.not.exist;

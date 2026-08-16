@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {string} cite - Citation or attribution text displayed beneath the quote with an em dash prefix
  * @prop {'default' | 'accent'} variant - Visual variant. Accent applies a gradient text fill to the quote content.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart blockquote
  * @csspart quote
  * @csspart cite
@@ -97,7 +98,7 @@ export class ArcBlockquote extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <blockquote class="blockquote" part="blockquote">
+      <blockquote class="blockquote" part="base blockquote">
         <div class="quote" part="quote">
           <slot></slot>
         </div>

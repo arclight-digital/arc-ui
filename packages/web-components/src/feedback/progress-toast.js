@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @fires arc-complete - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.
  * @fires arc-cancel - Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier.
  * @slot none
+ * @csspart base - The root element.
  * @csspart container
  * @csspart toast
  * @csspart cancel
@@ -172,7 +173,7 @@ export class ArcProgressToast extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="progress-toast-container" role="status" aria-live="polite" part="container">
+      <div class="progress-toast-container" role="status" aria-live="polite" part="base container">
         ${this._toasts.map(
           (t) => html`
           <div class="progress-toast" data-toast-id=${t.id} part="toast">

@@ -26,6 +26,7 @@ const STAR_PATH =
  * @prop {string} label - Accessible name for the control. Several ratings on one page are indistinguishable without it. Defaults to "Rating".
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the rating value changes
  * @slot none
+ * @csspart base - The root element.
  * @csspart star
  * @csspart rating
  */
@@ -251,7 +252,7 @@ export class ArcRating extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         aria-readonly=${this.readonly ? 'true' : 'false'}
         tabindex=${this.disabled ? '-1' : '0'}
         @keydown=${this._onKeydown}
-        part="rating"
+        part="base rating"
       >
         ${stars}
       </div>

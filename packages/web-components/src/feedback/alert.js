@@ -20,6 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-close - Fired when a dismissible alert is closed
  * @slot icon - Replaces the built-in status glyph. Absorbed from arc-callout, whose icon was slottable.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart alert
  * @csspart icon
  * @csspart heading
@@ -172,7 +173,7 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
         class="alert"
         role=${ArcAlert.ROLES[this.variant] ?? 'note'}
         aria-live=${ifDefined(this._ariaLive)}
-        part="alert"
+        part="base alert"
       >
         <div class="alert__icon-wrap" aria-hidden="true" part="icon">
           <slot name="icon">${getStatusIcon(this.variant)}</slot>

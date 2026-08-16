@@ -30,14 +30,14 @@ async function diff(original, revised, attrs = '') {
   return el;
 }
 
-const lines = (el) => [...el.shadowRoot.querySelectorAll('[part="line"]')];
+const lines = (el) => [...el.shadowRoot.querySelectorAll('[part~="line"]')];
 const panes = (el) => [...el.shadowRoot.querySelectorAll('.diff__pane')];
 
 /** Each rendered line as `<number><prefix><text>`, which is the whole row. */
 const readLines = (root) =>
-  [...root.querySelectorAll('[part="line"]')].map((l) => ({
-    num: l.querySelector('[part="line-number"]').textContent.trim(),
-    prefix: l.querySelector('[part="prefix"]').textContent,
+  [...root.querySelectorAll('[part~="line"]')].map((l) => ({
+    num: l.querySelector('[part~="line-number"]').textContent.trim(),
+    prefix: l.querySelector('[part~="prefix"]').textContent,
     text: l.querySelector('.diff__content').textContent,
     kind: [...l.classList].find((c) => c.startsWith('diff__line--'))?.replace('diff__line--', ''),
   }));
@@ -102,7 +102,7 @@ describe('arc-diff inline mode', () => {
   it('exposes the documented css parts', async () => {
     const el = await diff('a', 'b');
     for (const part of ['container', 'line', 'line-number', 'prefix']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 });

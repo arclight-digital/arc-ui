@@ -39,6 +39,7 @@ function warnUnknownIcon(name) {
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} size - Icon dimensions: `xs` (12px), `sm` (16px), `md` (20px), `lg` (24px), `xl` (32px).
  * @prop {string} label - Accessibility label. When provided, sets `role="img"` and `aria-label`. When empty, sets `role="presentation"` and `aria-hidden="true"`.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart icon
  */
 export class ArcIcon extends DeclaredPropsMixin(LitElement) {
@@ -149,7 +150,7 @@ export class ArcIcon extends DeclaredPropsMixin(LitElement) {
         role=${this.label ? 'img' : 'presentation'}
         aria-label=${this.label || nothing}
         aria-hidden=${this.label ? 'false' : 'true'}
-        part="icon"
+        part="base icon"
       >
         ${svg ? unsafeHTML(svg) : html`<slot></slot>`}
       </span>

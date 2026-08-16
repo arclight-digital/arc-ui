@@ -7,6 +7,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @tag arc-kbd
  * @status stable
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart kbd
  */
 export class ArcKbd extends LitElement {
@@ -41,6 +42,6 @@ export class ArcKbd extends LitElement {
   }
 
   render() {
-    return html`<kbd class="kbd" part="kbd"><slot></slot></kbd>`;
+    return html`<kbd class="kbd" part="base kbd"><slot></slot></kbd>`;
   }
 }

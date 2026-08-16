@@ -30,6 +30,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Controls the badge size. Options: 'sm', 'md', 'lg'.
  * @prop {string} color - Custom RGB color value (e.g. `"255, 100, 50"`) that overrides the variant color. Sets the border, text, background tint, and hover glow to the specified color.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart badge
  */
 export class ArcBadge extends DeclaredPropsMixin(LitElement) {
@@ -121,7 +122,7 @@ export class ArcBadge extends DeclaredPropsMixin(LitElement) {
       ? `border-color: rgba(${this.color}, 0.2); color: color-mix(in srgb, rgb(${this.color}), var(--text-primary) var(--accent-text-mix, 0%)); background: rgba(${this.color}, 0.06);`
       : '';
 
-    return html`<span class="badge" part="badge" style=${colorStyle}
+    return html`<span class="badge" part="base badge" style=${colorStyle}
       @mouseenter=${
         this.color
           ? (e) => {

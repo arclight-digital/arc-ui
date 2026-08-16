@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'top' | 'bottom' | 'left' | 'right'} position - Controls which side of the trigger the tooltip appears on. Top is the most common default. Switch to bottom, left, or right when the trigger sits near a viewport edge or when the surrounding layout makes another direction more natural.
  * @prop {number} delay - Time in milliseconds to wait after mouseenter or focusin before the tooltip becomes visible. The default of 200 ms prevents accidental activation during casual pointer movement. Increase to 400-600 ms in dense toolbars; avoid setting to 0 as it creates a jittery experience.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart trigger
  * @csspart popup
  */
@@ -279,7 +280,7 @@ export class ArcTooltip extends DeclaredPropsMixin(LitElement) {
         @mouseleave=${this._hide}
         @focusin=${this._show}
         @focusout=${this._hide}
-        part="trigger"
+        part="base trigger"
       >
         <slot @slotchange=${this._syncTriggerAria}></slot>
       </div>

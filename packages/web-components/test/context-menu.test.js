@@ -48,7 +48,7 @@ async function rightClick(host, el, { clientX = 40, clientY = 60 } = {}) {
   return event;
 }
 
-const menu = (el) => el.shadowRoot.querySelector('[part="menu"]');
+const menu = (el) => el.shadowRoot.querySelector('[part~="menu"]');
 const menuItems = (el) => [...el.shadowRoot.querySelectorAll('[role="menuitem"]')];
 const labels = (el) => menuItems(el).map((i) => i.textContent.trim());
 const active = (el) => menu(el)?.getAttribute('aria-activedescendant') ?? null;
@@ -86,7 +86,7 @@ describe('arc-context-menu opening', () => {
     await rightClick(host, el);
 
     expect(labels(el)).to.deep.equal(['Cut', 'Copy', 'Paste', 'Delete']);
-    expect(el.shadowRoot.querySelector('[part="divider"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="divider"]')).to.not.equal(null);
   });
 
   it('opens at the pointer', async () => {

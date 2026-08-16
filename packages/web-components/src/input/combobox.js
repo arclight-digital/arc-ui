@@ -24,6 +24,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires arc-change - Fired when an option is selected. `event.detail.value` contains the selected option value.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart label
  * @csspart wrapper
  * @csspart input
@@ -335,7 +336,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
     const activeId = this._listbox.activeDescendantId;
 
     return html`
-      <div class="combobox__slot-host">
+      <div part="base" class="combobox__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       ${this.label ? html`<label class="combobox__label" for="${this._comboId}-input" part="label">${this.label}</label>` : ''}

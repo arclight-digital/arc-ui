@@ -24,10 +24,10 @@ async function upload(attrs = '') {
   return el;
 }
 
-const dropzone = (el) => el.shadowRoot.querySelector('[part="dropzone"]');
+const dropzone = (el) => el.shadowRoot.querySelector('[part~="dropzone"]');
 const nativeInput = (el) => el.shadowRoot.querySelector('input[type="file"]');
-const items = (el) => [...el.shadowRoot.querySelectorAll('[part="file-item"]')];
-const errorText = (el) => el.shadowRoot.querySelector('[part="error"]')?.textContent.trim() ?? '';
+const items = (el) => [...el.shadowRoot.querySelectorAll('[part~="file-item"]')];
+const errorText = (el) => el.shadowRoot.querySelector('[part~="error"]')?.textContent.trim() ?? '';
 
 /** A File of a given size, so maxSize can be exercised without real bytes. */
 const file = (name, bytes = 10) => new File(['x'.repeat(bytes)], name, { type: 'text/plain' });
@@ -45,7 +45,7 @@ async function drop(el, files) {
 describe('arc-file-upload rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await upload();
-    expect(el.shadowRoot.querySelector('[part="wrapper"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="wrapper"]')).to.not.equal(null);
     expect(dropzone(el)).to.not.equal(null);
   });
 
@@ -218,7 +218,7 @@ describe('arc-file-upload removal', () => {
     el.addEventListener('arc-remove', (e) => seen.push(['remove', e.detail]));
     el.addEventListener('arc-change', (e) => seen.push(['change', e.detail]));
 
-    el.shadowRoot.querySelector('[part="file-item"] button')?.click();
+    el.shadowRoot.querySelector('[part~="file-item"] button')?.click();
     await settle(el);
 
     expect(seen.map(([k]) => k), 'remove then change').to.deep.equal(['remove', 'change']);
@@ -232,7 +232,7 @@ describe('arc-file-upload removal', () => {
     await drop(el, [file('ok.txt', 10), file('huge.txt', 500)]);
     expect(errorText(el)).to.not.equal('');
 
-    el.shadowRoot.querySelector('[part="file-item"] button')?.click();
+    el.shadowRoot.querySelector('[part~="file-item"] button')?.click();
     await settle(el);
 
     expect(errorText(el)).to.equal('');

@@ -24,6 +24,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard
  * @fires arc-select - Fired when a suggestion is selected (before the accompanying arc-change)
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart label
  * @csspart wrapper
  * @csspart icon
@@ -360,7 +361,7 @@ export class ArcSearch extends DeclaredPropsMixin(LitElement) {
     const showSuggestions = this.open && items.length > 0;
 
     return html`
-      <div class="search__slot-host">
+      <div part="base" class="search__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       ${this.label ? html`<label class="search__label" part="label">${this.label}</label>` : ''}

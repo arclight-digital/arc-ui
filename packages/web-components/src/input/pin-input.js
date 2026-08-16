@@ -22,6 +22,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * @fires arc-change - Fired when the pin is complete — every box filled. That is the commit for a fixed-length value.
  * @fires arc-complete - Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit.
  * @slot none
+ * @csspart base - The root element.
  * @csspart pin
  * @csspart label
  * @csspart boxes
@@ -313,7 +314,7 @@ export class ArcPinInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
     const inputMode = this._getInputMode();
 
     return html`
-      <div class="pin" part="pin">
+      <div class="pin" part="base pin">
         ${this.label ? html`<span class="pin__label" part="label">${this.label}</span>` : ''}
         <div class="pin__boxes" role="group" aria-label=${this.label || 'PIN input'} part="boxes">
           ${chars.map(

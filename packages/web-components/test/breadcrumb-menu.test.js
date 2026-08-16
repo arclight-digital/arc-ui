@@ -37,9 +37,9 @@ async function crumbs(items = ITEMS, attrs = '') {
   return el;
 }
 
-const links = (el) => [...el.shadowRoot.querySelectorAll('[part="link"]')];
-const dropdown = (el) => el.shadowRoot.querySelector('[part="dropdown"]');
-const dropdownItems = (el) => [...el.shadowRoot.querySelectorAll('[part="dropdown-item"]')];
+const links = (el) => [...el.shadowRoot.querySelectorAll('[part~="link"]')];
+const dropdown = (el) => el.shadowRoot.querySelector('[part~="dropdown"]');
+const dropdownItems = (el) => [...el.shadowRoot.querySelectorAll('[part~="dropdown-item"]')];
 const navigations = (el) => {
   const seen = [];
   el.addEventListener('arc-navigate', (e) => seen.push(e.detail.href));
@@ -55,7 +55,7 @@ describe('arc-breadcrumb-menu: the trail', () => {
     const el = await crumbs();
     expect(links(el).map((b) => b.textContent.trim().split('\n')[0].trim()))
       .to.eql(['Home', 'Projects', 'Arc UI']);
-    expect(el.shadowRoot.querySelectorAll('[part="separator"]').length, 'n-1 separators').to.equal(2);
+    expect(el.shadowRoot.querySelectorAll('[part~="separator"]').length, 'n-1 separators').to.equal(2);
   });
 
   it('marks only the last crumb as the current page', async () => {
@@ -66,13 +66,13 @@ describe('arc-breadcrumb-menu: the trail', () => {
 
   it('names the nav for assistive tech', async () => {
     const el = await crumbs();
-    expect(el.shadowRoot.querySelector('[part="base"]').getAttribute('aria-label'))
+    expect(el.shadowRoot.querySelector('[part~="base"]').getAttribute('aria-label'))
       .to.equal('Breadcrumb');
   });
 
   it('takes a custom nav label', async () => {
     const el = await crumbs(ITEMS, 'label="You are here"');
-    expect(el.shadowRoot.querySelector('[part="base"]').getAttribute('aria-label'))
+    expect(el.shadowRoot.querySelector('[part~="base"]').getAttribute('aria-label'))
       .to.equal('You are here');
   });
 
@@ -184,7 +184,7 @@ describe('arc-breadcrumb-menu: the dropdown', () => {
     links(el)[1].click();
     await settle(el);
 
-    expect(el.shadowRoot.querySelectorAll('[part="dropdown"]').length, 'only ever one').to.equal(1);
+    expect(el.shadowRoot.querySelectorAll('[part~="dropdown"]').length, 'only ever one').to.equal(1);
     expect(dropdownItems(el).map((b) => b.textContent.trim())).to.eql(['B2']);
   });
 

@@ -25,7 +25,7 @@ describe('arc-clock digital face', () => {
   it('renders a plausible time string', async () => {
     const el = mount('<arc-clock timezone="UTC"></arc-clock>');
     await el.updateComplete;
-    const time = el.shadowRoot.querySelector('[part="time"]');
+    const time = el.shadowRoot.querySelector('[part~="time"]');
     expect(time).to.exist;
     expect(time.textContent.trim()).to.match(/\d{1,2}:\d{2}/);
   });
@@ -34,25 +34,25 @@ describe('arc-clock digital face', () => {
     const el = mount('<arc-clock timezone="UTC" show-seconds></arc-clock>');
     el.hour12 = false;
     await pin(el, Date.UTC(2026, 0, 15, 9, 5, 7));
-    const text = el.shadowRoot.querySelector('[part="time"]').textContent.trim();
+    const text = el.shadowRoot.querySelector('[part~="time"]').textContent.trim();
     expect(text).to.match(/0?9:05:07/);
 
     el.showSeconds = false;
     await el.updateComplete;
-    const noSeconds = el.shadowRoot.querySelector('[part="time"]').textContent.trim();
+    const noSeconds = el.shadowRoot.querySelector('[part~="time"]').textContent.trim();
     expect(noSeconds).to.match(/0?9:05$/);
   });
 
   it('respects hour12 in both directions', async () => {
     const el = mount('<arc-clock timezone="UTC" hour12></arc-clock>');
     await pin(el, Date.UTC(2026, 0, 15, 15, 0, 0));
-    const twelve = el.shadowRoot.querySelector('[part="time"]').textContent.trim();
+    const twelve = el.shadowRoot.querySelector('[part~="time"]').textContent.trim();
     expect(twelve).to.include('3:00');
     expect(twelve).to.not.include('15');
 
     el.hour12 = false;
     await el.updateComplete;
-    const twentyFour = el.shadowRoot.querySelector('[part="time"]').textContent.trim();
+    const twentyFour = el.shadowRoot.querySelector('[part~="time"]').textContent.trim();
     expect(twentyFour).to.include('15:00');
   });
 
@@ -64,27 +64,27 @@ describe('arc-clock digital face', () => {
     tokyo.hour12 = false;
     await pin(utc, epoch);
     await pin(tokyo, epoch);
-    expect(utc.shadowRoot.querySelector('[part="time"]').textContent.trim()).to.match(/0?3:00/);
-    expect(tokyo.shadowRoot.querySelector('[part="time"]').textContent.trim()).to.include('12:00');
+    expect(utc.shadowRoot.querySelector('[part~="time"]').textContent.trim()).to.match(/0?3:00/);
+    expect(tokyo.shadowRoot.querySelector('[part~="time"]').textContent.trim()).to.include('12:00');
   });
 
   it('falls back to local time when the timezone is not recognized', async () => {
     const el = mount('<arc-clock timezone="Not/AZone"></arc-clock>');
     await el.updateComplete;
-    const time = el.shadowRoot.querySelector('[part="time"]');
+    const time = el.shadowRoot.querySelector('[part~="time"]');
     expect(time.textContent.trim()).to.match(/\d{1,2}:\d{2}/);
   });
 
   it('shows the muted zone abbreviation only with show-timezone', async () => {
     const el = mount('<arc-clock timezone="UTC" show-timezone></arc-clock>');
     await pin(el, Date.UTC(2026, 0, 15, 9, 0, 0));
-    const zone = el.shadowRoot.querySelector('[part="timezone"]');
+    const zone = el.shadowRoot.querySelector('[part~="timezone"]');
     expect(zone).to.exist;
     expect(zone.textContent.trim()).to.have.length.greaterThan(0);
 
     const plain = mount('<arc-clock timezone="UTC"></arc-clock>');
     await plain.updateComplete;
-    expect(plain.shadowRoot.querySelector('[part="timezone"]')).to.not.exist;
+    expect(plain.shadowRoot.querySelector('[part~="timezone"]')).to.not.exist;
   });
 });
 
@@ -95,7 +95,7 @@ describe('arc-clock analog face', () => {
     const el = mount('<arc-clock variant="analog" timezone="UTC" show-seconds></arc-clock>');
     await pin(el, Date.UTC(2026, 0, 15, 3, 0, 0)); // 03:00:00 UTC
     const rotation = (part) =>
-      el.shadowRoot.querySelector(`[part="${part}"]`).getAttribute('transform');
+      el.shadowRoot.querySelector(`[part~="${part}"]`).getAttribute('transform');
     expect(rotation('hand-hour')).to.equal('rotate(90 50 50)');
     expect(rotation('hand-minute')).to.equal('rotate(0 50 50)');
     expect(rotation('hand-second')).to.equal('rotate(0 50 50)');
@@ -104,8 +104,8 @@ describe('arc-clock analog face', () => {
   it('folds minutes into the hour hand angle', async () => {
     const el = mount('<arc-clock variant="analog" timezone="UTC"></arc-clock>');
     await pin(el, Date.UTC(2026, 0, 15, 6, 30, 0)); // 06:30 UTC
-    const hour = el.shadowRoot.querySelector('[part="hand-hour"]').getAttribute('transform');
-    const minute = el.shadowRoot.querySelector('[part="hand-minute"]').getAttribute('transform');
+    const hour = el.shadowRoot.querySelector('[part~="hand-hour"]').getAttribute('transform');
+    const minute = el.shadowRoot.querySelector('[part~="hand-minute"]').getAttribute('transform');
     expect(hour).to.equal('rotate(195 50 50)');
     expect(minute).to.equal('rotate(180 50 50)');
   });
@@ -113,11 +113,11 @@ describe('arc-clock analog face', () => {
   it('renders the second hand only with show-seconds', async () => {
     const el = mount('<arc-clock variant="analog" timezone="UTC"></arc-clock>');
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part="hand-second"]')).to.not.exist;
+    expect(el.shadowRoot.querySelector('[part~="hand-second"]')).to.not.exist;
 
     el.showSeconds = true;
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part="hand-second"]')).to.exist;
+    expect(el.shadowRoot.querySelector('[part~="hand-second"]')).to.exist;
   });
 
   it('renders the tick ring with 12 majors and 48 minors', async () => {
@@ -154,13 +154,13 @@ describe('arc-clock lifecycle and a11y', () => {
     expect(sr.textContent).to.match(/\d{1,2}:\d{2}/);
     expect(el.shadowRoot.querySelector('[aria-live]')).to.not.exist;
     // The visual face is decorative; assistive tech reads the hidden string.
-    expect(el.shadowRoot.querySelector('[part="face"]').getAttribute('aria-hidden')).to.equal('true');
+    expect(el.shadowRoot.querySelector('[part~="face"]').getAttribute('aria-hidden')).to.equal('true');
   });
 
   it('renders an unknown variant as the digital default', async () => {
     const el = mount('<arc-clock variant="cuckoo" timezone="UTC"></arc-clock>');
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part="time"]')).to.exist;
-    expect(el.shadowRoot.querySelector('[part="svg"]')).to.not.exist;
+    expect(el.shadowRoot.querySelector('[part~="time"]')).to.exist;
+    expect(el.shadowRoot.querySelector('[part~="svg"]')).to.not.exist;
   });
 });

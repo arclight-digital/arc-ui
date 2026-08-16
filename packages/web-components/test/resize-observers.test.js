@@ -82,7 +82,7 @@ describe('ResizeObserver components re-measure on width change', () => {
     await settle(el);
     await observed();
 
-    const toggle = () => el.shadowRoot.querySelector('[part="toggle"], button');
+    const toggle = () => el.shadowRoot.querySelector('[part~="toggle"], button');
     const wideHasToggle = toggle() !== null;
 
     el.style.width = '120px';
@@ -113,7 +113,7 @@ describe('ResizeObserver components re-measure on width change', () => {
     // marquee that computed it and stopped writing it would scroll at the
     // 10s default while every assertion against the field passed.
     const duration = () =>
-      el.shadowRoot.querySelector('[part="track"]').style.getPropertyValue('--marquee-duration');
+      el.shadowRoot.querySelector('[part~="track"]').style.getPropertyValue('--marquee-duration');
 
     const slow = duration();
     expect(slow, 'a duration is computed at all').to.match(/^[\d.]+s$/);

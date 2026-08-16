@@ -53,8 +53,8 @@ const mode = (el) => ({
   'Previous year': 'months',
   'Previous years': 'years',
 }[el.shadowRoot.querySelector('.nav-btn')?.getAttribute('aria-label')] ?? null);
-const input = (el) => el.shadowRoot.querySelector('[part="input"]');
-const dropdown = (el) => el.shadowRoot.querySelector('[part="dropdown"]');
+const input = (el) => el.shadowRoot.querySelector('[part~="input"]');
+const dropdown = (el) => el.shadowRoot.querySelector('[part~="dropdown"]');
 const title = (el) => el.shadowRoot.querySelector('.calendar-title')?.textContent.trim();
 const dayCells = (el) => [...el.shadowRoot.querySelectorAll('.day')];
 const day = (el, iso) => el.shadowRoot.querySelector(`.day[data-iso="${iso}"]`);
@@ -68,7 +68,7 @@ describe('arc-date-picker rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await opened('label="When"');
     for (const part of ['wrapper', 'label', 'input-wrapper', 'input', 'dropdown']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

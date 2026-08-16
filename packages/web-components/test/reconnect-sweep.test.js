@@ -71,7 +71,7 @@ describe('arc-truncate reconnect', () => {
    * button is what `_overflows` exists to draw, and the only half of it a
    * reader ever meets.
    */
-  const overflowing = (el) => el.shadowRoot.querySelector('[part="toggle"]') !== null;
+  const overflowing = (el) => el.shadowRoot.querySelector('[part~="toggle"]') !== null;
 
   async function truncate(width) {
     const host = mount(`<div style="width:${width}px"><arc-truncate lines="2">${LONG}</arc-truncate></div>`);
@@ -95,7 +95,7 @@ describe('arc-truncate reconnect', () => {
 
     await recycle(el);
     // anti-vacuity: the component is alive and still rendering after the move
-    expect(el.shadowRoot.querySelector('[part="content"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="content"]')).to.not.equal(null);
     expect(el.isConnected).to.equal(true);
 
     host.style.width = '4000px';

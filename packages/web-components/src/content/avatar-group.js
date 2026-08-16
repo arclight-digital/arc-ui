@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {number} max - Maximum number of avatars to display. Excess avatars are hidden and a "+N" overflow badge is shown.
  * @prop {'sm' | 'md' | 'lg'} overlap - Overlap density preset. sm = -8px, md = -12px, lg = -16px negative margin between avatars.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart group
  * @csspart overflow
  */
@@ -94,7 +95,7 @@ export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="group" part="group" role="group" aria-label="Avatar group">
+      <div class="group" part="base group" role="group" aria-label="Avatar group">
         <slot @slotchange=${this._handleSlotChange}></slot>
         <span class="group__overflow" part="overflow" style="display:none"></span>
       </div>

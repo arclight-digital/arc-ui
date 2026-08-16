@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} interactive - Enables hover effects for clickable cards that trigger JS instead of navigating via href.
  * @slot - Default content. Wrapping the content in a single `<a>` adopts it as the card's link — the recommended form for cards that must work before hydration or without JavaScript. The anchor fills the padded surface; the `footer` slot stays outside it so footer actions remain separately clickable.
  * @slot footer
+ * @csspart base - The root element.
  * @csspart body
  * @csspart footer
  * @csspart card
@@ -142,11 +143,11 @@ export class ArcCard extends DeclaredPropsMixin(LitElement) {
 
     // An explicit href always wins — established API, unchanged behavior.
     if (this.href) {
-      return html`<a class="card" href=${this.href} part="card"><div class="card__inner" part="inner">${content}</div></a>`;
+      return html`<a class="card" href=${this.href} part="base card"><div class="card__inner" part="inner">${content}</div></a>`;
     }
     // The footer stays outside the adopted anchor, so footer actions remain
     // separately clickable rather than nesting inside the card link.
     const classes = `card${this._slottedAnchor ? ' card--linked' : ''}`;
-    return html`<div class=${classes} part="card"><div class="card__inner" part="inner">${content}</div></div>`;
+    return html`<div class=${classes} part="base card"><div class="card__inner" part="inner">${content}</div></div>`;
   }
 }

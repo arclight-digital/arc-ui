@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @prop {boolean} pauseOnHover - When true, the animation pauses while the cursor hovers over the marquee.
  * @prop {string} gap - CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart track
  * @csspart group
  * @csspart group-duplicate
@@ -149,7 +150,7 @@ export class ArcMarquee extends DeclaredPropsMixin(LitElement) {
       <div
         class="marquee ${dirClass}"
         style="--marquee-duration: ${this._animDuration}; gap: ${this.gap}"
-        part="track"
+        part="base track"
       >
         <div
           class="marquee__group marquee__group--primary"

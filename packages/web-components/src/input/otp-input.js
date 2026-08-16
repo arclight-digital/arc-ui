@@ -21,6 +21,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every digit entered or deleted, with the partial value.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the code is complete — every box filled. That is the commit for a fixed-length code.
  * @slot none
+ * @csspart base - The root element.
  * @csspart otp
  * @csspart box
  */
@@ -239,7 +240,7 @@ export class ArcOtpInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
     const pattern = this.type === 'number' ? '[0-9]*' : undefined;
 
     return html`
-      <div class="otp" role="group" aria-label="One-time password input" part="otp">
+      <div class="otp" role="group" aria-label="One-time password input" part="base otp">
         ${chars.map(
           (char, i) => html`
           <input

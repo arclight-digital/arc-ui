@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * @fires arc-change - Fired when files are added or dropped
  * @fires arc-remove - Fired when a file is removed from the list
  * @slot none
+ * @csspart base - The root element.
  * @csspart wrapper
  * @csspart dropzone
  * @csspart error
@@ -290,7 +291,7 @@ export class ArcFileUpload extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div part="wrapper">
+      <div part="base wrapper">
         <div
           class="dropzone ${this._dragOver ? 'drag-over' : ''}"
           part="dropzone"

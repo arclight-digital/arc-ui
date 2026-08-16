@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {string} threshold - The container width at which the layout switches between horizontal and vertical. Accepts any CSS length value. When the container is wider than this value, children are in a row; below it, they stack.
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} gap - Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart switcher
  */
 export class ArcResponsiveSwitcher extends DeclaredPropsMixin(LitElement) {
@@ -79,7 +80,7 @@ export class ArcResponsiveSwitcher extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="switcher" part="switcher">
+      <div class="switcher" part="base switcher">
         <slot></slot>
       </div>
     `;

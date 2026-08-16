@@ -29,6 +29,7 @@ let inputIdCounter = 0;
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed
  * @slot prefix
  * @slot suffix
+ * @csspart base - The root element.
  * @csspart field
  * @csspart label
  * @csspart wrapper
@@ -280,7 +281,7 @@ export class ArcInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
     const hasError = !!this.error;
 
     return html`
-      <div class="input-group ${hasError ? 'input-group--error' : ''}">
+      <div part="base" class="input-group ${hasError ? 'input-group--error' : ''}">
         ${this.label ? html`<label class="input-group__label" for=${id} part="label">${this.label}</label>` : ''}
         <div class="input-group__wrapper" part="wrapper">
           <div class="input-group__prefix ${this._hasPrefix ? '' : 'input-group__prefix--empty'}" part="prefix">

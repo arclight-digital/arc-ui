@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} name - Form field name submitted with the toggle value. When set, the component participates in native `<form>` submission.
  * @fires {CustomEvent<{ checked: boolean }>} arc-change - Fired when the toggle state changes
  * @slot none
+ * @csspart base - The root element.
  * @csspart toggle
  * @csspart track
  * @csspart thumb
@@ -190,7 +191,7 @@ export class ArcToggle extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
 
   render() {
     return html`
-      <label class="toggle" part="toggle" @click=${this._toggle}>
+      <label class="toggle" part="base toggle" @click=${this._toggle}>
         <div
           class="toggle__track"
           role="switch"

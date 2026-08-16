@@ -34,7 +34,7 @@ async function chipIn(role, attrs = 'value="red"') {
   return el;
 }
 
-const control = (el) => el.shadowRoot.querySelector('[part="chip"]');
+const control = (el) => el.shadowRoot.querySelector('[part~="chip"]');
 
 describe('arc-chip rendering', () => {
   it('projects its label', async () => {

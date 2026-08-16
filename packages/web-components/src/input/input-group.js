@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @slot prefix
  * @slot - Default content.
  * @slot suffix
+ * @csspart base - The root element.
  * @csspart group
  * @csspart prefix
  * @csspart content
@@ -120,7 +121,7 @@ export class ArcInputGroup extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="input-group" part="group">
+      <div class="input-group" part="base group">
         <div class="input-group__addon input-group__addon--prefix ${this._hasPrefix ? '' : 'input-group__addon--empty'}" part="prefix">
           <slot name="prefix" @slotchange=${this._onPrefixSlotChange}></slot>
         </div>

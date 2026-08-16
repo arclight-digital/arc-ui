@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @slot headline
  * @slot - Default content.
  * @slot actions
+ * @csspart base - The root element.
  * @csspart container
  * @csspart background
  * @csspart inner
@@ -129,7 +130,7 @@ export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="cta" part="container">
+      <div class="cta" part="base container">
         <div class="cta__bg" part="background"></div>
         <div class="cta__inner" part="inner">
           ${

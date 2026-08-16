@@ -22,6 +22,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} disabled - Disables the button, reducing opacity to 40% and blocking pointer events.
  * @prop {string} type - HTML button type attribute. Only applies when `href` is not set.
  * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.
+ * @csspart base - The root element.
  * @csspart button
  */
 export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
@@ -210,7 +211,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
       // link icon-button stayed focusable and followable. Dropping `href` is how
       // the platform removes a link from the tab order (finding #61).
       const off = this.disabled;
-      return html`<a class=${classes} href=${off ? nothing : this.href} role=${off ? 'link' : nothing} aria-disabled=${off ? 'true' : nothing} aria-label=${this.label || nothing} part="button">${icon}${textEl}</a>`;
+      return html`<a class=${classes} href=${off ? nothing : this.href} role=${off ? 'link' : nothing} aria-disabled=${off ? 'true' : nothing} aria-label=${this.label || nothing} part="base button">${icon}${textEl}</a>`;
     }
     return html`
       <button
@@ -218,7 +219,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
         type=${this.type}
         ?disabled=${this.disabled}
         aria-label=${this.label || nothing}
-        part="button"
+        part="base button"
       >${icon}${textEl}</button>
     `;
   }

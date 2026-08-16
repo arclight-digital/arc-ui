@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-confirm - Fired when the confirm button is clicked
  * @fires {CustomEvent<void>} arc-cancel - Fired when cancel, escape, or backdrop click occurs
  * @slot none
+ * @csspart base - The root element.
  * @csspart body
  * @csspart cancel
  * @csspart confirm
@@ -49,7 +50,7 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
          it reads, rather than by adding a fourth arc-button variant. The button
          resolves --interactive from --accent-primary in its own context, so
          setting them on the instance is enough. */
-      :host([variant="error"]) arc-button[part="confirm"] {
+      :host([variant="error"]) arc-button[part~="confirm"] {
         --accent-primary: var(--color-error);
         --accent-primary-rgb: var(--color-error-rgb);
       }
@@ -100,7 +101,7 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <arc-modal
+      <arc-modal part="base"
         ?open=${this.open}
         heading=${this.heading}
         size="sm"

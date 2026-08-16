@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} value - The value sent with the form when the checkbox is checked. Defaults to "on" if omitted, matching native checkbox behavior. Set explicit values when multiple checkboxes share the same name to distinguish them in the submitted data.
  * @fires {CustomEvent<{ checked: boolean }>} arc-change - Fired when the checked state changes
  * @slot none
+ * @csspart base - The root element.
  * @csspart checkbox
  * @csspart box
  * @csspart label
@@ -174,7 +175,7 @@ export class ArcCheckbox extends DeclaredPropsMixin(FormControlMixin(LitElement)
 
   render() {
     return html`
-      <label class="checkbox" part="checkbox">
+      <label class="checkbox" part="base checkbox">
         <div
           class="checkbox__box"
           role="checkbox"

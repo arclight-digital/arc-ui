@@ -136,7 +136,7 @@ describe('arc-video playing state', () => {
     inner(el).play();
     await el.updateComplete;
 
-    const toggle = el.shadowRoot.querySelector('[part="play-toggle"]');
+    const toggle = el.shadowRoot.querySelector('[part~="play-toggle"]');
     expect(toggle.getAttribute('aria-label')).to.equal('Pause');
 
     toggle.click();
@@ -254,7 +254,7 @@ describe('arc-video keyboard', () => {
     // The button's own label is the component's answer to "am I fullscreen",
     // and it is what a screen-reader user hears.
     expect(
-      el.shadowRoot.querySelector('[part="fullscreen-button"]')?.getAttribute('aria-label'),
+      el.shadowRoot.querySelector('[part~="fullscreen-button"]')?.getAttribute('aria-label'),
       'still offering to enter fullscreen',
     ).to.equal('Fullscreen');
   });

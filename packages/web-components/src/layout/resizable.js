@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * @prop {number} maxSize - Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.
  * @fires {CustomEvent<{ size: number }>} arc-resize - Fired during and after panel resize with { size } detail
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart container
  * @csspart handle
  */
@@ -204,7 +205,7 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="container" part="container">
+      <div class="container" part="base container">
         <slot></slot>
       </div>
       <div

@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string }>} arc-select - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selection changes. `event.detail.value` contains the new value string.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart list
  */
 export class ArcList extends DeclaredPropsMixin(LitElement) {
@@ -235,7 +236,7 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
         aria-label=${this.label || nothing}
         aria-multiselectable=${this.selectable ? String(this.multiple === true) : nothing}
         @keydown=${this._handleKeydown}
-        part="list"
+        part="base list"
       >
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>

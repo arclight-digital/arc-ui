@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} gradient - Custom CSS gradient string, used when variant is set to custom
  * @prop {boolean} animated - Animate the gradient with a shifting background-position cycle
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart text
  */
 export class ArcGradientText extends DeclaredPropsMixin(LitElement) {
@@ -106,7 +107,7 @@ export class ArcGradientText extends DeclaredPropsMixin(LitElement) {
 
     return html`<span
       class="gradient-text"
-      part="text"
+      part="base text"
       style="${customStyle}"
     ><slot></slot></span>`;
   }

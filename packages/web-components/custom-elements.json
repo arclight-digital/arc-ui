@@ -78,6 +78,10 @@
           "name": "ArcAccordion",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "accordion"
             }
           ],
@@ -148,6 +152,10 @@
           "description": "Container that enforces a consistent width-to-height ratio on its content, ideal for images,\nvideos, and embedded media.",
           "name": "ArcAspectRatio",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "container"
             },
@@ -237,6 +245,10 @@
           "description": "Stack of avatars with overflow count badge.",
           "name": "ArcAvatarGroup",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "group"
             },
@@ -331,6 +343,10 @@
           "description": "User avatar with image or initials fallback.",
           "name": "ArcAvatar",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "img"
             },
@@ -490,6 +506,10 @@
           "name": "ArcCallout",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "callout"
             },
             {
@@ -610,6 +630,10 @@
           "description": "Content container with subtle border styling and hover effects. Links the entire card surface\nwhen an href is provided, creating a seamless clickable area with an animated gradient border.",
           "name": "ArcCard",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "body"
             },
@@ -734,6 +758,10 @@
           "description": "A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and\nkeyboard controls.",
           "name": "ArcCarousel",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "carousel"
             },
@@ -913,6 +941,10 @@
           "name": "ArcCollapsible",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "collapsible"
             },
             {
@@ -1021,6 +1053,10 @@
           "description": "Color sample square with label — useful for token docs.",
           "name": "ArcColorSwatch",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "swatch"
             },
@@ -1291,6 +1327,10 @@
           "name": "ArcCtaBanner",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             },
             {
@@ -1429,6 +1469,10 @@
           "name": "ArcDivider",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "divider"
             },
             {
@@ -1563,6 +1607,10 @@
           "name": "ArcEmptyState",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             },
             {
@@ -1660,6 +1708,10 @@
           "description": "Card with icon, heading, description, and animated hover effects.",
           "name": "ArcFeatureCard",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "inner"
             },
@@ -1819,6 +1871,10 @@
           "description": "A single glowing pin inside an Image Hotspots surface. The pin sits at percentage coordinates\nover the slotted image and opens a small anchored popover holding the slotted detail content.\nInside an arc-image-hotspots parent, opening one pin closes any other open pin.",
           "name": "ArcHotspot",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "pin"
             },
@@ -2068,6 +2124,10 @@
           "name": "ArcIcon",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "icon"
             }
           ],
@@ -2179,6 +2239,10 @@
           "description": "Before/after image comparison: two layered images with a draggable divider revealing one over\nthe other. The `before` layer sits on top, clipped to the region between the start edge and the\ndivider; dragging the handle (or pressing arrow keys on it) moves the reveal line.\n\nThe clip is pure CSS driven by a private custom property, so the component server-renders at\nits initial position with no client-side measurement.\n\n`orientation` is named for the axis the divider *moves* along: `horizontal` (the default)\nslides a vertical divider line left and right; `vertical` slides a horizontal divider line up\nand down.\n\nThe position axis is logical: 0 is the inline-start edge (left in LTR, right in RTL) for\nhorizontal orientation, and the block-start edge (top) for vertical. Before/after has no\ninherent screen direction — unlike an audio timeline there is no convention fixing it — so the\ncontrol mirrors with the document like the rest of the reading order. Arrow keys follow the\ndivider's visible motion.",
           "name": "ArcImageCompare",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "description": "The clipping frame wrapping both layers.",
               "name": "container"
@@ -2377,6 +2441,10 @@
           "name": "ArcImageHotspots",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             }
           ],
@@ -2417,6 +2485,10 @@
           "description": "Enhanced image component with shimmer loading skeleton, smooth fade-in transition, error\nfallback, and aspect ratio presets.",
           "name": "ArcImage",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "wrapper"
             },
@@ -2607,6 +2679,10 @@
           "name": "ArcInfiniteScroll",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             },
             {
@@ -2760,6 +2836,10 @@
           "description": "Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery\nwith wrapping prev/next navigation, zoom to 2x with drag-to-pan, and dismiss with Escape or a\nbackdrop click.\n\nThe gallery is data, not layout: images are supplied through the `images` property rather than\nslotted children, so the closed component renders nothing and the server render stays empty.\nEntries may be plain `src` strings or `{ src, alt, caption }` objects; the two forms mix freely.",
           "name": "ArcLightbox",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "backdrop"
             },
@@ -2946,6 +3026,10 @@
           "name": "ArcMarquee",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "track"
             },
             {
@@ -3083,6 +3167,10 @@
           "description": "Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes\nautomatically via currentColor, with an optional contrast card for guaranteed scanability on\ndark backgrounds.",
           "name": "ArcQrCode",
           "cssParts": [
+            {
+              "description": "The root element. Which element that is depends on `contrast`: the card wrapper when it is set, the svg otherwise — which is the case `base` exists for.",
+              "name": "base"
+            },
             {
               "name": "svg"
             },
@@ -3280,6 +3368,10 @@
           "name": "ArcScrollArea",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "scroll-area"
             }
           ],
@@ -3371,6 +3463,10 @@
           "description": "Thin progress bar that tracks scroll position of the page or a target container. Sticks to the\ntop or bottom edge with accent or gradient fill.",
           "name": "ArcScrollIndicator",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "bar"
             },
@@ -3503,6 +3599,10 @@
           "name": "ArcSeparator",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "separator"
             },
             {
@@ -3617,6 +3717,10 @@
           "description": "Loading placeholder with shimmer animation.",
           "name": "ArcSkeleton",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "skeleton"
             }
@@ -3743,6 +3847,10 @@
           "description": "Animated loading spinner in three sizes.",
           "name": "ArcSpinner",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "spinner"
             }
@@ -3980,6 +4088,10 @@
           "description": "House-styled video player. Before the first play it shows the poster with a large glowing\nplay button; once playback starts, a minimal custom control bar rides the native video —\nplay/pause, a mono time readout, a scrub bar that seeks directly, a mute toggle, and a\nfullscreen button. During playback the bar dims after two seconds of idle rather than\nleaving — it stays visible and clickable, and returns to full strength when the pointer is\nanywhere over the player or a control takes focus. Standard player\nkeys work on the focused player: Space or K toggles playback, the arrow keys seek five\nseconds, M toggles mute, F toggles fullscreen.\n\nTakes a single `src` — there is no source-element fallback chain for multiple formats.\nServe one broadly supported encoding (H.264/MP4 plays everywhere), or reach for the native\nvideo element directly when you need format negotiation or adaptive streaming.",
           "name": "ArcVideo",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "description": "The player frame.",
               "name": "wrapper"
@@ -4250,6 +4362,10 @@
           "name": "ArcVirtualList",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "spacer"
             },
             {
@@ -4396,6 +4512,10 @@
           "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail — the date and the day's label or value — in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, computed at render time in the browser; when rendering\nserver-side with no `end-date`, the anchor is instead derived from the\nnewest date present in `data`, so the server output is deterministic. Pin\n`end-date` explicitly whenever server and client must agree exactly.",
           "name": "ArcActivityHeatmap",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "heatmap"
             },
@@ -4591,6 +4711,10 @@
           "name": "ArcAnimatedNumber",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "value"
             }
           ],
@@ -4778,6 +4902,10 @@
           "name": "ArcBadge",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "badge"
             }
           ],
@@ -4889,6 +5017,10 @@
           "description": "An SVG chart component for dashboards with line, area, bar, and donut types. Data-driven from a\nseries array, with automatic nice-tick scales, a legend, hover crosshair and tooltips, and a\nvisually-hidden data table for assistive technology.",
           "name": "ArcChart",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "axis"
             },
@@ -5153,6 +5285,10 @@
           "description": "Live clock with a digital or analog face, optionally pinned to an IANA timezone.",
           "name": "ArcClock",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "container"
             },
@@ -5451,6 +5587,10 @@
           "name": "ArcComparison",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "table"
             },
             {
@@ -5529,6 +5669,10 @@
           "description": "Live countdown to a target date/time with days, hours, minutes, and seconds segments.",
           "name": "ArcCountdownTimer",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "separator"
             },
@@ -5676,6 +5820,10 @@
           "description": "A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column\nsorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a\nJavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single\ntab stop.",
           "name": "ArcDataGrid",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "header-cell"
             },
@@ -5970,6 +6118,10 @@
           "name": "ArcDataTable",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "row"
             },
             {
@@ -6217,6 +6369,10 @@
           "name": "ArcDescriptionItem",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "item"
             },
             {
@@ -6286,6 +6442,10 @@
           "description": "Structured term/detail pair list in a responsive grid layout with optional dividers.",
           "name": "ArcDescriptionList",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "list"
             }
@@ -6399,6 +6559,10 @@
           "description": "Line-based text diff viewer with inline and side-by-side display modes.",
           "name": "ArcDiff",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "line"
             },
@@ -6514,6 +6678,10 @@
           "description": "Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning,\nerror) and an animated sweep. The radial companion to arc-meter: same threshold semantics,\nwith the reading rendered center-stage.",
           "name": "ArcGauge",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "gauge"
             },
@@ -6784,6 +6952,10 @@
           "name": "ArcJsonTree",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             },
             {
@@ -6926,6 +7098,10 @@
           "name": "ArcKanban",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "card-label"
             },
             {
@@ -7054,6 +7230,10 @@
           "description": "",
           "name": "ArcKeyValue",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "list"
             }
@@ -7217,6 +7397,10 @@
           "description": "Segmented audio level meter with peak-hold — the live vertical sibling of arc-meter,\nbuilt for signal-rate updates (audio levels, buffer fill, realtime telemetry).\nSegments below the warn threshold render success-tinted, between warn and clip\nwarning-tinted, and above clip error-tinted, with the house glow on lit segments.\nA thin peak-hold line rides the highest recent level and decays toward the\ncurrent value; feed the `peak` property to drive it yourself instead.\n\nOne element is one channel. There is deliberately no stereo mode — compose two\nmeters side by side for a stereo pair, one per channel, so channel count is the\nconsumer's decision rather than a prop fork.",
           "name": "ArcLevelMeter",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "description": "The outer wrapper carrying role=\"meter\".",
               "name": "meter"
@@ -7461,6 +7645,10 @@
           "name": "ArcListItem",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "label"
             },
             {
@@ -7617,6 +7805,10 @@
           "description": "Structured list container with optional selection, keyboard navigation, and multiple visual\nvariants. Pairs with arc-list-item for rich content rows.",
           "name": "ArcList",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "list"
             }
@@ -7806,6 +7998,10 @@
           "description": "Semantic gauge display with color-coded fill zones (success, warning, error) based on\nconfigurable low/high/optimum thresholds.",
           "name": "ArcMeter",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "meter"
             },
@@ -8008,6 +8204,10 @@
           "name": "ArcSparkline",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "area"
             },
             {
@@ -8182,6 +8382,10 @@
           "description": "Numeric statistic display with gradient value and label.",
           "name": "ArcStat",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "stat"
             },
@@ -8378,6 +8582,10 @@
           "name": "ArcStepper",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "stepper"
             },
             {
@@ -8460,6 +8668,10 @@
           "description": "",
           "name": "ArcTable",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "table-wrap"
             },
@@ -8604,6 +8816,10 @@
           "description": "Compact pill-shaped label with color variants, custom color support, and an optional remove\nbutton, for categorisation, filtering, and selection feedback.",
           "name": "ArcTag",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "tag"
             },
@@ -8861,6 +9077,10 @@
           "name": "ArcTimeline",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "timeline"
             },
             {
@@ -8954,6 +9174,10 @@
           "description": "Status-page uptime history strip: one slim tick per period, colored by\nstatus. Hovering or arrow-keying across the strip raises a tick with the\nhouse status glow and shows its detail in a small built-in bubble. Accepts\nplain uptime fractions (thresholds decide the status) or explicit status\nobjects, and renders the computed overall percentage above the track.",
           "name": "ArcUptime",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "uptime"
             },
@@ -9134,6 +9358,10 @@
           "name": "ArcValueCard",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "card"
             },
             {
@@ -9246,6 +9474,10 @@
           "name": "ArcWaveform",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "description": "The interactive track region wrapping the SVG and playhead.",
               "name": "waveform"
             },
@@ -9254,8 +9486,8 @@
               "name": "svg"
             },
             {
-              "description": "The unplayed (muted) waveform layer.",
-              "name": "base"
+              "description": "The unplayed (muted) waveform layer. Named `base` before v4, which is the name the root element takes across every component now.",
+              "name": "unplayed"
             },
             {
               "description": "The played (accent) waveform layer.",
@@ -9451,6 +9683,10 @@
           "name": "ArcAlert",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "alert"
             },
             {
@@ -9640,6 +9876,10 @@
           "name": "ArcAnnouncement",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "region"
             }
           ],
@@ -9725,6 +9965,10 @@
           "description": "Full-width persistent strip pinned to viewport or section top. Uses semantic variants like alert\nbut edge-to-edge with no border-radius and a subtle gradient wash.",
           "name": "ArcBanner",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "banner"
             },
@@ -10068,6 +10312,10 @@
           "name": "ArcCommandPalette",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "item"
             },
             {
@@ -10228,6 +10476,10 @@
           "description": "Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned\npromise. Same visual treatment as dialog.",
           "name": "ArcConfirm",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "message"
             },
@@ -10436,6 +10688,10 @@
           "name": "ArcConnectionStatus",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "status"
             },
             {
@@ -10514,6 +10770,10 @@
           "description": "Right-click context menu with keyboard shortcuts.",
           "name": "ArcContextMenu",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "menu"
             },
@@ -10615,6 +10875,10 @@
           "name": "ArcConversation",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "conversation"
             }
           ],
@@ -10706,6 +10970,10 @@
           "description": "Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts —\nunsaved changes, session expiry, and discard decisions.",
           "name": "ArcDialog",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "body"
             },
@@ -10901,6 +11169,10 @@
           "name": "ArcDropdownMenu",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "divider"
             },
             {
@@ -11002,6 +11274,10 @@
           "description": "Card that appears on hover with a delay.",
           "name": "ArcHoverCard",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "trigger"
             },
@@ -11212,6 +11488,10 @@
           "name": "ArcLoadingOverlay",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "overlay"
             },
             {
@@ -11324,6 +11604,10 @@
           "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centered, muted and small. The default slot is the\nmessage body — append text to it to stream a reply in — and with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.",
           "name": "ArcMessage",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "message"
             },
@@ -11486,6 +11770,10 @@
           "description": "General-purpose focus-trapping overlay with backdrop blur, slide-up animation, and ESC-to-close\nbehavior for forms, settings, and rich content that needs full user attention.",
           "name": "ArcModal",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "backdrop"
             },
@@ -11703,6 +11991,10 @@
           "name": "ArcNotificationPanel",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "trigger"
             },
             {
@@ -11852,6 +12144,10 @@
           "name": "ArcPopover",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "trigger"
             },
             {
@@ -11986,6 +12282,10 @@
           "name": "ArcProgressToast",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             },
             {
@@ -12111,6 +12411,10 @@
           "description": "Progress indicator as a bar or spinner, with determinate and indeterminate modes. Shows\ncompletion state for uploads, installations, and long-running operations.",
           "name": "ArcProgress",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "progress"
             },
@@ -12296,6 +12600,10 @@
           "name": "ArcSheet",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "close"
             },
             {
@@ -12452,6 +12760,10 @@
           "name": "ArcSnackbar",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             },
             {
@@ -12573,6 +12885,10 @@
           "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix — a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.",
           "name": "ArcToast",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "container"
             },
@@ -12849,6 +13165,10 @@
           "name": "ArcTooltip",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "trigger"
             },
             {
@@ -13030,6 +13350,10 @@
           "name": "ArcButtonGroup",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "group"
             }
           ],
@@ -13142,6 +13466,10 @@
           "description": "Primary call-to-action element with three visual variants that map to action hierarchy. Supports\nprefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for\nnavigation-driven actions across landing pages, toolbars, and forms.",
           "name": "ArcButton",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "button"
             }
@@ -13322,6 +13650,10 @@
           "description": "Interactive month-view calendar grid for date selection with min/max constraints, keyboard\nnavigation, and today highlighting.",
           "name": "ArcCalendar",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "calendar"
             },
@@ -13541,6 +13873,10 @@
           "description": "Multi-select form control supporting checked, indeterminate, and disabled states. Ideal for\npreferences, bulk-selection patterns, and consent forms where users need to toggle one or more\nindependent options.",
           "name": "ArcCheckbox",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "checkbox"
             },
@@ -13923,6 +14259,10 @@
           "name": "ArcChip",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "chip"
             }
           ],
@@ -14043,6 +14383,10 @@
           "description": "Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional\npreset swatches.",
           "name": "ArcColorPicker",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "picker"
             },
@@ -14425,6 +14769,10 @@
           "name": "ArcCombobox",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "label"
             },
             {
@@ -14802,6 +15150,10 @@
           "name": "ArcCopyButton",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "button"
             },
             {
@@ -14902,6 +15254,10 @@
           "description": "Calendar-based date picker with keyboard navigation.",
           "name": "ArcDatePicker",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "wrapper"
             },
@@ -15367,6 +15723,10 @@
           "description": "Dual-calendar picker for selecting a start/end date range with presets and full keyboard\nnavigation.",
           "name": "ArcDateRangePicker",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "calendar"
             },
@@ -15922,6 +16282,10 @@
           "name": "ArcFieldset",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "fieldset"
             },
             {
@@ -16092,6 +16456,10 @@
           "name": "ArcFileUpload",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "wrapper"
             },
             {
@@ -16246,6 +16614,10 @@
           "description": "Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input,\nTextarea, and Button into a cohesive data-entry workflow.",
           "name": "ArcForm",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "form"
             },
@@ -16570,6 +16942,10 @@
           "name": "ArcIconButton",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "button"
             }
           ],
@@ -16784,6 +17160,10 @@
           "name": "ArcImageCropper",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "stage"
             },
             {
@@ -16972,6 +17352,10 @@
           "description": "Click-to-edit text: renders as plain text until activated, then swaps to a\npre-filled field. Enter or blur commits, Escape cancels. Built for track\nrenames, document titles, and other fields where a permanent input box would\nbe visual noise.\n\nThe display text inherits the surrounding typography (`font: inherit`) and\nthe edit field matches it, so the swap never changes the text's metrics —\nan inline-edit inside a heading edits at heading size, one in a table cell\nedits at cell size. This is why there is no `size` prop: sizing comes from\ncontext, and a fixed scale would fight it.\n\nWhile editing, keystrokes accumulate in an internal draft. `value` — and the\nvalue a form submits — only changes on commit, so Escape can always revert\nand a half-typed rename is never submitted. Committing an unchanged value\nfires no event at all.",
           "name": "ArcInlineEdit",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "description": "The display-state button wrapping the text and pencil affordance.",
               "name": "display"
@@ -17365,6 +17749,10 @@
           "name": "ArcInputGroup",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "group"
             },
             {
@@ -17450,6 +17838,10 @@
           "description": "Versatile form control supporting single-line text, email, password, and multiline textarea\nmodes with built-in label, placeholder, and validation states. Pairs with Form for complete\ndata-entry workflows.",
           "name": "ArcInput",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "field"
             },
@@ -17916,6 +18308,10 @@
           "description": "Rotary knob input for continuous parameters — the control a slider can't be when the panel\nis a rack of channel strips. A 270-degree arc track fills from min to the current value with\na glowing indicator line, a monospace readout below, and synth-style interaction: vertical\ndrag to turn (Shift for fine adjustment), mouse wheel and arrow keys to step, optional\nmagnetic detents at named values.",
           "name": "ArcKnob",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "knob"
             },
@@ -18395,6 +18791,10 @@
           "name": "ArcLabel",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "label"
             },
             {
@@ -18537,6 +18937,10 @@
           "description": "Text field that enforces a character mask as you type — dates, card numbers,\nphone numbers, license keys. The mask's literals are typed for the user;\n`value` holds only the raw characters, and the raw value is what forms\nreceive, so the mask stays presentation.",
           "name": "ArcMaskedInput",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "field"
             },
@@ -18992,6 +19396,10 @@
           "name": "ArcMultiSelect",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "label"
             },
             {
@@ -19370,6 +19778,10 @@
           "description": "A numeric stepper input with decrement and increment buttons flanking a central text field,\nsupporting min/max clamping, step increments, and keyboard shortcuts.",
           "name": "ArcNumberInput",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "wrapper"
             },
@@ -19786,6 +20198,10 @@
           "name": "ArcOtpInput",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "otp"
             },
             {
@@ -20151,6 +20567,10 @@
           "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.\n\nTrue when the password contains a 4+ run of consecutive chars (abcd, 4321). *\\/ function\nhasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i\n< s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;\ndesc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }\nSelf-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\\/ function scorePassword(pw) { if\n(!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if\n(pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;\nconst classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\\d/.test(pw) ? 1 :\n0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=\n1; if (/(.)\\1\\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,\nMath.max(1, score)); }",
           "name": "ArcPasswordInput",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "strength"
             },
@@ -20597,6 +21017,10 @@
           "name": "ArcPinInput",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "pin"
             },
             {
@@ -21035,6 +21459,10 @@
           "name": "ArcRadioGroup",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "group"
             },
             {
@@ -21472,6 +21900,10 @@
           "description": "Dual-thumb range slider for selecting a numeric interval within a defined range, with\naccent-primary fill between the thumbs and live value display.",
           "name": "ArcRangeSlider",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "range-slider"
             },
@@ -21938,6 +22370,10 @@
           "name": "ArcRating",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "star"
             },
             {
@@ -22296,6 +22732,10 @@
           "name": "ArcSearch",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "label"
             },
             {
@@ -22519,6 +22959,10 @@
           "description": "A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually\nexclusive buttons with an active highlight.",
           "name": "ArcSegmentedControl",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "control"
             },
@@ -22820,6 +23264,10 @@
           "description": "Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics\nfor accessible form inputs.",
           "name": "ArcSelect",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "select"
             },
@@ -23233,6 +23681,10 @@
           "name": "ArcSignaturePad",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "pad"
             },
             {
@@ -23639,6 +24091,10 @@
           "description": "Range input slider with a label, live numeric value display, accent-primary fill track, and\ncustomisable min/max/step.",
           "name": "ArcSlider",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "slider"
             },
@@ -24055,6 +24511,10 @@
           "name": "ArcSortableList",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "list"
             },
             {
@@ -24209,6 +24669,10 @@
           "name": "ArcSwitchGroup",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "fieldset"
             },
             {
@@ -24347,6 +24811,10 @@
           "description": "Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and\nduplicate rejection.",
           "name": "ArcTagInput",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "label"
             },
@@ -24827,6 +25295,10 @@
           "name": "ArcTextarea",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "wrapper"
             },
             {
@@ -25303,6 +25775,10 @@
           "name": "ArcThemeToggle",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "button"
             },
             {
@@ -25446,6 +25922,10 @@
           "description": "Scrollable column-based time picker with 12h/24h format support.",
           "name": "ArcTimePicker",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "wrapper"
             },
@@ -25914,6 +26394,10 @@
           "name": "ArcToggle",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "toggle"
             },
             {
@@ -26256,6 +26740,10 @@
           "description": "Dual-listbox for moving items between an available and a selected pane, ideal for permissions\nand settings UIs.",
           "name": "ArcTransferList",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "pane"
             },
@@ -26666,6 +27154,10 @@
           "description": "Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder\npickers. Group nodes expand and collapse; only leaf nodes are selectable, which keeps\nsingle-select semantics clean.",
           "name": "ArcTreeSelect",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "tree-select"
             },
@@ -27117,6 +27609,10 @@
           "name": "ArcAppShell",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "shell"
             },
             {
@@ -27239,6 +27735,10 @@
           "name": "ArcAspectGrid",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "grid"
             }
           ],
@@ -27351,6 +27851,10 @@
           "description": "Authentication page layout with centered and split variants for sign-in, sign-up,\npassword-reset, and other credential flows. Provides logo, form card, footer, and optional aside\nslots out of the box.",
           "name": "ArcAuthShell",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "shell"
             },
@@ -27665,6 +28169,10 @@
           "name": "ArcContainer",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "container"
             }
           ],
@@ -27778,6 +28286,10 @@
           "name": "ArcDashboardGrid",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "grid"
             }
           ],
@@ -27887,6 +28399,10 @@
           "description": "Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring\neasing. For bulk actions, unsaved-changes prompts.",
           "name": "ArcFloatBar",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "bar"
             }
@@ -28076,6 +28592,10 @@
           "description": "Pinterest-style vertical-pack grid using CSS columns for efficient masonry layout without\nJavaScript.",
           "name": "ArcMasonry",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "masonry"
             }
@@ -28316,6 +28836,10 @@
           "name": "ArcPageLayout",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "layout"
             },
             {
@@ -28441,6 +28965,10 @@
           "description": "Resizable panel with drag handle.",
           "name": "ArcResizable",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "container"
             },
@@ -28585,6 +29113,10 @@
           "name": "ArcResponsiveSwitcher",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "switcher"
             }
           ],
@@ -28677,6 +29209,10 @@
           "name": "ArcSection",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "section"
             },
             {
@@ -28743,6 +29279,10 @@
           "description": "Settings page with side navigation and content area.",
           "name": "ArcSettingsLayout",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "layout"
             },
@@ -29098,6 +29638,12 @@
           "kind": "class",
           "description": "Wrapper that goes sticky at a configurable offset and emits a stuck attribute/event for visual\nstate changes.",
           "name": "ArcSticky",
+          "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            }
+          ],
           "slots": [
             {
               "description": "Default content.",
@@ -29770,6 +30316,10 @@
           "name": "ArcBreadcrumb",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "breadcrumb"
             },
             {
@@ -30018,6 +30568,10 @@
           "description": "Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for\noff-canvas navigation, filters, and detail views.",
           "name": "ArcDrawer",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "backdrop"
             },
@@ -30314,6 +30868,10 @@
           "name": "ArcLink",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "link"
             }
           ],
@@ -30467,6 +31025,10 @@
           "description": "Desktop-application-style menu bar (File / Edit / View) with nested submenus, keyboard shortcuts\ndisplay, and full WAI-ARIA menubar keyboard navigation.",
           "name": "ArcMenubar",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "menu"
             },
@@ -30707,6 +31269,10 @@
           "name": "ArcNavigationMenu",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "nav"
             },
             {
@@ -30912,6 +31478,10 @@
           "description": "Page navigation control with previous/next arrows, numbered page buttons, and smart ellipsis\ntruncation.",
           "name": "ArcPagination",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "prev"
             },
@@ -31188,6 +31758,10 @@
           "name": "ArcScrollSpy",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "scroll-spy"
             },
             {
@@ -31330,6 +31904,10 @@
           "description": "Floating button that appears after scrolling and smoothly returns the user to the top of the\npage.",
           "name": "ArcScrollToTop",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "button"
             }
@@ -31768,6 +32346,10 @@
           "name": "ArcSidebar",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "sidebar"
             },
             {
@@ -31966,6 +32548,10 @@
           "description": "Accessible skip-to-content link, invisible until focused. On focus shows as accent-primary\nfilled pill with glow ring above the page.",
           "name": "ArcSkipLink",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "link"
             }
@@ -32353,6 +32939,10 @@
           "name": "ArcTabs",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "tabs"
             }
           ],
@@ -32495,6 +33085,10 @@
           "description": "Fixed header bar that anchors every page with a brand slot on the left, an optional center\nnavigation area, and a right-aligned actions region for user controls, search, and settings.",
           "name": "ArcTopBar",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "menu-btn"
             },
@@ -32907,6 +33501,10 @@
           "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.",
           "name": "ArcTreeView",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "description": "The root list. The nested lists at deeper levels are `group`.",
               "name": "tree"
@@ -35350,6 +35948,10 @@
           "name": "ArcBlockquote",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "blockquote"
             },
             {
@@ -35446,6 +36048,10 @@
           "description": "Syntax-highlighted code display with optional filename and copy button.",
           "name": "ArcCodeBlock",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "titlebar"
             },
@@ -35608,6 +36214,10 @@
           "name": "ArcGradientText",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "text"
             }
           ],
@@ -35720,6 +36330,10 @@
           "name": "ArcHighlight",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "text"
             },
             {
@@ -35829,6 +36443,10 @@
           "name": "ArcKbd",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "kbd"
             }
           ],
@@ -35869,6 +36487,10 @@
           "description": "A rendered keyboard with highlighted keys and chords — the visual big\nsibling of arc-kbd and arc-hotkey, for shortcut documentation and editor\ncheat sheets. Every key named in `highlight` lights up with the house\nstate marking: accent tint, glow, accent legend text.\n\nThe board is a stylised diagram, not a keyboard configurator: `compact`\n(the default) is a 60%-style block without nav cluster or numpad — enough\nfor almost all shortcut documentation — and `ansi` adds the F-row and nav\ncluster. There is deliberately no ISO/JIS machinery; a diagram that\nchased physical-layout fidelity would trade its one job (making a chord\nlegible at a glance) for configuration surface.\n\nIt is pure display typography — no slots, no click events, nothing\nfocusable. A shortcut diagram that responded to clicks would imply the\nkeys do something; wiring real shortcuts is arc-hotkey's job.",
           "name": "ArcKeyboardMap",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "board"
             },
@@ -36026,6 +36648,10 @@
           "name": "ArcMarkdown",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "markdown"
             }
           ],
@@ -36089,6 +36715,10 @@
           "description": "Locale-aware number, currency, percentage, and compact formatter using Intl.NumberFormat.",
           "name": "ArcNumberFormat",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "number"
             }
@@ -36256,6 +36886,10 @@
           "name": "ArcProse",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "prose"
             }
           ],
@@ -36326,6 +36960,10 @@
           "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviors, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.",
           "name": "ArcTerminal",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "terminal"
             },
@@ -36536,6 +37174,10 @@
           "name": "ArcText",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "text"
             }
           ],
@@ -36626,6 +37268,10 @@
           "description": "Relative time display that auto-updates (\"3 minutes ago\", \"yesterday\").",
           "name": "ArcTimeAgo",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "time"
             }
@@ -36733,6 +37379,10 @@
           "name": "ArcTruncate",
           "cssParts": [
             {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
               "name": "content"
             },
             {
@@ -36836,6 +37486,10 @@
           "description": "Character-by-character text reveal animation with blinking cursor.",
           "name": "ArcTypewriter",
           "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
             {
               "name": "text"
             }

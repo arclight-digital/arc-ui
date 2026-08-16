@@ -115,6 +115,7 @@ function caretForRaw(mask, formattedLength, rawIndex) {
  * @fires {CustomEvent<{ value: string, formatted: string }>} arc-change - Fired on blur or Enter when the value changed, and immediately when the last mask position fills — a complete mask is a committed value, the fixed-length precedent set by OTP Input.
  * @slot prefix
  * @slot suffix
+ * @csspart base - The root element.
  * @csspart field
  * @csspart label
  * @csspart wrapper
@@ -502,7 +503,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
     const numeric = slots.length > 0 && slots.every((s) => s === '#');
 
     return html`
-      <div class="masked ${hasError ? 'masked--error' : ''}">
+      <div part="base" class="masked ${hasError ? 'masked--error' : ''}">
         ${this.label ? html`<label class="masked__label" for=${id} part="label">${this.label}</label>` : ''}
         <div class="masked__wrapper" part="wrapper">
           <div class="masked__prefix ${this._hasPrefix ? '' : 'masked__prefix--empty'}" part="prefix">

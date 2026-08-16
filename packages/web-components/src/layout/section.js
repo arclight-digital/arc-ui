@@ -8,6 +8,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @status stable
  * @prop {string} label - Section label displayed in uppercase above content
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart section
  * @csspart label
  */
@@ -53,7 +54,7 @@ export class ArcSection extends LitElement {
 
   render() {
     return html`
-      <section class="section" part="section">
+      <section class="section" part="base section">
         ${this.label ? html`<span class="section__label" part="label">${this.label}</span>` : ''}
         <slot></slot>
       </section>

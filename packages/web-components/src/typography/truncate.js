@@ -12,6 +12,7 @@ import { observeResize } from '../shared/subscriptions.js';
  * @prop {boolean} expanded - Whether the text is fully expanded
  * @fires {CustomEvent<{ expanded: boolean }>} arc-toggle - Fired when expand/collapse toggle is clicked, with { expanded } detail
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart content
  * @csspart toggle
  */
@@ -133,7 +134,7 @@ export class ArcTruncate extends DeclaredPropsMixin(LitElement) {
       <div
         class="truncate__content ${clamped ? 'truncate__content--clamped' : ''}"
         style=${clampStyle}
-        part="content"
+        part="base content"
       >
         <slot></slot>
       </div>

@@ -26,6 +26,7 @@ import { DeclaredPropsMixin, flag, list, oneOf, num } from '../shared/props.js';
  * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously while the knob is turning — every drag movement, wheel notch, or key step. Use for real-time preview such as a filter cutoff or gain applied live.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired once when a turn commits: on drag release, and after each discrete wheel or key step. Use for persisting the value or triggering an expensive operation.
  * @slot none
+ * @csspart base - The root element.
  * @csspart knob
  * @csspart label
  * @csspart dial
@@ -378,7 +379,7 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
     const angle = -135 + (percent / 100) * ArcKnob.SWEEP;
 
     return html`
-      <div class="knob" part="knob">
+      <div class="knob" part="base knob">
         ${
           this.label
             ? html`

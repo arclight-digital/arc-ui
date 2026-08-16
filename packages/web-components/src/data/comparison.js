@@ -13,6 +13,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @requires arc-comparison-column
  * @prop {string[]} features - Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='["Storage","Bandwidth"]'`. A malformed value falls back to an empty list rather than throwing.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart table
  * @csspart header
  * @csspart feature
@@ -169,7 +170,7 @@ export class ArcComparison extends DeclaredPropsMixin(LitElement) {
     const colCount = cols.length + 1;
 
     return html`
-      <div class="comparison" part="table">
+      <div class="comparison" part="base table">
         <div class="grid" style="grid-template-columns: minmax(140px, 1fr) repeat(${cols.length}, 1fr);" role="table">
           <!-- Header row -->
           <div class="row" role="row">

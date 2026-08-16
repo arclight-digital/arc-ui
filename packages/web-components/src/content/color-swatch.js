@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {string} label - Display label below the swatch; falls back to the color value if empty
  * @prop {'sm' | 'md' | 'lg'} size - Controls swatch dimensions: sm (32px), md (48px), lg (64px)
  * @slot none
+ * @csspart base - The root element.
  * @csspart swatch
  * @csspart color
  * @csspart label
@@ -72,7 +73,7 @@ export class ArcColorSwatch extends DeclaredPropsMixin(LitElement) {
     const displayLabel = this.label || this.color;
 
     return html`
-      <div class="swatch" part="swatch">
+      <div class="swatch" part="base swatch">
         <div
           class="swatch__color"
           part="color"

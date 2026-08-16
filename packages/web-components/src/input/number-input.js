@@ -22,6 +22,7 @@ let numberInputIdCounter = 0;
  * @fires {CustomEvent<{ value: number }>} arc-input - Fired on every edit, including each keystroke while typing. Use for live previews.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the value is committed: blur or Enter after typing, or immediately on a stepper click or arrow key, which are edit and commit in one gesture.
  * @slot none
+ * @csspart base - The root element.
  * @csspart wrapper
  * @csspart label
  * @csspart controls
@@ -284,7 +285,7 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   render() {
     return html`
-      <div class="number-input" part="wrapper">
+      <div class="number-input" part="base wrapper">
         ${
           this.label
             ? html`

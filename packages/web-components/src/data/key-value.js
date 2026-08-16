@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'horizontal' | 'stacked'} layout - Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.
  * @prop {boolean} dividers - When true, renders a subtle border between each key-value pair.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart list
  */
 export class ArcKeyValue extends DeclaredPropsMixin(LitElement) {
@@ -80,7 +81,7 @@ export class ArcKeyValue extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="kv-list" role="list" part="list">
+      <div class="kv-list" role="list" part="base list">
         <slot></slot>
       </div>
     `;

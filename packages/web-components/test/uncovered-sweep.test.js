@@ -51,7 +51,7 @@ async function stepper(attrs = '') {
   return el;
 }
 
-const circles = (el) => [...el.shadowRoot.querySelectorAll('[part="step"]')];
+const circles = (el) => [...el.shadowRoot.querySelectorAll('[part~="step"]')];
 const current = (el) => circles(el).filter((c) => c.getAttribute('aria-current') === 'step');
 
 describe('arc-stepper active is bounded by the steps that exist', () => {
@@ -106,7 +106,7 @@ describe('arc-timeline heading level stays valid for assistive technology', () =
     await settle(el);
     return el;
   };
-  const level = (el) => el.shadowRoot.querySelector('[part="title"]')?.getAttribute('aria-level');
+  const level = (el) => el.shadowRoot.querySelector('[part~="title"]')?.getAttribute('aria-level');
 
   it('defaults to 3', async () => {
     expect(await timeline().then(level)).to.equal('3');
@@ -223,7 +223,7 @@ describe('arc-stat trend is a closed set including "no trend"', () => {
     await settle(el);
     return el;
   };
-  const indicator = (el) => el.shadowRoot.querySelector('[part="trend"]');
+  const indicator = (el) => el.shadowRoot.querySelector('[part~="trend"]');
 
   it('shows no indicator by default', async () => {
     expect(indicator(await stat()) === null, 'an unset trend drew an arrow').to.equal(true);
@@ -302,7 +302,7 @@ describe('arc-calendar first-day-of-week is 0 (locale) or an ISO day', () => {
     return el;
   };
   const weekdays = (el) =>
-    [...el.shadowRoot.querySelectorAll('[part="dow"]')].map((n) => n.textContent.trim());
+    [...el.shadowRoot.querySelectorAll('[part~="dow"]')].map((n) => n.textContent.trim());
 
   it('defaults to 0, meaning follow the locale', async () => {
     // The documented range is "1 = Monday … 7 = Sunday" and the default is 0,
@@ -335,7 +335,7 @@ describe('arc-calendar month and year default to now, and stay in range', () => 
     await settle(el);
     return el;
   };
-  const title = (el) => el.shadowRoot.querySelector('[part="title"]').textContent.trim();
+  const title = (el) => el.shadowRoot.querySelector('[part~="title"]').textContent.trim();
 
   it('defaults to the current month and year', async () => {
     // The case the computed-default form was added for: there is no literal to

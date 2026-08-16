@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * @prop {number} active - Zero-indexed active step — steps before this index show as completed.
  *   Clamped to the range of rendered steps.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart stepper
  * @csspart step
  * @csspart line
@@ -211,7 +212,7 @@ export class ArcStepper extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="stepper__slot-host">
+      <div part="base" class="stepper__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div class="stepper" part="stepper" role="list" aria-label="Progress">

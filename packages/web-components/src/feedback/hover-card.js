@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-close - Fired when the hover card hides
  * @slot - Default content.
  * @slot content
+ * @csspart base - The root element.
  * @csspart trigger
  * @csspart card
  */
@@ -168,7 +169,7 @@ export class ArcHoverCard extends DeclaredPropsMixin(LitElement) {
         @mouseleave=${this._scheduleClose}
         @focusin=${this._scheduleOpen}
         @focusout=${this._scheduleClose}
-        part="trigger"
+        part="base trigger"
       >
         <slot @slotchange=${this._syncTriggerAria}></slot>
       </div>

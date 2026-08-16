@@ -29,11 +29,11 @@ async function heatmap(data, attrs = END) {
   return el;
 }
 
-const cells = (el) => [...el.shadowRoot.querySelectorAll('[part="cell"]')];
+const cells = (el) => [...el.shadowRoot.querySelectorAll('[part~="cell"]')];
 const levelOf = (cell) =>
   [...cell.classList].find((c) => c.startsWith('level-'))?.slice('level-'.length);
 const cellByDate = (el, date) =>
-  el.shadowRoot.querySelector(`[part="cell"][data-date="${date}"]`);
+  el.shadowRoot.querySelector(`[part~="cell"][data-date="${date}"]`);
 
 describe('span and grid positions', () => {
   it('renders weeks * 7 cells when the end date closes its week', async () => {
@@ -81,7 +81,7 @@ describe('week-start', () => {
   it('moves the sparse weekday labels to the matching rows', async () => {
     const sun = await heatmap([], `${END} weeks="2"`);
     const mon = await heatmap([], `${END} weeks="2" week-start="monday"`);
-    const rowsOf = (el) => [...el.shadowRoot.querySelectorAll('[part="weekday"]')]
+    const rowsOf = (el) => [...el.shadowRoot.querySelectorAll('[part~="weekday"]')]
       .map((l) => l.style.gridRow);
     expect(rowsOf(sun)).to.deep.equal(['2', '4', '6']); // Mon/Wed/Fri under Sunday start
     expect(rowsOf(mon)).to.deep.equal(['1', '3', '5']); // Mon/Wed/Fri under Monday start
@@ -126,7 +126,7 @@ describe('empty data', () => {
     const el = await heatmap([], `${END} weeks="2"`);
     expect(cells(el).length).to.equal(14);
     expect(cells(el).every((c) => levelOf(c) === '0')).to.equal(true);
-    const grid = el.shadowRoot.querySelector('[part="grid"]');
+    const grid = el.shadowRoot.querySelector('[part~="grid"]');
     expect(grid.getAttribute('aria-label')).to.include('14 days');
     expect(grid.getAttribute('aria-label')).to.include('0 total');
   });
@@ -171,23 +171,23 @@ describe('detail bubble', () => {
     ], `${END} weeks="2"`);
 
     await hover(el, 3); // 2026-03-04
-    let detail = el.shadowRoot.querySelector('[part="detail"]');
+    let detail = el.shadowRoot.querySelector('[part~="detail"]');
     expect(detail.textContent).to.include('Mar 4, 2026');
     expect(detail.textContent).to.include('7 commits');
 
     await hover(el, 4); // 2026-03-05, no label
-    detail = el.shadowRoot.querySelector('[part="detail"]');
+    detail = el.shadowRoot.querySelector('[part~="detail"]');
     expect(detail.textContent).to.include('3');
 
     await hover(el, 6); // an empty day
-    detail = el.shadowRoot.querySelector('[part="detail"]');
+    detail = el.shadowRoot.querySelector('[part~="detail"]');
     expect(detail.textContent).to.include('No activity');
   });
 });
 
 describe('keyboard grid navigation', () => {
   const key = (el, k) => {
-    el.shadowRoot.querySelector('[part="grid"]')
+    el.shadowRoot.querySelector('[part~="grid"]')
       .dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true }));
     return el.updateComplete;
   };
@@ -219,7 +219,7 @@ describe('keyboard grid navigation', () => {
     expect(activeAt(el)).to.equal(0);
     await key(el, 'Escape');
     expect(activeAt(el)).to.equal(null);
-    expect(el.shadowRoot.querySelector('[part="detail"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="detail"]')).to.equal(null);
   });
 
   it('is one tab stop with a computed summary label', async () => {
@@ -227,7 +227,7 @@ describe('keyboard grid navigation', () => {
       { date: '2026-03-04', value: 7 },
       { date: '2026-03-05', value: 3 },
     ], `${END} weeks="2"`);
-    const grid = el.shadowRoot.querySelector('[part="grid"]');
+    const grid = el.shadowRoot.querySelector('[part~="grid"]');
     expect(grid.getAttribute('tabindex')).to.equal('0');
     expect(grid.getAttribute('role')).to.equal('img');
     const label = grid.getAttribute('aria-label');
@@ -241,8 +241,8 @@ describe('keyboard grid navigation', () => {
 describe('legend', () => {
   it('renders the five-step strip by default and drops it on legend="false"', async () => {
     const el = await heatmap([], `${END} weeks="2"`);
-    expect(el.shadowRoot.querySelectorAll('[part="swatch"]').length).to.equal(5);
+    expect(el.shadowRoot.querySelectorAll('[part~="swatch"]').length).to.equal(5);
     const off = await heatmap([], `${END} weeks="2" legend="false"`);
-    expect(off.shadowRoot.querySelector('[part="legend"]')).to.equal(null);
+    expect(off.shadowRoot.querySelector('[part~="legend"]')).to.equal(null);
   });
 });

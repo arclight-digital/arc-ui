@@ -20,6 +20,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @slot sidebar
  * @slot - Default content.
  * @slot toc
+ * @csspart base - The root element.
  * @csspart shell
  * @csspart body
  * @csspart sidebar
@@ -337,7 +338,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="shell" part="shell">
+      <div class="shell" part="base shell">
         <div class="shell__topbar"><slot name="topbar"></slot></div>
         <div class="shell__body" part="body">
           <div class="shell__backdrop" @click=${this._backdropClick}></div>

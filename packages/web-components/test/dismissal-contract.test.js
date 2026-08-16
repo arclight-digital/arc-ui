@@ -283,7 +283,7 @@ async function pressEscape(el) {
  * than hand-listed: a backdrop in the shadow root means the backdrop geometry.
  */
 async function dismissOutside(el) {
-  const backdrop = deepQuery(el, '[part="backdrop"], [class*="backdrop"]');
+  const backdrop = deepQuery(el, '[part~="backdrop"], [class*="backdrop"]');
   if (!backdrop) {
     document.body.dispatchEvent(
       new PointerEvent('pointerdown', { bubbles: true, composed: true, cancelable: true })

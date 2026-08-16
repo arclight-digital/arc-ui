@@ -49,8 +49,8 @@ describe('arc-rating rendering', () => {
 
   it('exposes the documented css parts', async () => {
     const el = await rating();
-    expect(el.shadowRoot.querySelector('[part="rating"]')).to.not.equal(null);
-    expect(el.shadowRoot.querySelectorAll('[part="star"]')).to.have.lengthOf(5);
+    expect(el.shadowRoot.querySelector('[part~="rating"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelectorAll('[part~="star"]')).to.have.lengthOf(5);
   });
 
   it('fills exactly as many stars as the value', async () => {

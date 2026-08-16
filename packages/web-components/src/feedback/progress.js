@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  * @prop {string} label - Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as "Uploading report.pdf" rather than a generic "Loading".
  * @prop {boolean} showValue - Displays the current percentage value next to the label.
  * @slot none
+ * @csspart base - The root element.
  * @csspart progress
  * @csspart label
  * @csspart spinner
@@ -156,7 +157,7 @@ export class ArcProgress extends DeclaredPropsMixin(LitElement) {
 
     if (this.variant === 'spinner') {
       return html`
-        <div part="progress">
+        <div part="base progress">
           ${this.label ? html`<span class="progress__label" part="label">${this.label}</span>` : ''}
           <div
             class="progress__spinner"
@@ -179,7 +180,7 @@ export class ArcProgress extends DeclaredPropsMixin(LitElement) {
     const hasHeader = this.label || (this.showValue && !this.indeterminate);
 
     return html`
-      <div part="progress">
+      <div part="base progress">
         ${
           hasHeader
             ? html`

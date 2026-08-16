@@ -30,9 +30,11 @@ import { DeclaredPropsMixin, flag, num, oneOf, list } from '../shared/props.js';
  * @fires {CustomEvent<{ value: number, time: number | null }>} arc-input - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview — updating a time display or audibly scrubbing.
  * @fires {CustomEvent<{ value: number, time: number | null }>} arc-change - Fired once when the seek commits: on pointer release, or with each keyboard nudge. Use for the actual seek on your audio source.
  * @slot none
+ * @csspart base - The root element.
  * @csspart waveform - The interactive track region wrapping the SVG and playhead.
  * @csspart svg - The SVG element.
- * @csspart base - The unplayed (muted) waveform layer.
+ * @csspart unplayed - The unplayed (muted) waveform layer. Named `base` before v4, which
+ *   is the name the root element takes across every component now.
  * @csspart played - The played (accent) waveform layer.
  * @csspart playhead - The playhead line.
  * @csspart time - The time readout row (renders only when duration is set).
@@ -337,7 +339,7 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="waveform"
-        part="waveform"
+        part="base waveform"
         role=${interactive ? 'slider' : 'img'}
         tabindex=${ifDefined(interactive ? '0' : undefined)}
         aria-label=${this.label || (interactive ? 'Audio position' : 'Audio waveform')}
@@ -354,7 +356,7 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
           <clipPath id="wave-played-clip">
             <rect x="0" y="0" width=${pos * W} height=${H}></rect>
           </clipPath>
-          <g class="wave-base" part="base">${this._renderShapes(peaks, W, H)}</g>
+          <g class="wave-base" part="unplayed">${this._renderShapes(peaks, W, H)}</g>
           <g class="wave-played" part="played" clip-path="url(#wave-played-clip)">
             ${this._renderShapes(peaks, W, H)}
           </g>

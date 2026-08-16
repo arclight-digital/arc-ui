@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'left' | 'right'} position - Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.
  * @fires {CustomEvent<void>} arc-close - Fired when the drawer closes via backdrop click or escape key
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart backdrop
  * @csspart panel
  * @csspart header
@@ -132,7 +133,7 @@ export class ArcDrawer extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   render() {
     return html`
       <div class="drawer__backdrop" @click=${this._handleBackdropClick} part="backdrop"></div>
-      <div class="drawer__panel" role="dialog" aria-modal="true" aria-label=${this.heading || 'Drawer'} part="panel">
+      <div class="drawer__panel" role="dialog" aria-modal="true" aria-label=${this.heading || 'Drawer'} part="base panel">
         <div class="drawer__header" part="header">
           <span class="drawer__title" part="title">${this.heading}</span>
           <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>

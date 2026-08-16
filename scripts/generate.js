@@ -42,6 +42,7 @@ const phases = [
       check('size-canon'),
       check('dismiss-prop'),
       check('array-dialect'),
+      check('part-base'),
       check('boolean-defaults'),
       check('empty-attributes'),
       check('breakpoint-drift'),

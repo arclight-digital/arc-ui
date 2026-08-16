@@ -12,6 +12,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @prop {string} separator - Character used as the separator between breadcrumb items. Common options: '/', '>', '•'.
  * @fires arc-navigate - Fired when a breadcrumb item is clicked
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart breadcrumb
  * @csspart current
  * @csspart link
@@ -128,7 +129,7 @@ export class ArcBreadcrumb extends LitElement {
 
   render() {
     return html`
-      <div class="breadcrumb__slot-host">
+      <div part="base" class="breadcrumb__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <nav class="breadcrumb" aria-label=${this.label} part="breadcrumb">

@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {string} maxHeight - CSS max-height value applied to the scrollable container. Use any valid CSS length (e.g. `300px`, `50vh`).
  * @prop {'vertical' | 'horizontal' | 'both'} orientation - Scroll direction. `vertical` shows a vertical scrollbar, `horizontal` shows a horizontal scrollbar, `both` shows both.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart scroll-area
  */
 export class ArcScrollArea extends DeclaredPropsMixin(LitElement) {
@@ -97,7 +98,7 @@ export class ArcScrollArea extends DeclaredPropsMixin(LitElement) {
         tabindex="0"
         role="region"
         aria-label="Scrollable content"
-        part="scroll-area"
+        part="base scroll-area"
       >
         <slot></slot>
       </div>

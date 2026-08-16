@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  *   rendering an uncoloured dot that screen readers announce by its bogus name.
  * @prop {'circle' | 'square' | 'rounded'} shape - Controls the avatar shape. Options: 'circle', 'square', 'rounded'.
  * @slot none
+ * @csspart base - The root element.
  * @csspart img
  * @csspart initials
  * @csspart avatar
@@ -189,7 +190,7 @@ export class ArcAvatar extends DeclaredPropsMixin(LitElement) {
       : html`<span class="avatar__initials" part="initials">${this._getInitials()}</span>`;
 
     return html`
-      <div class="avatar" part="avatar" role="img" aria-label=${this.name || 'Avatar'}>
+      <div class="avatar" part="base avatar" role="img" aria-label=${this.name || 'Avatar'}>
         ${content}
       </div>
       ${

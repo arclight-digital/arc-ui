@@ -42,6 +42,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  *   and the divider.
  * @slot after - The "after" image (`<img>` or `<arc-image>`). Sits underneath and sizes the
  *   component.
+ * @csspart base - The root element.
  * @csspart container - The clipping frame wrapping both layers.
  * @csspart before - The clipped before layer.
  * @csspart after - The base after layer.
@@ -382,7 +383,7 @@ export class ArcImageCompare extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="compare ${this._dragging ? 'compare--dragging' : ''}"
-        part="container"
+        part="base container"
         style="--_pos: ${pos}"
         @pointerdown=${this._onPointerDown}
       >

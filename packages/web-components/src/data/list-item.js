@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @slot - Default content.
  * @slot description
  * @slot suffix
+ * @csspart base - The root element.
  * @csspart label
  * @csspart description
  * @csspart item
@@ -224,7 +225,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
           aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
           aria-disabled=${this.disabled ? 'true' : 'false'}
           @click=${this._onClick}
-          part="item"
+          part="base item"
         >${this._renderContent()}</a>
       `;
     }
@@ -237,7 +238,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
         aria-disabled=${this.disabled ? 'true' : 'false'}
         tabindex=${this.disabled ? '-1' : '0'}
         @click=${this._onClick}
-        part="item"
+        part="base item"
       >${this._renderContent()}</div>
     `;
   }

@@ -22,7 +22,7 @@ async function strip(data, attrs = '') {
   return el;
 }
 
-const ticks = (el) => [...el.shadowRoot.querySelectorAll('[part="tick"]')];
+const ticks = (el) => [...el.shadowRoot.querySelectorAll('[part~="tick"]')];
 const statusOf = (tick) =>
   [...tick.classList].find((c) => c.startsWith('status--'))?.slice('status--'.length);
 
@@ -60,34 +60,34 @@ describe('summary', () => {
     // (1 + 0.9 + 0.98) / 3 = 0.96 — the status-only and empty entries are
     // excluded from the math but still count as ticks.
     const el = await strip([1, { value: 0.9, status: 'down' }, 0.98, { status: 'up' }, {}]);
-    const summary = el.shadowRoot.querySelector('[part="summary"]');
+    const summary = el.shadowRoot.querySelector('[part~="summary"]');
     expect(summary.textContent.trim()).to.equal('96% uptime');
   });
 
   it('trims trailing zeros but keeps real precision', async () => {
     const el = await strip([0.9998, 0.9998]);
-    const summary = el.shadowRoot.querySelector('[part="summary"]');
+    const summary = el.shadowRoot.querySelector('[part~="summary"]');
     expect(summary.textContent.trim()).to.equal('99.98% uptime');
   });
 
   it('is omitted when no entry carries a value', async () => {
     const el = await strip([{ status: 'up' }, { status: 'down' }]);
-    expect(el.shadowRoot.querySelector('[part="summary"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="summary"]')).to.equal(null);
   });
 
   it('is omitted when summary="false"', async () => {
     const el = await strip([1, 1], 'summary="false"');
-    expect(el.shadowRoot.querySelector('[part="summary"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="summary"]')).to.equal(null);
   });
 });
 
 describe('empty data', () => {
   it('renders an empty track, no summary, and stays out of the tab order', async () => {
     const el = await strip([]);
-    const track = el.shadowRoot.querySelector('[part="track"]');
+    const track = el.shadowRoot.querySelector('[part~="track"]');
     expect(track).to.not.equal(null);
     expect(ticks(el).length).to.equal(0);
-    expect(el.shadowRoot.querySelector('[part="summary"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="summary"]')).to.equal(null);
     expect(track.getAttribute('tabindex')).to.equal('-1');
     expect(track.getAttribute('aria-label')).to.equal('Uptime history: no data');
   });
@@ -102,21 +102,21 @@ describe('empty data', () => {
 describe('labels', () => {
   it('renders the caption ends from start-label and end-label', async () => {
     const el = await strip([1, 1], 'start-label="90 days ago" end-label="Today"');
-    const caption = el.shadowRoot.querySelector('[part="caption"]');
+    const caption = el.shadowRoot.querySelector('[part~="caption"]');
     expect(caption.textContent).to.include('90 days ago');
     expect(caption.textContent).to.include('Today');
   });
 
   it('omits the caption row when neither label is set', async () => {
     const el = await strip([1, 1]);
-    expect(el.shadowRoot.querySelector('[part="caption"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="caption"]')).to.equal(null);
   });
 
   it('shows a datum label in the detail bubble for the active tick', async () => {
     const el = await strip([1, { value: 0.9412, status: 'down', label: 'Mar 4' }]);
     ticks(el)[1].dispatchEvent(new PointerEvent('pointerover', { bubbles: true, composed: true }));
     await el.updateComplete;
-    const detail = el.shadowRoot.querySelector('[part="detail"]');
+    const detail = el.shadowRoot.querySelector('[part~="detail"]');
     expect(detail.textContent).to.include('Mar 4');
     expect(detail.textContent).to.include('94.12%');
     expect(detail.textContent).to.include('Outage');
@@ -135,7 +135,7 @@ const activeAt = (el) => {
 describe('keyboard inspection', () => {
   it('walks ticks with arrows and announces the active one', async () => {
     const el = await strip([1, 0.97, { status: 'down', label: 'Yesterday' }]);
-    const track = el.shadowRoot.querySelector('[part="track"]');
+    const track = el.shadowRoot.querySelector('[part~="track"]');
 
     track.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     await el.updateComplete;
@@ -151,12 +151,12 @@ describe('keyboard inspection', () => {
     track.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await el.updateComplete;
     expect(activeAt(el)).to.equal(null);
-    expect(el.shadowRoot.querySelector('[part="detail"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="detail"]')).to.equal(null);
   });
 
   it('summarises the strip in the track aria-label', async () => {
     const el = await strip([1, 1, { value: 0.5, status: 'down' }, { status: 'degraded' }]);
-    const label = el.shadowRoot.querySelector('[part="track"]').getAttribute('aria-label');
+    const label = el.shadowRoot.querySelector('[part~="track"]').getAttribute('aria-label');
     expect(label).to.include('4 periods');
     expect(label).to.include('1 outage period');
     expect(label).to.include('1 degraded');

@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} hideZeroSegments - Hide leading segments that are zero
  * @fires {CustomEvent<void>} arc-expired - Fired when the countdown reaches zero
  * @slot none
+ * @csspart base - The root element.
  * @csspart separator
  * @csspart segment
  * @csspart number
@@ -194,7 +195,7 @@ export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
     if (this._expired) {
       return html`
         ${topLabel}
-        <div class="container" part="container">
+        <div class="container" part="base container">
           <span class="expired-text">${this.expired}</span>
         </div>
       `;
@@ -212,7 +213,7 @@ export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
 
     return html`
       ${topLabel}
-      <div class="container" part="container">
+      <div class="container" part="base container">
         ${segments.map((seg) => {
           if (this.hideZeroSegments && seg.value === 0 && visibleCount === 0) return '';
           const needsSep = visibleCount > 0;

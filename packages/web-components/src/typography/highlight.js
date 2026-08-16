@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {string} query - The search query to highlight within the text
  * @prop {boolean} caseSensitive - Whether matching should be case-sensitive
  * @slot none
+ * @csspart base - The root element.
  * @csspart text
  * @csspart mark
  */
@@ -50,7 +51,7 @@ export class ArcHighlight extends DeclaredPropsMixin(LitElement) {
 
   render() {
     if (!this.query || !this.text) {
-      return html`<span part="text">${this.text}</span>`;
+      return html`<span part="base text">${this.text}</span>`;
     }
 
     const flags = this.caseSensitive ? 'g' : 'gi';
@@ -58,13 +59,13 @@ export class ArcHighlight extends DeclaredPropsMixin(LitElement) {
     try {
       regex = new RegExp(`(${this._escapeRegex(this.query)})`, flags);
     } catch {
-      return html`<span part="text">${this.text}</span>`;
+      return html`<span part="base text">${this.text}</span>`;
     }
 
     const parts = this.text.split(regex);
 
     // After split-by-captured-group, odd indices are matched segments.
-    return html`<span part="text">${parts.map((segment, i) =>
+    return html`<span part="base text">${parts.map((segment, i) =>
       i % 2 === 1 ? html`<mark part="mark">${segment}</mark>` : segment,
     )}</span>`;
   }

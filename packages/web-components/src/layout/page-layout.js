@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @slot sidebar
  * @slot - Default content.
  * @slot aside
+ * @csspart base - The root element.
  * @csspart layout
  * @csspart sidebar
  * @csspart main
@@ -112,7 +113,7 @@ export class ArcPageLayout extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="page-layout" part="layout">
+      <div class="page-layout" part="base layout">
         <div class="sidebar" part="sidebar">
           <slot name="sidebar"></slot>
         </div>

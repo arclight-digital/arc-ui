@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'1/1' | '16/9' | '4/3'} ratio - Aspect ratio applied to every cell. 1/1 for squares, 16/9 for widescreen, 4/3 for classic landscape.
  * @prop {'sm' | 'md' | 'lg'} gap - Spacing between grid cells, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart grid
  */
 export class ArcAspectGrid extends DeclaredPropsMixin(LitElement) {
@@ -71,7 +72,7 @@ export class ArcAspectGrid extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="grid" part="grid">
+      <div class="grid" part="base grid">
         <slot></slot>
       </div>
     `;

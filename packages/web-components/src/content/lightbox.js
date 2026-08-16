@@ -23,6 +23,7 @@ import { DeclaredPropsMixin, flag, list, int } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-close - Fired when the lightbox closes. Cancelable: call `preventDefault()` to veto the close.
  * @fires {CustomEvent<{value: number, index: number}>} arc-change - Fired when the displayed image changes. `detail.value` is the new index.
  * @slot none
+ * @csspart base - The root element.
  * @csspart backdrop
  * @csspart bar
  * @csspart counter
@@ -379,7 +380,7 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
         role="dialog"
         aria-modal="true"
         aria-label=${current?.alt || 'Image viewer'}
-        part="backdrop"
+        part="base backdrop"
         @click=${this._handleBackdropClick}
       >
         <div class="lightbox__bar" part="bar">

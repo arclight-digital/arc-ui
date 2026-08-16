@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
  * @prop {'horizontal' | 'vertical'} orientation - Layout direction of the tab list. Use 'vertical' to place tabs in a sidebar column with the panel to the right. Arrow-key navigation automatically switches to up/down in vertical mode.
  * @fires arc-change - Fired when the active tab changes
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart tabs
  */
 export class ArcTabs extends DeclaredPropsMixin(LitElement) {
@@ -259,7 +260,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="tabs" part="tabs">
+      <div class="tabs" part="base tabs">
         <div class="tabs__list" role="tablist" aria-orientation=${this.orientation} @keydown=${this._handleKeydown}>
           ${this._tabs.map(
             (tab, i) => html`

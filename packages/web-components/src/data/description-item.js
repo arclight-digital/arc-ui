@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @status stable
  * @prop {string} term - The key or label for this description entry, displayed as an uppercase heading.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart item
  * @csspart term
  * @csspart detail
@@ -69,7 +70,7 @@ export class ArcDescriptionItem extends LitElement {
 
   render() {
     return html`
-      <div class="item" part="item" role="listitem">
+      <div class="item" part="base item" role="listitem">
         <div class="item__term" part="term">${this.term}</div>
         <div class="item__detail" part="detail"><slot></slot></div>
       </div>

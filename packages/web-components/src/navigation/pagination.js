@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  * @prop {boolean} compact - Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the current page changes
  * @slot none
+ * @csspart base - The root element.
  * @csspart prev
  * @csspart next
  * @csspart pagination
@@ -191,7 +192,7 @@ export class ArcPagination extends DeclaredPropsMixin(LitElement) {
 
     if (this.compact) {
       return html`
-        <nav class="pagination" role="navigation" aria-label="Pagination" part="pagination">
+        <nav class="pagination" role="navigation" aria-label="Pagination" part="base pagination">
           ${prevBtn}
           <span class="pagination__compact-label" part="label">${this.current} / ${this.total}</span>
           ${nextBtn}
@@ -200,7 +201,7 @@ export class ArcPagination extends DeclaredPropsMixin(LitElement) {
     }
 
     return html`
-      <nav class="pagination" role="navigation" aria-label="Pagination" part="pagination">
+      <nav class="pagination" role="navigation" aria-label="Pagination" part="base pagination">
         ${prevBtn}
         ${pages.map((page) =>
           page === '...'

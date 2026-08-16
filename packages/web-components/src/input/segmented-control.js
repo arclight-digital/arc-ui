@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} disabled - Disables the entire control, reducing opacity to 40% and blocking pointer events.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selected segment changes
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart control
  * @csspart option
  */
@@ -226,7 +227,7 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
 
   render() {
     return html`
-      <div class="segmented__slot-host">
+      <div part="base" class="segmented__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div

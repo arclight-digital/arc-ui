@@ -41,7 +41,7 @@ describe('arc-lightbox open/close lifecycle', () => {
   it('show(index) opens at that image', async () => {
     const el = await openLightbox(2);
     expect(el.index).to.equal(2);
-    expect(el.shadowRoot.querySelector('[part="counter"]').textContent).to.contain('3 / 3');
+    expect(el.shadowRoot.querySelector('[part~="counter"]').textContent).to.contain('3 / 3');
   });
 
   it('is hidden while closed', async () => {
@@ -142,10 +142,10 @@ describe('arc-lightbox zoom', () => {
     const el = await openLightbox(0);
     pressKey('+');
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part="image"]').style.transform).to.contain('scale(2)');
+    expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.contain('scale(2)');
     pressKey('-');
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part="image"]').style.transform).to.not.contain('scale(2)');
+    expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.not.contain('scale(2)');
   });
 
   it('navigation resets the zoom', async () => {
@@ -154,7 +154,7 @@ describe('arc-lightbox zoom', () => {
     await el.updateComplete;
     el.next();
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part="image"]').style.transform).to.not.contain('scale(2)');
+    expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.not.contain('scale(2)');
   });
 });
 
@@ -206,29 +206,29 @@ describe('arc-lightbox images forms', () => {
 
   it('renders an object entry with alt and caption', async () => {
     const el = await openLightbox(0);
-    const img = el.shadowRoot.querySelector('[part="image"]');
+    const img = el.shadowRoot.querySelector('[part~="image"]');
     expect(img.getAttribute('src')).to.equal(PX);
     expect(img.getAttribute('alt')).to.equal('First');
-    expect(el.shadowRoot.querySelector('[part="caption"]').textContent.trim()).to.equal('A river valley');
+    expect(el.shadowRoot.querySelector('[part~="caption"]').textContent.trim()).to.equal('A river valley');
   });
 
   it('renders a plain-string entry with no caption', async () => {
     const el = await openLightbox(1);
-    const img = el.shadowRoot.querySelector('[part="image"]');
+    const img = el.shadowRoot.querySelector('[part~="image"]');
     expect(img.getAttribute('src')).to.equal(PX);
-    expect(el.shadowRoot.querySelector('[part="caption"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="caption"]')).to.equal(null);
   });
 
   it('shows the counter in "n / total" form', async () => {
     const el = await openLightbox(1);
-    expect(el.shadowRoot.querySelector('[part="counter"]').textContent).to.contain('2 / 3');
+    expect(el.shadowRoot.querySelector('[part~="counter"]').textContent).to.contain('2 / 3');
   });
 
   it('hides prev/next for a single image', async () => {
     const el = await mountLightbox([PX]);
     el.show();
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part="prev"]')).to.equal(null);
-    expect(el.shadowRoot.querySelector('[part="next"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="prev"]')).to.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="next"]')).to.equal(null);
   });
 });

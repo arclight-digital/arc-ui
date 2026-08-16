@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
  * @fires arc-change - Fired when items are reordered, with updated order in detail
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart list
  * @csspart item
  * @csspart handle
@@ -388,7 +389,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="sortable__slot-host">
+      <div part="base" class="sortable__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div class="sortable__sr" role="status" aria-live="polite">${this._announcement}</div>

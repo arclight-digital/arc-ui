@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-load - Fired when the image successfully loads.
  * @fires {CustomEvent<void>} arc-error - Fired when the image fails to load.
  * @slot none
+ * @csspart base - The root element.
  * @csspart wrapper
  * @csspart fallback
  * @csspart image
@@ -159,7 +160,7 @@ export class ArcImage extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="image-wrapper" part="wrapper">
+      <div class="image-wrapper" part="base wrapper">
         ${
           this._state === 'error'
             ? html`

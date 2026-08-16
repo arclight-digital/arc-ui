@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot header
  * @slot - Default content.
  * @slot footer
+ * @csspart base - The root element.
  * @csspart trigger
  * @csspart panel
  * @csspart header
@@ -211,7 +212,7 @@ export class ArcNotificationPanel extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="trigger" part="trigger" @click="${this._onTriggerClick}">
+      <div class="trigger" part="base trigger" @click="${this._onTriggerClick}">
         <slot name="trigger"></slot>
       </div>
       <div class="panel" part="panel">

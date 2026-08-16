@@ -22,6 +22,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires arc-select - Fired when a menu item is selected
  * @slot - Default content.
  * @slot trigger
+ * @csspart base - The root element.
  * @csspart divider
  * @csspart item
  * @csspart shortcut
@@ -276,7 +277,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="dropdown__slot-host">
+      <div part="base" class="dropdown__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div

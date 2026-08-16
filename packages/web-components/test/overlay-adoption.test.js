@@ -358,7 +358,7 @@ describe('dialog and confirm: the variant prop actually does something', () => {
       await el.updateComplete;
       await tick();
 
-      const confirm = el.shadowRoot.querySelector('arc-button[part="confirm"]');
+      const confirm = el.shadowRoot.querySelector('arc-button[part~="confirm"]');
       expect(confirm, 'confirm button rendered').to.not.equal(null);
       const before = getComputedStyle(confirm).getPropertyValue('--accent-primary').trim();
 
@@ -378,7 +378,7 @@ describe('dialog and confirm: the variant prop actually does something', () => {
       await el.updateComplete;
       await tick();
 
-      const confirm = el.shadowRoot.querySelector('arc-button[part="confirm"]');
+      const confirm = el.shadowRoot.querySelector('arc-button[part~="confirm"]');
       expect(getComputedStyle(confirm).getPropertyValue('--accent-primary').trim())
         .to.equal('rgb(77, 126, 247)');
     });

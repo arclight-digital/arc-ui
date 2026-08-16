@@ -815,3 +815,72 @@ happen at all is worth recording: Lit runs a component's own `willUpdate`
 *before* a controller's `hostUpdate`, so a component that reads a declared prop
 in `willUpdate` sees the raw assigned value, not the normalised one. Guard with
 `Array.isArray`, not `|| []` — a string is truthy.
+
+## `::part(base)` reaches the root element of any component
+
+**Affects 175 of 202 components.** Every component's root element now carries
+`base` **alongside** the name it already had:
+
+```html
+<!-- before -->  <div class="stat" part="stat">
+<!-- after  -->  <div class="stat" part="base stat">
+```
+
+Nothing is renamed and nothing is removed, so `::part(stat)` keeps working. The
+point is the other direction: `::part(base)` now works on any component without
+looking up what that component happens to call its outer box. Before this there
+were **86 distinct spellings** of the root part across the library — `container`,
+`wrapper`, `bar`, `shell`, `inner`, `body`, and eighty more.
+
+```css
+/* Now valid against any component in the library. */
+arc-stat::part(base),
+arc-chart::part(base) { margin-block-end: 1.5rem; }
+```
+
+### One rename
+
+`arc-waveform`'s `base` was the unplayed waveform layer — the only place in the
+library where `base` meant something other than the root. It is **`unplayed`**
+now, beside its `played` sibling, and `base` on arc-waveform means what it means
+everywhere else. If you styled `arc-waveform::part(base)` expecting the muted
+layer, that selector now targets the root element instead of failing, so this is
+one worth grepping for.
+
+### `[part="x"]` selectors need `[part~="x"]`
+
+If you select parts with an **attribute selector** rather than `::part()`, an
+exact match no longer matches a root:
+
+```js
+// no longer matches — the attribute is now "base stat"
+el.shadowRoot.querySelector('[part="stat"]')
+
+// matches, and is what ::part() does
+el.shadowRoot.querySelector('[part~="stat"]')
+```
+
+`::part(stat)` is unaffected — it has always matched on tokens. This only bites
+code reaching into a shadow root directly, which is mostly test code; it was 226
+selectors in ours.
+
+### Twenty-seven components have no `base`, on purpose
+
+Twenty-one render a bare `<slot>` as their entire shadow root — `arc-tab`,
+`arc-option`, `arc-stack`, `arc-center` and the like. The host *is* the box for
+those: style the element itself. Two more (`arc-inline-message`, `arc-kv-pair`)
+render two peer boxes with the host as their only container, and naming either
+half `base` would point the selector at something no reader would predict. Four
+render nothing at all — they are configuration elements.
+
+The full list, with the reason for each, is `EXEMPT` in
+`scripts/checks/part-base.js`.
+
+### If your component's root changes with a prop, `base` does not
+
+Fourteen components render a *different root element* depending on a prop —
+`arc-text` renders `h1` through `h6`, `span` or `p`; `arc-button` renders `<a>`
+or `<button>` depending on `href`; `arc-qr-code` renders a card wrapper or a bare
+svg depending on `contrast`. Every branch carries `base`, which is the clearest
+argument for having it: it is the one handle on those components that does not
+depend on how they are configured.

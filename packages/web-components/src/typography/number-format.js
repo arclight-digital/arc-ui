@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, oneOf, int, num } from '../shared/props.js';
  * @prop {number} decimals - Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.
  * @prop {'standard' | 'compact'} notation - Number notation — compact gives "12.3K", "1.2M"
  * @slot none
+ * @csspart base - The root element.
  * @csspart number
  */
 export class ArcNumberFormat extends DeclaredPropsMixin(LitElement) {
@@ -102,6 +103,6 @@ export class ArcNumberFormat extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
-    return html`<span class="number" part="number">${this._formatted}</span>`;
+    return html`<span class="number" part="base number">${this._formatted}</span>`;
   }
 }

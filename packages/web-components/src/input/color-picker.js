@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
  * @fires arc-input - Fired continuously as the color changes, including every frame of a drag across the saturation area or hue track. Use for live previews. `event.detail.value` contains the hex string.
  * @fires arc-change - Fired once the color is committed: the pointer released after a drag, a preset clicked, or a valid hex typed and blurred. Use for anything expensive. `event.detail.value` contains the hex string.
  * @slot none
+ * @csspart base - The root element.
  * @csspart picker
  * @csspart label
  * @csspart area
@@ -490,7 +491,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   render() {
     return html`
-      <div class="picker" part="picker">
+      <div class="picker" part="base picker">
         ${this.label ? html`<span class="picker__label" part="label">${this.label}</span>` : ''}
 
         <div

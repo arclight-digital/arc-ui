@@ -62,7 +62,7 @@ describe('arc-number-input', () => {
     await el.updateComplete;
     const seen = record(el);
 
-    el.shadowRoot.querySelector('[part="increment"]').click();
+    el.shadowRoot.querySelector('[part~="increment"]').click();
     await tick();
 
     expect(seen.map(([k]) => k)).to.deep.equal(['input', 'change']);

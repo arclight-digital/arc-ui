@@ -23,6 +23,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when a time is selected. Detail contains { value: "HH:MM" } in 24-hour format.
  * @slot none
+ * @csspart base - The root element.
  * @csspart wrapper
  * @csspart label
  * @csspart input-wrapper
@@ -528,7 +529,7 @@ export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
     );
 
     return html`
-      <div class="wrapper" part="wrapper">
+      <div class="wrapper" part="base wrapper">
         ${this.label ? html`<label part="label">${this.label}</label>` : ''}
 
         <div class="input-wrapper" part="input-wrapper">

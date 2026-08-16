@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Size cascaded to all child arc-toggle elements.
  * @prop {boolean} disabled - Disables all child toggles and dims the group.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart fieldset
  * @csspart legend
  * @csspart group
@@ -102,7 +103,7 @@ export class ArcSwitchGroup extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <fieldset ?disabled=${this.disabled} part="fieldset">
+      <fieldset ?disabled=${this.disabled} part="base fieldset">
         ${this.label ? html`<legend part="legend">${this.label}</legend>` : ''}
         <div class="switch-group" role="group" aria-label=${this.label || 'Switch group'} part="group">
           <slot @slotchange=${this._onSlotChange}></slot>

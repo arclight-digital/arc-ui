@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * @prop {number} headingLevel - ARIA heading level for each event title. Clamped to 1 or
  *   greater: `aria-level` below 1 is invalid and is dropped by assistive technology.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart timeline
  * @csspart item
  * @csspart marker
@@ -156,7 +157,7 @@ export class ArcTimeline extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="timeline__slot-host">
+      <div part="base" class="timeline__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <ol class="timeline" part="timeline" role="list">

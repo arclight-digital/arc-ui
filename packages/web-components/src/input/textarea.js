@@ -24,6 +24,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke with { value } detail
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed
  * @slot none
+ * @csspart base - The root element.
  * @csspart wrapper
  * @csspart label
  * @csspart textarea
@@ -214,7 +215,7 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
     const atLimit = showCounter && this.value.length >= this.maxlength;
 
     return html`
-      <div class="textarea-wrapper ${hasError ? 'error' : ''}" part="wrapper">
+      <div class="textarea-wrapper ${hasError ? 'error' : ''}" part="base wrapper">
         ${
           this.label
             ? html`

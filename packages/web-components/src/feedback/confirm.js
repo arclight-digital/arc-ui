@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-confirm - Fired when the user clicks the confirm button
  * @fires {CustomEvent<void>} arc-cancel - Fired when the user clicks cancel, presses Escape, or clicks the backdrop
  * @slot - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.
+ * @csspart base - The root element.
  * @csspart message
  * @csspart cancel
  * @csspart confirm
@@ -60,7 +61,7 @@ export class ArcConfirm extends DeclaredPropsMixin(LitElement) {
          it reads, rather than by adding a fourth arc-button variant. The button
          resolves --interactive from --accent-primary in its own context, so
          setting them on the instance is enough. */
-      :host([variant="error"]) arc-button[part="confirm"] {
+      :host([variant="error"]) arc-button[part~="confirm"] {
         --accent-primary: var(--color-error);
         --accent-primary-rgb: var(--color-error-rgb);
       }
@@ -124,7 +125,7 @@ export class ArcConfirm extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <arc-modal
+      <arc-modal part="base"
         ?open=${this.open}
         heading=${this.heading}
         size="sm"

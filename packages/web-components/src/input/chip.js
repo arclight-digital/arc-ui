@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {string} value - Machine-readable identifier for this chip, included in the `arc-change` event detail.
  * @fires {CustomEvent<{ value: string, selected: boolean }>} arc-change - Fired when the chip selected state changes
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart chip
  */
 export class ArcChip extends DeclaredPropsMixin(LitElement) {
@@ -86,7 +87,7 @@ export class ArcChip extends DeclaredPropsMixin(LitElement) {
         tabindex=${this.disabled ? '-1' : '0'}
         @click=${this._toggle}
         @keydown=${this._handleKeydown}
-        part="chip"
+        part="base chip"
       >
         <slot></slot>
       </arc-tag>

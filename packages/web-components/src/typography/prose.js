@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @status stable
  * @prop {'sm' | 'md' | 'lg'} size - Controls the base font size of the prose container. Affects paragraph text; headings and code maintain their own scale.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart prose
  */
 export class ArcProse extends DeclaredPropsMixin(LitElement) {
@@ -195,6 +196,6 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
-    return html`<div class="prose" part="prose"><slot></slot></div>`;
+    return html`<div class="prose" part="base prose"><slot></slot></div>`;
   }
 }

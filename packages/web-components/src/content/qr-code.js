@@ -17,6 +17,9 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * @prop {number} quietZone - Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.
  * @prop {boolean} contrast - Renders the code on a white rounded card with forced dark modules, guaranteeing dark-on-light scanability in both themes. Overrides --qr-fg/--qr-bg. Recommended for scan-critical codes.
  * @slot none
+ * @csspart base - The root element. Which element that is depends on `contrast`:
+ *   the card wrapper when it is set, the svg otherwise — which is the case `base`
+ *   exists for.
  * @csspart svg
  * @csspart card
  */
@@ -129,7 +132,7 @@ export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
     // aria-label never falls back to `value` — it may be a secret (2FA URI etc.).
     const code = html`
       <svg
-        part="svg"
+        part="base svg"
         role="img"
         aria-label=${this.label || 'QR code'}
         width=${this.size}
@@ -142,6 +145,6 @@ export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
       </svg>
     `;
 
-    return this.contrast ? html`<div class="card" part="card">${code}</div>` : code;
+    return this.contrast ? html`<div class="card" part="base card">${code}</div>` : code;
   }
 }

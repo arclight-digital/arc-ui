@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {string} label - Optional text displayed centered between two line segments. Only applies to horizontal orientation.
  * @prop {'line' | 'dashed' | 'dotted' | 'fade'} variant - Controls the line style. Fade uses a gradient that tapers to transparent at both ends.
  * @slot none
+ * @csspart base - The root element.
  * @csspart separator
  * @csspart line
  * @csspart label
@@ -144,7 +145,7 @@ export class ArcSeparator extends DeclaredPropsMixin(LitElement) {
 
     if (this.label && !vertical) {
       return html`
-        <div class="separator separator--labeled" role="separator" part="separator">
+        <div class="separator separator--labeled" role="separator" part="base separator">
           <span class="separator__line" part="line"></span>
           <span class="separator__label" part="label">${this.label}</span>
           <span class="separator__line" part="line"></span>
@@ -157,7 +158,7 @@ export class ArcSeparator extends DeclaredPropsMixin(LitElement) {
         class="separator"
         role="separator"
         aria-orientation=${vertical ? 'vertical' : 'horizontal'}
-        part="separator"
+        part="base separator"
       ></div>
     `;
   }

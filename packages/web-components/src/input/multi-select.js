@@ -24,6 +24,7 @@ import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when the selected values change
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart label
  * @csspart control
  * @csspart tag
@@ -496,7 +497,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
         : undefined;
 
     return html`
-      <div class="ms__slot-host">
+      <div part="base" class="ms__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       ${this.label ? html`<label class="ms__label" part="label">${this.label}</label>` : ''}

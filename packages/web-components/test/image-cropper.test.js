@@ -26,16 +26,16 @@ async function cropper(attrs = '') {
   const el = mount(`<arc-image-cropper src="${IMG}" height="240" ${attrs}></arc-image-cropper>`);
   await settle(el);
   // The stage measures the loaded image and lays the crop out on a frame.
-  for (let i = 0; i < 5 && !el.shadowRoot.querySelector('[part="crop"]'); i++) {
+  for (let i = 0; i < 5 && !el.shadowRoot.querySelector('[part~="crop"]'); i++) {
     await nextFrame();
     await settle(el);
   }
   return el;
 }
 
-const part = (el, name) => el.shadowRoot.querySelector(`[part="${name}"]`);
+const part = (el, name) => el.shadowRoot.querySelector(`[part~="${name}"]`);
 const crop = (el) => part(el, 'crop');
-const handles = (el) => [...el.shadowRoot.querySelectorAll('[part="handle"]')];
+const handles = (el) => [...el.shadowRoot.querySelectorAll('[part~="handle"]')];
 
 describe('arc-image-cropper loading states', () => {
   it('exposes the documented css parts once loaded', async () => {

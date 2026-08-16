@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @slot - Default content.
  * @slot footer
  * @slot aside
+ * @csspart base - The root element.
  * @csspart shell
  * @csspart form-side
  * @csspart logo
@@ -134,7 +135,7 @@ export class ArcAuthShell extends DeclaredPropsMixin(LitElement) {
   render() {
     if (this.variant === 'split') {
       return html`
-        <div class="auth-shell--split" part="shell">
+        <div class="auth-shell--split" part="base shell">
           <div class="form-side" part="form-side">
             <div class="logo" part="logo">
               <slot name="logo"></slot>
@@ -154,7 +155,7 @@ export class ArcAuthShell extends DeclaredPropsMixin(LitElement) {
     }
 
     return html`
-      <div class="auth-shell--centered" part="shell">
+      <div class="auth-shell--centered" part="base shell">
         <div class="logo" part="logo">
           <slot name="logo"></slot>
         </div>

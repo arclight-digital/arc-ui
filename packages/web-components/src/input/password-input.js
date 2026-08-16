@@ -96,6 +96,7 @@ function scorePassword(pw) {
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired on blur when value has changed, with { value } detail
  * @fires arc-strength-change - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)
  * @slot none
+ * @csspart base - The root element.
  * @csspart strength
  * @csspart label
  * @csspart field
@@ -396,7 +397,7 @@ export class ArcPasswordInput extends DeclaredPropsMixin(FormControlMixin(LitEle
     const hasError = !!this.error;
 
     return html`
-      <div class="input-group ${hasError ? 'input-group--error' : ''}">
+      <div part="base" class="input-group ${hasError ? 'input-group--error' : ''}">
         ${this.label ? html`<label class="input-group__label" for=${id} part="label">${this.label}</label>` : ''}
         <div class="input-group__wrapper" part="field">
           <input

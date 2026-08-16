@@ -13,9 +13,9 @@ if (!customElements.get('arc-level-meter')) customElements.define('arc-level-met
 
 afterEach(() => cleanup());
 
-const segs = (el) => [...el.shadowRoot.querySelectorAll('[part="segment"]')];
+const segs = (el) => [...el.shadowRoot.querySelectorAll('[part~="segment"]')];
 const litSegs = (el) => segs(el).filter((s) => s.classList.contains('seg--lit'));
-const peakLine = (el) => el.shadowRoot.querySelector('[part="peak"]');
+const peakLine = (el) => el.shadowRoot.querySelector('[part~="peak"]');
 const peakPos = (el) => parseFloat(peakLine(el).style.getPropertyValue('--_peak'));
 
 async function meter(attrs = '') {
@@ -52,7 +52,7 @@ describe('segments', () => {
   it('renders a continuous fill when segments is 0', async () => {
     const el = await meter('value="0.55" segments="0"');
     expect(segs(el).length).to.equal(0);
-    const fill = el.shadowRoot.querySelector('[part="fill"]');
+    const fill = el.shadowRoot.querySelector('[part~="fill"]');
     expect(parseFloat(fill.style.getPropertyValue('--_fill'))).to.be.closeTo(55, 0.1);
   });
 });
@@ -139,19 +139,19 @@ describe('orientation', () => {
   it('defaults to vertical, filling bottom-up', async () => {
     const el = await meter('value="0.5"');
     expect(el.getAttribute('orientation')).to.equal('vertical');
-    const track = el.shadowRoot.querySelector('[part="track"]');
+    const track = el.shadowRoot.querySelector('[part~="track"]');
     expect(getComputedStyle(track).flexDirection).to.equal('column-reverse');
   });
 
   it('switches to a row when horizontal', async () => {
     const el = await meter('value="0.5" orientation="horizontal"');
-    const track = el.shadowRoot.querySelector('[part="track"]');
+    const track = el.shadowRoot.querySelector('[part~="track"]');
     expect(getComputedStyle(track).flexDirection).to.equal('row');
   });
 
   it('treats an unknown orientation as vertical', async () => {
     const el = await meter('value="0.5" orientation="diagonal"');
-    const track = el.shadowRoot.querySelector('[part="track"]');
+    const track = el.shadowRoot.querySelector('[part~="track"]');
     expect(getComputedStyle(track).flexDirection).to.equal('column-reverse');
   });
 });

@@ -20,6 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} glow - Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.
  * @fires arc-navigate - Fired when a sidebar link is clicked
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart sidebar
  * @csspart section
  * @csspart toggle
@@ -398,7 +399,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="sidebar__slot-host">
+      <div part="base" class="sidebar__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <nav class="sidebar" part="sidebar" aria-label=${this.label}>

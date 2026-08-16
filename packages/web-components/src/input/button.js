@@ -21,6 +21,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot prefix
  * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript, since the anchor is real HTML in the initial markup. Put any icons inside that anchor; the `prefix`/`suffix` slots and `::part(button)` do not apply in this form.
  * @slot suffix
+ * @csspart base - The root element.
  * @csspart button
  */
 export class ArcButton extends DeclaredPropsMixin(LitElement) {
@@ -232,11 +233,11 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
       // how the platform removes a link from the tab order; aria-disabled keeps
       // it announced, and role="link" keeps it a link once href is gone.
       const off = this.disabled || this.loading;
-      return html`<a class="btn" href=${off ? nothing : this.href} role=${off ? 'link' : nothing} aria-disabled=${off ? 'true' : nothing} part="button">${this._renderContent()}</a>`;
+      return html`<a class="btn" href=${off ? nothing : this.href} role=${off ? 'link' : nothing} aria-disabled=${off ? 'true' : nothing} part="base button">${this._renderContent()}</a>`;
     }
     if (this._slottedAnchor) {
       return html`<slot class="btn-slot" @slotchange=${this._onDefaultSlotChange}></slot>`;
     }
-    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled || this.loading} aria-busy=${this.loading ? 'true' : 'false'} @click=${this._handleClick} part="button">${this._renderContent()}</button>`;
+    return html`<button class="btn" type=${this.type} ?disabled=${this.disabled || this.loading} aria-busy=${this.loading ? 'true' : 'false'} @click=${this._handleClick} part="base button">${this._renderContent()}</button>`;
   }
 }

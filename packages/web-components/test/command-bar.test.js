@@ -21,7 +21,7 @@ async function bar(attrs = '', slotted = '') {
   return el;
 }
 
-const input = (el) => el.shadowRoot.querySelector('[part="input"]');
+const input = (el) => el.shadowRoot.querySelector('[part~="input"]');
 
 /** Type into the native input the way a user would. */
 async function type(el, text) {
@@ -34,7 +34,7 @@ describe('arc-command-bar rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await bar();
     for (const part of ['base', 'icon', 'input', 'hint']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

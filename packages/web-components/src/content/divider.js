@@ -17,6 +17,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} vertical - Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content.
  * @prop {string} label - Text displayed in the center of the divider, splitting it into two lines. Common use: 'OR' between form options. Only applies to horizontal dividers.
  * @slot none
+ * @csspart base - The root element.
  * @csspart divider
  * @csspart line
  * @csspart label
@@ -275,13 +276,13 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
   render() {
     if (this.label && !this.vertical) {
       return html`
-        <div class="divider divider--labeled" role="separator" part="divider">
+        <div class="divider divider--labeled" role="separator" part="base divider">
           <span class="divider__line" part="line"></span>
           <span class="divider__label" part="label">${this.label}</span>
           <span class="divider__line" part="line"></span>
         </div>
       `;
     }
-    return html`<div class="divider" role="separator" aria-orientation=${this.vertical ? 'vertical' : 'horizontal'} part="divider"></div>`;
+    return html`<div class="divider" role="separator" aria-orientation=${this.vertical ? 'vertical' : 'horizontal'} part="base divider"></div>`;
   }
 }

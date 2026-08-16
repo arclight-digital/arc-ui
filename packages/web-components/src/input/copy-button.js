@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} disabled - Disables the button, preventing clicks and reducing visual opacity.
  * @fires {CustomEvent<{ value: string }>} arc-copy - Fired when text is successfully copied to the clipboard. `event.detail.value` contains the copied string.
  * @slot none
+ * @csspart base - The root element.
  * @csspart button
  * @csspart icon
  * @csspart label
@@ -142,7 +143,7 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
         @click=${this._copy}
         ?disabled=${this.disabled}
         aria-label=${this._copied ? 'Copied' : 'Copy to clipboard'}
-        part="button"
+        part="base button"
       >
         <span class="copy-btn__icon" part="icon">
           ${

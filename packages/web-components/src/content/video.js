@@ -32,6 +32,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<{ value: number }>} arc-pause - Fired when playback pauses. `detail.value` is the current time in seconds.
  * @fires {CustomEvent<{ value: number }>} arc-ended - Fired when playback reaches the end. `detail.value` is the final time in seconds.
  * @slot none
+ * @csspart base - The root element.
  * @csspart wrapper - The player frame.
  * @csspart video - The native video element.
  * @csspart overlay - The pre-play overlay covering the poster.
@@ -578,7 +579,7 @@ export class ArcVideo extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="video"
-        part="wrapper"
+        part="base wrapper"
         role="region"
         aria-label=${this.label || 'Video player'}
         tabindex=${ifDefined(controls ? '0' : undefined)}

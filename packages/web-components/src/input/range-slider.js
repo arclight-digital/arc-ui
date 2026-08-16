@@ -21,6 +21,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @fires {CustomEvent<{ value: [number, number], low: number, high: number }>} arc-input - Fired continuously as the user drags either thumb. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for real-time filtering or preview. Not fired when a key press leaves the range unchanged.
  * @fires {CustomEvent<{ value: [number, number], low: number, high: number }>} arc-change - Fired once when the user releases a thumb, indicating the final committed range. Detail contains the canonical `value` as `[low, high]`, plus `low` and `high` named separately. Use for persisting to a database or triggering an expensive operation. Not fired when a key press leaves the range unchanged.
  * @slot none
+ * @csspart base - The root element.
  * @csspart range-slider
  * @csspart header
  * @csspart label
@@ -355,7 +356,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
     const highPct = this._highPercent;
 
     return html`
-      <div class="range-slider" part="range-slider">
+      <div class="range-slider" part="base range-slider">
         ${
           this.label || this.showValues
             ? html`

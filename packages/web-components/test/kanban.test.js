@@ -36,10 +36,10 @@ async function board(attrs = '', columns = COLUMNS) {
   return el;
 }
 
-const columnEls = (el) => [...el.shadowRoot.querySelectorAll('[part="column"]')];
-const cards = (el) => [...el.shadowRoot.querySelectorAll('[part="card"]')];
+const columnEls = (el) => [...el.shadowRoot.querySelectorAll('[part~="column"]')];
+const cards = (el) => [...el.shadowRoot.querySelectorAll('[part~="card"]')];
 /** Cards are re-rendered on every move, so always look them up fresh by id. */
-const cardById = (el, id) => el.shadowRoot.querySelector(`[part="card"][data-card-id="${id}"]`);
+const cardById = (el, id) => el.shadowRoot.querySelector(`[part~="card"][data-card-id="${id}"]`);
 
 /**
  * A click, as this component detects one: a pointerdown/pointerup pair with no
@@ -53,9 +53,9 @@ async function clickCard(el, id) {
   await settle(el);
 }
 const labelsIn = (el, colIndex) =>
-  [...columnEls(el)[colIndex].querySelectorAll('[part="card-label"]')].map((n) => n.textContent.trim());
+  [...columnEls(el)[colIndex].querySelectorAll('[part~="card-label"]')].map((n) => n.textContent.trim());
 const counts = (el) =>
-  [...el.shadowRoot.querySelectorAll('[part="column-count"]')].map((n) => n.textContent.trim());
+  [...el.shadowRoot.querySelectorAll('[part~="column-count"]')].map((n) => n.textContent.trim());
 
 /** The board's layout as column → card labels. */
 const layout = (el) => columnEls(el).map((_, i) => labelsIn(el, i));
@@ -66,7 +66,7 @@ describe('arc-kanban rendering', () => {
     for (const part of [
       'board', 'column', 'column-header', 'column-title', 'column-count', 'list', 'card', 'card-label',
     ]) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 
@@ -78,7 +78,7 @@ describe('arc-kanban rendering', () => {
 
   it('titles each column', async () => {
     const el = await board();
-    expect([...el.shadowRoot.querySelectorAll('[part="column-title"]')].map((n) => n.textContent.trim()))
+    expect([...el.shadowRoot.querySelectorAll('[part~="column-title"]')].map((n) => n.textContent.trim()))
       .to.deep.equal(['To do', 'Doing', 'Done']);
   });
 
@@ -86,19 +86,19 @@ describe('arc-kanban rendering', () => {
     const el = await board('', [
       { id: 'c1', title: 'C', items: [{ id: 'a', label: 'A', description: 'details' }, { id: 'b', label: 'B' }] },
     ]);
-    expect(el.shadowRoot.querySelectorAll('[part="card-description"]')).to.have.lengthOf(1);
+    expect(el.shadowRoot.querySelectorAll('[part~="card-description"]')).to.have.lengthOf(1);
   });
 
   it('survives an empty board', async () => {
     const el = await board('', []);
     expect(columnEls(el)).to.have.lengthOf(0);
-    expect(el.shadowRoot.querySelector('[part="board"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="board"]')).to.not.equal(null);
   });
 
   it('survives never being handed columns', async () => {
     const el = mount('<arc-kanban></arc-kanban>');
     await settle(el);
-    expect(el.shadowRoot.querySelector('[part="board"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelector('[part~="board"]')).to.not.equal(null);
   });
 });
 
@@ -124,7 +124,7 @@ describe('arc-kanban column counts', () => {
     ]);
 
     const colour = (el) =>
-      getComputedStyle(el.shadowRoot.querySelector('[part="column-count"]')).color;
+      getComputedStyle(el.shadowRoot.querySelector('[part~="column-count"]')).color;
     expect(colour(over), 'an exceeded limit is coloured differently').to.not.equal(colour(under));
   });
 });

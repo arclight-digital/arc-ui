@@ -28,6 +28,7 @@ import { DeclaredPropsMixin, flag, oneOf, list, int } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when a tag is added or removed; detail contains `{ value }`
  * @fires arc-input - Fired as the user types; detail contains `{ query }`
  * @slot none
+ * @csspart base - The root element.
  * @csspart label
  * @csspart field
  * @csspart tag
@@ -548,7 +549,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
       <div
         class="ti__field ${this._focused ? 'ti__field--focused' : ''} ${hasError ? 'ti__field--error' : ''}"
         @click=${() => this.shadowRoot.querySelector('.ti__input')?.focus()}
-        part="field"
+        part="base field"
       >
         ${tags.map(
           (tag, i) => html`

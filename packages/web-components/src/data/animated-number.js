@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * @prop {'number' | 'currency' | 'percent'} format - Controls how the number is formatted using Intl.NumberFormat. Use currency with a prefix like $ or percent with a suffix like %.
  * @prop {string} locale - BCP 47 locale tag passed to Intl.NumberFormat for locale-aware number formatting (thousands separators, decimal marks).
  * @slot none
+ * @csspart base - The root element.
  * @csspart value
  */
 export class ArcAnimatedNumber extends DeclaredPropsMixin(LitElement) {
@@ -171,7 +172,7 @@ export class ArcAnimatedNumber extends DeclaredPropsMixin(LitElement) {
   render() {
     return html`
       <span class="value"
-            part="value"
+            part="base value"
             role="status"
             aria-live="polite"
       >${this._formatValue(this._displayValue)}</span>

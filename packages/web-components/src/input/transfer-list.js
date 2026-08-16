@@ -22,6 +22,7 @@ import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired after every move with `{ value }` -- the current array of selected values.
  * @slot none
+ * @csspart base - The root element.
  * @csspart pane
  * @csspart pane-header
  * @csspart search
@@ -627,7 +628,7 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
   render() {
     const disabled = this.disabled;
     return html`
-      <div class="tl">
+      <div part="base" class="tl">
         ${this._renderPane('source')}
         <div class="tl__controls" part="controls" role="group" aria-label="Transfer controls">
           <div class="tl__controls-group" role="group" aria-label="Move checked items">

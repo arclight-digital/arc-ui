@@ -15,6 +15,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @fires arc-navigate - Fired when a navigation item is selected
  * @fires {CustomEvent<{ value: boolean }>} arc-mobile-menu-toggle - Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart nav
  * @csspart item
  * @csspart trigger
@@ -826,7 +827,7 @@ export class ArcNavigationMenu extends LitElement {
 
   render() {
     return html`
-      <div class="nav__slot-host">
+      <div part="base" class="nav__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <nav class="nav" part="nav" aria-label=${this.label}>

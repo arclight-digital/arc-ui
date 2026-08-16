@@ -35,6 +35,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke while editing, with the draft text in detail.value.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired once on commit when the value actually changed, with the new value in detail.value.
  * @fires {CustomEvent<{ value: string }>} arc-cancel - Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.
+ * @csspart base - The root element.
  * @csspart display - The display-state button wrapping the text and pencil affordance.
  * @csspart field - The input or textarea shown while editing.
  * @csspart icon - The pencil affordance icon.
@@ -341,7 +342,7 @@ export class ArcInlineEdit extends DeclaredPropsMixin(FormControlMixin(LitElemen
       <button
         type="button"
         class=${classes}
-        part="display"
+        part="base display"
         ?disabled=${this.disabled}
         aria-label=${this.label ? `Edit ${this.label}` : 'Edit'}
         aria-disabled=${this.readonly ? 'true' : nothing}

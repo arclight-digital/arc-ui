@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @status stable
  * @prop {string} ratio - Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart container
  * @csspart inner
  */
@@ -99,7 +100,7 @@ export class ArcAspectRatio extends LitElement {
     return html`
       <div
         class="aspect-ratio"
-        part="container"
+        part="base container"
         style="aspect-ratio: ${this._aspectRatio};"
       >
         <div class="aspect-ratio__inner" part="inner">

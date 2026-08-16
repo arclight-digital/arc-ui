@@ -9,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @status stable
  * @prop {string} target - CSS selector for the element that should receive focus when the skip link is activated. Typically an ID like #main.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart link
  */
 export class ArcSkipLink extends LitElement {
@@ -56,7 +57,7 @@ export class ArcSkipLink extends LitElement {
 
   render() {
     return html`
-      <a class="skip-link" href=${this.target} part="link">
+      <a class="skip-link" href=${this.target} part="base link">
         <slot>Skip to content</slot>
       </a>
     `;

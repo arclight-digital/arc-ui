@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'bottom-right' | 'bottom-left'} position - Corner placement.
  * @prop {string} offset - Distance from viewport edges. Accepts any CSS length value.
  * @slot none
+ * @csspart base - The root element.
  * @csspart button
  */
 export class ArcScrollToTop extends DeclaredPropsMixin(LitElement) {
@@ -159,7 +160,7 @@ export class ArcScrollToTop extends DeclaredPropsMixin(LitElement) {
         style="--_offset: ${this.offset}"
         @click=${this._scrollToTop}
         aria-label="Scroll to top"
-        part="button"
+        part="base button"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <polyline points="18 15 12 9 6 15"></polyline>

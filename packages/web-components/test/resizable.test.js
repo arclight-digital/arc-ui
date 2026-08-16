@@ -27,7 +27,7 @@ async function panel(attrs = '') {
   return el;
 }
 
-const handle = (el) => el.shadowRoot.querySelector('[part="handle"]');
+const handle = (el) => el.shadowRoot.querySelector('[part~="handle"]');
 const panelSize = (el) => el.style.getPropertyValue('--panel-size');
 
 /** A full pointer drag on the handle, which captures the pointer itself. */
@@ -45,7 +45,7 @@ describe('arc-resizable rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await panel();
     for (const part of ['container', 'handle']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

@@ -12,6 +12,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @fires {CustomEvent<{ item: { label: string, icon: string }, path: string[], expanded: boolean }>} arc-toggle - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.
  * @fires {CustomEvent<{ value: string, item: { label: string, icon: string }, path: string[] }>} arc-select - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart tree - The root list. The nested lists at deeper levels are `group`.
  * @csspart group - A nested list under an expanded branch.
  * @csspart item
@@ -310,7 +311,7 @@ export class ArcTreeView extends LitElement {
     const visibleKeys = this._collectVisibleKeys(this._items);
     const focusKey = visibleKeys.includes(this._focusedKey) ? this._focusedKey : null;
     return html`
-      <div class="tree__slot-host">
+      <div part="base" class="tree__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       ${this._renderItems(this._items, 0, [], focusKey)}

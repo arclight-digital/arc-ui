@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
  * @fires arc-change - Fired when a date is selected. `event.detail.value` contains the ISO date string (YYYY-MM-DD).
  * @fires {CustomEvent<{ month: number, year: number }>} arc-month-change - Fired when the visible month or year changes via the navigation buttons.
  * @slot none
+ * @csspart base - The root element.
  * @csspart calendar
  * @csspart header
  * @csspart nav-prev
@@ -337,7 +338,7 @@ export class ArcCalendar extends DeclaredPropsMixin(LitElement) {
     const today = this._todayISO;
 
     return html`
-      <div class="calendar" part="calendar" @keydown=${this._onKeyDown} tabindex="0">
+      <div class="calendar" part="base calendar" @keydown=${this._onKeyDown} tabindex="0">
         <div class="calendar__header" part="header">
           <button class="calendar__nav" @click=${this._prevMonth} aria-label="Previous month" part="nav-prev">
             <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">

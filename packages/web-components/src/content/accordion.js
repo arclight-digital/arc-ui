@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @requires arc-accordion-item
  * @prop {boolean} multiple - When true, allows multiple accordion panels to be open simultaneously. When false (default), opening one panel closes any other open panel.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart accordion
  */
 export class ArcAccordion extends DeclaredPropsMixin(LitElement) {
@@ -148,7 +149,7 @@ export class ArcAccordion extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="accordion__slot-host">
+      <div part="base" class="accordion__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
       <div class="accordion" part="accordion">

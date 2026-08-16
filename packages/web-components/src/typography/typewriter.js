@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {number} pauseEnd - Milliseconds to pause at the end before looping
  * @fires {CustomEvent<void>} arc-complete - Fired when the typing animation finishes revealing all characters
  * @slot none
+ * @csspart base - The root element.
  * @csspart text
  */
 export class ArcTypewriter extends DeclaredPropsMixin(LitElement) {
@@ -166,6 +167,6 @@ export class ArcTypewriter extends DeclaredPropsMixin(LitElement) {
   render() {
     const classes = `typewriter${this._complete ? ' typewriter--done' : ''}`;
 
-    return html`<span class=${classes} part="text">${this._displayText}</span>`;
+    return html`<span class=${classes} part="base text">${this._displayText}</span>`;
   }
 }

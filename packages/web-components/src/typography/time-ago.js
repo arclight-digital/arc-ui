@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} live - Auto-update the relative time on an adaptive interval.
  * @prop {string} locale - BCP 47 locale tag for Intl.RelativeTimeFormat output.
  * @slot none
+ * @csspart base - The root element.
  * @csspart time
  */
 export class ArcTimeAgo extends DeclaredPropsMixin(LitElement) {
@@ -154,7 +155,7 @@ export class ArcTimeAgo extends DeclaredPropsMixin(LitElement) {
   render() {
     return html`<time
       class="time"
-      part="time"
+      part="base time"
       datetime="${this.datetime || ''}"
       title="${this._fullDate}"
     >${this._relative}</time>`;

@@ -21,6 +21,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot header
  * @slot - Default content.
  * @slot footer
+ * @csspart base - The root element.
  * @csspart backdrop
  * @csspart dialog
  * @csspart header
@@ -245,7 +246,7 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
       <div
         class="modal__backdrop"
         @click=${this._handleBackdropClick}
-        part="backdrop"
+        part="base backdrop"
       >
         <div
           class="modal__dialog"

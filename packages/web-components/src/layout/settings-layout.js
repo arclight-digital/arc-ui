@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {'left' | 'top'} navPosition - Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.
  * @slot nav
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart layout
  * @csspart nav
  * @csspart content
@@ -86,7 +87,7 @@ export class ArcSettingsLayout extends DeclaredPropsMixin(LitElement) {
       this.navPosition === 'top' ? 'settings-layout--top' : 'settings-layout--left';
 
     return html`
-      <div class="${layoutClass}" part="layout">
+      <div class="${layoutClass}" part="base layout">
         <div class="nav" part="nav">
           <slot name="nav"></slot>
         </div>

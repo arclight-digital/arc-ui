@@ -49,15 +49,15 @@ async function toggle(attrs = '') {
   return el;
 }
 
-const button = (el) => el.shadowRoot.querySelector('[part="button"]');
-const label = (el) => el.shadowRoot.querySelector('[part="label"]');
+const button = (el) => el.shadowRoot.querySelector('[part~="button"]');
+const label = (el) => el.shadowRoot.querySelector('[part~="label"]');
 const docTheme = () => document.documentElement.getAttribute('data-theme');
 
 describe('arc-theme-toggle rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await toggle();
     for (const part of ['button', 'icon', 'label']) {
-      expect(el.shadowRoot.querySelector(`[part="${part}"]`), part).to.not.equal(null);
+      expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
   });
 

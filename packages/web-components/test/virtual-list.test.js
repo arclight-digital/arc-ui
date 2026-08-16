@@ -27,7 +27,7 @@ async function list(attrs = '') {
   return el;
 }
 
-const rows = (el) => el.shadowRoot.querySelectorAll('[part="item"]');
+const rows = (el) => el.shadowRoot.querySelectorAll('[part~="item"]');
 
 describe('windowing', () => {
   it('mounts a screenful of rows, not ten thousand', async () => {
@@ -39,7 +39,7 @@ describe('windowing', () => {
 
   it('sizes the scroll region to the whole array', async () => {
     const el = await list();
-    const spacer = el.shadowRoot.querySelector('[part="spacer"]');
+    const spacer = el.shadowRoot.querySelector('[part~="spacer"]');
     expect(spacer.style.height).to.equal(`${ROWS * 20}px`);
   });
 

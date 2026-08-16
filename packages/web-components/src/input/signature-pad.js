@@ -32,6 +32,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the pointer session ends and the value serializes. A stroke is a discrete gesture, so each stroke end fires arc-input then arc-change together.
  * @fires {CustomEvent<void>} arc-clear - Fired when the pad is cleared, via the clear button or the clear() method.
  * @slot none
+ * @csspart base - The root element.
  * @csspart pad
  * @csspart label
  * @csspart canvas
@@ -449,7 +450,7 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
     const signed = this._hasInk || !!this.value;
     const ariaLabel = `${this.label || 'Signature'} — ${signed ? 'signed' : 'empty'}`;
     return html`
-      <div class="pad" part="pad">
+      <div class="pad" part="base pad">
         ${
           this.label
             ? html`

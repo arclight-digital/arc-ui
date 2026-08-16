@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {string} heading - Text displayed in the clickable trigger row. Also used as the ARIA label for the content region.
  * @fires {CustomEvent<{ open: boolean }>} arc-toggle - Fired when the collapsible expands or collapses
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart collapsible
  * @csspart trigger
  * @csspart heading
@@ -132,7 +133,7 @@ export class ArcCollapsible extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="collapsible" part="collapsible">
+      <div class="collapsible" part="base collapsible">
         <button
           class="collapsible__trigger"
           aria-expanded=${this.open ? 'true' : 'false'}

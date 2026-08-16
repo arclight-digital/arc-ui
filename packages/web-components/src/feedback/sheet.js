@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot header
  * @slot - Default content.
  * @slot footer
+ * @csspart base - The root element.
  * @csspart close
  * @csspart backdrop
  * @csspart panel
@@ -185,7 +186,7 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     if (changed.has('open') && this.open) {
       this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
       this.updateComplete.then(() => {
-        this.shadowRoot.querySelector('arc-icon-button[part="close"]')?.focus();
+        this.shadowRoot.querySelector('arc-icon-button[part~="close"]')?.focus();
       });
     }
   }
@@ -202,7 +203,7 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
         role="dialog"
         aria-modal="true"
         aria-label=${this.heading || 'Sheet'}
-        part="panel"
+        part="base panel"
       >
         <div class="sheet__handle" part="handle">
           <div class="sheet__handle-bar"></div>

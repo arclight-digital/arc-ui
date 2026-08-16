@@ -42,6 +42,7 @@ function statusStyle(variant) {
  * @fires arc-complete - Fired when a progress toast is completed with complete(id). detail: { id }.
  * @fires arc-cancel - Fired when the user clicks a progress toast's cancel button. detail: { id }.
  * @slot none
+ * @csspart base - The root element.
  * @csspart container
  * @csspart toast
  * @csspart action
@@ -480,7 +481,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <div class="toast-container" role="status" aria-live="polite" aria-atomic="false" part="container">
+      <div class="toast-container" role="status" aria-live="polite" aria-atomic="false" part="base container">
         ${this._toasts.map(
           (t) => html`
           <div class="toast" style=${statusStyle(t.variant)} data-toast-id=${t.id} part="toast">

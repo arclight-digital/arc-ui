@@ -17,6 +17,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * @prop {boolean} showArrows - Shows previous/next arrow buttons on the left and right edges of the viewport.
  * @fires arc-change - Fired when the active slide changes
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart carousel
  * @csspart viewport
  * @csspart arrow-prev
@@ -303,7 +304,7 @@ export class ArcCarousel extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="carousel"
-        part="carousel"
+        part="base carousel"
         role="region"
         aria-roledescription="carousel"
         aria-label="Carousel"

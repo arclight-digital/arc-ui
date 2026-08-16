@@ -57,8 +57,8 @@ describe('arc-segmented-control rendering', () => {
 
   it('exposes the documented css parts', async () => {
     const el = await control();
-    expect(el.shadowRoot.querySelector('[part="control"]')).to.not.equal(null);
-    expect(el.shadowRoot.querySelectorAll('[part="option"]')).to.have.lengthOf(3);
+    expect(el.shadowRoot.querySelector('[part~="control"]')).to.not.equal(null);
+    expect(el.shadowRoot.querySelectorAll('[part~="option"]')).to.have.lengthOf(3);
   });
 });
 

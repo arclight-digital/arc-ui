@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires arc-invalid - Fired when validation fails, with error details
  * @fires {CustomEvent<void>} arc-reset - Fired when the form is reset via the .reset() method
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart form
  * @csspart layout
  * @csspart errors
@@ -323,7 +324,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
   render() {
     return html`
       <form
-        part="form"
+        part="base form"
         action=${this.action || undefined}
         method=${this.method || undefined}
         ?novalidate=${this.novalidate}

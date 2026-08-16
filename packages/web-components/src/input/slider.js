@@ -20,6 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously as the user drags the thumb. Use for real-time preview updates like adjusting opacity, volume, or a CSS property live.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired once when the user releases the thumb, indicating the final committed value. Use for persisting the value to a database or triggering an expensive operation.
  * @slot none
+ * @csspart base - The root element.
  * @csspart slider
  * @csspart header
  * @csspart label
@@ -243,7 +244,7 @@ export class ArcSlider extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
 
   render() {
     return html`
-      <div class="slider" part="slider">
+      <div class="slider" part="base slider">
         ${
           this.label
             ? html`

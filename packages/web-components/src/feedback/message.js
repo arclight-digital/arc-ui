@@ -26,6 +26,7 @@ const ROLES = new Set(['user', 'assistant', 'system']);
  * @prop {boolean} markdown - Render the slotted text through the house markdown renderer. The slot's text content is the source; it re-parses whenever the slot changes, so streaming into the slot streams through the renderer. When false, slotted content renders as-is.
  * @slot - The message body. Text when markdown is set; any markup otherwise.
  * @slot avatar - An optional avatar beside the bubble; the component ships none of its own.
+ * @csspart base - The root element.
  * @csspart message
  * @csspart meta
  * @csspart bubble
@@ -227,7 +228,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
     // the transcript is never blank while the markdown path waits for JS.
     const rendersMarkdown = this.markdown && !this.pending && this._source;
     return html`
-      <div class="message message--${this._speaker}" part="message">
+      <div class="message message--${this._speaker}" part="base message">
         <slot name="avatar"></slot>
         <div class="message__main">
           ${this._renderMeta()}

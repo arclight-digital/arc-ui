@@ -29,6 +29,7 @@ import { DeclaredPropsMixin, flag, oneOf, list, int } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires {CustomEvent<{ value: string, start: string, end: string }>} arc-change - Fired when a complete range is committed (second day clicked or preset applied). `detail.value` is the ISO 8601 interval string, the same shape as the `value` property; `start` and `end` carry the two ends separately.
  * @slot none
+ * @csspart base - The root element.
  * @csspart calendar
  * @csspart panel-title
  * @csspart day
@@ -851,7 +852,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
     const hasPresets = Array.isArray(this.presets) && this.presets.length > 0;
 
     return html`
-      <div class="wrapper" part="wrapper">
+      <div class="wrapper" part="base wrapper">
         ${this.label ? html`<label part="label">${this.label}</label>` : ''}
 
         <div class="input-wrapper" part="input-wrapper">

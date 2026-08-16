@@ -1015,7 +1015,7 @@ catch.
 - prism caught the one mistake made along the way — `lg` styled on `arc-toolbar`
   while its documented union still said `md | sm`.
 
-**Status (2026-08-16): 3 of 5 conventions have landed.** `array-dialect` is
+**Status (2026-08-16): 4 of 5 conventions have landed.** `array-dialect` is
 done — 26 props across 19 components, all four dialects retired, and the check
 that keeps them retired is three rules with one exemption entry between them.
 
@@ -1047,14 +1047,47 @@ that keeps them retired is three rules with one exemption entry between them.
   cases without a line being written for it, because a declared prop is one the
   contract suite knows how to interrogate.
 
-**Still open in 4.3:** `part-base` (the ~180-component mechanical one) and
-`side-slots`. The side-slot row proposes aliasing `before/after` and
+**`part-base` landed 2026-08-16 — 175 of 202 components, and it was not the
+mechanical row it was filed as.** Three things the estimate did not contain:
+
+- **86 distinct spellings** of the root part, not a handful. That number is the
+  case for the convention rather than an obstacle to it.
+- **The root element is not always singular, and not always first.** Fourteen
+  components render a *different root element* depending on a prop (`arc-text`
+  is eight branches, `arc-button` two, `arc-qr-code` two), so `base` had to go
+  on every branch — and a codemod that put it on one branch of thirteen
+  components produced source that read as correct. It was caught by mounting all
+  202 in a browser and reading `shadowRoot.firstElementChild`, which is now the
+  method: **a static scan cannot answer "what is the root element".** Two more
+  (`arc-sheet`, `arc-drawer`) render the scrim first and the panel second as
+  siblings, so first-child is the wrong rule too.
+- **27 components have no root box**, and forcing one on them would have added
+  an element to the page to satisfy a naming rule. 21 are a bare `<slot>`; two
+  are peer boxes with the host as their only container; four render nothing.
+  Each is in `EXEMPT` with its reason.
+- One collision: `arc-waveform.base` was the unplayed layer. Renamed `unplayed`,
+  beside its `played` sibling — the one `::part()` break in the row.
+- **`[part="x"]` is not `::part(x)`.** The dual token broke 226 exact attribute
+  selectors in our own tests while breaking no CSS at all, because `::part()`
+  matches on tokens and `[part=]` does not. Worth knowing before the next dual
+  token; `[part~=]` is the equivalent.
+
+The check is three rules: the part is declared, it is rendered, and it is
+rendered in *every* branch that renders that root — the third exists because of
+the codemod mistake above. The runtime half is one forward assertion in
+`conformance-surface.test.js`, deliberately breaking that file's
+parts-are-asserted-backwards rule, with the reason recorded there: `base` is the
+only part every component is supposed to have and the only one that is not
+conditional. It is driven off the docblock, so the exemption list lives in one
+place.
+
+**Still open in 4.3:** `side-slots`. That row proposes aliasing `before/after` and
 `above/below` onto `prefix/suffix`, and neither is a side slot —
 `arc-image-compare`'s before/after are the two images being compared, and
 `arc-page-header`'s above/below are the block axis, where prefix/suffix are the
 inline one. **That row needs a decision before it needs a codemod.**
 
-- [ ] Root CSS part: every component's outermost part gains the `base` token
+- [x] Root CSS part: every component's outermost part gains the `base` token
       **alongside** its semantic name (`part="base wrapper"` dual-token).
       Honest accounting: this still touches ~180 components' JSDoc — each
       needs `@csspart base` declared and `custom-elements.json` regenerated,

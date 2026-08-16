@@ -20,6 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-close - Fired when the popover closes.
  * @slot trigger
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart trigger
  * @csspart panel
  */
@@ -167,7 +168,7 @@ export class ArcPopover extends DeclaredPropsMixin(LitElement) {
       <div
         class="popover__trigger"
         @click=${this._toggle}
-        part="trigger"
+        part="base trigger"
       >
         <slot name="trigger" @slotchange=${this._syncTriggerAria}></slot>
       </div>

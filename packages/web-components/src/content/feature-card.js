@@ -14,6 +14,7 @@ import { cardHoverStyles } from '../card-styles.js';
  * @prop {string} href - Makes the card a link
  * @prop {string} action - Action label (e.g. "Learn more") shown at the bottom of the card when href is set. Hidden when empty or when no href is provided.
  * @slot icon
+ * @csspart base - The root element.
  * @csspart inner
  * @csspart icon
  * @csspart title
@@ -160,8 +161,8 @@ export class ArcFeatureCard extends LitElement {
     `;
 
     if (this.href) {
-      return html`<a class="card" href=${this.href} part="card">${inner}</a>`;
+      return html`<a class="card" href=${this.href} part="base card">${inner}</a>`;
     }
-    return html`<div class="card" part="card">${inner}</div>`;
+    return html`<div class="card" part="base card">${inner}</div>`;
   }
 }

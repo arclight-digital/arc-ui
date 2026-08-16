@@ -22,6 +22,7 @@ const NEAR_BOTTOM_PX = 100;
  * @fires {CustomEvent<{value: number}>} arc-scroll-away - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.
  * @fires {CustomEvent<{value: number}>} arc-scroll-return - Fired once when the reader comes back within the near-bottom zone. detail.value is the distance from the bottom in pixels.
  * @slot - Default content: the arc-message children making up the transcript.
+ * @csspart base - The root element.
  * @csspart conversation
  */
 export class ArcConversation extends DeclaredPropsMixin(LitElement) {
@@ -178,7 +179,7 @@ export class ArcConversation extends DeclaredPropsMixin(LitElement) {
     return html`
       <div
         class="conversation"
-        part="conversation"
+        part="base conversation"
         role="log"
         tabindex="0"
         @scroll=${this._onScroll}

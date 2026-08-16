@@ -65,7 +65,7 @@ describe('disabled controls refuse the click path', () => {
 
       // Whatever the field is called in each, clicking it is the documented way
       // in — and every one of them declines while disabled.
-      el.shadowRoot.querySelector('input, [part="trigger"], [part="control"]')?.click();
+      el.shadowRoot.querySelector('input, [part~="trigger"], [part~="control"]')?.click();
       await settle(el);
 
       expect(el.open, `${tag} opened on click while disabled`).to.equal(false);

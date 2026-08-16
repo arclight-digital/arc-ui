@@ -103,7 +103,7 @@ describe('the calendars use the shared source', () => {
     await el.updateComplete;
     await tick();
 
-    const dows = [...el.shadowRoot.querySelectorAll('.dow, [part="dow"], .weekday')]
+    const dows = [...el.shadowRoot.querySelectorAll('.dow, [part~="dow"], .weekday')]
       .map((n) => n.textContent.trim()).filter(Boolean);
     expect(dows.length, 'seven headers').to.be.at.least(7);
     // German short weekdays start with Mo, since de-DE starts the week there.
@@ -117,7 +117,7 @@ describe('the calendars use the shared source', () => {
     await el.updateComplete;
     await tick();
 
-    const dows = [...el.shadowRoot.querySelectorAll('.dow, [part="dow"], .weekday')]
+    const dows = [...el.shadowRoot.querySelectorAll('.dow, [part~="dow"], .weekday')]
       .map((n) => n.textContent.trim()).filter(Boolean);
     expect(dows[0], 'forced to Sunday despite en-GB').to.equal('Sun');
   });
@@ -129,7 +129,7 @@ describe('the calendars use the shared source', () => {
     // Read off the header row rather than off `_firstDay`: a calendar that
     // resolved the locale's first day and laid the grid out from a different
     // one is exactly the bug, and the field alone cannot tell them apart.
-    const dows = [...el.shadowRoot.querySelectorAll('[part="dow"]')].map((n) => n.textContent.trim());
+    const dows = [...el.shadowRoot.querySelectorAll('[part~="dow"]')].map((n) => n.textContent.trim());
     expect(dows[0], 'en-GB weeks start on Monday').to.equal('Mon');
     expect(el.shadowRoot.textContent).to.include('August');
   });

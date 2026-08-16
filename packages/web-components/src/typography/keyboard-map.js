@@ -398,6 +398,7 @@ function chordName({ mods, key }, platform) {
  * @prop {'auto' | 'mac' | 'win'} platform - Which platform's modifier legends and `mod` resolution to use: "auto" (default — detected in the browser, mac on the server), "mac", or "win".
  * @prop {string} caption - Optional caption rendered below the board in muted text.
  * @slot none
+ * @csspart base - The root element.
  * @csspart board
  * @csspart key
  * @csspart key-highlighted
@@ -554,7 +555,7 @@ export class ArcKeyboardMap extends DeclaredPropsMixin(LitElement) {
     const keys = buildBoard(layout, platform);
 
     return html`
-      <figure class="map">
+      <figure part="base" class="map">
         <div
           class="board board--${layout}"
           part="board"

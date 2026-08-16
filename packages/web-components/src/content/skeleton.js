@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
  * @prop {string} height - CSS height value; circle auto-matches width when omitted
  * @prop {number} count - Renders multiple skeleton items stacked vertically with spacing. Useful for placeholder lists.
  * @slot none
+ * @csspart base - The root element.
  * @csspart skeleton
  */
 export class ArcSkeleton extends DeclaredPropsMixin(LitElement) {
@@ -86,7 +87,7 @@ export class ArcSkeleton extends DeclaredPropsMixin(LitElement) {
   render() {
     const n = this.count;
     if (n === 1) {
-      return html`<div role="status" aria-label="Loading" aria-busy="true">${this._renderOne()}</div>`;
+      return html`<div part="base" role="status" aria-label="Loading" aria-busy="true">${this._renderOne()}</div>`;
     }
     return html`
       <div class="skeleton-group" role="status" aria-label="Loading" aria-busy="true">

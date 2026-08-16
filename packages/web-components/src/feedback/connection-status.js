@@ -10,6 +10,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @fires {CustomEvent<void>} arc-online - Fired when the browser regains network connectivity
  * @fires {CustomEvent<void>} arc-offline - Fired when the browser loses network connectivity
  * @slot none
+ * @csspart base - The root element.
  * @csspart status
  * @csspart dot
  * @csspart label
@@ -139,7 +140,7 @@ export class ArcConnectionStatus extends LitElement {
     const label = this.online ? 'Connection restored' : 'You are offline';
 
     return html`
-      <div class="connection-status ${stateClass} ${visibleClass}" role="status" aria-live="polite" part="status">
+      <div class="connection-status ${stateClass} ${visibleClass}" role="status" aria-live="polite" part="base status">
         <span class="connection-status__dot" part="dot"></span>
         <span part="label">${label}</span>
       </div>

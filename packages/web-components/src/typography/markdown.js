@@ -176,6 +176,7 @@ function inlineMarkdown(text) {
  * @status stable
  * @prop {string} content - Markdown string to parse and render. Takes precedence over slotted text content.
  * @slot - Default content.
+ * @csspart base - The root element.
  * @csspart markdown
  */
 export class ArcMarkdown extends LitElement {
@@ -339,7 +340,7 @@ export class ArcMarkdown extends LitElement {
            serialize and this component rendered as an empty div. The directive
            puts the markup in the template itself, which server-renders and
            hydrates. The value is sanitizeHtml's output either way. -->
-      <div class="markdown" part="markdown">${unsafeHTML(parsed)}</div>
+      <div class="markdown" part="base markdown">${unsafeHTML(parsed)}</div>
       <slot style="display:none" @slotchange=${this._onSlotChange}></slot>
     `;
   }

@@ -31,6 +31,7 @@ const SEP = '\u001F';
  * @prop {boolean} keysQuoted - Render object keys with quotes. Off by default, matching devtools.
  * @fires arc-toggle - Fired when a node is expanded or collapsed, with the node path and new expanded state
  * @slot none
+ * @csspart base - The root element.
  * @csspart container
  * @csspart item
  * @csspart row
@@ -553,7 +554,7 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
   render() {
     if (this._parseError && this.data === undefined) {
       return html`
-        <div class="json-tree" part="container">
+        <div part="base" class="json-tree" part="container">
           <div class="json-tree__error" part="error" role="status">
             <span class="json-tree__error-label">Invalid JSON</span>
             <span class="json-tree__error-detail">${this._parseError}</span>
