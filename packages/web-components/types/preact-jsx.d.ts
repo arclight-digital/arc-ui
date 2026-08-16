@@ -1,17 +1,17 @@
 // Generated from custom-elements.json by scripts/generate/types.js — do not edit
-// Opt-in JSX typings for using ARC UI custom elements directly in React 19
-// (no wrapper — @arclux/arc-ui-react is the wrapper path, and both are supported).
+// Opt-in JSX typings for using ARC UI custom elements directly in Preact 10
+// (no wrapper — @arclux/arc-ui-preact is the wrapper path, and both are supported).
 //
 // Add this file to your program. Either in tsconfig:
 //
-//   { "include": ["src", "node_modules/@arclux/arc-ui/types/react-jsx.d.ts"] }
+//   { "include": ["src", "node_modules/@arclux/arc-ui/types/preact-jsx.d.ts"] }
 //
 // or from one file in the project:
 //
-//   /// <reference path="./node_modules/@arclux/arc-ui/types/react-jsx.d.ts" />
+//   /// <reference path="./node_modules/@arclux/arc-ui/types/preact-jsx.d.ts" />
 //
-// NOT `{ "types": ["@arclux/arc-ui/react-jsx"] }` and NOT
-// `/// <reference types="@arclux/arc-ui/react-jsx" />`. Both look right and both
+// NOT `{ "types": ["@arclux/arc-ui/preact-jsx"] }` and NOT
+// `/// <reference types="@arclux/arc-ui/preact-jsx" />`. Both look right and both
 // silently do nothing: TypeScript resolves a `types` entry as a *package*
 // — node_modules/@types/<name>, or <name>/package.json#types — and never
 // follows an export-map subpath. Nothing resolves, nothing is included, and
@@ -35,11 +35,13 @@ type ArcBaseAttributes = {
   title?: string;
   role?: string;
   tabIndex?: number;
+  tabindex?: number;
+  dangerouslySetInnerHTML?: { __html: string };
 } & { [attr: `data-${string}`]: unknown } & { [attr: `aria-${string}`]: unknown } & {
   [attr: `on${string}`]: unknown;
 };
 
-declare module 'react' {
+declare module 'preact' {
   namespace JSX {
     interface IntrinsicElements {
       'arc-accordion': ArcBaseAttributes & {

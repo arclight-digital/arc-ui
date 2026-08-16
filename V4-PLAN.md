@@ -1384,12 +1384,27 @@ recording as *not* attempted rather than as done:
 
 (Don't build the wrapper matrix over a catalog about to shrink.)
 
-- [ ] Drop Preact + Solid packages **with a registration story** (documented
-      side-effect imports or a `register()` entry point — a `.d.ts` alone
-      cannot define elements, and Preact lowercases `on*` props so wrapper
-      event mapping is a real capability, not boilerplate). Ship generated
+- [ ] ~~Drop Preact + Solid packages.~~ **Refuted (2026-08-16) — all six
+      packages stay.** Six framework bindings generated from one set of Lit
+      components is the product claim; the packages are what makes it a fact
+      rather than an assertion, and prism is Arclight's own tool with arc-ui
+      as its only real-world corpus. Drop two and two of prism's six
+      generators are proven by nothing. See the do-NOT list.
+
+      What survives from the row, now **additive**: ship generated
       `preact-jsx.d.ts` / `solid-jsx.d.ts` from core, mirroring
-      `types/react-jsx.d.ts`. Migration entries, not silent breaks.
+      `types/react-jsx.d.ts` — React already has *both* a package and a JSX
+      augmentation, and that is the model. It serves the consumer who wants
+      `<arc-input>` natively without giving up the wrapper for the consumer
+      who wants `<Input>`. No migration entry, no break, nothing to remove.
+
+      The one asymmetry worth knowing while maintaining them: the Solid
+      wrapper is a `splitProps` pass-through over `on:arc-input`, which is
+      Solid's own native syntax, so it is typed convenience. The Preact
+      wrapper hand-rolls `addEventListener` per custom event in a
+      `useLayoutEffect`, because Preact's `on*` handling cannot address a
+      dashed custom event name. That is a real capability and the reason a
+      `.d.ts` could never have replaced it.
 - [ ] Slim React: generate `*Props` from `elementProperties` instead of
       deleting published types outright (they are public API and
       `wrapper-slots.js`'s React probe reads them — deprecate across one
@@ -1405,8 +1420,8 @@ recording as *not* attempted rather than as done:
       Vue `isCustomElement`) in `docs/src/pages/docs/frameworks.astro` —
       built and shipped today, mentioned nowhere.
 
-**Exit:** 2.4a runtime suites green against the *new* matrix (4 packages + 2
-type augmentations); smoke-test-wrappers green on tarballs.
+**Exit:** 2.4a runtime suites green across all **six** packages plus the two
+new type augmentations; smoke-test-wrappers green on tarballs.
 
 ### 4.7 Icons split (M) — *after 4.1; independent otherwise*
 
@@ -1541,6 +1556,17 @@ else.
 - **React `*Props` interfaces (silent deletion)** — published API, and
   `wrapper-slots.js`'s React probe reads them; deprecate via generation from
   `elementProperties` instead (4.6).
+- **The Preact and Solid packages** — 4.6 proposed dropping them to types.
+  Refuted: **numbers sell.** "Six framework bindings from one set of web
+  components" is the product claim, and six published packages are what makes
+  it a fact rather than a pitch. prism is Arclight's own generator and arc-ui
+  is the only real-world catalog exercising it — drop these two and
+  `preact.js` and `solid.js` are proven by nothing. The cost of *generating*
+  them is a prism run; the cost is all in the support commitment, and 2.4a's
+  runtime suite already closed the failure mode that argued for the cut (all
+  six shipped without forwarding children and nobody noticed — the suite that
+  found it now covers all six). The JSX augmentations still ship, additively,
+  the way `react-jsx.d.ts` does beside the React package.
 - **`wrapper-slots.js` deletion or `namedSlotOutlets: true` for Angular** —
   the fix is the any-slot ⇒ `<ng-content>` rule (3.1).
 - **`static arc = { subscriptions }` axis** — re-vibing;

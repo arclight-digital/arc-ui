@@ -621,8 +621,14 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/rating.register.js"
     },
+    "./preact-jsx": {
+      "types": "./types/preact-jsx.d.ts"
+    },
     "./react-jsx": {
       "types": "./types/react-jsx.d.ts"
+    },
+    "./solid-jsx": {
+      "types": "./types/solid-jsx.d.ts"
     },
     "./resizable": {
       "types": "./types/index.d.ts",

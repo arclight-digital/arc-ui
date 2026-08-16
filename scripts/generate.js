@@ -125,6 +125,10 @@ const phases = [
       // The theming API, as an assertion: everything that carries the brand
       // follows the two inputs, and the brand is spelled once per scheme.
       check('two-color-contract'),
+      // Compiles the JSX augmentations against each framework's own resolution,
+      // because their content being right says nothing about whether a consumer
+      // can switch them on — see the check's header.
+      check('jsx-augmentations'),
     ],
   },
 ];

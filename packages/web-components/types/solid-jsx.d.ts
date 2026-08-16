@@ -1,17 +1,17 @@
 // Generated from custom-elements.json by scripts/generate/types.js — do not edit
-// Opt-in JSX typings for using ARC UI custom elements directly in React 19
-// (no wrapper — @arclux/arc-ui-react is the wrapper path, and both are supported).
+// Opt-in JSX typings for using ARC UI custom elements directly in Solid 1
+// (no wrapper — @arclux/arc-ui-solid is the wrapper path, and both are supported).
 //
 // Add this file to your program. Either in tsconfig:
 //
-//   { "include": ["src", "node_modules/@arclux/arc-ui/types/react-jsx.d.ts"] }
+//   { "include": ["src", "node_modules/@arclux/arc-ui/types/solid-jsx.d.ts"] }
 //
 // or from one file in the project:
 //
-//   /// <reference path="./node_modules/@arclux/arc-ui/types/react-jsx.d.ts" />
+//   /// <reference path="./node_modules/@arclux/arc-ui/types/solid-jsx.d.ts" />
 //
-// NOT `{ "types": ["@arclux/arc-ui/react-jsx"] }` and NOT
-// `/// <reference types="@arclux/arc-ui/react-jsx" />`. Both look right and both
+// NOT `{ "types": ["@arclux/arc-ui/solid-jsx"] }` and NOT
+// `/// <reference types="@arclux/arc-ui/solid-jsx" />`. Both look right and both
 // silently do nothing: TypeScript resolves a `types` entry as a *package*
 // — node_modules/@types/<name>, or <name>/package.json#types — and never
 // follows an export-map subpath. Nothing resolves, nothing is included, and
@@ -23,10 +23,9 @@ export {};
 
 type ArcBaseAttributes = {
   children?: unknown;
-  key?: string | number | null;
   ref?: unknown;
   class?: string;
-  className?: string;
+  classList?: Record<string, boolean | undefined>;
   style?: unknown;
   id?: string;
   slot?: string;
@@ -34,12 +33,17 @@ type ArcBaseAttributes = {
   hidden?: boolean;
   title?: string;
   role?: string;
-  tabIndex?: number;
+  tabindex?: number | string;
 } & { [attr: `data-${string}`]: unknown } & { [attr: `aria-${string}`]: unknown } & {
+  [directive: `on:${string}`]: unknown;
+  [directive: `oncapture:${string}`]: unknown;
+  [directive: `prop:${string}`]: unknown;
+  [directive: `attr:${string}`]: unknown;
+  [directive: `use:${string}`]: unknown;
   [attr: `on${string}`]: unknown;
 };
 
-declare module 'react' {
+declare module 'solid-js/jsx-runtime' {
   namespace JSX {
     interface IntrinsicElements {
       'arc-accordion': ArcBaseAttributes & {

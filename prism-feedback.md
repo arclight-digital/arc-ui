@@ -236,3 +236,45 @@ an ordinary initial value.
 
 No action requested — recording it so the roadmap item has one more concrete
 consumer behind it.
+
+## The Solid wrappers' `IntrinsicElements` block is inert (found in 4.6)
+
+Every generated Solid wrapper carries:
+
+```ts
+declare module 'solid-js' {
+  namespace JSX {
+    interface IntrinsicElements {
+      'arc-input': Record<string, unknown>;
+    }
+  }
+}
+```
+
+**That does nothing** under the standard Solid TypeScript setup
+(`jsx: "preserve"`, `jsxImportSource: "solid-js"`). TypeScript resolves
+`JSX.IntrinsicElements` through the **`solid-js/jsx-runtime`** entry, which
+`export * from "./types/jsx"`. Augmenting the main `solid-js` entry declares a
+second, unrelated `JSX` namespace that nothing consults — and because an
+augmentation that merges into an unused namespace is not an error, there is no
+diagnostic. All 201 wrappers in this repo carry the block; none of it applies.
+
+Verified by compiling the three forms against a real fixture:
+
+| augmented module | `<arc-activity-heatmap week-start="nope">` |
+| --- | --- |
+| `solid-js` (what prism emits) | compiles — tag unknown, no typing at all |
+| `solid-js/jsx-runtime` | **errors, correctly** |
+| `solid-js/types/jsx.js` | errors, but that path is internal |
+
+The fix is one string: emit `declare module 'solid-js/jsx-runtime'`.
+
+Two things worth noting for the generator's own tests. First, this is not
+visible in `packages/solid`'s build — it compiles clean either way, because the
+wrappers render `<arc-input>` inside a component whose props are typed
+separately, and the intrinsic lookup only matters to a *consumer* writing the
+tag directly. Second, an augmentation is inert in more than one way: a `files`
+entry pointing outside the project root also loads nothing and reports nothing.
+Neither is catchable by reading the emitted file, which is why `arc-ui` now
+compiles its JSX augmentations rather than asserting them
+(`scripts/checks/jsx-augmentations.js`).
