@@ -4286,6 +4286,90 @@ the test for when the exception applies. Separately,
 absence of a private getter, which is the point of that test rather than an
 exception to the rule.
 
+## The two patch fixes — V4-PLAN 3.2
+
+### `arc-diff` had no suite, and that was the finding
+
+The item was "memoise the LCS off the render path, caller-invisible". Before
+touching it: `arc-diff` was in the 38 components without a dedicated test file,
+which HANDOFF describes as "all presentational primitives whose whole contract
+is props + slots + parts and is already derived". `arc-diff` is not that. It is
+an LCS implementation with a backtrack, two line-number series and two render
+modes, and the derived suites can only see its declared props.
+
+So the memo waited and `diff.test.js` came first, pinning the output it was not
+allowed to change. Then the memo, keyed on the `(original, revised)` pair. Not
+on a dirty flag, and not on a one-shot guard: setting `revised` back to a value
+it held two renders ago has to be a cache miss, and the pair is the only key
+for which that falls out rather than needing a rule.
+
+The `render()` call was the whole cost. `_computeDiff` allocates the entire
+`(m+1) × (n+1)` table, and `render()` called it directly — so a `mode` flip, or
+any parent-driven update, rebuilt the table for text that had not moved.
+Memoising removes the *repeat* cost only; the first diff of a large pair is
+still O(m × n) in time and memory, which is what the size guard V4-PLAN defers
+to v4 is for.
+
+**The mutation pair found a blind spot the fixtures shared.** All five
+behavioural fixtures either ended on a matching line or happened to agree
+whichever way the backtrack went, so none of them read the last column of the
+LCS table for a real decision. `for (let j = 1; j <= n; j++)` mutated to
+`j < n` — which leaves that whole column zero — survived every one.
+
+What distinguishes them is a line deleted from the end of a file:
+
+```
+original: "a\nb"      revised: "a"
+correct:  " a" / "-b"
+mutant:   "-a" / "+a"      and `b` is never mentioned
+```
+
+This is HANDOFF's "pick fixture values where the arithmetic is observable", one
+step subtler than the `min: 0` case it was written for. Those fixtures were not
+degenerate — each was a reasonable diff. They were *unanimous*: every one
+happened to make the boundary comparison come out the same either way. With the
+end-deletion case added the pair is **100% (24/24)**.
+
+### `arc-json-tree`: the cycle guard is ancestor-scoped
+
+`JSON.parse` cannot produce a cycle, so this only ever affected the `data`
+property. Both walks recursed with no memory of where they had been:
+`_collectVisibleKeys` first, then `_renderNode`.
+
+The crash needed the expansion depth unbounded. At the default depth of one,
+`_isExpanded` stops at level 1 and the recursion never gets going — which is
+why an object containing itself looked fine in every casual test and blew the
+stack the moment someone wrote `<arc-json-tree expanded>`.
+
+**The guard is "is this value among its own ancestors", not "have I seen this
+value".** The second is a different rule and a wrong one: two sibling keys
+pointing at one shared object — a units table referenced twice, say — is
+ordinary, and marking the second of them `{Circular}` would hide real data
+under a correctness-sounding label. A WeakSet added before the children and
+removed after gives ancestor semantics exactly, and the anti-vacuity test for
+it is a shared sibling reference that must still render in full.
+
+Both walks needed the same guard and they have to agree on it.
+`_collectVisibleKeys` decides which rows can hold the roving tabindex, so a row
+`_renderNode` draws and it does not know about is on screen and unreachable by
+keyboard. That agreement is asserted directly: one key per rendered row.
+
+**The pair reads 71.88% (46/64), and none of the 18 survivors is in the new
+code.** Every operator in the guard — `container && ancestors.has(value)`, the
+two `&& !circular` conjunctions, the `circular` branch in `valuePart` — dies
+against the tests above. The survivors are pre-existing depth gaps elsewhere in
+the component: the `ArrowRight`/`ArrowLeft` branch conditions at `:330`/`:333`,
+the `bubbles`/`composed` flags on `arc-toggle`, the "show more" row's tabindex,
+and the `willUpdate` invalidation disjunction. Recorded rather than chased —
+3.2 is two named patch fixes, not a coverage item, and json-tree is not in the
+sampled gate. It is a reasonable candidate for the next depth pass.
+
+**Not purely a crash fix, and worth saying so.** At a finite depth above one the
+old code did not crash — it rendered `self > self > self` down to the limit.
+The guard changes that to one `{Circular}` row. Still patch-safe in the sense
+that matters, because nobody can depend on a cycle rendering as nested
+repetition and the alternative further down is no render at all.
+
 ## A ledger correction: `pnpm generate` was not diff-clean
 
 Caught during this batch's final verification, and it matters for Phase 0

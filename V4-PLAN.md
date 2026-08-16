@@ -735,13 +735,56 @@ six packages.
       `pnpm install --frozen-lockfile` works and
       `scripts/checks/prism-version.js` passes. That check exists because an
       older prism does not error — it silently reverts all 235 files.
-- [ ] **3.2 (S, after the 1.2 decision)** True patch fixes (v3.2.x), only in
+- [x] **3.2 (S, after the 1.2 decision)** True patch fixes (v3.2.x), only in
       components 1.2 keeps: memoize `data/diff.js`'s LCS off the render path
       (caller-invisible) and add `data/json-tree.js`'s WeakSet cycle guard
       (~6 LOC; turns a first-paint stack overflow into rendered output). The
       diff **size guard** is *not* patch-safe — above-threshold inputs
       produce different output — so it ships with v4 (or v3.3.0) with the
       threshold documented as a public constant.
+
+      **DONE 2026-08-15.** Both, plus the suite `arc-diff` never had.
+
+      **`arc-diff` had no test file at all**, which is the first thing the item
+      turned up: it is not a presentational primitive — it is an LCS
+      implementation — and it was in the 38 components without a dedicated
+      suite. Changing an untested algorithm's call pattern is not a patch, so
+      `diff.test.js` landed first and pinned the output: which lines, in what
+      order, with which of the two number series and which prefix, in both
+      modes. Only then the memo, keyed on the `(original, revised)` pair rather
+      than on a dirty flag — reverting `revised` to a value it held two renders
+      ago has to be a miss, and that is the only reading that cannot go stale.
+
+      **The suite's own fixtures had a blind spot the mutation pair found.**
+      Every one of them either ended on a matching line or happened to agree
+      whichever way the backtrack went, so none read the last column of the LCS
+      table for a real decision — `j <= n` mutated to `j < n` survived all of
+      them. A line deleted from the *end* of a file, which is about as ordinary
+      as a diff gets, distinguishes them: without that column the component
+      reports `-a +a` and never mentions the deleted line. Same rule as
+      HANDOFF's "pick fixture values where the arithmetic is observable", one
+      step subtler — these fixtures were not degenerate, they were unanimous.
+      Pair now **100% (24/24)**.
+
+      **The cycle guard is ancestor-scoped, and that distinction is the whole
+      design.** "Have I seen this object anywhere in this render" is a
+      different and wrong rule: two sibling keys pointing at one shared object
+      is an ordinary shape, and marking the second circular would silently hide
+      data. A WeakSet added and removed around the children gives exactly
+      "is this value among its own ancestors". Both walks needed it —
+      `_renderNode` and `_collectVisibleKeys` — and they have to agree, because
+      the second decides which rows can hold the roving tabindex and a rendered
+      row it does not know about cannot be focused.
+
+      **One nuance worth stating, because "patch-safe" was the item's premise.**
+      The crash only fires with the expansion depth unbounded (`expanded` as a
+      bare attribute); at the default depth of one the recursion stopped before
+      it ever recursed, which is why this survived so long. At a *finite* depth
+      above one the old code did not crash — it rendered `self > self > self`
+      five levels deep. So this changes output for cyclic input at finite
+      depths as well as fixing the crash. That is still patch-safe in the sense
+      that matters: nobody can depend on a cycle rendering as nested
+      repetition, and the alternative at higher depths is no render at all.
 
 ---
 

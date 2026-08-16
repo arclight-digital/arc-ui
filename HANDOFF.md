@@ -9,14 +9,31 @@ see "What changed under the plan" below.
 
 ## Where things stand
 
-- **Suite: 4,436 passing, 0 failing, 2 skipped**, ~25s, clean (2026-08-15).
+- **Suite: 4,664 passing, 0 failing, 2 skipped**, ~30s, clean (2026-08-15).
   `pnpm check` 22/22, `pnpm generate` diff-clean, `pnpm mutate:sample` green.
-- **Per-component coverage is effectively closed.** 64 components have a
-  dedicated suite; the 38 with none are all presentational primitives
-  (`arc-stack`, `arc-center`, `arc-skeleton`, `arc-kbd` …) whose whole contract
-  is props + slots + parts and is already derived. **Zero components with real
-  behaviour are untested.** Breadth is done; what is left is depth, which is
-  what the mutation gate measures — not more test files.
+- **Per-component coverage is *nearly* closed, and the old claim here was too
+  strong.** This file used to say the components with no dedicated suite "are
+  all presentational primitives" and that "zero components with real behaviour
+  are untested". 3.2 disproved it by walking into one: `arc-diff` is an LCS
+  implementation with a backtrack and two render modes, and it had **no
+  mention in any test file at all** — not a sweep, not a contract suite,
+  nothing but the derived prop conformance every component gets. It has a suite
+  now (`diff.test.js`, mutation pair 100%).
+
+  The honest count, verified by grepping each `@tag` against the whole test
+  directory rather than by eye: **44 tags are still not mentioned in any test
+  file.** Most really are primitives (`arc-stack`, `arc-center`, `arc-kbd`,
+  `arc-skeleton`, `arc-spinner`, `arc-separator`…), but not all of them.
+  Worth a pass before or during Phase 4: **`arc-sparkline`** (scales data to a
+  path), **`arc-masonry`** (column balancing), **`arc-animated-number`**
+  (tweening), **`arc-number-format`** (Intl options — 2.3 already found a
+  `RangeError` in it through the conformance probe), and
+  **`arc-comparison`/`arc-comparison-column`**. `arc-table` is on the list too
+  and 4.2 merges it away, so it does not need one.
+
+  The general lesson matches ground rule 2: "all presentational" was a
+  judgement made from a mental list, and the list was wrong. Breadth is *mostly*
+  done; depth is what the mutation gate measures.
 - **`pnpm generate` was NOT diff-clean, contrary to what this file used to
   claim.** Running it produced a large one-time catch-up: ~150 wrapper files
   across all six packages, plus the `packages/html` examples. The changes are
@@ -31,6 +48,14 @@ see "What changed under the plan" below.
   ~3,400 tests with the *same* detection, after fault injection showed one
   broken mechanism was being reported 238 times. See "Test posture" in
   test-findings.md before reading any test-count trend as progress.
+- **Phase 3 is DONE (2026-08-15).** 3.2's two patch fixes landed: `arc-diff`'s
+  LCS is memoised on the `(original, revised)` pair, and `arc-json-tree` has an
+  **ancestor-scoped** cycle guard on both of its walks. Ancestor-scoped is the
+  design, not an implementation detail — "have I seen this object anywhere in
+  this render" would mark the second of two siblings sharing one object as
+  circular and hide real data. The json-tree crash only fired with `expanded`
+  unbounded, which is why an object containing itself looked fine in every
+  casual test.
 - **V4-PLAN Phase 2 is DONE (2026-08-15).** 2.5 climbed the two large mutation
   pairs — `listbox-controller` **50.00% → 98.68%** and `position-controller`
   **52.83% → 88.46%** — and both are now ratcheted and enforced in CI rather
