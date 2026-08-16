@@ -12,6 +12,25 @@ if (!version) {
   process.exit(1);
 }
 
+/* Lockstep *versions*, diff-gated *publishing*.
+ *
+ * 4.6 asked for per-package versioning to replace this. It got the half that
+ * was actually costing something — every release put nine tarballs on npm
+ * whether or not anything in eight of them had moved — and kept one version
+ * line, because the two are separable and only one of them was the problem.
+ *
+ * A single version number is what makes the release tag mean something: the
+ * workflow gates on core's version matching the tag, and `v4.1.0` naming a tree
+ * where the Vue wrapper is at 4.0.3 is a tag that describes one package.
+ * Per-package numbers also need per-package changelogs and a decision per
+ * package per release, which is bookkeeping for one maintainer to carry in
+ * exchange for version histories nobody is reading.
+ *
+ * What diff-gating gives up in return is that a wrapper's version no longer
+ * proves it changed — but the git tag does, and scripts/checks/version-floor.js
+ * keeps the thing that has to stay true: every wrapper's core floor is a caret
+ * stamped at pack time, so an unpublished wrapper still accepts the new core.
+ */
 const packages = [
   '.',
   'packages/web-components',

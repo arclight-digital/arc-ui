@@ -85,12 +85,49 @@ jobs:
             exit 1
           fi
 
+      # Which packages this tag actually publishes.
+      #
+      # Every release published all nine at the same version whether or not
+      # anything in them had changed, which puts eight identical tarballs on
+      # npm per patch and makes a package's version history say nothing about
+      # whether the package moved. pnpm's own `[<since>]` filter answers it
+      # from git: the packages whose *files* changed since the previous tag.
+      # Deliberately without the `...` dependents prefix — a wrapper whose
+      # files did not change does not need republishing when core moves,
+      # because the copy already on npm declares `^<older core>` and a caret
+      # accepts the newer one.
+      #
+      # Except across a major, where a caret does not. A wrapper still
+      # declaring ^3 refuses core 4 and the consumer gets a peer conflict on
+      # upgrade, so a major republishes everything regardless of diff. This is
+      # also the safe direction to be wrong in: the cost is a few identical
+      # tarballs, and the cost of the other mistake is a broken upgrade path.
+      - name: Choose packages to publish
+        id: scope
+        run: |
+          PREV="$(git describe --tags --abbrev=0 "${GITHUB_REF_NAME}^" 2>/dev/null || true)"
+          if [ -z "$PREV" ]; then
+            echo "No previous tag — publishing everything."
+            echo "filter=-r" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          NEW_MAJOR="${GITHUB_REF_NAME#v}"; NEW_MAJOR="${NEW_MAJOR%%.*}"
+          OLD_MAJOR="${PREV#v}"; OLD_MAJOR="${OLD_MAJOR%%.*}"
+          if [ "$NEW_MAJOR" != "$OLD_MAJOR" ]; then
+            echo "Major bump $PREV → $GITHUB_REF_NAME — publishing everything."
+            echo "filter=-r" >> "$GITHUB_OUTPUT"
+          else
+            echo "Publishing packages changed since $PREV:"
+            pnpm --filter "[$PREV]" list --depth -1 || true
+            echo "filter=--filter [$PREV]" >> "$GITHUB_OUTPUT"
+          fi
+
       # OIDC trusted publishing: no token; provenance is generated
       # automatically. NPM_CONFIG_PROVENANCE stays as a guard so a silent
       # fallback to tokenless-unsigned publishing can never happen.
       # --no-git-checks is required on a detached tag checkout.
-      - name: Publish all packages
-        run: pnpm -r publish --access public --no-git-checks
+      - name: Publish
+        run: pnpm ${{ steps.scope.outputs.filter }} publish --access public --no-git-checks
         env:
           NPM_CONFIG_PROVENANCE: "true"
 

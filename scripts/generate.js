@@ -129,6 +129,10 @@ const phases = [
       // because their content being right says nothing about whether a consumer
       // can switch them on — see the check's header.
       check('jsx-augmentations'),
+      // The release publishes only what changed since the last tag, which is
+      // safe exactly while every wrapper's core floor is a caret stamped at
+      // pack time rather than a literal someone typed.
+      check('version-floor'),
     ],
   },
 ];
