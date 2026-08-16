@@ -227,6 +227,99 @@ describe('keyboard', () => {
   });
 });
 
+/**
+ * Cycles — V4-PLAN 3.2.
+ *
+ * `JSON.parse` cannot produce one, so this is entirely about the `data`
+ * property: an object that contains itself. Both walks — `_collectVisibleKeys`
+ * and `_renderNode` — recursed with no memory of where they had been, so with
+ * the expansion depth unbounded the first paint was a
+ * `RangeError: Maximum call stack size exceeded` and the component rendered
+ * nothing at all.
+ *
+ * The guard is ancestor-scoped on purpose. "Have I seen this object anywhere
+ * in this render" would also mark the *second* of two siblings that happen to
+ * share one object, which is an ordinary shape (a lookup table referenced
+ * twice) and not a cycle. The sibling test below is what holds that line.
+ */
+describe('cyclic data', () => {
+  /** `{ name, self }` where `self` is the object itself. */
+  function selfReferential() {
+    const node = { name: 'root' };
+    node.self = node;
+    return node;
+  }
+
+  it('renders a self-referential object instead of overflowing the stack', async () => {
+    // `expanded` bare means every level, which is what makes the recursion
+    // unbounded. At the default depth of one it stopped before it recursed and
+    // the bug was invisible.
+    const el = await tree(selfReferential(), 'expanded');
+    expect(rows(el).length, 'something rendered').to.be.greaterThan(0);
+    expect(valueOf(el, 'string').textContent).to.equal('"root"');
+  });
+
+  it('marks the cycle rather than repeating it', async () => {
+    const el = await tree(selfReferential(), 'expanded');
+    const previews = [...el.shadowRoot.querySelectorAll('[part="preview"]')]
+      .map((p) => p.textContent.trim());
+    expect(previews).to.include('{Circular}');
+
+    // One row for the root, one for `name`, one for `self`. A tree that
+    // recursed once more would have four.
+    expect(rows(el)).to.have.lengthOf(3);
+  });
+
+  it('marks a cycle closed through an array too', async () => {
+    const list = [1];
+    list.push(list);
+    const el = await tree({ list }, 'expanded');
+    const previews = [...el.shadowRoot.querySelectorAll('[part="preview"]')]
+      .map((p) => p.textContent.trim());
+    expect(previews).to.include('[Circular]');
+  });
+
+  it('leaves the cycle row out of the tree keymap rather than half in it', async () => {
+    // The two walks have to agree: `_collectVisibleKeys` decides which rows
+    // can hold the roving tabindex, and a row it does not know about cannot be
+    // focused even though it is on screen.
+    const el = await tree(selfReferential(), 'expanded');
+    const keys = el._collectVisibleKeys(el.data);
+    expect(keys.length, 'one key per rendered row').to.equal(rows(el).length);
+  });
+
+  it('still renders a shared reference in full when it is not an ancestor', async () => {
+    // Anti-vacuity, and the reason the guard is ancestor-scoped: `shared`
+    // appears twice as a sibling, which is not a cycle. A "seen anywhere"
+    // guard would render the second one as circular and quietly hide data.
+    const shared = { unit: 'ms' };
+    const el = await tree({ first: shared, second: shared }, 'expanded');
+
+    const previews = [...el.shadowRoot.querySelectorAll('[part="preview"]')]
+      .map((p) => p.textContent.trim());
+    expect(previews, 'neither copy is a cycle').to.not.include('{Circular}');
+    expect(el.shadowRoot.querySelectorAll('.json-tree__value--string')).to.have.lengthOf(2);
+  });
+
+  it('presents the cycle row as a leaf, not a branch that refuses to open', async () => {
+    const el = await tree(selfReferential(), 'expanded');
+    const row = rowByText(el, 'Circular');
+
+    expect(row.getAttribute('aria-expanded'), 'a leaf claims nothing').to.equal(null);
+    row.click();
+    await el.updateComplete;
+    expect(rowByText(el, 'Circular'), 'and clicking it changes nothing').to.not.equal(undefined);
+    expect(rows(el)).to.have.lengthOf(3);
+  });
+
+  it('keeps a cycle harmless at a finite depth as well', async () => {
+    // Without the guard this nested five deep and rendered `self > self > …`,
+    // which is not a crash but is not the truth either.
+    const el = await tree(selfReferential(), 'expanded="5"');
+    expect(rows(el)).to.have.lengthOf(3);
+  });
+});
+
 describe('aria', () => {
   it('exposes the tree pattern roles and levels', async () => {
     const el = await tree({ outer: { inner: 1 } }, 'expanded="2"');

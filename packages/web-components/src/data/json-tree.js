@@ -349,17 +349,29 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-  /** Visible-row keys under current expansion, for roving-tabindex recovery. */
-  _collectVisibleKeys(value, path = [], keys = []) {
+  /**
+   * Visible-row keys under current expansion, for roving-tabindex recovery.
+   *
+   * `ancestors` carries the objects on the path from the root to here, so a
+   * value that contains itself stops instead of recursing forever. It has to
+   * agree with `_renderNode`'s guard exactly: this list decides which rows can
+   * hold the tabindex, and a rendered row it does not know about cannot be
+   * focused.
+   */
+  _collectVisibleKeys(value, path = [], keys = [], ancestors = new WeakSet()) {
     const pathKey = this._pathKey(path);
     keys.push(pathKey);
     if (value === null || typeof value !== 'object') return keys;
+    // The cycle's own row is counted above and then not descended into.
+    if (ancestors.has(value)) return keys;
     const entries = this._entriesOf(value);
     if (entries.length > 0 && this._isExpanded(pathKey, path.length)) {
+      ancestors.add(value);
       const shown = this._shown.get(pathKey) ?? PAGE_SIZE;
       for (const [k, v] of entries.slice(0, shown)) {
-        this._collectVisibleKeys(v, [...path, String(k)], keys);
+        this._collectVisibleKeys(v, [...path, String(k)], keys, ancestors);
       }
+      ancestors.delete(value);
       if (entries.length > shown) keys.push(pathKey + SEP + SEP + 'more');
     }
     return keys;
@@ -442,12 +454,25 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  _renderNode(value, key, level, path, focusKey, isFirst) {
+  /**
+   * @param {WeakSet} ancestors - The objects between the root and this node.
+   *   A value that appears among its own ancestors is a cycle: it renders as
+   *   one non-expandable row and is not descended into. `JSON.parse` cannot
+   *   build one, so this only ever fires for the `data` property — but there
+   *   it used to overflow the stack on first paint.
+   *
+   *   Ancestors rather than "everything seen this render", which is a
+   *   different and wrong rule: two sibling keys pointing at one shared object
+   *   is an ordinary shape, and marking the second of them circular would hide
+   *   real data.
+   */
+  _renderNode(value, key, level, path, focusKey, isFirst, ancestors = new WeakSet()) {
     const pathKey = this._pathKey(path);
     const container = value !== null && typeof value === 'object';
+    const circular = container && ancestors.has(value);
     const isArray = Array.isArray(value);
-    const entries = container ? this._entriesOf(value) : null;
-    const branch = container && entries.length > 0;
+    const entries = container && !circular ? this._entriesOf(value) : null;
+    const branch = container && !circular && entries.length > 0;
     const open = branch && this._isExpanded(pathKey, level);
     const node = { pathKey, path, level, branch, open };
     // The root row's path key is the empty string, so compare against null
@@ -457,6 +482,8 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
     let valuePart;
     if (!container) {
       valuePart = this._renderPrimitive(value);
+    } else if (circular) {
+      valuePart = html`<span class="json-tree__preview" part="preview">${isArray ? '[Circular]' : '{Circular}'}</span>`;
     } else if (!branch) {
       valuePart = html`<span class="json-tree__preview" part="preview">${isArray ? '[]' : '{}'}</span>`;
     } else if (open) {
@@ -472,9 +499,14 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
     if (open) {
       const shown = this._shown.get(pathKey) ?? PAGE_SIZE;
       const visible = entries.slice(0, shown);
+      // Added and removed around the children only, so `ancestors` really is
+      // the path to this node and not everything the render has touched. The
+      // `.map` below runs while the template's expressions are evaluated, so
+      // the delete lands after every descendant has been built.
+      ancestors.add(value);
       children = html`
         <ul class="json-tree__group" role="group">
-          ${visible.map(([k, v]) => this._renderNode(v, k, level + 1, [...path, String(k)], focusKey, false))}
+          ${visible.map(([k, v]) => this._renderNode(v, k, level + 1, [...path, String(k)], focusKey, false, ancestors))}
           ${
             entries.length > shown
               ? this._renderMore(entries, shown, level + 1, path, pathKey, focusKey)
@@ -482,6 +514,7 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
           }
         </ul>
       `;
+      ancestors.delete(value);
       closer = html`<div class="json-tree__closer" style="padding-inline-start: calc(var(--space-xs) * 2 + ${level * 16 + 16}px)">${isArray ? ']' : '}'}</div>`;
     }
 

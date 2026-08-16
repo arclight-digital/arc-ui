@@ -107,6 +107,37 @@ export class ArcDiff extends DeclaredPropsMixin(LitElement) {
     super();
     this.original = '';
     this.revised = '';
+    /** `{ original, revised, ops }` for the last pair diffed — see `_diffOps`. */
+    this._diffMemo = null;
+  }
+
+  /**
+   * The diff for the current `original`/`revised` pair, computed once per pair.
+   *
+   * `_computeDiff` is O(m × n) in time *and* memory — it allocates the whole
+   * LCS table — and `render()` used to call it directly, so every re-render
+   * paid for it again. A `mode` flip, a parent update, anything at all that
+   * reached `requestUpdate` rebuilt a table for text that had not moved.
+   *
+   * Keyed on the two strings rather than on a dirty flag, so the memo is
+   * correct whatever drives the update: reverting `revised` to a value it held
+   * two renders ago is a cache miss, which is the only reading that cannot go
+   * stale. This is invisible to callers by construction — same inputs, same
+   * ops, and the ops array is never handed out or mutated.
+   *
+   * Not memoised across instances: the key would have to be the pair of full
+   * texts, and holding those in a module-level cache keeps every document a
+   * page has ever diffed alive for the lifetime of the tab.
+   */
+  _diffOps() {
+    const original = this.original || '';
+    const revised = this.revised || '';
+    const memo = this._diffMemo;
+    if (memo && memo.original === original && memo.revised === revised) return memo.ops;
+
+    const ops = this._computeDiff(original.split('\n'), revised.split('\n'));
+    this._diffMemo = { original, revised, ops };
+    return ops;
   }
 
   /** Compute LCS-based diff of two line arrays. */
@@ -160,9 +191,7 @@ export class ArcDiff extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
-    const beforeLines = (this.original || '').split('\n');
-    const afterLines = (this.revised || '').split('\n');
-    const ops = this._computeDiff(beforeLines, afterLines);
+    const ops = this._diffOps();
 
     if (this.mode === 'side-by-side') {
       const removedOps = ops.filter((o) => o.type !== 'added');
