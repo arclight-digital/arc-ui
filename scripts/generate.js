@@ -90,7 +90,16 @@ const phases = [
       // would leave the excluded names unreachable for one whole run.
       gen('group-barrels'),
       { name: 'prism', cmd: 'npx', args: ['prism', '--strict', '--prune'] },
+      // Immediately after prism, whose output it rewrites. A bridge, not a
+      // design: generating framework-native bindings is prism's remit and a
+      // ControlValueAccessor is the most framework-native thing Angular has.
+      // Specified upstream in PRISM-3.md §2.1; this step goes when that lands.
+      gen('angular-cva'),
       check('barrel-gating'),
+      // Reads the Angular sources angular-cva just rewrote, against the
+      // elements' own declarations — the pass failing loudly covers it not
+      // running, not it running wrong.
+      check('angular-forms'),
     ],
   },
   {

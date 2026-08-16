@@ -191,3 +191,11 @@ Recorded because a report of only defects is a misleading one.
   itself. All six wrapper packages regenerate byte-identically through it.
 
 Full running ledger: `prism-feedback.md` at the arc-ui repo root.
+
+---
+
+**Superseded for planning purposes by `PRISM-3.md`** (repo root), which collects
+this file's open items — §3's `propsFrom` cross-check and §4's runtime
+`elementProperties` resolution — into the prism 3.0 scope alongside the work
+arc-ui is doing on prism's behalf. This file stays as the record of the two
+2.13.0 barrel bugs and their reproductions.

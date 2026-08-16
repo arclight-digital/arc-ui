@@ -585,6 +585,9 @@
       "types": "./types/index.d.ts",
       "default": "./src/feedback/popover.register.js"
     },
+    "./preact-jsx": {
+      "types": "./types/preact-jsx.d.ts"
+    },
     "./progress": {
       "types": "./types/index.d.ts",
       "default": "./src/feedback/progress.register.js"
@@ -621,14 +624,8 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/rating.register.js"
     },
-    "./preact-jsx": {
-      "types": "./types/preact-jsx.d.ts"
-    },
     "./react-jsx": {
       "types": "./types/react-jsx.d.ts"
-    },
-    "./solid-jsx": {
-      "types": "./types/solid-jsx.d.ts"
     },
     "./resizable": {
       "types": "./types/index.d.ts",
@@ -733,6 +730,9 @@
     "./snackbar": {
       "types": "./types/index.d.ts",
       "default": "./src/feedback/snackbar.register.js"
+    },
+    "./solid-jsx": {
+      "types": "./types/solid-jsx.d.ts"
     },
     "./sortable-list": {
       "types": "./types/index.d.ts",

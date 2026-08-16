@@ -11,6 +11,7 @@
   "peerDependencies": {
     "@angular/common": ">=17.0.0 <22.0.0",
     "@angular/core": ">=17.0.0 <22.0.0",
+    "@angular/forms": ">=17.0.0 <22.0.0",
     "@arclux/arc-ui": "workspace:^"
   },
   "license": "MIT",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@angular/common": "^17.3.12",
     "@angular/compiler-cli": "^17.3.12",
+    "@angular/forms": "^17.3.12",
     "@angular/core": "^17.3.12",
     "@arclux/arc-ui": "workspace:*",
     "ng-packagr": "^17.3.0",

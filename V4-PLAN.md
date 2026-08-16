@@ -799,8 +799,9 @@ deletes — and cutting first shrinks the tree every later workstream touches.
 Non-blocking, may trail into 4.x minors: 4.8 (ships `experimental`), 4.9,
 4.10.
 
-**Status (2026-08-16): 4.1, 4.2, 4.3, 4.4 and 4.5 are done.** The tag still
-needs **4.6** (wrapper matrix), **4.7** (icons split) and **4.11**. 4.5's two
+**Status (2026-08-16): 4.1, 4.2, 4.3, 4.4, 4.5 and 4.6 are done.** The tag
+still needs **4.7** (icons split) and **4.11** — and **prism 3.0**, which now
+ships paired with v4.0; see `PRISM-3.md`. 4.5's two
 recorded non-goals — the docs site has never been measured against
 `type-roles` or the extended `gradient-stops`, and the four per-component
 `density` props stay — are follow-ups, not gaps in the row.
@@ -1380,7 +1381,7 @@ recording as *not* attempted rather than as done:
   redundant. Folding them into `[data-density]` would be an API break for no
   gain until someone wants it.
 
-### 4.6 Wrapper matrix (L) — *gated on 2.4a green AND 4.1 landed*
+### 4.6 Wrapper matrix (L) — *gated on 2.4a green AND 4.1 landed* — **DONE**
 
 (Don't build the wrapper matrix over a catalog about to shrink.)
 
@@ -1405,23 +1406,97 @@ recording as *not* attempted rather than as done:
       `useLayoutEffect`, because Preact's `on*` handling cannot address a
       dashed custom event name. That is a real capability and the reason a
       `.d.ts` could never have replaced it.
-- [ ] Slim React: generate `*Props` from `elementProperties` instead of
-      deleting published types outright (they are public API and
-      `wrapper-slots.js`'s React probe reads them — deprecate across one
-      major). Delete `create-component.ts` after a release with a
-      deprecation notice.
-- [ ] Angular: generated `ControlValueAccessor` + `NG_VALUE_ACCESSOR` for the
-      46 write-back controls (`formControlName`/`ngModel` currently work on
-      zero of them — the main reason an Angular wrapper exists).
-- [ ] Per-package versioning (changesets or diff-gated publish) with a
-      version-floor assertion in each wrapper, replacing lockstep
-      `pnpm -r publish` + 9-file bump.
-- [ ] Document the native paths (`react-jsx.d.ts`, `CUSTOM_ELEMENTS_SCHEMA`,
-      Vue `isCustomElement`) in `docs/src/pages/docs/frameworks.astro` —
-      built and shipped today, mentioned nowhere.
+- [x] **Slim React — mostly already true.** prism generates `*Props` from the
+      declared props via `config.propsFrom`, and the 99 components with custom
+      events already get typed `onArc*` handlers through `@lit/react`'s events
+      map. The do-NOT list's reason for keeping the types also still holds:
+      `wrapper-slots.js` reads the React props interface for
+      `children?: React.ReactNode`.
+
+      `create-component.ts` has its deprecation notice for the v5 removal. The
+      notice is nearly ceremonial: the file is in neither `index.ts` nor any of
+      the export map's 207 entries, and the map carries no wildcard, so under
+      `node16` or `bundler` resolution it is already unreachable. The one
+      population that can reach it is a deep import under legacy `node`
+      resolution, which ignores `exports` — and that is who it is addressed to.
+- [x] **Angular `ControlValueAccessor` — done, and it belongs upstream.**
+      27 controls, not 46. The row's number was the count of components
+      emitting `arc-change`, which sweeps in arc-tabs, arc-theme-toggle,
+      arc-waveform and arc-sortable-list. The library already had the precise
+      answer: `FormControlMixin` is what makes a component form-associated, and
+      27 extend it. Derived from source every run, so a 28th is covered by
+      writing it.
+
+      Two of the 27 have no single value: arc-date-range-picker binds
+      `start`/`end` and arc-range-slider binds `low`/`high`. Both get a
+      composite accessor rather than being left out, because
+      `formControlName` working on 25 of 27 is a gap a consumer discovers
+      rather than reads.
+
+      **`scripts/generate/angular-cva.js` is a bridge, not a design.** It
+      regex-rewrites prism's emitted Angular files, because generating
+      framework-native bindings is prism's remit and prism has exactly one
+      extension point (`config.propsFrom`) which answers a different question.
+      The pass is deterministic and idempotent, `pnpm generate` stays
+      diff-clean, and it fails loudly rather than silently when a pattern stops
+      matching — but it is coupled to prism's formatting.
+
+      **Superseded by PRISM-3.md §2.1**, where the generated shape is written
+      up as a specification along with the five non-obvious details it cost
+      something to find. This file goes the release prism ships it.
+
+      Verified by `ng-packagr` building all 27 under `strictTemplates`, and by
+      `check angular-forms`, which reads the finished Angular sources against
+      the elements' own declarations — the generator failing loudly covers the
+      pass not running, not it running wrong.
+
+      **Not covered by a runtime test.** `test/wrapper-runtime/contract.js` is
+      one expectations table across six frameworks, and a `formControlName`
+      probe is Angular-only; bolting an asymmetric case into it would cost more
+      than it proves. The compile and the structural check are what stands
+      behind this row.
+- [x] **Diff-gated publish, lockstep versions.** Only the half that was
+      costing something. Releases put nine tarballs on npm whether or not
+      anything in eight of them had moved; publishing is now scoped by pnpm's
+      own `[<since>]` filter against the previous tag — without the `...`
+      dependents prefix, because a wrapper whose files did not change does not
+      need republishing when core moves. Except across a major, where a caret
+      does not accept the new core, so a major publishes everything.
+
+      Per-package *version numbers* were deliberately not taken: a single
+      version line is what makes the tag mean something (the workflow gates on
+      core's version matching it), and per-package numbers want per-package
+      changelogs and a decision per package per release. Recorded in
+      `bump-versions.js` rather than left as an omission.
+
+      `check version-floor` is what makes the diff-gating safe: every wrapper
+      declares core as a peer spelled `workspace:^`, which pnpm stamps at pack
+      time. A literal reads identically in the repo and cannot follow a release.
+- [x] **The native paths are documented** — registration, Vue's
+      `isCustomElement`, Angular's `CUSTOM_ELEMENTS_SCHEMA`, the three JSX
+      declaration files, and what you give up, which is not the same in every
+      framework.
 
 **Exit:** 2.4a runtime suites green across all **six** packages plus the two
 new type augmentations; smoke-test-wrappers green on tarballs.
+
+**Status (2026-08-16): all five rows landed.** `pnpm check` 37/37 including
+four new linters (`jsx-augmentations`, `version-floor`, `angular-forms`, and
+`type-roles`/`contrast-contract`/`two-color-contract` from 4.5); generate
+diff-clean and idempotent; 4,929 tests; `ng-packagr` builds the Angular package
+clean; a11y-audit 182/182.
+
+**Paired release: prism 3.0 ships with arc-ui v4.0.** `PRISM-3.md` collects the
+scope — two breaking changes prism 3.0 should take (the Solid
+`IntrinsicElements` block being inert in all 201 wrappers, found here on
+2026-08-16; runtime `elementProperties` resolution), three jobs arc-ui is
+currently doing on prism's behalf (Angular CVA, the JSX augmentations, the
+wrapper export maps), the diagnostics, and a table of what arc-ui deletes as
+each lands — 696 of the ~1,235 lines that exist here only because of prism.
+
+The four wrapper *checks* stay whatever prism does. They are not workarounds;
+they are the acceptance suite, and they are how the next defect gets found —
+every fix in prism's ledger was found by one of them.
 
 ### 4.7 Icons split (M) — *after 4.1; independent otherwise*
 

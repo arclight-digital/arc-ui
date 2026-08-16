@@ -278,3 +278,20 @@ entry pointing outside the project root also loads nothing and reports nothing.
 Neither is catchable by reading the emitted file, which is why `arc-ui` now
 compiles its JSX augmentations rather than asserting them
 (`scripts/checks/jsx-augmentations.js`).
+
+---
+
+## Consolidated for prism 3.0 → `PRISM-3.md`
+
+This ledger stays the running record. The scope for **prism 3.0, shipping
+alongside arc-ui v4.0**, is collected in `PRISM-3.md` at this repo's root:
+the two breaking changes 3.0 should take, the three jobs arc-ui is currently
+doing for prism (Angular `ControlValueAccessor`, the JSX type augmentations,
+the wrapper export maps), the diagnostics, and a table of what arc-ui deletes
+as each lands.
+
+The item to read first is §2.1. arc-ui v4.0 ships a 275-line post-processor
+that regex-rewrites prism's emitted Angular files, because `formControlName`
+works on zero wrappers and the row is required for the v4 tag. It is a bridge
+with a deletion trigger, and the shape it generates is offered there as a
+specification rather than as a workaround to review.
