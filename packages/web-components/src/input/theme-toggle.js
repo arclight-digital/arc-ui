@@ -9,6 +9,7 @@ import { observeAttributes } from '../shared/subscriptions.js';
  * transitions and localStorage persistence.
  *
  * @tag arc-theme-toggle
+ * @status stable
  * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.
  * @prop {boolean} disabled - Prevents cycling and reduces opacity to 40%.
  * @prop {boolean} iconOnly - Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.

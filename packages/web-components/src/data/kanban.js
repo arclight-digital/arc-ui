@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * emits an `arc-card-move` event so the consumer can sync its source of truth.
  *
  * @tag arc-kanban
+ * @status beta
  * @requires arc-tag
  * @prop {Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>} columns - The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.
  * @prop {boolean} disabled - Disables all pointer and keyboard interaction and dims the board.

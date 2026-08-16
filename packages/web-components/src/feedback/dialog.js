@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * unsaved changes, session expiry, and discard decisions.
  *
  * @tag arc-dialog
+ * @status stable
  * @requires arc-modal
  * @requires arc-button
  * @prop {boolean} open - Whether the dialog is visible

@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Typography component with variants matching the arclight type scale.
  *
  * @tag arc-text
+ * @status stable
  * @prop {'display' | 'heading' | 'body' | 'muted' | 'ghost' | 'accent' | 'label' | 'wordmark' | 'code'} variant - Typography variant that controls font size, weight, letter-spacing, line-height, and color.
  * @prop {'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'} as - The HTML element to render. Allows semantic heading hierarchy to be set independently from the visual variant.
  * @slot - Default content.

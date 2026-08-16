@@ -99,6 +99,7 @@ function caretForRaw(mask, formattedLength, rawIndex) {
  * receive, so the mask stays presentation.
  *
  * @tag arc-masked-input
+ * @status stable
  * @prop {string} mask - The mask pattern. `#` accepts a digit, `A` an uppercase letter (lowercase input is uppercased), `a` any letter, `*` a letter or digit; every other character is a literal typed for the user. Examples: `##/##/####`, `#### #### #### ####`, `AAA-###`.
  * @prop {string} value - The RAW accepted characters only, with no mask literals — `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts.
  * @prop {string} placeholderChar - Character rendered in unfilled positions of the in-field hint once typing starts (for example `12/__/____`). Before any input, the native placeholder shows the full mask shape. Defaults to `_`.

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, num } from '../shared/props.js';
  * configurable low/high/optimum thresholds.
  *
  * @tag arc-meter
+ * @status stable
  * @prop {number} value - Current meter value. Clamped between `min` and `max`. Reflected as an attribute.
  * @prop {number} min - Minimum value representing the left edge (empty) of the meter.
  * @prop {number} max - Maximum value representing the right edge (full) of the meter.

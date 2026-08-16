@@ -12,6 +12,7 @@ let inputIdCounter = 0;
  * data-entry workflows.
  *
  * @tag arc-input
+ * @status stable
  * @prop {string} label - Visible label rendered above the input. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly.
  * @prop {string} name - The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation.
  * @prop {'text' | 'email' | 'tel' | 'url' | 'password'} type - The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.

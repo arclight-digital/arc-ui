@@ -24,6 +24,7 @@ const SEP = '\u001F';
  * loads no highlighter, so it ships in the register barrel.
  *
  * @tag arc-json-tree
+ * @status stable
  * @prop {object} data - The value to render. Set as a property for objects and arrays; takes precedence over the json attribute when both are set.
  * @prop {string} json - JSON string alternative to the data property, for attribute-only use. Parsed with try/catch; invalid input renders a small inline error state instead of throwing.
  * @prop {number | boolean} expanded - How many levels open initially (default 1). As a bare boolean attribute, every level opens.

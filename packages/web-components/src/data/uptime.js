@@ -12,6 +12,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * objects, and renders the computed overall percentage above the track.
  *
  * @tag arc-uptime
+ * @status stable
  * @prop {Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>} data - One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is "up", 0.95 and up is "degraded", below is "down"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral "none" track. Property only — set it from script or a framework binding.
  * @prop {string} startLabel - Caption under the oldest end of the track (e.g. "90 days ago").
  * @prop {string} endLabel - Caption under the newest end of the track (e.g. "Today").

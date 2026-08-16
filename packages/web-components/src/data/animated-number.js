@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * Smooth count-up/down number animation with formatting options.
  *
  * @tag arc-animated-number
+ * @status stable
  * @prop {number} value - Target number to animate to
  * @prop {number} duration - Animation duration in milliseconds
  * @prop {string} prefix - String prepended before the number (e.g., "$")

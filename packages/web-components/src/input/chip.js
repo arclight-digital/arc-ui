@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * state highlighted in accent-primary.
  *
  * @tag arc-chip
+ * @status stable
  * @requires arc-tag
  * @prop {boolean} selected - Whether the chip is currently selected. Reflected as an attribute and toggled on click or keypress.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.

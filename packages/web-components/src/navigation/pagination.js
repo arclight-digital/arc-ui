@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  * truncation.
  *
  * @tag arc-pagination
+ * @status stable
  * @prop {number} total - Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.
  * @prop {number} current - The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control.
  * @prop {number} siblings - Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative.

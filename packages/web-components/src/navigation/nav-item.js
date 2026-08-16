@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * navigation link. Nest one level deep to populate a dropdown panel.
  *
  * @tag arc-nav-item
+ * @status stable
  * @prop {string} href - Destination URL for the nav item. Required for leaf items that navigate. Omit on parent items that serve only as dropdown triggers.
  * @prop {boolean} active - Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.
  * @prop {'default' | 'primary' | 'muted'} variant - Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like "Blog" or "Changelog".

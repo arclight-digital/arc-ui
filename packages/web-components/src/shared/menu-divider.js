@@ -4,6 +4,7 @@ import { LitElement, css } from 'lit';
  * A visual separator between groups of menu items.
  *
  * @tag arc-menu-divider
+ * @status stable
  * @slot none
  */
 export class ArcMenuDivider extends LitElement {

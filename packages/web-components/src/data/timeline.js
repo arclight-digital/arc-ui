@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * Vertical timeline with dated events.
  *
  * @tag arc-timeline
+ * @status stable
  * @requires arc-timeline-item
  * @prop {number} headingLevel - ARIA heading level for each event title. Clamped to 1 or
  *   greater: `aria-level` below 1 is invalid and is dropped by assistive technology.

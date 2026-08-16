@@ -9,6 +9,7 @@ import { observeIntersect } from '../shared/subscriptions.js';
  * bottom, with built-in loading spinner and end-of-list state.
  *
  * @tag arc-infinite-scroll
+ * @status stable
  * @requires arc-spinner
  * @prop {number} threshold - Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.
  * @prop {boolean} loading - When true, displays a spinner in the footer and suppresses additional `arc-load-more` events.

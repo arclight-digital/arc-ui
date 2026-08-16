@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * input component via the `for` attribute.
  *
  * @tag arc-label
+ * @status stable
  * @prop {string} for - ID of the target input element. Clicking the label focuses the associated control.
  * @prop {boolean} required - Shows a red asterisk (*) after the label text.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the label font size.

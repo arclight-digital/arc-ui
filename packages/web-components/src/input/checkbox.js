@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * independent options.
  *
  * @tag arc-checkbox
+ * @status stable
  * @prop {boolean} checked - Controls whether the checkbox is in its checked (selected) state. When true, a checkmark icon is rendered inside the box. Bind to this property for two-way state management in frameworks that support it.
  * @prop {boolean} indeterminate - When true, displays a horizontal dash instead of a checkmark, representing a mixed or partially-selected state. Commonly used on a parent "select all" checkbox when only some children are checked. Clicking an indeterminate checkbox resolves it to fully checked.
  * @prop {boolean} disabled - Prevents all pointer and keyboard interaction and applies a dimmed visual treatment. Use this for options that are unavailable due to unmet prerequisites. Pair with a tooltip or helper text to explain why the option is locked.

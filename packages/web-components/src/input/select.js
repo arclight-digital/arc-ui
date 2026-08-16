@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * for accessible form inputs.
  *
  * @tag arc-select
+ * @status stable
  * @prop {string} value - The currently selected value. Must match one of the child `arc-option` value attributes. Setting this programmatically updates the displayed label and internal selection state.
  * @prop {string} placeholder - Hint text displayed inside the trigger button when no option is selected. Use it to communicate what kind of choice the user should make, such as "Choose a team member..." or "Pick a status". The placeholder disappears once a value is chosen.
  * @prop {string} label - Visible label rendered above the select trigger. Also serves as the accessible name for assistive technologies. Always provide a label for accessibility compliance.

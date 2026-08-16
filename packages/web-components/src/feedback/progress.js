@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  * completion state for uploads, installations, and long-running operations.
  *
  * @tag arc-progress
+ * @status stable
  * @prop {number} value - Current completion percentage from 0 to 100. Only meaningful in determinate mode. The bar fills proportionally and aria-valuenow updates to match, giving screen readers a live reading.
  * @prop {'bar' | 'spinner'} variant - Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right — best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the thickness of the bar track or the diameter of the spinner. Small (sm) fits inside table cells and tight layouts. Medium (md) is the standard default. Large (lg) is appropriate for page-level or hero loading states.

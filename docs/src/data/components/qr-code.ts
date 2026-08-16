@@ -6,7 +6,6 @@ export const qrCode: ComponentDef = {
   tag: 'arc-qr-code',
   tier: 'content',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes automatically via currentColor, with an optional contrast card for guaranteed scanability on dark backgrounds.',
 

@@ -6,7 +6,6 @@ export const dateRangePicker: ComponentDef = {
   tag: 'arc-date-range-picker',
   tier: 'input',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'Dual-calendar picker for selecting a start/end date range with presets and full keyboard navigation.',
 

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Styled callout box for tips, warnings, and info.
  *
  * @tag arc-callout
+ * @status stable
  * @requires arc-icon-button
  * @requires arc-icon
  * @prop {'info' | 'tip' | 'warning' | 'error'} variant - Semantic variant that controls the color scheme, top accent bar, and default icon

@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
  * navigation, and today highlighting.
  *
  * @tag arc-calendar
+ * @status stable
  * @prop {string} value - The selected date as an ISO string (YYYY-MM-DD). Empty string means no date is selected.
  * @prop {string} min - Minimum selectable date as an ISO string. Days before this date are disabled.
  * @prop {string} max - Maximum selectable date as an ISO string. Days after this date are disabled.

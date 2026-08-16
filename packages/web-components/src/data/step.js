@@ -4,6 +4,7 @@ import { LitElement, html, css } from 'lit';
  * Individual step within a Stepper.
  *
  * @tag arc-step
+ * @status stable
  * @prop {string} label - Step label text
  * @slot - Default content.
  */

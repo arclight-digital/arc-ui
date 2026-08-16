@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  *
  * @tag arc-carousel
  * @arc-group marketing
+ * @status stable
  * @prop {boolean} autoPlay - Enables automatic slide advancement on a timer. Pauses on hover and focus, respects prefers-reduced-motion.
  * @prop {number} interval - Auto-play interval in milliseconds between slide transitions.
  * @prop {boolean} loop - Enables wrapping at the edges so the last slide connects to the first and vice versa.

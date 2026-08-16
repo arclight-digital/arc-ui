@@ -16,6 +16,7 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
  * require `src` to be same-origin or CORS-enabled — a tainted canvas throws with a clear message.
  *
  * @tag arc-image-cropper
+ * @status beta
  * @prop {string} src - Image URL, object URL, or data URL to crop. Must be same-origin or CORS-enabled for canvas export.
  * @prop {number} height - Fixed stage height in pixels. The image is letterboxed to fit.
  * @prop {number} aspect - Crop aspect ratio as width/height (e.g. `1`, `16/9`). `0` allows free-form cropping.

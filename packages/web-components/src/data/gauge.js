@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * with the reading rendered center-stage.
  *
  * @tag arc-gauge
+ * @status stable
  * @prop {number} value - Current gauge value. Clamped between `min` and `max`. Reflected as an attribute.
  * @prop {number} min - Minimum value representing the empty end of the arc.
  * @prop {number} max - Maximum value representing the full end of the arc.

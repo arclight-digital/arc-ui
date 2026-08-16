@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Right-click context menu with keyboard shortcuts.
  *
  * @tag arc-context-menu
+ * @status stable
  * @requires arc-separator
  * @requires arc-icon
  * @prop {boolean} open - Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape.

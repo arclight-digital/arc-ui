@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * configurable orientation, and optional max-height constraint.
  *
  * @tag arc-scroll-area
+ * @status stable
  * @prop {string} maxHeight - CSS max-height value applied to the scrollable container. Use any valid CSS length (e.g. `300px`, `50vh`).
  * @prop {'vertical' | 'horizontal' | 'both'} orientation - Scroll direction. `vertical` shows a vertical scrollbar, `horizontal` shows a horizontal scrollbar, `both` shows both.
  * @slot - Default content.

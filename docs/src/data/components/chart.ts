@@ -6,7 +6,6 @@ export const chart: ComponentDef = {
   tag: 'arc-chart',
   tier: 'data',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'An SVG chart component for dashboards with line, area, bar, and donut types. Data-driven from a series array, with automatic nice-tick scales, a legend, hover crosshair and tooltips, and a visually-hidden data table for assistive technology.',
 

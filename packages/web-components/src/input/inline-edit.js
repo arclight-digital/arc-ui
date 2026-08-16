@@ -22,6 +22,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * fires no event at all.
  *
  * @tag arc-inline-edit
+ * @status stable
  * @requires arc-icon
  * @prop {string} value - The committed text. Updated only when an edit commits (Enter or blur); keystrokes accumulate in an internal draft until then.
  * @prop {string} label - Accessible name for the control. The display state announces as "Edit {label}" and the edit field is labeled with it. Always provide one.

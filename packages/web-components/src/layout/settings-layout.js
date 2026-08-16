@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Settings page with side navigation and content area.
  *
  * @tag arc-settings-layout
+ * @status stable
  * @prop {'left' | 'top'} navPosition - Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.
  * @slot nav
  * @slot - Default content.

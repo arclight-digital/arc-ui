@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * Responsive grid for dashboard metric cards.
  *
  * @tag arc-dashboard-grid
+ * @status stable
  * @prop {number} columns - Number of columns when using explicit column mode. When this attribute is set on the element, the grid switches from auto-fill to a fixed repeat(N, 1fr) layout.
  * @prop {string} gap - Gap between grid cells. Accepts any CSS length value or spacing token. Maps to the --gap CSS custom property.
  * @prop {string} minColumnWidth - Minimum column width in auto-fill mode. Controls the minmax() threshold at which columns wrap to the next row. Maps to the --min-col CSS custom property.

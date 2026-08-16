@@ -16,6 +16,7 @@ import { DeclaredPropsMixin, oneOf, num, int } from '../shared/props.js';
  *
  * @tag arc-level-meter
  * @arc-group media
+ * @status stable
  * @prop {number} value - Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min="-60" max="0"` it is a dB reading. Values outside the range are clamped.
  * @prop {number} min - Value at the empty end of the meter. Defaults to 0.
  * @prop {number} max - Value at the full end of the meter. Defaults to 1. Use -60..0 (or your headroom of choice) for dB scales.

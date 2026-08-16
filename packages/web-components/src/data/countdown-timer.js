@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-countdown-timer
  * @arc-group marketing
+ * @status stable
  * @prop {string} target - ISO date string or parseable date for the countdown target
  * @prop {string} label - Optional label displayed above the countdown
  * @prop {string} expired - Text shown when the countdown reaches zero

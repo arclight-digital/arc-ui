@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  *
  * @tag arc-knob
  * @arc-group media
+ * @status stable
  * @prop {number} value - Current knob value. Reflected as an attribute and updated on user interaction.
  * @prop {number} min - Minimum allowed value at the start of the arc sweep.
  * @prop {number} max - Maximum allowed value at the end of the arc sweep.

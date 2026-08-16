@@ -10,6 +10,7 @@ declare const ArcIconLibrary_base: {
  * put one anywhere in the document and it applies globally.
  *
  * @tag arc-icon-library
+ * @status stable
  * @prop {'phosphor' | 'lucide'} name - Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.
  */
 export declare class ArcIconLibrary extends ArcIconLibrary_base {

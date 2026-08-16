@@ -6,7 +6,6 @@ export const passwordInput: ComponentDef = {
   tag: 'arc-password-input',
   tier: 'input',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'Password entry field with a built-in visibility toggle and an optional four-segment strength meter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.',
 

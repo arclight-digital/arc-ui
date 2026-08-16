@@ -31,6 +31,7 @@ discover them.
 - [Malformed array attributes fall back instead of throwing](#malformed-array-attributes-fall-back-instead-of-throwing)
 - [Domain groups: marketing and media leave the default barrel](#domain-groups-marketing-and-media-leave-the-default-barrel)
 - [The five cuts](#the-five-cuts)
+- [Every component declares a status, and experimental leaves the barrel](#every-component-declares-a-status-and-experimental-leaves-the-barrel)
 
 ## Event contract
 
@@ -495,3 +496,34 @@ does not intend to ship a scheduler.
   `arc-date-picker` inside it, `arc-tag` for categories. ARC's tokens are CSS
   custom properties, so the embedded calendar can be themed from the same
   variables the rest of the page uses.
+
+## Every component declares a status, and experimental leaves the barrel
+
+**Two changes, and only the second can break anything today.**
+
+`@status` is now a required annotation on all 202 components — `stable`, `beta`
+or `experimental`, with no default. It rides `custom-elements.json` with the
+rest of the derived API surface, so editors, the docs and any tool reading the
+manifest can see maturity for every component rather than for the fourteen that
+happened to have it written on their docs page.
+
+**`experimental` components are absent from the default barrel.** They are
+published and reachable by their own subpath — `@arclux/arc-ui/tree-grid` — and
+absent from `import { … } from '@arclux/arc-ui'` and from every framework
+package's barrel. Nothing is experimental as of v4.0.0, so this breaks nothing
+right now; it is here early on purpose. Everything V4-PLAN 4.8 adds ships
+experimental, and gating at the point a component is born means no addition
+ever enters the barrel only to be removed from it inside one major — removing a
+barrel entry is a breaking change even when the component was never meant to be
+there.
+
+**`beta` deliberately does not gate.** Beta says the API may still move, not
+that the component should be hard to find; a beta nobody can import is a beta
+nobody evaluates. Ten components are beta in v4.0.0 — `arc-chart`,
+`arc-data-grid`, `arc-date-range-picker`, `arc-image-cropper`, `arc-kanban`,
+`arc-menubar`, `arc-password-input`, `arc-qr-code`, `arc-tag-input`,
+`arc-transfer-list` — and all ten are in the barrel exactly as before.
+
+If you consume the manifest, note that every custom element now carries
+`status` and `group`. `status` is always present; `group` is `null` for the app
+catalog.

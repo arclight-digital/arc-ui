@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Horizontal rule with multiple visual styles from subtle to glowing.
  *
  * @tag arc-divider
+ * @status stable
  * @prop {'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'} variant - Visual style
  * @prop {'' | 'left' | 'right'} align - Shifts the gradient origin so it fades from one edge
  *   instead of both. Empty (the default) fades from both edges. Useful for asymmetric layouts where the divider should visually connect to content on one side.

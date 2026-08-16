@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * video element directly when you need format negotiation or adaptive streaming.
  *
  * @tag arc-video
+ * @status stable
  * @requires arc-icon
  * @prop {string} src - Video source URL. A single source only; no multi-format machinery.
  * @prop {string} poster - Poster image URL shown before the first play.

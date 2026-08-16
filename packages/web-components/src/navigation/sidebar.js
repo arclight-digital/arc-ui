@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * vertical navigation.
  *
  * @tag arc-sidebar
+ * @status stable
  * @requires arc-sidebar-section
  * @requires arc-sidebar-link
  * @requires arc-icon

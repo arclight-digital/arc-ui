@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Multi-value select with tag chips, inline search filtering, and keyboard navigation.
  *
  * @tag arc-multi-select
+ * @status stable
  * @prop {string[]} value - Array of selected option values. Updated when items are toggled and emitted via `arc-change`.
  * @prop {string} label - Visible label rendered above the control in a small uppercase style.
  * @prop {string} placeholder - Hint text shown inside the control when no items are selected and the input is empty.

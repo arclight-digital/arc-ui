@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * preset swatches.
  *
  * @tag arc-color-picker
+ * @status stable
  * @prop {string} value - Current color as a 6-digit hex string (e.g. `#4d7ef7`). Reflected as an attribute.
  * @prop {string[]} presets - Array of hex color strings to display as quick-select swatches below the hex input.
  * @prop {string} label - Label text displayed above the picker in uppercase accent font.

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, list } from '../shared/props.js';
  * rest, accent-primary glow on active. Expands on hover.
  *
  * @tag arc-rail
+ * @status stable
  * @requires arc-icon-button
  * @prop {Array<{icon: string, label: string, value: string}>} items - Array of navigation items, each with an icon name, text label, and value identifier.
  * @prop {string} value - The value of the currently active item. Controls which icon receives the accent glow.

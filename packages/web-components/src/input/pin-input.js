@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * support, and optional masking.
  *
  * @tag arc-pin-input
+ * @status stable
  * @prop {number} length - Number of input boxes to render. Determines the expected code length.
  * @prop {string} value - Current combined value across all boxes. Reflected as an attribute.
  * @prop {'number' | 'alphanumeric' | 'text'} type - Character validation mode. `number` allows digits only, `alphanumeric` allows letters and digits, `text` allows any character.

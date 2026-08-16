@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * On/off switch with smooth animation, glow effect, and ARIA switch role.
  *
  * @tag arc-toggle
+ * @status stable
  * @prop {boolean} checked - Whether the toggle is in the on position. When set, the thumb slides to the active side and the track displays the accent glow.
  * @prop {boolean} disabled - Prevents user interaction. The toggle appears at reduced opacity and ignores pointer and keyboard events.
  * @prop {string} label - Visible text rendered beside the toggle. Clicking the label also toggles the switch, matching native `<label>` behavior.

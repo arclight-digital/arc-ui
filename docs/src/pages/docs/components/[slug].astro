@@ -159,8 +159,12 @@ const headings = removed
         ) : (
           <>
             <arc-tag color={interactivityColors[component.interactivity]}>{component.interactivity}</arc-tag>
-            {component.status === 'beta' && <arc-badge variant="primary">beta</arc-badge>}
-            {component.status === 'experimental' && <arc-badge variant="secondary">experimental</arc-badge>}
+            {/* From the manifest, not the page data — `status` was a docs-only
+                optional field until 4.1 and is now declared on the component.
+                `stable` is unbadged: it is 192 of 202, so a badge for it would
+                mean "component" rather than anything about maturity. */}
+            {api.status === 'beta' && <arc-badge variant="warning">beta</arc-badge>}
+            {api.status === 'experimental' && <arc-badge variant="error">experimental</arc-badge>}
           </>
         )}
       </div>

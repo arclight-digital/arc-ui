@@ -6,7 +6,6 @@ export const dataGrid: ComponentDef = {
   tag: 'arc-data-grid',
   tier: 'data',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column sorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a JavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single tab stop.',
 

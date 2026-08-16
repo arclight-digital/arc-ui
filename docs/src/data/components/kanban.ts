@@ -6,7 +6,6 @@ export const kanban: ComponentDef = {
   tag: 'arc-kanban',
   tier: 'data',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and within columns with the pointer, or moved entirely from the keyboard with live screen-reader announcements. Column limits, tags, and descriptions are supported per card, and every move emits an `arc-card-move` event so the consumer can sync its source of truth.',
 

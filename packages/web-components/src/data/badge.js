@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * color variants let you encode meaning at a glance across dashboards, tables, and card layouts.
  *
  * @tag arc-badge
+ * @status stable
  * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'} variant - Controls the badge color scheme. Default renders a neutral gray. Primary and secondary use the accent token colors. Success, warning, error, and info map to the corresponding semantic color tokens for status-oriented labels.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the badge size. Options: 'sm', 'md', 'lg'.
  * @prop {string} color - Custom RGB color value (e.g. `"255, 100, 50"`) that overrides the variant color. Sets the border, text, background tint, and hover glow to the specified color.

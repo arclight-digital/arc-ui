@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * off-canvas navigation, filters, and detail views.
  *
  * @tag arc-drawer
+ * @status stable
  * @requires arc-icon-button
  * @prop {boolean} open - Controls the visible state of the drawer. Set to `true` to slide the panel into view and activate the backdrop; set to `false` to run the exit animation, remove the backdrop, and restore body scroll.
  * @prop {string} heading - Text displayed in the drawer header bar. Also used as the `aria-label` for the dialog panel, ensuring screen readers announce the panel purpose when it opens.

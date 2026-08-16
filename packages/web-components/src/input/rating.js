@@ -17,6 +17,7 @@ const STAR_PATH =
  * and configurable max value.
  *
  * @tag arc-rating
+ * @status stable
  * @prop {number} value - Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as "No rating", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.
  * @prop {number} max - Maximum number of stars to render. Determines the upper bound of the rating scale.
  * @prop {boolean} disabled - Disables interaction, reducing opacity to 40% and blocking pointer events.

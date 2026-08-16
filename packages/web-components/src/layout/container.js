@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Max-width wrapper for page sections.
  *
  * @tag arc-container
+ * @status stable
  * @prop {boolean} narrow - Use the narrow max-width (720px vs 1120px)
  * @prop {'sm' | 'md' | 'lg' | 'xl' | 'full'} size - Controls the maximum width.
  * @prop {'none' | 'sm' | 'md' | 'lg'} padding - Controls inline padding.

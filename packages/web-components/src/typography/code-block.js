@@ -123,6 +123,7 @@ async function getHL(lang) {
  * Syntax-highlighted code display with optional filename and copy button.
  *
  * @tag arc-code-block
+ * @status stable
  * @requires arc-status-bar
  * @requires arc-copy-button
  * @prop {'default' | 'window' | 'basic'} variant - Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display.

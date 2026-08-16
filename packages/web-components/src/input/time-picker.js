@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Scrollable column-based time picker with 12h/24h format support.
  *
  * @tag arc-time-picker
+ * @status stable
  * @prop {string} value - The selected time in 24-hour "HH:MM" format (e.g. "14:30"). Set this to pre-select a time. Updated when the user picks a time.
  * @prop {string} min - Minimum selectable time in "HH:MM" 24-hour format. Times before this are visually dimmed and non-interactive.
  * @prop {string} max - Maximum selectable time in "HH:MM" 24-hour format. Times after this are visually dimmed and non-interactive.

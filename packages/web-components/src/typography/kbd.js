@@ -5,6 +5,7 @@ import { tokenStyles } from '../shared-styles.js';
  * Keyboard key indicator styled like a physical key.
  *
  * @tag arc-kbd
+ * @status stable
  * @slot - Default content.
  * @csspart kbd
  */

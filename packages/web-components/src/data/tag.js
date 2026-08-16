@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * button, for categorisation, filtering, and selection feedback.
  *
  * @tag arc-tag
+ * @status stable
  * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'} variant - Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.
  * @prop {string} color - Custom color as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the tag size.

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * page.
  *
  * @tag arc-scroll-to-top
+ * @status stable
  * @prop {number} threshold - Scroll distance in pixels before the button becomes visible.
  * @prop {boolean} smooth - Use smooth scrolling animation. Falls back to instant when prefers-reduced-motion is set.
  * @prop {'bottom-right' | 'bottom-left'} position - Corner placement.

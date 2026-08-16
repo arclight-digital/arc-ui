@@ -26,6 +26,7 @@ import { tokenStyles } from '../shared-styles.js';
  * `renderItem` wins if both are present.
  *
  * @tag arc-virtual-list
+ * @status stable
  * @prop {Array} items - The full data array. Only the visible slice is rendered at any given time.
  * @prop {Function} renderItem - `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used.
  * @prop {number} itemHeight - Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.

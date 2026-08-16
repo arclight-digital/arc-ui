@@ -6,6 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * filled pill with glow ring above the page.
  *
  * @tag arc-skip-link
+ * @status stable
  * @prop {string} target - CSS selector for the element that should receive focus when the skip link is activated. Typically an ID like #main.
  * @slot - Default content.
  * @csspart link

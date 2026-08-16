@@ -8,7 +8,6 @@ export const imageCropper: ComponentDef = {
   tag: 'arc-image-cropper',
   tier: 'input',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'Crop-before-upload control with a draggable, resizable crop rectangle, aspect-ratio locking, zoom, and canvas export at natural image resolution.',
 

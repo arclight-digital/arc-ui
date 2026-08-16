@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * the input border.
  *
  * @tag arc-input-group
+ * @status stable
  * @prop {'sm' | 'md' | 'lg'} size - Controls addon padding and font size.
  * @slot prefix
  * @slot - Default content.

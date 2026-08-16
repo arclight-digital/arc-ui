@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * using a smooth CSS grid animation.
  *
  * @tag arc-collapsible
+ * @status stable
  * @prop {boolean} open - Controls whether the content is visible. Reflected as an attribute and toggleable by clicking the heading.
  * @prop {string} heading - Text displayed in the clickable trigger row. Also used as the ARIA label for the content region.
  * @fires {CustomEvent<{ open: boolean }>} arc-toggle - Fired when the collapsible expands or collapses

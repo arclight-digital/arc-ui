@@ -7,6 +7,7 @@ import { cardHoverStyles } from '../card-styles.js';
  *
  * @tag arc-feature-card
  * @arc-group marketing
+ * @status stable
  * @prop {string} icon - Icon text or emoji displayed in the icon box
  * @prop {string} heading - Card title
  * @prop {string} description - Card body text

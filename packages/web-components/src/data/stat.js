@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Numeric statistic display with gradient value and label.
  *
  * @tag arc-stat
+ * @status stable
  * @prop {string} value - The stat value (e.g. "99%")
  * @prop {string} label - Label below the value
  * @prop {'' | 'up' | 'down' | 'neutral'} trend - Shows a trend indicator arrow below the label.

@@ -173,6 +173,7 @@ function inlineMarkdown(text) {
  * blocks, blockquotes, links, images, and inline formatting.
  *
  * @tag arc-markdown
+ * @status stable
  * @prop {string} content - Markdown string to parse and render. Takes precedence over slotted text content.
  * @slot - Default content.
  * @csspart markdown

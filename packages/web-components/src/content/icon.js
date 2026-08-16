@@ -34,6 +34,7 @@ function warnUnknownIcon(name) {
  * and custom icon registration.
  *
  * @tag arc-icon
+ * @status stable
  * @prop {string} name - Icon name to look up in the icon registry. When provided, renders the matching SVG. When empty, falls back to slotted content.
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} size - Icon dimensions: `xs` (12px), `sm` (16px), `md` (20px), `lg` (24px), `xl` (32px).
  * @prop {string} label - Accessibility label. When provided, sets `role="img"` and `aria-label`. When empty, sets `role="presentation"` and `aria-hidden="true"`.

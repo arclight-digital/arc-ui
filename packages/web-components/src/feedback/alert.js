@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * timely, prominent feedback to users.
  *
  * @tag arc-alert
+ * @status stable
  * @requires arc-icon-button
  * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic color palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues.
  * @prop {boolean} dismissible - When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to.

@@ -6,6 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * amber glow pulse. Reconnection auto-dismisses with success flash.
  *
  * @tag arc-connection-status
+ * @status stable
  * @fires {CustomEvent<void>} arc-online - Fired when the browser regains network connectivity
  * @fires {CustomEvent<void>} arc-offline - Fired when the browser loses network connectivity
  * @slot none

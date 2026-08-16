@@ -5,6 +5,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Node within a TreeView. Can nest for sub-trees.
  *
  * @tag arc-tree-item
+ * @status stable
  * @prop {string} label - Item label text
  * @prop {string} icon - Icon or emoji
  * @prop {boolean} expanded - Expand child items

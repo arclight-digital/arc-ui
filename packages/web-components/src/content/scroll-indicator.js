@@ -8,6 +8,7 @@ import { listen } from '../shared/subscriptions.js';
  * top or bottom edge with accent or gradient fill.
  *
  * @tag arc-scroll-indicator
+ * @status stable
  * @prop {string} target - CSS selector for the scroll container to track. Defaults to the window when empty.
  * @prop {'top' | 'bottom'} position - Which edge the indicator sticks to.
  * @prop {'sm' | 'md' | 'lg'} size - Bar thickness: sm (2px), md (3px), lg (4px).

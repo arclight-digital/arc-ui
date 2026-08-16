@@ -4,6 +4,7 @@ import { LitElement, html, css } from 'lit';
  * Individual event within a Timeline.
  *
  * @tag arc-timeline-item
+ * @status stable
  * @prop {string} heading - Event heading
  * @prop {string} date - Date string to display
  * @slot - Default content.

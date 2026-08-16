@@ -7,6 +7,7 @@ import { observeResize } from '../shared/subscriptions.js';
  * Multi-line text clamping with expandable show-more toggle.
  *
  * @tag arc-truncate
+ * @status stable
  * @prop {number} lines - Maximum number of visible lines before clamping
  * @prop {boolean} expanded - Whether the text is fully expanded
  * @fires {CustomEvent<{ expanded: boolean }>} arc-toggle - Fired when expand/collapse toggle is clicked, with { expanded } detail

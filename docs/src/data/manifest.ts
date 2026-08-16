@@ -37,6 +37,11 @@ export interface ComponentApi {
    * barrel, so this is what `importPath()` answers from.
    */
   group: string | null;
+  /**
+   * Maturity, declared on every component with no default (V4-PLAN 4.1). Never
+   * absent: `generate/manifest.js` fails rather than emit a manifest without it.
+   */
+  status: 'stable' | 'beta' | 'experimental';
   props: ApiProp[];
   events: ApiEvent[];
   slots: ApiSlot[];
@@ -61,6 +66,7 @@ for (const mod of manifest.modules) {
       tag: decl.tagName,
       description: decl.description ?? '',
       group: decl.group ?? null,
+      status: decl.status,
       props: (decl.members ?? [])
         .filter((m: any) => m.kind === 'field' && m.privacy !== 'private' && m.privacy !== 'protected')
         .map((m: any) => ({
@@ -97,6 +103,19 @@ export function getApi(tag: string): ComponentApi {
 export function importPath(tag: string): string {
   const group = getApi(tag).group;
   return group ? `@arclux/arc-ui/${group}` : '@arclux/arc-ui';
+}
+
+/**
+ * Whether a component is reachable from the default `@arclux/arc-ui` barrel.
+ *
+ * Mirrors `scripts/lib/barrel-rule.js` for the two axes a docs page can see. The
+ * heavy-dependency case (arc-code-block) is not mirrored — it is one component
+ * with its own documented story — so this answers "is it gated by group or
+ * status", not "is it in the barrel". `importPath()` is the one to render.
+ */
+export function inDefaultBarrel(tag: string): boolean {
+  const api = getApi(tag);
+  return !api.group && api.status !== 'experimental';
 }
 
 /** Group name → the tags in it, for the docs pages that list a whole group. */

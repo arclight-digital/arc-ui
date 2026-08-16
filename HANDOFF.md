@@ -367,7 +367,7 @@ some prop (arc-button becomes an `<a>` given an `href`) needs an entry, or the
 sweep only ever sees the safe shape. Adding the first entry immediately found a
 second component nobody had reported.
 
-## Four things that will bite you
+## Five things that will bite you
 
 1. **prism must be able to read your declarations.** `@arclux/prism` finds props
    by regex over `name: { … }`; a helper call is invisible to it and silently
@@ -403,6 +403,18 @@ second component nobody had reported.
    change, so `generate/exports.js` never removes an entry — you delete it from
    `packages/web-components/package.json` by hand and write the MIGRATION entry
    that goes with it.
+
+5. **A new component needs `@status`, and `pnpm generate` refuses without one.**
+   Since 4.1 every component declares `stable`, `beta` or `experimental` in its
+   JSDoc, and there is deliberately no default — a brand-new component silently
+   inheriting `stable` is the one answer omission must not give. `@arc-group` is
+   optional and validated the same way: an unknown value throws rather than
+   quietly producing a component that is in no barrel at all.
+
+   Both are read by `scripts/lib/component-tags.js` and composed into prism's
+   `barrelExclude` by `scripts/lib/barrel-rule.js`, which is import-free so the
+   browser suite can exercise it. **Do not hand-edit a barrel** — `barrel-gating`
+   compares what is on disk against that rule in both directions and will say so.
 
 ## What changed under the plan
 

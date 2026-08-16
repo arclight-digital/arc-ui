@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * table-of-contents rail out of the box.
  *
  * @tag arc-app-shell
+ * @status stable
  * @prop {boolean} sidebarOpen - Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.
  * @prop {number} breakpoint - Viewport width in pixels at which the layout switches between mobile and desktop modes.
  * @fires {CustomEvent<{ value: boolean }>} arc-sidebar-toggle - Fired when the shell itself opens or closes the mobile sidebar — on a backdrop click, on Escape, or on navigation. Listened to by arc-top-bar so its hamburger stays in step. Not fired for a toggle the shell merely received, so the two cannot echo each other.

@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Relative time display that auto-updates ("3 minutes ago", "yesterday").
  *
  * @tag arc-time-ago
+ * @status stable
  * @prop {string} datetime - ISO 8601 date string or any value parseable by new Date().
  * @prop {boolean} live - Auto-update the relative time on an adaptive interval.
  * @prop {string} locale - BCP 47 locale tag for Intl.RelativeTimeFormat output.

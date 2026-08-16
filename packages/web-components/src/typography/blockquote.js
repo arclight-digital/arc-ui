@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Styled pull-quote with optional citation for editorial emphasis.
  *
  * @tag arc-blockquote
+ * @status stable
  * @prop {string} cite - Citation or attribution text displayed beneath the quote with an em dash prefix
  * @prop {'default' | 'accent'} variant - Visual variant. Accent applies a gradient text fill to the quote content.
  * @slot - Default content.

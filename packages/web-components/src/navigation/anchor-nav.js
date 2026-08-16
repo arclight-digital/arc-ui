@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, oneOf, list } from '../shared/props.js';
  * background pill or underline glow.
  *
  * @tag arc-anchor-nav
+ * @status stable
  * @prop {'vertical' | 'horizontal'} orientation - Layout direction. Vertical renders a column of links; horizontal renders a row.
  * @prop {string} value - The value of the currently active link. Controls which item is highlighted.
  * @prop {Array<{label: string, value: string}>} items - Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children.

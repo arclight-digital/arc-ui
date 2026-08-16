@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Data-driven table with striped and compact-density variants, powered by columns and rows props.
  *
  * @tag arc-table
+ * @status stable
  * @prop {string[]} columns - Array of column header strings.
  * @prop {string[][]} rows - Array of row arrays. Each inner array contains cell values in column order.
  * @prop {boolean} striped - Alternating row backgrounds for improved scanability.

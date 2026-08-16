@@ -53,7 +53,8 @@
           },
           "tagName": "arc-accordion-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -123,7 +124,8 @@
           },
           "tagName": "arc-accordion",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -211,7 +213,8 @@
           },
           "tagName": "arc-aspect-ratio",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -304,7 +307,8 @@
           },
           "tagName": "arc-avatar-group",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -461,7 +465,8 @@
           },
           "tagName": "arc-avatar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -579,7 +584,8 @@
           },
           "tagName": "arc-callout",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -702,7 +708,8 @@
           },
           "tagName": "arc-card",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -879,7 +886,8 @@
           },
           "tagName": "arc-carousel",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -987,7 +995,8 @@
           },
           "tagName": "arc-collapsible",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1098,7 +1107,8 @@
           },
           "tagName": "arc-color-swatch",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1252,7 +1262,8 @@
           },
           "tagName": "arc-column",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1389,7 +1400,8 @@
           },
           "tagName": "arc-cta-banner",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1522,7 +1534,8 @@
           },
           "tagName": "arc-divider",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1619,7 +1632,8 @@
           },
           "tagName": "arc-empty-state",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1777,7 +1791,8 @@
           },
           "tagName": "arc-feature-card",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1940,7 +1955,8 @@
           },
           "tagName": "arc-hotspot",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -1999,7 +2015,8 @@
           },
           "tagName": "arc-icon-library",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -2134,7 +2151,8 @@
           },
           "tagName": "arc-icon",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -2330,7 +2348,8 @@
           },
           "tagName": "arc-image-compare",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -2370,7 +2389,8 @@
           },
           "tagName": "arc-image-hotspots",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -2558,7 +2578,8 @@
           },
           "tagName": "arc-image",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -2711,7 +2732,8 @@
           },
           "tagName": "arc-infinite-scroll",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -2885,7 +2907,8 @@
           },
           "tagName": "arc-lightbox",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -3022,7 +3045,8 @@
           },
           "tagName": "arc-marquee",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -3191,7 +3215,8 @@
           },
           "tagName": "arc-qr-code",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -3308,7 +3333,8 @@
           },
           "tagName": "arc-scroll-area",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -3438,7 +3464,8 @@
           },
           "tagName": "arc-scroll-indicator",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -3550,7 +3577,8 @@
           },
           "tagName": "arc-separator",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -3675,7 +3703,8 @@
           },
           "tagName": "arc-skeleton",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -3761,7 +3790,8 @@
           },
           "tagName": "arc-spinner",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -3910,7 +3940,8 @@
           },
           "tagName": "arc-stack",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -4178,7 +4209,8 @@
           },
           "tagName": "arc-video",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -4324,7 +4356,8 @@
           },
           "tagName": "arc-virtual-list",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -4507,7 +4540,8 @@
           },
           "tagName": "arc-activity-heatmap",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -4693,7 +4727,8 @@
           },
           "tagName": "arc-animated-number",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -4804,7 +4839,8 @@
           },
           "tagName": "arc-badge",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -5050,7 +5086,8 @@
           },
           "tagName": "arc-chart",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         },
         {
           "kind": "variable",
@@ -5261,7 +5298,8 @@
           },
           "tagName": "arc-clock",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -5362,7 +5400,8 @@
           },
           "tagName": "arc-comparison-column",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -5440,7 +5479,8 @@
           },
           "tagName": "arc-comparison",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -5586,7 +5626,8 @@
           },
           "tagName": "arc-countdown-timer",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -5816,7 +5857,8 @@
           },
           "tagName": "arc-data-grid",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -6040,7 +6082,8 @@
           },
           "tagName": "arc-data-table",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -6109,7 +6152,8 @@
           },
           "tagName": "arc-description-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -6200,7 +6244,8 @@
           },
           "tagName": "arc-description-list",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -6314,7 +6359,8 @@
           },
           "tagName": "arc-diff",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -6582,7 +6628,8 @@
           },
           "tagName": "arc-gauge",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -6723,7 +6770,8 @@
           },
           "tagName": "arc-json-tree",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -6851,7 +6899,8 @@
           },
           "tagName": "arc-kanban",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -6942,7 +6991,8 @@
           },
           "tagName": "arc-key-value",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -7008,7 +7058,8 @@
           },
           "tagName": "arc-kv-pair",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -7250,7 +7301,8 @@
           },
           "tagName": "arc-level-meter",
           "customElement": true,
-          "group": "media"
+          "group": "media",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -7406,7 +7458,8 @@
           },
           "tagName": "arc-list-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -7594,7 +7647,8 @@
           },
           "tagName": "arc-list",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -7794,7 +7848,8 @@
           },
           "tagName": "arc-meter",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -7968,7 +8023,8 @@
           },
           "tagName": "arc-sparkline",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8102,7 +8158,8 @@
           },
           "tagName": "arc-stat",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8161,7 +8218,8 @@
           },
           "tagName": "arc-step",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8243,7 +8301,8 @@
           },
           "tagName": "arc-stepper",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8384,7 +8443,8 @@
           },
           "tagName": "arc-table",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8552,7 +8612,8 @@
           },
           "tagName": "arc-tag",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8638,7 +8699,8 @@
           },
           "tagName": "arc-timeline-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8731,7 +8793,8 @@
           },
           "tagName": "arc-timeline",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -8899,7 +8962,8 @@
           },
           "tagName": "arc-uptime",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9010,7 +9074,8 @@
           },
           "tagName": "arc-value-card",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9204,7 +9269,8 @@
           },
           "tagName": "arc-waveform",
           "customElement": true,
-          "group": "media"
+          "group": "media",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9357,7 +9423,8 @@
           },
           "tagName": "arc-alert",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9442,7 +9509,8 @@
           },
           "tagName": "arc-announcement",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9572,7 +9640,8 @@
           },
           "tagName": "arc-banner",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9631,7 +9700,8 @@
           },
           "tagName": "arc-command-group",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9781,7 +9851,8 @@
           },
           "tagName": "arc-command-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -9941,7 +10012,8 @@
           },
           "tagName": "arc-command-palette",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10147,7 +10219,8 @@
           },
           "tagName": "arc-confirm",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10225,7 +10298,8 @@
           },
           "tagName": "arc-connection-status",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10324,7 +10398,8 @@
           },
           "tagName": "arc-context-menu",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10415,7 +10490,8 @@
           },
           "tagName": "arc-conversation",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10608,7 +10684,8 @@
           },
           "tagName": "arc-dialog",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10709,7 +10786,8 @@
           },
           "tagName": "arc-dropdown-menu",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10841,7 +10919,8 @@
           },
           "tagName": "arc-hover-card",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -10914,7 +10993,8 @@
           },
           "tagName": "arc-inline-message",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -11026,7 +11106,8 @@
           },
           "tagName": "arc-loading-overlay",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -11187,7 +11268,8 @@
           },
           "tagName": "arc-message",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -11381,7 +11463,8 @@
           },
           "tagName": "arc-modal",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -11529,7 +11612,8 @@
           },
           "tagName": "arc-notification-panel",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -11662,7 +11746,8 @@
           },
           "tagName": "arc-popover",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -11785,7 +11870,8 @@
           },
           "tagName": "arc-progress-toast",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -11968,7 +12054,8 @@
           },
           "tagName": "arc-progress",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -12123,7 +12210,8 @@
           },
           "tagName": "arc-sheet",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -12242,7 +12330,8 @@
           },
           "tagName": "arc-snackbar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -12453,7 +12542,8 @@
           },
           "tagName": "arc-toast",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -12566,7 +12656,8 @@
           },
           "tagName": "arc-tooltip",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -12745,7 +12836,8 @@
           },
           "tagName": "arc-button-group",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -12924,7 +13016,8 @@
           },
           "tagName": "arc-button",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -13142,7 +13235,8 @@
           },
           "tagName": "arc-calendar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -13522,7 +13616,8 @@
           },
           "tagName": "arc-checkbox",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -13642,7 +13737,8 @@
           },
           "tagName": "arc-chip",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -14022,7 +14118,8 @@
           },
           "tagName": "arc-color-picker",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -14398,7 +14495,8 @@
           },
           "tagName": "arc-combobox",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -14498,7 +14596,8 @@
           },
           "tagName": "arc-copy-button",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -14962,7 +15061,8 @@
           },
           "tagName": "arc-date-picker",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -15515,7 +15615,8 @@
           },
           "tagName": "arc-date-range-picker",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -15684,7 +15785,8 @@
           },
           "tagName": "arc-fieldset",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -15838,7 +15940,8 @@
           },
           "tagName": "arc-file-upload",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -16050,7 +16153,8 @@
           },
           "tagName": "arc-form",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -16159,7 +16263,8 @@
           },
           "tagName": "arc-hotkey",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -16372,7 +16477,8 @@
           },
           "tagName": "arc-icon-button",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -16560,7 +16666,8 @@
           },
           "tagName": "arc-image-cropper",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -16951,7 +17058,8 @@
           },
           "tagName": "arc-inline-edit",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -17036,7 +17144,8 @@
           },
           "tagName": "arc-input-group",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -17501,7 +17610,8 @@
           },
           "tagName": "arc-input",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -17978,7 +18088,8 @@
           },
           "tagName": "arc-knob",
           "customElement": true,
-          "group": "media"
+          "group": "media",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -18120,7 +18231,8 @@
           },
           "tagName": "arc-label",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -18573,7 +18685,8 @@
           },
           "tagName": "arc-masked-input",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -18951,7 +19064,8 @@
           },
           "tagName": "arc-multi-select",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -19365,7 +19479,8 @@
           },
           "tagName": "arc-number-input",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -19728,7 +19843,8 @@
           },
           "tagName": "arc-otp-input",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -20172,7 +20288,8 @@
           },
           "tagName": "arc-password-input",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -20609,7 +20726,8 @@
           },
           "tagName": "arc-pin-input",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -20954,7 +21072,8 @@
           },
           "tagName": "arc-radio-group",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -21045,7 +21164,8 @@
           },
           "tagName": "arc-radio",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -21509,7 +21629,8 @@
           },
           "tagName": "arc-range-slider",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -21866,7 +21987,8 @@
           },
           "tagName": "arc-rating",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -22089,7 +22211,8 @@
           },
           "tagName": "arc-search",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -22389,7 +22512,8 @@
           },
           "tagName": "arc-segmented-control",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -22800,7 +22924,8 @@
           },
           "tagName": "arc-select",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -23206,7 +23331,8 @@
           },
           "tagName": "arc-signature-pad",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -23620,7 +23746,8 @@
           },
           "tagName": "arc-slider",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -23708,7 +23835,8 @@
           },
           "tagName": "arc-sortable-list",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -23772,7 +23900,8 @@
           },
           "tagName": "arc-suggestion",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -23910,7 +24039,8 @@
           },
           "tagName": "arc-switch-group",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -24388,7 +24518,8 @@
           },
           "tagName": "arc-tag-input",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -24863,7 +24994,8 @@
           },
           "tagName": "arc-textarea",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -25006,7 +25138,8 @@
           },
           "tagName": "arc-theme-toggle",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -25472,7 +25605,8 @@
           },
           "tagName": "arc-time-picker",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -25814,7 +25948,8 @@
           },
           "tagName": "arc-toggle",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -26223,7 +26358,8 @@
           },
           "tagName": "arc-transfer-list",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -26662,7 +26798,8 @@
           },
           "tagName": "arc-tree-select",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -26783,7 +26920,8 @@
           },
           "tagName": "arc-app-shell",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -26895,7 +27033,8 @@
           },
           "tagName": "arc-aspect-grid",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -26989,7 +27128,8 @@
           },
           "tagName": "arc-auth-shell",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27096,7 +27236,8 @@
           },
           "tagName": "arc-center",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27203,7 +27344,8 @@
           },
           "tagName": "arc-cluster",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27315,7 +27457,8 @@
           },
           "tagName": "arc-container",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27424,7 +27567,8 @@
           },
           "tagName": "arc-dashboard-grid",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27525,7 +27669,8 @@
           },
           "tagName": "arc-float-bar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27611,7 +27756,8 @@
           },
           "tagName": "arc-inset",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27702,7 +27848,8 @@
           },
           "tagName": "arc-masonry",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27848,7 +27995,8 @@
           },
           "tagName": "arc-page-header",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -27973,7 +28121,8 @@
           },
           "tagName": "arc-page-layout",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28115,7 +28264,8 @@
           },
           "tagName": "arc-resizable",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28206,7 +28356,8 @@
           },
           "tagName": "arc-responsive-switcher",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28272,7 +28423,8 @@
           },
           "tagName": "arc-section",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28351,7 +28503,8 @@
           },
           "tagName": "arc-settings-layout",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28540,7 +28693,8 @@
           },
           "tagName": "arc-split-pane",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28625,7 +28779,8 @@
           },
           "tagName": "arc-status-bar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28720,7 +28875,8 @@
           },
           "tagName": "arc-sticky",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -28886,7 +29042,8 @@
           },
           "tagName": "arc-toolbar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29009,7 +29166,8 @@
           },
           "tagName": "arc-anchor-nav",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29112,7 +29270,8 @@
           },
           "tagName": "arc-bottom-nav",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29183,7 +29342,8 @@
           },
           "tagName": "arc-breadcrumb-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29289,7 +29449,8 @@
           },
           "tagName": "arc-breadcrumb-menu",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29388,7 +29549,8 @@
           },
           "tagName": "arc-breadcrumb",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29536,7 +29698,8 @@
           },
           "tagName": "arc-command-bar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29675,7 +29838,8 @@
           },
           "tagName": "arc-drawer",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29829,7 +29993,8 @@
           },
           "tagName": "arc-footer",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -29982,7 +30147,8 @@
           },
           "tagName": "arc-link",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -30064,7 +30230,8 @@
           },
           "tagName": "arc-menubar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "beta"
         }
       ],
       "exports": [
@@ -30213,7 +30380,8 @@
           },
           "tagName": "arc-nav-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -30299,7 +30467,8 @@
           },
           "tagName": "arc-navigation-menu",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -30417,7 +30586,8 @@
           },
           "tagName": "arc-page-indicator",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -30567,7 +30737,8 @@
           },
           "tagName": "arc-pagination",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -30690,7 +30861,8 @@
           },
           "tagName": "arc-rail",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -30832,7 +31004,8 @@
           },
           "tagName": "arc-scroll-spy",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -30958,7 +31131,8 @@
           },
           "tagName": "arc-scroll-to-top",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31119,7 +31293,8 @@
           },
           "tagName": "arc-sidebar-link",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31266,7 +31441,8 @@
           },
           "tagName": "arc-sidebar-section",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31464,7 +31640,8 @@
           },
           "tagName": "arc-sidebar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31527,7 +31704,8 @@
           },
           "tagName": "arc-skip-link",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31618,7 +31796,8 @@
           },
           "tagName": "arc-spy-link",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31760,7 +31939,8 @@
           },
           "tagName": "arc-stepper-nav",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31846,7 +32026,8 @@
           },
           "tagName": "arc-tab",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -31988,7 +32169,8 @@
           },
           "tagName": "arc-tabs",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -32281,7 +32463,8 @@
           },
           "tagName": "arc-top-bar",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -32398,7 +32581,8 @@
           },
           "tagName": "arc-tree-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -32466,7 +32650,8 @@
           },
           "tagName": "arc-tree-view",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -33436,7 +33621,8 @@
           },
           "tagName": "arc-menu-divider",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -33594,7 +33780,8 @@
           },
           "tagName": "arc-menu-item",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -33723,7 +33910,8 @@
           },
           "tagName": "arc-option",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -34841,7 +35029,8 @@
           },
           "tagName": "arc-blockquote",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35001,7 +35190,8 @@
           },
           "tagName": "arc-code-block",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35112,7 +35302,8 @@
           },
           "tagName": "arc-gradient-text",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35220,7 +35411,8 @@
           },
           "tagName": "arc-highlight",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35260,7 +35452,8 @@
           },
           "tagName": "arc-kbd",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35415,7 +35608,8 @@
           },
           "tagName": "arc-keyboard-map",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35478,7 +35672,8 @@
           },
           "tagName": "arc-markdown",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35643,7 +35838,8 @@
           },
           "tagName": "arc-number-format",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35713,7 +35909,8 @@
           },
           "tagName": "arc-prose",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -35911,7 +36108,8 @@
           },
           "tagName": "arc-terminal",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -36001,7 +36199,8 @@
           },
           "tagName": "arc-text",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -36106,7 +36305,8 @@
           },
           "tagName": "arc-time-ago",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -36209,7 +36409,8 @@
           },
           "tagName": "arc-truncate",
           "customElement": true,
-          "group": null
+          "group": null,
+          "status": "stable"
         }
       ],
       "exports": [
@@ -36409,7 +36610,8 @@
           },
           "tagName": "arc-typewriter",
           "customElement": true,
-          "group": "marketing"
+          "group": "marketing",
+          "status": "stable"
         }
       ],
       "exports": [

@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * Resizable panel with drag handle.
  *
  * @tag arc-resizable
+ * @status stable
  * @prop {'horizontal' | 'vertical'} direction - Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.
  * @prop {number} size - Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property.
  * @prop {number} minSize - Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.

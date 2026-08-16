@@ -7,6 +7,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * page structure, with separator icons and current-page indication.
  *
  * @tag arc-breadcrumb
+ * @status stable
  * @requires arc-breadcrumb-item
  * @prop {string} separator - Character used as the separator between breadcrumb items. Common options: '/', '>', '•'.
  * @fires arc-navigate - Fired when a breadcrumb item is clicked

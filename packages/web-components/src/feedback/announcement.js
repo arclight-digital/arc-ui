@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * readers. Zero visual footprint — pure accessibility utility.
  *
  * @tag arc-announcement
+ * @status stable
  * @prop {'polite' | 'assertive'} politeness - Controls the ARIA live region politeness level. Polite waits for the screen reader to finish before announcing; assertive interrupts immediately.
  * @prop {string} message - The text to announce to screen readers. Each time this property changes, a new announcement is triggered.
  * @slot none

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
  * Tabbed content navigation with keyboard support and ARIA roles.
  *
  * @tag arc-tabs
+ * @status stable
  * @requires arc-tab
  * @prop {number} selected - Zero-based index of the currently active tab. Changing this value programmatically switches the visible panel and updates ARIA attributes. Out-of-range values are clamped to the nearest valid index.
  * @prop {'start' | 'center' | 'end'} align - Aligns the tab list. Options: 'start', 'center', 'end'.

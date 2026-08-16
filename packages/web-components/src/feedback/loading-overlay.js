@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * spinner with optional progress text.
  *
  * @tag arc-loading-overlay
+ * @status stable
  * @requires arc-spinner
  * @prop {boolean} active - Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.
  * @prop {string} message - Optional text displayed below the spinner. Use it to communicate what is loading or the current progress step.

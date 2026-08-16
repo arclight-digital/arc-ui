@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * exposes named slots for sidebar, main, and aside regions.
  *
  * @tag arc-page-layout
+ * @status stable
  * @prop {'sidebar-left' | 'sidebar-right' | 'centered' | 'wide'} layout - Controls the column structure of the page. sidebar-left creates a 240px fixed column on the left for navigation. sidebar-right creates a 300px fixed column on the right for contextual content. centered constrains the main area to max-width with auto margins. wide allows content to stretch the full available width.
  * @prop {string} maxWidth - Maximum width of the content area when using the centered layout. Accepts any valid CSS length value. Has no effect on sidebar-left, sidebar-right, or wide layouts. Maps to the --max-width CSS custom property.
  * @prop {string} gap - Gap between the sidebar/aside and main content regions. Accepts any valid CSS length or spacing token. Maps to the --gap CSS custom property and applies to the CSS Grid gap in sidebar layouts.

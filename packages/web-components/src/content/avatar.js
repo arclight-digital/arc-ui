@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * User avatar with image or initials fallback.
  *
  * @tag arc-avatar
+ * @status stable
  * @prop {string} src - Image URL for the avatar. When provided, renders an `<img>` element. When empty, displays initials derived from the `name` prop.
  * @prop {string} name - User name used to generate initials (first letter, uppercased) and as the `alt` text / `aria-label` for the avatar.
  * @prop {'sm' | 'md' | 'lg'} size - Controls avatar dimensions: `sm` (32px), `md` (40px), `lg` (56px).

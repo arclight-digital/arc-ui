@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * related inputs with native fieldset semantics.
  *
  * @tag arc-fieldset
+ * @status stable
  * @prop {string} legend - Text displayed in the `<legend>` element. Also available via the `legend` slot for rich content.
  * @prop {string} description - Helper text displayed below the legend.
  * @prop {boolean} disabled - Disables all child controls and dims the fieldset.

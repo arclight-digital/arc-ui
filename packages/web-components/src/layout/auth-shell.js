@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * slots out of the box.
  *
  * @tag arc-auth-shell
+ * @status stable
  * @prop {'centered' | 'split'} variant - Controls the page layout. Centered places a single card in the middle of the viewport, best for focused credential flows. Split divides the viewport into a form side and an aside panel for marketing content or illustrations. On mobile, split collapses to a single-column centered layout automatically.
  * @slot logo
  * @slot - Default content.

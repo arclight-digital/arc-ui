@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * navigation-driven actions across landing pages, toolbars, and forms.
  *
  * @tag arc-button
+ * @status stable
  * @prop {'primary' | 'secondary' | 'ghost'} variant - Controls the visual weight and emphasis. Primary is a filled button with a neon glow hover suited for the top-level CTA. Secondary uses a bordered outline for supporting actions. Ghost renders with no border or background, ideal for low-priority or tertiary actions.
  * @prop {'sm' | 'md' | 'lg'} size - Sets the button size. Large (lg) is intended for hero sections and high-impact areas. Medium (md) is the default for general UI. Small (sm) fits compact toolbars, table rows, and inline contexts.
  * @prop {string} href - When provided, the button renders as an <a> element instead of a <button>, making it a navigational link. This is the recommended approach for any action that takes the user to a new page or section.

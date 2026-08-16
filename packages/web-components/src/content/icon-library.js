@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * put one anywhere in the document and it applies globally.
  *
  * @tag arc-icon-library
+ * @status stable
  * @prop {'phosphor' | 'lucide'} name - Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.
  */
 export class ArcIconLibrary extends DeclaredPropsMixin(LitElement) {

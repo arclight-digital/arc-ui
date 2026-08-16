@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Text highlighting with search query match markers.
  *
  * @tag arc-highlight
+ * @status stable
  * @prop {string} text - The full text to display and search within
  * @prop {string} query - The search query to highlight within the text
  * @prop {boolean} caseSensitive - Whether matching should be case-sensitive

@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * any UI that benefits from progressive disclosure.
  *
  * @tag arc-accordion
+ * @status stable
  * @requires arc-accordion-item
  * @prop {boolean} multiple - When true, allows multiple accordion panels to be open simultaneously. When false (default), opening one panel closes any other open panel.
  * @slot - Default content.

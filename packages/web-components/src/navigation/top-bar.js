@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * navigation area, and a right-aligned actions region for user controls, search, and settings.
  *
  * @tag arc-top-bar
+ * @status stable
  * @requires arc-container
  * @prop {string} heading - Brand text displayed in the top-left corner next to the optional logo slot. Rendered uppercase with wide letter-spacing at the wordmark size. Keep this to one or two words that identify the application.
  * @prop {string} homeHref - Destination of the brand link. Defaults to `/`; set it when the app is mounted under a sub-path, or to an empty string to render the brand as plain text with no link at all.

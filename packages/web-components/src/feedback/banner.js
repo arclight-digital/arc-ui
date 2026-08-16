@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * but edge-to-edge with no border-radius and a subtle gradient wash.
  *
  * @tag arc-banner
+ * @status stable
  * @requires arc-icon-button
  * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the semantic color palette and icon. Use "info" for neutral announcements, "success" for positive confirmations, "warning" for caution states, and "error" for outages or critical failures.
  * @prop {boolean} dismissible - When true, renders a close button on the right side. Clicking it collapses the banner and fires an "arc-close" event.

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * fallback, and aspect ratio presets.
  *
  * @tag arc-image
+ * @status stable
  * @prop {string} src - Image source URL.
  * @prop {string} alt - Alt text for the image. Used as the accessible description.
  * @prop {'' | '1/1' | '4/3' | '16/9' | '21/9' | '3/4' | '9/16'} aspect - Constrains the container

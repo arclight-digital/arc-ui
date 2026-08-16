@@ -28,6 +28,7 @@ const LOOP_PAUSE = 2000;
  * arc-typewriter follows.
  *
  * @tag arc-terminal
+ * @status stable
  * @prop {Array} lines - The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Property only — arrays do not survive an attribute.
  * @prop {string} prompt - Prompt glyph rendered before each command line.
  * @prop {string} title - Text centered in the window chrome bar. Empty hides it, leaving only the orbs.

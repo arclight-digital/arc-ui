@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * and settings UIs.
  *
  * @tag arc-transfer-list
+ * @status beta
  * @requires arc-icon-button
  * @prop {Array<{value:string,label:string,disabled?:boolean}>} options - The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.
  * @prop {string[]} value - Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`.

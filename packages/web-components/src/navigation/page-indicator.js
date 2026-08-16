@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * with accent-primary and scales up.
  *
  * @tag arc-page-indicator
+ * @status stable
  * @prop {number} count - Total number of dots to display.
  * @prop {number} value - Zero-based index of the active dot.
  * @prop {boolean} clickable - When true, dots become interactive tap targets that dispatch arc-change on click.

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, int, list } from '../shared/props.js';
  * gradient lines with interactive routing.
  *
  * @tag arc-stepper-nav
+ * @status stable
  * @requires arc-button
  * @prop {Array<string>} steps - Array of step labels displayed along the progress track.
  * @prop {number} active - Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have.

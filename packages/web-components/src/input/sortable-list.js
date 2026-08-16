@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * insertion indicators.
  *
  * @tag arc-sortable-list
+ * @status stable
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
  * @fires arc-change - Fired when items are reordered, with updated order in detail
  * @slot - Default content.

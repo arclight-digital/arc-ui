@@ -10,6 +10,7 @@ let numberInputIdCounter = 0;
  * supporting min/max clamping, step increments, and keyboard shortcuts.
  *
  * @tag arc-number-input
+ * @status stable
  * @prop {number} value - Current numeric value. Reflected as an attribute and updated on user interaction.
  * @prop {number} min - Minimum allowed value. The decrement button is disabled when the value reaches this limit.
  * @prop {number} max - Maximum allowed value. The increment button is disabled when the value reaches this limit.

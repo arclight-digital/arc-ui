@@ -81,6 +81,7 @@ function scorePassword(pw) {
  * Math.max(1, score)); }
  *
  * @tag arc-password-input
+ * @status beta
  * @prop {string} label - Visible label rendered above the field. Automatically associated with the input via a generated id.
  * @prop {string} name - The `name` attribute sent with form data on submission. Also used by the Form component to track field state.
  * @prop {string} value - The current value of the field. Can be set programmatically; updated internally on each keystroke.

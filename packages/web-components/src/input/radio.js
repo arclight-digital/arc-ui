@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * remains interactive.
  *
  * @tag arc-radio
+ * @status stable
  * @prop {string} value - The value submitted when this option is selected. Must be unique within the parent RadioGroup.
  * @prop {boolean} disabled - When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys.
  * @slot - Default content.

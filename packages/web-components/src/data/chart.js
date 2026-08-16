@@ -22,6 +22,7 @@ const finiteOrNaN = (v) => {
  * visually-hidden data table for assistive technology.
  *
  * @tag arc-chart
+ * @status beta
  * @prop {'line' | 'area' | 'bar' | 'donut'} type - The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given).
  * @prop {Array<{label:string,data:number[]}>} series - The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend.
  * @prop {string[]} labels - Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width.

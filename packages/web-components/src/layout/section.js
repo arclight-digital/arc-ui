@@ -5,6 +5,7 @@ import { tokenStyles } from '../shared-styles.js';
  * Page section with optional uppercase label, consistent spacing.
  *
  * @tag arc-section
+ * @status stable
  * @prop {string} label - Section label displayed in uppercase above content
  * @slot - Default content.
  * @csspart section

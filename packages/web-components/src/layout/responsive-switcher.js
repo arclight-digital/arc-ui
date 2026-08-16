@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * media queries needed.
  *
  * @tag arc-responsive-switcher
+ * @status stable
  * @prop {string} threshold - The container width at which the layout switches between horizontal and vertical. Accepts any CSS length value. When the container is wider than this value, children are in a row; below it, they stack.
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} gap - Spacing between children in both horizontal and vertical modes, mapped to design system spacing tokens.
  * @slot - Default content.

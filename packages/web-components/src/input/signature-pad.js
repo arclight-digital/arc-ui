@@ -18,6 +18,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * simulate one.
  *
  * @tag arc-signature-pad
+ * @status stable
  * @requires arc-icon-button
  * @prop {string} value - The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected — a data-URL is far too large to live in an attribute.
  * @prop {string} name - Form field name the data-URL submits under.

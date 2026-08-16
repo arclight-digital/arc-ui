@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * charting dependencies.
  *
  * @tag arc-sparkline
+ * @status stable
  * @prop {string} data - Comma-separated numeric values that define the chart data points (e.g. "10,25,18,30,22,35,28"). Parsed into a number array at render time. Non-numeric entries are silently dropped.
  * @prop {'line' | 'bar'} type - Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.
  * @prop {string} color - CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set.

@@ -4,15 +4,26 @@ import { components } from '../../../data/components/index';
 import { getApi } from '../../../data/manifest';
 
 /**
- * Domain group per component, read from the manifest rather than the page data
- * — the group is a source fact (`@arc-group`), and a card that claimed the
- * wrong import path would be wrong in the one place a reader copies from.
+ * Group and status per component, read from the manifest rather than the page
+ * data — both are source facts (`@arc-group`, `@status`). A card that claimed
+ * the wrong import path would be wrong in the one place a reader copies from,
+ * and status was a docs-only optional field until 4.1, set on 14 pages of 184,
+ * which is why 170 cards could not show a maturity they in fact had.
  */
 const groupOf = (tag: string) => getApi(tag).group;
+const statusOf = (tag: string) => getApi(tag).status;
 
 const groupLabels: Record<string, string> = {
   marketing: 'marketing',
   media: 'media',
+};
+
+// `stable` is the overwhelming majority and carries no information on a card —
+// badging all 192 of them would make the badge mean "component". Only the two
+// that qualify a reader's expectations get one.
+const statusLabels: Record<string, string> = {
+  beta: 'beta',
+  experimental: 'experimental',
 };
 
 const tiers = [
@@ -85,11 +96,18 @@ const jsonLd = {
               <code class="component-card__tag">&lt;{c.tag}&gt;</code>
               <span class="component-card__meta">
                 <span class="component-card__interactivity">{c.interactivity}</span>
-                {groupOf(c.tag) && (
-                  <span class="component-card__group" title={`Imported from @arclux/arc-ui/${groupOf(c.tag)}, not the default barrel`}>
-                    /{groupLabels[groupOf(c.tag)!] ?? groupOf(c.tag)}
-                  </span>
-                )}
+                <span class="component-card__flags">
+                  {statusLabels[statusOf(c.tag)] && (
+                    <span class="component-card__status" data-status={statusOf(c.tag)}>
+                      {statusLabels[statusOf(c.tag)]}
+                    </span>
+                  )}
+                  {groupOf(c.tag) && (
+                    <span class="component-card__group" title={`Imported from @arclux/arc-ui/${groupOf(c.tag)}, not the default barrel`}>
+                      /{groupLabels[groupOf(c.tag)!] ?? groupOf(c.tag)}
+                    </span>
+                  )}
+                </span>
               </span>
             </a>
           ))}
@@ -292,6 +310,33 @@ const jsonLd = {
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-ghost);
+  }
+
+  .component-card__flags {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    flex-shrink: 0;
+  }
+
+  /* Maturity. Beta and experimental only — see statusLabels above. */
+  .component-card__status {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: var(--radius-sm);
+    padding: 1px var(--space-xs);
+  }
+
+  .component-card__status[data-status="beta"] {
+    color: var(--color-warning);
+    border: 1px solid rgba(var(--color-warning-rgb), 0.3);
+  }
+
+  .component-card__status[data-status="experimental"] {
+    color: var(--color-error);
+    border: 1px solid rgba(var(--color-error-rgb), 0.3);
   }
 
   /* Domain group — the import path is the whole message, so it is set in the

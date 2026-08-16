@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * single-select semantics clean.
  *
  * @tag arc-tree-select
+ * @status stable
  * @prop {Array<{value: string, label: string, children?: Array<object>, disabled?: boolean}>} items - Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children.
  * @prop {string} value - The selected leaf's value. Setting it programmatically updates the trigger's breadcrumb label, and the branches containing it auto-expand the next time the panel opens.
  * @prop {string[]} expandedValues - Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list.

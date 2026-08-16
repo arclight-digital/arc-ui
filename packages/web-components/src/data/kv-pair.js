@@ -6,6 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * key text, and the default slot holds the value content.
  *
  * @tag arc-kv-pair
+ * @status stable
  * @prop {string} label - The key/term text displayed in uppercase accent styling.
  * @slot - Default content.
  * @csspart key

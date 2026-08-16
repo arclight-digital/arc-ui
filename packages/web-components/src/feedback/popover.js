@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * automatic outside-click dismissal.
  *
  * @tag arc-popover
+ * @status stable
  * @prop {boolean} open - Whether the popover panel is currently visible. Reflected as an attribute.
  * @prop {'top' | 'bottom' | 'left' | 'right'} position - Placement of the panel relative to the trigger element.
  * @prop {string} trigger - Reserved for future trigger-mode configuration (click, hover, manual).

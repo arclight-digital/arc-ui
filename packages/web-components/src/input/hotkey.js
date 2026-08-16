@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * chord sequences ("g i" = press g, then i).
  *
  * @tag arc-hotkey
+ * @status stable
  * @prop {string} keys - Key pattern to match. Modifier combos use "+" (e.g., "ctrl+k"). Chords use spaces (e.g., "g i").
  * @prop {boolean} disabled - Temporarily suspends the shortcut listener.
  * @prop {boolean} global - When true, attaches to `window` instead of `document` and skips input/textarea filtering.

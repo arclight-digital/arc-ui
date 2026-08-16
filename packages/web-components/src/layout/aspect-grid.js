@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Uniform aspect-ratio cell grid with configurable columns and ratio.
  *
  * @tag arc-aspect-grid
+ * @status stable
  * @prop {number} columns - Number of columns in the grid. Each column is equal width (1fr).
  * @prop {'1/1' | '16/9' | '4/3'} ratio - Aspect ratio applied to every cell. 1/1 for squares, 16/9 for widescreen, 4/3 for classic landscape.
  * @prop {'sm' | 'md' | 'lg'} gap - Spacing between grid cells, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).

@@ -27,6 +27,7 @@ function statusStyle(variant) {
  * the render state makes that an in-place update.
  *
  * @tag arc-toast
+ * @status stable
  * @requires arc-button
  * @requires arc-icon-button
  * @prop {'top-right' | 'top-left' | 'top-center' | 'bottom-right' | 'bottom-left' | 'bottom-center'} position - Anchors the toast stack to a fixed edge of the viewport. Top-right is the most conventional position for web applications. Bottom positions work well for media players or editors where the top area is occupied by toolbars.

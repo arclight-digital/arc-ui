@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * current page and provides focus-visible styling for keyboard navigation.
  *
  * @tag arc-sidebar-link
+ * @status stable
  * @prop {string} href - Destination URL for the link. Can be an absolute path, relative path, or hash anchor. The link renders as a standard anchor element for full accessibility and SEO.
  * @prop {boolean} active - When true, applies a highlighted style (accent-colored text and a left-edge indicator) to signal that this link corresponds to the currently viewed page. Only one link should be active at a time.
  * @prop {number} level - Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size.

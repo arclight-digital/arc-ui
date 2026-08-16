@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  *
  * @tag arc-marquee
  * @arc-group marketing
+ * @status stable
  * @prop {number} speed - Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value.
  * @prop {'left' | 'right'} direction - Scroll direction. `left` scrolls content from right to left (default), `right` reverses the direction.
  * @prop {boolean} pauseOnHover - When true, the animation pauses while the cursor hovers over the marquee.

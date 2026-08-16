@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * elements.
  *
  * @tag arc-prose
+ * @status stable
  * @prop {'sm' | 'md' | 'lg'} size - Controls the base font size of the prose container. Affects paragraph text; headings and code maintain their own scale.
  * @slot - Default content.
  * @csspart prose

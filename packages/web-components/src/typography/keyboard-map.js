@@ -391,6 +391,7 @@ function chordName({ mods, key }, platform) {
  * keys do something; wiring real shortcuts is arc-hotkey's job.
  *
  * @tag arc-keyboard-map
+ * @status stable
  * @prop {'compact' | 'ansi'} layout - Board shape: "compact" (default, a 60%-style block) or "ansi" (adds the F-row and nav cluster). Unknown values fall back to compact.
  * @prop {string|string[]} highlight - Key chords to light up: an array property (e.g. ["mod+z", "mod+shift+z"]) or a comma- or space-separated attribute string. Each chord joins keys with "+" ("mod+shift+p"); `mod` resolves to Cmd on mac and Ctrl on win, mirroring arc-hotkey's aliases (cmd/command → meta, option → alt, control → ctrl). Single keys are fine ("g", "escape"). Unknown key names are ignored.
  * @prop {boolean} labels - Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels="false"`.

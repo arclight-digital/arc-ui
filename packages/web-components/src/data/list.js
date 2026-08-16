@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * variants. Pairs with arc-list-item for rich content rows.
  *
  * @tag arc-list
+ * @status stable
  * @requires arc-list-item
  * @prop {'default' | 'bordered' | 'separated'} variant - Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the base font size for the list and its children.

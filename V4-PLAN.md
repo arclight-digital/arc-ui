@@ -799,21 +799,101 @@ deletes — and cutting first shrinks the tree every later workstream touches.
 Non-blocking, may trail into 4.x minors: 4.8 (ships `experimental`), 4.9,
 4.10.
 
-### 4.1 Cuts and satellites (M)
+### 4.1 Cuts and satellites (M) — **DONE (2026-08-15)**
 
-- [ ] Delete the broken four; move showcase/lab sets per V4-SCOPE.md. Every
-      cut's docs page becomes a tombstone with a named alternative in
-      MIGRATION.md (per ground rule 1, the guided-tour/spotlight tombstone
-      names `arc-tour` as forthcoming and is updated when 4.8 lands it).
-- [ ] Satellites peer-depend on core tokens and **inherit the derived
-      conformance suite** (their manifests feed the same suites) — otherwise
-      they become where components go to die.
-- [ ] **`status` becomes required and barrel-gating lands here, early** —
-      `docs/src/data/components/_types.ts` drops the `?` (set on 14 of 184
-      pages today), the badge renders on the card grid, and `experimental` is
-      gated out of the barrel (documented breaking change — subpath-only).
-      Landing this before 4.8 means no experimental addition ever enters the
-      barrel only to be removed from it.
+- [x] Delete the broken **five** (the plan said four; V4-SCOPE §1.4 settled the
+      list at five); move showcase/lab sets per V4-SCOPE.md. Every cut's docs
+      page becomes a tombstone with a named alternative in MIGRATION.md (per
+      ground rule 1, the guided-tour/spotlight tombstone names `arc-tour` as
+      forthcoming and is updated when 4.8 lands it).
+- [x] ~~Satellites peer-depend on core tokens and inherit the derived
+      conformance suite~~ — **moot, and that is the result**. V4-SCOPE §1.1
+      replaced satellite packages with subpaths inside this one, so there is no
+      peer dependency to declare and no separate suite to feed: `/marketing`
+      and `/media` are the same package, the same version, the same tests and
+      the same derived conformance run. The bullet's own fear — "otherwise they
+      become where components go to die" — is the argument that chose subpaths.
+- [x] **`status` becomes required and barrel-gating lands here, early** — with
+      one correction to where it lives, below. The badge renders on the card
+      grid and the component page, and `experimental` is gated out of the
+      barrel.
+
+**Landed in three commits**, each green at that commit: the group axis, the
+five deletions, the status axis.
+
+**Correction: `status` is declared on the component, not on the docs page.**
+The plan had `docs/src/data/components/_types.ts` drop the `?`. That does not
+build. The barrel gates on status, `barrelExclude` is computed in
+`prism.config.js` during `pnpm generate`, and the docs data layer is TypeScript
+in a different workspace package — so making the published package's exports a
+function of the documentation site inverts the dependency. `@status` is a
+required JSDoc annotation on all 202 components (`findComponents` throws
+without it, and there is no default: a new component silently inheriting
+`stable` is the one answer omission must not give), it rides the manifest with
+everything else derived, and `_types.ts` loses the field entirely rather than
+losing its `?`. Ten components carry `beta`; nothing is experimental yet.
+
+**The two catalog axes are one derivation.** `@arc-group` and `@status` are read
+by `scripts/lib/component-tags.js`; `scripts/lib/barrel-rule.js` composes them
+with the heavy-dependency case into the one list prism is given;
+`generate/group-barrels.js` writes `src/marketing/index.js` and
+`src/media/index.js`; `generate/manifest.js` carries both onto every
+declaration. `scripts/checks/barrel-gating.js` asserts the round trip against
+the barrels **as written to disk**, in all seven packages, in both directions —
+including the direction nothing else covers, that every *un*-excluded component
+is actually in the root barrel, since a prune that removed too much looks
+identical to one that worked.
+
+**Where 4.1 is deliberately untested by its own tree, and what covers it.**
+There are zero experimental components, so the status branch of the barrel rule
+is unreachable from the real catalog — landing the gate before 4.8 is the whole
+point, and it means the check that reads the real catalog asserts nothing about
+it. `barrel-rule.js` is therefore free of every import, including `node:fs`, so
+`test/barrel-gating.test.js` can hand it fabricated catalogs (8 cases,
+including that `beta` deliberately does *not* gate). The check prints "the
+status half is vacuous here" rather than letting a clean line read as coverage.
+
+**Four defects found by executing it, none of them in the plan:**
+
+1. **prism's `barrelExclude` could not remove a name from the web-component
+   root barrel.** `pruneBarrels` matches one line at a time; that barrel had
+   been pretty-printed into multi-line blocks, and the prune is the only
+   removal path — the other enforcement point is a gate on the *append*.
+   Invisible for as long as the only excluded component was `arc-code-block`,
+   which was excluded before it was ever added and so never needed removing.
+   Reformatted to the shape prism writes; reported upstream.
+2. **prism repairs barrels before it sweeps orphans** (`cli.js:673` then
+   `:677`), and the repair decides by asking the filesystem — so deleting a
+   component leaves every wrapper barrel naming files that are removed four
+   lines later. All six packages stopped compiling. Loud and self-healing on a
+   second run; deleting a component needs `pnpm generate` twice. Reported
+   upstream, recorded in HANDOFF.
+3. **`generate/exports.js` had a dead assertion.** Its header claims every
+   export target must exist on disk; the check ran only on bare-string entries,
+   which an entry is for exactly one pass before the script attaches its types
+   condition. Restored and verified by breaking `./alert` deliberately.
+   `check-export-map` is what actually caught the five dead subpaths, from the
+   other side, which is why nothing shipped broken.
+4. **`arc-dock` was worse than the ledger recorded.** Beyond the hover-only
+   reveal: `open` was documented as tracking the hover state and
+   `arc-open`/`arc-close` as firing on it, and nothing wrote `open` on hover, so
+   neither happened; its `_hovered` state property was assigned once in the
+   constructor and never read. Two speed-dial details in the ledger were also
+   corrected against the source while writing its tombstone.
+
+`check-scope-coverage` now distinguishes an **executed** verdict from a stale
+one — delete/merge/rename for an absent tag is the plan working and is counted;
+a `keep` for an absent tag is still a failure. Both halves verified by
+fabricating each case.
+
+**Arithmetic, measured:** 207 tags → 202 registered, 186 in the default barrel
+(15 grouped, 1 heavy-dependency). The 13 merges and 1 rename are 4.2 and 4.4.
+
+**Gate: MET.** `pnpm test` 4,550 passing / 0 failing / 2 skipped (was 4,666;
+−124 with the three deleted suites, +8 for barrel-gating). `pnpm check` 23/23,
+with `group-gating` renamed to `barrel-gating` as it grew the status half.
+`pnpm generate` diff-clean and idempotent. Docs build green, 201 pages
+including five tombstones.
 
 ### 4.2 Merges (L)
 

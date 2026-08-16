@@ -12,6 +12,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  *
  * @tag arc-image-hotspots
  * @arc-group marketing
+ * @status stable
  * @requires arc-hotspot
  * @slot - Default content.
  * @csspart container

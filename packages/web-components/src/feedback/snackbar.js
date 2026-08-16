@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * surface-base background with accent-colored action link. Slides up, auto-dismisses.
  *
  * @tag arc-snackbar
+ * @status stable
  * @requires arc-button
  * @requires arc-icon-button
  * @prop {'bottom-center' | 'bottom-left' | 'bottom-right'} position - Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.

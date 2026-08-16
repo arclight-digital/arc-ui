@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * JavaScript.
  *
  * @tag arc-masonry
+ * @status stable
  * @prop {number} columns - Number of columns in the masonry grid. The browser distributes children across columns to minimize overall height difference.
  * @prop {'sm' | 'md' | 'lg'} gap - Spacing between columns and rows, mapped to design system spacing tokens (--space-sm, --space-md, --space-lg).
  * @slot - Default content.

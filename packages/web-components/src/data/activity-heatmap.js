@@ -41,6 +41,7 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  * `end-date` explicitly whenever server and client must agree exactly.
  *
  * @tag arc-activity-heatmap
+ * @status stable
  * @prop {Array<{date: string, value: number, label?: string}>} data - One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. "7 commits"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Property only — set it from script or a framework binding.
  * @prop {string} endDate - The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above).
  * @prop {number} weeks - How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.

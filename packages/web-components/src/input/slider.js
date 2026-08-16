@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * customisable min/max/step.
  *
  * @tag arc-slider
+ * @status stable
  * @prop {number} value - Current slider value. Reflected as an attribute and updated on user interaction.
  * @prop {number} min - Minimum allowed value at the left edge of the track.
  * @prop {number} max - Maximum allowed value at the right edge of the track.

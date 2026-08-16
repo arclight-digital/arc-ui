@@ -6,6 +6,14 @@
  * it is read from packages/web-components/custom-elements.json via
  * data/manifest.ts, generated from component JSDoc by `pnpm generate`.
  * This layer carries only prose, examples, and page metadata.
+ *
+ * `status` used to live here as an optional field and is gone: it was set on 14
+ * pages out of 184, so 170 components had no maturity at all and nothing could
+ * render a badge or gate on one. V4-PLAN 4.1 made it required — but on the
+ * *component source* (`@status`), not here, because the published package's
+ * barrel gates on it and a package's exports cannot be defined by the docs
+ * site's data layer. It arrives through the manifest with everything else
+ * derived; read it from `getApi(tag).status`.
  */
 export interface ComponentDef {
   name: string;
@@ -13,7 +21,6 @@ export interface ComponentDef {
   tag: string;
   tier: 'layout' | 'navigation' | 'content' | 'data' | 'typography' | 'input' | 'feedback';
   interactivity: 'static' | 'hybrid' | 'interactive';
-  status?: 'stable' | 'beta' | 'experimental';
   description: string;
   /** Alias terms for site search (⌘K) that aren't in the component name, e.g. ['dropdown'] on Select. */
   searchKeywords?: string[];

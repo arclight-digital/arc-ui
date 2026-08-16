@@ -11,6 +11,7 @@ import { listen } from '../shared/subscriptions.js';
  * empty-state fallback.
  *
  * @tag arc-data-table
+ * @status stable
  * @requires arc-column
  * @prop {Array<Record<string, any>>} rows - The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.
  * @prop {boolean} sortable - Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.

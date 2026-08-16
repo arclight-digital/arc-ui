@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * when an href is provided, creating a seamless clickable area with an animated gradient border.
  *
  * @tag arc-card
+ * @status stable
  * @prop {string} href - When set, renders the card as an anchor element, making the entire card surface a clickable link. On hover, the border transitions to a blue-to-violet gradient and the inner surface gains a lift shadow.
  * @prop {'none' | 'sm' | 'md' | 'lg'} padding - Controls internal spacing. Options: 'none', 'sm', 'md', 'lg'.
  * @prop {boolean} interactive - Enables hover effects for clickable cards that trigger JS instead of navigating via href.

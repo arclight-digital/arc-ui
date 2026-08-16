@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Animated loading spinner in three sizes.
  *
  * @tag arc-spinner
+ * @status stable
  * @prop {'sm' | 'md' | 'lg'} size - Spinner dimensions: sm (16px), md (24px), lg (40px)
  * @prop {'primary' | 'secondary' | 'white'} variant - Color of the spinner ring
  * @slot none

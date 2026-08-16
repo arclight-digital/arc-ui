@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Menu dropdown triggered by a button with keyboard navigation.
  *
  * @tag arc-dropdown-menu
+ * @status stable
  * @requires arc-separator
  * @prop {boolean} open - Controls whether the menu panel is visible. Toggled by clicking the trigger. Set to false when the user selects an item, clicks outside, or presses Escape.
  * @fires {CustomEvent<void>} arc-close - Fired when the dropdown closes

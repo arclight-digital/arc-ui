@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, num, oneOf } from '../shared/props.js';
  * Resizable split layout with two panes.
  *
  * @tag arc-split-pane
+ * @status stable
  * @prop {'horizontal' | 'vertical'} orientation - Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider.
  * @prop {number} ratio - The proportion of space allocated to the primary pane, clamped to
  *   `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds;

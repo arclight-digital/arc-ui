@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * animation as toast but persists until complete.
  *
  * @tag arc-progress-toast
+ * @status stable
  * @requires arc-icon-button
  * @prop {'top-right' | 'bottom-right'} position - Anchors the progress toast stack to a fixed corner of the viewport.
  * @fires arc-complete - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.

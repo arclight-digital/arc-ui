@@ -5,6 +5,7 @@ import { LitElement, html, css } from 'lit';
  * clickable header text, and slotted children become the expandable body content.
  *
  * @tag arc-accordion-item
+ * @status stable
  * @prop {string} question - The heading text displayed on the trigger button. Should be a concise, scannable label or question.
  * @slot - Default content.
  */

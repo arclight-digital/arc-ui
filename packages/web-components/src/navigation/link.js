@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Styled anchor with nav, muted, and default variants.
  *
  * @tag arc-link
+ * @status stable
  * @prop {string} href - URL destination for the link.
  * @prop {'default' | 'muted' | 'nav'} variant - Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout.
  * @prop {boolean} active - Active state — applies accent-primary color for navigation highlighting.

@@ -6,7 +6,6 @@ export const tagInput: ComponentDef = {
   tag: 'arc-tag-input',
   tier: 'input',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and duplicate rejection.',
 

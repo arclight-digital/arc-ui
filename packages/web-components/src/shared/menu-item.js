@@ -6,6 +6,7 @@ import { notifyOwner } from './hydrate-slots.js';
  * A single action entry inside the context menu.
  *
  * @tag arc-menu-item
+ * @status stable
  * @prop {string} label - Display text for the menu item. Settable, and falls back to the element's text content when unset — `<arc-menu-item label="Cut">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent.
  * @prop {string} shortcut - Keyboard shortcut hint displayed on the right side.
  * @prop {string} icon - Name of the icon to display before the label.

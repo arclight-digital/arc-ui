@@ -1,22 +1,31 @@
 /**
- * Shared component discovery — parses @tag / @requires / @arc-group JSDoc
- * annotations out of the Web Component sources.
+ * Shared component discovery — parses the @tag / @requires / @arc-group /
+ * @status JSDoc annotations out of the Web Component sources.
  *
  * Single source of truth for "which custom element tags does ARC define?".
  * Consumed by generate-registrations.js (needs the full records) and
  * generate-base-css.js (needs just the tag list, to scope the :not(:defined)
  * guard so the shipped stylesheet only hides elements we actually own).
  *
- * Since V4-SCOPE §1.1 it is also the source of truth for **domain groups** —
- * the second catalog axis, orthogonal to tier. A grouped component keeps its
- * tier (`arc-cta-banner` is still `content`, and its wrapper still generates
- * into `content/`); what the group changes is *reachability*: it leaves the
- * default barrel and is imported from `@arclux/arc-ui/marketing` instead.
- * See scripts/generate/group-barrels.js and scripts/checks/group-gating.js.
+ * Since V4-SCOPE §1 it is also the source of truth for the two axes that decide
+ * a component's *reachability*, both orthogonal to tier:
+ *
+ *   - **domain group** (`@arc-group`) — what kind of product it is for. A
+ *     grouped component keeps its tier (`arc-cta-banner` is still `content`,
+ *     and its wrapper still generates into `content/`); what changes is that it
+ *     leaves the default barrel for `@arclux/arc-ui/marketing`.
+ *   - **status** (`@status`) — how settled its API is. `experimental` leaves
+ *     the barrel too; `beta` deliberately does not.
+ *
+ * `./barrel-rule.js` composes the two into the exclusion list prism is given,
+ * `generate/group-barrels.js` writes the group barrels, `generate/manifest.js`
+ * carries both onto every declaration so the docs read them rather than
+ * restating them, and `checks/barrel-gating.js` asserts the whole round trip.
  */
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { excludedFrom, HEAVY_DEPENDENCY_TAGS } from './barrel-rule.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -39,7 +48,26 @@ export const TIERS = [
 export const GROUPS = ['marketing', 'media'];
 
 /**
- * @returns {Map<string, { tag: string, className: string, tier: string, file: string, requires: string[], group: string | null }>}
+ * Maturity, from least to most settled. Orthogonal to `GROUPS`: a `/marketing`
+ * component can be perfectly stable, and an app component can be experimental.
+ * Conflating the two axes was the mistake V4-SCOPE §1.2 called out by name.
+ *
+ * **Required on every component, with no default.** It used to live on the docs
+ * pages as an optional field, set on 14 of 184 — which meant the other 170 had
+ * no status at all, so nothing could render a badge and nothing could gate on
+ * it. A default here would bring that back in a quieter form: a new component
+ * would silently inherit `stable`, which is the one answer a brand-new component
+ * should never give by omission. So it is declared, and `findComponents` throws
+ * when it is not.
+ *
+ * The source is the source of truth rather than the docs page, because the
+ * *barrel* gates on it (see `excludedFrom`) and a published package's exports
+ * cannot be defined by the documentation site's data layer.
+ */
+export const STATUSES = ['experimental', 'beta', 'stable'];
+
+/**
+ * @returns {Map<string, { tag: string, className: string, tier: string, file: string, requires: string[], group: string | null, status: string }>}
  *   Keyed by tag, in filesystem traversal order.
  */
 export function findComponents() {
@@ -79,7 +107,21 @@ export function findComponents() {
         );
       }
 
-      components.set(tag, { tag, className, tier, file, requires, group });
+      const statusMatch = source.match(/@status\s+([a-z][\w-]*)/);
+      const status = statusMatch?.[1] ?? null;
+      if (status === null) {
+        throw new Error(
+          `${tier}/${file}: no @status. Every component declares one of ` +
+            `${STATUSES.join(', ')} — see STATUSES in this file for why there is no default.`,
+        );
+      }
+      if (!STATUSES.includes(status)) {
+        throw new Error(
+          `${tier}/${file}: @status ${status} is not a known status (${STATUSES.join(', ')}).`,
+        );
+      }
+
+      components.set(tag, { tag, className, tier, file, requires, group, status });
     }
   }
 
@@ -110,10 +152,23 @@ export function findGroups() {
   return byGroup;
 }
 
-/** Sorted tags of every grouped component — what stays out of the default barrels. */
+/** Sorted tags of every grouped component. */
 export function findGroupedTags() {
   return [...findComponents().values()]
     .filter((c) => c.group)
     .map((c) => c.tag)
     .sort();
 }
+
+/**
+ * `excludedFrom` against the real catalog — what prism.config.js hands to prism.
+ *
+ * The rule itself lives in the import-free `./barrel-rule.js` so the browser
+ * suite can exercise it; this module owns only the filesystem half.
+ */
+export function findExcludedTags() {
+  return excludedFrom(findComponents());
+}
+
+// Re-exported so `component-tags.js` stays the one import for catalog facts.
+export { excludedFrom, HEAVY_DEPENDENCY_TAGS };

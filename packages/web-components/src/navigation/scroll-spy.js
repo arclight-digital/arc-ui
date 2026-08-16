@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Tracks scroll position and highlights the active navigation link.
  *
  * @tag arc-scroll-spy
+ * @status stable
  * @requires arc-spy-link
  * @prop {string} active - The id of the currently active section. Reflects to an attribute and updates automatically as the user scrolls.
  * @prop {number} offset - Pixel distance from the top of the viewport at which a section counts as current. Increase it to account for taller sticky headers.

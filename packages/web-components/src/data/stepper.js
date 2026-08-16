@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * Step indicator for multi-step workflows.
  *
  * @tag arc-stepper
+ * @status stable
  * @requires arc-step
  * @prop {number} active - Zero-indexed active step — steps before this index show as completed.
  *   Clamped to the range of rendered steps.

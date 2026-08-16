@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Horizontal toolbar with start, center, and end slots.
  *
  * @tag arc-toolbar
+ * @status stable
  * @requires arc-icon-button
  * @prop {boolean} sticky - When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below.
  * @prop {'md' | 'sm'} size - Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-typewriter
  * @arc-group marketing
+ * @status stable
  * @prop {string} text - The text to type out character by character
  * @prop {number} speed - Milliseconds per character
  * @prop {number} delay - Initial delay in milliseconds before typing starts

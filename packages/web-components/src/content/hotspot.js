@@ -13,6 +13,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  *
  * @tag arc-hotspot
  * @arc-group marketing
+ * @status stable
  * @prop {number} x - Horizontal position of the pin as a percentage of the image width, from 0 (left edge) to 100 (right edge). Values outside the range are clamped; a non-numeric value falls back to 50.
  * @prop {number} y - Vertical position of the pin as a percentage of the image height, from 0 (top edge) to 100 (bottom edge). Values outside the range are clamped; a non-numeric value falls back to 50.
  * @prop {string} label - Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader.

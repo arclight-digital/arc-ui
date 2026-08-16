@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * layouts with optional dividers between rows.
  *
  * @tag arc-key-value
+ * @status stable
  * @requires arc-kv-pair
  * @prop {'horizontal' | 'stacked'} layout - Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.
  * @prop {boolean} dividers - When true, renders a subtle border between each key-value pair.

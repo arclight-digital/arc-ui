@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-cta-banner
  * @arc-group marketing
+ * @status stable
  * @prop {string} eyebrow - Small label text displayed above the headline. Typically a short phrase like "Ready to build?" that sets context.
  * @prop {string} headline - Main headline text rendered with gradient display styling. Keep it concise and action-oriented.
  * @prop {boolean} nogradient - When true, disables the radial gradient background effect for quieter contexts.

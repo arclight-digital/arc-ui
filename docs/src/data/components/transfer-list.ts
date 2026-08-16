@@ -6,7 +6,6 @@ export const transferList: ComponentDef = {
   tag: 'arc-transfer-list',
   tier: 'input',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'Dual-listbox for moving items between an available and a selected pane, ideal for permissions and settings UIs.',
 

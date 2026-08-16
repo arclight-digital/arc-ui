@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Line-based text diff viewer with inline and side-by-side display modes.
  *
  * @tag arc-diff
+ * @status stable
  * @prop {string} original - The original text to compare (split by newlines).
  * @prop {string} revised - The modified text to compare (split by newlines).
  * @prop {'inline' | 'side-by-side'} mode - Display mode: 'inline' renders changes in a single column, 'side-by-side' renders two panes in a grid.

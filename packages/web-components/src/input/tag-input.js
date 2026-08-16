@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * duplicate rejection.
  *
  * @tag arc-tag-input
+ * @status beta
  * @prop {string[]} value - Array of current tags. Updated on add/remove and emitted via `arc-change`.
  * @prop {string[]} suggestions - Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox.
  * @prop {string} delimiter - Character that commits the current text as a tag when typed; pasted text is split on it.

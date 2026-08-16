@@ -6,6 +6,7 @@ import { LitElement, html, css } from 'lit';
  * match.
  *
  * @tag arc-command-group
+ * @status stable
  * @prop {string} heading - Heading text displayed above the group’s items.
  * @slot - Default content.
  */

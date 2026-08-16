@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * Drag-and-drop file upload zone with preview.
  *
  * @tag arc-file-upload
+ * @status stable
  * @prop {string} accept - Comma-separated list of accepted file types, passed directly to the native file input accept attribute. Examples: "image/*", ".pdf,.docx", "audio/mp3".
  * @prop {boolean} multiple - When true, allows selecting multiple files. Each drop or browse interaction appends to the existing file list rather than replacing it.
  * @prop {number} maxSize - Maximum file size in bytes. Files exceeding this limit are rejected with an inline error message. Set to 0 for no limit.

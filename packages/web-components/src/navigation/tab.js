@@ -8,6 +8,7 @@ import { notifyOwner } from '../shared/hydrate-slots.js';
  * individual tab behavior, such as disabling a specific tab or attaching per-tab event listeners.
  *
  * @tag arc-tab
+ * @status stable
  * @prop {string} label - Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.
  * @prop {boolean} disabled - When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.
  * @slot - Default content.

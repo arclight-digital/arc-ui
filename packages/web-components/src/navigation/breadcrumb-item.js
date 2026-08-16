@@ -7,6 +7,7 @@ import { resolveCarrierHref } from '../shared/anchor-adoption.js';
  * the last one) is treated as the current page and displayed with stronger visual weight.
  *
  * @tag arc-breadcrumb-item
+ * @status stable
  * @prop {string} href - Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current="page"` and a bolder font weight automatically.
  * @slot - Default content.
  */

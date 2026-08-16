@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Padding primitive consuming spacing tokens with optional negative-margin bleed mode.
  *
  * @tag arc-inset
+ * @status stable
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'} space - Padding size mapped to a design system spacing token. Controls all four sides equally.
  * @prop {boolean} bleed - When true, applies negative margins equal to the space value, allowing children to break out of a parent container's padding for full-bleed layouts.
  * @slot - Default content.

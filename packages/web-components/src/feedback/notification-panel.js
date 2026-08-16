@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Notification dropdown panel triggered by a button.
  *
  * @tag arc-notification-panel
+ * @status stable
  * @prop {boolean} open - Controls whether the notification panel is visible. Toggle this programmatically or let the built-in trigger click handler manage it.
  * @prop {'top-right' | 'top-left'} position - Horizontal alignment of the panel relative to the trigger element. Use top-right when the trigger is near the right edge of the viewport.
  * @prop {string} maxHeight - Maximum height of the scrollable body area. Prevents long notification lists from overflowing the viewport.

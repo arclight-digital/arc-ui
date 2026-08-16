@@ -6,7 +6,6 @@ export const menubar: ComponentDef = {
   tag: 'arc-menubar',
   tier: 'navigation',
   interactivity: 'interactive',
-  status: 'beta',
   description:
     'Desktop-application-style menu bar (File / Edit / View) with nested submenus, keyboard shortcuts display, and full WAI-ARIA menubar keyboard navigation.',
 

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * configuration — they do not render any visible content themselves.
  *
  * @tag arc-column
+ * @status stable
  * @prop {string} field - The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it.
  * @prop {string} key - Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set.
  * @prop {string} label - The human-readable header text displayed in the table's `<th>` element. This is what users see at the top of the column.

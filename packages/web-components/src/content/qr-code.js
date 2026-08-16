@@ -9,6 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * dark backgrounds.
  *
  * @tag arc-qr-code
+ * @status beta
  * @prop {string} value - The content to encode (URL, text, Wi-Fi string, 2FA URI, …). Empty values render nothing. Values exceeding QR capacity for the chosen level also render nothing.
  * @prop {number} size - Rendered width and height of the SVG in pixels. The code is vector-based and stays crisp at any size.
  * @prop {'L' | 'M' | 'Q' | 'H'} level - Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes.

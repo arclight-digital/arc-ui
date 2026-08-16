@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * navigation.
  *
  * @tag arc-date-range-picker
+ * @status beta
  * @prop {string} start - Range start date as an ISO string (YYYY-MM-DD). Empty when unset. Set both start and end to pre-select a range.
  * @prop {string} end - Range end date as an ISO string (YYYY-MM-DD). Empty when unset or while an end date is pending.
  * @prop {string} value - Read-derived ISO 8601 interval ("start/end") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning "start/end" sets both dates.

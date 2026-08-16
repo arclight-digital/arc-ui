@@ -238,33 +238,49 @@ for (const mod of manifest.modules) {
 }
 
 /**
- * Carry `@arc-group` through to the manifest.
+ * Carry `@arc-group` and `@status` through to the manifest.
  *
- * The analyzer drops JSDoc tags it has no schema for, so the domain group — the
- * second catalog axis from V4-SCOPE §1, which decides whether a component is in
- * the default barrel or behind `/marketing` or `/media` — would stop at the
+ * The analyzer drops JSDoc tags it has no schema for, so the two catalog axes
+ * from V4-SCOPE §1 — the domain group, which decides whether a component is in
+ * the default barrel or behind `/marketing` or `/media`, and the maturity
+ * status, which gates `experimental` out of the barrel — would stop at the
  * source file. Everything downstream that should say so reads the manifest and
  * only the manifest: the docs card grid and component pages, the editor data,
- * `llms.txt`. Left out, each of them would need its own copy of the group list,
- * which is the drift `scripts/lib/component-tags.js` exists to prevent.
+ * `llms.txt`. Left out, each of them would need its own copy of the lists, which
+ * is the drift `scripts/lib/component-tags.js` exists to prevent — and is
+ * exactly how `status` behaved before 4.1, hand-set on 14 docs pages out of 184.
  *
- * Recorded on every custom element, `null` included, so a reader can tell "in no
- * group" from "this manifest predates groups". Read here from the same
- * annotation rather than imported from component-tags.js: that module walks the
- * tier directories, and this loop is already holding the exact source file the
- * declaration came from.
+ * Recorded on every custom element, `group: null` included, so a reader can tell
+ * "in no group" from "this manifest predates groups". `status` has no null case:
+ * it is required on every component and `findComponents` throws without it, so
+ * an absence here is a manifest generated against sources that predate the rule.
+ * Read from the annotations rather than imported from component-tags.js — that
+ * module walks the tier directories, and this loop is already holding the exact
+ * source file each declaration came from.
  */
 let grouped = 0;
+const statuses = {};
 for (const mod of manifest.modules) {
   const file = resolve(wcDir, mod.path ?? '');
   if (!existsSync(file)) continue;
   const source = readFileSync(file, 'utf-8');
   const group = source.match(/@arc-group\s+([a-z][\w-]*)/)?.[1] ?? null;
+  const status = source.match(/@status\s+([a-z][\w-]*)/)?.[1] ?? null;
   for (const decl of mod.declarations ?? []) {
     if (!decl.customElement || !decl.tagName) continue;
     decl.group = group;
+    decl.status = status;
     if (group) grouped += 1;
+    statuses[status] = (statuses[status] ?? 0) + 1;
   }
+}
+
+// A missing status is a source that predates the rule, or a regex that stopped
+// matching. Either way the docs would render a badge for `null` and the barrel
+// gate would read every component as non-experimental — silently.
+if (statuses.null) {
+  console.error(`generate-manifest: ${statuses.null} custom element(s) have no @status`);
+  process.exit(1);
 }
 
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
@@ -274,5 +290,6 @@ const count = manifest.modules
   .filter((d) => d.customElement && d.tagName).length;
 console.log(
   `✓ custom-elements.json — ${count} custom elements, ${filled} facts recovered from declarations, ` +
-    `${grouped} in a domain group`
+    `${grouped} in a domain group, ` +
+    Object.entries(statuses).sort().map(([k, n]) => `${n} ${k}`).join('/')
 );

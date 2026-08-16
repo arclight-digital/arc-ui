@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * promise. Same visual treatment as dialog.
  *
  * @tag arc-confirm
+ * @status stable
  * @requires arc-modal
  * @requires arc-button
  * @prop {boolean} open - Controls whether the confirmation dialog is visible. For declarative usage; the imperative API manages this automatically.

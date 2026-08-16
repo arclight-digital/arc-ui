@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  * Structured term/detail pair list in a responsive grid layout with optional dividers.
  *
  * @tag arc-description-list
+ * @status stable
  * @requires arc-description-item
  * @prop {number} columns - Number of grid columns for laying out items side by side.
  * @prop {boolean} dividers - Show horizontal dividers between rows and vertical dividers between columns.

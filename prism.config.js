@@ -1,5 +1,5 @@
 import { propsFrom } from './scripts/prism-props.js';
-import { findGroupedTags } from './scripts/lib/component-tags.js';
+import { findExcludedTags } from './scripts/lib/component-tags.js';
 
 export default {
   // Our property declarations are built by the vocabulary in
@@ -15,28 +15,23 @@ export default {
 
   // Kept out of every barrel, in every framework.
   //
-  // arc-code-block is the original case: the only component with a heavy
-  // optional dependency (shiki + its grammars, 13.6 MB), and a bundler resolves
-  // the dynamic imports of anything in its module graph — so being re-exported
-  // from the barrel made shiki everyone's install, not just the install of
-  // consumers who render code. It is reached by its own subpath:
-  // `@arclux/arc-ui/code-block`.
-  //
-  // The rest are the domain groups (V4-SCOPE §1.1) — the marketing cluster and
-  // the DAW primitives, which leave the default barrel for `/marketing` and
-  // `/media`. **Derived, never listed here by hand**: the source of truth is the
-  // `@arc-group` annotation in each component, the same annotation
-  // scripts/generate/group-barrels.js writes the group barrels from. Two
-  // hand-kept lists would drift into a component that is in no barrel at all —
-  // excluded from the default one, absent from the group one — which is a
-  // failure a consumer discovers and no check here would see.
-  // scripts/checks/group-gating.js asserts the whole round trip.
+  // **Derived, never listed here by hand.** The three reasons a component leaves
+  // the default barrel — a heavy optional dependency, a domain group, an
+  // `experimental` status — live together in `excludedFrom` in
+  // scripts/lib/component-tags.js, which reads the same `@arc-group` and
+  // `@status` annotations that generate/group-barrels.js and the manifest read.
+  // A second hand-kept list here would eventually drift into a component that is
+  // in no barrel at all: excluded from the default one, absent from the group
+  // one. That is a failure a consumer discovers and nothing in this file would
+  // see. scripts/checks/barrel-gating.js asserts the whole round trip against
+  // the barrels as written to disk.
   //
   // Wrapper consumers are unaffected in reachability: every wrapper component
   // has had its own subpath since generate/wrapper-exports.js
-  // (`@arclux/arc-ui-react/Carousel`), which is exactly how code-block has been
-  // reached for a release.
-  barrelExclude: ['arc-code-block', ...findGroupedTags()],
+  // (`@arclux/arc-ui-react/Carousel`), which is exactly how arc-code-block —
+  // the original and still the only heavy-dependency case — has been reached
+  // for a release.
+  barrelExclude: findExcludedTags(),
 
   // Classification overrides. Highest precedence — beats the @arc-prism
   // JSDoc tag, which beats auto-detection. Lives here because JSDoc is

@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * easing. For bulk actions, unsaved-changes prompts.
  *
  * @tag arc-float-bar
+ * @status stable
  * @prop {boolean} open - Controls visibility of the float bar. Set to true when a triggering condition is met (e.g., items selected, form dirty) and false when the condition resolves.
  * @prop {'bottom' | 'top'} position - Which edge of the viewport the float bar appears at. Bottom is standard for bulk-action bars; top works for consent banners or global alerts.
  * @fires arc-open - Fired when the float bar becomes visible after the open prop is set to true.

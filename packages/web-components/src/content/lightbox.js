@@ -14,6 +14,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  * Entries may be plain `src` strings or `{ src, alt, caption }` objects; the two forms mix freely.
  *
  * @tag arc-lightbox
+ * @status stable
  * @requires arc-icon-button
  * @prop {Array} images - The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property — arrays do not round-trip through attributes.
  * @prop {number} index - Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image.

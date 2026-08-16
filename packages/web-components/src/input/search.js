@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * suggestions dropdown.
  *
  * @tag arc-search
+ * @status stable
  * @requires arc-suggestion
  * @prop {string} value - Current text content of the search input.
  * @prop {string} placeholder - Hint text displayed when the input is empty.

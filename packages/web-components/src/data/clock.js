@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Live clock with a digital or analog face, optionally pinned to an IANA timezone.
  *
  * @tag arc-clock
+ * @status stable
  * @prop {'digital' | 'analog'} variant - Which face to render. Digital shows a mono-spaced time string; analog shows an SVG dial with hands.
  * @prop {string} timezone - IANA timezone name (e.g. "Asia/Tokyo"). Defaults to the viewer's local timezone; an unrecognized value falls back to local.
  * @prop {string} label - Optional caption rendered under the face.

@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * paste support, and configurable length and input type.
  *
  * @tag arc-otp-input
+ * @status stable
  * @prop {number} length - Number of individual character boxes to render. Reflected as an attribute.
  * @prop {string} value - The concatenated value of all boxes. Reflected as an attribute and updated on every input.
  * @prop {boolean} disabled - Disables all input boxes, reducing opacity to 40% and blocking pointer events.

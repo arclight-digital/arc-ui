@@ -16,6 +16,7 @@ const ROLES = new Set(['user', 'assistant', 'system']);
  * the product wants faces; none is built in.
  *
  * @tag arc-message
+ * @status stable
  * @requires arc-markdown
  * @requires arc-time-ago
  * @prop {'user' | 'assistant' | 'system'} speaker - Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as "user".

@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * count that turns red at the limit.
  *
  * @tag arc-textarea
+ * @status stable
  * @prop {string} label - Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly.
  * @prop {string} value - The current text content of the textarea. Updated on every keystroke and emitted via `arc-input` and `arc-change` events.
  * @prop {string} name - Form field name submitted with the value. Required for native form integration via ElementInternals.

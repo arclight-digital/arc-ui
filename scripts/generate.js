@@ -70,7 +70,7 @@ const phases = [
       // would leave the excluded names unreachable for one whole run.
       gen('group-barrels'),
       { name: 'prism', cmd: 'npx', args: ['prism', '--strict', '--prune'] },
-      check('group-gating'),
+      check('barrel-gating'),
     ],
   },
   {

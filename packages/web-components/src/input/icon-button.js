@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * primary variants.
  *
  * @tag arc-icon-button
+ * @status stable
  * @requires arc-icon
  * @prop {string} name - Name of the arc-icon to render. When empty, the default slot is used for custom icon content.
  * @prop {string} text - Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling.

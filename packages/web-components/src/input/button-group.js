@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * Supports horizontal and vertical orientations.
  *
  * @tag arc-button-group
+ * @status stable
  * @prop {'horizontal' | 'vertical'} orientation - Layout direction. Vertical stacks buttons top-to-bottom.
  * @prop {'sm' | 'md' | 'lg'} size - Size cascaded to all child buttons.
  * @prop {string} variant - Button variant cascaded to all children (e.g., "ghost", "outline").

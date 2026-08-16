@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf, int, num } from '../shared/props.js';
  * Locale-aware number, currency, percentage, and compact formatter using Intl.NumberFormat.
  *
  * @tag arc-number-format
+ * @status stable
  * @prop {number} value - The number to format
  * @prop {'number' | 'currency' | 'percent' | 'compact'} type - Formatting style to apply
  * @prop {string} locale - BCP 47 locale tag for locale-aware formatting

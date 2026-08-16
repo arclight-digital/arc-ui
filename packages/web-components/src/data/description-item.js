@@ -6,6 +6,7 @@ import { tokenStyles } from '../shared-styles.js';
  * and the default slot holds the detail content.
  *
  * @tag arc-description-item
+ * @status stable
  * @prop {string} term - The key or label for this description entry, displayed as an uppercase heading.
  * @slot - Default content.
  * @csspart item

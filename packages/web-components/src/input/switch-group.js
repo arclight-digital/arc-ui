@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Supports vertical and horizontal layouts.
  *
  * @tag arc-switch-group
+ * @status stable
  * @prop {string} label - Group heading rendered as a `<legend>` element.
  * @prop {'vertical' | 'horizontal'} orientation - Layout direction. Vertical stacks toggles, horizontal arranges them in a row.
  * @prop {'sm' | 'md' | 'lg'} size - Size cascaded to all child arc-toggle elements.

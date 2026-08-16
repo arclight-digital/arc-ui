@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
  * Loading placeholder with shimmer animation.
  *
  * @tag arc-skeleton
+ * @status stable
  * @prop {'text' | 'circle' | 'rect'} variant - Shape of the skeleton: text for lines, circle for avatars, rect for blocks
  * @prop {string} width - CSS width value (e.g. "200px", "100%")
  * @prop {string} height - CSS height value; circle auto-matches width when omitted

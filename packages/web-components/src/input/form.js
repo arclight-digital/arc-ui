@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Textarea, and Button into a cohesive data-entry workflow.
  *
  * @tag arc-form
+ * @status stable
  * @prop {string} action - Form action URL for native form submission. When set, the form submits to this URL using the browser's built-in mechanism.
  * @prop {string} method - HTTP method for native form submission (GET or POST). Only applies when action is set.
  * @prop {boolean} novalidate - When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation.

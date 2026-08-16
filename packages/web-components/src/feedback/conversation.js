@@ -16,6 +16,7 @@ const NEAR_BOTTOM_PX = 100;
  * and wire it to scrollToEnd().
  *
  * @tag arc-conversation
+ * @status stable
  * @requires arc-message
  * @prop {boolean} autoScroll - Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer.
  * @fires {CustomEvent<{value: number}>} arc-scroll-away - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.

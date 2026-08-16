@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-gradient-text
  * @arc-group marketing
+ * @status stable
  * @prop {'accent' | 'display' | 'sunset' | 'ocean' | 'custom'} variant - Predefined gradient variant to apply
  * @prop {string} gradient - Custom CSS gradient string, used when variant is set to custom
  * @prop {boolean} animated - Animate the gradient with a shifting background-position cycle

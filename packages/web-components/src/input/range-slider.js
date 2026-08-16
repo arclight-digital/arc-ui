@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * accent-primary fill between the thumbs and live value display.
  *
  * @tag arc-range-slider
+ * @status stable
  * @prop {number} min - Minimum allowed value at the left edge of the track.
  * @prop {number} max - Maximum allowed value at the right edge of the track.
  * @prop {number} step - Increment granularity. Values snap to multiples of this number.

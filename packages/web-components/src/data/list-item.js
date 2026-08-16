@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * secondary text, links, and selection state.
  *
  * @tag arc-list-item
+ * @status stable
  * @prop {string} value - Unique identifier used for selection tracking.
  * @prop {boolean} selected - Whether this item is currently selected. Managed automatically by the parent list.
  * @prop {boolean} disabled - Prevents interaction and dims the item.

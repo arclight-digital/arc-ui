@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * page titles.
  *
  * @tag arc-command-palette
+ * @status stable
  * @requires arc-icon
  * @requires arc-command-item
  * @requires arc-command-group

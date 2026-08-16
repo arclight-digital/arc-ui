@@ -27,6 +27,7 @@ export function isOptionDisabled(option) {
  * and its text content becomes the label shown in the dropdown.
  *
  * @tag arc-option
+ * @status stable
  * @prop {string} value - The value identifier for this option, used to match against the parent control value.
  * @prop {boolean} disabled - When true, dims this option and prevents it from being selected.
  * @slot - Default content.
