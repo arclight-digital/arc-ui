@@ -12,11 +12,18 @@ import type { ArcAlert } from '@arclux/arc-ui/alert';
 export class Alert {
   private readonly _el: ArcAlert = inject(ElementRef).nativeElement;
 
-  @Input() set variant(value: 'info' | 'success' | 'warning' | 'error') {
+  @Input() set variant(value: 'info' | 'tip' | 'success' | 'warning' | 'error') {
     this._el.variant = value;
   }
-  get variant(): 'info' | 'success' | 'warning' | 'error' {
+  get variant(): 'info' | 'tip' | 'success' | 'warning' | 'error' {
     return this._el.variant;
+  }
+
+  @Input() set live(value: 'auto' | 'off' | 'polite' | 'assertive') {
+    this._el.live = value;
+  }
+  get live(): 'auto' | 'off' | 'polite' | 'assertive' {
+    return this._el.live;
   }
 
   @Input() set density(value: 'default' | 'compact') {

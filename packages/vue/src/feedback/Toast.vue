@@ -18,6 +18,9 @@ const props = withDefaults(defineProps<{
 const emit = defineEmits<{
   'arc-queue-overflow': [event: CustomEvent];
   'arc-queue-change': [event: CustomEvent];
+  'arc-complete': [event: CustomEvent];
+  'arc-cancel': [event: CustomEvent];
+  'arc-action': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
 }>();
 </script>
@@ -31,6 +34,9 @@ const emit = defineEmits<{
     :queueLimit="props.queueLimit"
     @arc-queue-overflow="(payload: CustomEvent) => emit('arc-queue-overflow', payload)"
     @arc-queue-change="(payload: CustomEvent) => emit('arc-queue-change', payload)"
+    @arc-complete="(payload: CustomEvent) => emit('arc-complete', payload)"
+    @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
+    @arc-action="(payload: CustomEvent) => emit('arc-action', payload)"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
   </arc-toast>

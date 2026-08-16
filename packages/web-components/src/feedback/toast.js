@@ -38,11 +38,17 @@ function statusStyle(variant) {
  * @fires arc-close - Fired when a toast notification is dismissed. detail: { id } — the id show() returned.
  * @fires arc-queue-change - Fired whenever the visible or queued count changes. detail: { visible, queued }.
  * @fires arc-queue-overflow - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.
+ * @fires arc-action - Fired when the user clicks a toast's action button, before it dismisses. detail: { id }. Absorbed from arc-snackbar, whose action was reachable as an event as well as the `action` callback — a callback cannot be attached declaratively.
+ * @fires arc-complete - Fired when a progress toast is completed with complete(id). detail: { id }.
+ * @fires arc-cancel - Fired when the user clicks a progress toast's cancel button. detail: { id }.
  * @slot none
  * @csspart container
  * @csspart toast
  * @csspart action
  * @csspart dismiss
+ * @csspart track
+ * @csspart fill
+ * @csspart cancel
  */
 export class ArcToast extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -127,7 +133,37 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
         color: var(--_status-color);
       }
 
+      .toast__body {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xs);
+      }
+
       .toast__message { flex: 1; }
+
+      /* Progress track, absorbed from arc-progress-toast (4.2). Copied rather
+         than reinterpreted — a merge that also restyles is two changes wearing
+         one commit. */
+      .toast__track {
+        height: 4px;
+        border-radius: var(--radius-full);
+        background: var(--border-subtle);
+        overflow: hidden;
+      }
+
+      .toast__fill {
+        height: 100%;
+        border-radius: var(--radius-full);
+        background: var(--gradient-accent-text);
+        transition: width var(--transition-base);
+        box-shadow: var(--glow-sm);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .toast__fill { transition: none; }
+      }
 
 
       .toast.is-exiting {
@@ -200,9 +236,16 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    *   up holding one that was never created.
    */
   show(options = {}) {
-    const { message = '', variant = 'info' } = options;
+    const { message = '', variant = 'info', progress } = options;
+    const isProgress = typeof progress === 'number';
 
-    if (this.dedupe) {
+    // A progress toast is never deduped and never auto-dismisses. Two uploads
+    // of a file with the same name are two uploads, not one that happened
+    // twice — coalescing them would leave one bar tracking two operations. And
+    // it persists by definition: it is finished by complete(), not by a timer.
+    // Absorbed from arc-progress-toast (4.2), which had neither a queue nor a
+    // dedupe to have to except itself from.
+    if (this.dedupe && !isProgress) {
       const existing = [...this._toasts, ...this._queue].find(
         (t) => t.message === message && t.variant === variant,
       );
@@ -217,7 +260,15 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
       }
     }
 
-    const entry = { id: ++this._counter, message, variant, count: 1, options };
+    const entry = {
+      id: ++this._counter,
+      message,
+      variant,
+      count: 1,
+      options: isProgress ? { ...options, persistent: true } : options,
+      progress: isProgress ? progress : undefined,
+      onCancel: options.onCancel,
+    };
 
     if (this._hasRoom()) {
       this._present(entry);
@@ -321,12 +372,81 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
     return entry.count > 1 ? `${entry.message} (×${entry.count})` : entry.message;
   }
 
+  /**
+   * Move a progress toast's bar, its message, or both. Unknown ids are ignored,
+   * matching dismiss().
+   *
+   * Named `updateToast` rather than `update` because `update` is Lit's — the
+   * name arc-progress-toast used, and the reason it also carried a do-nothing
+   * `update(changedProps) { super.update(changedProps); }` override that read
+   * as if it meant something.
+   *
+   * @param {number} id
+   * @param {{ progress?: number, message?: string }} changes
+   */
+  updateToast(id, { progress, message } = {}) {
+    let touched = false;
+    const apply = (t) => {
+      if (t.id !== id) return t;
+      touched = true;
+      return {
+        ...t,
+        progress: progress !== undefined ? progress : t.progress,
+        message: message !== undefined ? message : t.message,
+      };
+    };
+    this._toasts = this._toasts.map(apply);
+    // Queued entries too: a progress toast can be behind maxVisible, and an
+    // upload does not pause because its toast is not on screen yet.
+    this._queue = this._queue.map(apply);
+    if (touched) this.requestUpdate();
+  }
+
+  /**
+   * Finish a progress toast: dismiss it and fire `arc-complete`.
+   *
+   * Distinct from `dismiss()` on purpose — the operation finishing and the user
+   * closing the toast are different events, and a consumer waiting on the first
+   * should not be woken by the second.
+   */
+  complete(id) {
+    if (!this._toasts.some((t) => t.id === id) && !this._queue.some((t) => t.id === id)) return;
+    this._dismiss(id, { silent: true });
+    this._queue = this._queue.filter((t) => t.id !== id);
+    this.dispatchEvent(
+      new CustomEvent('arc-complete', { detail: { id }, bubbles: true, composed: true }),
+    );
+    this._notify();
+  }
+
+  _cancel(toast) {
+    if (toast.onCancel) toast.onCancel();
+    this.dispatchEvent(
+      new CustomEvent('arc-cancel', { detail: { id: toast.id }, bubbles: true, composed: true }),
+    );
+    this._dismiss(toast.id, { silent: true });
+  }
+
   _handleAction(toast) {
-    if (toast.action) toast.action();
+    // The callback first, then the event: a consumer who passed `action` gets
+    // it called whether or not anyone is listening, and arc-snackbar's
+    // declarative consumers get the event they had.
+    if (toast.options?.action) toast.options.action();
+    this.dispatchEvent(
+      new CustomEvent('arc-action', { detail: { id: toast.id }, bubbles: true, composed: true }),
+    );
     this._dismiss(toast.id);
   }
 
-  _dismiss(id) {
+  /**
+   * @param {number} id
+   * @param {{ silent?: boolean }} [opts] - `silent` suppresses `arc-close`, for
+   *   the two paths that have already announced themselves: `complete()` fires
+   *   `arc-complete` and `_cancel()` fires `arc-cancel`. Emitting `arc-close`
+   *   as well would make every progress operation look like it was closed by
+   *   the user, which is the one thing `arc-close` is supposed to mean.
+   */
+  _dismiss(id, { silent = false } = {}) {
     if (!this._toasts.some((t) => t.id === id)) return;
     const el = this.shadowRoot.querySelector(`[data-toast-id="${id}"]`);
     if (el) {
@@ -336,13 +456,15 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
         if (done) return;
         done = true;
         this._toasts = this._toasts.filter((t) => t.id !== id);
-        this.dispatchEvent(
-          new CustomEvent('arc-close', {
-            detail: { id },
-            bubbles: true,
-            composed: true,
-          }),
-        );
+        if (!silent) {
+          this.dispatchEvent(
+            new CustomEvent('arc-close', {
+              detail: { id },
+              bubbles: true,
+              composed: true,
+            }),
+          );
+        }
         this._release();
         this._notify();
       };
@@ -363,15 +485,50 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
           (t) => html`
           <div class="toast" style=${statusStyle(t.variant)} data-toast-id=${t.id} part="toast">
             <span class="toast__icon" aria-hidden="true">${getStatusIcon(t.variant)}</span>
-            <span class="toast__message">${this._label(t)}</span>
-            ${
-              t.actionLabel
+            <div class="toast__body">
+              <span class="toast__message">${this._label(t)}</span>
+              ${
+                typeof t.progress === 'number'
+                  ? html`
+                <div class="toast__track" part="track">
+                  <div
+                    class="toast__fill"
+                    style="width:${Math.min(100, Math.max(0, t.progress))}%"
+                    part="fill"
+                  ></div>
+                </div>
+              `
+                  : ''
+              }
+            </div>
+            ${/* `t.options.actionLabel`, not `t.actionLabel`.
+
+                  show() has only ever put the payload on `entry.options` —
+                  `const entry = { id, message, variant, count: 1, options }` —
+                  so `t.actionLabel` was undefined for every toast that ever
+                  rendered, and this button has never once appeared. The
+                  documented `part="action"` was undeliverable, and
+                  `_handleAction`'s `toast.action` was undefined on the same
+                  terms. Found while absorbing arc-snackbar, whose whole point
+                  is an action button. Nothing caught it because a conditional
+                  part is exempt from the derived part sweep by construction
+                  (conformance-surface.test.js:16-28) — it cannot tell a part
+                  that is conditional from one that is unreachable. */
+              t.options?.actionLabel
                 ? html`
-              <arc-button variant="ghost" size="sm" @click=${() => this._handleAction(t)} part="action">${t.actionLabel}</arc-button>
+              <arc-button variant="ghost" size="sm" @click=${() => this._handleAction(t)} part="action">${t.options.actionLabel}</arc-button>
             `
                 : ''
             }
-            <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${() => this._dismiss(t.id)} part="dismiss"></arc-icon-button>
+            ${
+              t.onCancel
+                ? html`
+              <arc-icon-button name="x" label="Cancel" variant="ghost" size="sm" @click=${() => this._cancel(t)} part="cancel"></arc-icon-button>
+            `
+                : html`
+              <arc-icon-button name="x" label="Dismiss" variant="ghost" size="sm" @click=${() => this._dismiss(t.id)} part="dismiss"></arc-icon-button>
+            `
+            }
           </div>
         `,
         )}

@@ -5,11 +5,17 @@ import { getStatusIcon } from '../status-utils.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0. **Below a form control, use the control's own `error` prop** — every
+ *   form control in the library renders one, with a `part="error"` and the aria wiring already
+ *   done, which is a thing a sibling element cannot do for it. Standing alone, use
+ *   `<arc-alert density="compact">`. Removed in v5.
+ *
  * Contextual feedback that sits inline in a form or content area. Same semantic color variants as
  * alert but compact — icon + text only, no background fill.
  *
  * @tag arc-inline-message
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-alert
  * @prop {'info' | 'success' | 'warning' | 'error'} variant - Controls the icon and text color. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures.
  * @slot - Default content.
  * @csspart icon

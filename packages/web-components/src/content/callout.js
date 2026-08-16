@@ -4,10 +4,15 @@ import { statusVars } from '../status-styles.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-alert>`. It absorbed the `tip` variant and the `icon` slot,
+ *   and `info` now maps to `role="note"` as this component always did. `variant` carries over; the
+ *   derived uppercase label has no equivalent — pass `heading` if you want one. Removed in v5.
+ *
  * Styled callout box for tips, warnings, and info.
  *
  * @tag arc-callout
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-alert
  * @requires arc-icon-button
  * @requires arc-icon
  * @prop {'info' | 'tip' | 'warning' | 'error'} variant - Semantic variant that controls the color scheme, top accent bar, and default icon

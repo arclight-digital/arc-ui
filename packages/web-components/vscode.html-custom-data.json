@@ -99,7 +99,7 @@
     },
     {
       "name": "arc-callout",
-      "description": "Styled callout box for tips, warnings, and info.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dismiss button is clicked on a dismissible callout.\n\n### **Slots:**\n - **icon**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **callout**\n- **header**\n- **icon**\n- **label**\n- **dismiss**\n- **content**",
+      "description": "@deprecated Since v4.0.0 — use `<arc-alert>`. It absorbed the `tip` variant and the `icon` slot, and `info` now maps to `role=\"note\"` as this component always did. `variant` carries over; the derived uppercase label has no equivalent — pass `heading` if you want one. Removed in v5. Styled callout box for tips, warnings, and info.\n\n\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dismiss button is clicked on a dismissible callout.\n\n### **Slots:**\n - **icon**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **callout**\n- **header**\n- **icon**\n- **label**\n- **dismiss**\n- **content**",
       "attributes": [
         {
           "name": "variant",
@@ -1836,16 +1836,27 @@
     },
     {
       "name": "arc-alert",
-      "description": "Contextual alert banner with four semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a dismissible alert is closed\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **alert**\n- **icon**\n- **heading**\n- **content**\n- **dismiss**",
+      "description": "Contextual alert banner with four semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a dismissible alert is closed\n\n### **Slots:**\n - **icon** - Replaces the built-in status glyph. Absorbed from arc-callout, whose icon was slottable.\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **alert**\n- **icon**\n- **heading**\n- **content**\n- **dismiss**",
       "attributes": [
         {
           "name": "variant",
-          "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+          "description": "Controls the semantic color palette, the icon, and — through the `ROLES` table — the ARIA role and whether the alert is announced. Use \"info\" for neutral guidance, \"tip\" for advice, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
           "values": [
             { "name": "info" },
+            { "name": "tip" },
             { "name": "success" },
             { "name": "warning" },
             { "name": "error" }
+          ]
+        },
+        {
+          "name": "live",
+          "description": "Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree — an `info` alert injected after a background save wants `polite`; a `warning` rendered in the initial page probably wants `off`.",
+          "values": [
+            { "name": "auto" },
+            { "name": "off" },
+            { "name": "polite" },
+            { "name": "assertive" }
           ]
         },
         {
@@ -2117,7 +2128,7 @@
     },
     {
       "name": "arc-inline-message",
-      "description": "Contextual feedback that sits inline in a form or content area. Same semantic color variants as\nalert but compact — icon + text only, no background fill.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **icon**\n- **content**",
+      "description": "@deprecated Since v4.0.0. **Below a form control, use the control's own `error` prop** — every form control in the library renders one, with a `part=\"error\"` and the aria wiring already done, which is a thing a sibling element cannot do for it. Standing alone, use `<arc-alert density=\"compact\">`. Removed in v5. Contextual feedback that sits inline in a form or content area. Same semantic color variants as alert but compact — icon + text only, no background fill.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **icon**\n- **content**",
       "attributes": [
         {
           "name": "variant",
@@ -2273,7 +2284,7 @@
     },
     {
       "name": "arc-progress-toast",
-      "description": "Toast variant with embedded progress bar for long-running operations. Same positioning and\nanimation as toast but persists until complete.\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.\n- **arc-cancel** - Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier.\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **cancel**\n- **track**\n- **fill**",
+      "description": "@deprecated Since v4.0.0 — use `<arc-toast>`. Pass `progress` to `show()` and arc-toast renders the track, skips dedupe and never auto-dismisses; `updateToast(id, { progress })`, `complete(id)` and the `arc-complete`/`arc-cancel` events all moved across. Removed in v5. Toast variant with embedded progress bar for long-running operations. Same positioning and animation as toast but persists until complete.\n\n\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.\n- **arc-cancel** - Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier.\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **cancel**\n- **track**\n- **fill**",
       "attributes": [
         {
           "name": "position",
@@ -2344,7 +2355,7 @@
     },
     {
       "name": "arc-snackbar",
-      "description": "Bottom-anchored single-line notification with optional action button. Darker than toast —\nsurface-base background with accent-colored action link. Slides up, auto-dismisses.\n---\n\n\n### **Events:**\n - **arc-action** - Fired when the user clicks the action button (e.g. \"Undo\")\n- **arc-close** - Fired when the snackbar is dismissed, either by auto-timeout or user interaction\n\n### **CSS Parts:**\n - **container**\n- **snackbar**\n- **action**\n- **dismiss**",
+      "description": "@deprecated Since v4.0.0 — use `<arc-toast>`. arc-toast already covers every position this had, and now fires `arc-action` as well as calling the `action` callback. `show({ message, action, actionLabel })` is unchanged. Removed in v5. Bottom-anchored single-line notification with optional action button. Darker than toast — surface-base background with accent-colored action link. Slides up, auto-dismisses.\n\n\n---\n\n\n### **Events:**\n - **arc-action** - Fired when the user clicks the action button (e.g. \"Undo\")\n- **arc-close** - Fired when the snackbar is dismissed, either by auto-timeout or user interaction\n\n### **CSS Parts:**\n - **container**\n- **snackbar**\n- **action**\n- **dismiss**",
       "attributes": [
         {
           "name": "position",
@@ -2365,7 +2376,7 @@
     },
     {
       "name": "arc-toast",
-      "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix — a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n- **arc-close** - Fired when a toast notification is dismissed. detail: { id } — the id show() returned.\n\n### **Methods:**\n - **show(options): _number_** - Show a toast, or coalesce it into an identical one that is already showing.\n- **dismiss(id: _number_)** - Dismiss a toast by the id show() returned, whether it is visible or still\nqueued. Unknown ids are ignored.\n- **clear()** - Dismiss everything on screen and discard the queue.\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **action**\n- **dismiss**",
+      "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix — a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n- **arc-complete** - Fired when a progress toast is completed with complete(id). detail: { id }.\n- **arc-cancel** - Fired when the user clicks a progress toast's cancel button. detail: { id }.\n- **arc-action** - Fired when the user clicks a toast's action button, before it dismisses. detail: { id }. Absorbed from arc-snackbar, whose action was reachable as an event as well as the `action` callback — a callback cannot be attached declaratively.\n- **arc-close** - Fired when a toast notification is dismissed. detail: { id } — the id show() returned.\n\n### **Methods:**\n - **show(options): _number_** - Show a toast, or coalesce it into an identical one that is already showing.\n- **dismiss(id: _number_)** - Dismiss a toast by the id show() returned, whether it is visible or still\nqueued. Unknown ids are ignored.\n- **clear()** - Dismiss everything on screen and discard the queue.\n- **updateToast(id: _number_, { progress, message }, changes: _{ progress?: number, message?: string }_)** - Move a progress toast's bar, its message, or both. Unknown ids are ignored,\nmatching dismiss().\n\nNamed `updateToast` rather than `update` because `update` is Lit's — the\nname arc-progress-toast used, and the reason it also carried a do-nothing\n`update(changedProps) { super.update(changedProps); }` override that read\nas if it meant something.\n- **complete(id)** - Finish a progress toast: dismiss it and fire `arc-complete`.\n\nDistinct from `dismiss()` on purpose — the operation finishing and the user\nclosing the toast are different events, and a consumer waiting on the first\nshould not be woken by the second.\n\n### **CSS Parts:**\n - **container**\n- **toast**\n- **action**\n- **dismiss**\n- **track**\n- **fill**\n- **cancel**",
       "attributes": [
         {
           "name": "position",

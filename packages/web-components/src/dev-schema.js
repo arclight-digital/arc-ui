@@ -74,7 +74,8 @@ export default {
     "error"
    ]
   },
-  "slug": "callout"
+  "slug": "callout",
+  "mergedInto": "arc-alert"
  },
  "arc-card": {
   "attrs": [
@@ -931,6 +932,7 @@ export default {
  "arc-alert": {
   "attrs": [
    "variant",
+   "live",
    "density",
    "dismissible",
    "heading"
@@ -938,9 +940,16 @@ export default {
   "enums": {
    "variant": [
     "info",
+    "tip",
     "success",
     "warning",
     "error"
+   ],
+   "live": [
+    "auto",
+    "off",
+    "polite",
+    "assertive"
    ],
    "density": [
     "default",
@@ -1088,7 +1097,8 @@ export default {
     "error"
    ]
   },
-  "slug": "inline-message"
+  "slug": "inline-message",
+  "mergedInto": "arc-alert"
  },
  "arc-loading-overlay": {
   "attrs": [
@@ -1172,7 +1182,8 @@ export default {
     "bottom-right"
    ]
   },
-  "slug": "progress-toast"
+  "slug": "progress-toast",
+  "mergedInto": "arc-toast"
  },
  "arc-progress": {
   "attrs": [
@@ -1222,7 +1233,8 @@ export default {
     "bottom-right"
    ]
   },
-  "slug": "snackbar"
+  "slug": "snackbar",
+  "mergedInto": "arc-toast"
  },
  "arc-toast": {
   "attrs": [

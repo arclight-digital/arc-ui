@@ -3,11 +3,14 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-toast>`. Pass `progress` to `show()` and arc-toast renders the track, skips dedupe and never auto-dismisses; `updateToast(id, { progress })`, `complete(id)` and the `arc-complete`/`arc-cancel` events all moved across. Removed in v5.
+ *
  * Toast variant with embedded progress bar for long-running operations. Same positioning and
  * animation as toast but persists until complete.
  *
  * @tag arc-progress-toast
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-toast
  * @requires arc-icon-button
  * @prop {'top-right' | 'bottom-right'} position - Anchors the progress toast stack to a fixed corner of the viewport.
  * @fires arc-complete - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.

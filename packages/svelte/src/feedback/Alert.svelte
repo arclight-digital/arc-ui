@@ -4,10 +4,13 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    variant?: 'info' | 'success' | 'warning' | 'error';
+    variant?: 'info' | 'tip' | 'success' | 'warning' | 'error';
+    live?: 'auto' | 'off' | 'polite' | 'assertive';
     density?: 'default' | 'compact';
     dismissible?: boolean;
     heading?: string;
+    /** <slot name="icon"> — put slot="icon" on the element inside. */
+    icon?: Snippet;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -36,9 +39,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { variant, density, dismissible, heading = '', children, ...rest }: Props = $props();
+  let { variant, live, density, dismissible, heading = '', icon, children, ...rest }: Props = $props();
 </script>
 
-<arc-alert {variant} {density} {dismissible} {heading} {...rest}>
+<arc-alert {variant} {live} {density} {dismissible} {heading} {...rest}>
+  {@render icon?.()}
   {@render children?.()}
 </arc-alert>

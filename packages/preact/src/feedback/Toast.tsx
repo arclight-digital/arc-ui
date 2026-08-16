@@ -12,6 +12,9 @@ export interface ToastProps {
   queueLimit?: number;
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
+  onArcComplete?: (e: CustomEvent) => void;
+  onArcCancel?: (e: CustomEvent) => void;
+  onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
@@ -40,7 +43,7 @@ export interface ToastProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Toast: FunctionComponent<ToastProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcQueueChange, onArcClose, ...rest }) => {
+export const Toast: FunctionComponent<ToastProps> = ({ position, duration, maxVisible, dedupe, queueLimit, onArcQueueOverflow, onArcQueueChange, onArcComplete, onArcCancel, onArcAction, onArcClose, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -56,12 +59,27 @@ export const Toast: FunctionComponent<ToastProps> = ({ position, duration, maxVi
       el.addEventListener('arc-queue-change', fn);
       listeners.push(['arc-queue-change', fn]);
     }
+    if (onArcComplete) {
+      const fn: EventListener = (e) => onArcComplete(e as CustomEvent);
+      el.addEventListener('arc-complete', fn);
+      listeners.push(['arc-complete', fn]);
+    }
+    if (onArcCancel) {
+      const fn: EventListener = (e) => onArcCancel(e as CustomEvent);
+      el.addEventListener('arc-cancel', fn);
+      listeners.push(['arc-cancel', fn]);
+    }
+    if (onArcAction) {
+      const fn: EventListener = (e) => onArcAction(e as CustomEvent);
+      el.addEventListener('arc-action', fn);
+      listeners.push(['arc-action', fn]);
+    }
     if (onArcClose) {
       const fn: EventListener = (e) => onArcClose(e as CustomEvent);
       el.addEventListener('arc-close', fn);
       listeners.push(['arc-close', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcQueueOverflow, onArcQueueChange, onArcClose]);
+  }, [onArcQueueOverflow, onArcQueueChange, onArcComplete, onArcCancel, onArcAction, onArcClose]);
   return h('arc-toast', { ref, position, duration, maxVisible, dedupe, queueLimit, ...rest });
 };

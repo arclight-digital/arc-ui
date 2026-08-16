@@ -12,7 +12,8 @@ declare module 'solid-js' {
 }
 
 export interface AlertProps {
-  variant?: 'info' | 'success' | 'warning' | 'error';
+  variant?: 'info' | 'tip' | 'success' | 'warning' | 'error';
+  live?: 'auto' | 'off' | 'polite' | 'assertive';
   density?: 'default' | 'compact';
   dismissible?: boolean;
   heading?: string;
@@ -46,9 +47,9 @@ export interface AlertProps {
 }
 
 export const Alert: Component<AlertProps> = (props) => {
-  const [local, rest] = splitProps(props, ['variant', 'density', 'dismissible', 'heading', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['variant', 'live', 'density', 'dismissible', 'heading', 'onArcClose', 'children']);
   return (
-    <arc-alert variant={local.variant} density={local.density} dismissible={local.dismissible} heading={local.heading} on:arc-close={local.onArcClose} {...rest}>
+    <arc-alert variant={local.variant} live={local.live} density={local.density} dismissible={local.dismissible} heading={local.heading} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-alert>
   );

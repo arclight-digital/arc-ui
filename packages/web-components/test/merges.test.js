@@ -13,6 +13,9 @@ import '../src/data/key-value.register.js';
 import '../src/data/kv-pair.register.js';
 import '../src/input/pin-input.register.js';
 import '../src/input/otp-input.register.js';
+import '../src/feedback/alert.register.js';
+import '../src/content/callout.register.js';
+import '../src/feedback/toast.register.js';
 
 /**
  * V4-PLAN 4.2's merges, tested from the side that can actually fail.
@@ -227,6 +230,207 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       expect(pin.shadowRoot.querySelectorAll('input').length).to.equal(
         otp.shadowRoot.querySelectorAll('input').length,
       );
+    });
+  });
+
+  describe('arc-callout → arc-alert', () => {
+    const roleOf = (el) => el.shadowRoot.querySelector('.alert').getAttribute('role');
+    const liveOf = (el) => el.shadowRoot.querySelector('.alert').getAttribute('aria-live');
+
+    it('maps severity to a role, ratified in V4-SCOPE §3.2', async () => {
+      const expected = {
+        error: 'alert',
+        warning: 'alert',
+        success: 'status',
+        info: 'note',
+        tip: 'note',
+      };
+      for (const [variant, role] of Object.entries(expected)) {
+        const el = await render(`<arc-alert variant="${variant}">x</arc-alert>`);
+        expect(roleOf(el), variant).to.equal(role);
+      }
+    });
+
+    it('no longer announces info — the correction the merge forced', async () => {
+      // A behaviour change for existing arc-alert users, not only for callout's:
+      // info used to be role="status", which is a polite live region. Since
+      // info is arc-callout's default variant and arc-callout was a static
+      // role="note" box, the naive merge would have turned every informational
+      // callout on every page into an announcement.
+      const el = await render('<arc-alert variant="info">x</arc-alert>');
+      expect(roleOf(el)).to.equal('note');
+      expect(liveOf(el), 'auto mode leaves the role to carry politeness').to.equal(null);
+    });
+
+    it('still announces error and warning assertively via the role', async () => {
+      // Anti-vacuity for the case above: if the mapping had gone the other way
+      // and everything became `note`, that test would pass and this one would
+      // not.
+      for (const variant of ['error', 'warning']) {
+        const el = await render(`<arc-alert variant="${variant}">x</arc-alert>`);
+        expect(roleOf(el), variant).to.equal('alert');
+      }
+    });
+
+    it('lets live override the derived politeness in both directions', async () => {
+      const quiet = await render('<arc-alert variant="error" live="off">x</arc-alert>');
+      expect(roleOf(quiet), 'the role survives — it is still an error').to.equal('alert');
+      expect(liveOf(quiet)).to.equal('off');
+
+      const loud = await render('<arc-alert variant="info" live="polite">x</arc-alert>');
+      expect(roleOf(loud)).to.equal('note');
+      expect(liveOf(loud)).to.equal('polite');
+    });
+
+    it('emits no aria-live at all in auto mode', async () => {
+      // Not cosmetic: writing the implicit value out again is a second
+      // declaration of the same thing, and the two can drift.
+      for (const variant of ['error', 'success', 'info']) {
+        const el = await render(`<arc-alert variant="${variant}">x</arc-alert>`);
+        expect(el.shadowRoot.querySelector('.alert').hasAttribute('aria-live'), variant).to.be.false;
+      }
+    });
+
+    it('carries the tip variant, on the success color ramp with its own glyph', async () => {
+      const tip = await render('<arc-alert variant="tip">x</arc-alert>');
+      const success = await render('<arc-alert variant="success">x</arc-alert>');
+      const icon = (el) => el.shadowRoot.querySelector('.alert__icon-wrap');
+      expect(getComputedStyle(icon(tip)).color).to.equal(getComputedStyle(icon(success)).color);
+      expect(icon(tip).textContent.trim()).to.not.equal(icon(success).textContent.trim());
+    });
+
+    it('takes a slotted icon, as arc-callout did', async () => {
+      const el = await render('<arc-alert variant="tip"><span slot="icon">!</span>x</arc-alert>');
+      const slot = el.shadowRoot.querySelector('slot[name="icon"]');
+      expect(slot, 'the icon slot exists').to.exist;
+      expect(slot.assignedElements()).to.have.lengthOf(1);
+    });
+
+    it('still renders arc-callout unchanged, note role and all', async () => {
+      const el = await render('<arc-callout variant="info">x</arc-callout>');
+      expect(el.shadowRoot.querySelector('.callout').getAttribute('role')).to.equal('note');
+    });
+  });
+
+  describe('arc-snackbar + arc-progress-toast → arc-toast', () => {
+    const toasts = (el) => [...el.shadowRoot.querySelectorAll('.toast')];
+    const fill = (el) => el.shadowRoot.querySelector('.toast__fill');
+
+    it('renders an action button — which it never did before', async () => {
+      // Not a new capability, a repair. show() has only ever put the payload on
+      // `entry.options`, and render read `t.actionLabel`, so this button was
+      // unreachable for every toast that ever existed. The documented
+      // part="action" could not be delivered.
+      const el = await render('<arc-toast></arc-toast>');
+      el.show({ message: 'Deleted', actionLabel: 'Undo' });
+      await el.updateComplete;
+      const action = el.shadowRoot.querySelector('[part="action"]');
+      expect(action, 'the action button renders').to.exist;
+      expect(action.textContent.trim()).to.equal('Undo');
+    });
+
+    it('calls the action callback and fires arc-action', async () => {
+      // arc-snackbar offered both. A callback cannot be attached declaratively,
+      // which is why the event has to exist for its consumers to migrate.
+      const el = await render('<arc-toast></arc-toast>');
+      let called = 0;
+      const seen = [];
+      el.addEventListener('arc-action', (e) => seen.push(e.detail.id));
+      const id = el.show({ message: 'Deleted', actionLabel: 'Undo', action: () => (called += 1) });
+      await el.updateComplete;
+      el.shadowRoot.querySelector('[part="action"]').click();
+      expect(called).to.equal(1);
+      expect(seen).to.deep.equal([id]);
+    });
+
+    it('renders a progress track when show() is given a progress', async () => {
+      const el = await render('<arc-toast></arc-toast>');
+      el.show({ message: 'Uploading', progress: 40 });
+      await el.updateComplete;
+      expect(fill(el)).to.exist;
+      expect(fill(el).style.width).to.equal('40%');
+    });
+
+    it('moves the bar with updateToast, and clamps it', async () => {
+      const el = await render('<arc-toast></arc-toast>');
+      const id = el.show({ message: 'Uploading', progress: 0 });
+      el.updateToast(id, { progress: 70 });
+      await el.updateComplete;
+      expect(fill(el).style.width).to.equal('70%');
+      el.updateToast(id, { progress: 300 });
+      await el.updateComplete;
+      expect(fill(el).style.width).to.equal('100%');
+    });
+
+    it('never dedupes a progress toast', async () => {
+      // Two uploads of a file with the same name are two uploads. Coalescing
+      // them would leave one bar tracking both.
+      const el = await render('<arc-toast></arc-toast>');
+      const a = el.show({ message: 'Uploading', progress: 0 });
+      const b = el.show({ message: 'Uploading', progress: 0 });
+      await el.updateComplete;
+      expect(b).to.not.equal(a);
+      expect(toasts(el)).to.have.lengthOf(2);
+    });
+
+    it('still dedupes an ordinary toast — the exception is scoped', async () => {
+      // Anti-vacuity for the case above: if the dedupe guard had been dropped
+      // rather than narrowed, that test would pass and this one would not.
+      const el = await render('<arc-toast></arc-toast>');
+      const a = el.show({ message: 'Saved' });
+      const b = el.show({ message: 'Saved' });
+      await el.updateComplete;
+      expect(b).to.equal(a);
+      expect(toasts(el)).to.have.lengthOf(1);
+    });
+
+    it('does not auto-dismiss a progress toast', async () => {
+      const el = await render('<arc-toast duration="10"></arc-toast>');
+      el.show({ message: 'Uploading', progress: 10 });
+      await el.updateComplete;
+      await new Promise((r) => setTimeout(r, 80));
+      expect(toasts(el), 'a progress toast is finished by complete(), not a timer').to.have.lengthOf(1);
+    });
+
+    it('fires arc-complete on complete(), and not arc-close', async () => {
+      // The operation finishing and the user closing the toast are different
+      // events. A consumer awaiting the first must not be woken by the second.
+      const el = await render('<arc-toast></arc-toast>');
+      const events = [];
+      el.addEventListener('arc-complete', (e) => events.push(['complete', e.detail.id]));
+      el.addEventListener('arc-close', (e) => events.push(['close', e.detail.id]));
+      const id = el.show({ message: 'Uploading', progress: 99 });
+      await el.updateComplete;
+      el.complete(id);
+      await new Promise((r) => setTimeout(r, 350));
+      expect(events).to.deep.equal([['complete', id]]);
+    });
+
+    it('fires arc-cancel from the cancel button, and calls onCancel', async () => {
+      const el = await render('<arc-toast></arc-toast>');
+      let cancelled = 0;
+      const events = [];
+      el.addEventListener('arc-cancel', (e) => events.push(e.detail.id));
+      el.addEventListener('arc-close', () => events.push('close'));
+      const id = el.show({ message: 'Uploading', progress: 20, onCancel: () => (cancelled += 1) });
+      await el.updateComplete;
+      el.shadowRoot.querySelector('[part="cancel"]').click();
+      await new Promise((r) => setTimeout(r, 350));
+      expect(cancelled).to.equal(1);
+      expect(events).to.deep.equal([id]);
+    });
+
+    it('still fires arc-close for an ordinary dismissal', async () => {
+      // Anti-vacuity for the two `silent` paths above: the suppression is
+      // scoped to complete() and cancel, not applied to _dismiss generally.
+      const el = await render('<arc-toast></arc-toast>');
+      const seen = [];
+      el.addEventListener('arc-close', (e) => seen.push(e.detail.id));
+      const id = el.show({ message: 'Saved' });
+      await el.updateComplete;
+      el.shadowRoot.querySelector('[part="dismiss"]').click();
+      await new Promise((r) => setTimeout(r, 350));
+      expect(seen).to.deep.equal([id]);
     });
   });
 

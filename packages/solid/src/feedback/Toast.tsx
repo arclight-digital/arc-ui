@@ -19,6 +19,9 @@ export interface ToastProps {
   queueLimit?: number;
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
+  onArcComplete?: (e: CustomEvent) => void;
+  onArcCancel?: (e: CustomEvent) => void;
+  onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
@@ -48,9 +51,9 @@ export interface ToastProps {
 }
 
 export const Toast: Component<ToastProps> = (props) => {
-  const [local, rest] = splitProps(props, ['position', 'duration', 'maxVisible', 'dedupe', 'queueLimit', 'onArcQueueOverflow', 'onArcQueueChange', 'onArcClose']);
+  const [local, rest] = splitProps(props, ['position', 'duration', 'maxVisible', 'dedupe', 'queueLimit', 'onArcQueueOverflow', 'onArcQueueChange', 'onArcComplete', 'onArcCancel', 'onArcAction', 'onArcClose']);
   return (
-    <arc-toast position={local.position} duration={local.duration} prop:maxVisible={local.maxVisible} dedupe={local.dedupe} prop:queueLimit={local.queueLimit} on:arc-queue-overflow={local.onArcQueueOverflow} on:arc-queue-change={local.onArcQueueChange} on:arc-close={local.onArcClose} {...rest}>
+    <arc-toast position={local.position} duration={local.duration} prop:maxVisible={local.maxVisible} dedupe={local.dedupe} prop:queueLimit={local.queueLimit} on:arc-queue-overflow={local.onArcQueueOverflow} on:arc-queue-change={local.onArcQueueChange} on:arc-complete={local.onArcComplete} on:arc-cancel={local.onArcCancel} on:arc-action={local.onArcAction} on:arc-close={local.onArcClose} {...rest}>
     </arc-toast>
   );
 };

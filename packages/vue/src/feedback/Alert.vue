@@ -5,7 +5,8 @@ import '@arclux/arc-ui/alert';
 defineOptions({ name: 'Alert' });
 
 const props = withDefaults(defineProps<{
-  variant?: 'info' | 'success' | 'warning' | 'error';
+  variant?: 'info' | 'tip' | 'success' | 'warning' | 'error';
+  live?: 'auto' | 'off' | 'polite' | 'assertive';
   density?: 'default' | 'compact';
   dismissible?: boolean;
   heading?: string;
@@ -21,11 +22,13 @@ const emit = defineEmits<{
 <template>
   <arc-alert
     :variant="props.variant"
+    :live="props.live"
     :density="props.density"
     :dismissible="props.dismissible"
     :heading="props.heading"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />
+    <slot name="icon" />
   </arc-alert>
 </template>

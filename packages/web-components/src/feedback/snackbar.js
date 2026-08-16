@@ -3,11 +3,14 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-toast>`. arc-toast already covers every position this had, and now fires `arc-action` as well as calling the `action` callback. `show({ message, action, actionLabel })` is unchanged. Removed in v5.
+ *
  * Bottom-anchored single-line notification with optional action button. Darker than toast —
  * surface-base background with accent-colored action link. Slides up, auto-dismisses.
  *
  * @tag arc-snackbar
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-toast
  * @requires arc-button
  * @requires arc-icon-button
  * @prop {'bottom-center' | 'bottom-left' | 'bottom-right'} position - Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.

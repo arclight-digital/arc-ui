@@ -486,7 +486,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Styled callout box for tips, warnings, and info.",
+          "description": "",
           "name": "ArcCallout",
           "cssParts": [
             {
@@ -582,10 +582,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-alert>`. It absorbed the `tip` variant and the `icon` slot, and `info` now maps to `role=\"note\"` as this component always did. `variant` carries over; the derived uppercase label has no equivalent — pass `heading` if you want one. Removed in v5. Styled callout box for tips, warnings, and info.",
           "tagName": "arc-callout",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-alert"
         }
       ],
       "exports": [
@@ -9338,11 +9340,25 @@
           ],
           "slots": [
             {
+              "description": "Replaces the built-in status glyph. Absorbed from arc-callout, whose icon was slottable.",
+              "name": "icon"
+            },
+            {
               "description": "Default content.",
               "name": ""
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "ROLES",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ error: 'alert', warning: 'alert', success: 'status', info: 'note', tip: 'note', }",
+              "description": "Severity → ARIA role. V4-SCOPE §3.2, ratified 2026-08-13.\n\n`arc-alert` already implemented role-follows-severity, so most of this is a\nratification of what the component did. The exception is `info`, and it is\nthe reason the row needed a decision at all: `info` used to map to\n`role=\"status\"`, which *is* a polite live region. `arc-callout`'s default\nvariant is `info` and it was a static `role=\"note\"` box — so a naive merge\nwould have upgraded every informational callout on every page into an\nannouncement, landing the regression on the single most common variant.\n\n**So `info` is `note` now, and that is a behaviour change for existing\n`arc-alert` users too**, not only for callout's. The reasoning: `info` is\nthe variant most likely to be static page furniture, and an alert that\ngenuinely needs announcing has two ways to say so — pick a severity that\ncarries one, or set `live`."
+            },
             {
               "kind": "field",
               "name": "heading",
@@ -9359,11 +9375,23 @@
               "name": "variant",
               "privacy": "public",
               "type": {
-                "text": "'info' | 'success' | 'warning' | 'error'"
+                "text": "'info' | 'tip' | 'success' | 'warning' | 'error'"
               },
-              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+              "description": "Controls the semantic color palette, the icon, and — through the `ROLES` table — the ARIA role and whether the alert is announced. Use \"info\" for neutral guidance, \"tip\" for advice, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
               "attribute": "variant",
               "default": "'info'",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "live",
+              "privacy": "public",
+              "description": "Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree — an `info` alert injected after a background save wants `polite`; a `warning` rendered in the initial page probably wants `off`.",
+              "type": {
+                "text": "'auto' | 'off' | 'polite' | 'assertive'"
+              },
+              "attribute": "live",
+              "default": "'auto'",
               "reflects": true
             },
             {
@@ -9404,11 +9432,20 @@
             {
               "name": "variant",
               "type": {
-                "text": "'info' | 'success' | 'warning' | 'error'"
+                "text": "'info' | 'tip' | 'success' | 'warning' | 'error'"
               },
-              "description": "Controls the semantic color palette and icon. Use \"info\" for neutral guidance, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+              "description": "Controls the semantic color palette, the icon, and — through the `ROLES` table — the ARIA role and whether the alert is announced. Use \"info\" for neutral guidance, \"tip\" for advice, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
               "fieldName": "variant",
               "default": "'info'"
+            },
+            {
+              "name": "live",
+              "description": "Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree — an `info` alert injected after a background save wants `polite`; a `warning` rendered in the initial page probably wants `off`.",
+              "type": {
+                "text": "'auto' | 'off' | 'polite' | 'assertive'"
+              },
+              "fieldName": "live",
+              "default": "'auto'"
             },
             {
               "name": "density",
@@ -10967,7 +11004,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Contextual feedback that sits inline in a form or content area. Same semantic color variants as\nalert but compact — icon + text only, no background fill.",
+          "description": "",
           "name": "ArcInlineMessage",
           "cssParts": [
             {
@@ -11018,10 +11055,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0. **Below a form control, use the control's own `error` prop** — every form control in the library renders one, with a `part=\"error\"` and the aria wiring already done, which is a thing a sibling element cannot do for it. Standing alone, use `<arc-alert density=\"compact\">`. Removed in v5. Contextual feedback that sits inline in a form or content area. Same semantic color variants as alert but compact — icon + text only, no background fill.",
           "tagName": "arc-inline-message",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-alert"
         }
       ],
       "exports": [
@@ -11794,7 +11833,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Toast variant with embedded progress bar for long-running operations. Same positioning and\nanimation as toast but persists until complete.",
+          "description": "",
           "name": "ArcProgressToast",
           "cssParts": [
             {
@@ -11895,10 +11934,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-toast>`. Pass `progress` to `show()` and arc-toast renders the track, skips dedupe and never auto-dismisses; `updateToast(id, { progress })`, `complete(id)` and the `arc-complete`/`arc-cancel` events all moved across. Removed in v5. Toast variant with embedded progress bar for long-running operations. Same positioning and animation as toast but persists until complete.",
           "tagName": "arc-progress-toast",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-toast"
         }
       ],
       "exports": [
@@ -12258,7 +12299,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Bottom-anchored single-line notification with optional action button. Darker than toast —\nsurface-base background with accent-colored action link. Slides up, auto-dismisses.",
+          "description": "",
           "name": "ArcSnackbar",
           "cssParts": [
             {
@@ -12355,10 +12396,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-toast>`. arc-toast already covers every position this had, and now fires `arc-action` as well as calling the `action` callback. `show({ message, action, actionLabel })` is unchanged. Removed in v5. Bottom-anchored single-line notification with optional action button. Darker than toast — surface-base background with accent-colored action link. Slides up, auto-dismisses.",
           "tagName": "arc-snackbar",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-toast"
         }
       ],
       "exports": [
@@ -12392,6 +12435,15 @@
             },
             {
               "name": "dismiss"
+            },
+            {
+              "name": "track"
+            },
+            {
+              "name": "fill"
+            },
+            {
+              "name": "cancel"
             }
           ],
           "slots": [],
@@ -12429,6 +12481,39 @@
               "kind": "method",
               "name": "clear",
               "description": "Dismiss everything on screen and discard the queue."
+            },
+            {
+              "kind": "method",
+              "name": "updateToast",
+              "parameters": [
+                {
+                  "name": "id",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "{ progress, message }",
+                  "default": "{}"
+                },
+                {
+                  "name": "changes",
+                  "type": {
+                    "text": "{ progress?: number, message?: string }"
+                  }
+                }
+              ],
+              "description": "Move a progress toast's bar, its message, or both. Unknown ids are ignored,\nmatching dismiss().\n\nNamed `updateToast` rather than `update` because `update` is Lit's — the\nname arc-progress-toast used, and the reason it also carried a do-nothing\n`update(changedProps) { super.update(changedProps); }` override that read\nas if it meant something."
+            },
+            {
+              "kind": "method",
+              "name": "complete",
+              "parameters": [
+                {
+                  "name": "id"
+                }
+              ],
+              "description": "Finish a progress toast: dismiss it and fire `arc-complete`.\n\nDistinct from `dismiss()` on purpose — the operation finishing and the user\nclosing the toast are different events, and a consumer waiting on the first\nshould not be woken by the second."
             },
             {
               "kind": "field",
@@ -12501,6 +12586,27 @@
                 "text": "CustomEvent"
               },
               "description": "Fired whenever the visible or queued count changes. detail: { visible, queued }."
+            },
+            {
+              "name": "arc-complete",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when a progress toast is completed with complete(id). detail: { id }."
+            },
+            {
+              "name": "arc-cancel",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the user clicks a progress toast's cancel button. detail: { id }."
+            },
+            {
+              "name": "arc-action",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the user clicks a toast's action button, before it dismisses. detail: { id }. Absorbed from arc-snackbar, whose action was reachable as an event as well as the `action` callback — a callback cannot be attached declaratively."
             },
             {
               "name": "arc-close",

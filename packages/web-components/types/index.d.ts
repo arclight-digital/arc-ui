@@ -42,10 +42,14 @@ export declare class ArcActivityHeatmap extends LitElement {
  * Events: arc-close
  */
 export declare class ArcAlert extends LitElement {
+  /** Severity → ARIA role. V4-SCOPE §3.2, ratified 2026-08-13. `arc-alert` already implemented role-follows-severity, so most of this is a ratification of what the component did. The exception is `info`, and it is the reason the row needed a decision at all: `info` used to map to `role="status"`, which *is* a polite live region. `arc-callout`'s default variant is `info` and it was a static `role="note"` box — so a naive merge would have upgraded every informational callout on every page into an announcement, landing the regression on the single most common variant. **So `info` is `note` now, and that is a behaviour change for existing `arc-alert` users too**, not only for callout's. The reasoning: `info` is the variant most likely to be static page furniture, and an alert that genuinely needs announcing has two ways to say so — pick a severity that carries one, or set `live`. @default { error: 'alert', warning: 'alert', success: 'status', info: 'note', tip: 'note', } */
+  ROLES: Record<string, unknown>;
   /** Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message. @default '' */
   heading: string;
-  /** Controls the semantic color palette and icon. Use "info" for neutral guidance, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
-  variant: 'info' | 'success' | 'warning' | 'error';
+  /** Controls the semantic color palette, the icon, and — through the `ROLES` table — the ARIA role and whether the alert is announced. Use "info" for neutral guidance, "tip" for advice, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
+  variant: 'info' | 'tip' | 'success' | 'warning' | 'error';
+  /** Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree — an `info` alert injected after a background save wants `polite`; a `warning` rendered in the initial page probably wants `off`. @default 'auto' */
+  live: 'auto' | 'off' | 'polite' | 'assertive';
   /** When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to. @default false */
   dismissible: boolean;
   /** Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage. @default 'default' */
@@ -3042,7 +3046,7 @@ export declare class ArcTimelineItem extends LitElement {
 
 /**
  * `<arc-toast>`
- * Events: arc-queue-overflow, arc-queue-change, arc-close
+ * Events: arc-queue-overflow, arc-queue-change, arc-complete, arc-cancel, arc-action, arc-close
  */
 export declare class ArcToast extends LitElement {
   /** Time in milliseconds before a toast auto-dismisses. Applies as the default for every show() call but can be overridden per-toast via the duration option in the show() payload. Set to 0 to disable auto-dismiss entirely, requiring the user to click the close button. @default 4000 */

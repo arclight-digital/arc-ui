@@ -570,6 +570,78 @@ merge list was drawn up from prop lists and the differences were in the styles:
   than the two it looks like: `arc-cluster` also defaulted to `gap="sm"` and
   `align="center"`, where `arc-stack` defaults to `md` and `stretch`.
 
+### The feedback family
+
+Four more, on the same terms — deprecated in v4, removed in v5, unchanged and
+still in the barrel until then.
+
+| deprecated | use instead | what to change |
+|---|---|---|
+| `arc-callout` | `arc-alert` | `variant` carries over, `tip` included; the derived uppercase label has no equivalent — pass `heading` if you want one |
+| `arc-snackbar` | `arc-toast` | `position` covers every value it had; `show({ message, action, actionLabel })` is unchanged |
+| `arc-progress-toast` | `arc-toast` | pass `progress` to `show()`; `updateToast`, `complete` and the events keep their names |
+| `arc-inline-message` | the control's own `error` prop | standing alone, `<arc-alert density="compact">` |
+
+**`arc-alert` gained `tip`, an `icon` slot, and a `live` prop** — and `info`
+changed behaviour, which is the one thing in this section that affects existing
+`arc-alert` users who never touched `arc-callout`. See below.
+
+**`arc-toast` gained a progress mode.** `show({ message, progress })` renders a
+track, skips dedupe (two uploads of a file with the same name are two uploads),
+and never auto-dismisses — a progress toast is finished by `complete(id)`, which
+fires `arc-complete` rather than `arc-close`. `updateToast(id, { progress })`
+moves the bar, `onCancel` renders a cancel button that fires `arc-cancel`. It
+also fires `arc-action` when a toast's action button is clicked, alongside
+calling the `action` callback, because a callback cannot be attached
+declaratively and that is how `arc-snackbar` consumers were listening.
+
+**`arc-inline-message` has no single replacement, on purpose.** Below a form
+control, use that control's own `error` prop: every form control in the library
+renders one, with its own `part="error"` and the aria wiring already done —
+which is the thing a sibling element cannot do for it. Standing alone, it was an
+alert in all but name.
+
+### `arc-alert`: `info` is no longer announced
+
+**This is a behaviour change for existing `arc-alert` users, not only for
+`arc-callout`'s.** `variant="info"` used to render `role="status"`, which is a
+polite live region. It now renders `role="note"`, which is not.
+
+`arc-callout`'s default variant is `info` and it was a static `role="note"` box.
+Merging the two without this correction would have upgraded every informational
+callout on every page into an announcement — the exact regression the merge was
+decided in order to prevent, landing on the single most common variant.
+
+The full mapping, and it is what the component now derives:
+
+| variant | role | announced |
+|---|---|---|
+| `error`, `warning` | `alert` | assertively |
+| `success` | `status` | politely |
+| `info`, `tip` | `note` | not at all |
+
+**If you have an `arc-alert variant="info"` that genuinely needs announcing, set
+`live`.** The new prop takes `auto` (the default, meaning the table above),
+`off`, `polite` or `assertive`, and overrides in both directions — `live="off"`
+on an `error` keeps `role="alert"` and stops the announcement.
+
+It exists because severity and urgency are different questions. Severity asks
+"how bad is this"; a live region asks "did this just appear", which no prop can
+infer from markup. An `info` alert injected after a background save wants
+`polite`; a `warning` rendered in the initial page probably wants `off`.
+
+### Fixed on the way through: `arc-toast`'s action button
+
+`arc-toast` documented a `part="action"` and rendered an action button when a
+toast had an `actionLabel`. It never had one: `show()` has only ever stored the
+payload on `entry.options`, and the render read `t.actionLabel`, so the
+condition was `undefined` for every toast the component ever displayed. The
+button has now appeared for the first time.
+
+Nothing caught it because the derived CSS-parts sweep cannot: a conditional part
+is exempt by construction, and it has no way to tell a part that is conditional
+from one that is unreachable.
+
 ### `arc-badge` is **not** deprecated
 
 It was on the merge list — `arc-tag` has `removable`, so `arc-tag` looked like

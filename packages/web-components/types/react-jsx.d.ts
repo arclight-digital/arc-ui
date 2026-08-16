@@ -42,7 +42,8 @@ declare module 'react' {
         legend?: boolean;
       };
       'arc-alert': ArcBaseAttributes & {
-        variant?: 'info' | 'success' | 'warning' | 'error';
+        variant?: 'info' | 'tip' | 'success' | 'warning' | 'error';
+        live?: 'auto' | 'off' | 'polite' | 'assertive';
         density?: 'default' | 'compact';
         dismissible?: boolean;
         heading?: string;

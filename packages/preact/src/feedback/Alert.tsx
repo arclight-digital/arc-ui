@@ -5,7 +5,8 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/alert';
 
 export interface AlertProps {
-  variant?: 'info' | 'success' | 'warning' | 'error';
+  variant?: 'info' | 'tip' | 'success' | 'warning' | 'error';
+  live?: 'auto' | 'off' | 'polite' | 'assertive';
   density?: 'default' | 'compact';
   dismissible?: boolean;
   heading?: string;
@@ -38,7 +39,7 @@ export interface AlertProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Alert: FunctionComponent<AlertProps> = ({ variant, density, dismissible, heading, onArcClose, children, ...rest }) => {
+export const Alert: FunctionComponent<AlertProps> = ({ variant, live, density, dismissible, heading, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +52,5 @@ export const Alert: FunctionComponent<AlertProps> = ({ variant, density, dismiss
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcClose]);
-  return h('arc-alert', { ref, variant, density, dismissible, heading, ...rest }, children);
+  return h('arc-alert', { ref, variant, live, density, dismissible, heading, ...rest }, children);
 };

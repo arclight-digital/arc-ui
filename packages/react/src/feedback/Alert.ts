@@ -5,7 +5,8 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcAlert } from '@arclux/arc-ui/alert';
 
 export interface AlertProps {
-  variant?: 'info' | 'success' | 'warning' | 'error';
+  variant?: 'info' | 'tip' | 'success' | 'warning' | 'error';
+  live?: 'auto' | 'off' | 'polite' | 'assertive';
   density?: 'default' | 'compact';
   dismissible?: boolean;
   heading?: string;

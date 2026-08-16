@@ -13,6 +13,9 @@ export interface ToastProps {
   className?: string;
   onArcQueueOverflow?: (e: CustomEvent) => void;
   onArcQueueChange?: (e: CustomEvent) => void;
+  onArcComplete?: (e: CustomEvent) => void;
+  onArcCancel?: (e: CustomEvent) => void;
+  onArcAction?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
 }
 
@@ -23,6 +26,9 @@ export const Toast = createComponent({
   events: {
     onArcQueueOverflow: 'arc-queue-overflow' as EventName<CustomEvent>,
     onArcQueueChange: 'arc-queue-change' as EventName<CustomEvent>,
+    onArcComplete: 'arc-complete' as EventName<CustomEvent>,
+    onArcCancel: 'arc-cancel' as EventName<CustomEvent>,
+    onArcAction: 'arc-action' as EventName<CustomEvent>,
     onArcClose: 'arc-close' as EventName<CustomEvent>,
   },
 });
