@@ -64,7 +64,13 @@ const phases = [
     title: 'Components',
     steps: [
       gen('registrations'),
+      // After registrations (the group barrels re-export the .register.js files
+      // it writes) and before prism, whose barrelExclude is the other half of
+      // the same decision — a group barrel that existed only after the prune
+      // would leave the excluded names unreachable for one whole run.
+      gen('group-barrels'),
       { name: 'prism', cmd: 'npx', args: ['prism', '--strict', '--prune'] },
+      check('group-gating'),
     ],
   },
   {

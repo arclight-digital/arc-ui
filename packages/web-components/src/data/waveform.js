@@ -19,6 +19,7 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  * RTL contexts, matching every DAW, player, and editor convention.
  *
  * @tag arc-waveform
+ * @arc-group media
  * @prop {Array} peaks - Peak amplitudes as a number array, each value 0 to 1. Property only (no attribute) — set it from script or a framework binding. Values outside the range are clamped. An empty or missing array renders an empty track.
  * @prop {number} position - Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.
  * @prop {number} duration - Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.

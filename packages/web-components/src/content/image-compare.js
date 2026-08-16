@@ -21,6 +21,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * divider's visible motion.
  *
  * @tag arc-image-compare
+ * @arc-group marketing
  * @prop {number} position - Divider position as a percentage, 0 to 100. 0 shows only the after
  *   layer, 100 only the before layer. Clamped, reflected, and updated as the user drags.
  * @prop {'horizontal' | 'vertical'} orientation - Axis the divider moves along. `horizontal`

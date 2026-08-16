@@ -31,6 +31,12 @@ export interface ApiSlot {
 export interface ComponentApi {
   tag: string;
   description: string;
+  /**
+   * Domain group (V4-SCOPE §1) — `null` for the app catalog, which is most of
+   * it. A grouped component is published from a subpath instead of the default
+   * barrel, so this is what `importPath()` answers from.
+   */
+  group: string | null;
   props: ApiProp[];
   events: ApiEvent[];
   slots: ApiSlot[];
@@ -54,6 +60,7 @@ for (const mod of manifest.modules) {
     byTag.set(decl.tagName, {
       tag: decl.tagName,
       description: decl.description ?? '',
+      group: decl.group ?? null,
       props: (decl.members ?? [])
         .filter((m: any) => m.kind === 'field' && m.privacy !== 'private' && m.privacy !== 'protected')
         .map((m: any) => ({
@@ -78,4 +85,28 @@ export function getApi(tag: string): ComponentApi {
   const api = byTag.get(tag);
   if (!api) throw new Error(`manifest.ts: no custom element "${tag}" in custom-elements.json`);
   return api;
+}
+
+/**
+ * The package specifier a component's barrel import comes from.
+ *
+ * Derived rather than written on the page, because getting it wrong is not
+ * visible in the docs — a copied `import { ArcCarousel } from '@arclux/arc-ui'`
+ * looks exactly right and fails only in the reader's build.
+ */
+export function importPath(tag: string): string {
+  const group = getApi(tag).group;
+  return group ? `@arclux/arc-ui/${group}` : '@arclux/arc-ui';
+}
+
+/** Group name → the tags in it, for the docs pages that list a whole group. */
+export function tagsByGroup(): Map<string, string[]> {
+  const out = new Map<string, string[]>();
+  for (const api of byTag.values()) {
+    if (!api.group) continue;
+    if (!out.has(api.group)) out.set(api.group, []);
+    out.get(api.group)!.push(api.tag);
+  }
+  for (const tags of out.values()) tags.sort();
+  return out;
 }

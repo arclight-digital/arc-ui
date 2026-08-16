@@ -15,8 +15,6 @@ export type { CalloutProps } from './Callout.js';
 export { Card } from './Card.js';
 export type { CardProps } from './Card.js';
 
-export { Carousel } from './Carousel.js';
-export type { CarouselProps } from './Carousel.js';
 
 export { Collapsible } from './Collapsible.js';
 export type { CollapsibleProps } from './Collapsible.js';
@@ -27,8 +25,6 @@ export type { ColorSwatchProps } from './ColorSwatch.js';
 export { Column } from './Column.js';
 export type { ColumnProps } from './Column.js';
 
-export { CtaBanner } from './CtaBanner.js';
-export type { CtaBannerProps } from './CtaBanner.js';
 
 export { Divider } from './Divider.js';
 export type { DividerProps } from './Divider.js';
@@ -36,8 +32,6 @@ export type { DividerProps } from './Divider.js';
 export { EmptyState } from './EmptyState.js';
 export type { EmptyStateProps } from './EmptyState.js';
 
-export { FeatureCard } from './FeatureCard.js';
-export type { FeatureCardProps } from './FeatureCard.js';
 
 export { Icon } from './Icon.js';
 export type { IconProps } from './Icon.js';
@@ -48,8 +42,6 @@ export type { ImageProps } from './Image.js';
 export { InfiniteScroll } from './InfiniteScroll.js';
 export type { InfiniteScrollProps } from './InfiniteScroll.js';
 
-export { Marquee } from './Marquee.js';
-export type { MarqueeProps } from './Marquee.js';
 
 export { ScrollArea } from './ScrollArea.js';
 export type { ScrollAreaProps } from './ScrollArea.js';
@@ -81,14 +73,8 @@ export type { AccordionProps } from './Accordion.js';
 export { Avatar } from './Avatar.js';
 export type { AvatarProps } from './Avatar.js';
 
-export { Hotspot } from './Hotspot.js';
-export type { HotspotProps } from './Hotspot.js';
 
-export { ImageCompare } from './ImageCompare.js';
-export type { ImageCompareProps } from './ImageCompare.js';
 
-export { ImageHotspots } from './ImageHotspots.js';
-export type { ImageHotspotsProps } from './ImageHotspots.js';
 
 export { Lightbox } from './Lightbox.js';
 export type { LightboxProps } from './Lightbox.js';

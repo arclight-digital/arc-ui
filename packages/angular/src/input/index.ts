@@ -40,7 +40,6 @@ export { ThemeToggle } from './ThemeToggle';
 export { TimePicker } from './TimePicker';
 export { Toggle } from './Toggle';
 export { TransferList } from './TransferList';
-export { Knob } from './Knob';
 export { InlineEdit } from './InlineEdit';
 export { MaskedInput } from './MaskedInput';
 export { SignaturePad } from './SignaturePad';

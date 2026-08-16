@@ -237,11 +237,42 @@ for (const mod of manifest.modules) {
   }
 }
 
+/**
+ * Carry `@arc-group` through to the manifest.
+ *
+ * The analyzer drops JSDoc tags it has no schema for, so the domain group — the
+ * second catalog axis from V4-SCOPE §1, which decides whether a component is in
+ * the default barrel or behind `/marketing` or `/media` — would stop at the
+ * source file. Everything downstream that should say so reads the manifest and
+ * only the manifest: the docs card grid and component pages, the editor data,
+ * `llms.txt`. Left out, each of them would need its own copy of the group list,
+ * which is the drift `scripts/lib/component-tags.js` exists to prevent.
+ *
+ * Recorded on every custom element, `null` included, so a reader can tell "in no
+ * group" from "this manifest predates groups". Read here from the same
+ * annotation rather than imported from component-tags.js: that module walks the
+ * tier directories, and this loop is already holding the exact source file the
+ * declaration came from.
+ */
+let grouped = 0;
+for (const mod of manifest.modules) {
+  const file = resolve(wcDir, mod.path ?? '');
+  if (!existsSync(file)) continue;
+  const source = readFileSync(file, 'utf-8');
+  const group = source.match(/@arc-group\s+([a-z][\w-]*)/)?.[1] ?? null;
+  for (const decl of mod.declarations ?? []) {
+    if (!decl.customElement || !decl.tagName) continue;
+    decl.group = group;
+    if (group) grouped += 1;
+  }
+}
+
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 
 const count = manifest.modules
   .flatMap((m) => m.declarations ?? [])
   .filter((d) => d.customElement && d.tagName).length;
 console.log(
-  `✓ custom-elements.json — ${count} custom elements, ${filled} facts recovered from declarations`
+  `✓ custom-elements.json — ${count} custom elements, ${filled} facts recovered from declarations, ` +
+    `${grouped} in a domain group`
 );

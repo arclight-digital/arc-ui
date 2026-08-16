@@ -331,3 +331,55 @@ returns `null`), and now returns the declared default. Code that tested
 
 This is a fix rather than a break for anything that iterated the value, which
 previously threw on `null`.
+
+## Domain groups: marketing and media leave the default barrel
+
+**Affects 15 components and one shared module.** They are all still published,
+still supported, still in this package and this test suite. What changed is
+which import reaches them.
+
+`@arclux/arc-ui/marketing` — `arc-carousel`, `arc-comparison`,
+`arc-comparison-column`, `arc-countdown-timer`, `arc-cta-banner`,
+`arc-feature-card`, `arc-gradient-text`, `arc-hotspot`, `arc-image-compare`,
+`arc-image-hotspots`, `arc-marquee`, `arc-typewriter`.
+
+`@arclux/arc-ui/media` — `arc-knob`, `arc-level-meter`, `arc-waveform`, and the
+`shared/time-scale` module that the last two are built on.
+
+```js
+// before
+import { ArcCarousel, ArcWaveform } from '@arclux/arc-ui';
+import { createScale } from '@arclux/arc-ui/shared/time-scale';
+
+// after
+import { ArcCarousel } from '@arclux/arc-ui/marketing';
+import { ArcWaveform, createScale } from '@arclux/arc-ui/media';
+```
+
+**Per-component subpaths are unchanged** — `@arclux/arc-ui/carousel` works
+exactly as before, in this release and after it. If that is how you import, this
+change is invisible to you. Framework wrapper consumers are in the same
+position: every wrapper component has had its own subpath since v3
+(`@arclux/arc-ui-react/Carousel`), and that is unaffected. Only the wrapper
+*barrels* — `@arclux/arc-ui-react` and its per-tier barrels — stop carrying
+these 15 names.
+
+**HTML and CSS consumers are unaffected.** `arc-carousel.css`, the standalone
+examples, and `@arclux/arc-ui/register` all still cover every component.
+
+**Why.** The catalog was flat: 200-odd tags with no way to express "this one is
+for a different kind of product". So every question about the marketing cluster
+and the DAW primitives came out as *delete or exile?*, and both answers were
+wrong — they are good components for a product this kit is not. A domain axis
+says that precisely, and once it existed the v4 deletion list fell from about 25
+tags to 5.
+
+The practical effect is that a default `import { … } from '@arclux/arc-ui'` in
+an admin dashboard no longer puts a landing-page carousel and a rotary synth
+knob in the module graph. Same mechanism `arc-code-block` has used since v3.
+
+They are subpaths of this package rather than separate packages on purpose, and
+that is the part meant to last: a satellite package is where components go to
+die — different version, different CI, different suite, quietly rotting. These
+share all three. A subpath can also be promoted to its own package later without
+moving a source file; un-splitting a published package cannot. See V4-SCOPE §1.

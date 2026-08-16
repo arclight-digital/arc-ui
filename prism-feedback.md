@@ -92,6 +92,49 @@ consumers may not know to reach for it.
 
 ---
 
+## New against 2.13.0: `barrelExclude` cannot remove a name from a wrapped barrel
+
+**`pruneBarrels` matches one line at a time.** `repairBarrel` tests each line
+against
+
+```js
+/^export\s+(?:type\s+)?\{([^}]*)\}\s*from\s*['"](\.[^'"]*)['"];?\s*$/
+```
+
+so an export block written across several lines — the shape any formatter
+produces once a tier barrel passes a print width — matches nothing and is
+copied through untouched. `updateRootBarrel`'s root-merge pattern has the same
+constraint, for the same reason.
+
+The consequence is one-directional and quiet. **Appending still works**: an
+unmatched tier line simply gets a new single-line `export … from './tier/index.js';`
+appended beside it, so nothing looks wrong and no diagnostic fires. **Removal
+stops working entirely**: `barrelExclude` is enforced at two points — a gate on
+the append (`cli.js:390`) and the prune — and only the prune can take out a name
+that is already there.
+
+That combination hides the bug for as long as every excluded component was
+excluded *before* it was first generated, which was true here for the whole life
+of `arc-code-block`. We hit it adding 15 components to `barrelExclude` at once
+(a v4 catalog change that moves a marketing cluster and three DAW primitives out
+of the default barrel and onto subpaths). All six wrapper packages pruned
+correctly — their barrels are single-line. `packages/web-components/src/index.js`
+had been pretty-printed at some point, and prism silently kept all 15 names in
+it. Our own check caught it, not prism.
+
+**Suggested fix:** parse the barrel by export statement rather than by line —
+joining continuation lines before matching would be enough, since the specifier
+already terminates each statement. Failing that, a `--strict` diagnostic when a
+`barrelExclude` tag's name is still present in a barrel after the prune would
+turn a silent no-op into a loud one; that is the property we actually needed.
+
+**Our workaround:** the root barrel is reformatted to one statement per line —
+the shape prism writes — with a comment saying why it must stay that way, and a
+repo check (`scripts/checks/group-gating.js`) asserts the exclusions actually
+took effect in every barrel rather than trusting that they did.
+
+---
+
 ## Still open (unchanged, and already on your roadmap)
 
 **Resolve properties at runtime from `Ctor.elementProperties`.** It is the fix

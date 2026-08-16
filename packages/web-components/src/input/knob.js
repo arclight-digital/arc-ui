@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * magnetic detents at named values.
  *
  * @tag arc-knob
+ * @arc-group media
  * @prop {number} value - Current knob value. Reflected as an attribute and updated on user interaction.
  * @prop {number} min - Minimum allowed value at the start of the arc sweep.
  * @prop {number} max - Maximum allowed value at the end of the arc sweep.

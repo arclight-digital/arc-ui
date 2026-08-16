@@ -21,8 +21,6 @@ export type { CalloutProps } from './content/Callout.js';
 export { Card } from './content/Card.js';
 export type { CardProps } from './content/Card.js';
 
-export { Carousel } from './content/Carousel.js';
-export type { CarouselProps } from './content/Carousel.js';
 
 export { Collapsible } from './content/Collapsible.js';
 export type { CollapsibleProps } from './content/Collapsible.js';
@@ -33,8 +31,6 @@ export type { ColorSwatchProps } from './content/ColorSwatch.js';
 export { Column } from './content/Column.js';
 export type { ColumnProps } from './content/Column.js';
 
-export { CtaBanner } from './content/CtaBanner.js';
-export type { CtaBannerProps } from './content/CtaBanner.js';
 
 export { Divider } from './content/Divider.js';
 export type { DividerProps } from './content/Divider.js';
@@ -42,8 +38,6 @@ export type { DividerProps } from './content/Divider.js';
 export { EmptyState } from './content/EmptyState.js';
 export type { EmptyStateProps } from './content/EmptyState.js';
 
-export { FeatureCard } from './content/FeatureCard.js';
-export type { FeatureCardProps } from './content/FeatureCard.js';
 
 export { Icon } from './content/Icon.js';
 export type { IconProps } from './content/Icon.js';
@@ -54,8 +48,6 @@ export type { ImageProps } from './content/Image.js';
 export { InfiniteScroll } from './content/InfiniteScroll.js';
 export type { InfiniteScrollProps } from './content/InfiniteScroll.js';
 
-export { Marquee } from './content/Marquee.js';
-export type { MarqueeProps } from './content/Marquee.js';
 
 export { QrCode } from './content/QrCode.js';
 export type { QrCodeProps } from './content/QrCode.js';
@@ -90,14 +82,8 @@ export type { BadgeProps } from './data/Badge.js';
 export { Chart } from './data/Chart.js';
 export type { ChartProps } from './data/Chart.js';
 
-export { ComparisonColumn } from './data/ComparisonColumn.js';
-export type { ComparisonColumnProps } from './data/ComparisonColumn.js';
 
-export { Comparison } from './data/Comparison.js';
-export type { ComparisonProps } from './data/Comparison.js';
 
-export { CountdownTimer } from './data/CountdownTimer.js';
-export type { CountdownTimerProps } from './data/CountdownTimer.js';
 
 export { DataGrid } from './data/DataGrid.js';
 export type { DataGridProps } from './data/DataGrid.js';
@@ -166,8 +152,6 @@ export { Blockquote } from './typography/Blockquote.js';
 export type { BlockquoteProps } from './typography/Blockquote.js';
 
 
-export { GradientText } from './typography/GradientText.js';
-export type { GradientTextProps } from './typography/GradientText.js';
 
 export { Highlight } from './typography/Highlight.js';
 export type { HighlightProps } from './typography/Highlight.js';
@@ -193,8 +177,6 @@ export type { TimeAgoProps } from './typography/TimeAgo.js';
 export { Truncate } from './typography/Truncate.js';
 export type { TruncateProps } from './typography/Truncate.js';
 
-export { Typewriter } from './typography/Typewriter.js';
-export type { TypewriterProps } from './typography/Typewriter.js';
 
 export { ButtonGroup } from './input/ButtonGroup.js';
 export type { ButtonGroupProps } from './input/ButtonGroup.js';
@@ -559,29 +541,17 @@ export type { ClockProps } from './data/Clock.js';
 export { Gauge } from './data/Gauge.js';
 export type { GaugeProps } from './data/Gauge.js';
 
-export { LevelMeter } from './data/LevelMeter.js';
-export type { LevelMeterProps } from './data/LevelMeter.js';
 
 export { Uptime } from './data/Uptime.js';
 export type { UptimeProps } from './data/Uptime.js';
 
-export { Waveform } from './data/Waveform.js';
-export type { WaveformProps } from './data/Waveform.js';
 
 export { Terminal } from './typography/Terminal.js';
 export type { TerminalProps } from './typography/Terminal.js';
 
-export { Knob } from './input/Knob.js';
-export type { KnobProps } from './input/Knob.js';
 
-export { Hotspot } from './content/Hotspot.js';
-export type { HotspotProps } from './content/Hotspot.js';
 
-export { ImageCompare } from './content/ImageCompare.js';
-export type { ImageCompareProps } from './content/ImageCompare.js';
 
-export { ImageHotspots } from './content/ImageHotspots.js';
-export type { ImageHotspotsProps } from './content/ImageHotspots.js';
 
 export { Lightbox } from './content/Lightbox.js';
 export type { LightboxProps } from './content/Lightbox.js';

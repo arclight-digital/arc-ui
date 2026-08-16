@@ -42,7 +42,6 @@ export { ArcImageCropper } from './image-cropper.js';
 export { ArcPasswordInput } from './password-input.js';
 export { ArcTagInput } from './tag-input.js';
 export { ArcTransferList } from './transfer-list.js';
-export { ArcKnob } from './knob.js';
 export { ArcSignaturePad } from './signature-pad.js';
 export { ArcMaskedInput } from './masked-input.js';
 export { ArcTreeSelect } from './tree-select.js';

@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Live countdown to a target date/time with days, hours, minutes, and seconds segments.
  *
  * @tag arc-countdown-timer
+ * @arc-group marketing
  * @prop {string} target - ISO date string or parseable date for the countdown target
  * @prop {string} label - Optional label displayed above the countdown
  * @prop {string} expired - Text shown when the countdown reaches zero

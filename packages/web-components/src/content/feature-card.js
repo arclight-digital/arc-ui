@@ -6,6 +6,7 @@ import { cardHoverStyles } from '../card-styles.js';
  * Card with icon, heading, description, and animated hover effects.
  *
  * @tag arc-feature-card
+ * @arc-group marketing
  * @prop {string} icon - Icon text or emoji displayed in the icon box
  * @prop {string} heading - Card title
  * @prop {string} description - Card body text

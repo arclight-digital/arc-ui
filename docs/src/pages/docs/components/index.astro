@@ -1,6 +1,19 @@
 ---
 import DocsLayout from '../../../layouts/DocsLayout.astro';
 import { components } from '../../../data/components/index';
+import { getApi } from '../../../data/manifest';
+
+/**
+ * Domain group per component, read from the manifest rather than the page data
+ * — the group is a source fact (`@arc-group`), and a card that claimed the
+ * wrong import path would be wrong in the one place a reader copies from.
+ */
+const groupOf = (tag: string) => getApi(tag).group;
+
+const groupLabels: Record<string, string> = {
+  marketing: 'marketing',
+  media: 'media',
+};
 
 const tiers = [
   { key: 'layout', label: 'Layout', desc: 'Page scaffolding, structural containers, and shells' },
@@ -66,11 +79,18 @@ const jsonLd = {
         </div>
         <div class="components-grid">
           {byTier[tier.key].map((c) => (
-            <a href={`/docs/components/${c.slug}`} class="component-card" data-name={c.name.toLowerCase()} data-tag={c.tag} data-tier={tier.key} data-interactivity={c.interactivity}>
+            <a href={`/docs/components/${c.slug}`} class="component-card" data-name={c.name.toLowerCase()} data-tag={c.tag} data-tier={tier.key} data-interactivity={c.interactivity} data-group={groupOf(c.tag) ?? ''}>
               <h3 class="component-card__name">{c.name}</h3>
               <p class="component-card__desc">{c.description}</p>
               <code class="component-card__tag">&lt;{c.tag}&gt;</code>
-              <span class="component-card__interactivity">{c.interactivity}</span>
+              <span class="component-card__meta">
+                <span class="component-card__interactivity">{c.interactivity}</span>
+                {groupOf(c.tag) && (
+                  <span class="component-card__group" title={`Imported from @arclux/arc-ui/${groupOf(c.tag)}, not the default barrel`}>
+                    /{groupLabels[groupOf(c.tag)!] ?? groupOf(c.tag)}
+                  </span>
+                )}
+              </span>
             </a>
           ))}
         </div>
@@ -258,13 +278,33 @@ const jsonLd = {
     margin-top: var(--space-xs);
   }
 
+  .component-card__meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-top: 2px;
+  }
+
   .component-card__interactivity {
     font-family: var(--font-accent);
     font-size: var(--text-xs);
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: var(--text-ghost);
-    margin-top: 2px;
+  }
+
+  /* Domain group — the import path is the whole message, so it is set in the
+     mono face the import statement is, not in the accent face the tier and
+     interactivity labels share. */
+  .component-card__group {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--accent-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1px var(--space-xs);
+    flex-shrink: 0;
   }
 
   @media (max-width: 768px) {

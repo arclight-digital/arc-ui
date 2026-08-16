@@ -11,6 +11,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * bubbling up from each arc-hotspot child, with detail.value naming the hotspot.
  *
  * @tag arc-image-hotspots
+ * @arc-group marketing
  * @requires arc-hotspot
  * @slot - Default content.
  * @csspart container

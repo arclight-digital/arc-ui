@@ -123,8 +123,6 @@ export type { SliderProps } from './Slider.js';
 export { Toggle } from './Toggle.js';
 export type { ToggleProps } from './Toggle.js';
 
-export { Knob } from './Knob.js';
-export type { KnobProps } from './Knob.js';
 
 export { InlineEdit } from './InlineEdit.js';
 export type { InlineEditProps } from './InlineEdit.js';

@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * Inline text wrapper that applies gradient fills to text declaratively.
  *
  * @tag arc-gradient-text
+ * @arc-group marketing
  * @prop {'accent' | 'display' | 'sunset' | 'ocean' | 'custom'} variant - Predefined gradient variant to apply
  * @prop {string} gradient - Custom CSS gradient string, used when variant is set to custom
  * @prop {boolean} animated - Animate the gradient with a shifting background-position cycle

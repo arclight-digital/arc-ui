@@ -40,7 +40,6 @@ export { default as Radio } from './Radio.vue';
 export { default as Select } from './Select.vue';
 export { default as Slider } from './Slider.vue';
 export { default as Toggle } from './Toggle.vue';
-export { default as Knob } from './Knob.vue';
 export { default as InlineEdit } from './InlineEdit.vue';
 export { default as MaskedInput } from './MaskedInput.vue';
 export { default as SignaturePad } from './SignaturePad.vue';

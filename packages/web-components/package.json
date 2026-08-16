@@ -489,6 +489,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/typography/markdown.register.js"
     },
+    "./marketing": {
+      "types": "./types/index.d.ts",
+      "default": "./src/marketing/index.js"
+    },
     "./marquee": {
       "types": "./types/index.d.ts",
       "default": "./src/content/marquee.register.js"
@@ -500,6 +504,14 @@
     "./masonry": {
       "types": "./types/index.d.ts",
       "default": "./src/layout/masonry.register.js"
+    },
+    "./media": {
+      "types": "./types/index.d.ts",
+      "default": "./src/media/index.js"
+    },
+    "./media/time-scale": {
+      "types": "./types/shared/time-scale.d.ts",
+      "default": "./src/shared/time-scale.js"
     },
     "./menu-divider": {
       "types": "./types/index.d.ts",
@@ -691,10 +703,6 @@
     "./shared/scroll-lock": {
       "types": "./types/shared/scroll-lock.d.ts",
       "default": "./src/shared/scroll-lock.js"
-    },
-    "./shared/time-scale": {
-      "types": "./types/shared/time-scale.d.ts",
-      "default": "./src/shared/time-scale.js"
     },
     "./sheet": {
       "types": "./types/index.d.ts",

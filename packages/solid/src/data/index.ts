@@ -6,11 +6,7 @@ export type { AnimatedNumberProps } from './AnimatedNumber.js';
 export { Badge } from './Badge.js';
 export type { BadgeProps } from './Badge.js';
 
-export { ComparisonColumn } from './ComparisonColumn.js';
-export type { ComparisonColumnProps } from './ComparisonColumn.js';
 
-export { CountdownTimer } from './CountdownTimer.js';
-export type { CountdownTimerProps } from './CountdownTimer.js';
 
 export { DataTable } from './DataTable.js';
 export type { DataTableProps } from './DataTable.js';
@@ -69,8 +65,6 @@ export type { EventCalendarProps } from './EventCalendar.js';
 export { Kanban } from './Kanban.js';
 export type { KanbanProps } from './Kanban.js';
 
-export { Comparison } from './Comparison.js';
-export type { ComparisonProps } from './Comparison.js';
 
 export { List } from './List.js';
 export type { ListProps } from './List.js';
@@ -87,14 +81,10 @@ export type { ClockProps } from './Clock.js';
 export { Gauge } from './Gauge.js';
 export type { GaugeProps } from './Gauge.js';
 
-export { LevelMeter } from './LevelMeter.js';
-export type { LevelMeterProps } from './LevelMeter.js';
 
 export { Uptime } from './Uptime.js';
 export type { UptimeProps } from './Uptime.js';
 
-export { Waveform } from './Waveform.js';
-export type { WaveformProps } from './Waveform.js';
 
 export { ActivityHeatmap } from './ActivityHeatmap.js';
 export type { ActivityHeatmapProps } from './ActivityHeatmap.js';

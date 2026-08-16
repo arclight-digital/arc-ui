@@ -4,8 +4,6 @@ export { Blockquote } from './Blockquote.js';
 export type { BlockquoteProps } from './Blockquote.js';
 
 
-export { GradientText } from './GradientText.js';
-export type { GradientTextProps } from './GradientText.js';
 
 export { Highlight } from './Highlight.js';
 export type { HighlightProps } from './Highlight.js';
@@ -28,8 +26,6 @@ export type { TimeAgoProps } from './TimeAgo.js';
 export { Truncate } from './Truncate.js';
 export type { TruncateProps } from './Truncate.js';
 
-export { Typewriter } from './Typewriter.js';
-export type { TypewriterProps } from './Typewriter.js';
 
 export { Text } from './Text.js';
 export type { TextProps } from './Text.js';

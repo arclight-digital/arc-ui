@@ -2,9 +2,6 @@
 export { AnimatedNumber } from './AnimatedNumber';
 export { Badge } from './Badge';
 export { Chart } from './Chart';
-export { ComparisonColumn } from './ComparisonColumn';
-export { Comparison } from './Comparison';
-export { CountdownTimer } from './CountdownTimer';
 export { DataGrid } from './DataGrid';
 export { DataTable } from './DataTable';
 export { DescriptionItem } from './DescriptionItem';
@@ -28,8 +25,6 @@ export { Timeline } from './Timeline';
 export { ValueCard } from './ValueCard';
 export { Clock } from './Clock';
 export { Gauge } from './Gauge';
-export { LevelMeter } from './LevelMeter';
 export { Uptime } from './Uptime';
-export { Waveform } from './Waveform';
 export { ActivityHeatmap } from './ActivityHeatmap';
 export { JsonTree } from './JsonTree';

@@ -203,6 +203,17 @@ const headings = [
     <section id="usage">
       <h2 class="docs-heading">Usage</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      {api.group && (
+        <div class="interactivity-note" data-level="group">
+          <p>
+            <strong>{component.name}</strong> is in the <code>{api.group}</code> domain group, so it is
+            deliberately absent from the default <code>@arclux/arc-ui</code> barrel. Import it from
+            <code>@arclux/arc-ui/{api.group}</code>, or from its own subpath
+            <code>@arclux/arc-ui/{component.slug}</code>. Everything else — the element, the CSS, the
+            framework wrappers, the support it gets — is unchanged.
+          </p>
+        </div>
+      )}
       {interactivityNotes[component.interactivity] && (
         <div class="interactivity-note" data-level={component.interactivity}>
           <p>{interactivityNotes[component.interactivity]}</p>
@@ -695,6 +706,14 @@ const headings = [
   .interactivity-note[data-level="hybrid"] {
     border-color: rgba(var(--accent-primary-rgb), 0.25);
     background: rgba(var(--accent-primary-rgb), 0.04);
+  }
+
+  /* The domain-group note keeps the neutral surface: it corrects an import
+     path, it does not warn about a capability the way the two above do. */
+  .interactivity-note[data-level="group"] code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    color: var(--accent-secondary);
   }
 
   .interactivity-note p {
