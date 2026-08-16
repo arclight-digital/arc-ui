@@ -1121,29 +1121,102 @@ wrapper packages.
 
 ### 4.4 Platform layer (XL) — *the engineering reason this is a major*
 
-- [ ] Top layer: `popover` attribute + CSS anchor positioning inside
+**Status (2026-08-16): the exit criteria are met.** Overlay adoption is at 100%
+of `open`-declaring survivors, the 2.4d dismissal contract is green across all
+of them, and the a11y audit is 182/182 clean. Row 1 is partly banked and partly
+open — see below.
+
+- [~] Top layer: `popover` attribute + CSS anchor positioning inside
       `PositionController`/`OverlayMixin` (current logic stays as the
       fallback path). Twenty consumers improve at once; kills the
       z-index/clipping/portal bug class (findings #31, #67, the context-menu
       re-anchoring flake, the `menu-width` sweep's reason to exist).
-- [ ] `modal`/`sheet`/`drawer`/`lightbox`/`command-palette` (OverlayMixin's
+
+      **The `popover` half was already done before 4.4 opened** — the twenty
+      `PositionController` consumers have been promoting with
+      `popover="manual"` and viewport-fixed coordinates since 2.4, and the row
+      was never reconciled against the code. So the benefit this row is sold on
+      — "kills the z-index/clipping bug class" — was already banked for the
+      anchored panels, and 4.4's `<dialog>` work banked it for the five modals
+      too. What is left is genuinely two smaller things, neither of which is a
+      correctness fix:
+
+      - **CSS anchor positioning** (`anchor-name` / `position-area` /
+        `position-try`) as the preferred path. The win is real but narrow:
+        positioning that survives a scroll with no listeners, no
+        `ResizeObserver` and no per-frame measurement. The cost is two
+        positioning engines that must agree, permanently — the JS path cannot
+        be removed while a major engine lacks support, and several
+        `PositionController` features map unevenly onto CSS
+        (`arc-context-menu` anchors to a *pointer*, which has no
+        `anchor-name`). **Recommend deferring to v4.x** under the same
+        re-vibing guard this section already applies to `static arc = {…}`:
+        the correctness is banked, and what remains is smoothness bought with
+        a second implementation.
+      - **`arc-navigation-menu`'s portal (finding #67).** This is the last
+        instance of the bug class the row names, and the only one left that
+        the top layer would actually delete rather than improve. The mobile
+        overlay renders into a second shadow root appended to `document.body`,
+        with the component's whole stylesheet copied into it and the whole
+        thing built and torn down on every connect — roughly 30 lines that
+        exist for no reason except escaping ancestor stacking and clipping.
+        `popover` would remove all of it. Not done here because the component
+        is 991 lines with two animation state machines around that overlay, and
+        it is the site's own navigation; it wants its own change rather than
+        the tail of a large one.
+- [x] `modal`/`sheet`/`drawer`/`lightbox`/`command-palette` (OverlayMixin's
       five consumers) on `<dialog>`: focus trapping, inert background, Escape
       from the browser instead of `focus-trap.js`.
-- [ ] **The dialog-family consolidation happens here, once**: merged
+
+      Landed with `shared/overlay-controller.js`, which replaced the mixin
+      outright. The row undersells what changed: `trapTabKey` moved focus back
+      when Tab would have left the panel, which is a keyboard behaviour and
+      only a keyboard behaviour — it did nothing about a click landing behind
+      the scrim or a screen reader's virtual cursor. `inert` does, and a modal
+      dialog applies it to the whole document without the library keeping a
+      list. Initial focus now honours `autofocus`, including on a consumer's
+      slotted content, which the manual `focusFirst` call silently overrode.
+
+      Two things the migration cost, both worth knowing before the next one:
+      `::part(backdrop)` cannot survive (`::backdrop` is a pseudo-element, so
+      the scrim is reachable only through custom properties), and **a synthetic
+      `KeyboardEvent` no longer tests Escape at all** — the user agent fires
+      `cancel`, so a fake key press would keep passing if the handling were
+      deleted outright. Three suites had to change their drivers.
+- [x] **The dialog-family consolidation happens here, once**: merged
       `arc-dialog` (today's modal, renamed per 1.3) built directly on
       `<dialog>`; `ArcConfirm.open(): Promise<boolean>` and the declarative
       instance-`confirm()` use case both preserved (the review's diff showed
       these are different shapes, not duplicates of each other — the
       duplicate was `dialog.js` vs `confirm.js`).
-- [ ] Rework `OverlayMixin` off its `updated()`-override onto the controller
+- [x] Rework `OverlayMixin` off its `updated()`-override onto the controller
       pattern (the exact pattern `props.js`'s docstring rejects), and adopt
       overlay + dismiss contracts across every `open`-declaring component
       (~25 today; ~10 use neither contract — which is what made guided-tour
       and speed-dial possible).
-- [ ] Container queries replace viewport breakpoints where the component,
+
+      The census was 20, not ~25, and **one** used neither contract rather than
+      ten: `arc-context-menu`, which caught outside clicks with a full-viewport
+      invisible `<div class="backdrop">`. Of the four that still use neither,
+      two are disclosures (`arc-collapsible`, `arc-sidebar-section`), one is a
+      layout affordance whose visibility tracks a selection (`arc-float-bar`),
+      and `arc-confirm` delegates to `arc-dialog`. All four are recorded with
+      their reason in `dismissal-contract.test.js`'s policy table, which is
+      what makes "100% adoption" a checked statement rather than a claim.
+- [x] Container queries replace viewport breakpoints where the component,
       not the page, is the unit — starting with `navigation-menu` (the 900px
       viewport gate that made its desktop bar untestable and
       placement-fragile).
+
+      "Untestable" was exact: whether the desktop bar rendered depended on the
+      size of the window running the suite, so every assertion about it was
+      really an assertion about the machine's screen. The two halves also
+      disagreed — CSS gated on the viewport, JS read `window.innerWidth` — so a
+      nav in a narrow column had its bar hidden while the JS insisted the
+      mobile panel should close, leaving no navigation at all. The container is
+      a wrapper rather than `:host`, because containment is public: it lands
+      `contain: layout style inline-size` on whatever carries it, and on the
+      host that is the custom element a consumer wrote.
 - [ ] **Deferred, on purpose:** the `static arc = {…}` declared-behavior
       axis. `subscriptions.js` already implements the controller the
       review's architect wanted to invent; revisit as v4.x once the overlay

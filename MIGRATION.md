@@ -1011,3 +1011,41 @@ not in that list, since it means the same thing in both.
 `arc-confirm` kept both of its shapes, which are different rather than
 duplicated: `ArcConfirm.open(): Promise<boolean>` for a call site that has to
 decide something before continuing, and the element itself for a template.
+
+## `arc-navigation-menu` collapses on its own width
+
+**Affects `arc-navigation-menu`.** The desktop bar used to hide below a 900px
+*viewport*; it now hides below a 900px *component*. The number is the same and
+most pages will see no difference — a full-bleed nav is as wide as the window.
+
+Where it does differ, it differs in your favour: a nav inside a 700px column
+now collapses to its mobile panel instead of overflowing, and a nav on a wide
+page stays expanded regardless of what a phone is doing to the viewport.
+
+```html
+<!-- previously: desktop bar, overflowing, because the window is wide -->
+<!-- now:        mobile panel, because the nav is 700px -->
+<div style="width: 700px">
+  <arc-navigation-menu>…</arc-navigation-menu>
+</div>
+```
+
+If you were relying on the viewport gate — a media query of your own at 900px
+that assumed the nav flipped at the same moment — key it off the nav's own
+width instead, or give the nav a container that matches the viewport.
+
+## `arc-context-menu` dismisses without covering the page
+
+**Affects `arc-context-menu`.** It used to render an invisible full-viewport
+`<div class="backdrop">` to catch outside clicks. That div is gone; dismissal
+goes through the shared `DismissController` like every other anchored panel.
+
+Two consequences, both improvements:
+
+- **The click that dismisses the menu now reaches what it was aimed at.**
+  Previously the first click anywhere closed the menu and hit nothing else.
+- **Tabbing away dismisses too.** A backdrop cannot observe focus, so keyboard
+  users had no dismissal path except Escape.
+
+If you were reaching into the shadow root for `.backdrop` — in a test, most
+likely — dispatch a `pointerdown` on `document.body` instead.
