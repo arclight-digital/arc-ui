@@ -9,17 +9,23 @@
 // Safe to keep here: barrel updates are append-only, and the prune resolves
 // `./content/index.js` and finds both names still exported by it.
 //
-// One export block per line, however long the line gets. That is the shape
-// prism writes and the only shape it can read back: both the root-merge append
-// and the prune match `export { … } from '…';` against a single line, so a
-// block wrapped across lines is invisible to them. This file had been
-// pretty-printed into multi-line blocks, and the effect was silent — appends
-// still worked, because an unmatched tier line just gets a new one appended,
-// but `barrelExclude` stopped being able to *remove* anything from here. It
-// went unnoticed for as long as the only excluded component was arc-code-block,
-// which was excluded before it was ever added and so never needed removing. The
-// v4 domain groups (V4-SCOPE §1.1) exclude 15 components that are already in
-// this file, which is what surfaced it. Reported upstream in prism-feedback.md.
+// One export block per line, however long the line gets — now a formatting
+// preference rather than a constraint. It was a constraint through prism
+// 2.13.0: both the root-merge append and the prune matched
+// `export { … } from '…';` against a single line, so a block wrapped across
+// lines was invisible to them. The effect was silent — appends still worked,
+// because an unmatched tier line just gets a new one appended, but
+// `barrelExclude` could not *remove* anything from this file. It went unnoticed
+// for as long as the only excluded component was arc-code-block, which was
+// excluded before it was ever added and so never needed removing; the v4 domain
+// groups (V4-SCOPE §1.1) excluded 15 that were already here, which surfaced it.
+//
+// **Fixed in prism 2.13.1**, which reads barrels by export statement and keeps
+// whatever layout it found. Verified here rather than taken from the changelog:
+// wrapping every block across lines, reinjecting an excluded name and running
+// the prune removes it, reports it, and leaves the wrapping alone. The file
+// stays single-line because reflowing it now would be churn, not because it
+// has to be.
 export { ArcIconLibrary, iconRegistry, ArcLightbox, ArcVideo } from './content/index.js';
 export { ArcAccordionItem, ArcAccordion, ArcAspectRatio, ArcAvatarGroup, ArcAvatar, ArcCallout, ArcCard, ArcCollapsible, ArcColorSwatch, ArcColumn, ArcDivider, ArcEmptyState, ArcIcon, ArcImage, ArcInfiniteScroll, ArcQrCode, ArcScrollArea, ArcScrollIndicator, ArcSeparator, ArcSkeleton, ArcSpinner, ArcStack, ArcVirtualList } from './content/index.js';
 export { ArcAnimatedNumber, ArcBadge, ArcChart, ArcDataGrid, ArcDataTable, ArcDescriptionItem, ArcDescriptionList, ArcDiff, ArcKanban, ArcKeyValue, ArcKvPair, ArcListItem, ArcList, ArcMeter, ArcSparkline, ArcStat, ArcStep, ArcStepper, ArcTable, ArcTag, ArcTimelineItem, ArcTimeline, ArcValueCard, ArcClock, ArcGauge, ArcUptime, ArcActivityHeatmap, ArcJsonTree } from './data/index.js';

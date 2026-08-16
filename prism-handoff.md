@@ -8,6 +8,15 @@ Neither ships a broken package — arc-ui's own checks caught both — but one i
 silent inside prism and the other reports as somebody else's error. Ordered by
 how hard they are to notice.
 
+> **Status: both fixed in 2.13.1**, same day, and verified here against the
+> reproductions below rather than from the changelog. Wrapping every export
+> block across lines and reinjecting an excluded name: prism removes it, reports
+> the removal, and preserves the wrapping. Deleting a component and running
+> generate once: wrapper-types passes and all seven barrels are clean. A full
+> regenerate on 2.13.1 is byte-identical to 2.13.0. §3 and §4 below are still
+> open. Thank you — the layout-preserving rewrite was more than we asked for and
+> is the part that keeps a prune out of a consumer's diff.
+
 ---
 
 ## 1. `barrelExclude` cannot remove a name from a multi-line barrel — **silent**

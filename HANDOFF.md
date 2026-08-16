@@ -389,20 +389,17 @@ second component nobody had reported.
    and friends, and that would leave every such rule unmatched in the default
    case.
 
-4. **Deleting a component needs `pnpm generate` run twice**, and the first run
-   tells you so only by failing `wrapper-types` with a wall of TS2307. prism
-   repairs barrels *before* it sweeps orphaned files (`cli.js:673` then `:677`),
-   and the barrel repair decides what to remove by asking the filesystem — so on
-   the first pass every specifier still resolves, nothing is pruned, and then the
-   files it pointed at are deleted underneath it. The second run sees the gap and
-   fixes it; the third is a no-op, so idempotence returns immediately. Reported
-   upstream in `prism-feedback.md`.
-
-   The same run will also fail `check-export-map` for the deleted component's
-   subpath. That one is not a bug: removing a published subpath is a breaking
-   change, so `generate/exports.js` never removes an entry — you delete it from
+4. **Deleting a component fails `generate/exports.js`, and that one is on
+   purpose.** Removing a published subpath is a breaking change, so
+   `generate/exports.js` never removes an entry — you delete it from
    `packages/web-components/package.json` by hand and write the MIGRATION entry
-   that goes with it.
+   that goes with it. Everything else about a deletion is one clean run.
+
+   It was two runs through prism 2.13.0, which repaired barrels before sweeping
+   orphans and so left every wrapper barrel naming files the same run deleted —
+   a wall of TS2307 with nothing saying a second run would fix it. **Fixed in
+   2.13.1**; the floor in `check-prism-version` is still 2.13.0, so if you are
+   ever debugging that symptom, check the resolved version first.
 
 5. **A new component needs `@status`, and `pnpm generate` refuses without one.**
    Since 4.1 every component declares `stable`, `beta` or `experimental` in its

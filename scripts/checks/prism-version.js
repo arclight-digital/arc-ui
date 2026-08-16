@@ -22,7 +22,14 @@
  * 35s prism step rather than after it.
  *
  * The floor is a floor, not a pin. Raise it when a prism release changes
- * emitted output that this repo depends on.
+ * emitted output that this repo depends on — or, as with 2.13.1, when an older
+ * prism would silently stop *maintaining* it. 2.13.1's fixes change no bytes:
+ * regenerating the whole tree on 2.13.0 and 2.13.1 is byte-identical. What
+ * 2.13.0 cannot do is remove a `barrelExclude` name from a barrel a formatter
+ * has wrapped, which since 4.1 is 16 components across seven packages, and it
+ * leaves every wrapper barrel broken for one run after a component is deleted.
+ * Both are maintenance correctness rather than emitter output, and both fail
+ * the same way a stale emitter does: quietly, in files nobody reads.
  *
  * Run via: pnpm check prism-version (and first in `pnpm generate`)
  */
@@ -31,10 +38,12 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 /** Bump when a prism release changes output this repo has committed. */
-const FLOOR = '2.13.0';
+const FLOOR = '2.13.1';
 const REASON =
   'the wrapper emitter fixes for findings #80-82 (Angular element registration, ' +
-  'and children forwarding for named-only slots in Angular and Solid)';
+  'and children forwarding for named-only slots in Angular and Solid), plus the ' +
+  '2.13.1 barrel fixes this catalog depends on (barrelExclude across a wrapped ' +
+  'barrel, and the prune/sweep ordering on a deletion)';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');

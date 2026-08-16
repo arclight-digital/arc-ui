@@ -92,7 +92,30 @@ consumers may not know to reach for it.
 
 ---
 
-## New against 2.13.0: `barrelExclude` cannot remove a name from a wrapped barrel
+## Both 2.13.0 barrel defects: **fixed in 2.13.1, verified here**
+
+Turned around the same day. Verified against the reproductions rather than
+taken from the changelog, per this repo's ground rule 5:
+
+- **Multi-line barrels.** Wrapped every export block in
+  `packages/web-components/src/index.js` across lines, reinjected `ArcCarousel`
+  (a `barrelExclude` entry) into one of them, ran `prism --strict --prune`. It
+  removed the name, *reported* the removal — `barrel: … (removed ArcCarousel)` —
+  and left the wrapping exactly as it found it, one name per line with the
+  trailing comma. The layout-preserving half matters as much as the fix: a
+  prune that reflowed would land in a consumer's diff as noise their next format
+  undoes.
+- **Deletion in one run.** Deleted `arc-marquee` and ran `pnpm generate` once.
+  `check-wrapper-types` passed and all seven barrels were clean of the name.
+  Previously this took two runs and the first one failed with `TS2307` across
+  all six wrapper packages.
+
+Regenerating the whole tree on 2.13.1 is byte-identical to 2.13.0, so neither
+fix moved any output.
+
+The two original reports follow, kept for the record.
+
+## Fixed in 2.13.1 — `barrelExclude` cannot remove a name from a wrapped barrel
 
 **`pruneBarrels` matches one line at a time.** `repairBarrel` tests each line
 against
@@ -135,7 +158,7 @@ took effect in every barrel rather than trusting that they did.
 
 ---
 
-## New against 2.13.0: the barrel prune runs before the orphan sweep
+## Fixed in 2.13.1 — the barrel prune runs before the orphan sweep
 
 `cli.js` calls `pruneBarrels` at :673 and `sweepOrphans` at :677. `repairBarrel`
 decides what to remove by *resolution* — asking the filesystem whether a
