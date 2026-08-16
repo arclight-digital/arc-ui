@@ -5,7 +5,8 @@
  * dev-warnings module (import '@arclux/arc-ui/dev').
  *
  * Per tag: the list of known attributes, the allowed values for attributes
- * whose type is a union of string literals, and the docs slug.
+ * whose type is a union of string literals, the docs slug, and — for a
+ * component being merged away — the tag that replaces it.
  *
  * (Called automatically by `pnpm generate`, after generate-manifest.js)
  */
@@ -58,6 +59,12 @@ for (const mod of manifest.modules) {
     if (Object.keys(enums).length) schema[decl.tagName].enums = enums;
     const slug = slugByTag.get(decl.tagName);
     if (slug) schema[decl.tagName].slug = slug;
+    // A deprecated component keeps working and stays in the barrel for the
+    // whole major — which is exactly why nothing else tells a consumer it is
+    // deprecated. Their build does not break, their tests pass, and the first
+    // signal would be the v5 release notes. Carrying the survivor here is what
+    // lets `@arclux/arc-ui/dev` say so at the point of use.
+    if (decl.status === 'deprecated') schema[decl.tagName].mergedInto = decl.mergedInto;
   }
 }
 
@@ -66,4 +73,8 @@ export default ${JSON.stringify(schema, null, 1)};
 `;
 writeFileSync(resolve(wcDir, 'src/dev-schema.js'), out);
 const enumCount = Object.values(schema).filter((s) => s.enums).length;
-console.log(`✓ src/dev-schema.js — ${Object.keys(schema).length} tags, ${enumCount} with enums`);
+const deprecated = Object.values(schema).filter((s) => s.mergedInto).length;
+console.log(
+  `✓ src/dev-schema.js — ${Object.keys(schema).length} tags, ${enumCount} with enums` +
+    (deprecated ? `, ${deprecated} deprecated` : ''),
+);

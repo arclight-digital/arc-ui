@@ -38,10 +38,16 @@ export const HEAVY_DEPENDENCY_TAGS = ['arc-code-block'];
  * to take back: removing one is a breaking change even when the component was
  * never meant to be there.
  *
- * `beta` deliberately does *not* gate. Beta is a promise about how much the API
- * may still move, not about whether the component is ready to be found; a beta
- * component hidden from the barrel is a component nobody evaluates, which is the
- * opposite of what a beta is for.
+ * `beta` and `deprecated` deliberately do *not* gate, for opposite reasons.
+ * Beta is a promise about how much the API may still move, not about whether the
+ * component is ready to be found; a beta component hidden from the barrel is a
+ * component nobody evaluates, which is the opposite of what a beta is for.
+ * `deprecated` is the reverse case — it is already in the barrel, and removing
+ * it there is precisely the break the deprecation period exists to postpone, so
+ * gating on it would perform the break while announcing a grace period.
+ *
+ * So only `experimental` gates, and it is the only status that can: it is the
+ * one a component can carry *before* anyone depends on it.
  *
  * Set-backed, so a component excluded for two reasons at once appears once.
  * Sorted, so the generated wrapper output is stable across runs.

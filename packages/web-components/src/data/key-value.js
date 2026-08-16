@@ -3,11 +3,14 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-description-list>`. arc-description-list absorbed `layout`, but defaults to `stacked` — pass `layout="horizontal"` to keep this one's default. Removed in v5.
+ *
  * A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked
  * layouts with optional dividers between rows.
  *
  * @tag arc-key-value
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-description-list
  * @requires arc-kv-pair
  * @prop {'horizontal' | 'stacked'} layout - Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.
  * @prop {boolean} dividers - When true, renders a subtle border between each key-value pair.

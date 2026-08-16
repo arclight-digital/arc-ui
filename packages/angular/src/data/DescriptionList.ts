@@ -19,6 +19,13 @@ export class DescriptionList {
     return this._el.columns;
   }
 
+  @Input() set layout(value: 'stacked' | 'horizontal') {
+    this._el.layout = value;
+  }
+  get layout(): 'stacked' | 'horizontal' {
+    return this._el.layout;
+  }
+
   @Input() set dividers(value: boolean) {
     this._el.dividers = value;
   }

@@ -3,11 +3,14 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-divider>`. arc-divider absorbed the `dashed`, `dotted` and `fade` variants; `orientation="vertical"` becomes the `vertical` flag. Removed in v5.
+ *
  * Visual divider for separating content sections. Supports horizontal and vertical orientations,
  * multiple line styles, and optional inline labels.
  *
  * @tag arc-separator
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-divider
  * @prop {'horizontal' | 'vertical'} orientation - Controls the divider direction. Vertical separators display as inline-flex with full parent height.
  * @prop {string} label - Optional text displayed centered between two line segments. Only applies to horizontal orientation.
  * @prop {'line' | 'dashed' | 'dotted' | 'fade'} variant - Controls the line style. Fade uses a gradient that tapers to transparent at both ends.

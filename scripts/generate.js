@@ -30,6 +30,9 @@ const phases = [
       // First, and before the prism step it guards: an older prism does not
       // fail, it silently reverts all 235 wrapper files to the pre-fix output.
       check('prism-version'),
+      // Before everything that reads a source file, because a source that does
+      // not parse fails four steps later with an error naming the wrong thing.
+      check('css-backticks'),
       check('child-registrations'),
       check('event-conventions'),
       check('doc-claims'),

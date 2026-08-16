@@ -32,6 +32,7 @@ discover them.
 - [Domain groups: marketing and media leave the default barrel](#domain-groups-marketing-and-media-leave-the-default-barrel)
 - [The five cuts](#the-five-cuts)
 - [Every component declares a status, and experimental leaves the barrel](#every-component-declares-a-status-and-experimental-leaves-the-barrel)
+- [The merges](#the-merges)
 
 ## Event contract
 
@@ -527,3 +528,57 @@ nobody evaluates. Ten components are beta in v4.0.0 — `arc-chart`,
 If you consume the manifest, note that every custom element now carries
 `status` and `group`. `status` is always present; `group` is `null` for the app
 catalog.
+
+## The merges
+
+**Five components are deprecated in v4.0.0 and removed in v5.** They are
+unchanged, still published, and still exported from `@arclux/arc-ui` — nothing
+about them moved, and a v4 upgrade needs no action. What changed is that each
+now has a survivor that can do its job, and `@arclux/arc-ui/dev` says so at the
+console when it sees one.
+
+| deprecated | use instead | what to change |
+|---|---|---|
+| `arc-separator` | `arc-divider` | `orientation="vertical"` → `vertical`; variants carry over unchanged |
+| `arc-key-value` | `arc-description-list` | add `layout="horizontal"` to keep the old default |
+| `arc-kv-pair` | `arc-description-item` | `label` → `term`; parts `key`/`value` → `term`/`detail` |
+| `arc-cluster` | `arc-stack` | `direction="horizontal" wrap gap="sm" align="center"`; `justify` values `space-between`/`space-around` → `between`/`around` |
+| `arc-otp-input` | `arc-pin-input` | part `otp` → `pin`; props carry over |
+
+Deprecated components stay in the barrel on purpose. Taking them out is exactly
+the break the deprecation period exists to postpone, so they are importable from
+`@arclux/arc-ui` for all of v4 and only the docs treat them as gone: no card in
+the catalog grid, and a notice on their page.
+
+### The survivors gained what they were missing
+
+Not renames. Four of the five needed the survivor to grow first, because the
+merge list was drawn up from prop lists and the differences were in the styles:
+
+- **`arc-divider` gained `line`, `dashed`, `dotted` and `fade`.** It had no
+  dashed or dotted rule of any kind, and no flat one — `subtle`, its default, is
+  the token *gradient*, which fades at both ends. `line` is the flat rule every
+  unadorned `arc-separator` drew. All four work horizontally, vertically, and on
+  both halves of a labelled divider.
+- **`arc-description-list` gained `layout`.** `arc-key-value[layout=horizontal]`
+  put the term beside the detail, and `arc-description-list` could only stack.
+  It defaults to `stacked`, so existing description lists are unchanged — which
+  is why migrating from `arc-key-value` means adding `layout="horizontal"`
+  rather than nothing.
+- **`arc-tag` gained `info`.** Every other status set in the library has one.
+- **`arc-stack` needed nothing**, but the migration is four attributes rather
+  than the two it looks like: `arc-cluster` also defaulted to `gap="sm"` and
+  `align="center"`, where `arc-stack` defaults to `md` and `stretch`.
+
+### `arc-badge` is **not** deprecated
+
+It was on the merge list — `arc-tag` has `removable`, so `arc-tag` looked like
+the superset. It is not, in the way that matters here: `arc-badge` is
+`--font-mono`, normal letter-spacing and sentence case; `arc-tag` is
+`--font-label`, 2px tracking, UPPERCASE, with a `min-height` of the touch
+target. Merging as written would have re-set every badge on every page in an
+uppercase label face — `v3.2.0` becoming `V3.2.0` in a taller box.
+
+Resolving it means deciding whether ARC has one chip typography or two, which
+is a design-language question rather than a catalog one. Both components stay
+for now, and the row is reopened after the type-scale work.

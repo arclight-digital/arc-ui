@@ -734,7 +734,7 @@
 
       .arc-divider .divider { width: 100%; height: 1px; }
 
-      .arc-divider:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
+      .arc-divider:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]):not([data-data-variant="dashed"]):not([data-data-variant="dotted"]):not([data-data-variant="fade"]):not([data-data-variant="line"]) .divider,
       .arc-divider[data-variant="subtle"] .divider { background: var(--gradient-divider); }
 
       .arc-divider[data-variant="glow"] .divider {
@@ -777,11 +777,11 @@
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
       .arc-divider[data-align="right"] .divider { margin-inline-start: auto; margin-inline-end: 0; }
 
-      .arc-divider[data-align="left"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
+      .arc-divider[data-align="left"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]):not([data-data-variant="dashed"]):not([data-data-variant="dotted"]):not([data-data-variant="fade"]):not([data-data-variant="line"]) .divider,
       .arc-divider[data-align="left"][data-variant="subtle"] .divider {
         background: linear-gradient(90deg, var(--border-default), transparent);
       }
-      .arc-divider[data-align="right"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
+      .arc-divider[data-align="right"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]):not([data-data-variant="dashed"]):not([data-data-variant="dotted"]):not([data-data-variant="fade"]):not([data-data-variant="line"]) .divider,
       .arc-divider[data-align="right"][data-variant="subtle"] .divider {
         background: linear-gradient(90deg, transparent, var(--border-default));
       }
@@ -818,7 +818,7 @@
       .arc-divider[vertical] { display: inline-flex; width: auto; height: 100%; }
       .arc-divider[vertical] .divider { width: 1px; height: 100%; }
 
-      .arc-divider[vertical]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]) .divider,
+      .arc-divider[vertical]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]):not([data-data-variant="dashed"]):not([data-data-variant="dotted"]):not([data-data-variant="fade"]):not([data-data-variant="line"]) .divider,
       .arc-divider[vertical][data-variant="subtle"] .divider {
         background: linear-gradient(180deg, transparent, var(--border-default), transparent);
       }
@@ -847,6 +847,61 @@
         background: linear-gradient(180deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
       }
 
+      /* ── Plain rule styles, absorbed from arc-separator ──
+         Border-based rather than background-based, which is what makes a dash a
+         dash: a repeating background cannot produce the platform's dash metrics
+         and would not track a border-style change from a consumer's own CSS.
+         Height goes to 0 because the border becomes the line. */
+      .arc-divider[data-variant="dashed"] .divider,
+      .arc-divider[data-variant="dotted"] .divider {
+        background: none;
+        box-shadow: none;
+        height: 0;
+        max-width: none;
+      }
+      .arc-divider[data-variant="dashed"] .divider { border-top: 1px dashed var(--border-default); }
+      .arc-divider[data-variant="dotted"] .divider { border-top: 1px dotted var(--border-default); }
+
+      .arc-divider[data-variant="fade"] .divider {
+        background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+        box-shadow: none;
+        max-width: none;
+      }
+
+      /* arc-separator's default, and the reason this variant exists rather than
+         mapping separator onto subtle: subtle is the token *gradient*, which
+         fades at both ends. A flat rule that reaches the full width is a
+         different thing, and it was what every unadorned arc-separator drew. */
+      .arc-divider[data-variant="line"] .divider {
+        background: var(--border-default);
+        box-shadow: none;
+        max-width: none;
+      }
+
+      .arc-divider[vertical][data-variant="dashed"] .divider,
+      .arc-divider[vertical][data-variant="dotted"] .divider {
+        border-top: none;
+        width: 0;
+        height: 100%;
+      }
+      .arc-divider[vertical][data-variant="dashed"] .divider { border-inline-start: 1px dashed var(--border-default); }
+      .arc-divider[vertical][data-variant="dotted"] .divider { border-inline-start: 1px dotted var(--border-default); }
+
+      .arc-divider[vertical][data-variant="fade"] .divider {
+        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+      }
+
+      .arc-divider[vertical][data-variant="line"] .divider { background: var(--border-default); }
+
+      /* Align applies to the two gradient-bearing rule styles only. A dashed
+         line has no origin to shift. */
+      .arc-divider[data-align="left"][data-variant="fade"] .divider {
+        background: linear-gradient(90deg, var(--border-default), transparent);
+      }
+      .arc-divider[data-align="right"][data-variant="fade"] .divider {
+        background: linear-gradient(90deg, transparent, var(--border-default));
+      }
+
       /* Labeled divider */
       .arc-divider .divider--labeled {
         display: flex;
@@ -861,6 +916,25 @@
         flex: 1;
         height: 1px;
         background: var(--gradient-divider);
+      }
+
+      .arc-divider[data-variant="dashed"] .divider__line,
+      .arc-divider[data-variant="dotted"] .divider__line {
+        background: none;
+        height: 0;
+      }
+      .arc-divider[data-variant="dashed"] .divider__line { border-top: 1px dashed var(--border-default); }
+      .arc-divider[data-variant="dotted"] .divider__line { border-top: 1px dotted var(--border-default); }
+
+      .arc-divider[data-variant="line"] .divider__line { background: var(--border-default); }
+
+      /* Each half fades away from the label rather than repeating the
+         both-ends fade twice, which would put a hard edge either side of it. */
+      .arc-divider[data-variant="fade"] .divider__line:first-child {
+        background: linear-gradient(90deg, transparent, var(--border-default));
+      }
+      .arc-divider[data-variant="fade"] .divider__line:last-child {
+        background: linear-gradient(90deg, var(--border-default), transparent);
       }
 
       .arc-divider .divider__label {
@@ -1711,6 +1785,17 @@
         display: block;
       }
 
+      /* Stacked by default; a parent arc-description-list[layout="horizontal"]
+         sets these four properties to put the term beside the detail. They are
+         read with fallbacks so an item used on its own still lays out — the
+         parent is the only writer, and it may not be there. */
+      .arc-description-item .item {
+        display: grid;
+        grid-template-columns: var(--_dl-item-columns, 1fr);
+        gap: var(--_dl-item-gap, 0);
+        align-items: var(--_dl-item-align, initial);
+      }
+
       .arc-description-item .item__term {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
@@ -1718,7 +1803,7 @@
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);
-        margin-bottom: var(--space-xs);
+        margin-bottom: var(--_dl-term-margin, var(--space-xs));
       }
 
       .arc-description-item .item__detail {
@@ -1750,6 +1835,22 @@
 
       .arc-description-list arc-description-item {
         padding: var(--space-md) var(--space-sm);
+      }
+
+      /* Item layout is set as a custom property rather than a selector, because
+         the thing that has to change is *inside* arc-description-item's shadow
+         root — ::slotted() reaches the host, and the host's only child is the
+         item's own wrapper. Custom properties cross the boundary; selectors do
+         not. (arc-key-value could style ::slotted(arc-kv-pair) directly only
+         because arc-kv-pair renders its two halves as bare children of .arc-description-list.)
+
+         The item reads these with fallbacks, so it still lays out correctly when
+         it is used outside a list. */
+      .arc-description-list[data-layout="horizontal"] arc-description-item {
+        --_dl-item-columns: minmax(120px, auto) 1fr;
+        --_dl-item-gap: var(--space-md);
+        --_dl-item-align: baseline;
+        --_dl-term-margin: 0;
       }
 
       @media (max-width: 640px) {
@@ -2535,6 +2636,15 @@
         border-color: rgba(var(--color-error-rgb), 0.2);
         color: color-mix(in srgb, var(--color-error), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-error-rgb), 0.06);
+      }
+
+      /* Absorbed from arc-badge, and copied from it verbatim including the flat
+         color — the other five mix toward --text-primary, info does not, and
+         a merge is the wrong moment to quietly restyle the thing being merged. */
+      .arc-tag[data-variant="info"] .tag {
+        border-color: rgba(var(--color-info-rgb), 0.2);
+        color: var(--color-info);
+        background: rgba(var(--color-info-rgb), 0.06);
       }
 
       /* One hover rule for every variant — see arc-badge. */

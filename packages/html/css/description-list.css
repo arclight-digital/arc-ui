@@ -17,6 +17,22 @@
         padding: var(--space-md) var(--space-sm);
       }
 
+      /* Item layout is set as a custom property rather than a selector, because
+         the thing that has to change is *inside* arc-description-item's shadow
+         root — ::slotted() reaches the host, and the host's only child is the
+         item's own wrapper. Custom properties cross the boundary; selectors do
+         not. (arc-key-value could style ::slotted(arc-kv-pair) directly only
+         because arc-kv-pair renders its two halves as bare children of .arc-description-list.)
+
+         The item reads these with fallbacks, so it still lays out correctly when
+         it is used outside a list. */
+      .arc-description-list[data-layout="horizontal"] arc-description-item {
+        --_dl-item-columns: minmax(120px, auto) 1fr;
+        --_dl-item-gap: var(--space-md);
+        --_dl-item-align: baseline;
+        --_dl-term-margin: 0;
+      }
+
       @media (max-width: 640px) {
         .arc-description-list .list {
           grid-template-columns: 1fr !important;

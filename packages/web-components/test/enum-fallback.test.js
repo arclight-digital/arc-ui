@@ -90,10 +90,16 @@ describe('unrecognised enum values fall back to the default', () => {
     expect(unknown).to.equal(def);
   });
 
-  it('arc-divider variant="dashed" keeps a visible gradient', async () => {
+  it('arc-divider variant="hairline" keeps a visible gradient', async () => {
+    // Was `dashed` until 4.2, when arc-divider absorbed arc-separator and
+    // `dashed` became a real member — at which point this test started
+    // asserting that a *recognised* variant renders like the default, which is
+    // the opposite of the point. The sweep caught it on the first run after the
+    // merge, which is the derivation earning its place: the sample has to be a
+    // value the enum does not contain, and that is a moving target.
     const [def, unknown] = await sameAsDefault(
       '<arc-divider></arc-divider>',
-      '<arc-divider variant="dashed"></arc-divider>',
+      '<arc-divider variant="hairline"></arc-divider>',
       '.divider',
       'backgroundImage',
     );

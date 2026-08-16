@@ -42,6 +42,38 @@ describe('dev warnings', () => {
     expect(warnings).to.deep.equal([]);
   });
 
+  it('warns that a deprecated component is going away, and names the survivor', async () => {
+    mount('<arc-separator></arc-separator>');
+    await settle();
+    const w = warnings.find((x) => x.includes('deprecated'));
+    expect(w, warnings.join('\n')).to.be.a('string');
+    expect(w).to.include('<arc-separator>');
+    expect(w).to.include('<arc-divider>');
+  });
+
+  it('warns about the deprecation before an attribute problem on the same element', async () => {
+    // Order matters here rather than being incidental: the element going away
+    // is the more useful of the two, and a consumer who reads one line should
+    // read that one. It also proves the attribute checks still run — an early
+    // return after the deprecation warning would be a silent regression for
+    // every deprecated component's remaining lifetime.
+    mount('<arc-separator variant="dashd"></arc-separator>');
+    await settle();
+    const deprecated = warnings.findIndex((w) => w.includes('deprecated'));
+    const badEnum = warnings.findIndex((w) => w.includes('is not a valid variant'));
+    expect(deprecated, warnings.join('\n')).to.be.at.least(0);
+    expect(badEnum, warnings.join('\n')).to.be.at.least(0);
+    expect(deprecated).to.be.lessThan(badEnum);
+  });
+
+  it('says nothing about deprecation for a live component', async () => {
+    // Anti-vacuity for the pair above: the warning has to be keyed on the
+    // schema entry, not emitted for every arc-* element the observer sees.
+    mount('<arc-divider></arc-divider>');
+    await settle();
+    expect(warnings.filter((w) => w.includes('deprecated'))).to.deep.equal([]);
+  });
+
   it('suggests kebab-case for camelCase attributes', async () => {
     // HTML lowercases attribute names, so confirmLabel arrives as confirmlabel.
     mount('<arc-dialog confirmLabel="Yes"></arc-dialog>');

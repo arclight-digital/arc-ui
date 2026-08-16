@@ -5,7 +5,7 @@ import '@arclux/arc-ui/tag';
 defineOptions({ name: 'Tag' });
 
 const props = withDefaults(defineProps<{
-  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
   size?: 'sm' | 'md' | 'lg';
   removable?: boolean;
   disabled?: boolean;

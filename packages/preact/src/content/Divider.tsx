@@ -4,7 +4,7 @@ import { h, type FunctionComponent } from 'preact';
 import '@arclux/arc-ui/divider';
 
 export interface DividerProps {
-  variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
+  variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line';
   align?: '' | 'left' | 'right';
   vertical?: boolean;
   label?: string;

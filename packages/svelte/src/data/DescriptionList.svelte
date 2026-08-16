@@ -5,6 +5,7 @@
 
   interface Props {
     columns?: number;
+    layout?: 'stacked' | 'horizontal';
     dividers?: boolean;
     children?: Snippet;
     class?: string;
@@ -34,9 +35,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns, dividers, children, ...rest }: Props = $props();
+  let { columns, layout, dividers, children, ...rest }: Props = $props();
 </script>
 
-<arc-description-list {columns} {dividers} {...rest}>
+<arc-description-list {columns} {layout} {dividers} {...rest}>
   {@render children?.()}
 </arc-description-list>

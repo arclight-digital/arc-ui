@@ -48,9 +48,10 @@ export const TIERS = [
 export const GROUPS = ['marketing', 'media'];
 
 /**
- * Maturity, from least to most settled. Orthogonal to `GROUPS`: a `/marketing`
- * component can be perfectly stable, and an app component can be experimental.
- * Conflating the two axes was the mistake V4-SCOPE §1.2 called out by name.
+ * Lifecycle stage, from least to most settled and then past it. Orthogonal to
+ * `GROUPS`: a `/marketing` component can be perfectly stable, and an app
+ * component can be experimental. Conflating the two axes was the mistake
+ * V4-SCOPE §1.2 called out by name.
  *
  * **Required on every component, with no default.** It used to live on the docs
  * pages as an optional field, set on 14 of 184 — which meant the other 170 had
@@ -63,8 +64,15 @@ export const GROUPS = ['marketing', 'media'];
  * The source is the source of truth rather than the docs page, because the
  * *barrel* gates on it (see `excludedFrom`) and a published package's exports
  * cannot be defined by the documentation site's data layer.
+ *
+ * `deprecated` arrived with 4.2's merges and pairs with `@arc-merged-into`,
+ * which names the survivor. A deprecated component is unchanged, fully
+ * supported and **still in the barrel** for the whole of the major it is
+ * deprecated in — taking it out of the barrel is the break the deprecation
+ * exists to postpone. What it loses is its place in the catalog: no card in the
+ * docs grid, a "merged into" notice on its page, and a dev-mode warning.
  */
-export const STATUSES = ['experimental', 'beta', 'stable'];
+export const STATUSES = ['experimental', 'beta', 'stable', 'deprecated'];
 
 /**
  * @returns {Map<string, { tag: string, className: string, tier: string, file: string, requires: string[], group: string | null, status: string }>}
@@ -107,6 +115,9 @@ export function findComponents() {
         );
       }
 
+      const mergedMatch = source.match(/@arc-merged-into\s+([a-z][\w-]*)/);
+      const mergedInto = mergedMatch?.[1] ?? null;
+
       const statusMatch = source.match(/@status\s+([a-z][\w-]*)/);
       const status = statusMatch?.[1] ?? null;
       if (status === null) {
@@ -121,7 +132,24 @@ export function findComponents() {
         );
       }
 
-      components.set(tag, { tag, className, tier, file, requires, group, status });
+      // The pair is required in both directions. A deprecated component with no
+      // survivor named is a dead end for whoever hits the warning, and an
+      // `@arc-merged-into` on a live component is a deprecation someone started
+      // and did not finish — the second is the one that would go unnoticed.
+      if (status === 'deprecated' && !mergedInto) {
+        throw new Error(
+          `${tier}/${file}: @status deprecated without @arc-merged-into. ` +
+            'Name the survivor — the dev warning and the docs notice both read it.',
+        );
+      }
+      if (mergedInto && status !== 'deprecated') {
+        throw new Error(
+          `${tier}/${file}: @arc-merged-into ${mergedInto} but @status is "${status}". ` +
+            'A component being merged away is deprecated.',
+        );
+      }
+
+      components.set(tag, { tag, className, tier, file, requires, group, status, mergedInto });
     }
   }
 

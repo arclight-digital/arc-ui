@@ -266,10 +266,14 @@ for (const mod of manifest.modules) {
   const source = readFileSync(file, 'utf-8');
   const group = source.match(/@arc-group\s+([a-z][\w-]*)/)?.[1] ?? null;
   const status = source.match(/@status\s+([a-z][\w-]*)/)?.[1] ?? null;
+  const mergedInto = source.match(/@arc-merged-into\s+([a-z][\w-]*)/)?.[1] ?? null;
   for (const decl of mod.declarations ?? []) {
     if (!decl.customElement || !decl.tagName) continue;
     decl.group = group;
     decl.status = status;
+    // Only on the components that have one, so the key's presence *is* the
+    // "this is going away" flag for every downstream reader.
+    if (mergedInto) decl.mergedInto = mergedInto;
     if (group) grouped += 1;
     statuses[status] = (statuses[status] ?? 0) + 1;
   }

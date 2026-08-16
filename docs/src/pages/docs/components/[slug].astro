@@ -156,6 +156,8 @@ const headings = removed
         <arc-tag color={tierColors[component.tier]}>{component.tier}</arc-tag>
         {removed ? (
           <arc-badge variant="error">removed in {removed.removedIn}</arc-badge>
+        ) : api.status === 'deprecated' ? (
+          <arc-badge variant="warning">deprecated</arc-badge>
         ) : (
           <>
             <arc-tag color={interactivityColors[component.interactivity]}>{component.interactivity}</arc-tag>
@@ -170,6 +172,24 @@ const headings = removed
       </div>
       <code class="component-page__tag">&lt;{component.tag}&gt;</code>
     </arc-page-header>
+
+    {/* Still documented in full — it works and is supported for this whole
+        major. The notice goes first because someone landing here from an
+        existing codebase needs the survivor before they need the API table. */}
+    {!removed && api.status === 'deprecated' && api.mergedInto && (
+      <section id="deprecated" class="deprecation">
+        <p>
+          <strong>{component.name} is deprecated.</strong> It still works, is still published, and is
+          still exported from <code>@arclux/arc-ui</code> for all of v4 — nothing about it changed.
+          It is removed in v5. Use{' '}
+          <a href={`/docs/components/${api.mergedInto.replace(/^arc-/, '')}`}>
+            <code>&lt;{api.mergedInto}&gt;</code>
+          </a>{' '}
+          instead; the mechanical change is in{' '}
+          <a href="https://github.com/arclux/arc-ui/blob/main/MIGRATION.md#the-merges">MIGRATION.md</a>.
+        </p>
+      </section>
+    )}
 
     {/* Tombstone — everything below this is skipped for a removed component. */}
     {removed && (
@@ -809,6 +829,25 @@ const headings = removed
   .interactivity-note p {
     margin: 0;
   }
+
+  .deprecation {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(var(--color-warning-rgb), 0.25);
+    background: rgba(var(--color-warning-rgb), 0.04);
+  }
+
+  .deprecation p { margin: 0; }
+
+  .deprecation code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  .deprecation a { color: var(--accent-secondary); }
 
   /* ── Tombstone ── */
 

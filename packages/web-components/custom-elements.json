@@ -1452,9 +1452,9 @@
               "name": "variant",
               "privacy": "public",
               "type": {
-                "text": "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'"
+                "text": "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line'"
               },
-              "description": "Visual style",
+              "description": "Visual style. `subtle`, `glow` and the three `line-*` styles are the illuminated set. `dashed`, `dotted` and `fade` are the plain rule styles absorbed from `arc-separator` when it was merged here, along with `line`, its flat single-color rule. `fade` is the flat edge-to-edge fade, as distinct from `subtle`, which is the token gradient; `line` is the flat rule with no fade at all.",
               "attribute": "variant",
               "default": "'subtle'",
               "reflects": true
@@ -1488,9 +1488,9 @@
             {
               "name": "variant",
               "type": {
-                "text": "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient'"
+                "text": "'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line'"
               },
-              "description": "Visual style",
+              "description": "Visual style. `subtle`, `glow` and the three `line-*` styles are the illuminated set. `dashed`, `dotted` and `fade` are the plain rule styles absorbed from `arc-separator` when it was merged here, along with `line`, its flat single-color rule. `fade` is the flat edge-to-edge fade, as distinct from `subtle`, which is the token gradient; `line` is the flat rule with no fade at all.",
               "fieldName": "variant",
               "default": "'subtle'"
             },
@@ -3485,7 +3485,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Visual divider for separating content sections. Supports horizontal and vertical orientations,\nmultiple line styles, and optional inline labels.",
+          "description": "",
           "name": "ArcSeparator",
           "cssParts": [
             {
@@ -3575,10 +3575,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-divider>`. arc-divider absorbed the `dashed`, `dotted` and `fade` variants; `orientation=\"vertical\"` becomes the `vertical` flag. Removed in v5. Visual divider for separating content sections. Supports horizontal and vertical orientations, multiple line styles, and optional inline labels.",
           "tagName": "arc-separator",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-divider"
         }
       ],
       "exports": [
@@ -6201,6 +6203,18 @@
             },
             {
               "kind": "field",
+              "name": "layout",
+              "privacy": "public",
+              "type": {
+                "text": "'stacked' | 'horizontal'"
+              },
+              "description": "How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across — one item can be horizontal inside a three-column list.",
+              "attribute": "layout",
+              "default": "'stacked'",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "dividers",
               "privacy": "public",
               "type": {
@@ -6221,6 +6235,15 @@
               "description": "Number of grid columns for laying out items side by side.",
               "fieldName": "columns",
               "default": "1"
+            },
+            {
+              "name": "layout",
+              "type": {
+                "text": "'stacked' | 'horizontal'"
+              },
+              "description": "How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across — one item can be horizontal inside a three-column list.",
+              "fieldName": "layout",
+              "default": "'stacked'"
             },
             {
               "name": "dividers",
@@ -6920,7 +6943,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked\nlayouts with optional dividers between rows.",
+          "description": "",
           "name": "ArcKeyValue",
           "cssParts": [
             {
@@ -6989,10 +7012,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-description-list>`. arc-description-list absorbed `layout`, but defaults to `stacked` — pass `layout=\"horizontal\"` to keep this one's default. Removed in v5. A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked layouts with optional dividers between rows.",
           "tagName": "arc-key-value",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-description-list"
         }
       ],
       "exports": [
@@ -7012,7 +7037,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A single key-value pair within an arc-key-value container. The `label` attribute provides the\nkey text, and the default slot holds the value content.",
+          "description": "",
           "name": "ArcKvPair",
           "cssParts": [
             {
@@ -7056,10 +7081,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-description-item>`. `label` becomes `term`; the `key`/`value` parts become `term`/`detail`. Removed in v5. A single key-value pair within an arc-key-value container. The `label` attribute provides the key text, and the default slot holds the value content.",
           "tagName": "arc-kv-pair",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-description-item"
         }
       ],
       "exports": [
@@ -8500,9 +8527,9 @@
               "name": "variant",
               "privacy": "public",
               "type": {
-                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
+                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'"
               },
-              "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
+              "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, error and info provide semantic status colors.",
               "attribute": "variant",
               "default": "'default'",
               "reflects": true
@@ -8557,9 +8584,9 @@
             {
               "name": "variant",
               "type": {
-                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'"
+                "text": "'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'"
               },
-              "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
+              "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, error and info provide semantic status colors.",
               "fieldName": "variant",
               "default": "'default'"
             },
@@ -19500,7 +19527,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A one-time password input that renders a row of individual character boxes with auto-advance,\npaste support, and configurable length and input type.",
+          "description": "",
           "name": "ArcOtpInput",
           "cssParts": [
             {
@@ -19841,10 +19868,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-pin-input>`. Same control: `length` covers 4-vs-6 and `mask` covers the obscured variant. The `otp` part becomes `pin`. Removed in v5. A one-time password input that renders a row of individual character boxes with auto-advance, paste support, and configurable length and input type.",
           "tagName": "arc-otp-input",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-pin-input"
         }
       ],
       "exports": [
@@ -27257,7 +27286,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap\nspacing.",
+          "description": "",
           "name": "ArcCluster",
           "slots": [
             {
@@ -27342,10 +27371,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-stack>`. `<arc-stack direction=\"horizontal\" wrap>` is exactly this; `justify` spells the two edge values `between` and `around`. Removed in v5. Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap spacing.",
           "tagName": "arc-cluster",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-stack"
         }
       ],
       "exports": [

@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
+    variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line';
     align?: '' | 'left' | 'right';
     vertical?: boolean;
     label?: string;

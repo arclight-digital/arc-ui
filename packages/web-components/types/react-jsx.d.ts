@@ -372,6 +372,7 @@ declare module 'react' {
       };
       'arc-description-list': ArcBaseAttributes & {
         columns?: number | string;
+        layout?: 'stacked' | 'horizontal';
         dividers?: boolean;
       };
       'arc-dialog': ArcBaseAttributes & {
@@ -388,7 +389,7 @@ declare module 'react' {
         mode?: 'inline' | 'side-by-side';
       };
       'arc-divider': ArcBaseAttributes & {
-        variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
+        variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line';
         align?: '' | 'left' | 'right';
         vertical?: boolean;
         label?: string;
@@ -1093,7 +1094,7 @@ declare module 'react' {
         orientation?: 'horizontal' | 'vertical';
       };
       'arc-tag': ArcBaseAttributes & {
-        variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+        variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
         size?: 'sm' | 'md' | 'lg';
         removable?: boolean;
         disabled?: boolean;

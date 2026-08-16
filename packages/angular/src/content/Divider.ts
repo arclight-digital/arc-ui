@@ -12,10 +12,10 @@ import type { ArcDivider } from '@arclux/arc-ui/divider';
 export class Divider {
   private readonly _el: ArcDivider = inject(ElementRef).nativeElement;
 
-  @Input() set variant(value: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient') {
+  @Input() set variant(value: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line') {
     this._el.variant = value;
   }
-  get variant(): 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' {
+  get variant(): 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line' {
     return this._el.variant;
   }
 

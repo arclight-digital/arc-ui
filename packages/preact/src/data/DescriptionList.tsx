@@ -5,6 +5,7 @@ import '@arclux/arc-ui/description-list';
 
 export interface DescriptionListProps {
   columns?: number;
+  layout?: 'stacked' | 'horizontal';
   dividers?: boolean;
   children?: preact.ComponentChildren;
   class?: string;
@@ -34,5 +35,5 @@ export interface DescriptionListProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DescriptionList: FunctionComponent<DescriptionListProps> = ({ columns, dividers, children, ...rest }) =>
-  h('arc-description-list', { columns, dividers, ...rest }, children);
+export const DescriptionList: FunctionComponent<DescriptionListProps> = ({ columns, layout, dividers, children, ...rest }) =>
+  h('arc-description-list', { columns, layout, dividers, ...rest }, children);

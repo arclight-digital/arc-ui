@@ -367,7 +367,7 @@ some prop (arc-button becomes an `<a>` given an `href`) needs an entry, or the
 sweep only ever sees the safe shape. Adding the first entry immediately found a
 second component nobody had reported.
 
-## Five things that will bite you
+## Six things that will bite you
 
 1. **prism must be able to read your declarations.** `@arclux/prism` finds props
    by regex over `name: { … }`; a helper call is invisible to it and silently
@@ -415,6 +415,17 @@ second component nobody had reported.
    `barrelExclude` by `scripts/lib/barrel-rule.js`, which is import-free so the
    browser suite can exercise it. **Do not hand-edit a barrel** — `barrel-gating`
    compares what is on disk against that rule in both directions and will say so.
+
+6. **No backticks inside a `css` template literal — including in comments.** A
+   backtick in a CSS comment ends the tagged template, and everything after it
+   is parsed as JavaScript. Three components broke this way in one 4.2 commit
+   from prose like "would not track ``border-style`` changes"; the error lands
+   several lines later (`TS1005: ',' expected`) and names the wrong thing.
+
+   It is caught, twice: `check-ssr` fails with the raw parse error, and
+   `generate/module-types.js` fails the whole pipeline. Both messages point at
+   the file, so the fix is quick once you know to look for a backtick rather
+   than for a CSS mistake.
 
 ## What changed under the plan
 

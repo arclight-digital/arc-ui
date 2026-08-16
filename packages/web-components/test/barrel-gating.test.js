@@ -48,6 +48,15 @@ describe('barrel gating: what leaves the default barrel', () => {
     expect(out).to.not.include('arc-data-grid');
   });
 
+  it('does NOT exclude a deprecated component', () => {
+    // The mirror of the beta case, and the more dangerous one to get wrong.
+    // A deprecated component is already in the barrel and someone is importing
+    // it from there; gating on `deprecated` would perform the break in the same
+    // release that announces a grace period for it.
+    const out = excludedFrom(catalog(comp('arc-separator', { status: 'deprecated' })));
+    expect(out).to.not.include('arc-separator');
+  });
+
   it('excludes a grouped component whatever its status', () => {
     const out = excludedFrom(
       catalog(

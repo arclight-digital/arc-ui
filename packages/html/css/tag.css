@@ -53,6 +53,15 @@
         background: rgba(var(--color-error-rgb), 0.06);
       }
 
+      /* Absorbed from arc-badge, and copied from it verbatim including the flat
+         color — the other five mix toward --text-primary, info does not, and
+         a merge is the wrong moment to quietly restyle the thing being merged. */
+      .arc-tag[data-variant="info"] .tag {
+        border-color: rgba(var(--color-info-rgb), 0.2);
+        color: var(--color-info);
+        background: rgba(var(--color-info-rgb), 0.06);
+      }
+
       /* One hover rule for every variant — see arc-badge. */
       .arc-tag .tag:hover { box-shadow: var(--glow-status); }
 

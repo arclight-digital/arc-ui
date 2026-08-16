@@ -10,7 +10,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-tag
  * @status stable
- * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error'} variant - Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.
+ * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'} variant - Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, error and info provide semantic status colors.
  * @prop {string} color - Custom color as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the tag size.
  * @prop {boolean} removable - When true, shows a close button that fires `arc-remove` when clicked.
@@ -23,7 +23,14 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  */
 export class ArcTag extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: oneOf(['default', 'primary', 'secondary', 'success', 'warning', 'error']),
+    variant: oneOf([
+      'default', 'primary', 'secondary', 'success', 'warning', 'error',
+      // Absorbed from arc-badge (4.2), which is the only variant it had that
+      // arc-tag did not. V4-SCOPE §3 read this row as "no new prop needed",
+      // which is true of the props and not of the enum behind one — a badge
+      // with variant="info" would have fallen through to `default` here.
+      'info',
+    ]),
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
     removable: flag(false),
     disabled: flag(false),
@@ -84,6 +91,15 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
         border-color: rgba(var(--color-error-rgb), 0.2);
         color: color-mix(in srgb, var(--color-error), var(--text-primary) var(--accent-text-mix, 0%));
         background: rgba(var(--color-error-rgb), 0.06);
+      }
+
+      /* Absorbed from arc-badge, and copied from it verbatim including the flat
+         color — the other five mix toward --text-primary, info does not, and
+         a merge is the wrong moment to quietly restyle the thing being merged. */
+      :host([variant="info"]) .tag {
+        border-color: rgba(var(--color-info-rgb), 0.2);
+        color: var(--color-info);
+        background: rgba(var(--color-info-rgb), 0.06);
       }
 
       /* One hover rule for every variant — see arc-badge. */

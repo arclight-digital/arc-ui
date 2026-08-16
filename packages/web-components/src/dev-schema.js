@@ -155,7 +155,11 @@ export default {
     "glow",
     "line-white",
     "line-primary",
-    "line-gradient"
+    "line-gradient",
+    "dashed",
+    "dotted",
+    "fade",
+    "line"
    ],
    "align": [
     "",
@@ -378,7 +382,8 @@ export default {
     "fade"
    ]
   },
-  "slug": "separator"
+  "slug": "separator",
+  "mergedInto": "arc-divider"
  },
  "arc-skeleton": {
   "attrs": [
@@ -645,8 +650,15 @@ export default {
  "arc-description-list": {
   "attrs": [
    "columns",
+   "layout",
    "dividers"
   ],
+  "enums": {
+   "layout": [
+    "stacked",
+    "horizontal"
+   ]
+  },
   "slug": "description-list"
  },
  "arc-diff": {
@@ -710,13 +722,15 @@ export default {
     "stacked"
    ]
   },
-  "slug": "key-value"
+  "slug": "key-value",
+  "mergedInto": "arc-description-list"
  },
  "arc-kv-pair": {
   "attrs": [
    "label"
   ],
-  "slug": "key-value"
+  "slug": "key-value",
+  "mergedInto": "arc-description-item"
  },
  "arc-level-meter": {
   "attrs": [
@@ -858,7 +872,8 @@ export default {
     "secondary",
     "success",
     "warning",
-    "error"
+    "error",
+    "info"
    ],
    "size": [
     "sm",
@@ -1695,7 +1710,8 @@ export default {
     "text"
    ]
   },
-  "slug": "otp-input"
+  "slug": "otp-input",
+  "mergedInto": "arc-pin-input"
  },
  "arc-password-input": {
   "attrs": [
@@ -2177,7 +2193,8 @@ export default {
     "space-around"
    ]
   },
-  "slug": "cluster"
+  "slug": "cluster",
+  "mergedInto": "arc-stack"
  },
  "arc-container": {
   "attrs": [

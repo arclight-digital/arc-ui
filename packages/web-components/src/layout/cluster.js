@@ -3,11 +3,14 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-stack>`. `<arc-stack direction="horizontal" wrap>` is exactly this; `justify` spells the two edge values `between` and `around`. Removed in v5.
+ *
  * Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap
  * spacing.
  *
  * @tag arc-cluster
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-stack
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl'} gap - Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.
  * @prop {'start' | 'center' | 'end'} align - Vertical alignment of items within each row (maps to align-items).
  * @prop {'start' | 'center' | 'end' | 'space-between' | 'space-around'} justify - Horizontal distribution of items (maps to justify-content). Use "space-between" for navigation-style spacing.

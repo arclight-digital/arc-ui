@@ -897,6 +897,8 @@ export declare class ArcDescriptionItem extends LitElement {
 export declare class ArcDescriptionList extends LitElement {
   /** Number of grid columns for laying out items side by side. @default 1 */
   columns: number;
+  /** How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across — one item can be horizontal inside a three-column list. @default 'stacked' */
+  layout: 'stacked' | 'horizontal';
   /** Show horizontal dividers between rows and vertical dividers between columns. @default true */
   dividers: boolean;
 }
@@ -938,8 +940,8 @@ export declare class ArcDiff extends LitElement {
 export declare class ArcDivider extends LitElement {
   /** Text displayed in the center of the divider, splitting it into two lines. Common use: 'OR' between form options. Only applies to horizontal dividers. @default '' */
   label: string;
-  /** Visual style @default 'subtle' */
-  variant: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
+  /** Visual style. `subtle`, `glow` and the three `line-*` styles are the illuminated set. `dashed`, `dotted` and `fade` are the plain rule styles absorbed from `arc-separator` when it was merged here, along with `line`, its flat single-color rule. `fade` is the flat edge-to-edge fade, as distinct from `subtle`, which is the token gradient; `line` is the flat rule with no fade at all. @default 'subtle' */
+  variant: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line';
   /** Shifts the gradient origin so it fades from one edge instead of both. Empty (the default) fades from both edges. Useful for asymmetric layouts where the divider should visually connect to content on one side. @default '' */
   align: '' | 'left' | 'right';
   /** Renders the divider as a vertical line. Switches to `inline-flex` display and rotates gradient directions to run top-to-bottom. Use inside flex rows to separate inline content. @default false */
@@ -2826,8 +2828,8 @@ export declare class ArcTabs extends LitElement {
 export declare class ArcTag extends LitElement {
   /** Custom color as an RGB triplet (e.g. `"77, 126, 247"`). When set, overrides the variant colors for border, text, background, and hover glow. Useful for data-driven category colors. @default '' */
   color: string;
-  /** Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors. @default 'default' */
-  variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error';
+  /** Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, error and info provide semantic status colors. @default 'default' */
+  variant: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
   /** Controls the tag size. @default 'md' */
   size: 'sm' | 'md' | 'lg';
   /** When true, shows a close button that fires `arc-remove` when clicked. @default false */

@@ -36,8 +36,16 @@ const tiers = [
   { key: 'feedback', label: 'Feedback', desc: 'Alerts, overlays, and responses to user actions' },
 ] as const;
 
+/**
+ * A deprecated component keeps its page — it still works, and someone using it
+ * needs to be able to read about it and find the survivor — but it leaves the
+ * catalog grid. The grid answers "what should I reach for", and the answer is
+ * never a component that is removed next major.
+ */
+const live = components.filter((c) => statusOf(c.tag) !== 'deprecated');
+
 const byTier = Object.fromEntries(
-  tiers.map(t => [t.key, components.filter(c => c.tier === t.key)])
+  tiers.map(t => [t.key, live.filter(c => c.tier === t.key)])
 );
 
 const tierBadgeVariant: Record<string, string> = {
@@ -54,13 +62,13 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'ARC UI Components',
-  description: `Browse all ${components.length} ARC UI components.`,
+  description: `Browse all ${live.length} ARC UI components.`,
   url: new URL('/docs/components', Astro.site).href,
   isPartOf: { '@id': 'https://arcui.dev/#website' },
   mainEntity: {
     '@type': 'ItemList',
-    numberOfItems: components.length,
-    itemListElement: components.map((c, i) => ({
+    numberOfItems: live.length,
+    itemListElement: live.map((c, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       name: c.name,
@@ -74,7 +82,7 @@ const jsonLd = {
   <div class="components-index">
     <h1 class="components-index__title">Components</h1>
     <p class="components-index__desc">
-      Browse all {components.length} components across seven categories: layout, navigation, content, data, typography, input, and feedback.
+      Browse all {live.length} components across seven categories: layout, navigation, content, data, typography, input, and feedback.
     </p>
 
     <div class="components-search">

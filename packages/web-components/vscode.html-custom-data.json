@@ -277,13 +277,17 @@
       "attributes": [
         {
           "name": "variant",
-          "description": "Visual style",
+          "description": "Visual style. `subtle`, `glow` and the three `line-*` styles are the illuminated set. `dashed`, `dotted` and `fade` are the plain rule styles absorbed from `arc-separator` when it was merged here, along with `line`, its flat single-color rule. `fade` is the flat edge-to-edge fade, as distinct from `subtle`, which is the token gradient; `line` is the flat rule with no fade at all.",
           "values": [
             { "name": "subtle" },
             { "name": "glow" },
             { "name": "line-white" },
             { "name": "line-primary" },
-            { "name": "line-gradient" }
+            { "name": "line-gradient" },
+            { "name": "dashed" },
+            { "name": "dotted" },
+            { "name": "fade" },
+            { "name": "line" }
           ]
         },
         {
@@ -664,7 +668,7 @@
     },
     {
       "name": "arc-separator",
-      "description": "Visual divider for separating content sections. Supports horizontal and vertical orientations,\nmultiple line styles, and optional inline labels.\n---\n\n\n### **CSS Parts:**\n - **separator**\n- **line**\n- **label**",
+      "description": "@deprecated Since v4.0.0 — use `<arc-divider>`. arc-divider absorbed the `dashed`, `dotted` and `fade` variants; `orientation=\"vertical\"` becomes the `vertical` flag. Removed in v5. Visual divider for separating content sections. Supports horizontal and vertical orientations, multiple line styles, and optional inline labels.\n\n\n---\n\n\n### **CSS Parts:**\n - **separator**\n- **line**\n- **label**",
       "attributes": [
         {
           "name": "orientation",
@@ -1251,6 +1255,11 @@
           "values": []
         },
         {
+          "name": "layout",
+          "description": "How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across — one item can be horizontal inside a three-column list.",
+          "values": [{ "name": "stacked" }, { "name": "horizontal" }]
+        },
+        {
           "name": "dividers",
           "description": "Show horizontal dividers between rows and vertical dividers between columns.",
           "values": []
@@ -1387,7 +1396,7 @@
     },
     {
       "name": "arc-key-value",
-      "description": "A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked\nlayouts with optional dividers between rows.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **list**",
+      "description": "@deprecated Since v4.0.0 — use `<arc-description-list>`. arc-description-list absorbed `layout`, but defaults to `stacked` — pass `layout=\"horizontal\"` to keep this one's default. Removed in v5. A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked layouts with optional dividers between rows.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **list**",
       "attributes": [
         {
           "name": "layout",
@@ -1404,7 +1413,7 @@
     },
     {
       "name": "arc-kv-pair",
-      "description": "A single key-value pair within an arc-key-value container. The `label` attribute provides the\nkey text, and the default slot holds the value content.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **key**\n- **value**",
+      "description": "@deprecated Since v4.0.0 — use `<arc-description-item>`. `label` becomes `term`; the `key`/`value` parts become `term`/`detail`. Removed in v5. A single key-value pair within an arc-key-value container. The `label` attribute provides the key text, and the default slot holds the value content.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **key**\n- **value**",
       "attributes": [
         {
           "name": "label",
@@ -1698,14 +1707,15 @@
       "attributes": [
         {
           "name": "variant",
-          "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, and error provide semantic status colors.",
+          "description": "Color variant. Default is neutral. Primary and secondary use accent tints. Success, warning, error and info provide semantic status colors.",
           "values": [
             { "name": "default" },
             { "name": "primary" },
             { "name": "secondary" },
             { "name": "success" },
             { "name": "warning" },
-            { "name": "error" }
+            { "name": "error" },
+            { "name": "info" }
           ]
         },
         {
@@ -3374,7 +3384,7 @@
     },
     {
       "name": "arc-otp-input",
-      "description": "A one-time password input that renders a row of individual character boxes with auto-advance,\npaste support, and configurable length and input type.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every digit entered or deleted, with the partial value.\n- **arc-change** - Fired when the code is complete — every box filled. That is the commit for a fixed-length code.\n\n### **CSS Parts:**\n - **otp**\n- **box**",
+      "description": "@deprecated Since v4.0.0 — use `<arc-pin-input>`. Same control: `length` covers 4-vs-6 and `mask` covers the obscured variant. The `otp` part becomes `pin`. Removed in v5. A one-time password input that renders a row of individual character boxes with auto-advance, paste support, and configurable length and input type.\n\n\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every digit entered or deleted, with the partial value.\n- **arc-change** - Fired when the code is complete — every box filled. That is the commit for a fixed-length code.\n\n### **CSS Parts:**\n - **otp**\n- **box**",
       "attributes": [
         {
           "name": "size",
@@ -4359,7 +4369,7 @@
     },
     {
       "name": "arc-cluster",
-      "description": "Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap\nspacing.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
+      "description": "@deprecated Since v4.0.0 — use `<arc-stack>`. `<arc-stack direction=\"horizontal\" wrap>` is exactly this; `justify` spells the two edge values `between` and `around`. Removed in v5. Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap spacing.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
       "attributes": [
         {
           "name": "gap",

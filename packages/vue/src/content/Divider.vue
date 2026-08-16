@@ -5,7 +5,7 @@ import '@arclux/arc-ui/divider';
 defineOptions({ name: 'Divider' });
 
 const props = withDefaults(defineProps<{
-  variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient';
+  variant?: 'subtle' | 'glow' | 'line-white' | 'line-primary' | 'line-gradient' | 'dashed' | 'dotted' | 'fade' | 'line';
   align?: '' | 'left' | 'right';
   vertical?: boolean;
   label?: string;

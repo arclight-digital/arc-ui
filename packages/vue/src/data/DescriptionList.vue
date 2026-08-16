@@ -6,6 +6,7 @@ defineOptions({ name: 'DescriptionList' });
 
 const props = defineProps<{
   columns?: number;
+  layout?: 'stacked' | 'horizontal';
   dividers?: boolean;
 }>();
 </script>
@@ -13,6 +14,7 @@ const props = defineProps<{
 <template>
   <arc-description-list
     :columns="props.columns"
+    :layout="props.layout"
     :dividers="props.dividers"
   >
     <slot />

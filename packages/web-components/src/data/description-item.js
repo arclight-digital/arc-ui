@@ -25,6 +25,17 @@ export class ArcDescriptionItem extends LitElement {
         display: block;
       }
 
+      /* Stacked by default; a parent arc-description-list[layout="horizontal"]
+         sets these four properties to put the term beside the detail. They are
+         read with fallbacks so an item used on its own still lays out — the
+         parent is the only writer, and it may not be there. */
+      .item {
+        display: grid;
+        grid-template-columns: var(--_dl-item-columns, 1fr);
+        gap: var(--_dl-item-gap, 0);
+        align-items: var(--_dl-item-align, initial);
+      }
+
       .item__term {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
@@ -32,7 +43,7 @@ export class ArcDescriptionItem extends LitElement {
         letter-spacing: 2px;
         text-transform: uppercase;
         color: var(--text-muted);
-        margin-bottom: var(--space-xs);
+        margin-bottom: var(--_dl-term-margin, var(--space-xs));
       }
 
       .item__detail {

@@ -6,6 +6,7 @@ import { ArcDescriptionList } from '@arclux/arc-ui/description-list';
 
 export interface DescriptionListProps {
   columns?: number;
+  layout?: 'stacked' | 'horizontal';
   dividers?: boolean;
   className?: string;
   children?: React.ReactNode;

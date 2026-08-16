@@ -41,7 +41,9 @@ export interface ComponentApi {
    * Maturity, declared on every component with no default (V4-PLAN 4.1). Never
    * absent: `generate/manifest.js` fails rather than emit a manifest without it.
    */
-  status: 'stable' | 'beta' | 'experimental';
+  status: 'stable' | 'beta' | 'experimental' | 'deprecated';
+  /** The tag that replaces this one. Present only when `status` is `deprecated`. */
+  mergedInto?: string;
   props: ApiProp[];
   events: ApiEvent[];
   slots: ApiSlot[];
@@ -67,6 +69,7 @@ for (const mod of manifest.modules) {
       description: decl.description ?? '',
       group: decl.group ?? null,
       status: decl.status,
+      mergedInto: decl.mergedInto,
       props: (decl.members ?? [])
         .filter((m: any) => m.kind === 'field' && m.privacy !== 'private' && m.privacy !== 'protected')
         .map((m: any) => ({

@@ -2,11 +2,14 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-description-item>`. `label` becomes `term`; the `key`/`value` parts become `term`/`detail`. Removed in v5.
+ *
  * A single key-value pair within an arc-key-value container. The `label` attribute provides the
  * key text, and the default slot holds the value content.
  *
  * @tag arc-kv-pair
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-description-item
  * @prop {string} label - The key/term text displayed in uppercase accent styling.
  * @slot - Default content.
  * @csspart key

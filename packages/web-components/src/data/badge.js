@@ -9,6 +9,23 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  *
  * @tag arc-badge
  * @status stable
+ *
+ * NOT merged into arc-tag in 4.2, against V4-SCOPE §3 row 3. That row reads
+ * "arc-tag is the superset (it has removable) ... no new prop needed", which is
+ * true of the props and false of the styles: arc-badge is `--font-mono`, normal
+ * letter-spacing, sentence case, `--space-xs`/`--space-sm` padding; arc-tag is
+ * `--font-label`, 2px tracking, UPPERCASE, and `min-height: var(--touch-min)`.
+ * Merging as written would silently re-set every badge on every page in an
+ * uppercase label face — `v3.2.0` becomes `V3.2.0` in a taller box — which is
+ * the "quietly delete a visual capability" failure §3.2 rules out by name for
+ * arc-callout's accent bar.
+ *
+ * The fix is a typography decision (does ARC have one chip face or two?), and
+ * V4-PLAN 4.5 owns typography by name: one type scale as font-role tokens, no
+ * component styling text outside a role. Deciding it here would be inventing
+ * design API in a merge commit and then re-deciding it three workstreams later.
+ * The `info` variant arc-tag gained in 4.2 stands on its own — every other
+ * status set in the library has one — and the merge is unblocked either way.
  * @prop {'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info'} variant - Controls the badge color scheme. Default renders a neutral gray. Primary and secondary use the accent token colors. Success, warning, error, and info map to the corresponding semantic color tokens for status-oriented labels.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the badge size. Options: 'sm', 'md', 'lg'.
  * @prop {string} color - Custom RGB color value (e.g. `"255, 100, 50"`) that overrides the variant color. Sets the border, text, background tint, and hover glow to the specified color.

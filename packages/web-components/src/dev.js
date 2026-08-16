@@ -122,6 +122,22 @@ function checkAttr(el, entry, name) {
 function checkElement(el) {
   const entry = schema[el.localName];
   if (!entry) return;
+  // Before the per-attribute checks: if the element itself is going away, that
+  // is the more useful thing to say, and saying it first means a deprecated
+  // component with a typo'd attribute does not bury it.
+  //
+  // This is the only signal a consumer gets. A deprecated component is
+  // unchanged and stays in the barrel for the whole major it is deprecated in
+  // — deliberately, since removing it there is the break the deprecation
+  // postpones — so nothing in a normal build, test run or type-check mentions
+  // it, and the next news would be the major that deletes it.
+  if (entry.mergedInto) {
+    warn(
+      el,
+      'deprecated',
+      `<${el.localName}> is deprecated and is removed in the next major — use <${entry.mergedInto}>.`,
+    );
+  }
   for (const { name } of el.attributes) checkAttr(el, entry, name);
 }
 

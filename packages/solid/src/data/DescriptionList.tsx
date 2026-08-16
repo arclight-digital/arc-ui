@@ -13,6 +13,7 @@ declare module 'solid-js' {
 
 export interface DescriptionListProps {
   columns?: number;
+  layout?: 'stacked' | 'horizontal';
   dividers?: boolean;
   children?: JSX.Element;
   class?: string;
@@ -43,9 +44,9 @@ export interface DescriptionListProps {
 }
 
 export const DescriptionList: Component<DescriptionListProps> = (props) => {
-  const [local, rest] = splitProps(props, ['columns', 'dividers', 'children']);
+  const [local, rest] = splitProps(props, ['columns', 'layout', 'dividers', 'children']);
   return (
-    <arc-description-list columns={local.columns} dividers={local.dividers} {...rest}>
+    <arc-description-list columns={local.columns} layout={local.layout} dividers={local.dividers} {...rest}>
       {local.children}
     </arc-description-list>
   );

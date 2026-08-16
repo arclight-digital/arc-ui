@@ -4,11 +4,14 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-pin-input>`. Same control: `length` covers 4-vs-6 and `mask` covers the obscured variant. The `otp` part becomes `pin`. Removed in v5.
+ *
  * A one-time password input that renders a row of individual character boxes with auto-advance,
  * paste support, and configurable length and input type.
  *
  * @tag arc-otp-input
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-pin-input
  * @prop {number} length - Number of individual character boxes to render. Reflected as an attribute.
  * @prop {string} value - The concatenated value of all boxes. Reflected as an attribute and updated on every input.
  * @prop {boolean} disabled - Disables all input boxes, reducing opacity to 40% and blocking pointer events.
