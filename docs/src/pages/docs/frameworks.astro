@@ -10,6 +10,7 @@ const headings = [
   { id: 'angular', label: 'Angular' },
   { id: 'solid', label: 'Solid' },
   { id: 'preact', label: 'Preact' },
+  { id: 'no-wrapper', label: 'Without a wrapper' },
   { id: 'vanilla', label: 'Vanilla JS / CDN' },
 ];
 ---
@@ -174,6 +175,77 @@ function App() {
     </Card>
   );
 }`}></arc-code-block></div>
+    </section>
+
+    <section id="no-wrapper">
+      <h2 class="docs-heading">Without a wrapper</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p class="docs-text">
+        The wrappers are a convenience, not a requirement. Every component is a
+        standard custom element, so <code>&lt;arc-button&gt;</code> works inside a
+        framework template the moment the element is registered. This path has shipped
+        since v3 and was documented nowhere; it is the right one if you would rather not
+        add a dependency, or if you are already writing custom elements elsewhere in the app.
+      </p>
+      <p class="docs-text">Register what you use — a side-effect import per component, or the whole catalog at once:</p>
+      <div class="docs-code"><arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';
+import '@arclux/arc-ui/button';   // just this element
+import '@arclux/arc-ui/register'; // or every element`}></arc-code-block></div>
+
+      <h3 class="docs-subheading">Telling your framework the tag is real</h3>
+      <p class="docs-text">
+        Most frameworks need one line so the compiler stops treating an unknown tag as a
+        typo or a component of its own. Svelte and Solid need nothing.
+      </p>
+      <div class="docs-code"><arc-code-block language="js" code={`// Vue — vite.config.js
+export default {
+  plugins: [vue({
+    template: { compilerOptions: { isCustomElement: (tag) => tag.startsWith('arc-') } },
+  })],
+};`}></arc-code-block></div>
+      <div class="docs-code"><arc-code-block language="typescript" code={`// Angular — on the component or module that uses the tags
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+@Component({
+  // …
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppComponent {}`}></arc-code-block></div>
+
+      <h3 class="docs-subheading">Typed tags in JSX</h3>
+      <p class="docs-text">
+        React, Preact and Solid each get a generated declaration file that types every
+        ARC tag — the same props, the same enum unions as the wrapper packages.
+        <strong>Add it to your program as a file.</strong> A
+        <code>types</code> entry looks like the natural way to do it and silently does
+        nothing: TypeScript resolves <code>types</code> as a package name and never follows
+        an export subpath, so the name matches nothing, nothing is included, and every tag
+        stays untyped without a diagnostic.
+      </p>
+      <div class="docs-code"><arc-code-block language="json" code={`{
+  "include": [
+    "src",
+    "node_modules/@arclux/arc-ui/types/react-jsx.d.ts"
+  ]
+}`}></arc-code-block></div>
+      <p class="docs-text">
+        Swap in <code>preact-jsx.d.ts</code> or <code>solid-jsx.d.ts</code> as needed, or
+        reference the file from one module instead:
+        <code>/// &lt;reference path="./node_modules/@arclux/arc-ui/types/solid-jsx.d.ts" /&gt;</code>
+      </p>
+
+      <h3 class="docs-subheading">What you give up</h3>
+      <p class="docs-text">
+        Custom events are the whole difference, and it is not the same in every framework.
+        Solid binds them natively — <code>on:arc-change=&#123;handler&#125;</code> — and the
+        declaration file types it. React 19 forwards unknown props to the element, so an
+        event needs a ref and a listener. Preact is the strictest case: it lowercases the
+        name after <code>on</code>, so a dashed event like <code>arc-change</code> cannot be
+        reached from a plain prop at all, and a ref with
+        <code>addEventListener</code> is the only route.
+        <strong>That listener wiring is what the wrapper packages are for</strong> — if you
+        use custom events heavily in React or Preact, take the wrapper.
+      </p>
     </section>
 
     <section id="vanilla">

@@ -28,6 +28,17 @@
   margin-bottom: var(--space-xs);
 }
 
+/* The h3 under a .docs-heading section. Promoted from tokens.astro's
+   page-local .subsection-heading, at the same values, so the next page that
+   needs one has a name to reach for instead of inventing a third. */
+.docs-subheading {
+  font-size: var(--text-sm);
+  font-weight: var(--font-label-weight, 600);
+  color: var(--text-secondary);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
 .docs-text {
   color: var(--text-secondary);
   font-size: var(--text-sm);
