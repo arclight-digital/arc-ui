@@ -799,9 +799,10 @@ deletes — and cutting first shrinks the tree every later workstream touches.
 Non-blocking, may trail into 4.x minors: 4.8 (ships `experimental`), 4.9,
 4.10.
 
-**Status (2026-08-16): 4.1 through 4.7 are done.** The tag still needs
-**4.11** — and **prism 3.0**, which now ships paired with v4.0; see
-`PRISM-3.md`. 4.5's two
+**Status (2026-08-16): every row the v4.0.0 tag requires is done** — 4.1
+through 4.7, and 4.11. What remains before the tag is outside this plan:
+**prism 3.0**, which now ships paired with v4.0 (see `PRISM-3.md`), and Phase
+5's beta and soak. 4.5's two
 recorded non-goals — the docs site has never been measured against
 `type-roles` or the extended `gradient-stops`, and the four per-component
 `density` props stay — are follow-ups, not gaps in the row.
@@ -1671,15 +1672,80 @@ else.
 - [ ] Move `web-test-runner.jitter.mjs` / `.startprobe.mjs` to
       `scripts/debug/` with a README pointer.
 
-### 4.11 Docs & release posture (M) — *last before the tag*
+### 4.11 Docs & release posture (M) — *last before the tag* — **DONE**
 
-- [ ] README: the `components-182` badge and the count-led hero replaced
-      with the actual differentiator — *change framework without changing
-      your design system*. The count is the incentive that produced the
-      tail.
-- [ ] MIGRATION.md complete before the tag: every merged/cut/renamed tag,
-      the dialect aliases, the wrapper story, the icons split, the two-color
-      theming contract, the barrel gating.
+- [x] **README leads with the claim, not the count.** The subtitle is now the
+      differentiator verbatim — *change framework without changing your design
+      system* — and the opening states the problem it answers before naming a
+      technology: a component library is a bet on a framework, and rewriting
+      the app rewrites the design system with it.
+
+      The claim is backed by the two things that have to be true for it, both
+      already enforced: 2.4a's runtime harness mounts every wrapper package in
+      a real browser against one contract (which is how three defects that had
+      shipped since the wrapper packages existed were found), and the visual
+      system is custom properties end to end, so the zero-JS HTML/CSS package
+      gets the same design as the React one.
+
+      **The count badge stays, demoted below `frameworks-7`.** The row said to
+      replace it; the count is still a real fact a reader wants, and hiding it
+      would be a different kind of dishonesty. What changed is that it no
+      longer *leads*, and the catalog section now says outright that the count
+      is a consequence rather than the pitch — v4 cut five components that
+      existed to make it bigger.
+
+      Also: an **Upgrading** section pointing at MIGRATION.md's v4 contents
+      list, the icons package in the structure block and the framework table,
+      Angular's `ControlValueAccessor` in the prism description, and the
+      third-party icon licences named beside ARC's own.
+
+- [x] **`readme-stats.js` fails instead of no-opping.** Rewriting the intro
+      sentence broke its anchor in the same edit that changed the number it
+      exists to keep current — `String.replace` with no match returns the
+      string unchanged and says nothing, so the generator would have gone on
+      printing "README stats synced" while doing nothing. Every one of its
+      seven replacements now asserts it matched. Proved by moving an anchor.
+
+- [x] **MIGRATION.md is complete, and its contents list is generated.**
+
+      Five sections were missing, four of them the row's own "wrapper story":
+      **Wrappers: four defects that were shipping** (Angular defined no custom
+      elements at all across 207 wrappers; Angular and Solid discarded children
+      of named-slot components; 18 Vue/Solid subpaths threw
+      `ERR_MODULE_NOT_FOUND`; `createComponent` deprecated), **Angular form
+      controls bind to `@angular/forms`**, **JSX typings for `<arc-*>`, and the
+      React instruction that never worked**, and **Props that documented a rule
+      now enforce it** (2.1's two slices — per-item `disabled`, and five bounds
+      that moved from the render onto the declaration).
+
+      The fifth was found by auditing the commit log rather than the plan.
+      **Event details that named the wrong thing** covers three changes that
+      landed unmarked because the old behaviour was a defect —
+      `arc-date-range-picker`'s `detail.value` changing from `{ start, end }`
+      to the ISO interval string is a *type* change on a payload consumers
+      read, and "it was broken" is no comfort to someone whose code read it.
+      Also `arc-tree-view` keying nodes by path rather than label, and
+      `arc-list`'s selection round-tripping through a comma.
+
+      Everything else on the row's list was already present: merged/cut/renamed
+      tags, the dialect aliases (`start`/`end` → `prefix`/`suffix` and
+      `closable` → `dismissible`, both two-way through v4 and removed in v5),
+      the icons split, the two-color contract, and the barrel gating.
+
+      **`scripts/generate/migration-toc.js`** derives the v4 contents list and
+      enforces section order. The list had drifted to **seven of eighteen**
+      entries — the failure a hand-maintained index always eventually has, and
+      one nobody notices, because a missing entry looks exactly like a section
+      that does not exist. A section without a place in `ORDER` now fails the
+      build rather than being appended silently; both directions of that guard
+      are proved, and the reorder was verified lossless (same 23 sections,
+      byte-identical bodies, the v2 → v3 half untouched). It also rejects two
+      titles that normalise to one anchor, which GitHub resolves by silently
+      suffixing the second.
+
+Exit criteria met: `pnpm check` green across 37 checks, `pnpm generate`
+diff-clean and idempotent, 4,929 tests across 124 files, and every `!`-marked
+commit on the branch traced to a MIGRATION section.
 
 ---
 

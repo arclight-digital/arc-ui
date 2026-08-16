@@ -4,10 +4,18 @@ A for-posterity record of every breaking change, one section per change, each
 with what changed, why, and the mechanical fix. Commit hashes point at the full
 story.
 
-**v3 → v4 is in progress.** Its sections are collected under
-[v4 breaking changes](#v4-breaking-changes) at the bottom and are written as the
-work lands, not at tag time — V4-PLAN 4.11 completes and orders them, it does not
-discover them.
+**v3 → v4 is complete.** Its sections are collected under
+[v4 breaking changes](#v4-breaking-changes) at the bottom, written as the work
+landed rather than at tag time — V4-PLAN 4.11 completed and ordered them, it did
+not discover them.
+
+The v4 contents list below is **generated** by `scripts/generate/migration-toc.js`,
+which also enforces the order the sections appear in. Adding a section means
+giving it a place in that order; leaving it out fails the build rather than
+appending it silently to the end. The list had drifted to seven of eighteen
+entries before it was derived, which is what a hand-maintained index does and
+why nobody noticed — a missing entry looks exactly like a section that does not
+exist.
 
 ## v2 → v3
 
@@ -27,13 +35,29 @@ discover them.
 
 **v4:**
 
+- [The five cuts](#the-five-cuts)
+- [The merges](#the-merges)
+- [Domain groups: marketing and media leave the default barrel](#domain-groups-marketing-and-media-leave-the-default-barrel)
+- [Every component declares a status, and experimental leaves the barrel](#every-component-declares-a-status-and-experimental-leaves-the-barrel)
+- [`arc-modal` is `arc-dialog`, and `arc-dialog` is not what it was](#arc-modal-is-arc-dialog-and-arc-dialog-is-not-what-it-was)
+- [`size` is `sm | md | lg`, and dismissal is `dismissible`](#size-is-sm--md--lg-and-dismissal-is-dismissible)
+- [Side slots are `prefix` and `suffix`](#side-slots-are-prefix-and-suffix)
 - [Array props take arrays, not JSON strings](#array-props-take-arrays-not-json-strings)
 - [Malformed array attributes fall back instead of throwing](#malformed-array-attributes-fall-back-instead-of-throwing)
-- [Domain groups: marketing and media leave the default barrel](#domain-groups-marketing-and-media-leave-the-default-barrel)
-- [The five cuts](#the-five-cuts)
-- [Every component declares a status, and experimental leaves the barrel](#every-component-declares-a-status-and-experimental-leaves-the-barrel)
-- [The merges](#the-merges)
-- [`size` is `sm | md | lg`, and dismissal is `dismissible`](#size-is-sm--md--lg-and-dismissal-is-dismissible)
+- [Every array prop is `list()`, and every one of them has an attribute](#every-array-prop-is-list-and-every-one-of-them-has-an-attribute)
+- [Props that documented a rule now enforce it](#props-that-documented-a-rule-now-enforce-it)
+- [The five modal overlays run on `<dialog>`](#the-five-modal-overlays-run-on-dialog)
+- [`arc-navigation-menu` collapses on its own width](#arc-navigation-menu-collapses-on-its-own-width)
+- [`arc-context-menu` dismisses without covering the page](#arc-context-menu-dismisses-without-covering-the-page)
+- [Event details that named the wrong thing](#event-details-that-named-the-wrong-thing)
+- [`::part(base)` reaches the root element of any component](#partbase-reaches-the-root-element-of-any-component)
+- [Text is described by a type context](#text-is-described-by-a-type-context)
+- [The high-contrast theme is generated, and its AAA claim is now true](#the-high-contrast-theme-is-generated-and-its-aaa-claim-is-now-true)
+- [`[data-density]`, and the two-color contract as the theming API](#data-density-and-the-two-color-contract-as-the-theming-api)
+- [Icons moved to `@arclux/arc-ui-icons`](#icons-moved-to-arcluxarc-ui-icons)
+- [Wrappers: four defects that were shipping](#wrappers-four-defects-that-were-shipping)
+- [Angular form controls bind to `@angular/forms`](#angular-form-controls-bind-to-angularforms)
+- [JSX typings for `<arc-*>`, and the React instruction that never worked](#jsx-typings-for-arc--and-the-react-instruction-that-never-worked)
 
 ## Event contract
 
@@ -287,108 +311,6 @@ relied on published examples fetch them from the docs site instead.
 
 # v4 breaking changes
 
-## Array props take arrays, not JSON strings
-
-**Affects `arc-comparison.features` and `arc-comparison-column.values`.**
-
-Both were declared `{ type: String }` and documented as *"JSON array of …"*, so
-the property held a string and the component parsed it at the point of use. They
-are declared `list()` now, which means the **property** takes a real array:
-
-```js
-// before
-el.features = '["Storage","Bandwidth"]';
-
-// after
-el.features = ['Storage', 'Bandwidth'];
-```
-
-**Markup is unchanged.** `features='["Storage","Bandwidth"]'` works exactly as
-before — the JSON spelling is what an attribute is *for*, and `list()` parses it.
-Only the property path changed, and only for these two props.
-
-Assigning a string now normalises to the declared default (an empty list) rather
-than being parsed, so the failure is a component that renders nothing rather than
-a thrown error. If you set these from script, the mechanical fix is to delete the
-`JSON.stringify` you were doing — or the string literal's quotes.
-
-The generated wrapper types moved with it: `features?: string` became
-`features?: string[]` in all six packages, so TypeScript consumers get a compile
-error rather than the silent empty render.
-
-**Why:** the library had four spellings of "this prop is an array" and no term
-for it. `list()` is the term. See V4-PLAN 2.2 and the `list()` docstring in
-`shared/props.js` for what each dialect got wrong; the sitewide migration of the
-remaining array props is 4.3, and each will be recorded here as it lands.
-
-## Malformed array attributes fall back instead of throwing
-
-**Affects the six `navigation/` components that took a JSON `items`/`steps`
-attribute:** `arc-anchor-nav`, `arc-bottom-nav`, `arc-breadcrumb-menu`,
-`arc-rail`, `arc-speed-dial`, `arc-stepper-nav`.
-
-Each carried its own copy of a try/catch `JSON.parse` converter. They all now
-use `list()`, which behaves the same on a well-formed attribute and differs in
-one case they all got wrong: **removing the attribute** used to leave `null` on
-the property (`JSON.parse(null)` coerces to the string `"null"`, parses fine, and
-returns `null`), and now returns the declared default. Code that tested
-`items === null` to mean "unset" should test `items.length === 0`.
-
-This is a fix rather than a break for anything that iterated the value, which
-previously threw on `null`.
-
-## Domain groups: marketing and media leave the default barrel
-
-**Affects 15 components and one shared module.** They are all still published,
-still supported, still in this package and this test suite. What changed is
-which import reaches them.
-
-`@arclux/arc-ui/marketing` — `arc-carousel`, `arc-comparison`,
-`arc-comparison-column`, `arc-countdown-timer`, `arc-cta-banner`,
-`arc-feature-card`, `arc-gradient-text`, `arc-hotspot`, `arc-image-compare`,
-`arc-image-hotspots`, `arc-marquee`, `arc-typewriter`.
-
-`@arclux/arc-ui/media` — `arc-knob`, `arc-level-meter`, `arc-waveform`, and the
-`shared/time-scale` module that the last two are built on.
-
-```js
-// before
-import { ArcCarousel, ArcWaveform } from '@arclux/arc-ui';
-import { createScale } from '@arclux/arc-ui/shared/time-scale';
-
-// after
-import { ArcCarousel } from '@arclux/arc-ui/marketing';
-import { ArcWaveform, createScale } from '@arclux/arc-ui/media';
-```
-
-**Per-component subpaths are unchanged** — `@arclux/arc-ui/carousel` works
-exactly as before, in this release and after it. If that is how you import, this
-change is invisible to you. Framework wrapper consumers are in the same
-position: every wrapper component has had its own subpath since v3
-(`@arclux/arc-ui-react/Carousel`), and that is unaffected. Only the wrapper
-*barrels* — `@arclux/arc-ui-react` and its per-tier barrels — stop carrying
-these 15 names.
-
-**HTML and CSS consumers are unaffected.** `arc-carousel.css`, the standalone
-examples, and `@arclux/arc-ui/register` all still cover every component.
-
-**Why.** The catalog was flat: 200-odd tags with no way to express "this one is
-for a different kind of product". So every question about the marketing cluster
-and the DAW primitives came out as *delete or exile?*, and both answers were
-wrong — they are good components for a product this kit is not. A domain axis
-says that precisely, and once it existed the v4 deletion list fell from about 25
-tags to 5.
-
-The practical effect is that a default `import { … } from '@arclux/arc-ui'` in
-an admin dashboard no longer puts a landing-page carousel and a rotary synth
-knob in the module graph. Same mechanism `arc-code-block` has used since v3.
-
-They are subpaths of this package rather than separate packages on purpose, and
-that is the part meant to last: a satellite package is where components go to
-die — different version, different CI, different suite, quietly rotting. These
-share all three. A subpath can also be promoted to its own package later without
-moving a source file; un-splitting a published package cannot. See V4-SCOPE §1.
-
 ## The five cuts
 
 **`arc-guided-tour`, `arc-spotlight`, `arc-speed-dial`, `arc-dock` and
@@ -498,37 +420,6 @@ does not intend to ship a scheduler.
   `arc-date-picker` inside it, `arc-tag` for categories. ARC's tokens are CSS
   custom properties, so the embedded calendar can be themed from the same
   variables the rest of the page uses.
-
-## Every component declares a status, and experimental leaves the barrel
-
-**Two changes, and only the second can break anything today.**
-
-`@status` is now a required annotation on all 202 components — `stable`, `beta`
-or `experimental`, with no default. It rides `custom-elements.json` with the
-rest of the derived API surface, so editors, the docs and any tool reading the
-manifest can see maturity for every component rather than for the fourteen that
-happened to have it written on their docs page.
-
-**`experimental` components are absent from the default barrel.** They are
-published and reachable by their own subpath — `@arclux/arc-ui/tree-grid` — and
-absent from `import { … } from '@arclux/arc-ui'` and from every framework
-package's barrel. Nothing is experimental as of v4.0.0, so this breaks nothing
-right now; it is here early on purpose. Everything V4-PLAN 4.8 adds ships
-experimental, and gating at the point a component is born means no addition
-ever enters the barrel only to be removed from it inside one major — removing a
-barrel entry is a breaking change even when the component was never meant to be
-there.
-
-**`beta` deliberately does not gate.** Beta says the API may still move, not
-that the component should be hard to find; a beta nobody can import is a beta
-nobody evaluates. Ten components are beta in v4.0.0 — `arc-chart`,
-`arc-data-grid`, `arc-date-range-picker`, `arc-image-cropper`, `arc-kanban`,
-`arc-menubar`, `arc-password-input`, `arc-qr-code`, `arc-tag-input`,
-`arc-transfer-list` — and all ten are in the barrel exactly as before.
-
-If you consume the manifest, note that every custom element now carries
-`status` and `group`. `status` is always present; `group` is `null` for the app
-catalog.
 
 ## The merges
 
@@ -716,6 +607,118 @@ Resolving it means deciding whether ARC has one chip typography or two, which
 is a design-language question rather than a catalog one. Both components stay
 for now, and the row is reopened after the type-scale work.
 
+## Domain groups: marketing and media leave the default barrel
+
+**Affects 15 components and one shared module.** They are all still published,
+still supported, still in this package and this test suite. What changed is
+which import reaches them.
+
+`@arclux/arc-ui/marketing` — `arc-carousel`, `arc-comparison`,
+`arc-comparison-column`, `arc-countdown-timer`, `arc-cta-banner`,
+`arc-feature-card`, `arc-gradient-text`, `arc-hotspot`, `arc-image-compare`,
+`arc-image-hotspots`, `arc-marquee`, `arc-typewriter`.
+
+`@arclux/arc-ui/media` — `arc-knob`, `arc-level-meter`, `arc-waveform`, and the
+`shared/time-scale` module that the last two are built on.
+
+```js
+// before
+import { ArcCarousel, ArcWaveform } from '@arclux/arc-ui';
+import { createScale } from '@arclux/arc-ui/shared/time-scale';
+
+// after
+import { ArcCarousel } from '@arclux/arc-ui/marketing';
+import { ArcWaveform, createScale } from '@arclux/arc-ui/media';
+```
+
+**Per-component subpaths are unchanged** — `@arclux/arc-ui/carousel` works
+exactly as before, in this release and after it. If that is how you import, this
+change is invisible to you. Framework wrapper consumers are in the same
+position: every wrapper component has had its own subpath since v3
+(`@arclux/arc-ui-react/Carousel`), and that is unaffected. Only the wrapper
+*barrels* — `@arclux/arc-ui-react` and its per-tier barrels — stop carrying
+these 15 names.
+
+**HTML and CSS consumers are unaffected.** `arc-carousel.css`, the standalone
+examples, and `@arclux/arc-ui/register` all still cover every component.
+
+**Why.** The catalog was flat: 200-odd tags with no way to express "this one is
+for a different kind of product". So every question about the marketing cluster
+and the DAW primitives came out as *delete or exile?*, and both answers were
+wrong — they are good components for a product this kit is not. A domain axis
+says that precisely, and once it existed the v4 deletion list fell from about 25
+tags to 5.
+
+The practical effect is that a default `import { … } from '@arclux/arc-ui'` in
+an admin dashboard no longer puts a landing-page carousel and a rotary synth
+knob in the module graph. Same mechanism `arc-code-block` has used since v3.
+
+They are subpaths of this package rather than separate packages on purpose, and
+that is the part meant to last: a satellite package is where components go to
+die — different version, different CI, different suite, quietly rotting. These
+share all three. A subpath can also be promoted to its own package later without
+moving a source file; un-splitting a published package cannot. See V4-SCOPE §1.
+
+## Every component declares a status, and experimental leaves the barrel
+
+**Two changes, and only the second can break anything today.**
+
+`@status` is now a required annotation on all 202 components — `stable`, `beta`
+or `experimental`, with no default. It rides `custom-elements.json` with the
+rest of the derived API surface, so editors, the docs and any tool reading the
+manifest can see maturity for every component rather than for the fourteen that
+happened to have it written on their docs page.
+
+**`experimental` components are absent from the default barrel.** They are
+published and reachable by their own subpath — `@arclux/arc-ui/tree-grid` — and
+absent from `import { … } from '@arclux/arc-ui'` and from every framework
+package's barrel. Nothing is experimental as of v4.0.0, so this breaks nothing
+right now; it is here early on purpose. Everything V4-PLAN 4.8 adds ships
+experimental, and gating at the point a component is born means no addition
+ever enters the barrel only to be removed from it inside one major — removing a
+barrel entry is a breaking change even when the component was never meant to be
+there.
+
+**`beta` deliberately does not gate.** Beta says the API may still move, not
+that the component should be hard to find; a beta nobody can import is a beta
+nobody evaluates. Ten components are beta in v4.0.0 — `arc-chart`,
+`arc-data-grid`, `arc-date-range-picker`, `arc-image-cropper`, `arc-kanban`,
+`arc-menubar`, `arc-password-input`, `arc-qr-code`, `arc-tag-input`,
+`arc-transfer-list` — and all ten are in the barrel exactly as before.
+
+If you consume the manifest, note that every custom element now carries
+`status` and `group`. `status` is always present; `group` is `null` for the app
+catalog.
+
+## `arc-modal` is `arc-dialog`, and `arc-dialog` is not what it was
+
+**Three tags became two.** This is the one migration in v4 where a tag name
+survives and means something different, so read it even if you only used one of
+them.
+
+| you had | you want | why |
+| --- | --- | --- |
+| `<arc-modal>` | `<arc-dialog>` | pure rename; `arc-modal` keeps working through v4 |
+| `<arc-dialog heading message …>` | `<arc-confirm heading message …>` | the confirm prompt moved; the name did not |
+| `<arc-confirm>` | `<arc-confirm>` | unchanged, and it absorbed the prompt above |
+
+The element is a dialog, the platform calls it a dialog, and `modal` named one
+of its behaviours rather than what it is. `arc-modal` is an empty subclass of
+`arc-dialog` — same props, events, parts and custom properties — deprecated for
+the whole of v4 and removed in v5.
+
+**The dangerous case is the middle row.** The old `<arc-dialog>` was a small
+confirm prompt: `heading`, `message`, `confirm-label`, `cancel-label`,
+`variant`. The new one is the overlay primitive. It knows `heading` and would
+silently ignore the rest — an empty panel with a title. So it doesn't ignore
+them: `arc-dialog` writes a `console.error` naming `arc-confirm` when it is
+handed `message`, `confirmLabel` or `cancelLabel`. `heading` is deliberately
+not in that list, since it means the same thing in both.
+
+`arc-confirm` kept both of its shapes, which are different rather than
+duplicated: `ArcConfirm.open(): Promise<boolean>` for a call site that has to
+decide something before continuing, and the element itself for a template.
+
 ## `size` is `sm | md | lg`, and dismissal is `dismissible`
 
 The first two of v4's five API conventions. Both are small; the checks behind
@@ -755,6 +758,94 @@ you say otherwise; an alert is not dismissible unless you say so. Both defaults
 are right for their component — an inescapable modal is the exception, an alert
 with an X is the exception — so making them agree would trade a naming
 inconsistency for a behavioural one, which is worse.
+
+## Side slots are `prefix` and `suffix`
+
+**Affects `arc-toolbar` and `arc-status-bar`.** Both took `start` and `end`;
+five other components — `arc-button`, `arc-input`, `arc-masked-input`,
+`arc-input-group`, `arc-list-item` — already took `prefix` and `suffix` for the
+same thing. One name won, and it is the one already in the majority and already
+in the rest of the ecosystem.
+
+```html
+<!-- before -->
+<arc-toolbar>
+  <arc-button slot="start">Open</arc-button>
+  <arc-button slot="end">Save</arc-button>
+</arc-toolbar>
+
+<!-- after -->
+<arc-toolbar>
+  <arc-button slot="prefix">Open</arc-button>
+  <arc-button slot="suffix">Save</arc-button>
+</arc-toolbar>
+```
+
+**`start` and `end` keep working for all of v4** and are removed in v5. Both
+spellings project into the same region, so a partial migration renders
+correctly; content already in `start` stays ahead of anything newly added to
+`prefix`.
+
+The CSS parts moved the same way and cost nothing: the region carries
+`part="prefix start"`, so `::part(start)` and `::part(prefix)` both select it.
+
+### Two pairs the plan listed and this deliberately did not touch
+
+`arc-image-compare`'s `before` and `after` are **the two images being
+compared** — a sequence, with one layered over the other. `arc-page-header`'s
+`above` and `below` are **the block axis**, where prefix/suffix are the inline
+one. Neither is a side slot, and folding them in would have described the wrong
+thing in the wrong dimension. They are unchanged and stay unchanged.
+
+## Array props take arrays, not JSON strings
+
+**Affects `arc-comparison.features` and `arc-comparison-column.values`.**
+
+Both were declared `{ type: String }` and documented as *"JSON array of …"*, so
+the property held a string and the component parsed it at the point of use. They
+are declared `list()` now, which means the **property** takes a real array:
+
+```js
+// before
+el.features = '["Storage","Bandwidth"]';
+
+// after
+el.features = ['Storage', 'Bandwidth'];
+```
+
+**Markup is unchanged.** `features='["Storage","Bandwidth"]'` works exactly as
+before — the JSON spelling is what an attribute is *for*, and `list()` parses it.
+Only the property path changed, and only for these two props.
+
+Assigning a string now normalises to the declared default (an empty list) rather
+than being parsed, so the failure is a component that renders nothing rather than
+a thrown error. If you set these from script, the mechanical fix is to delete the
+`JSON.stringify` you were doing — or the string literal's quotes.
+
+The generated wrapper types moved with it: `features?: string` became
+`features?: string[]` in all six packages, so TypeScript consumers get a compile
+error rather than the silent empty render.
+
+**Why:** the library had four spellings of "this prop is an array" and no term
+for it. `list()` is the term. See V4-PLAN 2.2 and the `list()` docstring in
+`shared/props.js` for what each dialect got wrong; the sitewide migration of the
+remaining array props is 4.3, and each will be recorded here as it lands.
+
+## Malformed array attributes fall back instead of throwing
+
+**Affects the six `navigation/` components that took a JSON `items`/`steps`
+attribute:** `arc-anchor-nav`, `arc-bottom-nav`, `arc-breadcrumb-menu`,
+`arc-rail`, `arc-speed-dial`, `arc-stepper-nav`.
+
+Each carried its own copy of a try/catch `JSON.parse` converter. They all now
+use `list()`, which behaves the same on a well-formed attribute and differs in
+one case they all got wrong: **removing the attribute** used to leave `null` on
+the property (`JSON.parse(null)` coerces to the string `"null"`, parses fine, and
+returns `null`), and now returns the declared default. Code that tested
+`items === null` to mean "unset" should test `items.length === 0`.
+
+This is a fix rather than a break for anything that iterated the value, which
+previously threw on `null`.
 
 ## Every array prop is `list()`, and every one of them has an attribute
 
@@ -815,6 +906,236 @@ happen at all is worth recording: Lit runs a component's own `willUpdate`
 *before* a controller's `hostUpdate`, so a component that reads a declared prop
 in `willUpdate` sees the raw assigned value, not the normalised one. Guard with
 `Array.isArray`, not `|| []` — a string is truthy.
+
+## Props that documented a rule now enforce it
+
+**Do this:** nothing, unless you were relying on a component ignoring its own
+documentation. Read the list if you set `disabled` on a tab or an option, or
+read a numeric prop back after assigning it.
+
+V4-PLAN 2.1, in two slices. One shape throughout: a constraint that lived where
+a value was *used* rather than where it was *held*, so the render obeyed it and
+the property did not — or nothing obeyed it at all and the docs said otherwise.
+
+### Per-item `disabled` is honoured
+
+`arc-tab` had no `disabled` property at all, while its own documentation
+promised "disabling a specific tab". It has one now, and `arc-tabs` honours it
+on click, on the programmatic path, and on the arrow keys, Home and End — via a
+bounded walk that terminates on an all-disabled bar rather than spinning. The
+key stays `preventDefault`ed even when no target survives the walk, so a fully
+disabled bar does not scroll the page instead.
+
+`arc-option.disabled` was read by **none** of its four consumers. The keyboard
+half is one `isItemDisabled` option on the shared `ListboxController`, so
+`arc-select`, `arc-combobox` and `arc-multi-select` all gained it at once;
+`arc-segmented-control` gained a click guard. Disabled options stay rendered and
+stay counted — filtering them out renumbers every option after them, and
+`aria-activedescendant` is an index into what is rendered.
+
+The path worth calling out is auto-selection: a guard on every way *in* is
+worthless if the control starts out sitting on the thing it guards. If your
+first option is disabled, the initial value is now the first enabled one.
+
+`arc-segmented-control` also becomes form-associated, so it participates in
+`form.reset()` and in `FormData` like every other control.
+
+### Numeric and enumerated bounds moved onto the declaration
+
+Five props clamped inside `render()` and stored whatever you assigned, so
+reading the property back gave you the unclamped value while the screen showed
+the clamped one. The bound is on the declaration now, which means **the property
+you read is the value in use**.
+
+- **`arc-pagination`** — `current`, `total` and the page range. `current` names
+  `total` as its `max` rather than a literal, so shrinking the page count pulls
+  `current` down with it.
+- **`arc-stepper-nav`** — the button said "Next" on the last step while the
+  handler took the completion branch, so the wizard submitted when the user was
+  told there was more. Both read a bounded `active` now and agree by
+  construction.
+- **`arc-image-cropper`** — `zoom` is declared and the `_zoomClamped` getter is
+  gone, so the picture and the property are the same number.
+- **`arc-label`** — resolves its target with `getElementById` rather than
+  splicing an id into a CSS selector, so ids containing CSS-special characters
+  work.
+- **`arc-icon-library`** — see
+  [Icons moved to `@arclux/arc-ui-icons`](#icons-moved-to-arcluxarc-ui-icons);
+  4.7 revisited this one.
+
+Normalisation runs in the mixin's `hostUpdate`, which is *before* a
+controller's `hostUpdate` but *after* assignment — so a component reading a
+declared prop in `willUpdate` sees the raw value, not the normalised one.
+
+## The five modal overlays run on `<dialog>`
+
+**Affects `arc-dialog` (was `arc-modal`), `arc-sheet`, `arc-drawer`,
+`arc-lightbox` and `arc-command-palette`.** They render a real `<dialog>` opened
+with `showModal()` instead of a hand-rolled backdrop.
+
+Most of this is invisible and better. Focus is contained by the browser, the
+rest of the page is genuinely `inert` rather than merely untabbable, Escape and
+focus restore come from the platform, and the panel paints in the top layer — so
+an overlay inside a `transform` or a `z-index` stacking context no longer loses
+to it.
+
+### `::part(backdrop)` is gone from four of them
+
+The scrim is `::backdrop` now: a pseudo-element, which cannot carry a part.
+Style it with custom properties on the host instead — `::backdrop` inherits
+from the element it belongs to, which is what makes this work:
+
+```css
+/* before */
+arc-sheet::part(backdrop) { background: rgba(0 0 0 / 0.8); backdrop-filter: none; }
+
+/* after */
+arc-sheet { --sheet-backdrop: rgba(0 0 0 / 0.8); --sheet-backdrop-filter: none; }
+```
+
+The properties are `--dialog-backdrop`, `--sheet-backdrop`, `--drawer-backdrop`
+and `--palette-backdrop`, each with a `-filter` companion where there was a
+blur. **`arc-lightbox` keeps its `backdrop` part** — there the scrim and the
+panel are the same box, so there is still an element to name.
+
+### Initial focus honours `autofocus`
+
+`showModal()` places focus per spec. Where the old code called
+`focusFirst(panel)` unconditionally, an `autofocus` on your own slotted content
+now wins:
+
+```html
+<arc-dialog heading="Rename">
+  <input autofocus>          <!-- focused on open; previously ignored -->
+</arc-dialog>
+```
+
+### Testing Escape needs a different gesture
+
+A dispatched `KeyboardEvent` no longer closes these. The user agent turns
+Escape into a `cancel` event on the dialog, and nothing else produces one:
+
+```js
+// before
+el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+// after
+el.shadowRoot.querySelector('dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
+```
+
+Same for a backdrop click: there is no backdrop element to click, and a click on
+`::backdrop` is dispatched by the browser to the `<dialog>` itself, so dispatch
+there.
+
+## `arc-navigation-menu` collapses on its own width
+
+**Affects `arc-navigation-menu`.** The desktop bar used to hide below a 900px
+*viewport*; it now hides below a 900px *component*. The number is the same and
+most pages will see no difference — a full-bleed nav is as wide as the window.
+
+Where it does differ, it differs in your favour: a nav inside a 700px column
+now collapses to its mobile panel instead of overflowing, and a nav on a wide
+page stays expanded regardless of what a phone is doing to the viewport.
+
+```html
+<!-- previously: desktop bar, overflowing, because the window is wide -->
+<!-- now:        mobile panel, because the nav is 700px -->
+<div style="width: 700px">
+  <arc-navigation-menu>…</arc-navigation-menu>
+</div>
+```
+
+If you were relying on the viewport gate — a media query of your own at 900px
+that assumed the nav flipped at the same moment — key it off the nav's own
+width instead, or give the nav a container that matches the viewport.
+
+## `arc-context-menu` dismisses without covering the page
+
+**Affects `arc-context-menu`.** It used to render an invisible full-viewport
+`<div class="backdrop">` to catch outside clicks. That div is gone; dismissal
+goes through the shared `DismissController` like every other anchored panel.
+
+Two consequences, both improvements:
+
+- **The click that dismisses the menu now reaches what it was aimed at.**
+  Previously the first click anywhere closed the menu and hit nothing else.
+- **Tabbing away dismisses too.** A backdrop cannot observe focus, so keyboard
+  users had no dismissal path except Escape.
+
+If you were reaching into the shadow root for `.backdrop` — in a test, most
+likely — dispatch a `pointerdown` on `document.body` instead.
+
+## Event details that named the wrong thing
+
+**Do this:** if you read `e.detail.value` from `arc-date-range-picker`, it is a
+string now. The rest of this section is behaviour that was wrong and is not, and
+needs nothing from you unless you built around it.
+
+None of these were marked breaking when they landed, because in each case the
+old behaviour was a defect rather than a contract. They are collected here
+because "it was broken" is not much comfort to someone whose code reads the
+value it was broken in.
+
+### `arc-date-range-picker`'s `detail.value` is the interval string
+
+`arc-change` carried `detail.value` as `{ start, end }`, while the `value`
+property the key is named after is an ISO 8601 interval string. Reading
+`e.detail.value` and `el.value` on the same component gave two different types.
+
+```js
+// before
+el.addEventListener('arc-change', (e) => {
+  e.detail.value;        // { start: '2026-01-01', end: '2026-01-31' }
+});
+
+// after
+el.addEventListener('arc-change', (e) => {
+  e.detail.value;        // '2026-01-01/2026-01-31'  — same as el.value
+  e.detail.start;        // '2026-01-01'  — unchanged
+  e.detail.end;          // '2026-01-31'  — unchanged
+});
+```
+
+`start` and `end` are untouched, so the mechanical fix is to read those instead.
+Dropping them to make `value` canonical would have been the worse break: they
+are what the component is for.
+
+The static event check passed the whole time, because it verifies the key exists
+and not that it agrees with the property of the same name. That is the right
+scope for a static check, and it is why this had to be found by reading.
+
+### `arc-tree-view` identifies a node by its path, not its label
+
+`_selected` and the expansion set were keyed on `item.label`, which is not an
+identity: `src/index.js` and `test/index.js` are two nodes called `index.js`,
+and "General" under two different sections is the same shape. Selecting one
+marked both. Expanding one `assets` folder opened every other.
+
+Both are keyed on the path now — the same `_pathKey` the component already
+computed for its roving focus. `arc-toggle` carries `path` alongside `item`, so
+it agrees with `arc-select` about what names a node.
+
+If you have a tree with no duplicate labels, nothing changes. If you have one
+with duplicates, it stops mis-selecting; and if you were keying your own state
+off `detail.item.label` to work around it, `detail.path` is what you want.
+
+### `arc-list`'s selection is an array, and survives a comma
+
+`value` *was* the selection, split apart on every read — so a value containing a
+comma never matched its own fragments, and `"Smith, John"` was recorded in
+`value` and never marked selected on screen. The selection is an array
+internally now and `value` is its serialised view, parsed back only when
+something outside assigns it.
+
+The attribute format is unchanged, so markup and `el.value = 'a,b'` work exactly
+as before. What changed is that every interaction path now round-trips exactly,
+including the toggle. Assigning a multi-select value from outside still cannot
+express a comma — that is the format's separator — and the prop says so now
+rather than leaving it to be discovered.
+
+`aria-multiselectable` is also gone from plain `role="list"`, where it is not
+defined. It stays on listbox, grid, tree and tablist, including when it is
+`false`, which is legal and meaningful there.
 
 ## `::part(base)` reaches the root element of any component
 
@@ -884,171 +1205,6 @@ or `<button>` depending on `href`; `arc-qr-code` renders a card wrapper or a bar
 svg depending on `contrast`. Every branch carries `base`, which is the clearest
 argument for having it: it is the one handle on those components that does not
 depend on how they are configured.
-
-## Side slots are `prefix` and `suffix`
-
-**Affects `arc-toolbar` and `arc-status-bar`.** Both took `start` and `end`;
-five other components — `arc-button`, `arc-input`, `arc-masked-input`,
-`arc-input-group`, `arc-list-item` — already took `prefix` and `suffix` for the
-same thing. One name won, and it is the one already in the majority and already
-in the rest of the ecosystem.
-
-```html
-<!-- before -->
-<arc-toolbar>
-  <arc-button slot="start">Open</arc-button>
-  <arc-button slot="end">Save</arc-button>
-</arc-toolbar>
-
-<!-- after -->
-<arc-toolbar>
-  <arc-button slot="prefix">Open</arc-button>
-  <arc-button slot="suffix">Save</arc-button>
-</arc-toolbar>
-```
-
-**`start` and `end` keep working for all of v4** and are removed in v5. Both
-spellings project into the same region, so a partial migration renders
-correctly; content already in `start` stays ahead of anything newly added to
-`prefix`.
-
-The CSS parts moved the same way and cost nothing: the region carries
-`part="prefix start"`, so `::part(start)` and `::part(prefix)` both select it.
-
-### Two pairs the plan listed and this deliberately did not touch
-
-`arc-image-compare`'s `before` and `after` are **the two images being
-compared** — a sequence, with one layered over the other. `arc-page-header`'s
-`above` and `below` are **the block axis**, where prefix/suffix are the inline
-one. Neither is a side slot, and folding them in would have described the wrong
-thing in the wrong dimension. They are unchanged and stay unchanged.
-
-## The five modal overlays run on `<dialog>`
-
-**Affects `arc-dialog` (was `arc-modal`), `arc-sheet`, `arc-drawer`,
-`arc-lightbox` and `arc-command-palette`.** They render a real `<dialog>` opened
-with `showModal()` instead of a hand-rolled backdrop.
-
-Most of this is invisible and better. Focus is contained by the browser, the
-rest of the page is genuinely `inert` rather than merely untabbable, Escape and
-focus restore come from the platform, and the panel paints in the top layer — so
-an overlay inside a `transform` or a `z-index` stacking context no longer loses
-to it.
-
-### `::part(backdrop)` is gone from four of them
-
-The scrim is `::backdrop` now: a pseudo-element, which cannot carry a part.
-Style it with custom properties on the host instead — `::backdrop` inherits
-from the element it belongs to, which is what makes this work:
-
-```css
-/* before */
-arc-sheet::part(backdrop) { background: rgba(0 0 0 / 0.8); backdrop-filter: none; }
-
-/* after */
-arc-sheet { --sheet-backdrop: rgba(0 0 0 / 0.8); --sheet-backdrop-filter: none; }
-```
-
-The properties are `--dialog-backdrop`, `--sheet-backdrop`, `--drawer-backdrop`
-and `--palette-backdrop`, each with a `-filter` companion where there was a
-blur. **`arc-lightbox` keeps its `backdrop` part** — there the scrim and the
-panel are the same box, so there is still an element to name.
-
-### Initial focus honours `autofocus`
-
-`showModal()` places focus per spec. Where the old code called
-`focusFirst(panel)` unconditionally, an `autofocus` on your own slotted content
-now wins:
-
-```html
-<arc-dialog heading="Rename">
-  <input autofocus>          <!-- focused on open; previously ignored -->
-</arc-dialog>
-```
-
-### Testing Escape needs a different gesture
-
-A dispatched `KeyboardEvent` no longer closes these. The user agent turns
-Escape into a `cancel` event on the dialog, and nothing else produces one:
-
-```js
-// before
-el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
-
-// after
-el.shadowRoot.querySelector('dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
-```
-
-Same for a backdrop click: there is no backdrop element to click, and a click on
-`::backdrop` is dispatched by the browser to the `<dialog>` itself, so dispatch
-there.
-
-## `arc-modal` is `arc-dialog`, and `arc-dialog` is not what it was
-
-**Three tags became two.** This is the one migration in v4 where a tag name
-survives and means something different, so read it even if you only used one of
-them.
-
-| you had | you want | why |
-| --- | --- | --- |
-| `<arc-modal>` | `<arc-dialog>` | pure rename; `arc-modal` keeps working through v4 |
-| `<arc-dialog heading message …>` | `<arc-confirm heading message …>` | the confirm prompt moved; the name did not |
-| `<arc-confirm>` | `<arc-confirm>` | unchanged, and it absorbed the prompt above |
-
-The element is a dialog, the platform calls it a dialog, and `modal` named one
-of its behaviours rather than what it is. `arc-modal` is an empty subclass of
-`arc-dialog` — same props, events, parts and custom properties — deprecated for
-the whole of v4 and removed in v5.
-
-**The dangerous case is the middle row.** The old `<arc-dialog>` was a small
-confirm prompt: `heading`, `message`, `confirm-label`, `cancel-label`,
-`variant`. The new one is the overlay primitive. It knows `heading` and would
-silently ignore the rest — an empty panel with a title. So it doesn't ignore
-them: `arc-dialog` writes a `console.error` naming `arc-confirm` when it is
-handed `message`, `confirmLabel` or `cancelLabel`. `heading` is deliberately
-not in that list, since it means the same thing in both.
-
-`arc-confirm` kept both of its shapes, which are different rather than
-duplicated: `ArcConfirm.open(): Promise<boolean>` for a call site that has to
-decide something before continuing, and the element itself for a template.
-
-## `arc-navigation-menu` collapses on its own width
-
-**Affects `arc-navigation-menu`.** The desktop bar used to hide below a 900px
-*viewport*; it now hides below a 900px *component*. The number is the same and
-most pages will see no difference — a full-bleed nav is as wide as the window.
-
-Where it does differ, it differs in your favour: a nav inside a 700px column
-now collapses to its mobile panel instead of overflowing, and a nav on a wide
-page stays expanded regardless of what a phone is doing to the viewport.
-
-```html
-<!-- previously: desktop bar, overflowing, because the window is wide -->
-<!-- now:        mobile panel, because the nav is 700px -->
-<div style="width: 700px">
-  <arc-navigation-menu>…</arc-navigation-menu>
-</div>
-```
-
-If you were relying on the viewport gate — a media query of your own at 900px
-that assumed the nav flipped at the same moment — key it off the nav's own
-width instead, or give the nav a container that matches the viewport.
-
-## `arc-context-menu` dismisses without covering the page
-
-**Affects `arc-context-menu`.** It used to render an invisible full-viewport
-`<div class="backdrop">` to catch outside clicks. That div is gone; dismissal
-goes through the shared `DismissController` like every other anchored panel.
-
-Two consequences, both improvements:
-
-- **The click that dismisses the menu now reaches what it was aimed at.**
-  Previously the first click anywhere closed the menu and hit nothing else.
-- **Tabbing away dismisses too.** A backdrop cannot observe focus, so keyboard
-  users had no dismissal path except Escape.
-
-If you were reaching into the shadow root for `.backdrop` — in a test, most
-likely — dispatch a `pointerdown` on `document.body` instead.
 
 ## Text is described by a type context
 
@@ -1323,3 +1479,163 @@ registered, so a server build that wants glyphs in its HTML imports a pack the
 same way a browser bundle does. Without one, icons render their fallback — and
 that is the same tree the client produces under the same conditions, so the page
 still hydrates cleanly. It is a page with no icons, not a broken one.
+
+## Wrappers: four defects that were shipping
+
+**Do this:** upgrade the wrapper package you use. No source changes, unless you
+worked around one of these — in which case the workaround is now the bug.
+
+None of these were regressions; all four had shipped since the wrapper packages
+existed, and all four were found by the runtime harness added in 2.4a, which
+mounts every wrapper package in a real browser and asserts one contract across
+all six frameworks. They are listed as breaking because in each case something
+that did nothing now does something.
+
+### Angular defined no custom elements at all
+
+All 207 Angular wrappers imported the element class into **type position only**,
+so TypeScript elided the import and the `customElements.define()` side effect
+never reached the bundle. An Angular consumer was getting an
+`HTMLUnknownElement`: no shadow root, no styles, no behaviour, and every
+`@Input()` writing a meaningless expando onto a plain div-equivalent.
+
+Every wrapper now emits a bare `import '@arclux/arc-ui/x'` alongside its
+`import type { ArcX }`. If you were importing `@arclux/arc-ui/register`
+yourself to work around this, you can stop — though it still works and is still
+the right call if you use elements Angular does not wrap.
+
+### Angular and Solid discarded children of named-slot components
+
+Both forwarded children only for components declaring a *default* slot, so the
+ten whose slots are all named threw every child away silently. The rule is now
+**any declared slot means the wrapper forwards children**: Angular emits
+`<ng-content />` and Solid takes `children` through `splitProps`. A single bare
+`<ng-content />` is sufficient for named slots — Angular's job is to place
+children in the host's light DOM with their `slot` attributes intact, and
+assignment is the custom element's job.
+
+React and Preact were already correct at runtime; their exported `*Props`
+interfaces gained the `children` they had always accepted.
+
+Content you passed to one of these ten and never saw will now render. That is
+the visible change.
+
+### 18 Vue and Solid subpaths resolved to nothing
+
+Every tier barrel — `./content`, `./data`, `./input`, `./layout`,
+`./navigation`, `./feedback`, `./typography`, `./shared` — in both
+`@arclux/arc-ui-vue` and `@arclux/arc-ui-solid`, plus `./CodeBlock` in each.
+`npm install` succeeded, the root barrel worked, and the import threw
+`ERR_MODULE_NOT_FOUND`.
+
+Both packages build with Vite lib + `preserveModules` from a single entry, and
+`preserveModules` preserves only what the entry graph reaches. `src/index.ts`
+re-exports components directly, never through the tier barrels, so those eight
+files were compiled by nothing. `./CodeBlock` went the same way for the opposite
+reason: it is `barrelExclude`d so the root never imports it (shiki is 13.6 MB),
+which meant nothing did — and that subpath is the only documented way to reach
+it.
+
+The build entries are derived from each package's own `exports` map now, so the
+two are the same statement and a subpath with no source behind it fails the
+build naming itself.
+
+### `createComponent` is deprecated in the React package
+
+`@arclux/arc-ui-react/dist/create-component.js` is a two-line pass-through to
+`@lit/react` and has never been in the export map. Import from `@lit/react`
+directly:
+
+```ts
+import { createComponent, type EventName } from '@lit/react';
+```
+
+It is reachable only by deep import under legacy `node` resolution, which is why
+it gets a deprecation release rather than being deleted outright. It goes in v5.
+
+## Angular form controls bind to `@angular/forms`
+
+**Do this:** nothing, if you were not using them. `@angular/forms` is now a peer
+dependency of `@arclux/arc-ui-angular` — install it if your project somehow does
+not already have it.
+
+`formControlName`, `formControl` and `ngModel` worked on **zero** wrappers,
+which is most of the reason an Angular wrapper package exists: an Angular team
+reaching for a component library reaches for reactive forms in the same breath.
+`<arc-input formControlName="email">` bound nothing and reported nothing, and
+failed silently — the control stayed pristine and empty while the element on
+screen held the user's text.
+
+27 controls implement `ControlValueAccessor` now. The set is derived from
+`FormControlMixin`, which is this library's own definition of a form control, so
+a 28th is covered by writing it rather than by editing a list.
+
+```html
+<arc-input formControlName="email"></arc-input>
+<arc-select [formControl]="tier"></arc-select>
+<arc-switch [(ngModel)]="notify"></arc-switch>
+```
+
+Two controls have no single value — `arc-date-range-picker` binds `start`/`end`
+and `arc-range-slider` binds `low`/`high` — and both carry a **composite**
+accessor rather than being left out, because `formControlName` working on 25 of
+27 is a gap a consumer discovers rather than reads. The form value is an object:
+
+```ts
+new FormControl({ start: '2026-01-01', end: '2026-01-31' })
+new FormControl({ low: 20, high: 80 })
+```
+
+A `FormGroup` with a control per input is still the better shape if you want to
+validate the two ends separately; it works today and always did. What it cannot
+do is `[(ngModel)]`.
+
+`@angular/forms` is a *required* peer rather than an optional one because
+`NG_VALUE_ACCESSOR` is a runtime value, not a type.
+
+## JSX typings for `<arc-*>`, and the React instruction that never worked
+
+**Do this:** if you follow `react-jsx.d.ts`'s activation instruction, replace it.
+Both spellings it shipped with are silent no-ops.
+
+```jsonc
+// tsconfig.json — this works
+{ "include": ["src", "node_modules/@arclux/arc-ui/types/react-jsx.d.ts"] }
+```
+
+```ts
+// or from one file — this works
+/// <reference path="./node_modules/@arclux/arc-ui/types/react-jsx.d.ts" />
+```
+
+```jsonc
+// NOT these. Both look right; both do nothing.
+{ "compilerOptions": { "types": ["@arclux/arc-ui/react-jsx"] } }
+/// <reference types="@arclux/arc-ui/react-jsx" />
+```
+
+TypeScript resolves a `types` entry as a **package** — `node_modules/@types/
+<name>`, or `<name>/package.json#types` — and never follows an export-map
+subpath. So the name resolved to nothing, nothing was included, every tag stayed
+untyped, and no diagnostic was emitted, because a `types` entry that resolves to
+nothing is not an error. The file's *content* was correct the whole time. If
+your `<arc-input>` has been accepting any attribute you cared to type, this is
+why.
+
+Preact and Solid now ship the same thing, **beside** their wrapper packages
+rather than instead of them:
+
+| Framework | File | Augments |
+| --- | --- | --- |
+| React 19 | `types/react-jsx.d.ts` | `declare module 'react'` |
+| Preact | `types/preact-jsx.d.ts` | `declare module 'preact'` |
+| Solid | `types/solid-jsx.d.ts` | `declare module 'solid-js/jsx-runtime'` |
+
+Solid's target is the one to note. `declare module 'solid-js'` is inert under
+the standard setup, because `jsxImportSource: "solid-js"` resolves
+`IntrinsicElements` through `solid-js/jsx-runtime` and the augmentation has to
+name that entry.
+
+All three are compiled against their own framework's resolution on every build
+rather than asserted, so a documented instruction that does not work fails here
+instead of shipping.

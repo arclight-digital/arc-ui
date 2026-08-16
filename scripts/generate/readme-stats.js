@@ -52,11 +52,42 @@ for (const id of identifiers) {
 const total = identifiers.length;
 let readme = fs.readFileSync(readmePath, 'utf8');
 
-readme = readme.replace(/components-\d+(?:%2B)?-/, `components-${total}-`);
-readme = readme.replace(/^\d+\+? components organized across/m, `${total} components organized across`);
+/**
+ * Replace, and fail if there was nothing to replace.
+ *
+ * Every one of these is a regex against hand-written prose, and `String
+ * .replace` with no match returns the string unchanged and says nothing. So
+ * this script's entire job is one edit away from becoming a no-op that still
+ * prints "README stats synced" — and it happened: 4.11 rewrote the count-led
+ * intro sentence, and the pattern below stopped matching in the same commit
+ * that changed the number it was there to keep current.
+ *
+ * A stale count in a README is a small thing. A generator that reports success
+ * while doing nothing is not, because it is the reason nobody looks.
+ */
+function sync(pattern, replacement, what) {
+  if (!pattern.test(readme)) {
+    console.error(
+      `generate-readme-stats: nothing in README.md matches the ${what} pattern\n` +
+        `  ${pattern}\n\n` +
+        '  The README was edited past this generator. Update the pattern to match the\n' +
+        '  new prose, or drop it here if the line is gone for good — leaving it is how\n' +
+        '  a count silently stops being maintained.',
+    );
+    process.exit(1);
+  }
+  readme = readme.replace(pattern, replacement);
+}
+
+sync(/components-\d+(?:%2B)?-/, `components-${total}-`, 'badge');
+sync(/\b\d+\+? components across\b/, `${total} components across`, 'component-count sentence');
 for (const [tier, count] of Object.entries(tierCounts)) {
   const label = tier.charAt(0).toUpperCase() + tier.slice(1);
-  readme = readme.replace(new RegExp(`\\| \\*\\*${label}\\*\\* \\| \\d+ \\|`), `| **${label}** | ${count} |`);
+  sync(
+    new RegExp(`\\| \\*\\*${label}\\*\\* \\| \\d+ \\|`),
+    `| **${label}** | ${count} |`,
+    `${label} tier row`,
+  );
 }
 
 fs.writeFileSync(readmePath, readme);

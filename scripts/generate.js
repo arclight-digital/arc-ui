@@ -113,7 +113,11 @@ const phases = [
   },
   {
     title: 'Editor & docs data',
-    steps: [gen('editor-data'), gen('dev-schema'), gen('readme-stats')],
+    // readme-stats and migration-toc both rewrite hand-written prose from
+    // derived facts — the component count, and the order and index of the v4
+    // sections. Neither reads generated output, but both belong after the
+    // catalog is settled rather than before it.
+    steps: [gen('editor-data'), gen('dev-schema'), gen('readme-stats'), gen('migration-toc')],
   },
   {
     // These assert against the generated wrappers, so they can only run
