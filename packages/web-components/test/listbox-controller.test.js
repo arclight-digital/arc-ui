@@ -6,6 +6,7 @@ import '../src/input/tag-input.register.js';
 // arc-option must be a defined element, not just parsed markup: unupgraded, its
 // `label` property doesn't exist and every option reads as blank.
 import '../src/shared/option.register.js';
+import { ListboxController } from '../src/shared/listbox-controller.js';
 import { mount, cleanup, tick, deepActive } from './helpers.js';
 
 /** Send a key to an element the way a real press reaches it. */
@@ -472,6 +473,300 @@ describe('ListboxController: disabled options', () => {
     expect(options(el)).to.have.lengthOf(4);
     expect(options(el)[1].getAttribute('aria-disabled')).to.equal('true');
     expect(options(el)[0].hasAttribute('aria-disabled'), 'only where it applies').to.equal(false);
+  });
+});
+
+/**
+ * The controller driven directly, without a component in front of it.
+ *
+ * Everything above goes through `arc-select`, which is the right shape for
+ * "does the keyboard work" and the wrong one for the *consumption* contract.
+ * Every consumer runs `if (this._listbox.handleKeydown(e)) return;` and then
+ * handles the same key in its own switch, so an assertion made through the
+ * component cannot tell "the controller consumed the key" from "the component
+ * did it anyway" — which is why mutating every `return true` and `return
+ * false` in `handleKeydown` to its opposite changed nothing any test could
+ * see. Fifteen survivors from one return value nobody read.
+ *
+ * The same harness reaches the states a rendered select never sits in: zero
+ * options, an option set that shrinks between renders, and the three option
+ * combinations no consumer sets (`wrap: false`, no `optionId`, `typeahead`
+ * without `getItemLabel`).
+ */
+
+/**
+ * A ListboxController on a stand-in host. `addController` and `requestUpdate`
+ * are the only two hooks it uses, plus `updateComplete` for the settle after
+ * an opening keypress.
+ *
+ * Returns the mutable state, so a test can change `labels` mid-flight the way
+ * a filtering combobox does.
+ */
+function harness({ labels = ['Apple', 'Apricot', 'Banana'], open = true, ...opts } = {}) {
+  const state = { labels, open, updates: 0, opened: 0, closed: 0, selected: [] };
+  const host = {
+    addController() {},
+    requestUpdate() { state.updates += 1; },
+    updateComplete: Promise.resolve(true),
+  };
+  state.controller = new ListboxController(host, {
+    getItemCount: () => state.labels.length,
+    isOpen: () => state.open,
+    onOpen: () => { state.opened += 1; state.open = true; },
+    onClose: () => { state.closed += 1; state.open = false; },
+    onSelect: (i) => state.selected.push(i),
+    optionId: (i) => `opt-${i}`,
+    getItemLabel: (i) => state.labels[i],
+    typeahead: true,
+    ...opts,
+  });
+  return state;
+}
+
+/** Press a key at the controller; the return value is the whole point. */
+function press(state, k, init = {}) {
+  const event = new KeyboardEvent('keydown', { key: k, cancelable: true, ...init });
+  return { consumed: state.controller.handleKeydown(event), event };
+}
+
+describe('ListboxController: which keys it consumes', () => {
+  it('consumes the keys it acts on', () => {
+    for (const k of ['ArrowDown', 'ArrowUp', 'Home', 'End', 'Escape']) {
+      expect(press(harness(), k).consumed, k).to.equal(true);
+    }
+  });
+
+  it('declines the keys that belong to the host while closed', () => {
+    for (const k of ['Home', 'End', 'Enter', 'Escape']) {
+      expect(press(harness({ open: false }), k).consumed, `${k} while closed`).to.equal(false);
+    }
+  });
+
+  it('consumes a direction key that opens the listbox', async () => {
+    const s = harness({ open: false });
+    expect(press(s, 'ArrowDown').consumed).to.equal(true);
+    expect(s.opened, 'the host was asked to open').to.equal(1);
+    await tick();
+    expect(s.controller.activeIndex).to.equal(0);
+  });
+
+  it('declines Home and End when the listbox is open but empty', () => {
+    const s = harness({ labels: [] });
+    expect(press(s, 'Home').consumed, 'Home').to.equal(false);
+    expect(press(s, 'End').consumed, 'End').to.equal(false);
+  });
+
+  it('declines Enter while closed even with an option already active', () => {
+    // Both halves of `!open || activeIndex < 0` matter: a listbox that closed
+    // without resetting still holds an active index, and Enter then belongs to
+    // the form, not to a listbox nobody can see.
+    const s = harness();
+    s.controller.setActive(1);
+    s.open = false;
+    const { consumed } = press(s, 'Enter');
+    expect(consumed).to.equal(false);
+    expect(s.selected, 'and selects nothing').to.deep.equal([]);
+  });
+
+  it('declines Enter when nothing is active', () => {
+    const s = harness();
+    expect(s.controller.activeIndex, 'nothing active').to.equal(-1);
+    expect(press(s, 'Enter').consumed).to.equal(false);
+  });
+
+  it('consumes Enter on an active option, and selects it', () => {
+    const s = harness();
+    s.controller.setActive(2);
+    const { consumed, event } = press(s, 'Enter');
+    expect(consumed).to.equal(true);
+    expect(s.selected).to.deep.equal([2]);
+    expect(event.defaultPrevented).to.equal(true);
+  });
+
+  it('consumes Escape on an open listbox, and closes it', () => {
+    const s = harness();
+    s.controller.setActive(1);
+    expect(press(s, 'Escape').consumed).to.equal(true);
+    expect(s.closed, 'the host was asked to close').to.equal(1);
+    expect(s.controller.activeIndex).to.equal(-1);
+  });
+});
+
+describe('ListboxController: wrap', () => {
+  it('wraps past the end to reach the only selectable option', () => {
+    // Four options with the two ahead of the active one disabled: the only way
+    // to move is round the end. Every other arrow test passes just as well
+    // against a controller that clamps, which is why wrapping survived.
+    const s = harness({
+      labels: ['a', 'b', 'c', 'd'],
+      isItemDisabled: (i) => i === 2 || i === 3,
+    });
+    s.controller.setActive(1);
+    press(s, 'ArrowDown');
+    expect(s.controller.activeIndex).to.equal(0);
+  });
+
+  it('wrap: false runs off the end instead of round it', () => {
+    const s = harness({
+      labels: ['a', 'b', 'c', 'd'],
+      isItemDisabled: (i) => i === 2 || i === 3,
+      wrap: false,
+    });
+    s.controller.setActive(1);
+    press(s, 'ArrowDown');
+    expect(s.controller.activeIndex, 'no selectable option forward').to.equal(1);
+  });
+
+  it('wrap: false holds both ends', () => {
+    const s = harness({ labels: ['a', 'b', 'c'], wrap: false });
+    s.controller.setActive(2);
+    press(s, 'ArrowDown');
+    expect(s.controller.activeIndex, 'last stays last').to.equal(2);
+
+    s.controller.setActive(0);
+    press(s, 'ArrowUp');
+    expect(s.controller.activeIndex, 'first stays first').to.equal(0);
+  });
+});
+
+describe('ListboxController: the option set changing underneath it', () => {
+  it('clamps the active index into a shrunken set', () => {
+    const s = harness({ labels: ['a', 'b', 'c'] });
+    s.controller.setActive(2);
+    s.labels = ['a', 'b'];
+    s.controller.clampToCount();
+    expect(s.controller.activeIndex).to.equal(1);
+  });
+
+  it('drops the active index when the set empties', () => {
+    const s = harness({ labels: ['a', 'b', 'c'] });
+    s.controller.setActive(2);
+    s.labels = [];
+    s.controller.clampToCount();
+    expect(s.controller.activeIndex).to.equal(-1);
+  });
+
+  it('empties activeDescendantId the moment the option leaves the set', () => {
+    // The render that shrinks the list runs before the host gets to clamp, so
+    // this range check is what stops that one frame naming an option it has
+    // just stopped drawing. Asserted without calling clampToCount, because the
+    // frame in question is the one before it runs.
+    const s = harness({ labels: ['a', 'b', 'c'] });
+    s.controller.setActive(2);
+    expect(s.controller.activeDescendantId).to.equal('opt-2');
+    s.labels = ['a', 'b'];
+    expect(s.controller.activeDescendantId, 'before any clamp').to.equal('');
+  });
+
+  it('has no activeDescendantId for a consumer that supplies no optionId', () => {
+    const s = harness({ optionId: undefined });
+    s.controller.setActive(1);
+    expect(s.controller.activeDescendantId).to.equal('');
+  });
+});
+
+describe('ListboxController: typeahead edges', () => {
+  it('starts the search after the active option', () => {
+    // Apple then Apricot: with index 0 already active, "a" has to advance
+    // rather than re-matching the option virtual focus is already on.
+    const s = harness({ labels: ['Apple', 'Apricot', 'Banana'] });
+    s.controller.setActive(0);
+    const { consumed, event } = press(s, 'a');
+    expect(consumed).to.equal(true);
+    expect(event.defaultPrevented).to.equal(true);
+    expect(s.controller.activeIndex).to.equal(1);
+  });
+
+  it('declines a letter that matches nothing', () => {
+    const s = harness();
+    expect(press(s, 'z').consumed).to.equal(false);
+    expect(s.controller.activeIndex).to.equal(-1);
+  });
+
+  it('declines each modifier combination on its own', () => {
+    // One at a time: a single test holding all three down passes against a
+    // controller that checks only the one it happens to look at first.
+    for (const mod of ['altKey', 'ctrlKey', 'metaKey']) {
+      const s = harness();
+      expect(press(s, 'a', { [mod]: true }).consumed, mod).to.equal(false);
+      expect(s.controller.activeIndex, mod).to.equal(-1);
+    }
+  });
+
+  it('declines a key that is not a single character', () => {
+    expect(press(harness(), 'Tab').consumed).to.equal(false);
+  });
+
+  it('leaves a leading Space to the host, and takes it inside a buffer', () => {
+    // Space on an empty buffer is the host's key — in a select it toggles the
+    // listbox. Once a search is in progress it is a character like any other.
+    const s = harness({ labels: ['a b', 'ab'] });
+    expect(press(s, ' ').consumed, 'leading').to.equal(false);
+    press(s, 'a');
+    expect(press(s, ' ').consumed, 'inside a buffer').to.equal(true);
+    expect(s.controller.activeIndex).to.equal(0);
+  });
+
+  it('declines when there are no options to search', () => {
+    expect(press(harness({ labels: [] }), 'a').consumed).to.equal(false);
+  });
+
+  it('declines when the consumer never enabled it', () => {
+    expect(press(harness({ typeahead: false }), 'a').consumed).to.equal(false);
+  });
+
+  it('declines when it was enabled without a label reader', () => {
+    // typeahead needs getItemLabel; asking for one without the other has to be
+    // inert rather than a call into undefined.
+    expect(press(harness({ getItemLabel: undefined }), 'a').consumed).to.equal(false);
+  });
+
+  it('opens a closed listbox to show what it matched', () => {
+    const s = harness({ open: false });
+    expect(press(s, 'b').consumed).to.equal(true);
+    expect(s.opened, 'the host was asked to open').to.equal(1);
+    expect(s.controller.activeIndex).to.equal(2);
+  });
+});
+
+describe('ListboxController: the scroll is queued, not continuous', () => {
+  afterEach(cleanup);
+
+  it('scrolls back to the top when the first option becomes active', async () => {
+    // `_pendingScroll = next >= 0`: index 0 is a real active option, and a `>`
+    // here leaves Home moving the marker to somewhere off screen.
+    const el = await mountSelect(40);
+    el.open = true;
+    await el.updateComplete;
+
+    key(trigger(el), 'End');
+    await el.updateComplete;
+    await tick();
+    const panel = el.shadowRoot.querySelector('.select__dropdown');
+    expect(panel.scrollTop, 'scrolled down first').to.be.greaterThan(0);
+
+    key(trigger(el), 'Home');
+    await el.updateComplete;
+    await tick();
+    // Not exactly 0: the scroll targets the option's offsetTop, and the panel
+    // has a 1px inset above the first one.
+    expect(panel.scrollTop).to.be.at.most(2);
+  });
+
+  it('leaves the scroll alone on a render that did not move the active option', async () => {
+    const el = await mountSelect(40);
+    el.open = true;
+    await el.updateComplete;
+    key(trigger(el), 'End');
+    await el.updateComplete;
+    await tick();
+
+    const panel = el.shadowRoot.querySelector('.select__dropdown');
+    panel.scrollTop = 0;
+    el.requestUpdate();
+    await el.updateComplete;
+    await tick();
+    expect(panel.scrollTop, 'a hand-scrolled panel survives an unrelated render').to.equal(0);
   });
 });
 

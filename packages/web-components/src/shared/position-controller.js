@@ -106,6 +106,22 @@ function anchorGone(anchor) {
   return anchor instanceof Node && !anchor.isConnected;
 }
 
+/**
+ * Window listener options, written once so the add and the remove cannot drift.
+ *
+ * `capture: true` because scroll does not bubble: a capture-phase listener on
+ * window is the only way a single listener sees an ancestor scroll container
+ * move the anchor. The flag has to match on the way out too — a
+ * `removeEventListener` keyed on a different capture flag removes nothing and
+ * says nothing.
+ *
+ * `passive: true` on both because neither handler ever calls `preventDefault`.
+ * It is a scheduling hint with no observable behaviour, so no test asserts it
+ * and its mutants are expected survivors.
+ */
+const SCROLL_LISTENER = { capture: true, passive: true };
+const RESIZE_LISTENER = { passive: true };
+
 /** Clamp `v` into [min, max], tolerating an inverted range. */
 function clamp(v, min, max) {
   // max < min when the panel is larger than the space it has to fit in. Biasing
@@ -172,12 +188,10 @@ export class PositionController {
 
     if (wasHidden) {
       this._shown = true;
-      // Capture phase, because scroll doesn't bubble: this is the only way one
-      // listener sees an ancestor scroll container move the anchor. A top-layer
-      // panel does not move with its anchor on its own, so without this it
-      // would hang in place while the page scrolls underneath.
-      window.addEventListener('scroll', this._update, { capture: true, passive: true });
-      window.addEventListener('resize', this._update, { passive: true });
+      // A top-layer panel does not move with its anchor on its own, so without
+      // these it hangs in place while the page scrolls underneath.
+      window.addEventListener('scroll', this._update, SCROLL_LISTENER);
+      window.addEventListener('resize', this._update, RESIZE_LISTENER);
     }
 
     // wasHidden as well as isNewPanel, because hide() disconnects the observer:
@@ -200,8 +214,8 @@ export class PositionController {
     if (!this._shown) return;
     this._shown = false;
     this._placement = undefined;
-    window.removeEventListener('scroll', this._update, { capture: true });
-    window.removeEventListener('resize', this._update);
+    window.removeEventListener('scroll', this._update, SCROLL_LISTENER);
+    window.removeEventListener('resize', this._update, RESIZE_LISTENER);
     this._resizeObserver?.disconnect();
 
     const floating = this.opts.floating();

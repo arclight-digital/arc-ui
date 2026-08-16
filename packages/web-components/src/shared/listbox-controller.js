@@ -69,9 +69,10 @@ export class ListboxController {
    * @param {boolean} [opts.typeahead=false] - Jump to an option by typing its
    *   first letters. Off by default: in a combobox or tag-input the same
    *   keystrokes belong to the text field, and stealing them would break typing.
-   * @param {boolean} [opts.wrap=true] - Wrap from last to first and back.
-   * @param {boolean} [opts.selectOnClose=false] - Reset the active option when
-   *   the listbox closes.
+   * @param {boolean} [opts.wrap=true] - Wrap from last to first and back. No
+   *   consumer sets it false today; it is kept because a non-wrapping listbox
+   *   is a legitimate pattern and the branch is exercised by this module's own
+   *   suite rather than by inference from a component.
    */
   constructor(host, opts) {
     this.host = host;
@@ -246,12 +247,21 @@ export class ListboxController {
     return true;
   }
 
-  /** One step with wrapping, treating "nothing active" as before the start. */
+  /**
+   * One step with wrapping, treating "nothing active" as before the start.
+   *
+   * A non-wrapping listbox returns the out-of-range index *unclamped* — `_seek`
+   * is the one that decides what off-the-end means, and it already refuses an
+   * out-of-range index when `wrap` is false. Clamping here as well used to look
+   * like the bounds check and was in fact dead: every clamped index landed back
+   * on the option it started from, so both readings held position and the two
+   * guards were one guard written twice.
+   */
   _step(delta, count) {
     if (count === 0) return -1;
     if (this._activeIndex < 0) return delta > 0 ? 0 : count - 1;
     const next = this._activeIndex + delta;
-    if (this.opts.wrap === false) return Math.max(0, Math.min(next, count - 1));
+    if (this.opts.wrap === false) return next;
     return (next + count) % count;
   }
 

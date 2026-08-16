@@ -206,16 +206,13 @@ jobs:
       #
       # listbox-controller and position-controller were skipped here while they
       # sat at `gate: null` — reported but unenforced — rather than passing
-      # silently. Both have now produced the same reading twice (50.00% and
-      # 52.83%, 2026-08-15), which is this file's own condition for ratcheting,
-      # so the skip is gone and all ten are enforced.
+      # silently, then briefly gated at their first honest floors of 50 and 52.
+      # V4-PLAN 2.5 climbed them to 98.68% and 88.46% and the gates now sit at
+      # 95 and 85. All ten are enforced.
       #
-      # Their floors are low on purpose. They are the two large ones (~59 and
-      # ~50 operator sites, against test files that mount real components) and
-      # they are V4-PLAN 2.5's first stop; the gate exists so the climb cannot
-      # slide backwards while it happens, not to claim the current score is
-      # good. Expect this job to get slower — that is the cost of enforcing them
-      # rather than watching them.
+      # This job is the slow one, and deliberately separate: mutate.js rewrites
+      # its source file in place, so it must not share a working tree with the
+      # generate-diff step or the suite.
       - name: Sampled mutation gate
         run: pnpm mutate:sample
 

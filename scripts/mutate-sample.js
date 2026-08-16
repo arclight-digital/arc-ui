@@ -106,30 +106,36 @@ const PAIRS = [
     name: 'listbox-controller',
     source: 'packages/web-components/src/shared/listbox-controller.js',
     tests: 'packages/web-components/test/listbox-controller.test.js',
-    // measured 50.00% (39/78) twice — 2026-08-15, either side of the
-    // per-option disabled work for finding #6, which added mutants and killed
-    // its share of them. Ratcheted on the second identical reading, per the
-    // rule at the top of this file.
+    // V4-PLAN 2.5, 2026-08-15: **50.00% (39/78) -> 98.68% (75/76)**, measured
+    // twice at the new level. Fifteen of the old survivors were `return true`
+    // and `return false` in `handleKeydown` — nothing read what the method
+    // returned, because every consumer is `if (handleKeydown(e)) return;`
+    // followed by its own switch, so a component looks right even when the
+    // controller wrongly declines a key. Fixed by driving the controller
+    // directly against a stand-in host.
     //
-    // 50 is a floor, not a target. It is the lowest score in the set and the
-    // largest module in it, which is what makes it V4-PLAN 2.5's first stop —
-    // the gate exists so the climb cannot slide backwards while it happens.
-    gate: 50,
+    // The one survivor is equivalent: `_pendingScroll = false` in the
+    // constructor, whose `true` queues a scroll `hostUpdated` then declines.
+    gate: 95,
     why: 'the select family spine',
   },
   {
     name: 'position-controller',
     source: 'packages/web-components/src/shared/position-controller.js',
     tests: 'packages/web-components/test/position-controller.test.js',
-    // measured 52.83% (28/53) twice, 2026-08-15. Same reasoning as
-    // listbox-controller above: a floor to climb from, not an endorsement.
+    // V4-PLAN 2.5, 2026-08-15: **52.83% (28/53) -> 88.46% (46/52)**, measured
+    // twice at the new level. The old reading was not thin tests but two
+    // vacuous ones — a scroll test anchored to a `position: fixed` element
+    // asserting the panel had *not* moved, and a re-observe test asserting a
+    // coordinate a resize cannot change. The whole horizontal axis had also
+    // never been positioned.
     //
-    // Its surviving mutants cluster in the flip/shift arithmetic — five
-    // `false -> true` and four `>= -> >` at the edge comparisons — which is
-    // exactly the geometry 4.4 replaces with CSS anchor positioning. Worth
-    // knowing before spending 2.5 effort here: some of this code is scheduled
-    // to become the fallback path rather than the main one.
-    gate: 52,
+    // All six remaining survivors are analysed as equivalent in
+    // test-findings.md: two `passive: true` hints, and three guards whose
+    // mutants land in an existing try/catch or on a spec no-op. That is why
+    // the gate stops at 88 rather than climbing further — the four `>= -> >`
+    // flip comparisons now have exact-fit fixtures and do die.
+    gate: 85,
     why: 'overlay placement — 20 consumers',
   },
 ];

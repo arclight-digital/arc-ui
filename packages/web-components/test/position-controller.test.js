@@ -5,7 +5,7 @@ import '../src/input/select.register.js';
 import '../src/feedback/popover.register.js';
 import '../src/feedback/tooltip.register.js';
 import { PositionController } from '../src/shared/position-controller.js';
-import { mount, cleanup, tick } from './helpers.js';
+import { mount, cleanup, tick, until, observed } from './helpers.js';
 
 /**
  * A minimal host so placement maths can be tested against a known anchor rect
@@ -54,6 +54,32 @@ async function probe(opts) {
 
 function box(el) {
   return el.shadowRoot.querySelector('.panel').getBoundingClientRect();
+}
+
+/** Nodes appended outside mount(), torn down by the hook below. */
+const cleanupNodes = [];
+afterEach(() => {
+  while (cleanupNodes.length) cleanupNodes.pop().remove();
+  window.scrollTo(0, 0);
+});
+
+/**
+ * A probe on a tall page with an anchor that scrolls with it.
+ *
+ * The default probe anchors to a `position: fixed` element on purpose — it
+ * makes the placement arithmetic independent of scroll. That is exactly wrong
+ * for testing the scroll listener, whose whole job is to notice the anchor
+ * moving, so this variant puts the anchor in the page's coordinate space.
+ */
+async function scrollingPage(opts) {
+  const spacer = document.createElement('div');
+  spacer.style.height = '3000px';
+  document.body.appendChild(spacer);
+  cleanupNodes.push(spacer);
+
+  const el = await probe(opts);
+  el.shadowRoot.querySelector('.anchor').style.position = 'absolute';
+  return el;
 }
 
 describe('PositionController placement', () => {
@@ -155,23 +181,226 @@ describe('PositionController placement', () => {
     expect(Math.round(box(el).width)).to.equal(100);
   });
 
-  it('repositions when the page scrolls under a top-layer panel', async () => {
+  it('follows an anchor the page scrolled out from under it', async () => {
     // A top-layer panel is out of flow: nothing moves it with its anchor, so
-    // without the capture-phase scroll listener it would hang in place.
-    const el = await probe({ offset: 8 });
-    const spacer = document.createElement('div');
-    spacer.style.height = '3000px';
-    document.body.appendChild(spacer);
+    // without the scroll listener it hangs in place.
+    //
+    // This used to anchor to the probe's `position: fixed` element, whose rect
+    // is scroll-invariant — so it asserted the panel had *not* moved, which is
+    // equally true of a controller that never registered a listener at all.
+    // Every mutant of that registration survived it.
+    const el = await scrollingPage({ offset: 8 });
     el.placeAnchor({ top: 50, left: 100 });
     el.controller.show();
-    const before = Math.round(box(el).top);
+    expect(Math.round(box(el).top), 'anchor bottom + offset').to.equal(78);
+    // Let the ResizeObserver's first delivery land before the scroll. It calls
+    // _update() on its own, and if it arrives after the scroll it repositions
+    // the panel correctly whether or not a scroll listener exists — which is
+    // how every mutant of that registration used to survive this file.
+    await observed();
 
-    window.dispatchEvent(new Event('scroll'));
-    await tick();
-    // The anchor is position:fixed, so its rect is scroll-invariant; what this
-    // asserts is that the listener ran and rewrote coordinates rather than
-    // leaving a stale value behind.
-    expect(Math.round(box(el).top)).to.equal(before);
+    window.scrollTo(0, 40);
+    await until(() => Math.round(box(el).top) === 38);
+    expect(Math.round(box(el).top), 'the panel came with it').to.equal(38);
+  });
+
+  it('re-arms the scroll listener after a hide/show cycle', async () => {
+    // hide() removes the listeners; the next show() has to put them back, which
+    // it decides from `_shown` having actually been cleared.
+    const el = await scrollingPage({ offset: 8 });
+    el.placeAnchor({ top: 50, left: 100 });
+    el.controller.show();
+    el.controller.hide();
+    el.controller.show();
+    await observed();
+
+    window.scrollTo(0, 40);
+    await until(() => Math.round(box(el).top) === 38);
+    expect(Math.round(box(el).top)).to.equal(38);
+  });
+
+  it('follows an anchor inside a scrolling ancestor', async () => {
+    // scroll does not bubble, so only a capture-phase listener on window sees
+    // an inner scroll container move. Without capture the page-level test above
+    // still passes and this one does not.
+    const scroller = document.createElement('div');
+    scroller.style.cssText = 'height: 200px; overflow: auto; position: relative;';
+    scroller.innerHTML = '<div style="height: 2000px"></div>';
+    document.body.appendChild(scroller);
+    cleanupNodes.push(scroller);
+
+    const el = document.createElement('position-probe');
+    scroller.prepend(el);
+    await el.updateComplete;
+    el.createController({ offset: 8 });
+    el.shadowRoot.querySelector('.anchor').style.position = 'absolute';
+    el.placeAnchor({ top: 40, left: 100 });
+    el.controller.show();
+    // Read rather than assumed: the scroll container sits at whatever the body
+    // margin puts it at, and only the delta matters here.
+    const anchorBottom = el.shadowRoot.querySelector('.anchor').getBoundingClientRect().bottom;
+    const before = Math.round(box(el).top);
+    expect(before, 'anchor bottom + offset').to.equal(Math.round(anchorBottom) + 8);
+    await observed();
+
+    scroller.scrollTop = 30;
+    await until(() => Math.round(box(el).top) === before - 30);
+    expect(Math.round(box(el).top)).to.equal(before - 30);
+  });
+});
+
+/**
+ * The horizontal axis, which nothing above reached.
+ *
+ * Every placement assertion in this file was `top` or `bottom`, so the whole
+ * `else` arm of the main-axis branch — the side maths and both cross-axis
+ * alignments on it — was written and never run. Six mutants lived there.
+ */
+describe('PositionController placement: left and right', () => {
+  afterEach(cleanup);
+
+  it('rests to the right of the anchor, centred on it', async () => {
+    const el = await probe({ placement: () => 'right', offset: 8 });
+    el.placeAnchor({ top: 200, left: 200 });
+    el.controller.show();
+
+    expect(el.controller.placement).to.equal('right');
+    // anchor right (200 + 100) + offset
+    expect(Math.round(box(el).left)).to.equal(308);
+    // centred on a 20px anchor with an 80px panel: 200 + (20 - 80) / 2
+    expect(Math.round(box(el).top)).to.equal(170);
+  });
+
+  it('rests to the left of the anchor', async () => {
+    const el = await probe({ placement: () => 'left', offset: 8 });
+    el.placeAnchor({ top: 200, left: 300 });
+    el.controller.show();
+
+    expect(el.controller.placement).to.equal('left');
+    expect(Math.round(box(el).right)).to.equal(292);
+  });
+
+  it('aligns to the anchor top and bottom on a side placement', async () => {
+    const start = await probe({ placement: () => 'right', align: () => 'start', offset: 8 });
+    start.placeAnchor({ top: 200, left: 200 });
+    start.controller.show();
+    expect(Math.round(box(start).top), 'start meets the anchor top').to.equal(200);
+
+    const end = await probe({ placement: () => 'right', align: () => 'end', offset: 8 });
+    end.placeAnchor({ top: 200, left: 200 });
+    end.controller.show();
+    expect(Math.round(box(end).bottom), 'end meets the anchor bottom').to.equal(220);
+  });
+});
+
+/**
+ * The flip decision at its boundary.
+ *
+ * `_flip` asks whether the space available is `>= h`. Every fit test above is
+ * comfortably inside or comfortably outside, and a `>` reads identically to a
+ * `>=` everywhere except at the exact fit — so all four comparisons survived.
+ * Each case here places the anchor so the preferred side fits to the pixel,
+ * and its pair moves it one pixel to prove the fixture can fail.
+ */
+describe('PositionController flip: the exact fit', () => {
+  afterEach(cleanup);
+
+  // The probe's panel is 120x80 and its anchor 100x20; offset and padding are
+  // 8 each, so a side fits exactly when the gap is 80 (or 120) + 16.
+  const EXACT = [
+    { placement: 'bottom', opposite: 'top', at: () => ({ top: window.innerHeight - 116, left: 200 }), tighter: { top: 1 } },
+    { placement: 'top', opposite: 'bottom', at: () => ({ top: 96, left: 200 }), tighter: { top: -1 } },
+    { placement: 'right', opposite: 'left', at: () => ({ top: 200, left: window.innerWidth - 236 }), tighter: { left: 1 } },
+    { placement: 'left', opposite: 'right', at: () => ({ top: 200, left: 136 }), tighter: { left: -1 } },
+  ];
+
+  for (const { placement, opposite, at, tighter } of EXACT) {
+    it(`stays on ${placement} when it fits to the pixel`, async () => {
+      const el = await probe({ placement: () => placement, offset: 8, padding: 8 });
+      el.placeAnchor(at());
+      el.controller.show();
+      expect(el.controller.placement).to.equal(placement);
+    });
+
+    it(`flips off ${placement} one pixel short`, async () => {
+      const el = await probe({ placement: () => placement, offset: 8, padding: 8 });
+      const spot = at();
+      el.placeAnchor({
+        top: spot.top + (tighter.top ?? 0),
+        left: spot.left + (tighter.left ?? 0),
+      });
+      el.controller.show();
+      expect(el.controller.placement).to.equal(opposite);
+    });
+  }
+});
+
+describe('PositionController: the opt-outs', () => {
+  afterEach(cleanup);
+
+  it('flip: false keeps the requested side even where it does not fit', async () => {
+    // The same fixture as "flips above the anchor when the panel would overflow
+    // the bottom edge", which is this one's anti-vacuity pair.
+    const el = await probe({ offset: 8, flip: false });
+    el.placeAnchor({ top: window.innerHeight - 40, left: 100 });
+    el.controller.show();
+    expect(el.controller.placement).to.equal('bottom');
+  });
+
+  it('shift: false leaves the panel hanging off the cross-axis edge', async () => {
+    // Pairs with "shifts along the cross axis to stay inside the left edge",
+    // which is the same anchor with shifting left on.
+    const el = await probe({ offset: 8, padding: 8, shift: false });
+    el.placeAnchor({ top: 50, left: 0 });
+    el.controller.show();
+    // Centring on a 100px anchor puts a 120px panel at -10, and nothing pulls
+    // it back: the main-axis clamp below only touches the other axis.
+    expect(Math.round(box(el).left)).to.equal(-10);
+  });
+
+  it('constrainSize caps the panel to the room below it', async () => {
+    const el = await probe({ offset: 8, padding: 8, constrainSize: true, flip: false });
+    el.placeAnchor({ top: 100, left: 100 });
+    el.controller.show();
+    const panel = el.shadowRoot.querySelector('.panel');
+    // viewport height less the anchor bottom, the offset and the padding
+    expect(panel.style.maxHeight).to.equal(`${window.innerHeight - 120 - 16}px`);
+  });
+
+  it('constrainSize caps the panel to the room above it', async () => {
+    const el = await probe({
+      placement: () => 'top', offset: 8, padding: 8, constrainSize: true, flip: false,
+    });
+    el.placeAnchor({ top: 300, left: 100 });
+    el.controller.show();
+    const panel = el.shadowRoot.querySelector('.panel');
+    expect(panel.style.maxHeight).to.equal('284px');
+  });
+});
+
+describe('PositionController: an anchor that is not there', () => {
+  afterEach(cleanup);
+
+  it('does nothing at all when the anchor callback returns nothing', async () => {
+    const el = await probe({ anchor: () => null });
+    el.controller.show();
+    expect(el.shadowRoot.querySelector('.panel').style.top, 'never positioned').to.equal('');
+  });
+
+  it('freezes rather than re-measuring an anchor that left the document', async () => {
+    // A detached element measures as a zero rect at the origin, which would
+    // teleport the panel to the top-left corner mid-close.
+    const el = mount('<position-probe></position-probe>');
+    await el.updateComplete;
+    const anchor = el.shadowRoot.querySelector('.anchor');
+    el.createController({ offset: 8, anchor: () => anchor });
+    el.placeAnchor({ top: 50, left: 100 });
+    el.controller.show();
+    expect(Math.round(box(el).top)).to.equal(78);
+
+    anchor.remove();
+    el.controller.show();
+    expect(Math.round(box(el).top), 'held its last good position').to.equal(78);
   });
 });
 
@@ -218,6 +447,29 @@ describe('PositionController top-layer adoption', () => {
     el.controller.show();
     el.controller.show();
     expect(el.shadowRoot.querySelector('.panel').matches(':popover-open')).to.equal(true);
+  });
+
+  it('leaves a popover value it did not write alone', async () => {
+    // The attribute is only ever *added*. A panel that already declares its own
+    // mode keeps it — the controller has no business rewriting a value it did
+    // not set, and re-setting one it did is churn on every reposition.
+    const el = await probe({});
+    const panel = el.shadowRoot.querySelector('.panel');
+    panel.setAttribute('popover', 'auto');
+    el.controller.show();
+    expect(panel.getAttribute('popover')).to.equal('auto');
+  });
+
+  it('hides cleanly when something else already closed the popover', async () => {
+    // hidePopover() on a popover that is not showing throws. The guard is what
+    // keeps a component closing mid-frame from taking hide() down with it.
+    const el = await probe({});
+    el.controller.show();
+    const panel = el.shadowRoot.querySelector('.panel');
+    panel.hidePopover();
+
+    el.controller.hide();
+    expect(panel.matches(':popover-open')).to.equal(false);
   });
 });
 
@@ -277,17 +529,46 @@ describe('PositionController panel identity', () => {
   it('re-observes the panel after a hide/show cycle', async () => {
     // hide() disconnects the ResizeObserver; reopening has to wire it back up or
     // the panel stops tracking its own size changes.
-    const el = await probe({});
-    el.placeAnchor({ top: 50, left: 100 });
+    //
+    // Placed above the anchor deliberately: `top = anchor.top - h - offset` is
+    // the one coordinate that moves when the panel's height changes. This used
+    // to assert a bottom placement, whose top is the same number before and
+    // after the resize — so it passed whether or not the observer was wired up,
+    // and every mutant of that wiring survived it.
+    const el = await probe({ placement: () => 'top', offset: 8 });
+    el.placeAnchor({ top: 300, left: 100 });
     el.controller.show();
+    await observed();
     el.controller.hide();
     el.controller.show();
+    await observed();
+    expect(Math.round(box(el).top), 'positioned on reopen').to.equal(212);
 
     const panel = el.shadowRoot.querySelector('.panel');
-    panel.style.height = '400px';
-    await tick();
+    panel.style.height = '200px';
+    await until(() => Math.round(box(el).top) === 92);
     expect(panel.matches(':popover-open')).to.equal(true);
-    expect(Math.round(box(el).top)).to.equal(78);
+  });
+
+  it('re-observes a replacement panel', async () => {
+    // The observer has to move to the new element as well as the popover
+    // attribute: left watching the panel that was replaced, it reports sizes
+    // for an element nobody can see.
+    const el = await probe({ placement: () => 'top', offset: 8 });
+    el.placeAnchor({ top: 300, left: 100 });
+    el.controller.show();
+    await observed();
+
+    const first = el.shadowRoot.querySelector('.panel');
+    const replacement = first.cloneNode();
+    first.replaceWith(replacement);
+    el.controller.show();
+    await observed();
+    expect(Math.round(box(el).top), 'positioned on adoption').to.equal(212);
+
+    replacement.style.height = '200px';
+    await until(() => Math.round(box(el).top) === 92);
+    expect(Math.round(box(el).top)).to.equal(92);
   });
 });
 
