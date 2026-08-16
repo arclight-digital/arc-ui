@@ -60,10 +60,10 @@ const PAIRS = [
     why: 'overlay dismissal — 17 consumers, finding #72',
   },
   {
-    name: 'overlay-mixin',
-    source: 'packages/web-components/src/shared/overlay-mixin.js',
-    tests: 'packages/web-components/test/overlay-mixin.test.js',
-    // measured 83.33% (5/6) 2026-08-13
+    name: 'overlay-controller',
+    source: 'packages/web-components/src/shared/overlay-controller.js',
+    tests: 'packages/web-components/test/overlay-controller.test.js',
+    // remeasured after V4-PLAN 4.4 moved the five overlays onto <dialog>
     gate: 80,
     why: 'modal behaviour — 5 consumers, finding #73',
   },
@@ -81,7 +81,7 @@ const PAIRS = [
     tests: 'packages/web-components/test/focus-trap.test.js',
     // measured 87.50% (14/16) 2026-08-13
     gate: 85,
-    why: 'composed-tree focus — reaches 5 via overlay-mixin',
+    why: 'composed-tree focus — arc-app-shell, and trigger-aria\'s deepActiveElement',
   },
   {
     name: 'scroll-lock',
@@ -89,7 +89,7 @@ const PAIRS = [
     tests: 'packages/web-components/test/scroll-lock.test.js',
     // measured 100.00% (3/3) 2026-08-13
     gate: 95,
-    why: 'body scroll refcount — reaches 5 via overlay-mixin',
+    why: 'body scroll refcount — reaches 5 via overlay-controller',
   },
   {
     name: 'subscriptions',

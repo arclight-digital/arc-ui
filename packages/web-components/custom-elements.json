@@ -2989,10 +2989,6 @@
             {
               "name": "DeclaredPropsMixin",
               "module": "/src/shared/props.js"
-            },
-            {
-              "name": "OverlayMixin",
-              "module": "/src/shared/overlay-mixin.js"
             }
           ],
           "superclass": {
@@ -10325,9 +10321,7 @@
               "name": "description"
             },
             {
-              "name": "backdrop"
-            },
-            {
+              "description": "The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--palette-backdrop` custom property.",
               "name": "dialog"
             },
             {
@@ -10440,10 +10434,6 @@
             {
               "name": "DeclaredPropsMixin",
               "module": "/src/shared/props.js"
-            },
-            {
-              "name": "OverlayMixin",
-              "module": "/src/shared/overlay-mixin.js"
             }
           ],
           "superclass": {
@@ -11775,9 +11765,7 @@
               "name": "base"
             },
             {
-              "name": "backdrop"
-            },
-            {
+              "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--modal-backdrop` and `--modal-backdrop-filter` custom properties.",
               "name": "dialog"
             },
             {
@@ -11954,10 +11942,6 @@
             {
               "name": "DeclaredPropsMixin",
               "module": "/src/shared/props.js"
-            },
-            {
-              "name": "OverlayMixin",
-              "module": "/src/shared/overlay-mixin.js"
             }
           ],
           "superclass": {
@@ -12607,9 +12591,7 @@
               "name": "close"
             },
             {
-              "name": "backdrop"
-            },
-            {
+              "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties.",
               "name": "panel"
             },
             {
@@ -12723,10 +12705,6 @@
             {
               "name": "DeclaredPropsMixin",
               "module": "/src/shared/props.js"
-            },
-            {
-              "name": "OverlayMixin",
-              "module": "/src/shared/overlay-mixin.js"
             }
           ],
           "superclass": {
@@ -30609,9 +30587,7 @@
               "name": "base"
             },
             {
-              "name": "backdrop"
-            },
-            {
+              "description": "The sliding panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--drawer-backdrop` custom property.",
               "name": "panel"
             },
             {
@@ -30712,10 +30688,6 @@
             {
               "name": "DeclaredPropsMixin",
               "module": "/src/shared/props.js"
-            },
-            {
-              "name": "OverlayMixin",
-              "module": "/src/shared/overlay-mixin.js"
             }
           ],
           "superclass": {
@@ -34865,6 +34837,53 @@
           "declaration": {
             "name": "ArcOption",
             "module": "src/shared/option.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/overlay-controller.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "OverlayController — a modal overlay on the platform's `<dialog>`.\n\nReplaces `OverlayMixin`, and V4-PLAN 4.4 makes the change for two separate\nreasons that happen to have the same fix.\n\n## The mechanism reason\n\nThe mixin did its work in an `updated()` override — the exact pattern\n`props.js`'s docstring rejects, and for the reason recorded there: a hook\nonly runs if every component overriding the same method remembers to call\n`super`. It also could not see a reparent, because moving an element changes\nno property and schedules no update, so `connectedCallback` had to re-arm by\nhand (finding #73, and #55/#64/#72 before it). A controller's hooks run\nregardless of what the host overrides, and `hostConnected` is not a special\ncase bolted on afterwards.\n\n## The platform reason, which is the larger one\n\nFive components hand-rolled what a modal `<dialog>` does natively, and every\none of those hand-rolled pieces has a failure mode the platform does not:\n\n| hand-rolled                        | what `showModal()` gives                |\n| ---------------------------------- | --------------------------------------- |\n| `trapTabKey` on a keydown listener | the background is genuinely inert — not |\n|                                    | just untabbable, but unclickable and    |\n|                                    | unreachable by a screen reader's own    |\n|                                    | navigation, which a Tab trap never was  |\n| `focusFirst(panel)`                | focus placed per spec, honouring        |\n|                                    | `autofocus`, delegatesFocus and slotted |\n|                                    | content                                 |\n| `__previousFocus` + restore        | restored by the browser, and correctly  |\n|                                    | when the previous element has since     |\n|                                    | moved or been re-rendered               |\n| `Escape` on a document listener    | the `cancel` event, which cannot be     |\n|                                    | missed by a stopped-propagation keydown |\n| `z-index: var(--z-modal)`          | the top layer: no stacking context, no  |\n|                                    | `overflow: hidden` ancestor, no ladder  |\n\nThe Tab-trap row is the one worth reading twice. `trapTabKey` moved focus\nback into the panel when Tab would have left it, which is a *keyboard*\nbehaviour; it did nothing about a screen reader user browsing the background\nwith virtual-cursor keys, or about a click landing on a button behind the\nscrim. `inert` is what makes those true, and modal `<dialog>` applies it to\neverything else in the document without the library maintaining a list.\n\n## What is still ours\n\n**Scroll lock.** A modal dialog blocks interaction with the page behind it\nbut does not stop it scrolling, so `scroll-lock.js` stays, per-owner as\nbefore.\n\n**The dismissal decision.** `cancel` is preventDefault-ed and routed to the\nhost's `onRequestClose` rather than allowed to close the dialog, because\nwhether Escape closes an overlay is the component's policy: `arc-modal`\nrefuses when `dismissible` is false, and every consumer can veto through the\ncancelable `arc-close` event. Letting the browser close it and reopening\nafterwards would flash.\n\n## Usage\n\n    this._overlay = new OverlayController(this, {\n      dialog: () => this.shadowRoot?.querySelector('dialog'),\n      isOpen: () => this.open,\n      onRequestClose: () => this._close(),\n    });\n\nThe host renders a `<dialog>` and nothing else about opening: no `open`\nattribute in the template, no `showModal` call. The controller reconciles\nafter every render, which is also what makes it correct across a reparent.",
+          "name": "OverlayController",
+          "members": [
+            {
+              "kind": "method",
+              "name": "hostUpdated",
+              "description": "Reconcile after every render.\n\nEvery render rather than on an `open` change, because the dialog element\nitself can be replaced by a re-render while `open` never changes, and a\nfresh `<dialog>` is closed no matter what the host thinks. Both calls\nbelow are no-ops when the state already matches, so the common case costs\ntwo property reads."
+            },
+            {
+              "kind": "method",
+              "name": "hostConnected",
+              "description": "Reopen after a reparent.\n\nMoving an element in the DOM closes any `<dialog>` inside it — the top\nlayer is a property of the connection, not of the element — and changes no\nproperty, so nothing would schedule the update that `hostUpdated` needs.\nThis is the same finding (#73) the mixin's `connectedCallback` was added\nfor, and it is still a real case; what changed is that the controller has a\nhook for it rather than an override."
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected"
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host"
+            },
+            {
+              "kind": "field",
+              "name": "opts",
+              "default": "opts"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "OverlayController",
+          "declaration": {
+            "name": "OverlayController",
+            "module": "src/shared/overlay-controller.js"
           }
         }
       ]

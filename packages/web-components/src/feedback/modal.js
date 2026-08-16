@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { OverlayController } from '../shared/overlay-controller.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
@@ -22,14 +22,15 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot - Default content.
  * @slot footer
  * @csspart base - The root element.
- * @csspart backdrop
- * @csspart dialog
+ * @csspart dialog - The dialog panel. Same element as `base`; the scrim is `::backdrop`,
+ *   which is not an element and so cannot be a part — style it with the
+ *   `--modal-backdrop` and `--modal-backdrop-filter` custom properties.
  * @csspart header
  * @csspart close
  * @csspart body
  * @csspart footer
  */
-export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
+export class ArcModal extends DeclaredPropsMixin(LitElement) {
   static properties = {
     open: flag(false),
     heading: { type: String },
@@ -66,46 +67,67 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     css`
       :host { display: contents; }
 
-      .modal__backdrop {
+      /* The dialog is the panel. There is no backdrop element any more — the
+         scrim is ::backdrop, which the browser paints in the top layer with no
+         z-index and no stacking context to lose to. Its two properties come
+         through custom properties so a consumer can still reach them;
+         ::backdrop inherits from its originating element, which is what makes
+         that work. */
+      .modal__dialog {
         position: fixed;
         inset: 0;
-        background: var(--overlay-backdrop);
-        backdrop-filter: blur(4px);
-        z-index: var(--z-modal);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--space-lg);
-        opacity: 0;
-        visibility: hidden;
-        /* visibility flips instantly on open (delayed only on close) so the
-           dialog is focusable the moment [open] is set */
-        transition: opacity var(--transition-base), visibility 0s var(--transition-base);
-      }
-
-      :host([open]) .modal__backdrop {
-        opacity: 1;
-        visibility: visible;
-        transition-delay: 0s;
-      }
-
-      .modal__dialog {
-        position: relative;
-        background: var(--surface-raised);
+        margin: auto;
+        padding: 0;
         border: 1px solid var(--border-subtle);
+        background: var(--surface-raised);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-overlay);
-        width: 100%;
+        width: calc(100% - var(--space-lg) * 2);
         max-height: calc(100vh - var(--space-2xl) * 2);
         overflow-y: auto;
-        display: flex;
         flex-direction: column;
+        opacity: 0;
         transform: translateY(16px);
-        transition: transform var(--transition-base);
+        transition:
+          opacity var(--transition-base),
+          transform var(--transition-base),
+          overlay var(--transition-base) allow-discrete,
+          display var(--transition-base) allow-discrete;
       }
 
-      :host([open]) .modal__dialog {
+      /* display is set here rather than on the base rule: a closed <dialog> is
+         display:none by UA stylesheet, and a flex declaration on the base rule
+         would override that and leave the panel visible while closed. */
+      .modal__dialog[open] {
+        display: flex;
+        opacity: 1;
         transform: translateY(0);
+      }
+
+      /* The entry half of the transition. Without it the panel is already at
+         its final opacity on the frame it enters the top layer, so only the
+         exit animates. */
+      @starting-style {
+        .modal__dialog[open] {
+          opacity: 0;
+          transform: translateY(16px);
+        }
+      }
+
+      .modal__dialog::backdrop {
+        background: var(--modal-backdrop, var(--overlay-backdrop));
+        backdrop-filter: var(--modal-backdrop-filter, blur(4px));
+        opacity: 0;
+        transition:
+          opacity var(--transition-base),
+          overlay var(--transition-base) allow-discrete,
+          display var(--transition-base) allow-discrete;
+      }
+
+      .modal__dialog[open]::backdrop { opacity: 1; }
+
+      @starting-style {
+        .modal__dialog[open]::backdrop { opacity: 0; }
       }
 
       :host([size="sm"]) .modal__dialog { max-width: 400px; }
@@ -120,10 +142,6 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
         height: 100%;
         border-radius: 0;
         border: none;
-      }
-
-      :host([fullscreen]) .modal__backdrop {
-        padding: 0;
       }
 
       .modal__header {
@@ -181,8 +199,15 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .modal__backdrop,
-        .modal__dialog { transition: none; }
+        /* The discrete properties keep their transitions: without overlay and
+           display easing, a closing dialog leaves the top layer on the frame
+           close() is called and the exit never runs at all. Dropping the
+           duration to 0s is what "no motion" means here, not dropping the
+           allow-discrete behaviour that makes close() observable. */
+        .modal__dialog,
+        .modal__dialog::backdrop {
+          transition-duration: 0s;
+        }
       }
     `,
   ];
@@ -190,15 +215,24 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   constructor() {
     super();
     this.heading = '';
+    this._overlay = new OverlayController(this, {
+      dialog: () => this.shadowRoot?.querySelector('dialog'),
+      isOpen: () => this.open,
+      onRequestClose: () => this._close(),
+    });
   }
 
   /**
    * The single gate on dismissal.
    *
-   * OverlayMixin routes Escape and backdrop clicks here, and the X button only
-   * renders when dismissible, so guarding once covers every path. A modal with
-   * dismissible=false is genuinely undismissable — the caller has to resolve it
-   * through its own footer actions.
+   * OverlayController routes Escape and backdrop clicks here, and the X button
+   * only renders when dismissible, so guarding once covers every path. A modal
+   * with dismissible=false is genuinely undismissable — the caller has to
+   * resolve it through its own footer actions.
+   *
+   * The Escape path is why the controller cancels the browser's own close
+   * rather than letting it through: `dismissible=false` has to be able to
+   * refuse, and a dialog that closed and reopened would flash.
    */
   _close() {
     if (!this.dismissible) return;
@@ -233,9 +267,9 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   }
 
   updated(changed) {
-    // Focus trap, scroll lock, Escape and focus restore all come from
-    // OverlayMixin; this only adds the open event.
-    super.updated(changed);
+    // Focus, inertness, Escape, focus restore and the top layer are the
+    // browser's, via OverlayController and <dialog>. This only adds the event.
+    super.updated?.(changed);
     if (changed.has('open') && this.open) {
       this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
     }
@@ -243,38 +277,30 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
 
   render() {
     return html`
-      <div
-        class="modal__backdrop"
-        @click=${this._handleBackdropClick}
-        part="base backdrop"
+      <dialog
+        class="modal__dialog"
+        aria-label=${this.heading || 'Dialog'}
+        part="base dialog"
       >
-        <div
-          class="modal__dialog"
-          role="dialog"
-          aria-modal="true"
-          aria-label=${this.heading || 'Dialog'}
-          part="dialog"
-        >
-          <div class="modal__header" part="header">
-            <slot name="header">
-              <h2 class="modal__heading">${this.heading}</h2>
-            </slot>
-            ${
-              this.dismissible
-                ? html`
-              <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
-            `
-                : ''
-            }
-          </div>
-          <div class="modal__body" part="body">
-            <slot></slot>
-          </div>
-          <div class="modal__footer" part="footer">
-            <slot name="footer"></slot>
-          </div>
+        <div class="modal__header" part="header">
+          <slot name="header">
+            <h2 class="modal__heading">${this.heading}</h2>
+          </slot>
+          ${
+            this.dismissible
+              ? html`
+            <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
+          `
+              : ''
+          }
         </div>
-      </div>
+        <div class="modal__body" part="body">
+          <slot></slot>
+        </div>
+        <div class="modal__footer" part="footer">
+          <slot name="footer"></slot>
+        </div>
+      </dialog>
     `;
   }
 }

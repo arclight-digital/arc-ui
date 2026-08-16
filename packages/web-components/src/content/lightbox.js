@@ -1,7 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
 import { tokenStyles } from '../shared-styles.js';
-import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { OverlayController } from '../shared/overlay-controller.js';
 import { DeclaredPropsMixin, flag, list, int } from '../shared/props.js';
 
 /**
@@ -35,7 +35,7 @@ import { DeclaredPropsMixin, flag, list, int } from '../shared/props.js';
  * @csspart image
  * @csspart caption
  */
-export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
+export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
   static properties = {
     images: list(),
     index: int({ default: 0, min: 0, max: '_lastIndex', clamp: 'toRange' }),
@@ -49,27 +49,42 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     css`
       :host { display: contents; }
 
+      /* Alone among the five overlays, the lightbox's scrim and its panel are
+         the same box: it fills the viewport and paints the dim itself. So this
+         element keeps both of its part names and ::backdrop is left
+         transparent — there is nothing behind the lightbox to show through it. */
       .lightbox {
         position: fixed;
         inset: 0;
-        background: var(--overlay-backdrop);
-        backdrop-filter: blur(4px);
-        z-index: var(--z-modal);
-        display: flex;
+        margin: 0;
+        max-width: none;
+        max-height: none;
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: var(--lightbox-backdrop, var(--overlay-backdrop));
+        backdrop-filter: var(--lightbox-backdrop-filter, blur(4px));
         flex-direction: column;
         padding: var(--space-lg);
         opacity: 0;
-        visibility: hidden;
-        /* visibility flips instantly on open (delayed only on close) so the
-           dialog is focusable the moment [open] is set */
-        transition: opacity var(--transition-base), visibility 0s var(--transition-base);
+        transition:
+          opacity var(--transition-base),
+          overlay var(--transition-base) allow-discrete,
+          display var(--transition-base) allow-discrete;
       }
 
-      :host([open]) .lightbox {
+      /* display on the open rule: a closed dialog is display:none by UA
+         stylesheet, and a flex declaration on the base rule would override it. */
+      .lightbox[open] {
+        display: flex;
         opacity: 1;
-        visibility: visible;
-        transition-delay: 0s;
       }
+
+      @starting-style {
+        .lightbox[open] { opacity: 0; }
+      }
+
+      .lightbox::backdrop { background: transparent; }
 
       .lightbox__bar {
         display: flex;
@@ -168,6 +183,11 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
 
   constructor() {
     super();
+    this._overlay = new OverlayController(this, {
+      dialog: () => this.shadowRoot?.querySelector('dialog'),
+      isOpen: () => this.open,
+      onRequestClose: () => this._close(),
+    });
     this._zoomed = false;
     this._loaded = false;
     this._panX = 0;
@@ -242,7 +262,7 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   }
 
   /**
-   * The single gate on dismissal. OverlayMixin routes Escape and backdrop
+   * The single gate on dismissal. OverlayController routes Escape and backdrop
    * clicks here, and close() delegates, so the cancelable arc-close fires on
    * every path before the state flips.
    */
@@ -274,10 +294,23 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     this._loaded = true;
   }
 
+  /**
+   * The second dismissal surface: the space around the image.
+   *
+   * OverlayController's own backdrop click covers the dialog element, and this
+   * covers the figure that fills it — clicking beside the picture closes the
+   * viewer, clicking the picture does not. Same `target === currentTarget`
+   * test the controller uses, applied one element deeper.
+   */
+  _onFigureClick(e) {
+    if (e.target === e.currentTarget) this._close();
+  }
+
   updated(changed) {
-    // Focus trap, scroll lock, Escape and focus restore all come from
-    // OverlayMixin; this adds the open event and the navigation keys.
-    super.updated(changed);
+    // Focus, inertness, Escape, focus restore and the top layer are the
+    // browser's, via OverlayController and <dialog>. This adds the open event
+    // and the navigation keys, which are the lightbox's own.
+    super.updated?.(changed);
     if (changed.has('open')) {
       if (this.open) {
         this._resetZoom();
@@ -375,13 +408,10 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     const current = images[index];
 
     return html`
-      <div
+      <dialog
         class="lightbox"
-        role="dialog"
-        aria-modal="true"
         aria-label=${current?.alt || 'Image viewer'}
         part="base backdrop"
-        @click=${this._handleBackdropClick}
       >
         <div class="lightbox__bar" part="bar">
           <span class="lightbox__counter" part="counter" aria-live="polite">
@@ -405,7 +435,7 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
           </div>
         </div>
 
-        <figure class="lightbox__figure" part="figure" @click=${this._handleBackdropClick}>
+        <figure class="lightbox__figure" part="figure" @click=${this._onFigureClick}>
           ${
             current
               ? keyed(
@@ -463,7 +493,7 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
         `
             : nothing
         }
-      </div>
+      </dialog>
     `;
   }
 }

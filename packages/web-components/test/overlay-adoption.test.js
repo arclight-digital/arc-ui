@@ -13,6 +13,24 @@ import '../src/input/tag-input.register.js';
 import '../src/shared/option.register.js';
 import { mount, cleanup, tick, pressKey, deepActive } from './helpers.js';
 
+/** Escape, as the user agent delivers it to a modal <dialog>. */
+function escape(el) {
+  el.shadowRoot.querySelector('dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
+}
+
+/**
+ * A click on the scrim.
+ *
+ * There is no backdrop element any more — the scrim is `::backdrop`, and a
+ * click on it is dispatched by the browser to the `<dialog>` itself, which is
+ * what makes `target === dialog` mean "outside the content".
+ */
+function backdropClick(el) {
+  el.shadowRoot
+    .querySelector('dialog')
+    .dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
+}
+
 /** A pointerdown where DismissController listens for it. */
 function clickAt(target) {
   target.dispatchEvent(new PointerEvent('pointerdown', {
@@ -20,7 +38,7 @@ function clickAt(target) {
   }));
 }
 
-describe('OverlayMixin adoption: arc-modal', () => {
+describe('OverlayController adoption: arc-modal', () => {
   afterEach(cleanup);
 
   async function openModal() {
@@ -41,8 +59,10 @@ describe('OverlayMixin adoption: arc-modal', () => {
   });
 
   it('closes on Escape', async () => {
+    // Escape arrives as the user agent's `cancel` event since V4-PLAN 4.4 moved
+    // this onto <dialog>; a dispatched KeyboardEvent no longer produces one.
     const el = await openModal();
-    pressKey('Escape');
+    escape(el);
     await el.updateComplete;
     expect(el.open).to.equal(false);
   });
@@ -54,7 +74,7 @@ describe('OverlayMixin adoption: arc-modal', () => {
     el.closable = false;
     await el.updateComplete;
 
-    pressKey('Escape');
+    escape(el);
     await el.updateComplete;
     expect(el.open).to.equal(true);
   });
@@ -64,16 +84,14 @@ describe('OverlayMixin adoption: arc-modal', () => {
     el.closable = false;
     await el.updateComplete;
 
-    const backdrop = el.shadowRoot.querySelector('.modal__backdrop');
-    backdrop.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
+    backdropClick(el);
     await el.updateComplete;
     expect(el.open).to.equal(true);
   });
 
   it('closes on a backdrop click when closable', async () => {
     const el = await openModal();
-    const backdrop = el.shadowRoot.querySelector('.modal__backdrop');
-    backdrop.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
+    backdropClick(el);
     await el.updateComplete;
     expect(el.open).to.equal(false);
   });
@@ -103,7 +121,7 @@ describe('OverlayMixin adoption: arc-modal', () => {
   });
 });
 
-describe('OverlayMixin adoption: arc-command-palette', () => {
+describe('OverlayController adoption: arc-command-palette', () => {
   afterEach(cleanup);
 
   async function openPalette() {

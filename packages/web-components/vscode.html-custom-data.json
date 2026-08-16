@@ -2017,7 +2017,7 @@
     },
     {
       "name": "arc-command-palette",
-      "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **item**\n- **match**\n- **description**\n- **backdrop**\n- **dialog**\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
+      "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **item**\n- **match**\n- **description**\n- **dialog** - The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--palette-backdrop` custom property.\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
       "attributes": [
         {
           "name": "open",
@@ -2253,7 +2253,7 @@
     },
     {
       "name": "arc-modal",
-      "description": "General-purpose focus-trapping overlay with backdrop blur, slide-up animation, and ESC-to-close\nbehavior for forms, settings, and rich content that needs full user attention.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the modal closes\n- **arc-open** - Fired when the modal opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **backdrop**\n- **dialog**\n- **header**\n- **close**\n- **body**\n- **footer**",
+      "description": "General-purpose focus-trapping overlay with backdrop blur, slide-up animation, and ESC-to-close\nbehavior for forms, settings, and rich content that needs full user attention.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the modal closes\n- **arc-open** - Fired when the modal opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **dialog** - The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--modal-backdrop` and `--modal-backdrop-filter` custom properties.\n- **header**\n- **close**\n- **body**\n- **footer**",
       "attributes": [
         {
           "name": "open",
@@ -2388,7 +2388,7 @@
     },
     {
       "name": "arc-sheet",
-      "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **backdrop**\n- **panel**\n- **handle**\n- **header**\n- **body**\n- **footer**",
+      "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties.\n- **handle**\n- **header**\n- **body**\n- **footer**",
       "attributes": [
         {
           "name": "open",
@@ -4923,7 +4923,7 @@
     },
     {
       "name": "arc-drawer",
-      "description": "Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for\noff-canvas navigation, filters, and detail views.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the drawer closes via backdrop click or escape key\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **backdrop**\n- **panel**\n- **header**\n- **title**\n- **close**\n- **body**",
+      "description": "Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for\noff-canvas navigation, filters, and detail views.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the drawer closes via backdrop click or escape key\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **panel** - The sliding panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--drawer-backdrop` custom property.\n- **header**\n- **title**\n- **close**\n- **body**",
       "attributes": [
         {
           "name": "open",

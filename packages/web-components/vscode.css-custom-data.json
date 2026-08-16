@@ -383,8 +383,10 @@
     { "name": "::part(item)" },
     { "name": "::part(match)" },
     { "name": "::part(description)" },
-    { "name": "::part(backdrop)" },
-    { "name": "::part(dialog)" },
+    {
+      "name": "::part(dialog)",
+      "description": "The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--palette-backdrop` custom property."
+    },
     { "name": "::part(search)" },
     { "name": "::part(input)" },
     { "name": "::part(results)" },
@@ -428,8 +430,10 @@
     { "name": "::part(meta)" },
     { "name": "::part(bubble)" },
     { "name": "::part(base)", "description": "The root element." },
-    { "name": "::part(backdrop)" },
-    { "name": "::part(dialog)" },
+    {
+      "name": "::part(dialog)",
+      "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--modal-backdrop` and `--modal-backdrop-filter` custom properties."
+    },
     { "name": "::part(header)" },
     { "name": "::part(close)" },
     { "name": "::part(body)" },
@@ -458,8 +462,10 @@
     { "name": "::part(fill)" },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(close)" },
-    { "name": "::part(backdrop)" },
-    { "name": "::part(panel)" },
+    {
+      "name": "::part(panel)",
+      "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties."
+    },
     { "name": "::part(handle)" },
     { "name": "::part(header)" },
     { "name": "::part(body)" },
@@ -835,8 +841,10 @@
     { "name": "::part(input)" },
     { "name": "::part(hint)" },
     { "name": "::part(base)", "description": "The root element." },
-    { "name": "::part(backdrop)" },
-    { "name": "::part(panel)" },
+    {
+      "name": "::part(panel)",
+      "description": "The sliding panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--drawer-backdrop` custom property."
+    },
     { "name": "::part(header)" },
     { "name": "::part(title)" },
     { "name": "::part(close)" },

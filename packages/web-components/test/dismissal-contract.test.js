@@ -246,6 +246,25 @@ function deepestIn(root) {
  * `keyOn(menu(el), 'Escape')` rather than a document-level press.
  */
 async function pressEscape(el) {
+  // A modal `<dialog>` is the third case, and it is the platform's rather than
+  // the component's: the user agent translates Escape into a `cancel` event on
+  // the element, and no dispatched keydown produces that — not from document,
+  // not from the focused node, not from anywhere. Since V4-PLAN 4.4 moved the
+  // five backdrop overlays onto `showModal()`, dispatching a key at them
+  // asserts nothing at all, and would keep passing if their handling were
+  // deleted outright.
+  //
+  // So the driver dispatches what the browser would. Whether Escape produces a
+  // cancel is the platform's guarantee; what the component does with one is the
+  // library's, and that is the half this suite is about.
+  // deepQuery, not shadowRoot.querySelector: arc-confirm and arc-dialog
+  // compose an <arc-modal>, so their dialog is one shadow root further down.
+  const dialog = deepQuery(el, 'dialog');
+  if (dialog?.open) {
+    dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
+    return;
+  }
+
   el.focus?.();
   await settle();
 
@@ -283,6 +302,19 @@ async function pressEscape(el) {
  * than hand-listed: a backdrop in the shadow root means the backdrop geometry.
  */
 async function dismissOutside(el) {
+  // Three geometries now, and the third arrived with the platform. A modal
+  // `<dialog>` has no backdrop *element*: the scrim is `::backdrop`, which is a
+  // pseudo-element and cannot be clicked directly — the browser dispatches a
+  // click on it to the dialog itself. So `target === dialog` is what "outside
+  // the content" means, and dispatching at the dialog is the only way to
+  // perform the gesture. A document-level pointerdown is not something a user
+  // can do to a modal at all: everything else in the document is inert.
+  const dialog = deepQuery(el, 'dialog');
+  if (dialog?.open) {
+    dialog.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
+    return 'dialog backdrop click';
+  }
+
   const backdrop = deepQuery(el, '[part~="backdrop"], [class*="backdrop"]');
   if (!backdrop) {
     document.body.dispatchEvent(

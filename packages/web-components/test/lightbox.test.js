@@ -45,17 +45,24 @@ describe('arc-lightbox open/close lifecycle', () => {
   });
 
   it('is hidden while closed', async () => {
+    // The viewer is a <dialog> since V4-PLAN 4.4, so "hidden" is the UA
+    // stylesheet's display:none on a closed dialog rather than a visibility
+    // transition of ours. Asserting the computed display keeps the claim while
+    // dropping the mechanism.
     const el = await mountLightbox();
-    const backdrop = el.shadowRoot.querySelector('.lightbox');
-    expect(getComputedStyle(backdrop).visibility).to.equal('hidden');
+    const dialog = el.shadowRoot.querySelector('dialog');
+    expect(dialog.open, 'not in the top layer').to.equal(false);
+    expect(getComputedStyle(dialog).display).to.equal('none');
   });
 
-  it('is immediately visible when opened (no visibility transition on open)', async () => {
+  it('is usable the moment open is set, without waiting out a transition', async () => {
+    // This existed because a delayed `visibility` made the viewer unfocusable
+    // for the length of its own fade. The <dialog> equivalent of "usable now"
+    // is being in the top layer now.
     const el = await mountLightbox();
     el.open = true;
     await el.updateComplete;
-    const backdrop = el.shadowRoot.querySelector('.lightbox');
-    expect(getComputedStyle(backdrop).visibility).to.equal('visible');
+    expect(el.shadowRoot.querySelector('dialog').open).to.equal(true);
   });
 
   it('close() fires arc-close before the state flips', async () => {
@@ -81,8 +88,11 @@ describe('arc-lightbox open/close lifecycle', () => {
   });
 
   it('closes on Escape', async () => {
+    // Escape reaches a modal <dialog> as the user agent's `cancel` event, which
+    // no dispatched KeyboardEvent produces. What the library owns is what it
+    // does with one; that Escape produces one is the platform's guarantee.
     const el = await openLightbox();
-    pressKey('Escape');
+    el.shadowRoot.querySelector('dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
     await el.updateComplete;
     expect(el.open).to.equal(false);
   });

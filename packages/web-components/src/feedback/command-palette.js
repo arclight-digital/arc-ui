@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { MenuKeyboardController } from '../shared/menu-keyboard.js';
-import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { OverlayController } from '../shared/overlay-controller.js';
 import { matchItem, highlightRuns, snippetAround } from '../shared/fuzzy-match.js';
 import '../content/icon.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
@@ -33,8 +33,9 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @csspart item
  * @csspart match
  * @csspart description
- * @csspart backdrop
- * @csspart dialog
+ * @csspart dialog - The palette panel. The scrim is `::backdrop`, which is not an
+ *   element and so cannot be a part — style it with the `--palette-backdrop`
+ *   custom property.
  * @csspart search
  * @csspart input
  * @csspart results
@@ -42,7 +43,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @csspart group-heading
  * @csspart footer
  */
-export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
+export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
   static properties = {
     open: flag(false),
     placeholder: { type: String },
@@ -56,52 +57,64 @@ export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElemen
     css`
       :host { display: contents; }
 
-      .palette__backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: var(--z-modal);
-        background: var(--overlay-backdrop);
-        opacity: 0;
-        visibility: hidden;
-        /* visibility flips instantly on open (delayed only on close) so the
-           dialog is focusable the moment [open] is set */
-        transition:
-          opacity var(--transition-base),
-          visibility 0s var(--transition-base);
-      }
-
-      :host([open]) .palette__backdrop {
-        opacity: 1;
-        visibility: visible;
-        transition-delay: 0s;
-      }
-
+      /* The dialog is the panel; the scrim is its ::backdrop. No backdrop
+         element and no z-index — the top layer has no ladder to climb. The
+         scrim colour comes through a custom property so a consumer can still
+         reach it: ::backdrop inherits from its originating element. */
       .palette__dialog {
         position: fixed;
-        z-index: var(--z-modal);
         top: 20%;
         left: 50%;
-        transform: translateX(-50%) scale(0.95);
+        margin: 0;
+        padding: 0;
+        transform: translateX(-50%) scale(1);
         width: 90%;
         max-width: 520px;
+        max-height: none;
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
         border-radius: var(--radius-lg);
         box-shadow: var(--shadow-overlay);
         overflow: hidden;
         opacity: 0;
-        visibility: hidden;
         transition:
           opacity var(--transition-base),
-          visibility 0s var(--transition-base),
-          transform var(--transition-base);
+          transform var(--transition-base),
+          overlay var(--transition-base) allow-discrete,
+          display var(--transition-base) allow-discrete;
       }
 
-      :host([open]) .palette__dialog {
+      /* display on the open rule: a closed dialog is display:none by UA
+         stylesheet, and a block declaration on the base rule would override it. */
+      .palette__dialog[open] {
+        display: block;
         opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) scale(1);
-        transition-delay: 0s;
+      }
+
+      @starting-style {
+        .palette__dialog[open] {
+          opacity: 0;
+          transform: translateX(-50%) scale(0.95);
+        }
+      }
+
+      .palette__dialog:not([open]) {
+        transform: translateX(-50%) scale(0.95);
+      }
+
+      .palette__dialog::backdrop {
+        background: var(--palette-backdrop, var(--overlay-backdrop));
+        opacity: 0;
+        transition:
+          opacity var(--transition-base),
+          overlay var(--transition-base) allow-discrete,
+          display var(--transition-base) allow-discrete;
+      }
+
+      .palette__dialog[open]::backdrop { opacity: 1; }
+
+      @starting-style {
+        .palette__dialog[open]::backdrop { opacity: 0; }
       }
 
       .palette__search {
@@ -259,6 +272,11 @@ export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElemen
 
   constructor() {
     super();
+    this._overlay = new OverlayController(this, {
+      dialog: () => this.shadowRoot?.querySelector('dialog'),
+      isOpen: () => this.open,
+      onRequestClose: () => this._close(),
+    });
     this.placeholder = 'Type a command...';
     this.maxResults = 50;
     this._query = '';
@@ -464,16 +482,17 @@ export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElemen
   }
 
   updated(changed) {
-    super.updated(changed);
+    super.updated?.(changed);
     if (this.open) {
       const focused = this.shadowRoot.querySelector('.palette__item.is-focused');
       if (focused) focused.scrollIntoView({ block: 'nearest' });
     }
     if (changed.has('open')) {
       if (this.open) {
-        // Scroll lock, Tab trapping, Escape, and focus save/restore are
-        // OverlayMixin's. The search input is the dialog's first focusable
-        // child, so the mixin's focusFirst lands on it — no explicit focus call.
+        // Scroll lock is OverlayController's; focus, inertness, Escape and
+        // focus restore are the browser's. The search input is the dialog's
+        // first focusable child, so showModal() lands on it — no explicit
+        // focus call, and unlike one it yields to an autofocus in the slot.
         this._query = '';
         this._menuKb.reset();
         this._menuKb.focusedIndex = 0;
@@ -536,14 +555,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElemen
       <div part="base" class="palette__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      <div class="palette__backdrop" @click=${this._handleBackdropClick} part="backdrop"></div>
-      <div
-        class="palette__dialog"
-        role="dialog"
-        aria-modal="true"
-        aria-label="Command palette"
-        part="dialog"
-      >
+      <dialog class="palette__dialog" aria-label="Command palette" part="dialog">
         <div class="palette__search" part="search">
           <svg class="palette__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
             <path d="M11.5 7a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0zm-.82 4.74a6 6 0 111.06-1.06l3.04 3.04a.75.75 0 11-1.06 1.06l-3.04-3.04z"/>
@@ -598,7 +610,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(OverlayMixin(LitElemen
           <span><kbd>↵</kbd> select</span>
           <span><kbd>esc</kbd> close</span>
         </div>
-      </div>
+      </dialog>
     `;
   }
 }

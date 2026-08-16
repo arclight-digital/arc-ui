@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { OverlayMixin } from '../shared/overlay-mixin.js';
+import { OverlayController } from '../shared/overlay-controller.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
@@ -20,14 +20,15 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot footer
  * @csspart base - The root element.
  * @csspart close
- * @csspart backdrop
- * @csspart panel
+ * @csspart panel - The sliding panel. The scrim is `::backdrop`, which is not an
+ *   element and so cannot be a part — style it with the `--sheet-backdrop` and
+ *   `--sheet-backdrop-filter` custom properties.
  * @csspart handle
  * @csspart header
  * @csspart body
  * @csspart footer
  */
-export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
+export class ArcSheet extends DeclaredPropsMixin(LitElement) {
   static properties = {
     open: flag(false),
     side: oneOf(['bottom', 'right']),
@@ -40,42 +41,59 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     css`
       :host { display: contents; }
 
-      .sheet__backdrop {
-        position: fixed;
-        inset: 0;
-        background: var(--overlay-backdrop);
-        backdrop-filter: blur(4px);
-        z-index: var(--z-overlay);
-        opacity: 0;
-        visibility: hidden;
-        transition:
-          opacity var(--transition-exit),
-          visibility var(--transition-exit);
-      }
-
-      :host([open]) .sheet__backdrop {
-        opacity: 1;
-        visibility: visible;
-        transition-duration: var(--duration-enter);
-      }
-
+      /* The panel is the dialog; the scrim is its ::backdrop. No backdrop
+         element and no z-index: the top layer has no ladder to climb. Both
+         scrim properties come through custom properties so a consumer can
+         still reach them — ::backdrop inherits from its originating element. */
       .sheet__panel {
         position: fixed;
-        z-index: var(--z-modal);
+        margin: 0;
+        padding: 0;
+        max-width: none;
+        max-height: none;
         background: var(--surface-raised);
         border: 1px solid var(--border-subtle);
         box-shadow: var(--shadow-overlay);
-        display: flex;
         flex-direction: column;
         box-sizing: border-box;
-        transition: transform var(--duration-exit) var(--ease-out-expo);
+        transition:
+          transform var(--duration-exit) var(--ease-out-expo),
+          overlay var(--duration-exit) allow-discrete,
+          display var(--duration-exit) allow-discrete;
       }
 
-      :host([open]) .sheet__panel {
+      /* display on the open rule, not the base one: a closed dialog is
+         display:none by UA stylesheet, and a flex declaration on the base rule
+         would override it and leave the sheet on screen while closed. */
+      .sheet__panel[open] {
+        display: flex;
         transition-duration: var(--duration-enter);
       }
 
-      /* Bottom sheet */
+      .sheet__panel::backdrop {
+        background: var(--sheet-backdrop, var(--overlay-backdrop));
+        backdrop-filter: var(--sheet-backdrop-filter, blur(4px));
+        opacity: 0;
+        transition:
+          opacity var(--transition-exit),
+          overlay var(--transition-exit) allow-discrete,
+          display var(--transition-exit) allow-discrete;
+      }
+
+      .sheet__panel[open]::backdrop {
+        opacity: 1;
+        transition-duration: var(--duration-enter);
+      }
+
+      @starting-style {
+        .sheet__panel[open]::backdrop { opacity: 0; }
+      }
+
+      /* Bottom sheet. The off-screen transform is now stated twice — once for
+         the entry (@starting-style, the frame the dialog enters the top layer)
+         and once for the exit (:not([open]), which the overlay transition keeps
+         visible long enough to run). The old single translateY(100%) base rule
+         could serve both because the panel never left the layout. */
       :host(:not([side="right"])) .sheet__panel,
       :host([side="bottom"]) .sheet__panel {
         bottom: 0;
@@ -83,12 +101,18 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
         inset-inline-end: 0;
         max-height: 80vh;
         border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-        transform: translateY(100%);
       }
 
-      :host([open]:not([side="right"])) .sheet__panel,
-      :host([open][side="bottom"]) .sheet__panel {
-        transform: translateY(0);
+      @starting-style {
+        :host(:not([side="right"])) .sheet__panel[open],
+        :host([side="bottom"]) .sheet__panel[open] {
+          transform: translateY(100%);
+        }
+      }
+
+      :host(:not([side="right"])) .sheet__panel:not([open]),
+      :host([side="bottom"]) .sheet__panel:not([open]) {
+        transform: translateY(100%);
       }
 
       /* Right sheet */
@@ -99,11 +123,16 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
         width: 400px;
         max-width: 90vw;
         border-radius: var(--radius-xl) 0 0 var(--radius-xl);
-        transform: translateX(100%);
       }
 
-      :host([open][side="right"]) .sheet__panel {
-        transform: translateX(0);
+      @starting-style {
+        :host([side="right"]) .sheet__panel[open] {
+          transform: translateX(100%);
+        }
+      }
+
+      :host([side="right"]) .sheet__panel:not([open]) {
+        transform: translateX(100%);
       }
 
       .sheet__header {
@@ -169,6 +198,11 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   constructor() {
     super();
     this.heading = '';
+    this._overlay = new OverlayController(this, {
+      dialog: () => this.shadowRoot?.querySelector('dialog'),
+      isOpen: () => this.open,
+      onRequestClose: () => this._close(),
+    });
   }
 
   _close() {
@@ -182,26 +216,20 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   }
 
   updated(changed) {
-    super.updated(changed);
+    super.updated?.(changed);
     if (changed.has('open') && this.open) {
       this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
-      this.updateComplete.then(() => {
-        this.shadowRoot.querySelector('arc-icon-button[part~="close"]')?.focus();
-      });
     }
+    // The close button used to be focused by hand here. `showModal()` places
+    // initial focus per spec, which lands on the same button — and unlike the
+    // manual call it yields to an `autofocus` on the consumer's own slotted
+    // content, which the manual call silently overrode.
   }
 
   render() {
     return html`
-      <div
-        class="sheet__backdrop"
-        @click=${this._handleBackdropClick}
-        part="backdrop"
-      ></div>
-      <div
+      <dialog
         class="sheet__panel"
-        role="dialog"
-        aria-modal="true"
         aria-label=${this.heading || 'Sheet'}
         part="base panel"
       >
@@ -220,7 +248,7 @@ export class ArcSheet extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
         <div class="sheet__footer" part="footer">
           <slot name="footer"></slot>
         </div>
-      </div>
+      </dialog>
     `;
   }
 }
