@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { deepActiveElement } from '../shared/trigger-aria.js';
 import { PositionController } from '../shared/position-controller.js';
+import { DismissController } from '../shared/dismiss-controller.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/icon.js';
@@ -40,12 +41,6 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
     tokenStyles,
     css`
       :host { display: contents; }
-
-      .backdrop {
-        position: fixed;
-        inset: 0;
-        z-index: var(--z-max);
-      }
 
       .menu {
         position: fixed;
@@ -149,6 +144,11 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
 
     this._handleContextMenu = this._handleContextMenu.bind(this);
     this._parentRef = null;
+    this._dismiss = new DismissController(this, {
+      // _close(false): the pointer chose a new target, so don't yank focus back
+      // to whatever opened the menu.
+      onDismiss: () => this._close(false),
+    });
     this._position = new PositionController(this, {
       // A context menu has no anchor element — it hangs off the pointer, so the
       // anchor is a zero-size box at the click.
@@ -180,6 +180,15 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
   updated(changed) {
     if (changed.has('open')) {
       this.open ? this._position.show() : this._position.hide();
+      // The 2.4d dismissal contract, adopted here in V4-PLAN 4.4. This was the
+      // last `open`-declaring overlay with neither central contract: it caught
+      // outside clicks with a full-viewport invisible `<div class="backdrop">`,
+      // which is the third mechanism DismissController exists to replace. That
+      // div covered the page whenever the menu was open — so the click that
+      // dismissed the menu never reached what it was aimed at, and a keyboard
+      // user tabbing away was not covered at all, because a backdrop cannot
+      // observe focus.
+      this.open ? this._dismiss.activate() : this._dismiss.deactivate();
     }
     // Items arriving from the slot resize the menu, which changes where it has
     // to sit to stay on screen.
@@ -344,7 +353,6 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
     return html`
       <div class="slot-host"><slot @slotchange=${this._onSlotChange}></slot></div>
       <slot name="content"></slot>
-      <div class="backdrop" @click=${() => this._close(false)}></div>
       <div
         class="menu"
         part="menu"

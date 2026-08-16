@@ -41,6 +41,13 @@ async function target(items = ITEMS) {
 }
 
 /** Fire a contextmenu on the target the way a right-click would. */
+/** The gesture DismissController listens for: a pointerdown anywhere else. */
+function outsidePointerDown() {
+  document.body.dispatchEvent(
+    new PointerEvent('pointerdown', { bubbles: true, composed: true, cancelable: true }),
+  );
+}
+
 async function rightClick(host, el, { clientX = 40, clientY = 60 } = {}) {
   const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX, clientY });
   host.dispatchEvent(event);
@@ -361,11 +368,16 @@ describe('arc-context-menu closing', () => {
     expect(el.open).to.equal(false);
   });
 
-  it('closes on a backdrop click', async () => {
+  it('closes when the pointer lands outside', async () => {
+    // Was a click on a full-viewport invisible `.backdrop` div. V4-PLAN 4.4
+    // moved this component onto DismissController — the last `open`-declaring
+    // overlay on neither central contract — so the gesture is an ordinary
+    // pointerdown elsewhere in the document, and the click that dismisses the
+    // menu now reaches whatever it was aimed at.
     const { host, el } = await target();
     await rightClick(host, el);
 
-    el.shadowRoot.querySelector('.backdrop').click();
+    outsidePointerDown();
     await settle(el);
     expect(el.open).to.equal(false);
   });
@@ -394,9 +406,9 @@ describe('arc-context-menu closing', () => {
     await settle(el);
     expect(el.open, 'Escape vetoed').to.equal(true);
 
-    el.shadowRoot.querySelector('.backdrop').click();
+    outsidePointerDown();
     await settle(el);
-    expect(el.open, 'backdrop vetoed').to.equal(true);
+    expect(el.open, 'outside dismissal vetoed').to.equal(true);
 
     menuItems(el)[0].click();
     await settle(el);
@@ -421,19 +433,26 @@ describe('arc-context-menu closing', () => {
     expect(deepActive()).to.equal(outside);
   });
 
-  it('leaves focus alone on a backdrop dismissal', async () => {
-    // The backdrop path passes restoreFocus: false — the click has already
-    // moved the user's attention somewhere else, so yanking focus back would
-    // fight them.
+  it('leaves focus alone on an outside dismissal', async () => {
+    // The outside path passes restoreFocus: false — the user has already moved
+    // their attention somewhere else, so pulling focus back to where it was
+    // before the menu opened would fight them. `outside` is exactly where
+    // restoreFocus: true would have put it, so asserting focus is *not* there
+    // is what pins the flag.
+    //
+    // Compared with `===` rather than handed to `expect(a).to.equal(b)`: on
+    // failure chai diffs the two values, and one of them is whatever has focus
+    // — `document.body` here — which it walks. That hangs the runner rather
+    // than reporting, and it cost a bisect to find.
     const outside = mount('<button>elsewhere</button>');
     const { host, el } = await target();
     outside.focus();
     await rightClick(host, el);
 
-    el.shadowRoot.querySelector('.backdrop').click();
+    outsidePointerDown();
     await settle(el);
 
-    expect(deepActive(), 'focus is not pulled back').to.not.equal(outside);
+    expect(deepActive() === outside, 'focus is not pulled back to the opener').to.equal(false);
   });
 });
 

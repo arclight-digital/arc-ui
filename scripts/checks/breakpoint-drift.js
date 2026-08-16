@@ -62,17 +62,25 @@ for (const file of sources(SRC)) {
     // The marked query is the next media query within a short window — the
     // marker sits in a comment that may run several lines before it.
     const window = lines.slice(i, i + 14).join('\n');
-    const match = window.match(/@media\s*\([^)]*?(\d+(?:\.\d+)?)px\s*\)/);
+    // `@container` as well as `@media`. V4-PLAN 4.4 moved arc-navigation-menu
+    // onto a container query — the component is the unit, not the page — and
+    // the literal still has to match the token for the same reason it always
+    // did: a container query cannot read a custom property either.
+    const match = window.match(
+      /@(?:media|container)\s+(?:[\w-]+\s+)?\([^)]*?(\d+(?:\.\d+)?)px\s*\)/,
+    );
     const rel = path.relative(path.join(__dirname, '..', '..'), file);
     if (!match) {
-      problems.push(`${rel}:${i + 1}: marked ${MARKER} but no media query follows within 14 lines`);
+      problems.push(
+        `${rel}:${i + 1}: marked ${MARKER} but no media or container query follows within 14 lines`,
+      );
       return;
     }
     checked++;
     const found = Number.parseFloat(match[1]);
     if (found !== expected) {
       problems.push(
-        `${rel}:${i + 1}: media query uses ${found}px, but tokens.breakpoint.navCollapse is ${expected}px`,
+        `${rel}:${i + 1}: query uses ${found}px, but tokens.breakpoint.navCollapse is ${expected}px`,
       );
     }
   });
@@ -92,4 +100,4 @@ if (problems.length > 0) {
   process.exit(1);
 }
 
-console.log(`check-breakpoint-drift: ${checked} nav-collapse media quer${checked === 1 ? 'y' : 'ies'} match ${expected}px`);
+console.log(`check-breakpoint-drift: ${checked} nav-collapse quer${checked === 1 ? 'y' : 'ies'} match ${expected}px`);

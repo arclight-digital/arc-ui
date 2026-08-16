@@ -847,7 +847,16 @@ const headings = removed
     font-size: 0.9em;
   }
 
-  .deprecation a { color: var(--accent-secondary); }
+  /* Underlined, not just recoloured. axe's link-in-text-block: a link inside a
+     block of prose has to be distinguishable without relying on colour, and
+     these two notices are the only prose on the site with inline links in them.
+     Landed 4.1 and 4.2 with colour alone, which took the a11y audit from 0
+     violations to 15 — one per deprecated component and one per tombstone. */
+  .deprecation a {
+    color: var(--accent-secondary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 
   /* ── Tombstone ── */
 
@@ -870,6 +879,13 @@ const headings = removed
   .tombstone__lede code {
     font-family: var(--font-mono);
     font-size: 0.9em;
+  }
+
+  .tombstone__lede a,
+  .tombstone__why a {
+    color: var(--accent-secondary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   .tombstone__why {
@@ -931,6 +947,8 @@ const headings = removed
 
   .tombstone__migration a {
     color: var(--accent-secondary);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
   }
 
   /* ── Icon Browser (global — dynamically injected) ── */

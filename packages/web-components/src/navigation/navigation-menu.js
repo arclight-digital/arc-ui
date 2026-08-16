@@ -260,11 +260,39 @@ export class ArcNavigationMenu extends LitElement {
 
       .nav__slot-host { display: none; }
 
+      /* The query container for the desktop bar.
+       *
+       * A wrapper rather than :host, and the reason is that containment is
+       * public. container-type: inline-size implies contain: layout style
+       * inline-size on whatever carries it, and on :host that is the custom
+       * element itself — so a consumer's page would inherit a containing block
+       * for fixed-position content and an element whose size stops depending on
+       * its contents, neither of which this component asked them to accept.
+       *
+       * It would also re-create the hazard the mobile overlay already routes
+       * around. That overlay renders into a portal rather than this shadow root
+       * (finding #67) precisely because ancestors kept clipping and stacking
+       * it; a layout-contained host is one more such ancestor, waiting for the
+       * next fixed child. Wrapping only the thing the query is about costs one
+       * block-level div and leaves both problems unmade. */
+      .nav__container {
+        container-type: inline-size;
+        container-name: nav;
+        display: block;
+      }
+
       /* ── Mobile panel ── */
       /* nav-collapse: keep in step with tokens.breakpoint.navCollapse.
          Literal for prism's sake — see the note in arc-top-bar. Guarded by
-         check-breakpoint-drift.js. */
-      @media (max-width: 900px) {
+         check-breakpoint-drift.js.
+
+         A container query, not a media query (V4-PLAN 4.4). The unit here is
+         the component: a nav in a 700px sidebar should collapse whatever the
+         viewport is doing, and a nav in a wide page should not collapse because
+         a phone is holding the page. It is also what makes the desktop bar
+         testable — a test can set the container's width, and could never set
+         the viewport's. */
+      @container nav (max-width: 900px) {
         .nav { display: none; }
       }
 
@@ -722,8 +750,19 @@ export class ArcNavigationMenu extends LitElement {
     }
   }
 
+  /**
+   * Close the mobile panel once the bar is wide enough to show itself again.
+   *
+   * Measured on the component rather than the window, matching the container
+   * query that decides the same thing in CSS. Before this the two disagreed
+   * whenever the nav was not full-bleed: a nav in a narrow column kept its
+   * desktop bar hidden by CSS while the JS, reading a wide viewport, insisted
+   * the mobile panel should close — leaving no navigation at all.
+   */
   _onResize() {
-    if (window.innerWidth > breakpoints.navCollapse && this._mobileOpen) {
+    const container = this.shadowRoot?.querySelector('.nav__container');
+    const width = container?.getBoundingClientRect().width ?? 0;
+    if (width > breakpoints.navCollapse && this._mobileOpen) {
       this._closeMobile();
     }
   }
@@ -830,7 +869,8 @@ export class ArcNavigationMenu extends LitElement {
       <div part="base" class="nav__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
       </div>
-      <nav class="nav" part="nav" aria-label=${this.label}>
+      <div class="nav__container">
+       <nav class="nav" part="nav" aria-label=${this.label}>
         ${this._items.map((item, i) => {
           const hasChildren = item.hasChildren;
           const isOpen = this._openIndex === i;
@@ -907,8 +947,8 @@ export class ArcNavigationMenu extends LitElement {
             </div>
           `;
         })}
-      </nav>
-
+       </nav>
+      </div>
     `;
   }
 
