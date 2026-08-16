@@ -114,7 +114,7 @@ describe('labels', () => {
 
   it('shows a datum label in the detail bubble for the active tick', async () => {
     const el = await strip([1, { value: 0.9412, status: 'down', label: 'Mar 4' }]);
-    el._activeIndex = 1;
+    ticks(el)[1].dispatchEvent(new PointerEvent('pointerover', { bubbles: true, composed: true }));
     await el.updateComplete;
     const detail = el.shadowRoot.querySelector('[part="detail"]');
     expect(detail.textContent).to.include('Mar 4');
@@ -123,6 +123,15 @@ describe('labels', () => {
   });
 });
 
+/**
+ * Which tick the strip is showing as active, read off the class it marks.
+ * `_activeIndex` is state; `is-active` and the detail bubble are the strip.
+ */
+const activeAt = (el) => {
+  const i = ticks(el).findIndex((t) => t.classList.contains('is-active'));
+  return i === -1 ? null : i;
+};
+
 describe('keyboard inspection', () => {
   it('walks ticks with arrows and announces the active one', async () => {
     const el = await strip([1, 0.97, { status: 'down', label: 'Yesterday' }]);
@@ -130,18 +139,18 @@ describe('keyboard inspection', () => {
 
     track.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     await el.updateComplete;
-    expect(el._activeIndex).to.equal(0);
+    expect(activeAt(el)).to.equal(0);
     expect(ticks(el)[0].classList.contains('is-active')).to.equal(true);
 
     track.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
     await el.updateComplete;
-    expect(el._activeIndex).to.equal(2);
+    expect(activeAt(el)).to.equal(2);
     const live = el.shadowRoot.querySelector('[role="status"]');
     expect(live.textContent).to.include('Yesterday');
 
     track.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
     await el.updateComplete;
-    expect(el._activeIndex).to.equal(null);
+    expect(activeAt(el)).to.equal(null);
     expect(el.shadowRoot.querySelector('[part="detail"]')).to.equal(null);
   });
 

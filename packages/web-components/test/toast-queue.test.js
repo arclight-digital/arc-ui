@@ -35,20 +35,39 @@ function messages(el) {
   return [...el.shadowRoot.querySelectorAll('.toast__message')].map((n) => n.textContent.trim());
 }
 
+/**
+ * How deep the queue is, per the component's own announcement.
+ *
+ * `_queue` is state and the queue is the one part of this component that is
+ * deliberately *not* rendered — which is exactly why `arc-queue-change` exists.
+ * Reading the counts off the event is reading the published contract; reading
+ * the array is reading the implementation of it.
+ */
+function counts(el) {
+  const seen = [];
+  el.addEventListener('arc-queue-change', (e) => seen.push(e.detail));
+  return {
+    latest: () => seen.at(-1) ?? { visible: 0, queued: 0 },
+    all: seen,
+  };
+}
+
 describe('arc-toast: visible cap and FIFO queue', () => {
   afterEach(cleanup);
 
   it('caps visible toasts at maxVisible and queues the rest', async () => {
     const el = await mountToast('max-visible="2" duration="0"');
+    const q = counts(el);
     for (const m of ['one', 'two', 'three']) el.show({ message: m });
     await el.updateComplete;
 
     expect(messages(el)).to.deep.equal(['one', 'two']);
-    expect(el._queue.length, 'third is queued').to.equal(1);
+    expect(q.latest(), 'third is queued').to.deep.equal({ visible: 2, queued: 1 });
   });
 
   it('releases a queued toast when a visible one is dismissed', async () => {
     const el = await mountToast('max-visible="1" duration="0"');
+    const q = counts(el);
     const first = el.show({ message: 'one' });
     el.show({ message: 'two' });
     await el.updateComplete;
@@ -56,7 +75,7 @@ describe('arc-toast: visible cap and FIFO queue', () => {
 
     el.dismiss(first);
     await until(() => messages(el).join() === 'two', 'queued toast released');
-    expect(el._queue.length).to.equal(0);
+    expect(q.latest()).to.deep.equal({ visible: 1, queued: 0 });
   });
 
   it('treats maxVisible 0 as no cap', async () => {
@@ -71,12 +90,24 @@ describe('arc-toast: visible cap and FIFO queue', () => {
     let dropped = 0;
     el.addEventListener('arc-queue-overflow', (e) => { dropped += e.detail.dropped; });
 
+    const q = counts(el);
     for (const m of ['v', 'q1', 'q2', 'q3']) el.show({ message: m });
     await el.updateComplete;
 
-    expect(el._queue.length, 'queue held at the limit').to.equal(2);
+    expect(q.latest().queued, 'queue held at the limit').to.equal(2);
     expect(dropped).to.equal(1);
-    expect(el._queue.map((t) => t.message), 'oldest dropped').to.deep.equal(['q2', 'q3']);
+
+    // Which two survived, shown rather than inspected: clearing the screen
+    // releases them in order, and `q1` — the dropped one — never appears.
+    const dismissVisible = () =>
+      el.shadowRoot.querySelector('[part="dismiss"]').click();
+
+    dismissVisible();
+    await until(() => messages(el).join() === 'q2', 'q2 released first');
+    dismissVisible();
+    await until(() => messages(el).join() === 'q3', 'then q3');
+    dismissVisible();
+    await until(() => messages(el).length === 0, 'and nothing else was queued');
   });
 
   it('reports visible and queued counts as they change', async () => {
@@ -97,9 +128,10 @@ describe('arc-toast: visible cap and FIFO queue', () => {
     el.show({ message: 'two' });
     await el.updateComplete;
 
+    const q = counts(el);
     el.clear();
     await until(() => messages(el).length === 0, 'screen emptied');
-    expect(el._queue.length).to.equal(0);
+    expect(q.latest()).to.deep.equal({ visible: 0, queued: 0 });
   });
 });
 
@@ -134,14 +166,20 @@ describe('arc-toast: dedupe', () => {
 
   it('coalesces into a queued toast too', async () => {
     const el = await mountToast('max-visible="1" duration="0"');
+    const q = counts(el);
     el.show({ message: 'visible' });
     const queued = el.show({ message: 'queued' });
     const dup = el.show({ message: 'queued' });
     await el.updateComplete;
 
-    expect(dup).to.equal(queued);
-    expect(el._queue.length, 'one queued entry, counted twice').to.equal(1);
-    expect(el._queue[0].count).to.equal(2);
+    expect(dup, 'the same id came back').to.equal(queued);
+    expect(q.latest().queued, 'one queued entry, not two').to.equal(1);
+
+    // And it was counted twice, which shows when it reaches the screen: the
+    // "(×N)" suffix is what coalescing is *for*, so releasing the queue is the
+    // honest way to ask whether the count survived.
+    el.shadowRoot.querySelector('[part="dismiss"]').click();
+    await until(() => messages(el).join() === 'queued (×2)', 'released with its count');
   });
 
   it('can be turned off', async () => {
@@ -156,13 +194,13 @@ describe('arc-toast: dedupe', () => {
   it('restarts the timer on a visible duplicate', async () => {
     // A message that keeps repeating should stay on screen while it repeats.
     const el = await mountToast('duration="80"');
-    const id = el.show({ message: 'Retrying' });
+    el.show({ message: 'Retrying' });
     await new Promise((r) => setTimeout(r, 50));
     el.show({ message: 'Retrying' });
     await new Promise((r) => setTimeout(r, 50));
 
     // Past the original 80ms deadline, but the duplicate reset it.
-    expect(el._toasts.some((t) => t.id === id), 'still showing').to.equal(true);
+    expect(messages(el), 'still showing').to.deep.equal(['Retrying (×2)']);
   });
 });
 

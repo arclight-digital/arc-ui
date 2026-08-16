@@ -195,6 +195,12 @@ describe('DismissController adoption — pointer', () => {
     it(`${tag} does not listen while closed`, async () => {
       // The hand-rolled versions attached on connect and filtered inside the
       // handler; the controller only subscribes while open.
+      //
+      // The one assertion in this file with no public surface, and it stays
+      // private on purpose: a listener that fires and finds the panel already
+      // closed does nothing anyone can see, so "is it subscribed" has no
+      // observable consequence to assert instead. The claim is about the
+      // resource, not the behaviour.
       const el = mount(markup);
       await el.updateComplete;
       expect(el._dismiss._active).to.equal(false);
@@ -236,11 +242,30 @@ describe('DismissController adoption — focus', () => {
   const OPTION = '<arc-option value="a">Alpha</arc-option>';
 
   const cases = [
-    ['arc-multi-select', `<arc-multi-select>${OPTION}</arc-multi-select>`, '.ms__input', (el) => el._open],
-    ['arc-combobox', '<arc-combobox></arc-combobox>', 'input', (el) => el._open],
+    // Each `state` reader is the component's *published* answer to "is it
+    // open": the two comboboxes say so on aria-expanded, which is what a
+    // screen reader follows.
+    [
+      'arc-multi-select',
+      `<arc-multi-select>${OPTION}</arc-multi-select>`,
+      '.ms__input',
+      (el) => el.shadowRoot.querySelector('[aria-expanded]')?.getAttribute('aria-expanded') === 'true',
+    ],
+    [
+      'arc-combobox',
+      '<arc-combobox></arc-combobox>',
+      'input',
+      (el) => el.shadowRoot.querySelector('[aria-expanded]')?.getAttribute('aria-expanded') === 'true',
+    ],
     // tag-input does not open a panel on focus; what it does carry is the
-    // focus ring, which was equally stuck.
-    ['arc-tag-input', '<arc-tag-input></arc-tag-input>', 'input', (el) => el._focused],
+    // focus ring, which was equally stuck — and the ring is a class, so it is
+    // as visible to a test as it is to a reader.
+    [
+      'arc-tag-input',
+      '<arc-tag-input></arc-tag-input>',
+      'input',
+      (el) => el.shadowRoot.querySelector('.ti__field').classList.contains('ti__field--focused'),
+    ],
   ];
 
   for (const [tag, markup, fieldSel, state] of cases) {

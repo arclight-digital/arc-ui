@@ -39,7 +39,16 @@ async function block(width = '200px', code = '') {
 }
 
 /** Overflow is measured off layout and applied through reactive state. */
-const overflowing = (el) => el._overflows;
+/**
+ * Whether the block is showing itself as horizontally overflowing.
+ *
+ * Read off the class the state drives — `copy--quiet` moves the copy button
+ * out of the way of a scrollbar. `_overflows` is state, and the whole point of
+ * the finding this file pins is that the state got *stuck*, which only matters
+ * because it was visible.
+ */
+const overflowing = (el) =>
+  el.shadowRoot.querySelector('.code-block__copy')?.classList.contains('code-block__copy--quiet') ?? false;
 const copyButton = (el) => el.shadowRoot.querySelector('.code-block__copy');
 
 describe('arc-code-block overflow measurement', () => {

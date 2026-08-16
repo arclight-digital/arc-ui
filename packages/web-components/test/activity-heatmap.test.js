@@ -147,6 +147,22 @@ describe('empty data', () => {
   });
 });
 
+/**
+ * Which day the heatmap is showing as active, read off the cell it marks.
+ *
+ * `_activeIndex` is state; `is-active` and the detail bubble are what a user
+ * sees. Hovering is also how the index is set in practice, so the setup below
+ * goes through the pointer rather than through the field.
+ */
+const activeAt = (el) => {
+  const i = cells(el).findIndex((c) => c.classList.contains('is-active'));
+  return i === -1 ? null : i;
+};
+const hover = (el, i) => {
+  cells(el)[i].dispatchEvent(new PointerEvent('pointerover', { bubbles: true, composed: true }));
+  return el.updateComplete;
+};
+
 describe('detail bubble', () => {
   it('shows the date with the label, or the bare value, or "No activity"', async () => {
     const el = await heatmap([
@@ -154,19 +170,16 @@ describe('detail bubble', () => {
       { date: '2026-03-05', value: 3 },
     ], `${END} weeks="2"`);
 
-    el._activeIndex = 3; // 2026-03-04
-    await el.updateComplete;
+    await hover(el, 3); // 2026-03-04
     let detail = el.shadowRoot.querySelector('[part="detail"]');
     expect(detail.textContent).to.include('Mar 4, 2026');
     expect(detail.textContent).to.include('7 commits');
 
-    el._activeIndex = 4; // 2026-03-05, no label
-    await el.updateComplete;
+    await hover(el, 4); // 2026-03-05, no label
     detail = el.shadowRoot.querySelector('[part="detail"]');
     expect(detail.textContent).to.include('3');
 
-    el._activeIndex = 6; // an empty day
-    await el.updateComplete;
+    await hover(el, 6); // an empty day
     detail = el.shadowRoot.querySelector('[part="detail"]');
     expect(detail.textContent).to.include('No activity');
   });
@@ -184,28 +197,28 @@ describe('keyboard grid navigation', () => {
       `${END} weeks="2"`);
 
     await key(el, 'ArrowDown');            // first press lands, no jump
-    expect(el._activeIndex).to.equal(0);
+    expect(activeAt(el)).to.equal(0);
     await key(el, 'ArrowDown');
-    expect(el._activeIndex).to.equal(1);
+    expect(activeAt(el)).to.equal(1);
     await key(el, 'ArrowRight');           // a week later, same weekday
-    expect(el._activeIndex).to.equal(8);
+    expect(activeAt(el)).to.equal(8);
     await key(el, 'ArrowUp');
-    expect(el._activeIndex).to.equal(7);
+    expect(activeAt(el)).to.equal(7);
     await key(el, 'ArrowLeft');
-    expect(el._activeIndex).to.equal(0);
+    expect(activeAt(el)).to.equal(0);
     await key(el, 'ArrowUp');              // clamped at the first day
-    expect(el._activeIndex).to.equal(0);
+    expect(activeAt(el)).to.equal(0);
 
     await key(el, 'End');
-    expect(el._activeIndex).to.equal(13);
+    expect(activeAt(el)).to.equal(13);
     expect(cells(el)[13].classList.contains('is-active')).to.equal(true);
     const live = el.shadowRoot.querySelector('[role="status"]');
     expect(live.textContent).to.include('Launch day');
 
     await key(el, 'Home');
-    expect(el._activeIndex).to.equal(0);
+    expect(activeAt(el)).to.equal(0);
     await key(el, 'Escape');
-    expect(el._activeIndex).to.equal(null);
+    expect(activeAt(el)).to.equal(null);
     expect(el.shadowRoot.querySelector('[part="detail"]')).to.equal(null);
   });
 

@@ -108,18 +108,25 @@ describe('ResizeObserver components re-measure on width change', () => {
     // `group.scrollWidth / speed` (marquee.js:126) — the *content* width, not
     // the host's. The content is a nowrap group, so narrowing the host does not
     // change it, and a test asserting that it does is asserting a bug.
-    const slow = el._animDuration;
-    expect(slow, 'a duration is computed at all').to.be.a('string');
+    // Read off the custom property the track carries, which is where the
+    // duration actually drives the animation. `_animDuration` is state, and a
+    // marquee that computed it and stopped writing it would scroll at the
+    // 10s default while every assertion against the field passed.
+    const duration = () =>
+      el.shadowRoot.querySelector('[part="track"]').style.getPropertyValue('--marquee-duration');
+
+    const slow = duration();
+    expect(slow, 'a duration is computed at all').to.match(/^[\d.]+s$/);
 
     el.style.width = '150px';
     await observed();
-    expect(el._animDuration, 'host width must not change the scroll duration').to.equal(slow);
+    expect(duration(), 'host width must not change the scroll duration').to.equal(slow);
 
     el.speed = 200;
     await settle(el);
-    const faster = await until(() => el._animDuration !== slow);
+    const faster = await until(() => duration() !== slow);
     expect(faster, 'quadrupling speed did not shorten the duration').to.equal(true);
-    expect(parseFloat(el._animDuration)).to.be.below(parseFloat(slow));
+    expect(parseFloat(duration())).to.be.below(parseFloat(slow));
   });
 
   // NOT COVERED: arc-code-block's re-measure on resize.
@@ -145,7 +152,9 @@ describe('ResizeObserver components re-measure on width change', () => {
     await settle(el);
     await observed();
 
-    const overflowing = () => (el._overflowItems?.length ?? 0);
+    // The rendered overflow menu, not the array behind it: "moves items into
+    // the overflow menu" is a claim about what the toolbar draws.
+    const overflowing = () => el.shadowRoot.querySelectorAll('.overflow__item').length;
     expect(overflowing(), 'nothing overflows at full width').to.equal(0);
 
     el.style.width = '120px';

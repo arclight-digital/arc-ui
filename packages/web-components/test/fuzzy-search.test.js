@@ -29,6 +29,20 @@ const beats = (query, winner, loser) => {
   expect(w, `"${query}": "${winner}" should outrank "${loser}"`).to.be.greaterThan(l);
 };
 
+
+/**
+ * Type into the palette's own field.
+ *
+ * `_query` is state; the input is how a query gets there, and going through it
+ * also exercises the `@input` handler that a direct assignment skips.
+ */
+async function type(el, text) {
+  const field = el.shadowRoot.querySelector('.palette__input');
+  field.value = text;
+  field.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+  await el.updateComplete;
+}
+
 describe('fuzzy matching', () => {
   it('finds a subsequence the old substring filter could not', () => {
     expect(score('cmdpal', 'Command Palette')).to.be.a('number');
@@ -161,8 +175,7 @@ describe('arc-command-palette search', () => {
     const el = await palette();
     el.open = true;
     await el.updateComplete;
-    el._query = 'cp';
-    await el.updateComplete;
+    await type(el, 'cp');
     expect(labels(el)[0]).to.equal('Command Palette');
   });
 
@@ -170,8 +183,7 @@ describe('arc-command-palette search', () => {
     const el = await palette();
     el.open = true;
     await el.updateComplete;
-    el._query = 'popup';
-    await el.updateComplete;
+    await type(el, 'popup');
     expect(labels(el)).to.deep.equal(['Modal']);
   });
 
@@ -179,8 +191,7 @@ describe('arc-command-palette search', () => {
     const el = await palette();
     el.open = true;
     await el.updateComplete;
-    el._query = 'mod';
-    await el.updateComplete;
+    await type(el, 'mod');
     const mark = el.shadowRoot.querySelector('.palette__item-match');
     expect(mark, 'a match should be marked').to.exist;
     expect(mark.textContent).to.equal('Mod');
@@ -300,8 +311,7 @@ describe('result cap', () => {
     await tick();
     el.open = true;
     await el.updateComplete;
-    el._query = 'item';
-    await el.updateComplete;
+    await type(el, 'item');
 
     expect(el.shadowRoot.querySelectorAll('.palette__item').length).to.equal(5);
   });

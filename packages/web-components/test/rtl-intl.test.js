@@ -126,7 +126,11 @@ describe('the calendars use the shared source', () => {
     // 2021-08-01 was a Sunday. Week starting Monday => six leading blanks.
     const el = mount('<arc-calendar year="2021" month="7" locale="en-GB"></arc-calendar>');
     await el.updateComplete;
-    expect(el._firstDay).to.equal(1);
+    // Read off the header row rather than off `_firstDay`: a calendar that
+    // resolved the locale's first day and laid the grid out from a different
+    // one is exactly the bug, and the field alone cannot tell them apart.
+    const dows = [...el.shadowRoot.querySelectorAll('[part="dow"]')].map((n) => n.textContent.trim());
+    expect(dows[0], 'en-GB weeks start on Monday').to.equal('Mon');
     expect(el.shadowRoot.textContent).to.include('August');
   });
 

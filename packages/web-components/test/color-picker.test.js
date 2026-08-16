@@ -35,6 +35,22 @@ const crosshair = (el) => el.shadowRoot.querySelector('.picker__crosshair');
 const hueThumb = (el) => el.shadowRoot.querySelector('.picker__hue-thumb');
 const swatches = (el) => [...el.shadowRoot.querySelectorAll('.picker__swatch')];
 
+/**
+ * The HSL the picker is *showing*, read back out of the styles it renders.
+ *
+ * `_hue`/`_sat`/`_lit` are state, and state is not the contract: a picker that
+ * parsed a hex perfectly and stopped positioning the crosshair or the hue thumb
+ * would satisfy every assertion made against those fields and show the wrong
+ * colour. The raw `style` attribute is read rather than the computed value
+ * because the browser serialises `hsl()` to `rgb()`, which would throw away the
+ * sub-integer precision finding #62 is about.
+ */
+const styleOf = (node) => node.getAttribute('style') ?? '';
+const shownHue = (el) => Number(/hsl\(\s*([-\d.]+)/.exec(styleOf(hueThumb(el)))[1]);
+const shownSat = (el) => Number(/left:\s*([-\d.]+)%/.exec(styleOf(crosshair(el)))[1]);
+const shownLit = (el) => 100 - Number(/top:\s*([-\d.]+)%/.exec(styleOf(crosshair(el)))[1]);
+const shownHsl = (el) => [shownHue(el), shownSat(el), shownLit(el)];
+
 /** Type into the hex field and commit the way the component defines it. */
 async function typeHex(el, text, { commit = 'blur' } = {}) {
   const f = hexField(el);
@@ -63,9 +79,12 @@ describe('arc-color-picker colour conversion', () => {
   for (const hex of EXACT) {
     it(`round-trips ${hex} through HSL and back`, async () => {
       const el = await picker('', { value: hex });
-      // _parseHex ran on the value; rebuilding from the parsed HSL must land on
-      // the same colour, or the area and the swatch disagree about what is set.
-      expect(el._hslToHex(el._hue, el._sat, el._lit)).to.equal(hex);
+      // _parseHex ran on the value; rebuilding from the HSL *the picker
+      // rendered* must land on the same colour, or the area and the swatch
+      // disagree about what is set. `_hslToHex` is used here as the tool, not
+      // as the subject — the numbers going into it are the ones that reached
+      // the DOM, so this closes the hex → HSL → styles → hex loop.
+      expect(el._hslToHex(...shownHsl(el))).to.equal(hex);
     });
   }
 
@@ -81,13 +100,13 @@ describe('arc-color-picker colour conversion', () => {
    */
   it('round-trips a colour off the integer-HSL lattice', async () => {
     const el = await picker('', { value: '#4d7ef7' });
-    expect(el._hslToHex(el._hue, el._sat, el._lit)).to.equal('#4d7ef7');
+    expect(el._hslToHex(...shownHsl(el))).to.equal('#4d7ef7');
   });
 
   it('round-trips its own default value', async () => {
     const el = await picker();
     expect(el.value).to.equal('#4d7ef7');
-    expect(el._hslToHex(el._hue, el._sat, el._lit)).to.equal(el.value);
+    expect(el._hslToHex(...shownHsl(el))).to.equal(el.value);
   });
 
   it('keeps sub-integer precision rather than snapping', async () => {
@@ -95,49 +114,49 @@ describe('arc-color-picker colour conversion', () => {
     // round trips above would be the only thing failing and it would be easy to
     // read them as a conversion-arithmetic problem instead.
     const el = await picker('', { value: '#4d7ef7' });
-    const whole = [el._hue, el._sat, el._lit].every((n) => Number.isInteger(n));
+    const whole = shownHsl(el).every((n) => Number.isInteger(n));
     expect(whole, 'HSL state was rounded to integers').to.equal(false);
   });
 
   it('reads hue from a pure red', async () => {
     const el = await picker('', { value: '#ff0000' });
-    expect(el._hue).to.equal(0);
-    expect(el._sat).to.equal(100);
-    expect(el._lit).to.equal(50);
+    expect(shownHue(el)).to.equal(0);
+    expect(shownSat(el)).to.equal(100);
+    expect(shownLit(el)).to.equal(50);
   });
 
   it('reads hue from a pure green', async () => {
     const el = await picker('', { value: '#00ff00' });
-    expect(el._hue).to.equal(120);
+    expect(shownHue(el)).to.equal(120);
   });
 
   it('reads hue from a pure blue', async () => {
     const el = await picker('', { value: '#0000ff' });
-    expect(el._hue).to.equal(240);
+    expect(shownHue(el)).to.equal(240);
   });
 
   it('gives an achromatic colour zero saturation', async () => {
     // The `d === 0` branch: hue is genuinely undefined for grey and is pinned
     // to 0 rather than left as NaN.
     const el = await picker('', { value: '#808080' });
-    expect(el._sat).to.equal(0);
-    expect(el._hue).to.equal(0);
+    expect(shownSat(el)).to.equal(0);
+    expect(shownHue(el)).to.equal(0);
   });
 
   it('ignores a malformed value rather than rendering NaN', async () => {
     const el = await picker('', { value: '#4d7ef7' });
-    const before = [el._hue, el._sat, el._lit];
+    const before = shownHsl(el);
     el.value = 'not-a-colour';
     await settle(el);
-    expect([el._hue, el._sat, el._lit], 'garbage reached the HSL state').to.eql(before);
+    expect(shownHsl(el), 'garbage reached the HSL state').to.eql(before);
   });
 
   it('ignores a three-digit shorthand, which it does not claim to accept', async () => {
     const el = await picker('', { value: '#4d7ef7' });
-    const before = el._hue;
+    const before = shownHue(el);
     el.value = '#f00';
     await settle(el);
-    expect(el._hue).to.equal(before);
+    expect(shownHue(el)).to.equal(before);
   });
 });
 
@@ -240,14 +259,14 @@ describe('arc-color-picker area and hue interaction', () => {
     // re-parses the committed hex and lands on that colour's *true* saturation.
     // Since #62 that is a float, and the small drift is the 8-bit hex grid
     // rather than a rounding bug.
-    expect(el._sat).to.be.closeTo(25, 0.5);
+    expect(shownSat(el)).to.be.closeTo(25, 0.5);
   });
 
   it('reads lightness from the inverted vertical position', async () => {
     const el = await picker('', { value: '#ff0000' });
     drag(area(el), [at(area(el), 1, 0.25)], { moveTarget: window });
     await settle(el);
-    expect(el._lit, 'top of the area should be light').to.be.closeTo(75, 0.5);
+    expect(shownLit(el), 'top of the area should be light').to.be.closeTo(75, 0.5);
   });
 
   it('clamps a drag that leaves the area', async () => {
@@ -259,23 +278,23 @@ describe('arc-color-picker area and hue interaction', () => {
       { moveTarget: window },
     );
     await settle(el);
-    expect(el._sat).to.equal(0);
-    expect(el._lit).to.equal(100);
+    expect(shownSat(el)).to.equal(0);
+    expect(shownLit(el)).to.equal(100);
   });
 
   it('reads hue from the horizontal position on the track', async () => {
     const el = await picker('', { value: '#ff0000' });
     drag(hueTrack(el), [at(hueTrack(el), 0.5, 0.5)], { moveTarget: window });
     await settle(el);
-    expect(el._hue).to.equal(180);
+    expect(shownHue(el)).to.equal(180);
   });
 
   it('keeps saturation and lightness while the hue changes', async () => {
     const el = await picker('', { value: '#4d7ef7' });
-    const [s, l] = [el._sat, el._lit];
+    const [s, l] = [shownSat(el), shownLit(el)];
     drag(hueTrack(el), [at(hueTrack(el), 0.25, 0.5)], { moveTarget: window });
     await settle(el);
-    expect([el._sat, el._lit], 'the hue drag disturbed S/L').to.eql([s, l]);
+    expect([shownSat(el), shownLit(el)], 'the hue drag disturbed S/L').to.eql([s, l]);
   });
 
   it('stops tracking the pointer once released', async () => {
@@ -395,7 +414,7 @@ describe('arc-color-picker presets', () => {
     const el = await picker('', { presets: PRESETS, value: '#ffffff' });
     swatches(el)[2].click();
     await settle(el);
-    expect(el._hue).to.equal(240);
+    expect(shownHue(el)).to.equal(240);
   });
 
   it('matches an uppercase preset against the lowercase value', async () => {

@@ -31,12 +31,27 @@ async function ms(attrs = '', props = {}) {
   Object.assign(el, props);
   await settle(el);
   // The options arrive by slotchange, so one settle is not always enough.
-  await until(() => el._options.length === 3);
+  await until(() => el.shadowRoot.querySelectorAll('.ms__option').length === 3);
   await settle(el);
   return el;
 }
 
 const input = (el) => el.shadowRoot.querySelector('.ms__input');
+/**
+ * Which option the listbox has virtual focus on, as an index, read off
+ * `aria-activedescendant`.
+ *
+ * `_listbox.activeIndex` is the controller's state; the attribute is what an
+ * assistive technology follows, and it is the only half of virtual focus a
+ * user has. The controller's own suite tests the field directly — here the
+ * subject is whether this component wires it up.
+ */
+const activeOption = (el) => {
+  const id = input(el).getAttribute('aria-activedescendant');
+  if (!id) return -1;
+  return [...el.shadowRoot.querySelectorAll('.ms__option')]
+    .findIndex((o) => o.id === id);
+};
 const dropdown = (el) => el.shadowRoot.querySelector('.ms__dropdown');
 const options = (el) => [...el.shadowRoot.querySelectorAll('.ms__option')];
 const optionText = (el) => options(el).map((o) => o.textContent.trim());
@@ -193,8 +208,7 @@ describe('arc-multi-select selection', () => {
     await type(el, 'blu');
     optionFor(el, 'Blue').click();
     await settle(el);
-    expect(el._query).to.equal('');
-    expect(input(el).value).to.equal('');
+    expect(input(el).value, 'the query field is what a user sees').to.equal('');
     expect(optionText(el), 'the list stayed filtered').to.eql(['Blue', 'Black', 'Crimson']);
   });
 
@@ -351,10 +365,10 @@ describe('arc-multi-select keyboard', () => {
     await type(el, 'bl');
     keyOn(input(el), 'ArrowDown');
     await settle(el);
-    const activeBefore = el._listbox.activeIndex;
+    const activeBefore = activeOption(el);
     keyOn(input(el), 'End');
     await settle(el);
-    expect(el._listbox.activeIndex, 'End moved the listbox instead of the caret').to.equal(
+    expect(activeOption(el), 'End moved the listbox instead of the caret').to.equal(
       activeBefore,
     );
   });
@@ -363,7 +377,7 @@ describe('arc-multi-select keyboard', () => {
     const el = await opened();
     keyOn(input(el), 'End');
     await settle(el);
-    expect(el._listbox.activeIndex).to.equal(2);
+    expect(activeOption(el)).to.equal(2);
   });
 });
 

@@ -132,6 +132,12 @@ describe('arc-clock lifecycle and a11y', () => {
   afterEach(cleanup);
 
   it('starts the timer on connect and stops it on disconnect', async () => {
+    // Left against the interval handle rather than against the rendered time.
+    // The observable version — "the display changes while connected and stops
+    // changing after removal" — needs two waits of just over a second, which
+    // is past Mocha's 2000ms and would buy a slow, flaky test for a claim this
+    // states directly. One of two deliberate private-state assertions in the
+    // suite; the other is in overlay-adoption.test.js.
     const el = mount('<arc-clock></arc-clock>');
     await el.updateComplete;
     expect(el._intervalId).to.not.be.null;

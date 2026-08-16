@@ -37,7 +37,7 @@ async function table(attrs = '', { rows = ROWS, columns = COLUMNS } = {}) {
   const el = mount(`<arc-data-table ${attrs}>${columns}</arc-data-table>`);
   el.rows = rows;
   await settle(el);
-  await until(() => el._columns.length > 0);
+  await until(() => el.shadowRoot.querySelectorAll('th').length > 0);
   await settle(el);
   return el;
 }
@@ -521,7 +521,7 @@ describe('arc-data-table reacting to input', () => {
     col.key = 'score';
     col.label = 'Extra';
     el.appendChild(col);
-    await until(() => el._columns.length === 3);
+    await until(() => dataHeaders(el).length === 3);
     await settle(el);
     expect(dataHeaders(el).length).to.equal(3);
   });
@@ -626,37 +626,47 @@ describe('selection pruning guards', () => {
   const checkboxes = (el) =>
     [...el.shadowRoot.querySelectorAll('tbody input[type="checkbox"]')];
 
+  /** How many rows are checked, which is the selection as anyone can see it. */
+  const selectedCount = (el) => checkboxes(el).filter((c) => c.checked).length;
+
   it('leaves the selection alone when a row object survives a rows reassignment', async () => {
     // The `kept.size !== size` guard: if the set is unchanged it must not be
     // replaced, or every rows update churns identity and re-fires selection.
+    // Asserted as the churn itself — a spurious `arc-select` — rather than as
+    // Set identity, which is the mechanism and not the promise.
     const el = await table('selectable');
     checkboxes(el)[0].click();
     await settle(el);
-    const before = el._selectedRows;
 
+    const seen = record(el, ['arc-select']);
     el.rows = [...ROWS]; // same objects, new array
     await settle(el);
-    expect(el._selectedRows, 'the set was replaced despite nothing changing').to.equal(before);
+
+    expect(seen, 'nothing changed, so nothing should be announced').to.deep.equal([]);
+    expect(selectedCount(el), 'and the row is still selected').to.equal(1);
   });
 
   it('drops a selected row that is no longer present', async () => {
     const el = await table('selectable');
     checkboxes(el)[0].click();
     await settle(el);
-    expect(el._selectedRows.size).to.equal(1);
+    expect(selectedCount(el)).to.equal(1);
 
     el.rows = ROWS.slice(1); // Carol removed
     await settle(el);
-    expect(el._selectedRows.size, 'a removed row stayed selected').to.equal(0);
+    expect(selectedCount(el), 'a removed row stayed selected').to.equal(0);
   });
 
   it('does no work when nothing is selected', async () => {
-    // The `size === 0` early return. Asserted through behaviour: an empty
-    // selection must stay the same object across a rows change.
+    // The `size === 0` early return, asserted the same way: an empty selection
+    // crossing a rows change must stay silent and stay empty.
     const el = await table('selectable');
-    const before = el._selectedRows;
+    const seen = record(el, ['arc-select']);
+
     el.rows = ROWS.slice(1);
     await settle(el);
-    expect(el._selectedRows).to.equal(before);
+
+    expect(seen).to.deep.equal([]);
+    expect(selectedCount(el)).to.equal(0);
   });
 });

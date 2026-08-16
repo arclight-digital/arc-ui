@@ -643,6 +643,9 @@ describe('arc-menubar dismissal and state', () => {
       await settle(el);
       triggers(el)[0].click();
       await settle(el);
+      // One of the suite's few deliberate private-state assertions (see
+      // HANDOFF's testing rules): a map that leaks entries has no rendered
+      // consequence to assert instead — the claim is about the resource.
       expect(el._positions.size, 'the map itself is cleaned up correctly').to.equal(0);
     }
 

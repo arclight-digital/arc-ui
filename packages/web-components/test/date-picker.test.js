@@ -41,6 +41,18 @@ async function opened(attrs = '', props = {}) {
   return el;
 }
 
+/**
+ * Which panel the picker is showing, per the labels on its own nav buttons.
+ *
+ * `_mode` is state; the day/month/year grids and the "Previous month" /
+ * "Previous year" labels are what a user meets, and the labels name the mode
+ * unambiguously where the grid markup does not.
+ */
+const mode = (el) => ({
+  'Previous month': 'days',
+  'Previous year': 'months',
+  'Previous years': 'years',
+}[el.shadowRoot.querySelector('.nav-btn')?.getAttribute('aria-label')] ?? null);
 const input = (el) => el.shadowRoot.querySelector('[part="input"]');
 const dropdown = (el) => el.shadowRoot.querySelector('[part="dropdown"]');
 const title = (el) => el.shadowRoot.querySelector('.calendar-title')?.textContent.trim();
@@ -166,13 +178,13 @@ describe('arc-date-picker opening and closing', () => {
     const el = await opened('', { value: WED });
     el.shadowRoot.querySelector('.calendar-title').click();
     await settle(el);
-    expect(el._mode).to.equal('months');
+    expect(mode(el)).to.equal('months');
 
     input(el).click();
     await settle(el);
     input(el).click();
     await settle(el);
-    expect(el._mode).to.equal('days');
+    expect(mode(el)).to.equal('days');
   });
 
   it('moves focus into the grid when opened', async () => {
@@ -373,7 +385,7 @@ describe('arc-date-picker month and mode navigation', () => {
     await settle(el);
     gridCells(el)[0].click(); // 2021
     await settle(el);
-    expect(el._mode).to.equal('months');
+    expect(mode(el)).to.equal('months');
     expect(title(el)).to.equal('2021');
   });
 

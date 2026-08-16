@@ -23,6 +23,18 @@ const nextFrame = () => new Promise((resolve) => requestAnimationFrame(() => res
 
 /** The scroll container inside a conversation's shadow root. */
 const scroller = (conversation) => conversation.shadowRoot.querySelector('.conversation');
+/**
+ * How far the transcript is from its bottom, in px, computed from the scroll
+ * box rather than read off `_distanceFromEnd`.
+ *
+ * Same arithmetic as the getter, deliberately: the claim these tests make is
+ * about where the view *is*, and reading the component's own opinion of that
+ * would pass just as well if the pin never moved the scroller.
+ */
+const distanceFromEnd = (el) => {
+  const c = scroller(el);
+  return Math.max(0, c.scrollHeight - c.scrollTop - c.clientHeight);
+};
 
 /** Mount a fixed-height conversation with enough messages to overflow it. */
 async function mountOverflowing(count = 12) {
@@ -179,7 +191,7 @@ describe('arc-conversation auto-scroll', () => {
     const el = await mountOverflowing();
     const c = scroller(el);
     expect(c.scrollHeight, 'the fixture must actually overflow').to.be.greaterThan(c.clientHeight);
-    expect(el._distanceFromEnd).to.be.at.most(1);
+    expect(distanceFromEnd(el)).to.be.at.most(1);
   });
 
   it('follows an appended message when the reader is near the bottom', async () => {
@@ -194,7 +206,7 @@ describe('arc-conversation auto-scroll', () => {
     await tick(); // MutationObserver flush
     await nextFrame(); // the pin re-runs once the message's shadow has rendered
 
-    expect(el._distanceFromEnd, 'the view must stick to the new end').to.be.at.most(1);
+    expect(distanceFromEnd(el), 'the view must stick to the new end').to.be.at.most(1);
   });
 
   it('never yanks a reader who has scrolled up', async () => {
@@ -221,7 +233,7 @@ describe('arc-conversation auto-scroll', () => {
     await tick();
     await nextFrame();
 
-    expect(el._distanceFromEnd).to.be.at.most(1);
+    expect(distanceFromEnd(el)).to.be.at.most(1);
   });
 
   it('leaves scrolling alone entirely when autoScroll is false', async () => {
@@ -235,7 +247,7 @@ describe('arc-conversation auto-scroll', () => {
     await msg.updateComplete;
     await tick();
 
-    expect(el._distanceFromEnd, 'the appended message must sit below the fold').to.be.greaterThan(1);
+    expect(distanceFromEnd(el), 'the appended message must sit below the fold').to.be.greaterThan(1);
   });
 });
 
@@ -245,10 +257,10 @@ describe('arc-conversation scrollToEnd()', () => {
   it('scrolls the container to the bottom on demand', async () => {
     const el = await mountOverflowing();
     scrollTo(el, 0);
-    expect(el._distanceFromEnd).to.be.greaterThan(0);
+    expect(distanceFromEnd(el)).to.be.greaterThan(0);
 
     el.scrollToEnd();
-    expect(el._distanceFromEnd).to.be.at.most(1);
+    expect(distanceFromEnd(el)).to.be.at.most(1);
   });
 });
 

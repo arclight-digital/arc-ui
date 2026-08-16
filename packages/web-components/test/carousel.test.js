@@ -42,6 +42,16 @@ async function carousel(attrs = '', slides = SLIDES) {
 }
 
 const dots = (el) => [...el.shadowRoot.querySelectorAll('[part="dot"]')];
+/**
+ * The slide the carousel is showing, read off its own dots.
+ *
+ * `_current` is component state, and state is not a contract: a carousel that
+ * tracked the index perfectly and never rendered it would satisfy every
+ * assertion made against the field. The selected dot is what a sighted user
+ * sees and what a screen reader announces, so it is the thing to assert.
+ * `show-dots` is on by default, so it is available in every fixture here.
+ */
+const current = (el) => dots(el).findIndex((d) => d.getAttribute('aria-selected') === 'true');
 const prevArrow = (el) => el.shadowRoot.querySelector('[part="arrow-prev"]');
 const nextArrow = (el) => el.shadowRoot.querySelector('[part="arrow-next"]');
 const viewport = (el) => el.shadowRoot.querySelector('[part="viewport"]');
@@ -144,11 +154,11 @@ describe('arc-carousel navigation', () => {
 
     nextArrow(el).click();
     await settle(el);
-    expect(el._current).to.equal(1);
+    expect(current(el)).to.equal(1);
 
     prevArrow(el).click();
     await settle(el);
-    expect(el._current).to.equal(0);
+    expect(current(el)).to.equal(0);
   });
 
   it('announces the new index on detail.value', async () => {
@@ -180,11 +190,11 @@ describe('arc-carousel navigation', () => {
 
     prevArrow(el).click();
     await settle(el);
-    expect(el._current, 'first → last').to.equal(2);
+    expect(current(el), 'first → last').to.equal(2);
 
     nextArrow(el).click();
     await settle(el);
-    expect(el._current, 'last → first').to.equal(0);
+    expect(current(el), 'last → first').to.equal(0);
   });
 
   it('clamps at both ends when not looping', async () => {
@@ -194,13 +204,13 @@ describe('arc-carousel navigation', () => {
 
     prevArrow(el).click();
     await settle(el);
-    expect(el._current, 'held at the first slide').to.equal(0);
+    expect(current(el), 'held at the first slide').to.equal(0);
 
     for (let i = 0; i < 5; i++) {
       nextArrow(el).click();
       await settle(el);
     }
-    expect(el._current, 'held at the last slide').to.equal(2);
+    expect(current(el), 'held at the last slide').to.equal(2);
   });
 
   it('navigates directly from a dot, and moves the selection with it', async () => {
@@ -209,7 +219,7 @@ describe('arc-carousel navigation', () => {
     dots(el)[2].click();
     await settle(el);
 
-    expect(el._current).to.equal(2);
+    expect(current(el)).to.equal(2);
     expect(dots(el).map((d) => d.getAttribute('aria-selected')))
       .to.deep.equal(['false', 'false', 'true']);
   });
@@ -248,21 +258,21 @@ describe('arc-carousel navigation', () => {
     keyOn(viewport(el), 'ArrowLeft');
     await settle(el);
 
-    expect(el._current, 'the slide did not move').to.equal(0);
+    expect(current(el), 'the slide did not move').to.equal(0);
     expect(seen, 'so nothing is announced').to.deep.equal([]);
   });
 
   it('stays silent at the last rail', async () => {
     const el = await carousel();
     el.loop = false;
-    el._current = 2;
+    dots(el)[2].click();
     await settle(el);
 
     const seen = record(el, ['arc-change']);
     keyOn(viewport(el), 'ArrowRight');
     await settle(el);
 
-    expect(el._current).to.equal(2);
+    expect(current(el)).to.equal(2);
     expect(seen).to.deep.equal([]);
   });
 
@@ -276,7 +286,7 @@ describe('arc-carousel navigation', () => {
     keyOn(viewport(el), 'ArrowRight');
     await settle(el);
 
-    expect(el._current).to.equal(1);
+    expect(current(el)).to.equal(1);
     expect(seen).to.deep.equal([['change', 1]]);
   });
 });
@@ -287,11 +297,11 @@ describe('arc-carousel keyboard', () => {
 
     keyOn(viewport(el), 'ArrowRight');
     await settle(el);
-    expect(el._current).to.equal(1);
+    expect(current(el)).to.equal(1);
 
     keyOn(viewport(el), 'ArrowLeft');
     await settle(el);
-    expect(el._current).to.equal(0);
+    expect(current(el)).to.equal(0);
   });
 
   it('claims the keys it handles and leaves the rest', async () => {
@@ -302,12 +312,12 @@ describe('arc-carousel keyboard', () => {
     await settle(el);
     expect(handled.defaultPrevented).to.equal(true);
 
-    const before = el._current;
+    const before = current(el);
     const ignored = new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true });
     viewport(el).dispatchEvent(ignored);
     await settle(el);
     expect(ignored.defaultPrevented).to.equal(false);
-    expect(el._current).to.equal(before);
+    expect(current(el)).to.equal(before);
   });
 });
 
@@ -323,16 +333,16 @@ describe('arc-carousel auto-play', () => {
     // rather than "the machine was busy". Observed ~2 in 6 full-suite runs
     // under load. What the test means is "it advances without help", so wait
     // for that rather than for the clock.
-    const advanced = await until(() => el._current !== 0, { timeout: 1500 });
+    const advanced = await until(() => current(el) !== 0, { timeout: 1500 });
 
     expect(advanced, 'the deck moved by itself within 1.5s').to.equal(true);
-    expect(el._current, 'and landed on a real slide').to.be.greaterThan(0);
+    expect(current(el), 'and landed on a real slide').to.be.greaterThan(0);
   });
 
   it('stays put without auto-play', async () => {
     const el = await carousel('interval="30"');
     await wait(120);
-    expect(el._current).to.equal(0);
+    expect(current(el)).to.equal(0);
   });
 
   it('pauses while the pointer is over it', async () => {
@@ -340,9 +350,9 @@ describe('arc-carousel auto-play', () => {
     const el = await carousel('auto-play interval="30" loop');
 
     region(el).dispatchEvent(new MouseEvent('mouseenter'));
-    const at = el._current;
+    const at = current(el);
     await wait(120);
-    expect(el._current, 'hovering holds the slide').to.equal(at);
+    expect(current(el), 'hovering holds the slide').to.equal(at);
 
     region(el).dispatchEvent(new MouseEvent('mouseleave'));
     // Poll, for the same reason 'advances on its own' does: this half asserts
@@ -350,7 +360,7 @@ describe('arc-carousel auto-play', () => {
     // interval is a guess about how busy the machine is. The hover half above
     // asserts nothing happens, which a fixed sleep can say honestly.
     expect(
-      await until(() => el._current !== at),
+      await until(() => current(el) !== at),
       'and it resumes on leave',
     ).to.equal(true);
   });
@@ -360,9 +370,9 @@ describe('arc-carousel auto-play', () => {
     const el = await carousel('auto-play interval="30" loop');
 
     region(el).dispatchEvent(new FocusEvent('focusin', { bubbles: true }));
-    const at = el._current;
+    const at = current(el);
     await wait(120);
-    expect(el._current, 'a keyboard user is not rushed').to.equal(at);
+    expect(current(el), 'a keyboard user is not rushed').to.equal(at);
   });
 
   it('stands down entirely under prefers-reduced-motion', async () => {
@@ -370,7 +380,7 @@ describe('arc-carousel auto-play', () => {
     const el = await carousel('auto-play interval="30" loop');
 
     await wait(120);
-    expect(el._current, 'no timer should have been started').to.equal(0);
+    expect(current(el), 'no timer should have been started').to.equal(0);
   });
 
   it('stops its timer on disconnect', async () => {
@@ -379,9 +389,9 @@ describe('arc-carousel auto-play', () => {
     await wait(60);
 
     el.remove();
-    const at = el._current;
+    const at = current(el);
     await wait(120);
 
-    expect(el._current, 'a detached carousel must not keep ticking').to.equal(at);
+    expect(current(el), 'a detached carousel must not keep ticking').to.equal(at);
   });
 });

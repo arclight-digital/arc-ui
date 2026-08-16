@@ -16,11 +16,24 @@
  * `open: flag(false, { blockedBy: 'disabled' })`, so the constraint runs on the
  * same controller as every other declared contract and holds on both paths.
  *
- * That makes most of this file **redundant by construction** —
- * `conformance.test.js` derives the property-path and markup cases from the
- * declaration for any component that declares `blockedBy`. What it keeps is the
- * two things a declaration cannot state: that clicking the field is the right
- * way in, and that these five specific components are the ones carrying it. A
+ * That makes most of this file **redundant by construction**, and V4-PLAN 2.6
+ * cut the redundant half. What replaces it is `props.test.js`'s `blockedBy`
+ * block, which tests the mechanism once, on the spine that implements it:
+ * refusal while blocked, refusal on the attribute path, reversion when the
+ * blocker turns on afterwards, and the allowed-default case. Five per-component
+ * copies of that assertion are the "one bug reported 238 times" shape — the
+ * subject was `props.js` in all five.
+ *
+ * (The plan's own note said `conformance.test.js` derived the property-path
+ * case. It does not: it checks that `blockedBy` names a real property, which is
+ * declaration validity rather than mechanism. Recorded because a trim
+ * justified by coverage that turns out not to exist is the failure mode ground
+ * rule 1 exists to prevent.)
+ *
+ * What stays is the three things neither of those can state: that clicking the
+ * field is the right way in, that a refused set schedules no render — which no
+ * declaration derives and a component's own update pipeline could still get
+ * wrong — and that these five specific components are the ones carrying it. A
  * sixth component acquiring the same prose and not the declaration is exactly
  * the regression this list catches and the derived suite cannot.
  */
@@ -69,20 +82,6 @@ describe('disabled controls and a programmatic open', () => {
       // its behaviour still looks correct — which is the point of #58.
       const meta = customElements.get(tag).elementProperties.get('open')?.arc;
       expect(meta?.blockedBy, `${tag} lost its blockedBy declaration`).to.equal('disabled');
-    });
-
-    it(`${tag} stays closed when open is set as a property`, async () => {
-      const el = mount(markup);
-      el.disabled = true;
-      await settle(el);
-
-      // anti-vacuity: it really is disabled, so this is not just an inert element
-      expect(el.disabled, `${tag} did not take disabled`).to.equal(true);
-
-      el.open = true;
-      await settle(el);
-
-      expect(el.open, `${tag} — documented as unable to open while disabled`).to.equal(false);
     });
 
     it(`${tag} does not even schedule a render for a refused set`, async () => {

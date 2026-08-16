@@ -10,7 +10,7 @@
  * submitting a code on arc-change submitted every incomplete prefix first.
  */
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup, tick } from './helpers.js';
+import { mount, cleanup, tick, record, only } from './helpers.js';
 
 import '../src/input/number-input.register.js';
 import '../src/input/otp-input.register.js';
@@ -27,16 +27,6 @@ import '../src/input/tag-input.register.js';
 import '../src/shared/option.register.js';
 
 afterEach(() => cleanup());
-
-/** Record both events in fire order. */
-function record(el) {
-  const seen = [];
-  el.addEventListener('arc-input', (e) => seen.push(['input', e.detail.value]));
-  el.addEventListener('arc-change', (e) => seen.push(['change', e.detail.value]));
-  return seen;
-}
-
-const only = (seen, kind) => seen.filter(([k]) => k === kind);
 
 describe('arc-number-input', () => {
   it('typing emits arc-input and does not commit', async () => {

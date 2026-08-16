@@ -68,6 +68,18 @@ const columnText = (el, key) => {
   return bodyRows(el).map((tr) => cellsOf(tr)[i]?.textContent.trim());
 };
 const cellAt = (el, r, c) => el.shadowRoot.querySelector(`[data-row="${r}"][data-col="${c}"]`);
+/**
+ * Where the grid's single tab stop is, as `[row, col]`.
+ *
+ * `_focusRow`/`_focusCol` are state, and state is not the contract: an APG grid
+ * that tracked the position perfectly and stopped rendering `tabindex="0"` on
+ * the cell would satisfy every assertion made against the fields and would be
+ * unreachable by keyboard. The tab stop is what a user lands on.
+ */
+const focusAt = (el) => {
+  const stop = el.shadowRoot.querySelector('[tabindex="0"]');
+  return stop ? [Number(stop.dataset.row), Number(stop.dataset.col)] : [null, null];
+};
 /** Click the nth *data* column header, so the index means the same with or without selection. */
 const clickHeader = (el, index, init = {}) =>
   dataHeaders(el)[index].dispatchEvent(new MouseEvent('click', { bubbles: true, ...init }));
@@ -637,10 +649,10 @@ describe('arc-data-grid inline editing', () => {
     const el = await grid();
     dblclick(cellsOf(bodyRows(el)[0])[1]);
     await settle(el);
-    const before = [el._focusRow, el._focusCol];
+    const before = focusAt(el);
     keyOn(editor(el), 'ArrowDown');
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal(before);
+    expect(focusAt(el)).to.deep.equal(before);
   });
 });
 
@@ -670,18 +682,18 @@ describe('arc-data-grid keyboard (APG grid)', () => {
     const el = await grid();
     keyOn(cellAt(el, 0, 0), 'ArrowUp');
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal([0, 0]);
+    expect(focusAt(el)).to.deep.equal([0, 0]);
     keyOn(cellAt(el, 0, 0), 'ArrowLeft');
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal([0, 0]);
+    expect(focusAt(el)).to.deep.equal([0, 0]);
 
     for (let i = 0; i < 10; i++) {
-      keyOn(cellAt(el, el._focusRow, el._focusCol), 'ArrowDown');
+      keyOn(cellAt(el, ...focusAt(el)), 'ArrowDown');
       await settle(el);
-      keyOn(cellAt(el, el._focusRow, el._focusCol), 'ArrowRight');
+      keyOn(cellAt(el, ...focusAt(el)), 'ArrowRight');
       await settle(el);
     }
-    expect([el._focusRow, el._focusCol]).to.deep.equal([ROWS.length, COLS.length - 1]);
+    expect(focusAt(el)).to.deep.equal([ROWS.length, COLS.length - 1]);
   });
 
   it('Home and End move within the row, and with ctrl to the grid corners', async () => {
@@ -690,19 +702,19 @@ describe('arc-data-grid keyboard (APG grid)', () => {
     await settle(el);
     keyOn(cellAt(el, 1, 0), 'End');
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal([1, COLS.length - 1]);
+    expect(focusAt(el)).to.deep.equal([1, COLS.length - 1]);
 
     keyOn(cellAt(el, 1, COLS.length - 1), 'Home');
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal([1, 0]);
+    expect(focusAt(el)).to.deep.equal([1, 0]);
 
     keyOn(cellAt(el, 1, 0), 'End', { ctrlKey: true });
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal([ROWS.length, COLS.length - 1]);
+    expect(focusAt(el)).to.deep.equal([ROWS.length, COLS.length - 1]);
 
     keyOn(cellAt(el, ROWS.length, COLS.length - 1), 'Home', { ctrlKey: true });
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal([0, 0]);
+    expect(focusAt(el)).to.deep.equal([0, 0]);
   });
 
   it('sorts from the keyboard with Enter, and multi-sorts with Shift+Enter', async () => {
@@ -794,7 +806,7 @@ describe('arc-data-grid keyboard (APG grid)', () => {
 
     keyOn(cellAt(el, 0, 0), 'ArrowRight');
     await settle(el);
-    expect(el._focusCol).to.equal(1); // anti-vacuity: we really left the checkbox
+    expect(focusAt(el)[1]).to.equal(1); // anti-vacuity: we really left the checkbox
     keyOn(cellAt(el, 0, 1), ' ');
     await settle(el);
 
@@ -828,7 +840,7 @@ describe('arc-data-grid keyboard (APG grid)', () => {
     await settle(el);
     keyOn(cellAt(el, 1, 1), 'ArrowRight');
     await settle(el);
-    expect([el._focusRow, el._focusCol]).to.deep.equal([1, 2]);
+    expect(focusAt(el)).to.deep.equal([1, 2]);
 
     keyOn(cellAt(el, 1, 2), ' ');
     await settle(el);
@@ -916,7 +928,9 @@ describe('arc-data-grid virtualization', () => {
     await settle(el);
 
     expect(first()).to.not.equal(before);
-    expect(el._startIndex).to.be.greaterThan(0);
+    // The window's own index, read off the row it rendered: cells carry their
+    // absolute `data-row`, so a window that moved says so in the DOM.
+    expect(Number(cellsOf(bodyRows(el)[0])[0].dataset.row)).to.be.greaterThan(1);
   });
 
   it('gives every rendered row the declared height so the maths stays true', async () => {
@@ -939,23 +953,35 @@ describe('arc-data-grid virtualization', () => {
     await until(() => wrapper.scrollTop > 0);
 
     expect(wrapper.scrollTop).to.be.greaterThan(0);
-    expect(el._focusRow).to.equal(MANY.length);
+    expect(focusAt(el)[0]).to.equal(MANY.length);
   });
 });
 
-describe('arc-data-grid horizontal scroll shadow', () => {
-  const WIDE = Array.from({ length: 8 }, (_, i) => ({
-    key: `c${i}`,
-    label: `Column ${i}`,
-    width: '200px',
-    pinned: i === 0,
-  }));
+/**
+ * A grid narrower than its columns, so the wrapper really overflows sideways.
+ *
+ * The `scrolled-x` class is the observable output of the scroll handler, and
+ * every teardown assertion below reads it — which only means anything if the
+ * table overflows in the first place.
+ */
+const WIDE = Array.from({ length: 8 }, (_, i) => ({
+  key: `c${i}`,
+  label: `Column ${i}`,
+  width: '200px',
+  pinned: i === 0,
+}));
 
+async function wideGrid() {
+  const el = mount('<arc-data-grid style="display:block; width: 300px"></arc-data-grid>');
+  el.columns = WIDE;
+  el.rows = [Object.fromEntries(WIDE.map((c) => [c.key, c.label]))];
+  await settle(el);
+  return el;
+}
+
+describe('arc-data-grid horizontal scroll shadow', () => {
   it('marks the wrapper once scrolled away from the pinned edge', async () => {
-    const el = mount('<arc-data-grid style="display:block; width: 300px"></arc-data-grid>');
-    el.columns = WIDE;
-    el.rows = [Object.fromEntries(WIDE.map((c) => [c.key, c.label]))];
-    await settle(el);
+    const el = await wideGrid();
 
     const wrapper = el.shadowRoot.querySelector('.grid-wrapper');
     expect(wrapper.classList.contains('scrolled-x')).to.equal(false);
@@ -970,42 +996,46 @@ describe('arc-data-grid horizontal scroll shadow', () => {
     expect(wrapper.classList.contains('scrolled-x')).to.equal(true);
   });
 
-  it('coalesces a burst of scroll events into one frame', async () => {
-    const el = mount('<arc-data-grid style="display:block; width: 300px"></arc-data-grid>');
-    el.columns = WIDE;
-    el.rows = [Object.fromEntries(WIDE.map((c) => [c.key, c.label]))];
-    await settle(el);
-
+  it('defers a burst of scroll events to one frame', async () => {
+    // Asserted through the class the frame writes rather than through the
+    // handle it holds. `_rafId !== null` only says a frame was booked; this
+    // says the work waited for it *and* then happened, which is the pair of
+    // claims coalescing actually makes.
+    const el = await wideGrid();
     const wrapper = el.shadowRoot.querySelector('.grid-wrapper');
+
     wrapper.scrollLeft = 120;
     for (let i = 0; i < 5; i++) wrapper.dispatchEvent(new Event('scroll'));
-    expect(el._rafId).to.not.equal(null);
+    expect(wrapper.classList.contains('scrolled-x'), 'nothing done synchronously').to.equal(false);
 
     await nextFrame();
     await settle(el);
-    expect(el._rafId).to.equal(null);
+    expect(wrapper.classList.contains('scrolled-x'), 'and done once the frame ran').to.equal(true);
   });
 });
 
 describe('arc-data-grid teardown', () => {
   it('cancels a pending frame on disconnect', async () => {
-    const el = await grid();
+    const el = await wideGrid();
     const wrapper = el.shadowRoot.querySelector('.grid-wrapper');
+    wrapper.scrollLeft = 120;
     wrapper.dispatchEvent(new Event('scroll'));
-    expect(el._rafId).to.not.equal(null);
 
     el.remove();
-    expect(el._rafId).to.equal(null);
+    await nextFrame();
+    expect(wrapper.classList.contains('scrolled-x'), 'the booked frame did no work').to.equal(false);
   });
 
   it('stops responding to scroll once disconnected', async () => {
-    const el = await grid();
+    const el = await wideGrid();
     const wrapper = el.shadowRoot.querySelector('.grid-wrapper');
     el.remove();
 
+    wrapper.scrollLeft = 120;
     wrapper.dispatchEvent(new Event('scroll'));
     await nextFrame();
-    expect(el._rafId).to.equal(null);
+    await settle(el);
+    expect(wrapper.classList.contains('scrolled-x')).to.equal(false);
   });
 
   it('restores the scroll listener after reconnecting', async () => {
@@ -1013,15 +1043,20 @@ describe('arc-data-grid teardown', () => {
     // removed it, but firstUpdated only ever runs once, so a grid moved in the
     // DOM silently lost its pinned-column shadow and, when virtual, stopped
     // recalculating its window. Now bound by the subscriptions controller.
-    const el = await grid();
+    //
+    // This is also the anti-vacuity pair for the two above: the same scroll on
+    // a grid that is connected does flip the class, so their `false` is the
+    // teardown working rather than a fixture that never overflowed.
+    const el = await wideGrid();
     const wrapper = el.shadowRoot.querySelector('.grid-wrapper');
     el.remove();
     document.body.appendChild(el);
     await settle(el);
 
+    wrapper.scrollLeft = 120;
     wrapper.dispatchEvent(new Event('scroll'));
-    expect(el._rafId).to.not.equal(null);
     await nextFrame();
-    await tick();
+    await settle(el);
+    expect(wrapper.classList.contains('scrolled-x')).to.equal(true);
   });
 });

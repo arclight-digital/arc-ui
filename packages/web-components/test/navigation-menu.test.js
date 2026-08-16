@@ -54,7 +54,7 @@ const MARKUP = `
 async function menu(markup = MARKUP) {
   const el = mount(markup);
   await settle(el);
-  await until(() => el._items.length > 0);
+  await until(() => el.shadowRoot.querySelectorAll('.nav__item').length > 0);
   await settle(el);
   return el;
 }
@@ -122,7 +122,10 @@ describe('arc-navigation-menu rendering', () => {
     // assignment happens before Lit adopts the tree, so the event never
     // arrives and the whole nav bar renders empty. hydrateSlots is the fix.
     const el = await menu();
-    expect(el._items.length).to.equal(3);
+    // Counted off the rendered bar rather than off `_items`: the failure this
+    // guards is "the whole nav renders empty", and a list held in state that
+    // never reaches the DOM is exactly that failure passing.
+    expect([...el.shadowRoot.querySelectorAll('.nav__item')]).to.have.lengthOf(3);
   });
 
   it('renders the sub-items of a dropdown', async () => {
@@ -371,7 +374,10 @@ describe('arc-navigation-menu mobile portal', () => {
       new CustomEvent('arc-mobile-menu-toggle', { detail: { value: true }, bubbles: true }),
     );
     await settle(el);
-    expect(el._mobileOpen).to.equal(true);
+    expect(
+      await until(() => portalRoot()?.querySelector('.mobile-panel--open') !== null),
+      'the mobile panel opened',
+    ).to.equal(true);
   });
 
   it('renders the items into the portal, not into its own shadow root', async () => {

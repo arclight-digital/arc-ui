@@ -198,7 +198,12 @@ describe('arc-tree-select: keyboard', () => {
     await el.updateComplete;
 
     expect(el.open).to.equal(true);
-    expect(el._listbox.activeIndex).to.equal(0);
+    // Virtual focus asserted through the attribute that publishes it: the
+    // controller's own index is tested in listbox-controller.test.js, and what
+    // this component owes is wiring it to aria-activedescendant.
+    const active = trigger(el).getAttribute('aria-activedescendant');
+    expect(active, 'the first row is virtually focused').to.match(/-row-0$/);
+    expect(el.shadowRoot.getElementById(active), 'and it names a live row').to.not.equal(null);
     expect(deepActive()).to.equal(trigger(el));
   });
 

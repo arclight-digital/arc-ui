@@ -145,9 +145,10 @@ describe('arc-context-menu opening', () => {
 
     await rightClick(host, el, { clientX: 150, clientY: 100 });
 
-    expect(el._x, 'the new coordinates were recorded').to.equal(150);
+    // Only where the menu ended up: `_x` is the coordinate on its way in, and
+    // a menu that recorded it and never re-anchored is the bug this pins.
     const second = (await stableRect(() => menu(el))).left;
-    expect(second - first, 'and the menu moved with them').to.be.closeTo(120, 2);
+    expect(second - first, 'the menu moved with the second click').to.be.closeTo(120, 2);
   });
 
   it('stays open across the re-anchor', async () => {

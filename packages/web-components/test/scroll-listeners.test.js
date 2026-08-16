@@ -60,7 +60,7 @@ describe('arc-scroll-spy', () => {
     const page = spyPage(attrs);
     const el = page.querySelector('arc-scroll-spy');
     await settle(el);
-    await until(() => el._links.length === 3);
+    await until(() => el.shadowRoot.querySelectorAll('[part="link"], .scroll-spy__link').length === 3);
     await settle(el);
     return { page, el };
   }
@@ -119,13 +119,25 @@ describe('arc-scroll-spy', () => {
   });
 
   it('reports progress through the document', async () => {
-    const { el } = await spy();
+    // Read off the ring, which is what `progress` exists to draw. `_progress`
+    // is state, and a spy that computed it correctly and stopped drawing it
+    // would satisfy an assertion made against the field while showing a reader
+    // nothing. `progress="ring"` is on the fixture for the same reason: the
+    // number has to have somewhere to land.
+    const { el } = await spy('progress="ring"');
+    const ring = () => el.shadowRoot.querySelector('.scroll-spy__ring-fill');
+    /** dashoffset counts *down* from the full circumference as it fills. */
+    const shown = () => {
+      const r = ring();
+      return 1 - Number(r.getAttribute('stroke-dashoffset')) / Number(r.getAttribute('stroke-dasharray'));
+    };
+
     await scrollTo(0);
-    await until(() => el._progress === 0);
-    const atTop = el._progress;
+    await until(() => shown() === 0);
+    const atTop = shown();
 
     await scrollTo(bottom());
-    expect(await until(() => el._progress >= 0.99)).to.equal(true);
+    expect(await until(() => shown() >= 0.99)).to.equal(true);
     expect(atTop).to.equal(0);
   });
 
@@ -282,6 +294,14 @@ describe('arc-scroll-to-top', () => {
 describe('arc-scroll-indicator', () => {
   const fill = (el) => el.shadowRoot.querySelector('.bar__fill');
   const bar = (el) => el.shadowRoot.querySelector('.bar');
+  /**
+   * How far the indicator says it has got, 0–1, read off the fill it draws.
+   *
+   * The raw `style` attribute rather than the computed transform: this is the
+   * number the component wrote, undisturbed by the matrix the browser
+   * serialises it to.
+   */
+  const shown = (el) => Number(/scaleX\(([-\d.]+)\)/.exec(fill(el).getAttribute('style'))[1]);
 
   async function indicator(attrs = '') {
     const page = pageWith(`<arc-scroll-indicator ${attrs}></arc-scroll-indicator>`, {
@@ -295,14 +315,14 @@ describe('arc-scroll-indicator', () => {
   it('is empty at the top of the page', async () => {
     await scrollTo(0);
     const el = await indicator();
-    expect(await until(() => el._progress === 0)).to.equal(true);
+    expect(await until(() => shown(el) === 0)).to.equal(true);
     expect(fill(el).getAttribute('style')).to.contain('scaleX(0)');
   });
 
   it('fills as the page scrolls', async () => {
     const el = await indicator();
     await scrollTo(bottom());
-    expect(await until(() => el._progress >= 0.99)).to.equal(true);
+    expect(await until(() => shown(el) >= 0.99)).to.equal(true);
   });
 
   it('exposes itself as a progressbar', async () => {
@@ -316,7 +336,7 @@ describe('arc-scroll-indicator', () => {
   it('reports its percentage on aria-valuenow', async () => {
     const el = await indicator();
     await scrollTo(bottom());
-    await until(() => el._progress >= 0.99);
+    await until(() => shown(el) >= 0.99);
     expect(Number(bar(el).getAttribute('aria-valuenow'))).to.be.greaterThan(95);
   });
 
@@ -332,13 +352,13 @@ describe('arc-scroll-indicator', () => {
     box.scrollTop = box.scrollHeight - box.clientHeight;
     box.dispatchEvent(new Event('scroll'));
 
-    expect(await until(() => el._progress >= 0.99)).to.equal(true);
+    expect(await until(() => shown(el) >= 0.99)).to.equal(true);
   });
 
   it('falls back to the window when the selector matches nothing', async () => {
     const el = await indicator('target="#nope"');
     await scrollTo(bottom());
-    expect(await until(() => el._progress >= 0.99)).to.equal(true);
+    expect(await until(() => shown(el) >= 0.99)).to.equal(true);
   });
 
   /**
@@ -400,7 +420,13 @@ describe('scroll listeners are connection-scoped', () => {
       '<arc-scroll-to-top threshold="100"></arc-scroll-to-top>',
       (el) => el.shadowRoot.querySelector('.scroll-to-top').classList.contains('visible'),
     ],
-    ['arc-scroll-indicator', '<arc-scroll-indicator></arc-scroll-indicator>', (el) => el._progress > 0],
+    [
+      'arc-scroll-indicator',
+      '<arc-scroll-indicator></arc-scroll-indicator>',
+      // The drawn fill, for the same reason as the block above: reacting means
+      // the bar moved, not that a field did.
+      (el) => !/scaleX\(0\)/.test(el.shadowRoot.querySelector('.bar__fill').getAttribute('style')),
+    ],
   ];
 
   for (const [tag, markup, reacted] of CASES) {

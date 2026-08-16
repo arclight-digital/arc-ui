@@ -239,6 +239,11 @@ describe('arc-video keyboard', () => {
 
   it('F is a quiet no-op when fullscreen is unavailable', async () => {
     const el = await mountVideo();
+    // Playing so the control bar is rendered: its fullscreen button's label is
+    // the component's published answer to "am I fullscreen", and asserting
+    // that rather than `_fullscreen` is what makes this about the user.
+    inner(el).dispatchEvent(new Event('play'));
+    await el.updateComplete;
     // Simulate an embedded context with no fullscreen API on the element.
     Object.defineProperty(wrapper(el), 'requestFullscreen', {
       configurable: true,
@@ -246,7 +251,12 @@ describe('arc-video keyboard', () => {
     });
     press(el, 'f');
     await el.updateComplete; // nothing thrown, nothing changed
-    expect(el._fullscreen).to.be.false;
+    // The button's own label is the component's answer to "am I fullscreen",
+    // and it is what a screen-reader user hears.
+    expect(
+      el.shadowRoot.querySelector('[part="fullscreen-button"]')?.getAttribute('aria-label'),
+      'still offering to enter fullscreen',
+    ).to.equal('Fullscreen');
   });
 });
 
