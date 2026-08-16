@@ -54,7 +54,16 @@ const phases = [
     // component adopts, breakpoint constants, and the utility classes.
     // One tree, four outputs, so they cannot drift.
     title: 'Tokens',
-    steps: [gen('base-css'), gen('host-tokens'), gen('breakpoints'), gen('utilities')],
+    steps: [
+      gen('base-css'),
+      gen('host-tokens'),
+      gen('breakpoints'),
+      gen('utilities'),
+      // The AAA preset, solved by the same contrast contract as the four
+      // shipped schemes rather than written by hand and claimed. See the
+      // high-contrast block in shared/tokens.js.
+      gen('high-contrast'),
+    ],
   },
   {
     // Vendored icon modules are gitignored — fresh checkouts (e.g. the CI
@@ -109,6 +118,10 @@ const phases = [
       // tell a font declaration that names a real token from one that names
       // nothing — so it cannot run with the source assertions at the top.
       check('type-roles'),
+      // Measured on the emitted stylesheets rather than on the tree: the point
+      // is to catch a color that reached a scheme without going through the
+      // solver, which is exactly what the hand-written AAA preset was.
+      check('contrast-contract'),
     ],
   },
 ];

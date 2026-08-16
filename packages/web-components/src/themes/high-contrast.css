@@ -1,7 +1,17 @@
+/* Generated from shared/tokens.js — do not edit by hand */
+
 /**
  * ARC UI — High Contrast Theme Preset
- * Import AFTER base.css for WCAG AAA compliance (7:1+ contrast ratios).
- * Strengthens borders, brightens text, and widens interactive targets.
+ *
+ * Import AFTER base.css. Every foreground below clears 7:1 against its own
+ * ground, and that is checked rather than claimed: the palettes are solved by
+ * the same contrast contract as the four shipped schemes, and `pnpm generate`
+ * fails if a target cannot be reached without leaving the color's hue.
+ *
+ * The hand-written file this replaces carried the same claim in its header and
+ * missed it in ten of thirty pairings — text-ghost, error and accent-secondary
+ * in both schemes, and success and warning in light mode at 4.87 and 4.86,
+ * which is AA and nothing more.
  *
  * Usage:
  *   @import '@arclux/arc-ui/base.css';
@@ -9,91 +19,75 @@
  */
 
 :root {
-  /* ── High-contrast backgrounds ── */
   --bg-deep: rgb(0, 0, 0);
   --bg-surface: rgb(5, 5, 8);
   --bg-base: rgb(5, 5, 8);
   --bg-card: rgb(10, 10, 14);
   --bg-elevated: rgb(18, 18, 24);
+  --text-primary: rgb(254, 254, 255);
+  --text-secondary: rgb(166, 168, 178);
+  --text-muted: rgb(157, 157, 170);
+  --text-ghost: rgb(148, 148, 169);
+  --accent-primary: rgb(95, 146, 255);
+  --accent-secondary: rgb(169, 125, 255);
+  --color-success: rgb(52, 211, 153);
+  --color-error: rgb(255, 94, 90);
+  --color-warning: rgb(245, 158, 11);
+  --color-info: rgb(77, 149, 255);
+  --border-subtle: rgb(51, 51, 58);
+  --border-default: rgb(71, 71, 79);
+  --border-bright: rgb(101, 101, 116);
+  --accent-primary-rgb: 95, 146, 255;
+  --accent-secondary-rgb: 169, 125, 255;
+  --text-primary-rgb: 254, 254, 255;
+  --text-muted-rgb: 157, 157, 170;
+  --border-default-rgb: 71, 71, 79;
+  --color-success-rgb: 52, 211, 153;
+  --color-error-rgb: 255, 94, 90;
+  --color-warning-rgb: 245, 158, 11;
+  --color-info-rgb: 77, 149, 255;
+  --bg-hover: rgba(255, 255, 255, 0.08);
 
-  /* ── Maximum text contrast (≥ 7:1 on bg-deep) ── */
-  --text-primary: rgb(255, 255, 255);
-  --text-secondary: rgb(200, 200, 210);
-  --text-muted: rgb(170, 170, 185);
-  --text-ghost: rgb(140, 140, 160);
-  --text-primary-rgb: 255, 255, 255;
-  --text-muted-rgb: 170, 170, 185;
-
-  /* ── Stronger borders ── */
-  --border-subtle: rgb(50, 50, 62);
-  --border-default: rgb(70, 70, 85);
-  --border-bright: rgb(100, 100, 118);
-
-  /* ── Brighter accents ── */
-  --accent-primary: rgb(100, 150, 255);
-  --accent-secondary: rgb(165, 120, 255);
-  --accent-primary-rgb: 100, 150, 255;
-  --accent-secondary-rgb: 165, 120, 255;
-
-  /* ── Bold focus rings ── */
   --focus-ring: 0 0 0 3px var(--accent-primary);
   --focus-glow: 0 0 0 3px var(--accent-primary), 0 0 0 5px rgba(var(--accent-primary-rgb), 0.4);
-
-  /* ── Semantic: stronger interactive focus ── */
   --interactive-focus: 0 0 0 3px var(--interactive), 0 0 0 5px rgba(var(--interactive-rgb), 0.4);
   --interactive-focus-ring: 0 0 0 3px var(--interactive);
   --feedback-error-glow: 0 0 16px rgba(var(--color-error-rgb), 0.25);
   --feedback-success-glow: 0 0 16px rgba(var(--color-success-rgb), 0.25);
   --feedback-warning-glow: 0 0 16px rgba(var(--color-warning-rgb), 0.25);
   --feedback-info-glow: 0 0 16px rgba(var(--color-info-rgb), 0.25);
-
-  /* ── Larger interactive targets ── */
   --touch-min: 36px;
   --touch-pad: 6px;
-
-  /* ── Brighter feedback colors ── */
-  --color-success: rgb(72, 230, 170);
-  --color-error: rgb(255, 90, 90);
-  --color-warning: rgb(255, 180, 30);
-  --color-info: rgb(80, 150, 255);
-  --color-success-rgb: 72, 230, 170;
-  --color-error-rgb: 255, 90, 90;
-  --color-warning-rgb: 255, 180, 30;
-  --color-info-rgb: 80, 150, 255;
-
-  /* ── Stronger hover state ── */
-  --bg-hover: rgba(255, 255, 255, 0.08);
 }
 
-/* ── Light mode high-contrast overrides ── */
 [data-theme='light'] {
   --bg-deep: rgb(255, 255, 255);
   --bg-surface: rgb(250, 250, 252);
   --bg-base: rgb(250, 250, 252);
   --bg-card: rgb(255, 255, 255);
   --bg-elevated: rgb(240, 240, 245);
-
-  --text-primary: rgb(0, 0, 0);
-  --text-secondary: rgb(30, 30, 45);
-  --text-muted: rgb(60, 60, 80);
-  --text-ghost: rgb(90, 90, 112);
-  --text-primary-rgb: 0, 0, 0;
-  --text-muted-rgb: 60, 60, 80;
-
-  --border-subtle: rgb(180, 185, 195);
-  --border-default: rgb(150, 155, 170);
-  --border-bright: rgb(120, 125, 145);
-
-  --accent-primary: rgb(20, 70, 200);
-  --accent-secondary: rgb(85, 40, 195);
-  --accent-primary-rgb: 20, 70, 200;
-  --accent-secondary-rgb: 85, 40, 195;
-
-  --color-success: rgb(15, 130, 75);
-  --color-error: rgb(180, 20, 20);
-  --color-warning: rgb(160, 100, 0);
-  --color-info: rgb(15, 80, 195);
-
+  --text-primary: rgb(2, 1, 13);
+  --text-secondary: rgb(71, 73, 93);
+  --text-muted: rgb(78, 80, 100);
+  --text-ghost: rgb(84, 87, 109);
+  --accent-primary: rgb(31, 76, 205);
+  --accent-secondary: rgb(105, 50, 211);
+  --color-success: rgb(0, 102, 72);
+  --color-error: rgb(176, 24, 29);
+  --color-warning: rgb(124, 79, 0);
+  --color-info: rgb(22, 83, 185);
+  --border-subtle: rgb(198, 200, 206);
+  --border-default: rgb(168, 172, 180);
+  --border-bright: rgb(130, 134, 144);
+  --accent-primary-rgb: 31, 76, 205;
+  --accent-secondary-rgb: 105, 50, 211;
+  --text-primary-rgb: 2, 1, 13;
+  --text-muted-rgb: 78, 80, 100;
+  --border-default-rgb: 168, 172, 180;
+  --color-success-rgb: 0, 102, 72;
+  --color-error-rgb: 176, 24, 29;
+  --color-warning-rgb: 124, 79, 0;
+  --color-info-rgb: 22, 83, 185;
   --bg-hover: rgba(0, 0, 0, 0.06);
 }
 
@@ -104,28 +98,28 @@
     --bg-base: rgb(250, 250, 252);
     --bg-card: rgb(255, 255, 255);
     --bg-elevated: rgb(240, 240, 245);
-
-    --text-primary: rgb(0, 0, 0);
-    --text-secondary: rgb(30, 30, 45);
-    --text-muted: rgb(60, 60, 80);
-    --text-ghost: rgb(90, 90, 112);
-    --text-primary-rgb: 0, 0, 0;
-    --text-muted-rgb: 60, 60, 80;
-
-    --border-subtle: rgb(180, 185, 195);
-    --border-default: rgb(150, 155, 170);
-    --border-bright: rgb(120, 125, 145);
-
-    --accent-primary: rgb(20, 70, 200);
-    --accent-secondary: rgb(85, 40, 195);
-    --accent-primary-rgb: 20, 70, 200;
-    --accent-secondary-rgb: 85, 40, 195;
-
-    --color-success: rgb(15, 130, 75);
-    --color-error: rgb(180, 20, 20);
-    --color-warning: rgb(160, 100, 0);
-    --color-info: rgb(15, 80, 195);
-
+    --text-primary: rgb(2, 1, 13);
+    --text-secondary: rgb(71, 73, 93);
+    --text-muted: rgb(78, 80, 100);
+    --text-ghost: rgb(84, 87, 109);
+    --accent-primary: rgb(31, 76, 205);
+    --accent-secondary: rgb(105, 50, 211);
+    --color-success: rgb(0, 102, 72);
+    --color-error: rgb(176, 24, 29);
+    --color-warning: rgb(124, 79, 0);
+    --color-info: rgb(22, 83, 185);
+    --border-subtle: rgb(198, 200, 206);
+    --border-default: rgb(168, 172, 180);
+    --border-bright: rgb(130, 134, 144);
+    --accent-primary-rgb: 31, 76, 205;
+    --accent-secondary-rgb: 105, 50, 211;
+    --text-primary-rgb: 2, 1, 13;
+    --text-muted-rgb: 78, 80, 100;
+    --border-default-rgb: 168, 172, 180;
+    --color-success-rgb: 0, 102, 72;
+    --color-error-rgb: 176, 24, 29;
+    --color-warning-rgb: 124, 79, 0;
+    --color-info-rgb: 22, 83, 185;
     --bg-hover: rgba(0, 0, 0, 0.06);
   }
 }

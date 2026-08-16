@@ -95,7 +95,7 @@
   --border-bright: rgb(51, 51, 64);
 
   --accent-primary: rgb(77, 126, 247);
-  --accent-secondary: rgb(148, 102, 255);
+  --accent-secondary: rgb(149, 103, 255);
 
   /* The accent captured under a name pinned regions never redeclare, so they
      can derive from it without referencing a property they are themselves
@@ -106,11 +106,11 @@
   --_brand-secondary: var(--accent-secondary);
 
   --accent-primary-rgb: 77, 126, 247;
-  --accent-secondary-rgb: 148, 102, 255;
+  --accent-secondary-rgb: 149, 103, 255;
   --text-primary-rgb: 232, 232, 236;
   --text-muted-rgb: 142, 142, 155;
   --border-default-rgb: 34, 34, 41;
-  --color-error-rgb: 239, 68, 68;
+  --color-error-rgb: 240, 69, 69;
   --white-rgb: 255, 255, 255;
   --black-rgb: 0, 0, 0;
 
@@ -124,8 +124,8 @@
 
   --color-success: rgb(52, 211, 153);
   --color-success-rgb: 52, 211, 153;
-  --color-error: rgb(239, 68, 68);
-  --color-error-subtle: rgba(239, 68, 68, 0.1);
+  --color-error: rgb(240, 69, 69);
+  --color-error-subtle: rgba(240, 69, 69, 0.1);
   --color-warning: rgb(245, 158, 11);
   --color-warning-rgb: 245, 158, 11;
   --color-warning-subtle: rgba(245, 158, 11, 0.1);
@@ -422,22 +422,22 @@
   --bg-card: rgb(248, 248, 252);
   --bg-elevated: rgb(238, 238, 246);
   --text-primary: rgb(35, 35, 55);
-  --text-secondary: rgb(77, 80, 99);
+  --text-secondary: rgb(76, 79, 99);
   --text-muted: rgb(84, 87, 107);
   --text-ghost: rgb(91, 94, 116);
-  --border-subtle: rgb(224, 226, 232);
+  --border-subtle: rgb(223, 225, 231);
   --border-default: rgb(210, 214, 222);
-  --border-bright: rgb(186, 191, 201);
-  --accent-primary: rgb(40, 87, 215);
+  --border-bright: rgb(185, 190, 200);
+  --accent-primary: rgb(39, 86, 215);
   --accent-secondary: rgb(113, 61, 221);
-  --color-success: rgb(0, 112, 81);
+  --color-success: rgb(0, 111, 80);
   --color-error: rgb(187, 38, 39);
-  --color-warning: rgb(133, 89, 0);
+  --color-warning: rgb(133, 88, 0);
   --color-info: rgb(27, 88, 190);
   --chart-1: #3769eb;
   --chart-4: #7846e6;
   --chart-6: #4d7c0f;
-  --accent-primary-rgb: 40, 87, 215;
+  --accent-primary-rgb: 39, 86, 215;
   --accent-secondary-rgb: 113, 61, 221;
   --text-primary-rgb: 35, 35, 55;
   --text-muted-rgb: 84, 87, 107;
@@ -485,22 +485,22 @@
     --bg-card: rgb(248, 248, 252);
     --bg-elevated: rgb(238, 238, 246);
     --text-primary: rgb(35, 35, 55);
-    --text-secondary: rgb(77, 80, 99);
+    --text-secondary: rgb(76, 79, 99);
     --text-muted: rgb(84, 87, 107);
     --text-ghost: rgb(91, 94, 116);
-    --border-subtle: rgb(224, 226, 232);
+    --border-subtle: rgb(223, 225, 231);
     --border-default: rgb(210, 214, 222);
-    --border-bright: rgb(186, 191, 201);
-    --accent-primary: rgb(40, 87, 215);
+    --border-bright: rgb(185, 190, 200);
+    --accent-primary: rgb(39, 86, 215);
     --accent-secondary: rgb(113, 61, 221);
-    --color-success: rgb(0, 112, 81);
+    --color-success: rgb(0, 111, 80);
     --color-error: rgb(187, 38, 39);
-    --color-warning: rgb(133, 89, 0);
+    --color-warning: rgb(133, 88, 0);
     --color-info: rgb(27, 88, 190);
     --chart-1: #3769eb;
     --chart-4: #7846e6;
     --chart-6: #4d7c0f;
-    --accent-primary-rgb: 40, 87, 215;
+    --accent-primary-rgb: 39, 86, 215;
     --accent-secondary-rgb: 113, 61, 221;
     --text-primary-rgb: 35, 35, 55;
     --text-muted-rgb: 84, 87, 107;
@@ -723,9 +723,9 @@
   --border-default: rgb(34, 34, 41);
   --border-bright: rgb(51, 51, 64);
   --accent-primary: rgb(77, 126, 247);
-  --accent-secondary: rgb(148, 102, 255);
+  --accent-secondary: rgb(149, 103, 255);
   --color-success: rgb(52, 211, 153);
-  --color-error: rgb(239, 68, 68);
+  --color-error: rgb(240, 69, 69);
   --color-warning: rgb(245, 158, 11);
   --color-info: rgb(59, 130, 246);
   --chart-1: #4d7ef7;
@@ -811,17 +811,17 @@
   --text-primary: rgb(232, 232, 236);
   --text-secondary: rgb(170, 173, 183);
   --text-muted: rgb(162, 162, 175);
-  --text-ghost: rgb(152, 152, 174);
+  --text-ghost: rgb(153, 153, 174);
   --accent-primary: rgb(96, 148, 255);
-  --accent-secondary: rgb(170, 127, 255);
+  --accent-secondary: rgb(171, 127, 255);
   --color-success: rgb(52, 211, 153);
-  --color-error: rgb(255, 98, 94);
+  --color-error: rgb(255, 99, 94);
   --color-warning: rgb(245, 158, 11);
   --color-info: rgb(79, 151, 255);
   --text-primary-rgb: 232, 232, 236;
   --text-muted-rgb: 162, 162, 175;
   --border-default-rgb: 35, 57, 111;
-  --color-error-rgb: 255, 98, 94;
+  --color-error-rgb: 255, 99, 94;
   --color-success-rgb: 52, 211, 153;
   --color-warning-rgb: 245, 158, 11;
   --color-info-rgb: 79, 151, 255;
@@ -871,17 +871,17 @@
     --text-primary: rgb(232, 232, 236);
     --text-secondary: rgb(170, 173, 183);
     --text-muted: rgb(162, 162, 175);
-    --text-ghost: rgb(152, 152, 174);
+    --text-ghost: rgb(153, 153, 174);
     --accent-primary: rgb(96, 148, 255);
-    --accent-secondary: rgb(170, 127, 255);
+    --accent-secondary: rgb(171, 127, 255);
     --color-success: rgb(52, 211, 153);
-    --color-error: rgb(255, 98, 94);
+    --color-error: rgb(255, 99, 94);
     --color-warning: rgb(245, 158, 11);
     --color-info: rgb(79, 151, 255);
     --text-primary-rgb: 232, 232, 236;
     --text-muted-rgb: 162, 162, 175;
     --border-default-rgb: 35, 57, 111;
-    --color-error-rgb: 255, 98, 94;
+    --color-error-rgb: 255, 99, 94;
     --color-success-rgb: 52, 211, 153;
     --color-warning-rgb: 245, 158, 11;
     --color-info-rgb: 79, 151, 255;
@@ -927,17 +927,17 @@
   --bg-card: rgb(248, 248, 252);
   --bg-elevated: rgb(238, 238, 246);
   --text-primary: rgb(35, 35, 55);
-  --text-secondary: rgb(77, 80, 99);
+  --text-secondary: rgb(76, 79, 99);
   --text-muted: rgb(84, 87, 107);
   --text-ghost: rgb(91, 94, 116);
-  --border-subtle: rgb(224, 226, 232);
+  --border-subtle: rgb(223, 225, 231);
   --border-default: rgb(210, 214, 222);
-  --border-bright: rgb(186, 191, 201);
-  --accent-primary: rgb(40, 87, 215);
+  --border-bright: rgb(185, 190, 200);
+  --accent-primary: rgb(39, 86, 215);
   --accent-secondary: rgb(113, 61, 221);
-  --color-success: rgb(0, 112, 81);
+  --color-success: rgb(0, 111, 80);
   --color-error: rgb(187, 38, 39);
-  --color-warning: rgb(133, 89, 0);
+  --color-warning: rgb(133, 88, 0);
   --color-info: rgb(27, 88, 190);
   --chart-1: #3769eb;
   --chart-4: #7846e6;
@@ -1015,30 +1015,30 @@
 [data-theme="dark"] .theme-fixed-light,
 :root:not([data-theme]) .theme-fixed-light {
   --bg-deep: rgb(201, 213, 245);
-  --bg-surface: rgb(208, 218, 246);
-  --bg-base: rgb(203, 215, 245);
-  --bg-card: rgb(208, 218, 246);
-  --bg-elevated: rgb(197, 210, 244);
-  --border-subtle: rgb(182, 198, 241);
-  --border-default: rgb(167, 186, 239);
-  --border-bright: rgb(139, 164, 233);
+  --bg-surface: rgb(207, 218, 246);
+  --bg-base: rgb(203, 214, 245);
+  --bg-card: rgb(207, 218, 246);
+  --bg-elevated: rgb(197, 209, 244);
+  --border-subtle: rgb(181, 197, 240);
+  --border-default: rgb(166, 186, 239);
+  --border-bright: rgb(138, 164, 233);
   --text-primary: rgb(35, 35, 55);
-  --text-secondary: rgb(59, 62, 80);
-  --text-muted: rgb(67, 70, 89);
+  --text-secondary: rgb(59, 62, 81);
+  --text-muted: rgb(66, 69, 88);
   --text-ghost: rgb(74, 76, 98);
   --accent-primary: rgb(24, 66, 194);
-  --accent-secondary: rgb(97, 37, 200);
+  --accent-secondary: rgb(97, 36, 199);
   --color-success: rgb(0, 92, 62);
-  --color-error: rgb(165, 0, 18);
-  --color-warning: rgb(114, 71, 0);
-  --color-info: rgb(10, 74, 175);
+  --color-error: rgb(164, 0, 17);
+  --color-warning: rgb(114, 70, 0);
+  --color-info: rgb(9, 73, 174);
   --text-primary-rgb: 35, 35, 55;
-  --text-muted-rgb: 67, 70, 89;
-  --border-default-rgb: 167, 186, 239;
-  --color-error-rgb: 165, 0, 18;
+  --text-muted-rgb: 66, 69, 88;
+  --border-default-rgb: 166, 186, 239;
+  --color-error-rgb: 164, 0, 17;
   --color-success-rgb: 0, 92, 62;
-  --color-warning-rgb: 114, 71, 0;
-  --color-info-rgb: 10, 74, 175;
+  --color-warning-rgb: 114, 70, 0;
+  --color-info-rgb: 9, 73, 174;
   --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
   --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
   --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -1075,30 +1075,30 @@
 @media (prefers-color-scheme: dark) {
   [data-theme="auto"] .theme-fixed-light {
     --bg-deep: rgb(201, 213, 245);
-    --bg-surface: rgb(208, 218, 246);
-    --bg-base: rgb(203, 215, 245);
-    --bg-card: rgb(208, 218, 246);
-    --bg-elevated: rgb(197, 210, 244);
-    --border-subtle: rgb(182, 198, 241);
-    --border-default: rgb(167, 186, 239);
-    --border-bright: rgb(139, 164, 233);
+    --bg-surface: rgb(207, 218, 246);
+    --bg-base: rgb(203, 214, 245);
+    --bg-card: rgb(207, 218, 246);
+    --bg-elevated: rgb(197, 209, 244);
+    --border-subtle: rgb(181, 197, 240);
+    --border-default: rgb(166, 186, 239);
+    --border-bright: rgb(138, 164, 233);
     --text-primary: rgb(35, 35, 55);
-    --text-secondary: rgb(59, 62, 80);
-    --text-muted: rgb(67, 70, 89);
+    --text-secondary: rgb(59, 62, 81);
+    --text-muted: rgb(66, 69, 88);
     --text-ghost: rgb(74, 76, 98);
     --accent-primary: rgb(24, 66, 194);
-    --accent-secondary: rgb(97, 37, 200);
+    --accent-secondary: rgb(97, 36, 199);
     --color-success: rgb(0, 92, 62);
-    --color-error: rgb(165, 0, 18);
-    --color-warning: rgb(114, 71, 0);
-    --color-info: rgb(10, 74, 175);
+    --color-error: rgb(164, 0, 17);
+    --color-warning: rgb(114, 70, 0);
+    --color-info: rgb(9, 73, 174);
     --text-primary-rgb: 35, 35, 55;
-    --text-muted-rgb: 67, 70, 89;
-    --border-default-rgb: 167, 186, 239;
-    --color-error-rgb: 165, 0, 18;
+    --text-muted-rgb: 66, 69, 88;
+    --border-default-rgb: 166, 186, 239;
+    --color-error-rgb: 164, 0, 17;
     --color-success-rgb: 0, 92, 62;
-    --color-warning-rgb: 114, 71, 0;
-    --color-info-rgb: 10, 74, 175;
+    --color-warning-rgb: 114, 70, 0;
+    --color-info-rgb: 9, 73, 174;
     --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
     --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
     --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -1142,7 +1142,7 @@
 @supports (color: oklch(from red l c h)) {
   .theme-fixed-dark {
     --accent-primary: oklch(from var(--_brand-primary) 0.6225 c h);
-    --accent-secondary: oklch(from var(--_brand-secondary) 0.6350 c h);
+    --accent-secondary: oklch(from var(--_brand-secondary) 0.6374 c h);
   }
 
   [data-theme="light"] .theme-fixed-dark {
@@ -1155,26 +1155,26 @@
     --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 45%, rgb(0, 0, 0));
     --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 56%, rgb(0, 0, 0));
     --accent-primary: oklch(from var(--_brand-primary) 0.6809 c h);
-    --accent-secondary: oklch(from var(--_brand-secondary) 0.6942 c h);
+    --accent-secondary: oklch(from var(--_brand-secondary) 0.6951 c h);
   }
 
   .theme-fixed-light {
-    --accent-primary: oklch(from var(--_brand-primary) 0.5072 c h);
+    --accent-primary: oklch(from var(--_brand-primary) 0.5050 c h);
     --accent-secondary: oklch(from var(--_brand-secondary) 0.5199 c h);
   }
 
   [data-theme="dark"] .theme-fixed-light,
   :root:not([data-theme]) .theme-fixed-light {
-    --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 25%, rgb(255, 255, 255));
-    --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
-    --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 24%, rgb(255, 255, 255));
-    --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
-    --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 27%, rgb(255, 255, 255));
-    --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 34%, rgb(255, 255, 255));
-    --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 41%, rgb(255, 255, 255));
-    --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 54%, rgb(255, 255, 255));
+    --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 25%, rgb(255, 255, 255));
+    --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 22%, rgb(255, 255, 255));
+    --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 24%, rgb(255, 255, 255));
+    --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 22%, rgb(255, 255, 255));
+    --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 27%, rgb(255, 255, 255));
+    --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 34%, rgb(255, 255, 255));
+    --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 41%, rgb(255, 255, 255));
+    --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 54%, rgb(255, 255, 255));
     --accent-primary: oklch(from var(--_brand-primary) 0.4444 c h);
-    --accent-secondary: oklch(from var(--_brand-secondary) 0.4593 c h);
+    --accent-secondary: oklch(from var(--_brand-secondary) 0.4574 c h);
   }
 
   @media (prefers-color-scheme: light) {
@@ -1188,22 +1188,22 @@
       --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 45%, rgb(0, 0, 0));
       --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.6225 c h) 56%, rgb(0, 0, 0));
       --accent-primary: oklch(from var(--_brand-primary) 0.6809 c h);
-      --accent-secondary: oklch(from var(--_brand-secondary) 0.6942 c h);
+      --accent-secondary: oklch(from var(--_brand-secondary) 0.6951 c h);
     }
   }
 
   @media (prefers-color-scheme: dark) {
     [data-theme="auto"] .theme-fixed-light {
-      --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 25%, rgb(255, 255, 255));
-      --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
-      --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 24%, rgb(255, 255, 255));
-      --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 22%, rgb(255, 255, 255));
-      --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 27%, rgb(255, 255, 255));
-      --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 34%, rgb(255, 255, 255));
-      --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 41%, rgb(255, 255, 255));
-      --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5072 c h) 54%, rgb(255, 255, 255));
+      --bg-deep: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 25%, rgb(255, 255, 255));
+      --bg-surface: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 22%, rgb(255, 255, 255));
+      --bg-base: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 24%, rgb(255, 255, 255));
+      --bg-card: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 22%, rgb(255, 255, 255));
+      --bg-elevated: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 27%, rgb(255, 255, 255));
+      --border-subtle: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 34%, rgb(255, 255, 255));
+      --border-default: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 41%, rgb(255, 255, 255));
+      --border-bright: color-mix(in srgb, oklch(from var(--_brand-primary) 0.5050 c h) 54%, rgb(255, 255, 255));
       --accent-primary: oklch(from var(--_brand-primary) 0.4444 c h);
-      --accent-secondary: oklch(from var(--_brand-secondary) 0.4593 c h);
+      --accent-secondary: oklch(from var(--_brand-secondary) 0.4574 c h);
     }
   }
 }

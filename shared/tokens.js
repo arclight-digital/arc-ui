@@ -788,7 +788,10 @@ const RAMP_CONTRACT = ratiosOf(tokens.color, ['textSecondary', 'textMuted', 'tex
 const BORDER_CONTRACT = ratiosOf(tokens.color, BORDER_KEYS);
 
 /** The ratio a key owes its own ground. */
-const contractFor = (key) => RAMP_CONTRACT[key] ?? BORDER_CONTRACT[key] ?? CONTRAST_FLOOR;
+const contractFor = (
+  key,
+  { floor = CONTRAST_FLOOR, borders = BORDER_CONTRACT, ramp = RAMP_CONTRACT } = {},
+) => ramp[key] ?? borders[key] ?? floor;
 
 /**
  * Raise every foreground and border in a palette to the contract, against that
@@ -796,14 +799,17 @@ const contractFor = (key) => RAMP_CONTRACT[key] ?? BORDER_CONTRACT[key] ?? CONTR
  *
  * @param {object} palette - A complete color set: surfaces, text, borders, accents.
  * @param {string} label - Scheme name, for the error when a target is unreachable.
+ * @param {{floor?: number, borders?: Record<string, number>}} [contract] - Raise
+ *   the bar. The high-contrast preset passes AAA and its own border ratios; the
+ *   four shipped schemes pass nothing and take the defaults.
  */
-function solvePalette(palette, label) {
+function solvePalette(palette, label, contract) {
   const ground = palette.bgDeep;
   const out = { ...palette };
 
   for (const key of [...FOREGROUND_KEYS, ...BORDER_KEYS]) {
     if (!palette[key]) continue;
-    const target = contractFor(key);
+    const target = contractFor(key, contract);
     const solved = solveContrast(palette[key], ground, target);
     if (!solved) {
       throw new Error(
@@ -1412,6 +1418,88 @@ const softPalettes = {
   light: solvePalette(
     softenSurfaces({ ...tokens.color, ...lightTokens.color }, 'light'),
     'soft light',
+  ),
+};
+
+/* ── The high-contrast preset ───────────────────────────────────────────────
+ *
+ * `themes/high-contrast.css` shipped as a hand-written file whose header
+ * claimed "WCAG AAA compliance (7:1+ contrast ratios)". Measured against its
+ * own grounds, ten of its thirty foreground pairings did not reach 7:1 —
+ * `--text-ghost` at 6.37 in dark and 6.71 in light, `--color-error` at 6.86 and
+ * 6.88, `--accent-secondary` at 6.73, and in light mode `--color-success` at
+ * 4.87 and `--color-warning` at 4.86, both of which clear AA and nothing more.
+ *
+ * A claim nobody can check is a claim that drifts, and this one had. So the
+ * preset is derived here instead: the same solver, the same palettes, the same
+ * `solvePalette` throw when a target is unreachable — the assertion that keeps
+ * the four shipped schemes honest now keeps this one honest too. V4-PLAN 4.5's
+ * scheme-parity row.
+ *
+ * Two contracts rather than one floor:
+ *
+ *   The text ramp is *lifted*, not floored. Flooring it would collapse three
+ *   levels into one — dark's own steps sit at 7.17, 6.37 and 5.71, so `max(r,
+ *   7)` produces 7.17, 7.00, 7.00, which is the failure the base contract's
+ *   comment warns about and is what the first version of this did. Instead
+ *   every step is multiplied by whatever the *lowest* step needs to reach AAA,
+ *   which puts the floor exactly at 7:1 and preserves the spacing that makes
+ *   four levels mean four things.
+ *
+ *   Borders are not text and AAA does not apply, but "stronger borders" is half
+ *   of what this preset is for. They take the ratios the hand-written file
+ *   achieved in dark, which is the one part of it that was doing its job. The
+ *   light half had drifted marginally stronger (1.97/2.78/4.08 against
+ *   1.66/2.27/3.63); one contract is the point, so both schemes take dark's.
+ */
+const AAA = 7;
+
+/** Dark's four text steps, scaled together until the lowest one clears `target`. */
+function liftRamp(ratios, target) {
+  const lift = target / Math.min(...Object.values(ratios));
+  return Object.fromEntries(Object.entries(ratios).map(([k, v]) => [k, v * lift]));
+}
+
+const HIGH_CONTRAST = {
+  floor: AAA,
+  borders: { borderSubtle: 1.66, borderDefault: 2.27, borderBright: 3.63 },
+  ramp: liftRamp(
+    ratiosOf(tokens.color, ['textPrimary', 'textSecondary', 'textMuted', 'textGhost']),
+    AAA,
+  ),
+};
+
+/* The grounds, which are what make AAA reachable at all: a scheme cannot carry
+   7:1 across a ramp without going to its extreme. These stay hand-picked, from
+   the file this replaces — the elevation steps above the page are a design
+   decision, not something a contrast solver has an opinion about. */
+const HIGH_CONTRAST_GROUNDS = {
+  dark: {
+    bgDeep: 'rgb(0, 0, 0)',
+    bgSurface: 'rgb(5, 5, 8)',
+    bgBase: 'rgb(5, 5, 8)',
+    bgCard: 'rgb(10, 10, 14)',
+    bgElevated: 'rgb(18, 18, 24)',
+  },
+  light: {
+    bgDeep: 'rgb(255, 255, 255)',
+    bgSurface: 'rgb(250, 250, 252)',
+    bgBase: 'rgb(250, 250, 252)',
+    bgCard: 'rgb(255, 255, 255)',
+    bgElevated: 'rgb(240, 240, 245)',
+  },
+};
+
+const highContrastPalettes = {
+  dark: solvePalette(
+    { ...tokens.color, ...HIGH_CONTRAST_GROUNDS.dark },
+    'high-contrast dark',
+    HIGH_CONTRAST,
+  ),
+  light: solvePalette(
+    { ...tokens.color, ...lightTokens.color, ...HIGH_CONTRAST_GROUNDS.light },
+    'high-contrast light',
+    HIGH_CONTRAST,
   ),
 };
 
@@ -2041,6 +2129,89 @@ function weightWithFallback(value) {
 }
 
 const hostValue = (value) => weightWithFallback(privatiseScale(value));
+
+/**
+ * Generate `themes/high-contrast.css`.
+ *
+ * The palettes are solved above; this only spells them, plus the handful of
+ * declarations that are not colors and therefore have no contrast contract to
+ * verify. Those stay literal and each says why it is here — a preset that only
+ * darkened the page and left the focus ring at its default width would be
+ * solving half the problem it claims to.
+ */
+export function generateHighContrastCSS() {
+  const scheme = (variant, indent) => {
+    const palette = highContrastPalettes[variant];
+    const channels = {};
+    for (const key of Object.keys(rgbVarMap)) {
+      if (palette[key]) channels[key] = parseColor(palette[key]).map(Math.round).join(', ');
+    }
+    const lines = [
+      ...SURFACE_KEYS.map((k) => [colorVarMap[k], palette[k]]),
+      ...FOREGROUND_KEYS.map((k) => [colorVarMap[k], palette[k]]),
+      ...BORDER_KEYS.map((k) => [colorVarMap[k], palette[k]]),
+      ...Object.entries(channels).map(([k, v]) => [rgbVarMap[k], v]),
+      /* Not solved: a hover wash is a translucent overlay, not a foreground,
+         so it has no ratio to clear. Stronger than the base scheme's for the
+         same reason the borders are. */
+      ['--bg-hover', variant === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.06)'],
+    ].filter(([name, value]) => name && value);
+    return renderDecls(lines, indent);
+  };
+
+  /* Not colors, so nothing above verifies them — and nothing needs to. A wider
+     ring and a larger touch target are the non-color half of "high contrast",
+     carried across unchanged from the hand-written file this replaces. */
+  const structural = [
+    ['--focus-ring', '0 0 0 3px var(--accent-primary)'],
+    ['--focus-glow', '0 0 0 3px var(--accent-primary), 0 0 0 5px rgba(var(--accent-primary-rgb), 0.4)'],
+    ['--interactive-focus', '0 0 0 3px var(--interactive), 0 0 0 5px rgba(var(--interactive-rgb), 0.4)'],
+    ['--interactive-focus-ring', '0 0 0 3px var(--interactive)'],
+    ['--feedback-error-glow', '0 0 16px rgba(var(--color-error-rgb), 0.25)'],
+    ['--feedback-success-glow', '0 0 16px rgba(var(--color-success-rgb), 0.25)'],
+    ['--feedback-warning-glow', '0 0 16px rgba(var(--color-warning-rgb), 0.25)'],
+    ['--feedback-info-glow', '0 0 16px rgba(var(--color-info-rgb), 0.25)'],
+    ['--touch-min', tokens.touch.mobileMin],
+    ['--touch-pad', '6px'],
+  ];
+
+  return `/* Generated from shared/tokens.js — do not edit by hand */
+
+/**
+ * ARC UI — High Contrast Theme Preset
+ *
+ * Import AFTER base.css. Every foreground below clears 7:1 against its own
+ * ground, and that is checked rather than claimed: the palettes are solved by
+ * the same contrast contract as the four shipped schemes, and \`pnpm generate\`
+ * fails if a target cannot be reached without leaving the color's hue.
+ *
+ * The hand-written file this replaces carried the same claim in its header and
+ * missed it in ten of thirty pairings — text-ghost, error and accent-secondary
+ * in both schemes, and success and warning in light mode at 4.87 and 4.86,
+ * which is AA and nothing more.
+ *
+ * Usage:
+ *   @import '@arclux/arc-ui/base.css';
+ *   @import '@arclux/arc-ui/themes/high-contrast';
+ */
+
+:root {
+${scheme('dark', '  ')}
+
+${renderDecls(structural, '  ')}
+}
+
+[data-theme='light'] {
+${scheme('light', '  ')}
+}
+
+@media (prefers-color-scheme: light) {
+  [data-theme='auto'] {
+${scheme('light', '    ')}
+  }
+}
+`;
+}
 
 /**
  * Generate the declarations for the `:host` static token layer.

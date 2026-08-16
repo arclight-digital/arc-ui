@@ -1125,3 +1125,42 @@ declares. That text had been rendering at its hard-coded fallback since it was
 written — unreachable by any theme and indistinguishable from working.
 `scripts/checks/type-roles.js` fails the build on a `var()` naming a token
 nothing declares, so that class of bug is now impossible rather than fixed.
+
+## The high-contrast theme is generated, and its AAA claim is now true
+
+**Affects `@arclux/arc-ui/themes/high-contrast`.** It shipped as a hand-written
+file whose header claimed "WCAG AAA compliance (7:1+ contrast ratios)".
+Measured against its own grounds, **ten of its thirty foreground pairings did
+not reach 7:1**:
+
+| token | scheme | was |
+| --- | --- | --- |
+| `--text-ghost` | dark | 6.37:1 |
+| `--accent-secondary` | dark | 6.73:1 |
+| `--color-error` | dark | 6.86:1 |
+| `--text-ghost` | light | 6.71:1 |
+| `--color-error` | light | 6.88:1 |
+| `--color-success` | light | **4.87:1** |
+| `--color-warning` | light | **4.86:1** |
+
+The last two clear AA and nothing more. The file is now generated from
+`shared/tokens.js` by the same contrast solver as the four shipped schemes, so
+`pnpm generate` fails if a target cannot be reached, and
+`scripts/checks/contrast-contract.js` measures the emitted stylesheet
+independently of the tree.
+
+**Colors moved.** Every foreground in the preset is re-solved, so if you were
+matching one of its values in your own CSS, read it from the token instead. The
+text ramp is *lifted* rather than floored — every step multiplied by whatever
+the lowest step needs to reach 7:1 — so the four levels keep their spacing
+instead of collapsing onto the floor. Grounds, focus-ring widths, touch-target
+sizes and the hover wash are unchanged.
+
+### The shipped schemes moved by a channel, too
+
+The solver searches in continuous OKLCH lightness and ships three 8-bit
+channels, and the rounding could walk an answer back under its own target — by
+a hundredth, but under. `solveContrast` now takes its final step on the value
+that actually ships. This moved **24 tokens in base.css by one channel step**.
+Nothing is visibly different; the difference is that the 5.5:1 contract those
+schemes carry is now true of the file rather than of the search.

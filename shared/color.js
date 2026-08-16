@@ -136,7 +136,23 @@ export function solveContrast(seed, background, target) {
     if (darker === ok) lo = mid;
     else hi = mid;
   }
-  return formatRgb(at(darker ? lo : hi));
+
+  /* The search runs in continuous lightness and the answer ships as three
+     8-bit channels, so the rounding can walk the ratio back under the target —
+     by a hundredth, but under. That is the difference between a contract and a
+     claim: the high-contrast preset came out at 6.97, 6.98 and 6.99 against a
+     header promising 7. So the last step is taken on the value that actually
+     ships, walking one small increment further from the ground until the
+     rounded color clears. */
+  let l = darker ? lo : hi;
+  const step = darker ? -0.002 : 0.002;
+  for (let i = 0; i < 40; i++) {
+    const rounded = at(l).map(Math.round);
+    if (contrast(rounded, bgRgb) >= target) return formatRgb(rounded);
+    l += step;
+    if (l < 0 || l > 1) break;
+  }
+  return null;
 }
 
 /**
