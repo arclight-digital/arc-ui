@@ -17,7 +17,6 @@ export { default as ScrollToTop } from './ScrollToTop.svelte';
 export { default as SidebarLink } from './SidebarLink.svelte';
 export { default as SidebarSection } from './SidebarSection.svelte';
 export { default as SkipLink } from './SkipLink.svelte';
-export { default as SpeedDial } from './SpeedDial.svelte';
 export { default as SpyLink } from './SpyLink.svelte';
 export { default as StepperNav } from './StepperNav.svelte';
 export { default as Tab } from './Tab.svelte';

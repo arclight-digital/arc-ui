@@ -663,22 +663,6 @@ export default {
   },
   "slug": "diff"
  },
- "arc-event-calendar": {
-  "attrs": [
-   "locale",
-   "first-day-of-week",
-   "events",
-   "view",
-   "date"
-  ],
-  "enums": {
-   "view": [
-    "month",
-    "week"
-   ]
-  },
-  "slug": "event-calendar"
- },
  "arc-gauge": {
   "attrs": [
    "value",
@@ -1061,14 +1045,6 @@ export default {
   ],
   "slug": "dropdown-menu"
  },
- "arc-guided-tour": {
-  "attrs": [
-   "steps",
-   "active",
-   "open"
-  ],
-  "slug": "guided-tour"
- },
  "arc-hover-card": {
   "attrs": [
    "position",
@@ -1232,14 +1208,6 @@ export default {
    ]
   },
   "slug": "snackbar"
- },
- "arc-spotlight": {
-  "attrs": [
-   "target",
-   "active",
-   "padding"
-  ],
-  "slug": "spotlight"
  },
  "arc-toast": {
   "attrs": [
@@ -2242,21 +2210,6 @@ export default {
   ],
   "slug": "dashboard-grid"
  },
- "arc-dock": {
-  "attrs": [
-   "position",
-   "autoHide",
-   "open"
-  ],
-  "enums": {
-   "position": [
-    "bottom",
-    "left",
-    "right"
-   ]
-  },
-  "slug": "dock"
- },
  "arc-float-bar": {
   "attrs": [
    "open",
@@ -2654,27 +2607,6 @@ export default {
    "target"
   ],
   "slug": "skip-link"
- },
- "arc-speed-dial": {
-  "attrs": [
-   "open",
-   "direction",
-   "position",
-   "items"
-  ],
-  "enums": {
-   "direction": [
-    "up",
-    "down",
-    "left",
-    "right"
-   ],
-   "position": [
-    "bottom-right",
-    "bottom-left"
-   ]
-  },
-  "slug": "speed-dial"
  },
  "arc-spy-link": {
   "attrs": [

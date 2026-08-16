@@ -179,5 +179,5 @@ function BulkActions() {
     },
   ],
 
-  seeAlso: ['toolbar', 'dock', 'status-bar'],
+  seeAlso: ['toolbar', 'status-bar', 'drawer'],
 };

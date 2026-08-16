@@ -54,8 +54,6 @@ export type { SidebarSectionProps } from './SidebarSection.js';
 export { SkipLink } from './SkipLink.js';
 export type { SkipLinkProps } from './SkipLink.js';
 
-export { SpeedDial } from './SpeedDial.js';
-export type { SpeedDialProps } from './SpeedDial.js';
 
 export { SpyLink } from './SpyLink.js';
 export type { SpyLinkProps } from './SpyLink.js';

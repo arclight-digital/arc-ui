@@ -17,8 +17,11 @@
  *     fixture, that a real outside relatedTarget still dismisses — otherwise
  *     the negative would pass on a controller that had simply stopped working.
  *   - **A boundary resolving to nothing means there is no inside**, so every
- *     pointer is outside. That is the right reading for arc-spotlight, whose
- *     highlighted target can go away.
+ *     pointer is outside — the reading a component whose highlighted target has
+ *     gone away needs, since the alternative traps the page open. `boundary` has
+ *     had no consumer since 4.1 deleted arc-spotlight, so these three cases are
+ *     now the only thing holding it; `arc-tour` (4.8) is the component that
+ *     needs it back.
  *
  * The host here is a purpose-built probe, not a real component. That is what
  * makes this a direct suite: a failure names the controller.
@@ -227,8 +230,8 @@ describe('DismissController: boundary()', () => {
   });
 
   it('a boundary resolving to nothing means every pointer is outside', async () => {
-    // arc-spotlight's highlighted target can disappear; with no inside left,
-    // the next pointer anywhere should close it rather than trap the page.
+    // A highlighted target can disappear; with no inside left, the next pointer
+    // anywhere should close it rather than trap the page.
     const { el, inner } = await fixture({ boundary: () => null });
     down(inner);
     expect(el.dismissed).to.equal(1);

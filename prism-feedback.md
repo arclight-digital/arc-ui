@@ -135,6 +135,35 @@ took effect in every barrel rather than trusting that they did.
 
 ---
 
+## New against 2.13.0: the barrel prune runs before the orphan sweep
+
+`cli.js` calls `pruneBarrels` at :673 and `sweepOrphans` at :677. `repairBarrel`
+decides what to remove by *resolution* — asking the filesystem whether a
+specifier still points at a file — which is the right call and the reason it
+does not delete working exports. But at :673 the orphaned wrapper files are all
+still on disk, so every specifier resolves and nothing is removed. Four lines
+later they are deleted, and the barrels that name them are left broken.
+
+Deleting five components made all six wrapper packages stop compiling:
+
+```
+packages/react/src/index.ts(487,28): error TS2307:
+  Cannot find module './feedback/GuidedTour.js' or its corresponding type declarations.
+```
+
+The failure is loud rather than silent, which is much better than the
+`barrelExclude` case above — our `wrapper-types` check catches it immediately.
+It is also self-healing: a second `prism --prune` sees the files gone and
+repairs the barrels, and a third is a no-op. So the practical cost is that
+**deleting a component requires running generate twice**, and the first run's
+failure does not say so.
+
+**Suggested fix:** swap the two calls. `sweepOrphans` does not read barrels, and
+`pruneBarrels` wants to run against the post-sweep tree — which is exactly the
+state the resolution check is designed to be correct about.
+
+---
+
 ## Still open (unchanged, and already on your roadmap)
 
 **Resolve properties at runtime from `Ctor.elementProperties`.** It is the fix

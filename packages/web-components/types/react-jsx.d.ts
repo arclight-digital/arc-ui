@@ -393,11 +393,6 @@ declare module 'react' {
         vertical?: boolean;
         label?: string;
       };
-      'arc-dock': ArcBaseAttributes & {
-        position?: 'bottom' | 'left' | 'right';
-        autoHide?: boolean;
-        open?: boolean;
-      };
       'arc-drawer': ArcBaseAttributes & {
         open?: boolean;
         position?: 'left' | 'right';
@@ -409,13 +404,6 @@ declare module 'react' {
       'arc-empty-state': ArcBaseAttributes & {
         heading?: string;
         description?: string;
-      };
-      'arc-event-calendar': ArcBaseAttributes & {
-        locale?: string;
-        'first-day-of-week'?: number | string;
-        events?: string;
-        view?: 'month' | 'week';
-        date?: string;
       };
       'arc-feature-card': ArcBaseAttributes & {
         icon?: string;
@@ -471,11 +459,6 @@ declare module 'react' {
         variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
         gradient?: string;
         animated?: boolean;
-      };
-      'arc-guided-tour': ArcBaseAttributes & {
-        steps?: string;
-        active?: number | string;
-        open?: boolean;
       };
       'arc-highlight': ArcBaseAttributes & {
         text?: string;
@@ -1038,12 +1021,6 @@ declare module 'react' {
         height?: number | string;
         fill?: boolean;
       };
-      'arc-speed-dial': ArcBaseAttributes & {
-        open?: boolean;
-        direction?: 'up' | 'down' | 'left' | 'right';
-        position?: 'bottom-right' | 'bottom-left';
-        items?: string;
-      };
       'arc-spinner': ArcBaseAttributes & {
         size?: 'sm' | 'md' | 'lg';
         variant?: 'primary' | 'secondary' | 'white';
@@ -1054,11 +1031,6 @@ declare module 'react' {
         minRatio?: number | string;
         maxRatio?: number | string;
         label?: string;
-      };
-      'arc-spotlight': ArcBaseAttributes & {
-        target?: string;
-        active?: boolean;
-        padding?: number | string;
       };
       'arc-spy-link': ArcBaseAttributes & {
         target?: string;

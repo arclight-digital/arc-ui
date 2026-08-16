@@ -297,10 +297,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/content/divider.register.js"
     },
-    "./dock": {
-      "types": "./types/index.d.ts",
-      "default": "./src/layout/dock.register.js"
-    },
     "./drawer": {
       "types": "./types/index.d.ts",
       "default": "./src/navigation/drawer.register.js"
@@ -312,10 +308,6 @@
     "./empty-state": {
       "types": "./types/index.d.ts",
       "default": "./src/content/empty-state.register.js"
-    },
-    "./event-calendar": {
-      "types": "./types/index.d.ts",
-      "default": "./src/data/event-calendar.register.js"
     },
     "./feature-card": {
       "types": "./types/index.d.ts",
@@ -348,10 +340,6 @@
     "./gradient-text": {
       "types": "./types/index.d.ts",
       "default": "./src/typography/gradient-text.register.js"
-    },
-    "./guided-tour": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/guided-tour.register.js"
     },
     "./highlight": {
       "types": "./types/index.d.ts",
@@ -748,10 +736,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/data/sparkline.register.js"
     },
-    "./speed-dial": {
-      "types": "./types/index.d.ts",
-      "default": "./src/navigation/speed-dial.register.js"
-    },
     "./spinner": {
       "types": "./types/index.d.ts",
       "default": "./src/content/spinner.register.js"
@@ -759,10 +743,6 @@
     "./split-pane": {
       "types": "./types/index.d.ts",
       "default": "./src/layout/split-pane.register.js"
-    },
-    "./spotlight": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/spotlight.register.js"
     },
     "./spy-link": {
       "types": "./types/index.d.ts",

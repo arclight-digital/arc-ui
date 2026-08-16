@@ -947,19 +947,6 @@ export declare class ArcDivider extends LitElement {
 }
 
 /**
- * `<arc-dock>`
- * Events: arc-open, arc-close
- */
-export declare class ArcDock extends LitElement {
-  /** Which viewport edge the dock snaps to. Bottom is the most common for media controls and action bars; left and right are suited for tool palettes in canvas editors. @default 'bottom' */
-  position: 'bottom' | 'left' | 'right';
-  /** When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible. @default false */
-  autoHide: boolean;
-  /** Controls the visible state of the dock programmatically. When auto-hide is true, this reflects the current hover-reveal state; when auto-hide is false, use this to toggle visibility manually. @default false */
-  open: boolean;
-}
-
-/**
  * `<arc-drawer>`
  * Events: arc-close
  */
@@ -989,23 +976,6 @@ export declare class ArcEmptyState extends LitElement {
   heading: string;
   /** Supporting text displayed below the heading, max-width 360px @default '' */
   description: string;
-}
-
-/**
- * `<arc-event-calendar>`
- * Events: arc-period-change, arc-date-click, arc-event-click
- */
-export declare class ArcEventCalendar extends LitElement {
-  /** BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language. @default '' */
-  locale: string;
-  /** Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention. @default 0 */
-  firstDayOfWeek: number;
-  /** The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute. @default [] */
-  events: Array<{date:string,end?:string,label:string,color?:number}>;
-  /** ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty. @default '' */
-  date: string;
-  /** Which period layout to render. Also switchable by the user via the header view toggle. @default 'month' */
-  view: 'month' | 'week';
 }
 
 /**
@@ -1135,19 +1105,6 @@ export declare class ArcGradientText extends LitElement {
   variant: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
   /** Animate the gradient with a shifting background-position cycle @default false */
   animated: boolean;
-}
-
-/**
- * `<arc-guided-tour>`
- * Events: arc-change, arc-complete, arc-close
- */
-export declare class ArcGuidedTour extends LitElement {
-  /** Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body. @default [] */
-  steps: unknown[];
-  /** Read-only property reflecting the zero-based index of the currently active step. @default 0 */
-  active: number;
-  /** Controls whether the tour is active. Set to true to start the tour from the first step. @default false */
-  open: boolean;
 }
 
 /**
@@ -2681,21 +2638,6 @@ export declare class ArcSparkline extends LitElement {
 }
 
 /**
- * `<arc-speed-dial>`
- * Events: arc-close, arc-open, arc-action
- */
-export declare class ArcSpeedDial extends LitElement {
-  /** Array of secondary action items to display when the speed dial is open. Each item needs an icon and label. @default [] */
-  items: Array<{icon: string, label: string, value?: string}>;
-  /** Whether the secondary actions are currently visible. @default false */
-  open: boolean;
-  /** The direction in which child actions fan out from the trigger. @default 'up' */
-  direction: 'up' | 'down' | 'left' | 'right';
-  /** Fixed viewport corner where the speed dial is anchored. @default 'bottom-right' */
-  position: 'bottom-right' | 'bottom-left';
-}
-
-/**
  * `<arc-spinner>`
  */
 export declare class ArcSpinner extends LitElement {
@@ -2724,19 +2666,6 @@ export declare class ArcSplitPane extends LitElement {
   minRatio: number;
   /** Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing. @default 0.85 */
   maxRatio: number;
-}
-
-/**
- * `<arc-spotlight>`
- * Events: arc-close
- */
-export declare class ArcSpotlight extends LitElement {
-  /** CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index. @default '' */
-  target: string;
-  /** Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room. @default 8 */
-  padding: number;
-  /** Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element. @default false */
-  active: boolean;
 }
 
 /**
@@ -3491,11 +3420,9 @@ declare global {
     'arc-dialog': ArcDialog;
     'arc-diff': ArcDiff;
     'arc-divider': ArcDivider;
-    'arc-dock': ArcDock;
     'arc-drawer': ArcDrawer;
     'arc-dropdown-menu': ArcDropdownMenu;
     'arc-empty-state': ArcEmptyState;
-    'arc-event-calendar': ArcEventCalendar;
     'arc-feature-card': ArcFeatureCard;
     'arc-fieldset': ArcFieldset;
     'arc-file-upload': ArcFileUpload;
@@ -3504,7 +3431,6 @@ declare global {
     'arc-form': ArcForm;
     'arc-gauge': ArcGauge;
     'arc-gradient-text': ArcGradientText;
-    'arc-guided-tour': ArcGuidedTour;
     'arc-highlight': ArcHighlight;
     'arc-hotkey': ArcHotkey;
     'arc-hotspot': ArcHotspot;
@@ -3593,10 +3519,8 @@ declare global {
     'arc-snackbar': ArcSnackbar;
     'arc-sortable-list': ArcSortableList;
     'arc-sparkline': ArcSparkline;
-    'arc-speed-dial': ArcSpeedDial;
     'arc-spinner': ArcSpinner;
     'arc-split-pane': ArcSplitPane;
-    'arc-spotlight': ArcSpotlight;
     'arc-spy-link': ArcSpyLink;
     'arc-stack': ArcStack;
     'arc-stat': ArcStat;
@@ -3650,10 +3574,8 @@ declare global {
     'arc-confirm': CustomEvent<void>;
     'arc-copy': CustomEvent<{ value: string }>;
     'arc-crop-change': CustomEvent;
-    'arc-date-click': CustomEvent;
     'arc-ended': CustomEvent<{ value: number }>;
     'arc-error': CustomEvent<void>;
-    'arc-event-click': CustomEvent;
     'arc-expired': CustomEvent<void>;
     'arc-hotkey-trigger': CustomEvent<{ keys: string }>;
     'arc-input': CustomEvent;
@@ -3669,7 +3591,6 @@ declare global {
     'arc-open': CustomEvent;
     'arc-overflow-change': CustomEvent;
     'arc-pause': CustomEvent<{ value: number }>;
-    'arc-period-change': CustomEvent<{ view: 'month' | 'week', date: string }>;
     'arc-play': CustomEvent<{ value: number }>;
     'arc-queue-change': CustomEvent;
     'arc-queue-overflow': CustomEvent;

@@ -38,7 +38,6 @@ import '../src/feedback/dropdown-menu.register.js';
 import '../src/feedback/popover.register.js';
 import '../src/content/hotspot.register.js';
 import '../src/feedback/notification-panel.register.js';
-import '../src/navigation/speed-dial.register.js';
 
 afterEach(() => cleanup());
 
@@ -115,16 +114,6 @@ const CASES = [
     panel: '[part="panel"]',
     field: '[part="trigger"]',
   },
-  {
-    tag: 'arc-speed-dial',
-    markup: '<arc-speed-dial></arc-speed-dial>',
-    panel: '[part="actions"]',
-    field: '[part="trigger"]',
-    // Its actions come from an `items` array, not from slotted children — so a
-    // markup-only fixture opens an empty fan and the anti-vacuity guard
-    // correctly refuses it.
-    props: { items: [{ label: 'One', icon: 'plus' }, { label: 'Two', icon: 'minus' }] },
-  },
 ];
 
 /**
@@ -163,12 +152,10 @@ const NO_SECOND_PATH = {
   'arc-command-palette': 'no trigger of its own; opened by a global shortcut',
   'arc-confirm': 'no trigger of its own; wraps arc-modal for an imperative API',
   'arc-dialog': 'no trigger of its own; wraps arc-modal for an imperative API',
-  'arc-guided-tour': 'no trigger of its own; the application starts the tour',
   'arc-context-menu': 'opens from a contextmenu event on a separate target, not from a click on itself',
   'arc-search': 'the panel opens on typing, so there is no click path to compare',
   'arc-collapsible': 'a disclosure: the heading click is the only path there is',
   'arc-sidebar-section': 'a disclosure: the heading click is the only path there is',
-  'arc-dock': 'visibility is driven by hover and auto-hide, not by a trigger',
   'arc-float-bar': 'visibility tracks a selection, not a trigger',
 };
 

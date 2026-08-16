@@ -238,5 +238,5 @@ export default function FeatureTour() {
     },
   ],
 
-  seeAlso: ['popover', 'tooltip', 'image', 'guided-tour'],
+  seeAlso: ['popover', 'tooltip', 'image', 'hotspot'],
 };

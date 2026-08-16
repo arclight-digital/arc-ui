@@ -100,8 +100,6 @@ export type { DescriptionListProps } from './data/DescriptionList.js';
 export { Diff } from './data/Diff.js';
 export type { DiffProps } from './data/Diff.js';
 
-export { EventCalendar } from './data/EventCalendar.js';
-export type { EventCalendarProps } from './data/EventCalendar.js';
 
 export { Kanban } from './data/Kanban.js';
 export type { KanbanProps } from './data/Kanban.js';
@@ -364,8 +362,6 @@ export type { SidebarProps } from './navigation/Sidebar.js';
 export { SkipLink } from './navigation/SkipLink.js';
 export type { SkipLinkProps } from './navigation/SkipLink.js';
 
-export { SpeedDial } from './navigation/SpeedDial.js';
-export type { SpeedDialProps } from './navigation/SpeedDial.js';
 
 export { SpyLink } from './navigation/SpyLink.js';
 export type { SpyLinkProps } from './navigation/SpyLink.js';
@@ -409,8 +405,6 @@ export type { ContainerProps } from './layout/Container.js';
 export { DashboardGrid } from './layout/DashboardGrid.js';
 export type { DashboardGridProps } from './layout/DashboardGrid.js';
 
-export { Dock } from './layout/Dock.js';
-export type { DockProps } from './layout/Dock.js';
 
 export { FloatBar } from './layout/FloatBar.js';
 export type { FloatBarProps } from './layout/FloatBar.js';
@@ -484,8 +478,6 @@ export type { DialogProps } from './feedback/Dialog.js';
 export { DropdownMenu } from './feedback/DropdownMenu.js';
 export type { DropdownMenuProps } from './feedback/DropdownMenu.js';
 
-export { GuidedTour } from './feedback/GuidedTour.js';
-export type { GuidedTourProps } from './feedback/GuidedTour.js';
 
 export { HoverCard } from './feedback/HoverCard.js';
 export type { HoverCardProps } from './feedback/HoverCard.js';
@@ -517,8 +509,6 @@ export type { SheetProps } from './feedback/Sheet.js';
 export { Snackbar } from './feedback/Snackbar.js';
 export type { SnackbarProps } from './feedback/Snackbar.js';
 
-export { Spotlight } from './feedback/Spotlight.js';
-export type { SpotlightProps } from './feedback/Spotlight.js';
 
 export { Toast } from './feedback/Toast.js';
 export type { ToastProps } from './feedback/Toast.js';

@@ -200,10 +200,6 @@
       "types": "./dist/data/Diff.vue.d.ts",
       "default": "./dist/data/Diff.vue.js"
     },
-    "./EventCalendar": {
-      "types": "./dist/data/EventCalendar.vue.d.ts",
-      "default": "./dist/data/EventCalendar.vue.js"
-    },
     "./Gauge": {
       "types": "./dist/data/Gauge.vue.d.ts",
       "default": "./dist/data/Gauge.vue.js"
@@ -620,10 +616,6 @@
       "types": "./dist/navigation/SkipLink.vue.d.ts",
       "default": "./dist/navigation/SkipLink.vue.js"
     },
-    "./SpeedDial": {
-      "types": "./dist/navigation/SpeedDial.vue.d.ts",
-      "default": "./dist/navigation/SpeedDial.vue.js"
-    },
     "./SpyLink": {
       "types": "./dist/navigation/SpyLink.vue.d.ts",
       "default": "./dist/navigation/SpyLink.vue.js"
@@ -683,10 +675,6 @@
     "./DashboardGrid": {
       "types": "./dist/layout/DashboardGrid.vue.d.ts",
       "default": "./dist/layout/DashboardGrid.vue.js"
-    },
-    "./Dock": {
-      "types": "./dist/layout/Dock.vue.d.ts",
-      "default": "./dist/layout/Dock.vue.js"
     },
     "./FloatBar": {
       "types": "./dist/layout/FloatBar.vue.d.ts",
@@ -792,10 +780,6 @@
       "types": "./dist/feedback/DropdownMenu.vue.d.ts",
       "default": "./dist/feedback/DropdownMenu.vue.js"
     },
-    "./GuidedTour": {
-      "types": "./dist/feedback/GuidedTour.vue.d.ts",
-      "default": "./dist/feedback/GuidedTour.vue.js"
-    },
     "./HoverCard": {
       "types": "./dist/feedback/HoverCard.vue.d.ts",
       "default": "./dist/feedback/HoverCard.vue.js"
@@ -839,10 +823,6 @@
     "./Snackbar": {
       "types": "./dist/feedback/Snackbar.vue.d.ts",
       "default": "./dist/feedback/Snackbar.vue.js"
-    },
-    "./Spotlight": {
-      "types": "./dist/feedback/Spotlight.vue.d.ts",
-      "default": "./dist/feedback/Spotlight.vue.js"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.vue.d.ts",

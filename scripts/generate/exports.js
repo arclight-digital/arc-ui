@@ -11,12 +11,17 @@
  * invisible from inside this repo, since nothing here imports itself by
  * package name. So this script asserts rather than assumes:
  *
- *   - every export target must exist on disk
+ *   - every export target must exist on disk — including each target inside an
+ *     already-conditioned entry, which is every entry after its first pass
  *   - every JavaScript target must resolve to a .d.ts that exists
  *
  * Either failure exits non-zero, which fails `pnpm generate` and therefore the
  * generate-diff CI gate. Adding a subpath without types is not something you
  * can forget to notice.
+ *
+ * Entries are never *removed* here. Deleting a published subpath is a breaking
+ * change with a MIGRATION entry behind it, so it is a hand edit that this
+ * script then verifies — not a silent consequence of deleting a source file.
  *
  * Run via: pnpm run generate:exports
  * Called automatically as part of: pnpm generate (after the types steps)
@@ -96,14 +101,31 @@ const problems = [];
 const withTypes = {};
 
 for (const [key, value] of Object.entries(existing)) {
-  // Already an explicit condition object (e.g. "./react-jsx") — leave alone.
-  if (typeof value !== 'string') {
+  // Wildcard subpaths expand at resolution time; there is no single file to check.
+  if (key.includes('*')) {
     withTypes[key] = value;
     continue;
   }
 
-  // Wildcard subpaths expand at resolution time; there is no single file to check.
-  if (key.includes('*')) {
+  // Already a condition object — either one this script wrote on an earlier run
+  // or a hand-authored one (e.g. "./react-jsx"). Its shape is settled, so it is
+  // passed through as-is, but its targets are still asserted.
+  //
+  // They were not, until 4.1 deleted five components and left five subpaths
+  // pointing at nothing: the existence check below only ever ran on *bare
+  // string* entries, which an entry is for exactly one run — its first, before
+  // this script attaches the types condition. So the assertion this file's
+  // header describes was live for one pass per subpath and dead thereafter,
+  // across the whole map. `check-export-map` is what actually caught the five,
+  // which is why nothing shipped broken; it runs on the same targets from the
+  // other side and was never fooled.
+  if (typeof value !== 'string') {
+    for (const [condition, target] of Object.entries(value)) {
+      if (typeof target !== 'string' || !target.startsWith('.')) continue;
+      if (!fs.existsSync(path.join(pkgDir, target))) {
+        problems.push(`${key} → ${condition}: ${target} does not exist`);
+      }
+    }
     withTypes[key] = value;
     continue;
   }

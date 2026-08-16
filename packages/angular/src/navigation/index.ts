@@ -20,7 +20,6 @@ export { SidebarLink } from './SidebarLink';
 export { SidebarSection } from './SidebarSection';
 export { Sidebar } from './Sidebar';
 export { SkipLink } from './SkipLink';
-export { SpeedDial } from './SpeedDial';
 export { SpyLink } from './SpyLink';
 export { StepperNav } from './StepperNav';
 export { Tab } from './Tab';

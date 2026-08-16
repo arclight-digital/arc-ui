@@ -367,7 +367,7 @@ some prop (arc-button becomes an `<a>` given an `href`) needs an entry, or the
 sweep only ever sees the safe shape. Adding the first entry immediately found a
 second component nobody had reported.
 
-## Three things that will bite you
+## Four things that will bite you
 
 1. **prism must be able to read your declarations.** `@arclux/prism` finds props
    by regex over `name: { … }`; a helper call is invisible to it and silently
@@ -388,6 +388,21 @@ second component nobody had reported.
    reflecting `="false"` — 14 components style `:host([border])`, `:host([open])`
    and friends, and that would leave every such rule unmatched in the default
    case.
+
+4. **Deleting a component needs `pnpm generate` run twice**, and the first run
+   tells you so only by failing `wrapper-types` with a wall of TS2307. prism
+   repairs barrels *before* it sweeps orphaned files (`cli.js:673` then `:677`),
+   and the barrel repair decides what to remove by asking the filesystem — so on
+   the first pass every specifier still resolves, nothing is pruned, and then the
+   files it pointed at are deleted underneath it. The second run sees the gap and
+   fixes it; the third is a no-op, so idempotence returns immediately. Reported
+   upstream in `prism-feedback.md`.
+
+   The same run will also fail `check-export-map` for the deleted component's
+   subpath. That one is not a bug: removing a published subpath is a breaking
+   change, so `generate/exports.js` never removes an entry — you delete it from
+   `packages/web-components/package.json` by hand and write the MIGRATION entry
+   that goes with it.
 
 ## What changed under the plan
 

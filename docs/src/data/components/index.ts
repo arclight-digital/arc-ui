@@ -109,7 +109,6 @@ import { switchGroup } from './switch-group';
 import { buttonGroup } from './button-group';
 import { inputGroup } from './input-group';
 import { hotkey } from './hotkey';
-import { dock } from './dock';
 import { masonry } from './masonry';
 import { floatBar } from './float-bar';
 import { aspectGrid } from './aspect-grid';
@@ -123,14 +122,11 @@ import { stepperNav } from './stepper-nav';
 import { bottomNav } from './bottom-nav';
 import { skipLink } from './skip-link';
 import { anchorNav } from './anchor-nav';
-import { speedDial } from './speed-dial';
 import { breadcrumbMenu } from './breadcrumb-menu';
 import { rail } from './rail';
 import { pageIndicator } from './page-indicator';
 import { snackbar } from './snackbar';
 import { banner } from './banner';
-import { spotlight } from './spotlight';
-import { guidedTour } from './guided-tour';
 import { inlineMessage } from './inline-message';
 import { confirm } from './confirm';
 import { loadingOverlay } from './loading-overlay';
@@ -157,7 +153,6 @@ import { kanban } from './kanban';
 import { tagInput } from './tag-input';
 import { passwordInput } from './password-input';
 import { menubar } from './menubar';
-import { eventCalendar } from './event-calendar';
 import { transferList } from './transfer-list';
 import { imageCropper } from './image-cropper';
 import { qrCode } from './qr-code';
@@ -296,7 +291,6 @@ export const components: ComponentDef[] = [
   buttonGroup,
   inputGroup,
   hotkey,
-  dock,
   masonry,
   floatBar,
   aspectGrid,
@@ -310,14 +304,11 @@ export const components: ComponentDef[] = [
   bottomNav,
   skipLink,
   anchorNav,
-  speedDial,
   breadcrumbMenu,
   rail,
   pageIndicator,
   snackbar,
   banner,
-  spotlight,
-  guidedTour,
   inlineMessage,
   confirm,
   loadingOverlay,
@@ -344,7 +335,6 @@ export const components: ComponentDef[] = [
   tagInput,
   passwordInput,
   menubar,
-  eventCalendar,
   transferList,
   imageCropper,
   qrCode,

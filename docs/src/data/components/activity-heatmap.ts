@@ -197,5 +197,5 @@ export function ContributionGraph() {
     },
   ],
 
-  seeAlso: ['uptime', 'sparkline', 'event-calendar', 'chart'],
+  seeAlso: ['uptime', 'sparkline', 'calendar', 'chart'],
 };

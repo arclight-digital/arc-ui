@@ -7,7 +7,6 @@ export { DataTable } from './DataTable';
 export { DescriptionItem } from './DescriptionItem';
 export { DescriptionList } from './DescriptionList';
 export { Diff } from './Diff';
-export { EventCalendar } from './EventCalendar';
 export { Kanban } from './Kanban';
 export { KeyValue } from './KeyValue';
 export { KvPair } from './KvPair';

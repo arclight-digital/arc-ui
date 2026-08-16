@@ -18,7 +18,6 @@ export { default as TimelineItem } from './TimelineItem.vue';
 export { default as ValueCard } from './ValueCard.vue';
 export { default as Chart } from './Chart.vue';
 export { default as DataGrid } from './DataGrid.vue';
-export { default as EventCalendar } from './EventCalendar.vue';
 export { default as Kanban } from './Kanban.vue';
 export { default as List } from './List.vue';
 export { default as Table } from './Table.vue';

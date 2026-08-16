@@ -23,7 +23,6 @@ export { ArcDescriptionList } from './description-list.js';
 export { ArcKeyValue } from './key-value.js';
 export { ArcChart } from './chart.js';
 export { ArcDataGrid } from './data-grid.js';
-export { ArcEventCalendar } from './event-calendar.js';
 export { ArcKanban } from './kanban.js';
 export { ArcGauge } from './gauge.js';
 export { ArcClock } from './clock.js';

@@ -78,8 +78,31 @@ if (verdicts.size === 0) {
   process.exit(1);
 }
 
+/**
+ * A verdict for a tag that is no longer registered is one of two opposite
+ * things, and the difference is the whole point of Phase 4.
+ *
+ * **Executed** — the verdict said the tag would go, and 4.1/4.2/4.4 made it go.
+ * `arc-dock` is deleted; `arc-badge` is merged into `arc-tag`; `arc-modal` is
+ * renamed. The row stays in §4 because it is the record of *why*, and because
+ * the tombstone and the MIGRATION entry both point back at it. This is the
+ * plan working, so it is counted rather than reported.
+ *
+ * **Stale** — a `keep` verdict for a tag that has vanished. Nothing in the plan
+ * removes a keep, so this means either the catalog moved without the ledger, or
+ * something was deleted that was never decided. Still a failure.
+ *
+ * Read off the verdict text rather than tracked in a list, for the same reason
+ * the coverage itself is: a hand-kept list of executed cuts is one more thing to
+ * forget to update.
+ */
+const executes = (verdict) =>
+  /\*\*delete/.test(verdict) || verdict.includes('merge →') || verdict.includes('rename →');
+
 const missing = [...tags].filter((t) => !verdicts.has(t)).sort();
-const stale = [...verdicts.keys()].filter((t) => !tags.has(t)).sort();
+const gone = [...verdicts.keys()].filter((t) => !tags.has(t));
+const executed = gone.filter((t) => executes(verdicts.get(t))).sort();
+const stale = gone.filter((t) => !executes(verdicts.get(t))).sort();
 const dupes = [...duplicated].sort();
 
 if (!missing.length && !stale.length && !dupes.length) {
@@ -97,7 +120,10 @@ if (!missing.length && !stale.length && !dupes.length) {
     .filter(([, n]) => n)
     .map(([k, n]) => `${n} ${k}`)
     .join(', ');
-  console.log(`check-scope-coverage: all ${tags.size} tags have a verdict — ${summary}`);
+  console.log(
+    `check-scope-coverage: all ${tags.size} tags have a verdict — ${summary}` +
+      (executed.length ? `; ${executed.length} executed (${executed.join(', ')})` : ''),
+  );
   process.exit(0);
 }
 
@@ -107,8 +133,10 @@ if (missing.length) {
   for (const t of missing) console.error(`    ${t}`);
 }
 if (stale.length) {
-  console.error(`  ${stale.length} verdict(s) for a tag that no longer exists:`);
-  for (const t of stale) console.error(`    ${t}`);
+  console.error(
+    `  ${stale.length} verdict(s) for a tag that no longer exists, and did not say it would:`,
+  );
+  for (const t of stale) console.error(`    ${t} — ${verdicts.get(t)}`);
 }
 if (dupes.length) {
   console.error(`  ${dupes.length} tag(s) with more than one verdict row:`);

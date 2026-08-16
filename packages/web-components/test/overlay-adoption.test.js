@@ -3,7 +3,6 @@ import '../src/feedback/modal.register.js';
 import '../src/feedback/command-palette.register.js';
 import '../src/feedback/popover.register.js';
 import '../src/feedback/dropdown-menu.register.js';
-import '../src/feedback/spotlight.register.js';
 import '../src/feedback/notification-panel.register.js';
 import '../src/input/date-picker.register.js';
 import '../src/input/multi-select.register.js';
@@ -308,48 +307,6 @@ describe('DismissController adoption — focus', () => {
   }
 });
 
-describe('DismissController boundary: arc-spotlight', () => {
-  afterEach(cleanup);
-
-  async function mountSpotlight() {
-    const target = document.createElement('button');
-    target.id = 'spot-target';
-    target.textContent = 'Target';
-    document.body.appendChild(target);
-
-    const el = mount('<arc-spotlight target="#spot-target"></arc-spotlight>');
-    await el.updateComplete;
-    el.active = true;
-    await el.updateComplete;
-    await tick();
-    return { el, target };
-  }
-
-  it('stays active for a click on the element it highlights', async () => {
-    // The boundary option exists for exactly this: "inside" is the target, not
-    // the spotlight host, which draws nothing clickable of its own.
-    const { el, target } = await mountSpotlight();
-    clickAt(target);
-    await el.updateComplete;
-    expect(el.active).to.equal(true);
-  });
-
-  it('dismisses on a click anywhere else', async () => {
-    const { el } = await mountSpotlight();
-    clickAt(document.body);
-    await el.updateComplete;
-    expect(el.active).to.equal(false);
-  });
-
-  it('dismisses when its target has gone away', async () => {
-    const { el, target } = await mountSpotlight();
-    target.remove();
-    clickAt(document.body);
-    await el.updateComplete;
-    expect(el.active).to.equal(false);
-  });
-});
-
 describe('no component hand-rolls an outside-click listener', () => {
   it('has no document click listeners left in the source', async () => {
     // A regression guard on the whole point of this pass. Any new component that
@@ -359,7 +316,7 @@ describe('no component hand-rolls an outside-click listener', () => {
     // rather than reaching for a filesystem it doesn't have.
     const paths = [
       'feedback/popover.js', 'feedback/dropdown-menu.js', 'feedback/notification-panel.js',
-      'feedback/spotlight.js', 'input/date-picker.js', 'input/time-picker.js',
+      'input/date-picker.js', 'input/time-picker.js',
       'input/search.js', 'navigation/breadcrumb-menu.js',
     ];
 

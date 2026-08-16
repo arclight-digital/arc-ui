@@ -18,7 +18,6 @@ export { default as TimelineItem } from './TimelineItem.svelte';
 export { default as ValueCard } from './ValueCard.svelte';
 export { default as Chart } from './Chart.svelte';
 export { default as DataGrid } from './DataGrid.svelte';
-export { default as EventCalendar } from './EventCalendar.svelte';
 export { default as Kanban } from './Kanban.svelte';
 export { default as List } from './List.svelte';
 export { default as Table } from './Table.svelte';

@@ -143,7 +143,7 @@ describe('the calendars use the shared source', () => {
   it('keeps no hardcoded English date names in the sources', async () => {
     const paths = [
       'input/date-picker.js', 'input/calendar.js',
-      'input/date-range-picker.js', 'data/event-calendar.js',
+      'input/date-range-picker.js',
     ];
     for (const path of paths) {
       const src = await (await fetch(new URL(`../src/${path}`, import.meta.url))).text();
@@ -194,8 +194,8 @@ describe('logical properties for RTL', () => {
         for (const rule of block[1].matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
           const selector = rule[1].trim();
           // A rule keyed on a physical side describes that side by API
-          // contract: arc-dock position="left" means the left edge, not the
-          // start edge, so its border belongs on the physical right. Same for a
+          // contract: `position="left"` means the left edge, not the start
+          // edge, so its border belongs on the physical right. Same for a
           // resolved data-placement. The codemod's deliberate carve-outs.
           if (/\[(?:position|data-placement)\s*=\s*"(?:left|right)"\]/.test(selector)) continue;
           for (const raw of rule[2].split(';')) {

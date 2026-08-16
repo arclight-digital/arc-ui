@@ -289,6 +289,14 @@ clause.
 Arithmetic check: 13 merged + 5 deleted + 12 `/marketing` + 3 `/media` = 33
 non-default, leaving **174 in the app barrel**.
 
+**Executed so far (V4-PLAN 4.1, 2026-08-15):** the 5 deletions and the 15 group
+moves. 202 tags are registered today. Rows for the five deleted tags stay here —
+they are the record of why, and both the docs tombstones and MIGRATION.md point
+back at them. `scripts/checks/scope-coverage.js` reads the verdict text and
+counts a delete/merge/rename verdict for an absent tag as *executed* rather than
+stale; a `keep` verdict for an absent tag is still a failure, because nothing in
+this plan removes a keep. The 13 merges and 1 rename are 4.2 and 4.4.
+
 ### content (33)
 
 | tag | verdict |

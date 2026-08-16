@@ -27,14 +27,18 @@ one too.
 - **CLOSED** — answered without a source change, with the reasoning recorded at
   the finding itself.
 - **CLOSED by removal** — the component does not survive Phase 1
-  (`arc-speed-dial`, `arc-guided-tour`). Their pins **stay until 4.1 performs
-  the deletion**, per V4-PLAN ground rule 1: a pin removed ahead of the deletion
-  would leave the component unguarded in between.
+  (`arc-speed-dial`, `arc-guided-tour`). Their pins stayed until 4.1 performed
+  the deletion, per V4-PLAN ground rule 1: a pin removed ahead of the deletion
+  would have left the component unguarded in between. **Both were deleted on
+  2026-08-15 along with their suites**, so those pins are gone with the
+  components they guarded, and the findings below are the record of why.
 - **PINNED** — #74 and #86 only, each by its own recorded decision, and each
   naming the workstream that will take it.
 
-Nine `BUG:` pins remain, and all nine are in those last two categories. There is
-no finding here whose disposition is "not looked at".
+Nine `BUG:` pins remained when this was written, and all nine were in those last
+two categories. **Six went with 4.1's deletions** (four in `arc-speed-dial`,
+two in `arc-guided-tour`), leaving three. There is no finding here whose
+disposition is "not looked at".
 
 ### Data and correctness — wrong results, silently
 
@@ -510,7 +514,7 @@ name; a junk value in `localStorage` is correctly ignored.
 
 ---
 
-## arc-speed-dial — **CLOSED, resolved by removal**
+## arc-speed-dial — **CLOSED, resolved by removal — executed 2026-08-15**
 
 `V4-SCOPE.md` §4 deletes `arc-speed-dial` — "broken as stable" — so #16, #17 and
 #18 are closed as resolved-by-removal per V4-PLAN's ground rule 1 rather than
@@ -1741,7 +1745,7 @@ tablet.
 
 ---
 
-## arc-guided-tour — **CLOSED, resolved by removal**
+## arc-guided-tour — **CLOSED, resolved by removal — executed 2026-08-15**
 
 `V4-SCOPE.md` §4 deletes `arc-guided-tour` — "broken as stable" — so #43 and #44
 are closed as resolved-by-removal, on the same terms as arc-speed-dial above:
@@ -4881,7 +4885,15 @@ The fix is to move the `Escape` case above the guard. This is the same shape as
 #47, #58, #59: a constraint enforced where it is convenient rather than where it
 belongs.
 
-### 86. Three overlays have no keyboard dismissal at all — **a11y — PINNED, not fixed**
+### 86. Three overlays have no keyboard dismissal at all — **a11y — two thirds CLOSED by removal; `arc-notification-panel` still PINNED**
+
+**Update, 4.1 (2026-08-15).** Two of the three are deleted. `arc-guided-tour`
+and `arc-speed-dial` are gone from the catalog, so the finding survives only as
+`arc-notification-panel`, which keeps its `escape: 'BUG'` row in
+`dismissal-contract.test.js` and its 4.4 disposition below unchanged. This is
+resolution by removal, not a fix: nothing about the missing Escape was
+addressed, the components that had it are simply no longer shipped. The original
+finding follows.
 
 `arc-guided-tour`, `arc-notification-panel` and `arc-speed-dial` contain no
 keydown handling of any kind. They open, and Escape does nothing.
@@ -4925,6 +4937,13 @@ for a stated reason: eight have no trigger of their own, `arc-context-menu`
 opens from a `contextmenu` event on a separate target, `arc-search` opens on
 typing, two are disclosures whose heading click is the only path there is, and
 two are layout affordances driven by hover or selection.
+
+**4.1 (2026-08-15)** took three of those back out with their components: the
+`arc-speed-dial` case, and the `arc-guided-tour` and `arc-dock` exemptions. Nine
+cases, twelve exemptions. The derivation is what matters and it is untouched —
+the population still comes from the manifest, so the sweep asked for those three
+to be removed rather than letting them rot as entries for tags that no longer
+exist.
 
 ---
 

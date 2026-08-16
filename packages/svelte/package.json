@@ -248,11 +248,6 @@
       "svelte": "./dist/data/Diff.svelte",
       "default": "./dist/data/Diff.svelte"
     },
-    "./EventCalendar": {
-      "types": "./dist/data/EventCalendar.svelte.d.ts",
-      "svelte": "./dist/data/EventCalendar.svelte",
-      "default": "./dist/data/EventCalendar.svelte"
-    },
     "./Gauge": {
       "types": "./dist/data/Gauge.svelte.d.ts",
       "svelte": "./dist/data/Gauge.svelte",
@@ -773,11 +768,6 @@
       "svelte": "./dist/navigation/SkipLink.svelte",
       "default": "./dist/navigation/SkipLink.svelte"
     },
-    "./SpeedDial": {
-      "types": "./dist/navigation/SpeedDial.svelte.d.ts",
-      "svelte": "./dist/navigation/SpeedDial.svelte",
-      "default": "./dist/navigation/SpeedDial.svelte"
-    },
     "./SpyLink": {
       "types": "./dist/navigation/SpyLink.svelte.d.ts",
       "svelte": "./dist/navigation/SpyLink.svelte",
@@ -852,11 +842,6 @@
       "types": "./dist/layout/DashboardGrid.svelte.d.ts",
       "svelte": "./dist/layout/DashboardGrid.svelte",
       "default": "./dist/layout/DashboardGrid.svelte"
-    },
-    "./Dock": {
-      "types": "./dist/layout/Dock.svelte.d.ts",
-      "svelte": "./dist/layout/Dock.svelte",
-      "default": "./dist/layout/Dock.svelte"
     },
     "./FloatBar": {
       "types": "./dist/layout/FloatBar.svelte.d.ts",
@@ -988,11 +973,6 @@
       "svelte": "./dist/feedback/DropdownMenu.svelte",
       "default": "./dist/feedback/DropdownMenu.svelte"
     },
-    "./GuidedTour": {
-      "types": "./dist/feedback/GuidedTour.svelte.d.ts",
-      "svelte": "./dist/feedback/GuidedTour.svelte",
-      "default": "./dist/feedback/GuidedTour.svelte"
-    },
     "./HoverCard": {
       "types": "./dist/feedback/HoverCard.svelte.d.ts",
       "svelte": "./dist/feedback/HoverCard.svelte",
@@ -1047,11 +1027,6 @@
       "types": "./dist/feedback/Snackbar.svelte.d.ts",
       "svelte": "./dist/feedback/Snackbar.svelte",
       "default": "./dist/feedback/Snackbar.svelte"
-    },
-    "./Spotlight": {
-      "types": "./dist/feedback/Spotlight.svelte.d.ts",
-      "svelte": "./dist/feedback/Spotlight.svelte",
-      "default": "./dist/feedback/Spotlight.svelte"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.svelte.d.ts",

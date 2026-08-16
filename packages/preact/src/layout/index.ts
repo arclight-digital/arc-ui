@@ -21,8 +21,6 @@ export type { ContainerProps } from './Container.js';
 export { DashboardGrid } from './DashboardGrid.js';
 export type { DashboardGridProps } from './DashboardGrid.js';
 
-export { Dock } from './Dock.js';
-export type { DockProps } from './Dock.js';
 
 export { FloatBar } from './FloatBar.js';
 export type { FloatBarProps } from './FloatBar.js';

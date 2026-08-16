@@ -29,6 +29,8 @@ discover them.
 
 - [Array props take arrays, not JSON strings](#array-props-take-arrays-not-json-strings)
 - [Malformed array attributes fall back instead of throwing](#malformed-array-attributes-fall-back-instead-of-throwing)
+- [Domain groups: marketing and media leave the default barrel](#domain-groups-marketing-and-media-leave-the-default-barrel)
+- [The five cuts](#the-five-cuts)
 
 ## Event contract
 
@@ -383,3 +385,113 @@ that is the part meant to last: a satellite package is where components go to
 die — different version, different CI, different suite, quietly rotting. These
 share all three. A subpath can also be promoted to its own package later without
 moving a source file; un-splitting a published package cannot. See V4-SCOPE §1.
+
+## The five cuts
+
+**`arc-guided-tour`, `arc-spotlight`, `arc-speed-dial`, `arc-dock` and
+`arc-event-calendar` are removed.** Their tags no longer resolve, their
+subpaths (`@arclux/arc-ui/dock` and the rest) are gone from the export map, and
+their wrappers are gone from all six framework packages.
+
+Each keeps its docs page as a tombstone — `/docs/components/dock` still answers,
+with the reason and the alternative — so an existing link explains itself rather
+than 404ing.
+
+This is the whole v4 deletion list. It started at roughly 25 tags and ended at
+five, because most of what looked like a value problem was a grouping problem;
+see [Domain groups](#domain-groups-marketing-and-media-leave-the-default-barrel)
+for where the other twenty went. These five are here on their own merits.
+
+### `arc-guided-tour` → `arc-tour` (forthcoming), or `arc-popover`
+
+Shipped as stable while broken in the two ways that matter for a tour. A
+finished tour reopened on its last step instead of the first, because nothing
+reset the step index on close (`arc-change` was documented as the progress
+signal, and writing `active` directly moved the tour without firing it). And the
+backdrop it drew over the page had no keyboard dismissal at all — no Escape, no
+key handling of any kind.
+
+Underneath both: steps were addressed by CSS selector through
+`document.querySelector`, which cannot cross a shadow boundary. A tour over a
+web-component UI could not point at anything inside one, which includes every
+component in this library.
+
+**`arc-tour` (V4-PLAN 4.8) is the rebuild** — the same job on the v4 overlay
+contract, taking **element references** rather than selectors, which is the fix
+for shadow-DOM targeting by API design rather than by workaround. It is not
+shipped yet; the tombstone says so and will be updated when it lands. For a
+single anchored explanation rather than a sequence, `arc-popover` is what you
+want and always was.
+
+### `arc-spotlight` → `arc-tour` (forthcoming)
+
+Half of a tour with no tour around it, and it addressed its target by selector
+for the same reason and with the same consequence. `arc-tour` absorbs it: a
+one-step tour is a spotlight.
+
+`DismissController`'s `boundary` option was built for this component — it is what
+lets an overlay treat a *separate* element as "inside" so a click on the
+highlighted target does not dismiss it. The option stays, with no consumer, for
+`arc-tour` to pick up; it is pinned directly by `dismiss-controller.test.js`
+rather than through a component.
+
+### `arc-speed-dial` → `arc-dropdown-menu`, or `arc-float-bar`
+
+Three defects, all in the first thing a consumer would touch:
+
+- **Closed actions stayed focusable and clickable.** The closed state was
+  `opacity: 0` and a transform, so the buttons were invisible and still in the
+  tab order — a keyboard user could activate a control they could not see.
+- **An unrecognised `position` anchored it nowhere.** The CSS keyed on
+  `bottom-right` and `bottom-left` with no fallback rule, so any other value
+  left `position: absolute` with no offsets and the fan landed wherever the
+  containing block happened to be.
+- **The documented per-item `value` was never emitted.** `arc-action` carried
+  `{ index }` only, so a handler could not tell which action fired without
+  keeping its own copy of the array.
+
+On top of that it had no dismissal of any kind — no controller, no backdrop, no
+key handling — so once open the only way to close it was clicking the trigger
+again.
+
+`arc-dropdown-menu` is a trigger with a set of actions and has the dismissal and
+keyboard contracts the fan never had. Use `arc-float-bar` when the actions
+should be visible rather than behind a trigger.
+
+### `arc-dock` → `arc-drawer`, or `arc-toolbar`
+
+With `auto-hide` set, the reveal was a bare CSS `:hover` rule and nothing else.
+No keyboard path, no touch path — on a phone or from a keyboard the panel and
+everything in it were unreachable.
+
+The API described a component that was never built. `open` was documented as
+reflecting the hover-reveal state and `arc-open`/`arc-close` as firing on it, but
+nothing wrote `open` on hover, so neither happened; a `_hovered` state property
+was declared, assigned once in the constructor, and never read. Fixing it means
+giving it a trigger, at which point it is `arc-drawer`.
+
+Note that `auto-hide` defaulted to `false`, so a dock without it was a fixed
+panel. If that is what you were using, `arc-toolbar` or a plain `position: fixed`
+container is the direct replacement and you lose nothing.
+
+### `arc-event-calendar` → `arc-calendar`, or a real scheduler
+
+No time-of-day support of any kind. Events were whole-day blocks: no start time,
+no end time, no week or day view, no overlap handling. A calendar that cannot
+express "Tuesday at 2pm" cannot express an appointment.
+
+This is a scope failure, not a bug list. The missing part is the hard part, and
+building it properly is a component in its own right rather than a fix — so ARC
+does not intend to ship a scheduler.
+
+- **Date selection** — `arc-calendar` is what most reaches for a calendar
+  actually wanted, and it is unaffected.
+- **Per-day density over a long span** — `arc-activity-heatmap`.
+- **Real scheduling** — drive a dedicated calendar library (FullCalendar,
+  Schedule-X, or similar) and use ARC for everything around it. The recipe is
+  the ordinary one: give the library a container, pass it your events, and let
+  ARC own the surrounding chrome — `arc-toolbar` for the view switcher and
+  navigation, `arc-modal` for the event editor, `arc-select` and
+  `arc-date-picker` inside it, `arc-tag` for categories. ARC's tokens are CSS
+  custom properties, so the embedded calendar can be themed from the same
+  variables the rest of the page uses.

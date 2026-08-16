@@ -33,8 +33,6 @@ export type { DialogProps } from './Dialog.js';
 export { DropdownMenu } from './DropdownMenu.js';
 export type { DropdownMenuProps } from './DropdownMenu.js';
 
-export { GuidedTour } from './GuidedTour.js';
-export type { GuidedTourProps } from './GuidedTour.js';
 
 export { HoverCard } from './HoverCard.js';
 export type { HoverCardProps } from './HoverCard.js';
@@ -66,8 +64,6 @@ export type { SheetProps } from './Sheet.js';
 export { Snackbar } from './Snackbar.js';
 export type { SnackbarProps } from './Snackbar.js';
 
-export { Spotlight } from './Spotlight.js';
-export type { SpotlightProps } from './Spotlight.js';
 
 export { Toast } from './Toast.js';
 export type { ToastProps } from './Toast.js';

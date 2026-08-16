@@ -6,7 +6,6 @@ export { Center } from './Center';
 export { Cluster } from './Cluster';
 export { Container } from './Container';
 export { DashboardGrid } from './DashboardGrid';
-export { Dock } from './Dock';
 export { FloatBar } from './FloatBar';
 export { Inset } from './Inset';
 export { Masonry } from './Masonry';

@@ -248,11 +248,6 @@
       "solid": "./src/data/Diff.tsx",
       "default": "./dist/data/Diff.js"
     },
-    "./EventCalendar": {
-      "types": "./dist/data/EventCalendar.d.ts",
-      "solid": "./src/data/EventCalendar.tsx",
-      "default": "./dist/data/EventCalendar.js"
-    },
     "./Gauge": {
       "types": "./dist/data/Gauge.d.ts",
       "solid": "./src/data/Gauge.tsx",
@@ -773,11 +768,6 @@
       "solid": "./src/navigation/SkipLink.tsx",
       "default": "./dist/navigation/SkipLink.js"
     },
-    "./SpeedDial": {
-      "types": "./dist/navigation/SpeedDial.d.ts",
-      "solid": "./src/navigation/SpeedDial.tsx",
-      "default": "./dist/navigation/SpeedDial.js"
-    },
     "./SpyLink": {
       "types": "./dist/navigation/SpyLink.d.ts",
       "solid": "./src/navigation/SpyLink.tsx",
@@ -852,11 +842,6 @@
       "types": "./dist/layout/DashboardGrid.d.ts",
       "solid": "./src/layout/DashboardGrid.tsx",
       "default": "./dist/layout/DashboardGrid.js"
-    },
-    "./Dock": {
-      "types": "./dist/layout/Dock.d.ts",
-      "solid": "./src/layout/Dock.tsx",
-      "default": "./dist/layout/Dock.js"
     },
     "./FloatBar": {
       "types": "./dist/layout/FloatBar.d.ts",
@@ -988,11 +973,6 @@
       "solid": "./src/feedback/DropdownMenu.tsx",
       "default": "./dist/feedback/DropdownMenu.js"
     },
-    "./GuidedTour": {
-      "types": "./dist/feedback/GuidedTour.d.ts",
-      "solid": "./src/feedback/GuidedTour.tsx",
-      "default": "./dist/feedback/GuidedTour.js"
-    },
     "./HoverCard": {
       "types": "./dist/feedback/HoverCard.d.ts",
       "solid": "./src/feedback/HoverCard.tsx",
@@ -1047,11 +1027,6 @@
       "types": "./dist/feedback/Snackbar.d.ts",
       "solid": "./src/feedback/Snackbar.tsx",
       "default": "./dist/feedback/Snackbar.js"
-    },
-    "./Spotlight": {
-      "types": "./dist/feedback/Spotlight.d.ts",
-      "solid": "./src/feedback/Spotlight.tsx",
-      "default": "./dist/feedback/Spotlight.js"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.d.ts",

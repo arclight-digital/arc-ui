@@ -107,13 +107,6 @@ const POLICY = {
   'arc-popover': { escape: true, outside: true },
   'arc-hotspot': { escape: true, outside: true },
   'arc-notification-panel': { escape: 'BUG', outside: true, bug: '#86' },
-  'arc-speed-dial': { escape: 'BUG', outside: 'BUG', bug: '#86' },
-  'arc-guided-tour': {
-    escape: 'BUG',
-    outside: null,
-    bug: '#86',
-    why: 'outside: a tour step is not dismissed by a stray click',
-  },
 
   // ── Field-with-a-panel: the panel dismisses, the field keeps focus ────────
   'arc-select': { escape: true, outside: true, markup: '<arc-select><arc-option value="a">A</arc-option></arc-select>' },
@@ -133,7 +126,6 @@ const POLICY = {
   // ── Not overlays. `open` here is disclosure or layout state ───────────────
   'arc-collapsible': { escape: null, outside: null, why: 'a disclosure; its heading is the only control' },
   'arc-sidebar-section': { escape: null, outside: null, why: 'a disclosure inside a persistent nav' },
-  'arc-dock': { escape: null, outside: null, why: 'layout affordance; auto-hide is driven by hover, not dismissal' },
   'arc-float-bar': { escape: null, outside: null, why: 'layout affordance; visibility tracks a selection, not focus' },
 };
 

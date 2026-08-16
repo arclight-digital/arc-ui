@@ -4,19 +4,51 @@ import ComponentShowcase from '../../../components/ComponentShowcase.astro';
 import ApiList from '../../../components/ApiList.astro';
 import { components } from '../../../data/components/index';
 import { getApi } from '../../../data/manifest';
+import { removedComponents, type RemovedComponent } from '../../../data/removed';
 
+/**
+ * Live components and tombstones share this route because they share the URL —
+ * a cut component keeps `/docs/components/<slug>` and renders an explanation of
+ * where it went, rather than 404ing at a link that is already in bookmarks and
+ * search indexes. See data/removed.ts.
+ */
 export function getStaticPaths() {
-  return components.map((c) => ({
-    params: { slug: c.slug },
-    props: { component: c },
-  }));
+  return [
+    ...components.map((c) => ({
+      params: { slug: c.slug },
+      props: { component: c, removed: null },
+    })),
+    ...removedComponents.map((r) => ({
+      params: { slug: r.slug },
+      props: {
+        // Enough of a ComponentDef for the header, the breadcrumb and the page
+        // metadata. Everything below the header is behind `removed`.
+        component: {
+          name: r.name,
+          slug: r.slug,
+          tag: r.tag,
+          tier: r.tier,
+          interactivity: 'interactive' as const,
+          description: r.was,
+          tabs: [],
+        },
+        removed: r,
+      },
+    })),
+  ];
 }
 
-const { component } = Astro.props;
+const { component, removed } = Astro.props as { component: any; removed: RemovedComponent | null };
 
 // API surface from custom-elements.json (single source of truth) — the docs
 // data layer only carries prose, examples, and page metadata.
-const api = getApi(component.tag);
+//
+// A removed component is not in the manifest, and `getApi` throws on an unknown
+// tag on purpose (that throw is what keeps a stale docs page from rendering an
+// empty API table as if it were the truth). So tombstones get an explicitly
+// empty surface here rather than a weakened `getApi`.
+const EMPTY_API = { tag: component.tag, description: '', group: null, props: [], events: [], slots: [], cssParts: [] };
+const api = removed ? EMPTY_API : getApi(component.tag);
 const subComponents = (component.subComponents ?? []).map((sub: any) => ({
   ...sub,
   api: getApi(sub.tag),
@@ -58,9 +90,13 @@ const tierOrder = ['layout', 'navigation', 'content', 'data', 'typography', 'inp
 const ordered = tierOrder.flatMap((t) =>
   components.filter((c) => c.tier === t).sort((a, b) => a.name.localeCompare(b.name)),
 );
+// A tombstone is in no sidebar order, so it gets no prev/next. Guarded on the
+// index rather than on `removed`, because `findIndex` returning -1 would
+// otherwise make `nextComponent` the *first* component of the whole catalog.
 const orderedIndex = ordered.findIndex((c) => c.slug === component.slug);
 const prevComponent = orderedIndex > 0 ? ordered[orderedIndex - 1] : null;
-const nextComponent = orderedIndex < ordered.length - 1 ? ordered[orderedIndex + 1] : null;
+const nextComponent =
+  orderedIndex >= 0 && orderedIndex < ordered.length - 1 ? ordered[orderedIndex + 1] : null;
 
 // BreadcrumbList comes from DocsLayout (via the breadcrumbs prop); this page
 // only adds its component-specific TechArticle.
@@ -72,14 +108,18 @@ const jsonLd = {
   name: component.name,
   description: component.description,
   url: pageUrl,
-  image: new URL(`/og/${component.slug}.png`, Astro.site).href,
+  // `ogPathFor` only emits a component card for a slug that is in `components`,
+  // so a tombstone has no card and must not claim one here either.
+  ...(removed ? {} : { image: new URL(`/og/${component.slug}.png`, Astro.site).href }),
   proficiencyLevel: 'Beginner',
   author: { '@id': 'https://arcui.dev/#org' },
   publisher: { '@id': 'https://arcui.dev/#org' },
   isPartOf: { '@id': 'https://arcui.dev/#website' },
 };
 
-const headings = [
+const headings = removed
+  ? [{ id: 'removed', label: 'Removed' }]
+  : [
   ...(component.overview ? [{ id: 'overview', label: 'Overview' }] : []),
   ...(component.guidelines ? [{ id: 'guidelines', label: 'Guidelines' }] : []),
   ...(component.features ? [{ id: 'features', label: 'Features' }] : []),
@@ -114,12 +154,54 @@ const headings = [
       </arc-breadcrumb>
       <div slot="aside" class="component-page__badges">
         <arc-tag color={tierColors[component.tier]}>{component.tier}</arc-tag>
-        <arc-tag color={interactivityColors[component.interactivity]}>{component.interactivity}</arc-tag>
-        {component.status === 'beta' && <arc-badge variant="primary">beta</arc-badge>}
-        {component.status === 'experimental' && <arc-badge variant="secondary">experimental</arc-badge>}
+        {removed ? (
+          <arc-badge variant="error">removed in {removed.removedIn}</arc-badge>
+        ) : (
+          <>
+            <arc-tag color={interactivityColors[component.interactivity]}>{component.interactivity}</arc-tag>
+            {component.status === 'beta' && <arc-badge variant="primary">beta</arc-badge>}
+            {component.status === 'experimental' && <arc-badge variant="secondary">experimental</arc-badge>}
+          </>
+        )}
       </div>
       <code class="component-page__tag">&lt;{component.tag}&gt;</code>
     </arc-page-header>
+
+    {/* Tombstone — everything below this is skipped for a removed component. */}
+    {removed && (
+      <section id="removed" class="tombstone">
+        <p class="tombstone__lede">
+          <strong>{removed.name} was removed in {removed.removedIn}.</strong> It is not published, and
+          <code>&lt;{removed.tag}&gt;</code> no longer resolves to anything. This page is here so the link
+          still answers.
+        </p>
+
+        <h2 class="docs-heading">Why</h2>
+        <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        {/* A plain paragraph, not arc-markdown: that component fills itself in
+            on hydration, and a tombstone is the one page most likely to be read
+            by a crawler or with JS off. data/removed.ts keeps the prose free of
+            markdown for the same reason. */}
+        <p class="tombstone__why">{removed.why}</p>
+
+        <h2 class="docs-heading">Use instead</h2>
+        <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <ul class="tombstone__alts">
+          {removed.alternatives.map((alt) => (
+            <li>
+              {alt.href ? <a href={alt.href}>{alt.label}</a> : <span class="tombstone__alt-name">{alt.label}</span>}
+              {alt.forthcoming && <span class="tombstone__forthcoming">not yet shipped</span>}
+              {alt.note && <span class="tombstone__note">{alt.note}</span>}
+            </li>
+          ))}
+        </ul>
+
+        <p class="tombstone__migration">
+          The full entry, with the mechanical fix, is in
+          <a href={`https://github.com/arclux/arc-ui/blob/main/MIGRATION.md${removed.migration}`}>MIGRATION.md</a>.
+        </p>
+      </section>
+    )}
 
     {/* Overview */}
     {component.overview && (
@@ -168,6 +250,7 @@ const headings = [
     )}
 
     <!-- Preview -->
+    {!removed && (
     <section id="preview">
       <h2 class="docs-heading">Preview</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
@@ -198,8 +281,10 @@ const headings = [
         )}
       </div>
     </section>
+    )}
 
     <!-- Usage / Code Tabs -->
+    {!removed && (
     <section id="usage">
       <h2 class="docs-heading">Usage</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
@@ -221,6 +306,7 @@ const headings = [
       )}
       <ComponentShowcase tabs={component.tabs} />
     </section>
+    )}
 
     <!-- API Table -->
     {api.props.length > 0 && (
@@ -718,6 +804,90 @@ const headings = [
 
   .interactivity-note p {
     margin: 0;
+  }
+
+  /* ── Tombstone ── */
+
+  .tombstone {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .tombstone__lede {
+    font-size: var(--text-md);
+    line-height: 1.6;
+    color: var(--text-secondary);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(var(--color-error-rgb), 0.25);
+    background: rgba(var(--color-error-rgb), 0.04);
+  }
+
+  .tombstone__lede code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  .tombstone__why {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 68ch;
+  }
+
+  .tombstone__alts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    max-width: 68ch;
+  }
+
+  .tombstone__alts li {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-inline-start: var(--space-md);
+    border-inline-start: 2px solid var(--border-subtle);
+  }
+
+  .tombstone__alts a,
+  .tombstone__alt-name {
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .tombstone__alts a:hover {
+    color: var(--accent-primary);
+  }
+
+  /* An alternative that does not exist yet has to say so on the page, not only
+     in MIGRATION.md — a reader who follows a tombstone to a 404 is worse off
+     than one who was told to wait. */
+  .tombstone__forthcoming {
+    font-family: var(--font-accent);
+    font-size: var(--text-xs);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-ghost);
+  }
+
+  .tombstone__note {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  .tombstone__migration {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+  }
+
+  .tombstone__migration a {
+    color: var(--accent-secondary);
   }
 
   /* ── Icon Browser (global — dynamically injected) ── */

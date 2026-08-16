@@ -3276,117 +3276,6 @@
           }
         },
         {
-          "name": "arc-event-calendar",
-          "description": "Scheduling calendar with month and week views that renders all-day and multi-day event chips\ncolored by the chart palette.\n---\n\n\n### **Events:**\n - **arc-period-change** - Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`.\n- **arc-date-click** - Fired when a day cell or a \"+N more\" overflow button is activated. `event.detail.date` contains the ISO date string.\n- **arc-event-click** - Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object.\n\n### **CSS Parts:**\n - **event**\n- **day**\n- **day-number**\n- **events**\n- **more**\n- **calendar**\n- **header**\n- **nav-prev**\n- **nav-next**\n- **today**\n- **title**\n- **view-toggle**\n- **view-month**\n- **view-week**\n- **dows**\n- **dow**\n- **grid**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "locale",
-              "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "first-day-of-week",
-              "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
-              "value": {
-                "type": "number",
-                "default": "0"
-              }
-            },
-            {
-              "name": "events",
-              "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
-              "value": {
-                "type": "Array<{date:string,end?:string,label:string,color?:number}>",
-                "default": "[]"
-              }
-            },
-            {
-              "name": "view",
-              "description": "Which period layout to render. Also switchable by the user via the header view toggle.",
-              "value": {
-                "type": "'month' | 'week'",
-                "default": "'month'"
-              }
-            },
-            {
-              "name": "date",
-              "description": "ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [
-            {
-              "name": "arc-period-change",
-              "type": "CustomEvent<{ view: 'month' | 'week', date: string }>",
-              "description": "Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`."
-            },
-            {
-              "name": "arc-date-click",
-              "type": "CustomEvent",
-              "description": "Fired when a day cell or a \"+N more\" overflow button is activated. `event.detail.date` contains the ISO date string."
-            },
-            {
-              "name": "arc-event-click",
-              "type": "CustomEvent",
-              "description": "Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "locale",
-                "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
-                "type": "string"
-              },
-              {
-                "name": "firstDayOfWeek",
-                "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
-                "type": "number"
-              },
-              {
-                "name": "events",
-                "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
-                "type": "Array<{date:string,end?:string,label:string,color?:number}>"
-              },
-              {
-                "name": "date",
-                "description": "ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty.",
-                "type": "string"
-              },
-              {
-                "name": "view",
-                "description": "Which period layout to render. Also switchable by the user via the header view toggle.",
-                "type": "'month' | 'week'"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-period-change",
-                "type": "CustomEvent<{ view: 'month' | 'week', date: string }>",
-                "description": "Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`."
-              },
-              {
-                "name": "arc-date-click",
-                "type": "CustomEvent",
-                "description": "Fired when a day cell or a \"+N more\" overflow button is activated. `event.detail.date` contains the ISO date string."
-              },
-              {
-                "name": "arc-event-click",
-                "type": "CustomEvent",
-                "description": "Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object."
-              }
-            ]
-          }
-        },
-        {
           "name": "arc-gauge",
           "description": "Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning,\nerror) and an animated sweep. The radial companion to arc-meter: same threshold semantics,\nwith the reading rendered center-stage.\n---\n\n\n### **CSS Parts:**\n - **gauge**\n- **svg**\n- **track**\n- **arc**\n- **readout**\n- **value**\n- **unit**\n- **label**",
           "doc-url": "",
@@ -5722,91 +5611,6 @@
           }
         },
         {
-          "name": "arc-guided-tour",
-          "description": "Multi-step onboarding that composes spotlight with popover-styled tooltips at each step. Step\ncounter uses accent-primary gradient text.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.\n- **arc-complete** - Fired when the user finishes the last step of the tour\n- **arc-close** - Fired when the user skips or closes the tour before completing all steps\n\n### **CSS Parts:**\n - **ring**\n- **tooltip**\n- **counter**\n- **title**\n- **content**\n- **controls**\n- **prev**\n- **next**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "steps",
-              "description": "Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body.",
-              "value": {
-                "type": "array",
-                "default": "[]"
-              }
-            },
-            {
-              "name": "active",
-              "description": "Read-only property reflecting the zero-based index of the currently active step.",
-              "value": {
-                "type": "number",
-                "default": "0"
-              }
-            },
-            {
-              "name": "open",
-              "description": "Controls whether the tour is active. Set to true to start the tour from the first step.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [
-            {
-              "name": "arc-change",
-              "type": "CustomEvent<{ step: number }>",
-              "description": "Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index."
-            },
-            {
-              "name": "arc-complete",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the user finishes the last step of the tour"
-            },
-            {
-              "name": "arc-close",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the user skips or closes the tour before completing all steps"
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "steps",
-                "description": "Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body.",
-                "type": "array"
-              },
-              {
-                "name": "active",
-                "description": "Read-only property reflecting the zero-based index of the currently active step.",
-                "type": "number"
-              },
-              {
-                "name": "open",
-                "description": "Controls whether the tour is active. Set to true to start the tour from the first step.",
-                "type": "boolean"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-change",
-                "type": "CustomEvent<{ step: number }>",
-                "description": "Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index."
-              },
-              {
-                "name": "arc-complete",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the user finishes the last step of the tour"
-              },
-              {
-                "name": "arc-close",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the user skips or closes the tour before completing all steps"
-              }
-            ]
-          }
-        },
-        {
           "name": "arc-hover-card",
           "description": "Card that appears on hover with a delay.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the hover card becomes visible\n- **arc-close** - Fired when the hover card hides\n\n### **Slots:**\n - _default_ - Default content.\n- **content**\n\n### **CSS Parts:**\n - **trigger**\n- **card**",
           "doc-url": "",
@@ -6631,71 +6435,6 @@
                 "name": "arc-close",
                 "type": "CustomEvent",
                 "description": "Fired when the snackbar is dismissed, either by auto-timeout or user interaction"
-              }
-            ]
-          }
-        },
-        {
-          "name": "arc-spotlight",
-          "description": "Dims the entire page except a targeted element, which gets an accent-primary glow ring and\nelevated z-index. For onboarding and feature discovery.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the user clicks outside the highlighted element to dismiss the spotlight\n\n### **CSS Parts:**\n - **ring**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "target",
-              "description": "CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "active",
-              "description": "Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "padding",
-              "description": "Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.",
-              "value": {
-                "type": "number",
-                "default": "8"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [
-            {
-              "name": "arc-close",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the user clicks outside the highlighted element to dismiss the spotlight"
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "target",
-                "description": "CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index.",
-                "type": "string"
-              },
-              {
-                "name": "padding",
-                "description": "Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.",
-                "type": "number"
-              },
-              {
-                "name": "active",
-                "description": "Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.",
-                "type": "boolean"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-close",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the user clicks outside the highlighted element to dismiss the spotlight"
               }
             ]
           }
@@ -13398,82 +13137,6 @@
           }
         },
         {
-          "name": "arc-dock",
-          "description": "Edge-snapped auto-hide panel with a 1px border edge line and subtle accent glow on hover-reveal.\nSlides in with spring easing.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the dock becomes visible, either via hover-reveal or programmatic open.\n- **arc-close** - Fired when the dock hides, either because the cursor left the edge area or the open prop was set to false.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **dock**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "position",
-              "description": "Which viewport edge the dock snaps to. Bottom is the most common for media controls and action bars; left and right are suited for tool palettes in canvas editors.",
-              "value": {
-                "type": "'bottom' | 'left' | 'right'",
-                "default": "'bottom'"
-              }
-            },
-            {
-              "name": "autoHide",
-              "description": "When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "open",
-              "description": "Controls the visible state of the dock programmatically. When auto-hide is true, this reflects the current hover-reveal state; when auto-hide is false, use this to toggle visibility manually.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-open",
-              "description": "Fired when the dock becomes visible, either via hover-reveal or programmatic open."
-            },
-            {
-              "name": "arc-close",
-              "description": "Fired when the dock hides, either because the cursor left the edge area or the open prop was set to false."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "position",
-                "description": "Which viewport edge the dock snaps to. Bottom is the most common for media controls and action bars; left and right are suited for tool palettes in canvas editors.",
-                "type": "'bottom' | 'left' | 'right'"
-              },
-              {
-                "name": "autoHide",
-                "description": "When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.",
-                "type": "boolean"
-              },
-              {
-                "name": "open",
-                "description": "Controls the visible state of the dock programmatically. When auto-hide is true, this reflects the current hover-reveal state; when auto-hide is false, use this to toggle visibility manually.",
-                "type": "boolean"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-open",
-                "description": "Fired when the dock becomes visible, either via hover-reveal or programmatic open."
-              },
-              {
-                "name": "arc-close",
-                "description": "Fired when the dock hides, either because the cursor left the edge area or the open prop was set to false."
-              }
-            ]
-          }
-        },
-        {
           "name": "arc-float-bar",
           "description": "Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring\neasing. For bulk actions, unsaved-changes prompts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the float bar becomes visible after the open prop is set to true.\n- **arc-close** - Fired when the float bar hides after the open prop is set to false.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **bar**",
           "doc-url": "",
@@ -15673,108 +15336,6 @@
           }
         },
         {
-          "name": "arc-speed-dial",
-          "description": "Floating action button that fans out secondary actions with staggered scale-in animation.\nTrigger is a primary icon-button.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the speed dial collapses.\n- **arc-open** - Fired when the speed dial expands.\n- **arc-action** - Fired when a secondary action is selected with detail: { index }.\n\n### **Slots:**\n - **trigger**\n\n### **CSS Parts:**\n - **base**\n- **actions**\n- **action**\n- **trigger**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "open",
-              "description": "Whether the secondary actions are currently visible.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "direction",
-              "description": "The direction in which child actions fan out from the trigger.",
-              "value": {
-                "type": "'up' | 'down' | 'left' | 'right'",
-                "default": "'up'"
-              }
-            },
-            {
-              "name": "position",
-              "description": "Fixed viewport corner where the speed dial is anchored.",
-              "value": {
-                "type": "'bottom-right' | 'bottom-left'",
-                "default": "'bottom-right'"
-              }
-            },
-            {
-              "name": "items",
-              "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
-              "value": {
-                "type": "Array<{icon: string, label: string, value?: string}>",
-                "default": "[]"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "trigger"
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-close",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the speed dial collapses."
-            },
-            {
-              "name": "arc-open",
-              "type": "CustomEvent",
-              "description": "Fired when the speed dial expands."
-            },
-            {
-              "name": "arc-action",
-              "type": "CustomEvent",
-              "description": "Fired when a secondary action is selected with detail: { index }."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "items",
-                "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
-                "type": "Array<{icon: string, label: string, value?: string}>"
-              },
-              {
-                "name": "open",
-                "description": "Whether the secondary actions are currently visible.",
-                "type": "boolean"
-              },
-              {
-                "name": "direction",
-                "description": "The direction in which child actions fan out from the trigger.",
-                "type": "'up' | 'down' | 'left' | 'right'"
-              },
-              {
-                "name": "position",
-                "description": "Fixed viewport corner where the speed dial is anchored.",
-                "type": "'bottom-right' | 'bottom-left'"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-close",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the speed dial collapses."
-              },
-              {
-                "name": "arc-open",
-                "type": "CustomEvent",
-                "description": "Fired when the speed dial expands."
-              },
-              {
-                "name": "arc-action",
-                "type": "CustomEvent",
-                "description": "Fired when a secondary action is selected with detail: { index }."
-              }
-            ]
-          }
-        },
-        {
           "name": "arc-spy-link",
           "description": "Navigation anchor that highlights when its target section is in view.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
           "doc-url": "",
@@ -17836,57 +17397,6 @@
           "name": "part(container)"
         },
         {
-          "name": "part(event)"
-        },
-        {
-          "name": "part(day)"
-        },
-        {
-          "name": "part(day-number)"
-        },
-        {
-          "name": "part(events)"
-        },
-        {
-          "name": "part(more)"
-        },
-        {
-          "name": "part(calendar)"
-        },
-        {
-          "name": "part(header)"
-        },
-        {
-          "name": "part(nav-prev)"
-        },
-        {
-          "name": "part(nav-next)"
-        },
-        {
-          "name": "part(today)"
-        },
-        {
-          "name": "part(title)"
-        },
-        {
-          "name": "part(view-toggle)"
-        },
-        {
-          "name": "part(view-month)"
-        },
-        {
-          "name": "part(view-week)"
-        },
-        {
-          "name": "part(dows)"
-        },
-        {
-          "name": "part(dow)"
-        },
-        {
-          "name": "part(grid)"
-        },
-        {
           "name": "part(gauge)"
         },
         {
@@ -18282,30 +17792,6 @@
           "name": "part(panel)"
         },
         {
-          "name": "part(ring)"
-        },
-        {
-          "name": "part(tooltip)"
-        },
-        {
-          "name": "part(counter)"
-        },
-        {
-          "name": "part(title)"
-        },
-        {
-          "name": "part(content)"
-        },
-        {
-          "name": "part(controls)"
-        },
-        {
-          "name": "part(prev)"
-        },
-        {
-          "name": "part(next)"
-        },
-        {
           "name": "part(trigger)"
         },
         {
@@ -18439,9 +17925,6 @@
         },
         {
           "name": "part(dismiss)"
-        },
-        {
-          "name": "part(ring)"
         },
         {
           "name": "part(container)"
@@ -19119,9 +18602,6 @@
           "name": "part(grid)"
         },
         {
-          "name": "part(dock)"
-        },
-        {
           "name": "part(bar)"
         },
         {
@@ -19435,18 +18915,6 @@
         },
         {
           "name": "part(link)"
-        },
-        {
-          "name": "part(base)"
-        },
-        {
-          "name": "part(actions)"
-        },
-        {
-          "name": "part(action)"
-        },
-        {
-          "name": "part(trigger)"
         },
         {
           "name": "part(base)"

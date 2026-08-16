@@ -79,8 +79,18 @@ export class DismissController {
    * @param {() => void} opts.onDismiss
    * @param {() => boolean} [opts.when] - Extra guard, checked per event.
    * @param {() => Element | null | undefined} [opts.boundary] - What counts as
-   *   "inside", when that isn't the host. arc-spotlight highlights a *separate*
-   *   target element and must stay open for interaction with it, not with itself.
+   *   "inside", when that isn't the host. The shape it exists for is a component
+   *   that points at a *separate* target element and must stay open for
+   *   interaction with that target, not with itself.
+   *
+   *   **No component consumes this today.** arc-spotlight was the only one, and
+   *   V4-SCOPE §4 deleted it in 4.1; `arc-tour` (4.8) is the rebuild that needs
+   *   the same thing, and taking element references rather than selectors is
+   *   the design change that makes it work through shadow roots. Kept rather
+   *   than removed with its last consumer because the behaviour is pinned
+   *   directly — `dismiss-controller.test.js` "boundary()" covers inside,
+   *   resolves-to-nothing on pointer, and resolves-to-nothing on focusout,
+   *   against a purpose-built probe rather than through a component.
    * @param {boolean} [opts.pointer=true] - Dismiss when a pointer lands outside.
    * @param {boolean} [opts.focus=true] - Dismiss when focus moves outside.
    */
@@ -146,8 +156,9 @@ export class DismissController {
     if (this._when && !this._when()) return;
     const inside = this._inside;
     // A boundary that resolves to nothing means there is no inside: every click
-    // is outside, which is the right reading for a spotlight whose target has
-    // gone away.
+    // is outside. That is the right reading for a component whose highlighted
+    // target has gone away — the alternative, treating "no inside" as "nothing
+    // is outside", traps the page open with no way to dismiss it.
     if (inside && e.composedPath().includes(inside)) return;
     this._onDismiss();
   }

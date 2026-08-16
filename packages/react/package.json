@@ -200,10 +200,6 @@
       "types": "./dist/data/Diff.d.ts",
       "default": "./dist/data/Diff.js"
     },
-    "./EventCalendar": {
-      "types": "./dist/data/EventCalendar.d.ts",
-      "default": "./dist/data/EventCalendar.js"
-    },
     "./Gauge": {
       "types": "./dist/data/Gauge.d.ts",
       "default": "./dist/data/Gauge.js"
@@ -620,10 +616,6 @@
       "types": "./dist/navigation/SkipLink.d.ts",
       "default": "./dist/navigation/SkipLink.js"
     },
-    "./SpeedDial": {
-      "types": "./dist/navigation/SpeedDial.d.ts",
-      "default": "./dist/navigation/SpeedDial.js"
-    },
     "./SpyLink": {
       "types": "./dist/navigation/SpyLink.d.ts",
       "default": "./dist/navigation/SpyLink.js"
@@ -683,10 +675,6 @@
     "./DashboardGrid": {
       "types": "./dist/layout/DashboardGrid.d.ts",
       "default": "./dist/layout/DashboardGrid.js"
-    },
-    "./Dock": {
-      "types": "./dist/layout/Dock.d.ts",
-      "default": "./dist/layout/Dock.js"
     },
     "./FloatBar": {
       "types": "./dist/layout/FloatBar.d.ts",
@@ -792,10 +780,6 @@
       "types": "./dist/feedback/DropdownMenu.d.ts",
       "default": "./dist/feedback/DropdownMenu.js"
     },
-    "./GuidedTour": {
-      "types": "./dist/feedback/GuidedTour.d.ts",
-      "default": "./dist/feedback/GuidedTour.js"
-    },
     "./HoverCard": {
       "types": "./dist/feedback/HoverCard.d.ts",
       "default": "./dist/feedback/HoverCard.js"
@@ -839,10 +823,6 @@
     "./Snackbar": {
       "types": "./dist/feedback/Snackbar.d.ts",
       "default": "./dist/feedback/Snackbar.js"
-    },
-    "./Spotlight": {
-      "types": "./dist/feedback/Spotlight.d.ts",
-      "default": "./dist/feedback/Spotlight.js"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.d.ts",

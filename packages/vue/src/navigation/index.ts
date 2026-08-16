@@ -17,7 +17,6 @@ export { default as ScrollToTop } from './ScrollToTop.vue';
 export { default as SidebarLink } from './SidebarLink.vue';
 export { default as SidebarSection } from './SidebarSection.vue';
 export { default as SkipLink } from './SkipLink.vue';
-export { default as SpeedDial } from './SpeedDial.vue';
 export { default as SpyLink } from './SpyLink.vue';
 export { default as StepperNav } from './StepperNav.vue';
 export { default as Tab } from './Tab.vue';

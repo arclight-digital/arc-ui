@@ -6,7 +6,6 @@ export { default as Center } from './Center.vue';
 export { default as Cluster } from './Cluster.vue';
 export { default as Container } from './Container.vue';
 export { default as DashboardGrid } from './DashboardGrid.vue';
-export { default as Dock } from './Dock.vue';
 export { default as FloatBar } from './FloatBar.vue';
 export { default as Inset } from './Inset.vue';
 export { default as Masonry } from './Masonry.vue';

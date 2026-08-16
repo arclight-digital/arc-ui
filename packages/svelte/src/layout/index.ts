@@ -6,7 +6,6 @@ export { default as Center } from './Center.svelte';
 export { default as Cluster } from './Cluster.svelte';
 export { default as Container } from './Container.svelte';
 export { default as DashboardGrid } from './DashboardGrid.svelte';
-export { default as Dock } from './Dock.svelte';
 export { default as FloatBar } from './FloatBar.svelte';
 export { default as Inset } from './Inset.svelte';
 export { default as Masonry } from './Masonry.svelte';

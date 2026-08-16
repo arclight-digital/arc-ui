@@ -1281,43 +1281,6 @@
       "references": []
     },
     {
-      "name": "arc-event-calendar",
-      "description": "Scheduling calendar with month and week views that renders all-day and multi-day event chips\ncolored by the chart palette.\n---\n\n\n### **Events:**\n - **arc-period-change** - Fired when the visible period or view changes (navigation buttons, Today, view toggle, or keyboard). `event.detail` contains `{ view, date }`.\n- **arc-date-click** - Fired when a day cell or a \"+N more\" overflow button is activated. `event.detail.date` contains the ISO date string.\n- **arc-event-click** - Fired when an event chip is clicked or activated. `event.detail.event` contains the original event object.\n\n### **CSS Parts:**\n - **event**\n- **day**\n- **day-number**\n- **events**\n- **more**\n- **calendar**\n- **header**\n- **nav-prev**\n- **nav-next**\n- **today**\n- **title**\n- **view-toggle**\n- **view-month**\n- **view-week**\n- **dows**\n- **dow**\n- **grid**",
-      "attributes": [
-        {
-          "name": "locale",
-          "description": "BCP 47 tag used for month and weekday names. Defaults to the document's `lang`, then the browser's language.",
-          "values": []
-        },
-        {
-          "name": "first-day-of-week",
-          "description": "Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.",
-          "values": []
-        },
-        {
-          "name": "events",
-          "description": "The event objects to display. `date` (and optional `end` for multi-day spans) are ISO strings (YYYY-MM-DD). `color` indexes the fixed `--chart-N` palette and defaults to 1. Set via JavaScript property, not an attribute.",
-          "values": [
-            { "name": "Array<{date:string" },
-            { "name": "end?:string" },
-            { "name": "label:string" },
-            { "name": "color?:number}>" }
-          ]
-        },
-        {
-          "name": "view",
-          "description": "Which period layout to render. Also switchable by the user via the header view toggle.",
-          "values": [{ "name": "month" }, { "name": "week" }]
-        },
-        {
-          "name": "date",
-          "description": "ISO date string (YYYY-MM-DD) anchoring the visible period. Defaults to today when left empty.",
-          "values": []
-        }
-      ],
-      "references": []
-    },
-    {
       "name": "arc-gauge",
       "description": "Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning,\nerror) and an animated sweep. The radial companion to arc-meter: same threshold semantics,\nwith the reading rendered center-stage.\n---\n\n\n### **CSS Parts:**\n - **gauge**\n- **svg**\n- **track**\n- **arc**\n- **readout**\n- **value**\n- **unit**\n- **label**",
       "attributes": [
@@ -2116,28 +2079,6 @@
       "references": []
     },
     {
-      "name": "arc-guided-tour",
-      "description": "Multi-step onboarding that composes spotlight with popover-styled tooltips at each step. Step\ncounter uses accent-primary gradient text.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the tour advances or goes back to a different step. Detail contains { step } with the new step index.\n- **arc-complete** - Fired when the user finishes the last step of the tour\n- **arc-close** - Fired when the user skips or closes the tour before completing all steps\n\n### **CSS Parts:**\n - **ring**\n- **tooltip**\n- **counter**\n- **title**\n- **content**\n- **controls**\n- **prev**\n- **next**",
-      "attributes": [
-        {
-          "name": "steps",
-          "description": "Array of step definitions. Each step specifies a CSS selector for the target element, a title for the popover heading, and content for the popover body.",
-          "values": [{ "name": "array" }]
-        },
-        {
-          "name": "active",
-          "description": "Read-only property reflecting the zero-based index of the currently active step.",
-          "values": []
-        },
-        {
-          "name": "open",
-          "description": "Controls whether the tour is active. Set to true to start the tour from the first step.",
-          "values": []
-        }
-      ],
-      "references": []
-    },
-    {
       "name": "arc-hover-card",
       "description": "Card that appears on hover with a delay.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the hover card becomes visible\n- **arc-close** - Fired when the hover card hides\n\n### **Slots:**\n - _default_ - Default content.\n- **content**\n\n### **CSS Parts:**\n - **trigger**\n- **card**",
       "attributes": [
@@ -2407,28 +2348,6 @@
         {
           "name": "duration",
           "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
-          "values": []
-        }
-      ],
-      "references": []
-    },
-    {
-      "name": "arc-spotlight",
-      "description": "Dims the entire page except a targeted element, which gets an accent-primary glow ring and\nelevated z-index. For onboarding and feature discovery.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the user clicks outside the highlighted element to dismiss the spotlight\n\n### **CSS Parts:**\n - **ring**",
-      "attributes": [
-        {
-          "name": "target",
-          "description": "CSS selector for the element to highlight. The first matching element will be spotlighted with a glow ring and elevated z-index.",
-          "values": []
-        },
-        {
-          "name": "active",
-          "description": "Controls whether the spotlight overlay is visible. Set to true to activate the dimming overlay and highlight the target element.",
-          "values": []
-        },
-        {
-          "name": "padding",
-          "description": "Padding in pixels around the target element cutout. Increase for larger glow rings or to give the target more breathing room.",
           "values": []
         }
       ],
@@ -4532,32 +4451,6 @@
       "references": []
     },
     {
-      "name": "arc-dock",
-      "description": "Edge-snapped auto-hide panel with a 1px border edge line and subtle accent glow on hover-reveal.\nSlides in with spring easing.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the dock becomes visible, either via hover-reveal or programmatic open.\n- **arc-close** - Fired when the dock hides, either because the cursor left the edge area or the open prop was set to false.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **dock**",
-      "attributes": [
-        {
-          "name": "position",
-          "description": "Which viewport edge the dock snaps to. Bottom is the most common for media controls and action bars; left and right are suited for tool palettes in canvas editors.",
-          "values": [
-            { "name": "bottom" },
-            { "name": "left" },
-            { "name": "right" }
-          ]
-        },
-        {
-          "name": "autoHide",
-          "description": "When true, the dock hides itself when the cursor moves away from the edge and reveals on hover. Set to false to keep the dock permanently visible.",
-          "values": []
-        },
-        {
-          "name": "open",
-          "description": "Controls the visible state of the dock programmatically. When auto-hide is true, this reflects the current hover-reveal state; when auto-hide is false, use this to toggle visibility manually.",
-          "values": []
-        }
-      ],
-      "references": []
-    },
-    {
       "name": "arc-float-bar",
       "description": "Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring\neasing. For bulk actions, unsaved-changes prompts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the float bar becomes visible after the open prop is set to true.\n- **arc-close** - Fired when the float bar hides after the open prop is set to false.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **bar**",
       "attributes": [
@@ -5319,42 +5212,6 @@
           "name": "target",
           "description": "CSS selector for the element that should receive focus when the skip link is activated. Typically an ID like #main.",
           "values": []
-        }
-      ],
-      "references": []
-    },
-    {
-      "name": "arc-speed-dial",
-      "description": "Floating action button that fans out secondary actions with staggered scale-in animation.\nTrigger is a primary icon-button.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the speed dial collapses.\n- **arc-open** - Fired when the speed dial expands.\n- **arc-action** - Fired when a secondary action is selected with detail: { index }.\n\n### **Slots:**\n - **trigger**\n\n### **CSS Parts:**\n - **base**\n- **actions**\n- **action**\n- **trigger**",
-      "attributes": [
-        {
-          "name": "open",
-          "description": "Whether the secondary actions are currently visible.",
-          "values": []
-        },
-        {
-          "name": "direction",
-          "description": "The direction in which child actions fan out from the trigger.",
-          "values": [
-            { "name": "up" },
-            { "name": "down" },
-            { "name": "left" },
-            { "name": "right" }
-          ]
-        },
-        {
-          "name": "position",
-          "description": "Fixed viewport corner where the speed dial is anchored.",
-          "values": [{ "name": "bottom-right" }, { "name": "bottom-left" }]
-        },
-        {
-          "name": "items",
-          "description": "Array of secondary action items to display when the speed dial is open. Each item needs an icon and label.",
-          "values": [
-            { "name": "Array<{icon: string" },
-            { "name": "label: string" },
-            { "name": "value?: string}>" }
-          ]
         }
       ],
       "references": []
