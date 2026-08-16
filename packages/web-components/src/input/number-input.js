@@ -98,8 +98,8 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
         cursor: pointer;
         font-size: var(--_text-md);
         font-family: var(--font-body);
-        font-weight: 600;
-        line-height: 1;
+        font-weight: var(--font-label-weight, 600);
+        line-height: var(--glyph-lh);
         transition:
           background var(--transition-fast),
           color var(--transition-fast);

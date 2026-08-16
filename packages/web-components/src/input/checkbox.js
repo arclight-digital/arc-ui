@@ -112,7 +112,7 @@ export class ArcCheckbox extends DeclaredPropsMixin(FormControlMixin(LitElement)
       .checkbox__label {
         font-family: var(--font-body);
         font-size: var(--body-size);
-        font-weight: 400;
+        font-weight: var(--field-weight, 400);
         color: var(--text-muted);
         user-select: none;
       }

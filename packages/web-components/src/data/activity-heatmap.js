@@ -134,7 +134,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         color: var(--text-muted);
-        line-height: 1;
+        line-height: var(--glyph-lh);
       }
 
       .heatmap__month {

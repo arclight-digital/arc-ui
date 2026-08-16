@@ -31,7 +31,7 @@ export class ArcText extends DeclaredPropsMixin(LitElement) {
         font-size: var(--display-xl-size);
         font-weight: var(--display-xl-weight);
         letter-spacing: var(--display-xl-spacing);
-        line-height: 1.2;
+        line-height: var(--heading-lh);
         padding-bottom: 0.1em;
         background: var(--gradient-display-text);
         -webkit-background-clip: text;
@@ -44,7 +44,7 @@ export class ArcText extends DeclaredPropsMixin(LitElement) {
         font-size: var(--heading-size);
         font-weight: var(--heading-weight);
         color: var(--text-primary);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         text-wrap: balance;
         margin-bottom: var(--space-md);
       }

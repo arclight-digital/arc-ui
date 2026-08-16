@@ -208,7 +208,7 @@ export class ArcImageCompare extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         pointer-events: none;
         user-select: none;

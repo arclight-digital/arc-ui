@@ -84,7 +84,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 3px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
@@ -133,7 +133,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
         align-items: center;
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         /* The unread baseline. --text-primary, and not one of the greys, for a
            reason worth writing down: secondary, muted and ghost are rgb 150,
            142 and 133 — seventeen points end to end. A read/unread split built
@@ -143,7 +143,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
            behind. Nothing ends up dimmer than the flat ghost every entry shared
            before, so the panel gains a state without spending contrast. */
         color: var(--text-primary);
-        font-weight: 400;
+        font-weight: var(--field-weight, 400);
         text-decoration: none;
         padding-block: var(--space-xs);
         padding-inline: var(--nav-row-inset) var(--space-sm);
@@ -209,7 +209,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
          the amount. */
       .scroll-spy__link[aria-current="location"] {
         color: color-mix(in srgb, var(--interactive), var(--text-primary) var(--accent-text-mix, 0%));
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         background: var(--accent-primary-subtle);
         box-shadow: 0 0 12px rgba(var(--interactive-rgb), 0.08);
       }

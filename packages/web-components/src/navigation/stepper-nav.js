@@ -72,7 +72,7 @@ export class ArcStepperNav extends DeclaredPropsMixin(LitElement) {
         align-items: center;
         justify-content: center;
         font-size: var(--_text-sm);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         border: 2px solid var(--border-default);
         color: var(--text-muted);
         transition: all var(--transition-base);

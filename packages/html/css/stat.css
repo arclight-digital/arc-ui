@@ -14,9 +14,9 @@
 
       .arc-stat .stat__value {
         font-size: clamp(32px, 4.5vw, 48px);
-        font-weight: 200;
-        letter-spacing: -1px;
-        line-height: 1;
+        font-weight: var(--numeral-weight, 200);
+        letter-spacing: var(--display-xl-spacing);
+        line-height: var(--glyph-lh);
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -47,7 +47,7 @@
         gap: 4px;
         font-family: var(--font-mono);
         font-size: var(--_text-sm);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         margin-top: var(--space-xs);
       }
 

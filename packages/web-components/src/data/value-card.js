@@ -49,7 +49,7 @@ export class ArcValueCard extends LitElement {
         flex-shrink: 0;
         color: var(--accent-secondary);
         font-size: 24px; /* icon size, not text */
-        line-height: 1;
+        line-height: var(--glyph-lh);
         padding-top: 2px;
       }
 
@@ -60,8 +60,8 @@ export class ArcValueCard extends LitElement {
       }
 
       .card__title {
-        font-size: 17px; /* heading size, keep hardcoded */
-        font-weight: 600;
+        font-size: var(--body-size);
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         margin: 0;
       }
@@ -70,7 +70,7 @@ export class ArcValueCard extends LitElement {
         color: var(--text-secondary);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.7;
+        line-height: var(--body-lh);
         margin: 0;
       }
     `,

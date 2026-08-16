@@ -74,7 +74,7 @@ export class ArcCalendar extends DeclaredPropsMixin(LitElement) {
       .calendar__title {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
       }
 
@@ -116,7 +116,7 @@ export class ArcCalendar extends DeclaredPropsMixin(LitElement) {
       .calendar__dow {
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-muted);
         padding: var(--space-xs) 0;
         text-transform: uppercase;
@@ -152,7 +152,7 @@ export class ArcCalendar extends DeclaredPropsMixin(LitElement) {
       .calendar__day--selected {
         background: var(--interactive) !important;
         color: var(--text-primary) !important;
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       .calendar__day--outside {

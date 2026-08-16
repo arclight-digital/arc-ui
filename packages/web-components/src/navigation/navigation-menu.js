@@ -128,7 +128,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .nav__trigger--muted {
         color: var(--text-muted);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         background: transparent;
         border-color: transparent;
       }
@@ -246,7 +246,7 @@ export class ArcNavigationMenu extends LitElement {
       .nav__dropdown-label {
         display: block;
         font-size: var(--_text-sm);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         color: var(--text-primary);
         margin-bottom: 2px; /* cosmetic micro-spacing */
       }
@@ -255,7 +255,7 @@ export class ArcNavigationMenu extends LitElement {
         display: block;
         font-size: var(--_text-sm);
         color: var(--text-muted);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       .nav__slot-host { display: none; }
@@ -467,7 +467,7 @@ export class ArcNavigationMenu extends LitElement {
 
       .mobile-trigger--muted {
         color: var(--text-muted);
-        font-weight: 400;
+        font-weight: var(--field-weight, 400);
         border-color: transparent;
         background: transparent;
       }
@@ -551,7 +551,7 @@ export class ArcNavigationMenu extends LitElement {
         min-height: var(--touch-min);
         text-decoration: none;
         color: var(--text-primary);
-        font-weight: 400;
+        font-weight: var(--field-weight, 400);
         font-size: var(--body-size);
         border-radius: var(--radius-sm);
         -webkit-tap-highlight-color: transparent;
@@ -577,7 +577,7 @@ export class ArcNavigationMenu extends LitElement {
         display: block;
         font-size: var(--_text-sm);
         color: var(--text-muted);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         margin-top: 2px;
       }
     `,

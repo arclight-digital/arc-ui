@@ -119,7 +119,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
       .item__description {
         font-size: var(--_text-sm);
         color: var(--text-muted);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       .item__description--empty { display: none; }

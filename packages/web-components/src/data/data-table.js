@@ -92,7 +92,7 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         border-bottom: 1px solid var(--border-default);
@@ -155,7 +155,7 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
         padding: var(--space-sm) var(--space-md);
         border-bottom: 1px solid var(--divider);
         color: var(--text-secondary);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
       }
 
       tr:last-child td {

@@ -179,7 +179,18 @@ export const tokens = {
     heading: 'var(--text-xl)',
     body: 'var(--text-md)',
     wordmark: 'clamp(20px, 2.5vw, 28px)',
-    sectionTitle: 'var(--text-xs)',
+    /* The uppercase tracked label — a form label, a table header, an eyebrow
+       over a section. One treatment, and until this entry existed it was
+       written out by hand in some fifty components: 12px, the label role's
+       weight, uppercase, tracked. `sectionTitle` below is the name that
+       shipped for it first and now points here rather than restating it. */
+    label: 'var(--text-xs)',
+    /* The figure itself, at the size arc-clock and arc-countdown-timer had
+       independently arrived at — the same clamp, character for character, in
+       two files with no name between them. arc-stat's is deliberately larger
+       and stays its own; this names the step two components already shared. */
+    numeral: 'clamp(24px, 3vw, 36px)',
+    sectionTitle: 'var(--label-size)',
     uiAccent: '16px',
     code: '14px',
     // 10px, not var(--text-xs) (12px). The two sources disagreed: shared-styles
@@ -201,8 +212,15 @@ export const tokens = {
     heading: 'var(--font-display-weight)',
     body: 'var(--font-body-weight)',
     wordmark: 'var(--font-display-weight)',
-    sectionTitle: 'var(--font-label-weight)',
+    label: 'var(--font-label-weight)',
+    sectionTitle: 'var(--label-weight)',
     uiAccent: 'var(--font-label-weight)',
+    /* The large figure a stat, a clock, a countdown or a gauge displays.
+       Light on purpose — a 48px number at the body weight reads as shouting —
+       and its own context because the four components that draw one had it
+       written out at 200 three times and 300 once, which is a difference
+       nobody chose and nobody can see until two of them share a dashboard. */
+    numeral: 200,
     /* Field text: what the user typed, in the four text inputs. Its own context
        rather than the body weight, because a form value wants the weight a
        native input has (400) and body prose here is 500. Before this it was
@@ -218,7 +236,14 @@ export const tokens = {
     // (1px/0px) and the wide Tektur-era values (4px/1px/3px) read as gappy.
     // Tomorrow is proportional and set tight, so small caps need the tracking
     // back — short of Tektur's, which was compensating for a wider face.
-    sectionTitle: '2px',
+    //
+    // That decision reached this file and stopped there. The tree carried the
+    // same uppercase label at four trackings — 2px, 1.5px, 1px and 0.08em —
+    // and the two spellings this comment names as retired are exactly the ones
+    // still in it: 1px is the Azeret-era value, 3px and 4px are Tektur's. The
+    // style pass pointed all of them here.
+    label: '2px',
+    sectionTitle: 'var(--label-spacing)',
     uiAccent: '0.5px',
     wordmark: 'clamp(8px, 1.2vw, 14px)',
     // Was spelled only in the :root template and in shared-styles.js, never in
@@ -226,7 +251,28 @@ export const tokens = {
     labelInline: '0.75px',
   },
 
+  /* Leading, by what the box holds.
+   *
+   * Three of these are new, and the reason is the census that produced them:
+   * the tree shipped three line-heights and the components used ten. `body`,
+   * `code` and `heading` covered display type and prose and named nothing for
+   * the two most common boxes in a component library —
+   *
+   *   `glyph`  a box whose whole content is one mark: an icon, a badge, a
+   *            counter, a kbd cap. Leading has to add nothing or the box grows
+   *            taller than the mark and stops centring. Twenty-four components
+   *            wrote `line-height: 1`.
+   *   `ui`     running text inside a control: a field, a list row, a menu item,
+   *            a table cell, a label. Thirty components wrote this one, twenty
+   *            at 1.4 and ten at 1.5 — 1.7px apart on a 17px face, invisible in
+   *            any one component and plainly uneven in a form that uses four.
+   *
+   * The uppercase tracked label has no leading of its own: it is the same text
+   * at a smaller size, so it reads `ui` like everything else in a control.
+   */
   lineHeight: {
+    glyph: 1,
+    ui: 1.4,
     body: 1.7,
     code: 1.8,
     heading: 1.2,
@@ -899,6 +945,13 @@ export const cssVariables = `
   --wordmark-size: ${tokens.fontSize.wordmark};
   --wordmark-weight: ${tokens.fontWeight.wordmark};
   --wordmark-spacing: ${tokens.letterSpacing.wordmark};
+  --glyph-lh: ${tokens.lineHeight.glyph};
+  --ui-lh: ${tokens.lineHeight.ui};
+  --numeral-size: ${tokens.fontSize.numeral};
+  --numeral-weight: ${tokens.fontWeight.numeral};
+  --label-size: ${tokens.fontSize.label};
+  --label-weight: ${tokens.fontWeight.label};
+  --label-spacing: ${tokens.letterSpacing.label};
   --section-title-size: ${tokens.fontSize.sectionTitle};
   --section-title-weight: ${tokens.fontWeight.sectionTitle};
   --section-title-spacing: ${tokens.letterSpacing.sectionTitle};
@@ -1928,6 +1981,10 @@ export function generateHostTokensCSS(indent = '    ') {
     ['heading', 'heading'],
     ['body', 'body'],
     ['wordmark', 'wordmark'],
+    ['glyph', 'glyph'],
+    ['ui', 'ui'],
+    ['numeral', 'numeral'],
+    ['label', 'label'],
     ['section-title', 'sectionTitle'],
     ['ui-accent', 'uiAccent'],
     ['code', 'code'],

@@ -182,7 +182,7 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         user-select: none;
@@ -191,7 +191,7 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
       .zoom__value {
         font-family: var(--font-mono);
         font-size: var(--code-size);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--interactive);
         min-width: 5ch;
         text-align: end;

@@ -72,7 +72,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         margin-bottom: var(--space-xs);
@@ -115,7 +115,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
         align-items: center;
         gap: var(--space-xs);
         font-size: var(--_text-xs);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         color: var(--text-primary);
         background: var(--surface-overlay);
         border: 1px solid var(--border-default);
@@ -136,7 +136,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
         cursor: pointer;
         border-radius: var(--radius-full);
         font-size: var(--_text-sm);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         padding: 0;
         transition: color var(--transition-fast), background var(--transition-fast);
       }

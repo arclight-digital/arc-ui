@@ -63,10 +63,10 @@ export class ArcSearch extends DeclaredPropsMixin(LitElement) {
       .search__label {
         display: block;
         font-size: var(--_text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-secondary);
         margin-bottom: var(--space-xs);
-        letter-spacing: 0.5px;
+        letter-spacing: var(--ui-accent-spacing);
       }
 
       .search__wrapper {

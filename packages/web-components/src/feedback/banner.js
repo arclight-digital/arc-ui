@@ -67,7 +67,7 @@ export class ArcBanner extends DeclaredPropsMixin(LitElement) {
         color: var(--_status-color);
         flex-shrink: 0;
         font-size: var(--_text-md);
-        line-height: 1;
+        line-height: var(--glyph-lh);
       }
 
       .banner__message {

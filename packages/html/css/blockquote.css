@@ -33,7 +33,7 @@
         inset-inline-start: var(--space-md);
         font-size: 64px;
         font-weight: var(--font-quote-weight, 200);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         color: var(--text-ghost);
         opacity: 0.15;
         font-family: var(--font-quote);
@@ -43,10 +43,10 @@
       .arc-blockquote .quote {
         font-family: var(--font-body);
         font-size: var(--_text-lg);
-        font-weight: 400;
+        font-weight: var(--field-weight, 400);
         font-style: italic;
         color: var(--text-primary);
-        line-height: 1.8;
+        line-height: var(--body-lh);
       }
 
       .arc-blockquote[data-variant="accent"] .quote {
@@ -61,7 +61,7 @@
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
       }

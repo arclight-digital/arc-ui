@@ -56,7 +56,7 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         background: transparent;
@@ -73,7 +73,7 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
           box-shadow var(--transition-base);
         white-space: nowrap;
         user-select: none;
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       .segmented__option:hover:not(.is-active):not(:disabled) {

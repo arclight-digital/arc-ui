@@ -211,7 +211,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
       .masked__error {
         font-size: var(--_text-xs);
         color: var(--color-error);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       /*

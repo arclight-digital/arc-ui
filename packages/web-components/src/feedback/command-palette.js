@@ -161,7 +161,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
 
       .palette__empty strong {
         color: var(--text-secondary);
-        font-weight: var(--weight-medium, 500);
+        font-weight: var(--font-body-weight, 500);
         overflow-wrap: anywhere;
       }
 
@@ -169,7 +169,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
         padding: var(--space-sm) var(--space-sm) var(--space-xs);
         font-family: var(--font-label);
         font-size: var(--_text-xs);
-        letter-spacing: 0.12em;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-ghost);
       }
@@ -225,7 +225,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
       .palette__item-match {
         background: none;
         color: var(--interactive);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       .palette__item-description {

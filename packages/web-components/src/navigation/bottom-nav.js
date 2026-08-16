@@ -58,7 +58,7 @@ export class ArcBottomNav extends DeclaredPropsMixin(LitElement) {
         background: none;
         border: none;
         font: inherit;
-        font-size: 10px;
+        font-size: var(--label-inline-size);
       }
 
       .bottom-nav__item:hover {
@@ -81,7 +81,7 @@ export class ArcBottomNav extends DeclaredPropsMixin(LitElement) {
 
       .bottom-nav__icon {
         font-size: 20px;
-        line-height: 1;
+        line-height: var(--glyph-lh);
         display: flex;
         align-items: center;
         justify-content: center;

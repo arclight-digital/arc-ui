@@ -74,7 +74,7 @@ export class ArcStepper extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-sm);
         font-weight: 700;
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         flex-shrink: 0;
         position: relative;
         z-index: 1;
@@ -151,7 +151,7 @@ export class ArcStepper extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         text-align: center;
@@ -168,7 +168,7 @@ export class ArcStepper extends DeclaredPropsMixin(LitElement) {
 
       .step__check {
         font-size: var(--_text-sm);
-        line-height: 1;
+        line-height: var(--glyph-lh);
       }
 
       .stepper__slot-host { display: none; }

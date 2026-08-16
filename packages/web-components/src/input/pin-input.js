@@ -81,7 +81,7 @@ export class ArcPinInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         font-size: var(--_text-lg);
         color: var(--text-ghost);
         user-select: none;
-        line-height: 1;
+        line-height: var(--glyph-lh);
         padding: 0 2px;
       }
 
@@ -91,7 +91,7 @@ export class ArcPinInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         text-align: center;
         font-family: var(--font-mono);
         font-size: var(--_text-lg);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);

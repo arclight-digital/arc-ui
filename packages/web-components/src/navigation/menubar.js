@@ -212,7 +212,7 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
       .item__caret {
         flex-shrink: 0;
         color: var(--text-muted);
-        line-height: 1;
+        line-height: var(--glyph-lh);
       }
 
       .divider {

@@ -147,7 +147,7 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
       .sheet__heading {
         font-family: var(--font-body);
         font-size: var(--_text-md);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         margin: 0;
       }

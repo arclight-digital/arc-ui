@@ -81,7 +81,7 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         user-select: none;
@@ -158,7 +158,7 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
         font-family: var(--font-mono);
         font-size: var(--code-size);
         color: var(--interactive);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         /* Updates on every pointermove — proportional digits would change its
            width each frame and make the whole control breathe while turning. */
         font-variant-numeric: tabular-nums;

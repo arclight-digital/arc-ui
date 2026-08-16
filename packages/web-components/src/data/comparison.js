@@ -47,7 +47,7 @@ export class ArcComparison extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-sm);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-primary);
         padding: var(--space-md);

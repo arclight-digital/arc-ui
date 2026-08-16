@@ -118,7 +118,7 @@ export class ArcNotificationPanel extends DeclaredPropsMixin(LitElement) {
         border-bottom: 1px solid var(--divider);
         padding: var(--space-md);
         font-family: var(--font-body);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-sm);
         color: var(--text-primary);
       }

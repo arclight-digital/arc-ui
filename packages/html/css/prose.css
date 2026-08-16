@@ -20,7 +20,7 @@
         color: var(--text-primary) !important;
         margin-top: var(--space-2xl) !important;
         margin-bottom: var(--space-md) !important;
-        line-height: 1.3 !important;
+        line-height: var(--heading-lh) !important;
       }
       .arc-prose h2 {
         font-size: var(--heading-size) !important;
@@ -28,18 +28,18 @@
         color: var(--text-primary) !important;
         margin-top: var(--space-xl) !important;
         margin-bottom: var(--space-md) !important;
-        line-height: 1.4 !important;
+        line-height: var(--ui-lh) !important;
       }
       .arc-prose h3 {
         font-size: var(--_text-lg) !important;
-        font-weight: 600 !important;
+        font-weight: var(--font-label-weight, 600) !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
       .arc-prose h4 {
         font-size: var(--_text-md) !important;
-        font-weight: 600 !important;
+        font-weight: var(--font-label-weight, 600) !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;

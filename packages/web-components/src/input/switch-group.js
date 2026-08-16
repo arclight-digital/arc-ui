@@ -49,7 +49,7 @@ export class ArcSwitchGroup extends DeclaredPropsMixin(LitElement) {
       legend {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-secondary);
         padding: 0;
         margin-bottom: var(--space-sm);

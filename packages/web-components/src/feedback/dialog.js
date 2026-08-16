@@ -178,7 +178,7 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
 
       .dialog__heading {
         font-size: var(--_text-md);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         margin: 0;
       }

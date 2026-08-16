@@ -104,7 +104,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         border-bottom: 1px solid var(--border-default);
@@ -150,7 +150,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
         padding: var(--space-sm) var(--space-md);
         border-bottom: 1px solid var(--divider);
         color: var(--text-secondary);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
         white-space: nowrap;
         background: inherit;
       }
@@ -267,7 +267,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
         box-sizing: border-box;
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        font-weight: 300;
+        font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid rgba(var(--interactive-rgb), 0.4);

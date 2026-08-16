@@ -72,7 +72,7 @@ export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
       }
@@ -168,7 +168,7 @@ export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         text-align: center;
@@ -206,7 +206,7 @@ export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
       .time-option.selected {
         background: var(--interactive);
         color: var(--on-accent);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       .time-option.disabled {

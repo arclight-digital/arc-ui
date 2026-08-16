@@ -94,7 +94,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
       }
@@ -219,7 +219,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
         font-size: var(--_text-md);
         padding: var(--space-xs) var(--space-sm);
         border-radius: var(--radius-sm);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         transition: color var(--transition-fast), background var(--transition-fast);
       }
 
@@ -251,7 +251,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1.5px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-primary);
         text-align: center;
@@ -268,11 +268,11 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
 
       .weekday {
         font-size: var(--_text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-muted);
         padding: var(--space-xs) 0;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: var(--ui-accent-spacing);
       }
 
       /* No column gap: in-range backgrounds must form a continuous bar */
@@ -328,7 +328,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
       .day.selected {
         background: var(--interactive);
         color: var(--text-primary);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       .day.selected.today {

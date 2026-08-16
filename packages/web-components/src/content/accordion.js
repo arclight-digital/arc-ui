@@ -61,7 +61,7 @@ export class ArcAccordion extends DeclaredPropsMixin(LitElement) {
         cursor: pointer;
         font-family: var(--font-body);
         font-size: var(--_text-md);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         background: none;
         border: none;
@@ -110,7 +110,7 @@ export class ArcAccordion extends DeclaredPropsMixin(LitElement) {
         color: var(--text-secondary);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.75;
+        line-height: var(--body-lh);
         padding: var(--space-md);
         margin: 0;
       }

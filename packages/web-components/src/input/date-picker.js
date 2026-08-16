@@ -73,7 +73,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
       }
@@ -148,7 +148,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 1.5px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-primary);
         background: none;
@@ -182,8 +182,8 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         padding: var(--space-sm) var(--space-xs);
         font-family: var(--font-label);
         font-size: var(--_text-xs);
-        font-weight: 500;
-        letter-spacing: 1px;
+        font-weight: var(--font-body-weight, 500);
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-secondary);
         background: none;
@@ -201,7 +201,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
       .picker-cell.current {
         background: var(--interactive);
         color: var(--on-accent);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       .picker-cell:focus-visible {
@@ -217,7 +217,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         font-size: var(--_text-md);
         padding: var(--space-xs);
         border-radius: var(--radius-sm);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         transition: color var(--transition-fast), background var(--transition-fast);
       }
 
@@ -240,11 +240,11 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
 
       .weekday {
         font-size: var(--_text-xs);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-muted);
         padding: var(--space-xs) 0;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: var(--ui-accent-spacing);
       }
 
       .days {
@@ -287,7 +287,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
       .day.selected {
         background: var(--interactive);
         color: var(--text-primary);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       .day.selected.today {

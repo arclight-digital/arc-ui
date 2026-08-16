@@ -58,7 +58,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-ghost);
         background: none;

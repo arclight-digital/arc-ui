@@ -76,7 +76,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         user-select: none;
@@ -86,7 +86,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
         font-family: var(--font-mono);
         font-size: var(--code-size);
         color: var(--interactive);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         /* The readout changes on every pointermove. Proportional digits make it
            a different width each frame, which is visible as the label beside it
            shifting — and, anywhere the control is sized to its content, as the

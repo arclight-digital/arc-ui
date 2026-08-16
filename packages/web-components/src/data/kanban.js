@@ -81,7 +81,7 @@ export class ArcKanban extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-secondary);
       }
@@ -89,7 +89,7 @@ export class ArcKanban extends DeclaredPropsMixin(LitElement) {
       .kanban__count {
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         color: var(--text-muted);
         background: var(--surface-hover);
         border: 1px solid var(--border-subtle);
@@ -170,15 +170,15 @@ export class ArcKanban extends DeclaredPropsMixin(LitElement) {
 
       .kanban__card-label {
         font-size: var(--_text-sm);
-        font-weight: 500;
-        line-height: 1.4;
+        font-weight: var(--font-body-weight, 500);
+        line-height: var(--ui-lh);
         color: var(--text-primary);
       }
 
       .kanban__card-desc {
         margin: 0;
         font-size: var(--_text-sm);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
         color: var(--text-secondary);
         display: -webkit-box;
         -webkit-line-clamp: 2;

@@ -126,7 +126,7 @@ export class ArcInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
       .input-group__error {
         font-size: var(--_text-xs);
         color: var(--color-error);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       /* Sizes */

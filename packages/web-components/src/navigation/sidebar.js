@@ -133,7 +133,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         padding: var(--space-sm);
         margin-bottom: var(--space-xs);
@@ -162,7 +162,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         padding: var(--space-sm);
         margin-bottom: 2px; /* cosmetic micro-spacing */
@@ -197,7 +197,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
         font-weight: var(--font-mono-weight, 400);
-        letter-spacing: 0;
+        letter-spacing: normal;
         color: var(--text-ghost);
         -webkit-text-fill-color: var(--text-ghost);
         margin-inline-start: auto;
@@ -242,7 +242,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         justify-content: space-between;
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        font-weight: 400;
+        font-weight: var(--field-weight, 400);
         color: var(--text-muted);
         text-decoration: none;
         /* Logical, now that the container carries the indent. The four-value
@@ -341,7 +341,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
       .sidebar__link[aria-current="page"] {
         color: var(--interactive);
         background: var(--accent-primary-subtle);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
       }
 
       :host([glow]) .sidebar__link[aria-current="page"] {

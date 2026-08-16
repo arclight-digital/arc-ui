@@ -130,7 +130,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
       .toast__icon {
         font-size: var(--_text-sm);
         flex-shrink: 0;
-        line-height: 1;
+        line-height: var(--glyph-lh);
         color: var(--_status-color);
       }
 

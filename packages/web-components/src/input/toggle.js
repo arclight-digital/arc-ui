@@ -119,7 +119,7 @@ export class ArcToggle extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       .toggle__label {
         font-family: var(--font-body);
         font-size: var(--body-size);
-        font-weight: 400;
+        font-weight: var(--field-weight, 400);
         letter-spacing: normal;
         text-transform: none;
         color: var(--text-muted);

@@ -65,10 +65,10 @@ export class ArcPageHeader extends DeclaredPropsMixin(LitElement) {
       slot[name='heading']::slotted(*) {
         margin: 0;
         font-family: var(--font-body);
-        font-size: 28px;
-        font-weight: 700;
+        font-size: var(--heading-size);
+        font-weight: var(--heading-weight);
         color: var(--text-primary);
-        line-height: 1.2;
+        line-height: var(--heading-lh);
       }
 
       .page-header__aside {
@@ -82,14 +82,14 @@ export class ArcPageHeader extends DeclaredPropsMixin(LitElement) {
         margin-top: var(--space-sm);
         color: var(--text-secondary);
         font-size: var(--body-size);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
       }
 
       slot[name='description']::slotted(*) {
         margin: var(--space-sm) 0 0;
         color: var(--text-secondary);
         font-size: var(--body-size);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
       }
 
       .page-header__below {

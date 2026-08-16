@@ -204,7 +204,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       .select__error {
         font-size: var(--_text-xs);
         color: var(--color-error);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         margin-top: var(--space-xs);
       }
 

@@ -188,7 +188,7 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
         font-size: var(--_text-xs);
         color: var(--text-ghost);
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
       }
 
       .code-block__body-wrap {

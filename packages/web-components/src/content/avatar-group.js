@@ -52,7 +52,7 @@ export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-sm);
-        letter-spacing: 0.5px;
+        letter-spacing: var(--ui-accent-spacing);
         color: var(--text-ghost);
         user-select: none;
         padding-inline-start: var(--space-sm);

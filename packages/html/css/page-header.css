@@ -30,10 +30,10 @@
       .arc-page-header [slot="heading"] {
         margin: 0;
         font-family: var(--font-body);
-        font-size: 28px;
-        font-weight: 700;
+        font-size: var(--heading-size);
+        font-weight: var(--heading-weight);
         color: var(--text-primary);
-        line-height: 1.2;
+        line-height: var(--heading-lh);
       }
 
       .arc-page-header .page-header__aside {
@@ -47,14 +47,14 @@
         margin-top: var(--space-sm);
         color: var(--text-secondary);
         font-size: var(--body-size);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
       }
 
       .arc-page-header [slot="description"] {
         margin: var(--space-sm) 0 0;
         color: var(--text-secondary);
         font-size: var(--body-size);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
       }
 
       .arc-page-header .page-header__below {

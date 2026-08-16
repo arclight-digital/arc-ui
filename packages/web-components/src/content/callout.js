@@ -51,7 +51,7 @@ export class ArcCallout extends DeclaredPropsMixin(LitElement) {
         background: rgba(var(--_status-rgb), 0.04);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.7;
+        line-height: var(--body-lh);
         color: var(--text-secondary);
       }
 
@@ -72,7 +72,7 @@ export class ArcCallout extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1.5px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--_status-color);
       }

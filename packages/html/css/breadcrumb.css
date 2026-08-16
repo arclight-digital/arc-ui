@@ -10,7 +10,7 @@
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         flex-wrap: wrap;
       }
@@ -55,7 +55,7 @@
 
       .arc-breadcrumb .breadcrumb__current {
         color: var(--text-primary);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         padding: var(--touch-pad) var(--space-xs);
         display: inline-flex;
         align-items: center;

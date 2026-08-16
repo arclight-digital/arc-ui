@@ -144,7 +144,7 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
 
       .waveform__time-current {
         color: var(--interactive);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
     `,
   ];

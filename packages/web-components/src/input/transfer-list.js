@@ -99,7 +99,7 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
       }

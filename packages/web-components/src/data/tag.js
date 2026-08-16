@@ -52,7 +52,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         min-height: var(--touch-min);
@@ -61,7 +61,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-full);
         background: var(--surface-hover);
         transition: box-shadow var(--transition-base), border-color var(--transition-base);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       :host([variant="primary"]) .tag {
@@ -107,7 +107,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
       .tag:hover { box-shadow: var(--glow-status); }
 
       /* Sizes */
-      :host([size="sm"]) .tag { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: 1.5px; }
+      :host([size="sm"]) .tag { font-size: calc(var(--_text-xs) - 1px); padding: 2px var(--space-sm); letter-spacing: var(--label-spacing); }
       :host([size="lg"]) .tag { font-size: var(--_text-sm); padding: var(--space-sm) var(--space-lg); }
 
       .tag__label {

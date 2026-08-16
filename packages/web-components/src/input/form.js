@@ -84,7 +84,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--color-error);
         margin: 0 0 var(--space-xs) 0;
@@ -95,7 +95,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
         padding: 0 0 0 var(--space-md);
         font-size: var(--_text-sm);
         color: var(--color-error);
-        line-height: 1.6;
+        line-height: var(--body-lh);
       }
     `,
   ];

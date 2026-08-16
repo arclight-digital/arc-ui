@@ -86,7 +86,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
       }
 
       .btn__text {
-        line-height: 1;
+        line-height: var(--glyph-lh);
         /* letter-spacing also lands after the final letter, and that trailing
            space is inside the box being centered — so the word rendered half of
            it, 0.75px, to the left of centre. Pulled back off the end here, at

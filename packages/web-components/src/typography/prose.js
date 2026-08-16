@@ -40,7 +40,7 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
         color: var(--text-primary) !important;
         margin-top: var(--space-2xl) !important;
         margin-bottom: var(--space-md) !important;
-        line-height: 1.3 !important;
+        line-height: var(--heading-lh) !important;
       }
       ::slotted(h2) {
         font-size: var(--heading-size) !important;
@@ -48,18 +48,18 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
         color: var(--text-primary) !important;
         margin-top: var(--space-xl) !important;
         margin-bottom: var(--space-md) !important;
-        line-height: 1.4 !important;
+        line-height: var(--ui-lh) !important;
       }
       ::slotted(h3) {
         font-size: var(--_text-lg) !important;
-        font-weight: 600 !important;
+        font-weight: var(--font-label-weight, 600) !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
       }
       ::slotted(h4) {
         font-size: var(--_text-md) !important;
-        font-weight: 600 !important;
+        font-weight: var(--font-label-weight, 600) !important;
         color: var(--text-primary) !important;
         margin-top: var(--space-lg) !important;
         margin-bottom: var(--space-sm) !important;
@@ -141,7 +141,7 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
     style.textContent = `
       arc-prose li {
         margin-bottom: 4px;
-        line-height: 1.7;
+        line-height: var(--body-lh);
       }
       arc-prose li::marker {
         color: var(--text-ghost);
@@ -172,7 +172,7 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
       }
       arc-prose strong {
         color: var(--text-primary);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
       arc-prose em {
         font-style: italic;
@@ -184,7 +184,7 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
         border-bottom: 1px solid var(--divider);
       }
       arc-prose th {
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
       }
       arc-prose blockquote p {

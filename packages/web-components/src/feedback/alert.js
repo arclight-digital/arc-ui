@@ -115,7 +115,7 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
 
       .alert__heading {
         font-family: var(--font-body);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-md);
         color: var(--text-primary);
         margin: 0 0 var(--space-xs);
@@ -124,7 +124,7 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
       .alert__content {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.6;
+        line-height: var(--body-lh);
         color: var(--text-secondary);
       }
 

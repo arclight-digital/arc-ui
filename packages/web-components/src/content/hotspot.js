@@ -152,7 +152,7 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
         box-shadow: var(--shadow-overlay);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.6;
+        line-height: var(--body-lh);
         color: var(--text-secondary);
         overflow: hidden;
         opacity: 0;
@@ -197,7 +197,7 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
         margin: 0 0 var(--space-xs);
         font-family: var(--font-label);
         font-size: var(--_text-sm);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
       }
     `,

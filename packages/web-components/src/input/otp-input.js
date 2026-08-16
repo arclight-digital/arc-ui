@@ -61,7 +61,7 @@ export class ArcOtpInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         text-align: center;
         font-family: var(--font-mono);
         font-size: var(--_text-md);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);

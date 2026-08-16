@@ -79,7 +79,7 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         border: 1px solid transparent;
         /* Pill. Circles are the house shape — the library is called ARC — and
            the round icon-only controls, the tags, the badges and the toggles
@@ -109,7 +109,7 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
       :host([size="md"]) .btn,
       :host([size="md"]) .btn-slot::slotted(a) { font-size: var(--_text-xs); padding: var(--space-sm) var(--space-lg); }
       :host([size="lg"]) .btn,
-      :host([size="lg"]) .btn-slot::slotted(a) { font-size: var(--_text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
+      :host([size="lg"]) .btn-slot::slotted(a) { font-size: var(--_text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: var(--label-spacing); }
 
       /* Default → primary */
       :host(:not([variant="ghost"]):not([variant="secondary"])) .btn,

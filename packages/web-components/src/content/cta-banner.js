@@ -80,7 +80,7 @@ export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 4px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
@@ -89,9 +89,9 @@ export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
       }
 
       .cta__headline {
-        font-size: clamp(28px, 4vw, 40px);
-        font-weight: 500;
-        letter-spacing: -1px;
+        font-size: var(--_text-2xl);
+        font-weight: var(--font-body-weight, 500);
+        letter-spacing: var(--display-xl-spacing);
         background: var(--gradient-display-text);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -104,7 +104,7 @@ export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
         font-size: var(--_text-md);
         max-width: 480px;
         text-wrap: balance;
-        line-height: 1.7;
+        line-height: var(--body-lh);
       }
 
       .cta__body ::slotted(*) { margin: 0; }

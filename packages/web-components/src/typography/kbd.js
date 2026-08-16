@@ -23,7 +23,7 @@ export class ArcKbd extends LitElement {
         align-items: center;
         font-family: var(--font-mono);
         font-size: var(--_text-sm);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         color: var(--text-secondary);
         background: var(--surface-overlay);
         border: 1px solid var(--border-default);

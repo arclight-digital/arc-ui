@@ -39,7 +39,7 @@
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         border: 1px solid transparent;
         /* Pill. Circles are the house shape — the library is called ARC — and
            the round icon-only controls, the tags, the badges and the toggles
@@ -69,7 +69,7 @@
       .arc-button[data-size="md"] .btn,
       .arc-button[data-size="md"] a { font-size: var(--_text-xs); padding: var(--space-sm) var(--space-lg); }
       .arc-button[data-size="lg"] .btn,
-      .arc-button[data-size="lg"] a { font-size: var(--_text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: 3px; }
+      .arc-button[data-size="lg"] a { font-size: var(--_text-xs); padding: var(--space-md) var(--space-xl); letter-spacing: var(--label-spacing); }
 
       /* Default → primary */
       .arc-button:not([data-data-variant="ghost"]):not([data-data-variant="secondary"]) .btn,

@@ -37,7 +37,7 @@ export class ArcBreadcrumb extends LitElement {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         flex-wrap: wrap;
       }
@@ -82,7 +82,7 @@ export class ArcBreadcrumb extends LitElement {
 
       .breadcrumb__current {
         color: var(--text-primary);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         padding: var(--touch-pad) var(--space-xs);
         display: inline-flex;
         align-items: center;

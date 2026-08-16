@@ -258,7 +258,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
       .tree-select__error {
         font-size: var(--_text-xs);
         color: var(--color-error);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         margin-top: var(--space-xs);
       }
     `,

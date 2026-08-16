@@ -451,7 +451,7 @@ export class ArcKeyboardMap extends DeclaredPropsMixin(LitElement) {
         overflow: hidden;
         font-family: var(--font-mono);
         font-size: clamp(8px, calc(var(--_key) * 0.32), 13px);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         color: var(--text-secondary);
         background: var(--surface-overlay);
         border: 1px solid var(--border-default);

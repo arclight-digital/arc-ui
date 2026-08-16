@@ -66,8 +66,8 @@ export class ArcFeatureCard extends LitElement {
       }
 
       .card__title {
-        font-size: 17px; /* heading size, keep hardcoded */
-        font-weight: 600;
+        font-size: var(--body-size);
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         transition: color var(--transition-slow);
         margin: 0;
@@ -79,7 +79,7 @@ export class ArcFeatureCard extends LitElement {
         color: var(--text-secondary);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.7;
+        line-height: var(--body-lh);
         flex: 1;
         margin: 0;
       }
@@ -91,7 +91,7 @@ export class ArcFeatureCard extends LitElement {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1.5px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-ghost);
         transition: color var(--transition-fast), gap var(--transition-fast);

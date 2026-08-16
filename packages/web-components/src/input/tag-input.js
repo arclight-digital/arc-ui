@@ -82,7 +82,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         margin-bottom: var(--space-xs);
@@ -130,7 +130,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         align-items: center;
         gap: var(--space-xs);
         font-size: var(--_text-xs);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         color: var(--text-primary);
         background: var(--surface-overlay);
         border: 1px solid var(--border-default);
@@ -164,7 +164,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         cursor: pointer;
         border-radius: var(--radius-full);
         font-size: var(--_text-sm);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         padding: 0;
         transition: color var(--transition-fast), background var(--transition-fast);
       }
@@ -263,7 +263,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         margin-top: var(--space-xs);
         font-size: var(--_text-xs);
         color: var(--color-error);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
     `,
     // animate: false — this panel has its own keyframe entrance.

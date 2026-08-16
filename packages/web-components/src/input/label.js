@@ -50,14 +50,14 @@ export class ArcLabel extends DeclaredPropsMixin(LitElement) {
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: var(--label-spacing);
         color: var(--text-secondary);
         cursor: pointer;
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         margin-bottom: var(--space-xs);
       }
 
-      :host([size="sm"]) .label { font-size: 10px; }
+      :host([size="sm"]) .label { font-size: var(--label-inline-size); }
       :host([size="lg"]) .label { font-size: var(--_text-sm); }
 
       .label__required {
@@ -77,7 +77,7 @@ export class ArcLabel extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-body);
         font-size: var(--_text-xs);
         color: var(--text-muted);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
         margin-bottom: var(--space-xs);
       }
 

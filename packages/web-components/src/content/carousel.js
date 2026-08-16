@@ -93,7 +93,7 @@ export class ArcCarousel extends DeclaredPropsMixin(LitElement) {
                     opacity var(--transition-fast);
         opacity: 0.85;
         font-size: var(--_text-md);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         padding: 0;
       }
 

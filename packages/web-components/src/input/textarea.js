@@ -70,8 +70,8 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
       label {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
-        font-size: var(--_text-xs);
-        letter-spacing: 1px;
+        font-size: var(--label-inline-size);
+        letter-spacing: var(--label-inline-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
       }
@@ -80,7 +80,7 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         font-weight: var(--field-weight, 400);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
         color: var(--text-primary);
         background: var(--surface-raised);
         border: 1px solid var(--border-default);
@@ -95,7 +95,7 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
 
       /* Sizes */
       :host([size="sm"]) textarea { font-size: var(--_text-xs); padding: var(--space-xs) var(--space-sm); }
-      :host([size="sm"]) label { font-size: calc(var(--_text-xs) - 1px); }
+      :host([size="sm"]) label { font-size: calc(var(--label-inline-size) - 1px); }
       :host([size="lg"]) textarea { font-size: var(--_text-md); padding: var(--space-md) var(--space-lg); }
 
       :host([auto-resize]) textarea { resize: none; overflow: hidden; }
@@ -145,7 +145,7 @@ export class ArcTextarea extends DeclaredPropsMixin(FormControlMixin(LitElement)
       .error-message {
         font-size: var(--_text-xs);
         color: var(--color-error);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       .char-count {

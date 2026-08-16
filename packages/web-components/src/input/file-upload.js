@@ -72,7 +72,7 @@ export class ArcFileUpload extends DeclaredPropsMixin(LitElement) {
       .upload-icon {
         font-size: var(--_text-md);
         color: var(--text-muted);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         transition: color var(--transition-fast);
       }
 
@@ -148,7 +148,7 @@ export class ArcFileUpload extends DeclaredPropsMixin(LitElement) {
         font-size: var(--_text-md);
         padding: 2px calc(var(--space-xs) + 2px); /* cosmetic 2px vertical for tight remove button */
         border-radius: var(--radius-sm);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         transition: color var(--transition-fast), background var(--transition-fast);
       }
 

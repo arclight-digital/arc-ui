@@ -54,7 +54,7 @@ export class ArcConfirm extends DeclaredPropsMixin(LitElement) {
       .confirm__message {
         font-size: var(--_text-sm);
         color: var(--text-secondary);
-        line-height: 1.6;
+        line-height: var(--body-lh);
       }
 
       /* Slotted bodies are usually a sentence with one thing picked out of it —

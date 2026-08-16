@@ -46,7 +46,7 @@ export class ArcCollapsible extends DeclaredPropsMixin(LitElement) {
         cursor: pointer;
         font-family: var(--font-body);
         font-size: var(--body-size);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         background: none;
         border: none;

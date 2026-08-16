@@ -105,6 +105,10 @@ const phases = [
       check('wrapper-types'),
       check('motion-tokens'),
       check('focus-ring'),
+      // Reads the component sources *and* the token layer generated above, to
+      // tell a font declaration that names a real token from one that names
+      // nothing — so it cannot run with the source assertions at the top.
+      check('type-roles'),
     ],
   },
 ];

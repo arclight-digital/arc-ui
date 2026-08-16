@@ -1049,3 +1049,79 @@ Two consequences, both improvements:
 
 If you were reaching into the shadow root for `.backdrop` — in a test, most
 likely — dispatch a `pointerdown` on `document.body` instead.
+
+## Text is described by a type context
+
+**Affects every component that renders text, and every theme that overrides
+typography.** V4-PLAN 4.5's first row. The role slots — `--font-body`,
+`--font-label`, their weights — shipped in v3 and proved a consumer's override
+*reaches* a component. They said nothing about the components that never asked,
+and a census found a lot of them:
+
+| property | raw | total |
+| --- | --- | --- |
+| `font-family` | 3 | 262 |
+| `font-size` | 22 | 413 |
+| `font-weight` | 68 | 163 |
+| `line-height` | 80 | 98 |
+| `letter-spacing` | 65 | 89 |
+
+`font-weight: 600` was written out 39 times — the label role's *own* weight, in
+components that could not follow it when a face arrived without a semibold,
+which is the exact failure the role weight exists to prevent.
+
+### New tokens
+
+Four contexts, for treatments the tree used everywhere and named nowhere:
+
+- **`--ui-lh`** (1.4) — running text inside a control: a field, a list row, a
+  menu item, a table cell. Thirty components wrote this by hand, twenty at 1.4
+  and ten at 1.5.
+- **`--glyph-lh`** (1) — a box whose whole content is one mark: an icon, a
+  badge, a counter, a kbd cap. Leading has to add nothing or the box grows
+  taller than the mark and stops centring. Twenty-four components wrote it.
+- **`--numeral-size`** / **`--numeral-weight`** — the large figure a stat,
+  clock, countdown or gauge displays. `arc-clock` and `arc-countdown-timer` had
+  independently arrived at `clamp(24px, 3vw, 36px)`, character for character.
+- **`--label-size`** / **`--label-weight`** / **`--label-spacing`** — the
+  uppercase tracked label: a form label, a table header, an eyebrow.
+  **`--section-title-*` now points at these** rather than restating them, so
+  overriding either name moves everything wearing the treatment. If you
+  override `--section-title-spacing`, nothing changes; prefer `--label-*` in
+  new work.
+
+### What moved on screen
+
+Most of the pass is a literal replaced by the token that already held its
+value. These are the sites where two spellings of one treatment were converged,
+and the value that lost:
+
+- **Label tracking is 2px everywhere.** The same uppercase 12px label shipped at
+  `2px`, `1.5px`, `1px`, `0.08em` and `0.12em`. `shared/tokens.js` already
+  records 2px as the value chosen for the current label face, and names `1px` as
+  the retired Azeret-era value and `3px`/`4px` as Tektur's — so the deliberated
+  number won. `arc-table`'s `th` and `arc-data-grid`'s `th` are the same element
+  and had differed by exactly this.
+- **`arc-textarea`'s label matches the other fields.** It was 12px at 2px
+  tracking; `arc-input`, `arc-select`, `arc-password-input`, `arc-masked-input`
+  and `arc-tree-select` were all 10px at 0.75px, and an input and a textarea sit
+  in the same form constantly.
+- **UI leading is 1.4** (was 1.5 in ten components) and **prose leading is 1.7**
+  (was 1.6 in nine, 1.75 in one, 1.8 in `arc-blockquote`'s pull-quote).
+- **`arc-page-header`'s heading is the heading context** — it was 28px/700
+  against the context's own size and weight.
+- **`arc-cta-banner`'s headline is `--text-2xl`**, one step off the clamp it had.
+- **`arc-gauge`'s value weighs 200** like the other three numerals, not 300; the
+  **`arc-data-grid` inline editor weighs 400**, which its own comment already
+  claimed ("matches arc-input's field look").
+
+Every one of these is reachable from a token, so a theme that wants the old
+value can set it.
+
+### One bug this turned up
+
+`arc-command-palette` read `--weight-medium`, which nothing in the tree
+declares. That text had been rendering at its hard-coded fallback since it was
+written — unreachable by any theme and indistinguishable from working.
+`scripts/checks/type-roles.js` fails the build on a `var()` naming a token
+nothing declares, so that class of bug is now impossible rather than fixed.

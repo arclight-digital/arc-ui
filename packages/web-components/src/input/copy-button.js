@@ -43,7 +43,7 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
         min-height: var(--touch-min);
         font-family: var(--font-body);
         font-size: var(--_text-xs);
-        line-height: 1;
+        line-height: var(--glyph-lh);
         transition:
           background var(--transition-fast),
           border-color var(--transition-fast),

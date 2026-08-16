@@ -69,7 +69,7 @@ export class ArcBreadcrumbMenu extends DeclaredPropsMixin(LitElement) {
 
       .breadcrumb-menu__link.is-current {
         color: var(--text-primary);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       .breadcrumb-menu__chevron {

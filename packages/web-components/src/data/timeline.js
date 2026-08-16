@@ -106,10 +106,10 @@ export class ArcTimeline extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 1.5px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-primary);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         transition: color var(--transition-fast);
       }
 
@@ -121,7 +121,7 @@ export class ArcTimeline extends DeclaredPropsMixin(LitElement) {
         margin: var(--space-sm) 0 0;
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.6;
+        line-height: var(--body-lh);
         color: var(--text-muted);
       }
 
@@ -130,7 +130,7 @@ export class ArcTimeline extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-size: var(--_text-xs);
         font-weight: var(--font-label-weight, 600);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-ghost);
       }

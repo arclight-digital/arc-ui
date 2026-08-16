@@ -40,14 +40,14 @@ export class ArcInlineMessage extends DeclaredPropsMixin(LitElement) {
         color: var(--_status-color);
         flex-shrink: 0;
         font-size: var(--_text-sm);
-        line-height: 1.6;
+        line-height: var(--body-lh);
       }
 
       .inline-message__content {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         color: var(--text-muted);
-        line-height: 1.6;
+        line-height: var(--body-lh);
       }
     `,
   ];

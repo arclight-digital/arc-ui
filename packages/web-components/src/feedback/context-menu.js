@@ -78,7 +78,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
         text-align: start;
         font-family: inherit;
         font-size: inherit;
-        line-height: 1.5;
+        line-height: var(--ui-lh);
       }
 
       .menu-item:hover,

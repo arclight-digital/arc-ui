@@ -116,8 +116,8 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-mono);
         font-variant-numeric: tabular-nums;
         font-size: var(--_text-2xl);
-        font-weight: 300;
-        line-height: 1;
+        font-weight: var(--numeral-weight, 200);
+        line-height: var(--glyph-lh);
         color: var(--text-primary);
       }
 

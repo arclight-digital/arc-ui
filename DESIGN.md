@@ -35,6 +35,26 @@ is how a design language dies.
   `--font-mono`, `--font-display`, `--font-quote`. Writing a typeface name into
   a stylesheet escapes the role system. (`--font-accent` is a legacy alias of
   `--font-label`; don't use it in new work.)
+- Text is described by a **type context**, never spelled out. A context is a
+  complete treatment — `--<name>-size`, `-weight`, `-spacing`, `-lh` — and a
+  component picks one rather than assembling its own:
+
+  | context | what wears it |
+  | --- | --- |
+  | `display-xl`, `heading`, `wordmark` | display type |
+  | `body` | prose |
+  | `ui` (`--ui-lh`) | running text inside a control: a field, a row, a menu item, a cell |
+  | `glyph` (`--glyph-lh`) | a box whose whole content is one mark — an icon, a badge, a kbd cap |
+  | `numeral` | the large figure a stat, clock, countdown or gauge displays |
+  | `label` | the uppercase tracked label; `section-title` is its older name |
+  | `label-inline` | the small label attached to a form field |
+  | `ui-accent`, `code` | an emphasised UI string; monospace |
+
+  `scripts/checks/type-roles.js` fails the build on a literal `font-size`,
+  `font-weight`, `font-family`, `line-height` or `letter-spacing`, and on a
+  `var()` naming a token nothing declares. A value derived from a context —
+  `calc(var(--label-inline-size) - 1px)` — is using the scale and passes.
+  Genuine one-offs go in that file's `EXEMPT` map **with a reason**.
 
 ## Motion and effects
 

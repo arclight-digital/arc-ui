@@ -205,17 +205,17 @@ export class ArcMarkdown extends LitElement {
       .markdown h6 {
         font-family: var(--font-body);
         color: var(--text-primary);
-        line-height: 1.3;
+        line-height: var(--heading-lh);
         margin-top: var(--space-xl);
         margin-bottom: var(--space-md);
       }
 
-      .markdown h1 { font-size: var(--_text-3xl); font-weight: 600; }
-      .markdown h2 { font-size: var(--heading-size); font-weight: 600; }
-      .markdown h3 { font-size: var(--_text-lg); font-weight: 600; }
-      .markdown h4 { font-size: var(--body-size); font-weight: 600; }
-      .markdown h5 { font-size: var(--body-size); font-weight: 500; }
-      .markdown h6 { font-size: var(--code-size); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
+      .markdown h1 { font-size: var(--_text-3xl); font-weight: var(--font-label-weight, 600); }
+      .markdown h2 { font-size: var(--heading-size); font-weight: var(--font-label-weight, 600); }
+      .markdown h3 { font-size: var(--_text-lg); font-weight: var(--font-label-weight, 600); }
+      .markdown h4 { font-size: var(--body-size); font-weight: var(--font-label-weight, 600); }
+      .markdown h5 { font-size: var(--body-size); font-weight: var(--font-body-weight, 500); }
+      .markdown h6 { font-size: var(--code-size); font-weight: var(--font-body-weight, 500); text-transform: uppercase; letter-spacing: var(--label-spacing); }
 
       .markdown h1:first-child,
       .markdown h2:first-child,
@@ -230,7 +230,7 @@ export class ArcMarkdown extends LitElement {
 
       .markdown p:last-child { margin-bottom: 0; }
 
-      .markdown strong { color: var(--text-primary); font-weight: 600; }
+      .markdown strong { color: var(--text-primary); font-weight: var(--font-label-weight, 600); }
 
       .markdown em { font-style: italic; }
 

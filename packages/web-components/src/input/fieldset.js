@@ -62,7 +62,7 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
       legend {
         font-family: var(--font-body);
         font-size: var(--body-size);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-primary);
         padding: 0 var(--space-xs);
         display: flex;
@@ -98,7 +98,7 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         color: var(--text-muted);
-        line-height: 1.5;
+        line-height: var(--ui-lh);
         margin-top: var(--space-xs);
         padding: 0 var(--space-xs);
       }

@@ -51,7 +51,7 @@ export class ArcBadge extends DeclaredPropsMixin(LitElement) {
         align-items: center;
         gap: var(--space-xs);
         font-family: var(--font-mono);
-        font-weight: 500;
+        font-weight: var(--font-body-weight, 500);
         font-size: var(--_text-xs);
         letter-spacing: normal;
         text-transform: none;
@@ -61,7 +61,7 @@ export class ArcBadge extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-full);
         background: var(--surface-hover);
         transition: box-shadow var(--transition-base), border-color var(--transition-base);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       :host([variant="primary"]) .badge {

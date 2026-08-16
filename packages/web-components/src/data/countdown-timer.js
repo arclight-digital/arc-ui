@@ -50,7 +50,7 @@ export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         text-align: center;
         margin-bottom: var(--space-md);
@@ -76,10 +76,10 @@ export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
 
       .number {
         font-family: var(--font-mono);
-        font-size: clamp(24px, 3vw, 36px);
-        font-weight: 200;
+        font-size: var(--numeral-size);
+        font-weight: var(--numeral-weight, 200);
         font-variant-numeric: tabular-nums;
-        line-height: 1.2;
+        line-height: var(--heading-lh);
         background: var(--gradient-accent-text);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -90,7 +90,7 @@ export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-ghost);
         margin-top: var(--space-xs);
@@ -99,7 +99,7 @@ export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
       .separator {
         color: var(--text-ghost);
         font-size: var(--_text-xl);
-        font-weight: 200;
+        font-weight: var(--numeral-weight, 200);
         user-select: none;
       }
 
@@ -107,7 +107,7 @@ export class ArcCountdownTimer extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xl);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
       }

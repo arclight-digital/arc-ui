@@ -41,7 +41,7 @@ export class ArcDescriptionItem extends LitElement {
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
-        letter-spacing: 2px;
+        letter-spacing: var(--label-spacing);
         text-transform: uppercase;
         color: var(--text-muted);
         margin-bottom: var(--_dl-term-margin, var(--space-xs));
@@ -51,7 +51,7 @@ export class ArcDescriptionItem extends LitElement {
         font-family: var(--font-body);
         font-size: var(--_text-sm);
         color: var(--text-primary);
-        line-height: 1.6;
+        line-height: var(--body-lh);
         margin: 0;
       }
 

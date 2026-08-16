@@ -220,7 +220,7 @@ export class ArcVideo extends DeclaredPropsMixin(LitElement) {
 
       .video__time-current {
         color: var(--interactive);
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
       }
 
       /* Scrubber: the slider track recipe, sized down for a control bar. */

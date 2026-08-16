@@ -79,7 +79,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
       }
 
       .message__author {
-        font-weight: 600;
+        font-weight: var(--font-label-weight, 600);
         color: var(--text-secondary);
       }
 
@@ -88,7 +88,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-lg);
         font-family: var(--font-body);
         font-size: var(--_text-sm);
-        line-height: 1.6;
+        line-height: var(--body-lh);
         overflow-wrap: break-word;
         /* State by tint: the speaking user carries the accent wash. */
         background: rgba(var(--accent-primary-rgb), 0.08);
@@ -152,7 +152,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
       .message__pending-ellipsis {
         display: none;
         color: var(--text-muted);
-        line-height: 1;
+        line-height: var(--glyph-lh);
       }
 
       @media (prefers-reduced-motion: reduce) {

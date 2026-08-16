@@ -191,7 +191,7 @@ export class ArcPasswordInput extends DeclaredPropsMixin(FormControlMixin(LitEle
       .input-group__error {
         font-size: var(--_text-xs);
         color: var(--color-error);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
       }
 
       /* Sizes */
@@ -273,7 +273,7 @@ export class ArcPasswordInput extends DeclaredPropsMixin(FormControlMixin(LitEle
       .strength__label {
         font-size: var(--_text-xs);
         color: var(--text-muted);
-        line-height: 1.4;
+        line-height: var(--ui-lh);
         min-height: 1.4em;
       }
     `,
