@@ -5986,8 +5986,16 @@
               }
             },
             {
+              "name": "dismissible",
+              "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. Note the default: a modal is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
+              "value": {
+                "type": "boolean",
+                "default": "true"
+              }
+            },
+            {
               "name": "closable",
-              "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.",
+              "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
               "value": {
                 "type": "boolean",
                 "default": "true"
@@ -6036,8 +6044,13 @@
                 "type": "'sm' | 'md' | 'lg'"
               },
               {
+                "name": "dismissible",
+                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. Note the default: a modal is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
+                "type": "boolean"
+              },
+              {
                 "name": "closable",
-                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.",
+                "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
                 "type": "boolean"
               },
               {
@@ -13941,9 +13954,9 @@
             },
             {
               "name": "size",
-              "description": "Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.",
+              "description": "Controls the toolbar height. `md`, the default, is 48px for primary toolbars; `sm` is 36px for secondary or nested toolbars; `lg` is 60px. The nested arc-icon-button in the overflow menu tracks it.",
               "value": {
-                "type": "'md' | 'sm'",
+                "type": "'sm' | 'md' | 'lg'",
                 "default": "'md'"
               }
             },
@@ -13992,8 +14005,8 @@
               },
               {
                 "name": "size",
-                "description": "Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.",
-                "type": "'md' | 'sm'"
+                "description": "Controls the toolbar height. `md`, the default, is 48px for primary toolbars; `sm` is 36px for secondary or nested toolbars; `lg` is 60px. The nested arc-icon-button in the overflow menu tracks it.",
+                "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "border",

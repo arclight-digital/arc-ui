@@ -16,6 +16,7 @@ export interface ModalProps {
   heading?: string;
   size?: 'sm' | 'md' | 'lg';
   fullscreen?: boolean;
+  dismissible?: boolean;
   closable?: boolean;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
@@ -48,9 +49,9 @@ export interface ModalProps {
 }
 
 export const Modal: Component<ModalProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'size', 'fullscreen', 'closable', 'onArcClose', 'onArcOpen', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'heading', 'size', 'fullscreen', 'dismissible', 'closable', 'onArcClose', 'onArcOpen', 'children']);
   return (
-    <arc-modal open={local.open} heading={local.heading} size={local.size} fullscreen={local.fullscreen} closable={local.closable} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} {...rest}>
+    <arc-modal open={local.open} heading={local.heading} size={local.size} fullscreen={local.fullscreen} dismissible={local.dismissible} closable={local.closable} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} {...rest}>
       {local.children}
     </arc-modal>
   );

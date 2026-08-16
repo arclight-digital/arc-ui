@@ -13,7 +13,8 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} open - Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element.
  * @prop {string} heading - Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?").
  * @prop {'sm' | 'md' | 'lg'} size - Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.
- * @prop {boolean} closable - When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons.
+ * @prop {boolean} dismissible - When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. Note the default: a modal is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.
+ * @prop {boolean} closable - @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.
  * @prop {boolean} fullscreen - Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.
  * @fires {CustomEvent<void>} arc-open - Fired when the modal opens
  * @fires {CustomEvent<void>} arc-close - Fired when the modal closes
@@ -34,6 +35,28 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
     fullscreen: flag(false),
+
+    /**
+     * The canonical dismissal prop (V4-PLAN 4.3). `dismissible` won over
+     * `closable` on 3-to-1 usage — arc-alert, arc-banner and arc-callout — and
+     * because `DismissController` and the central dismissal contract are the
+     * architecture's word for it.
+     *
+     * **The two dialects differed in polarity as well as spelling, and only the
+     * spelling converges.** A modal is dismissible unless you say otherwise; an
+     * alert is not dismissible unless you say so. Both defaults are right for
+     * their component — an inescapable modal is the exception, an alert with an
+     * X is the exception — so forcing one default on both would trade a naming
+     * inconsistency for a behavioural one, which is the worse of the two.
+     */
+    dismissible: flag(true, { negative: 'no-dismissible' }),
+
+    /**
+     * Deprecated alias, removed in v5. Declared as a real property rather than
+     * a getter pair so the *attribute* keeps working: `<arc-modal no-closable>`
+     * is markup that exists in consumers' pages, and an accessor alone would
+     * leave Lit with no attribute to observe.
+     */
     closable: flag(true, { negative: 'no-closable' }),
   };
 
@@ -172,12 +195,12 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
    * The single gate on dismissal.
    *
    * OverlayMixin routes Escape and backdrop clicks here, and the X button only
-   * renders when closable, so guarding once covers every path. A modal with
-   * closable=false is genuinely undismissable — the caller has to resolve it
+   * renders when dismissible, so guarding once covers every path. A modal with
+   * dismissible=false is genuinely undismissable — the caller has to resolve it
    * through its own footer actions.
    */
   _close() {
-    if (!this.closable) return;
+    if (!this.dismissible) return;
     // Cancelable: a consumer with unsaved state can preventDefault() to veto.
     if (
       !this.dispatchEvent(
@@ -186,6 +209,26 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
     )
       return;
     this.open = false;
+  }
+
+  /**
+   * Keep the deprecated `closable` and the canonical `dismissible` in step.
+   *
+   * In `willUpdate` rather than `updated`, so the mirrored assignment is folded
+   * into the same render pass instead of costing a second one. The canonical
+   * name is checked first, so a consumer that sets both in one turn gets the
+   * one they are supposed to be using.
+   *
+   * This cannot loop: the second pass sees the two already equal and the guard
+   * on each branch is an inequality.
+   */
+  willUpdate(changed) {
+    super.willUpdate?.(changed);
+    if (changed.has('dismissible') && this.closable !== this.dismissible) {
+      this.closable = this.dismissible;
+    } else if (changed.has('closable') && this.dismissible !== this.closable) {
+      this.dismissible = this.closable;
+    }
   }
 
   updated(changed) {
@@ -216,7 +259,7 @@ export class ArcModal extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
               <h2 class="modal__heading">${this.heading}</h2>
             </slot>
             ${
-              this.closable
+              this.dismissible
                 ? html`
               <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
             `

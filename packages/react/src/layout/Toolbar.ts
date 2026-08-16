@@ -6,7 +6,7 @@ import { ArcToolbar } from '@arclux/arc-ui/toolbar';
 
 export interface ToolbarProps {
   sticky?: boolean;
-  size?: 'md' | 'sm';
+  size?: 'sm' | 'md' | 'lg';
   border?: boolean;
   overflow?: boolean;
   className?: string;

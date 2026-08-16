@@ -8,6 +8,7 @@
     heading?: string;
     size?: 'sm' | 'md' | 'lg';
     fullscreen?: boolean;
+    dismissible?: boolean;
     closable?: boolean;
     /** <slot name="header"> — put slot="header" on the element inside. */
     header?: Snippet;
@@ -41,10 +42,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open, heading = '', size, fullscreen, closable, header, footer, children, ...rest }: Props = $props();
+  let { open, heading = '', size, fullscreen, dismissible, closable, header, footer, children, ...rest }: Props = $props();
 </script>
 
-<arc-modal {open} {heading} {size} {fullscreen} {closable} {...rest}>
+<arc-modal {open} {heading} {size} {fullscreen} {dismissible} {closable} {...rest}>
   {@render header?.()}
   {@render footer?.()}
   {@render children?.()}

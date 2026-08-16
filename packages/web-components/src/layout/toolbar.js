@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @status stable
  * @requires arc-icon-button
  * @prop {boolean} sticky - When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below.
- * @prop {'md' | 'sm'} size - Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars.
+ * @prop {'sm' | 'md' | 'lg'} size - Controls the toolbar height. `md`, the default, is 48px for primary toolbars; `sm` is 36px for secondary or nested toolbars; `lg` is 60px. The nested arc-icon-button in the overflow menu tracks it.
  * @prop {boolean} border - Renders a subtle bottom border (--border-subtle) to visually separate the toolbar from the content below. Enabled by default.
  * @prop {boolean} overflow - Enables responsive overflow collapse. A ResizeObserver measures available width; slotted items that do not fit are collapsed (hidden via the reversible hidden attribute) from the end of the item list, and a "More" trigger opens a menu of proxy items that re-dispatch clicks to the hidden originals. Note: because slotted nodes cannot be moved into the overflow panel, complex custom content is represented in the menu only by its text label (or the label attribute on arc-button / arc-icon-button).
  * @fires arc-overflow-change - Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.
@@ -31,7 +31,11 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     sticky: flag(false),
-    size: oneOf(['md', 'sm']),
+    // Canonical members and order (V4-PLAN 4.3). It declared ['md', 'sm'] —
+    // right default, reversed order, and no `lg` at all, so a toolbar could not
+    // be made taller while every other control in the library could. The
+    // explicit default keeps `md` the default now that `sm` is first.
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
     border: flag(true, { negative: 'no-border' }),
     overflow: flag(false),
     _overflowItems: { state: true },
@@ -64,6 +68,13 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
       :host([size='sm']) .toolbar {
         height: 36px;
         padding: 0 var(--space-sm);
+      }
+
+      /* The default is 48px with --space-md padding, from the base rule above,
+         and sm steps down to 36. lg steps up by the same 12px. */
+      :host([size='lg']) .toolbar {
+        height: 60px;
+        padding: 0 var(--space-lg);
       }
 
       :host([border]) .toolbar {
@@ -377,7 +388,7 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
           class="overflow__more"
           name="dots-three"
           label="More actions"
-          size=${this.size === 'sm' ? 'sm' : 'md'}
+          size=${this.size === 'sm' ? 'sm' : this.size === 'lg' ? 'lg' : 'md'}
           aria-haspopup="menu"
           aria-expanded=${this._menuOpen ? 'true' : 'false'}
           part="more"

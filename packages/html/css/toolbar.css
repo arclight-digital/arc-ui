@@ -26,6 +26,13 @@
         padding: 0 var(--space-sm);
       }
 
+      /* The default is 48px with --space-md padding, from the base rule above,
+         and sm steps down to 36. lg steps up by the same 12px. */
+      .arc-toolbar[data-size="lg"] .toolbar {
+        height: 60px;
+        padding: 0 var(--space-lg);
+      }
+
       .arc-toolbar[border] .toolbar {
         border-bottom: 1px solid var(--divider);
       }

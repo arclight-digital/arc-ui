@@ -6,7 +6,7 @@ defineOptions({ name: 'Toolbar' });
 
 const props = defineProps<{
   sticky?: boolean;
-  size?: 'md' | 'sm';
+  size?: 'sm' | 'md' | 'lg';
   border?: boolean;
   overflow?: boolean;
 }>();

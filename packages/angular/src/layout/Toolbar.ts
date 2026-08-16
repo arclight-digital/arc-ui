@@ -19,10 +19,10 @@ export class Toolbar {
     return this._el.sticky;
   }
 
-  @Input() set size(value: 'md' | 'sm') {
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
     this._el.size = value;
   }
-  get size(): 'md' | 'sm' {
+  get size(): 'sm' | 'md' | 'lg' {
     return this._el.size;
   }
 

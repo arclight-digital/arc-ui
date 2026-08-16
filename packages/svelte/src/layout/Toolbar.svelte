@@ -5,7 +5,7 @@
 
   interface Props {
     sticky?: boolean;
-    size?: 'md' | 'sm';
+    size?: 'sm' | 'md' | 'lg';
     border?: boolean;
     overflow?: boolean;
     /** <slot name="start"> — put slot="start" on the element inside. */

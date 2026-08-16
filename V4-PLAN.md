@@ -982,6 +982,48 @@ One release. The five conventions are enforced by five named checks —
 the same walker, so nothing is written twice): `part-base.js`,
 `side-slots.js`, `dismiss-prop.js`, `size-canon.js`, `array-dialect.js`.
 
+**Status (2026-08-15): the walker is built and 2 of 5 conventions have landed.**
+`scripts/lib/source-walker.js` is the shared reader 4.10 migrates nine existing
+checks onto — the intersection of what they already do (balanced regions,
+comment-blanked source with offsets preserved, the properties block, CSS rules,
+docblock tags, method bodies), with the two lessons each of them had rediscovered
+separately kept as properties of the reader: a regex over a nested object matches
+the nesting, and a comment quoting the banned thing fails the rule that bans it.
+Rules are functions; `run()` owns iteration, reporting and the anti-vacuity
+guard, so a rule stays the size of its idea and every check reports identically.
+
+Landed: **`size-canon`** and **`dismiss-prop`**, both with their exception lists
+audited for rot (an entry naming a tag that no longer exists is a decision about
+nothing). Both were proved to fire by reintroducing the defects they claim to
+catch.
+
+- Size had **7** divergences, not the 5 the plan counted, and they split three
+  ways rather than one: two pixel dimensions that share the word and nothing
+  else, two scales that are genuinely a different axis (the type scale on
+  `arc-icon`, the layout scale on `arc-container`), two that extend the canon
+  downward with a load-bearing `xs`, and exactly one real outlier —
+  `arc-toolbar`, which declared `['md','sm']` and so was the only control in the
+  library that could not be made larger. So the check has two lists rather than
+  one: NOT_A_SCALE (the convention does not apply) and EXTENDS (it does, and the
+  canon is still enforced in front of the extension).
+- Dismissal was **one** component, not the five the plan lists — `close` and
+  `dismiss` on the others are methods, and `removable` on `arc-tag` is a
+  different concept. The finding is that the two dialects differed in *polarity*
+  as well as spelling: `closable` defaults true, `dismissible` false. Only the
+  spelling converges; forcing one default on both would trade a naming
+  inconsistency for a behavioural one.
+- prism caught the one mistake made along the way — `lg` styled on `arc-toolbar`
+  while its documented union still said `md | sm`.
+
+**Still open in 4.3:** `part-base` (the ~180-component mechanical one),
+`side-slots`, `array-dialect`. Measured while sizing them, and each has the same
+shape of surprise waiting: the side-slot row proposes aliasing `before/after` and
+`above/below` onto `prefix/suffix`, and neither is a side slot —
+`arc-image-compare`'s before/after are the two images being compared, and
+`arc-page-header`'s above/below are the block axis, where prefix/suffix are the
+inline one. That row needs a decision before it needs a codemod. `array-dialect`
+is ~28 remaining props across `{type: Array}` and `attribute: false`.
+
 - [ ] Root CSS part: every component's outermost part gains the `base` token
       **alongside** its semantic name (`part="base wrapper"` dual-token).
       Honest accounting: this still touches ~180 components' JSDoc — each

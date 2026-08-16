@@ -709,6 +709,7 @@ declare module 'react' {
         heading?: string;
         size?: 'sm' | 'md' | 'lg';
         fullscreen?: boolean;
+        dismissible?: boolean;
         closable?: boolean;
       };
       'arc-multi-select': ArcBaseAttributes & {
@@ -1197,7 +1198,7 @@ declare module 'react' {
       };
       'arc-toolbar': ArcBaseAttributes & {
         sticky?: boolean;
-        size?: 'md' | 'sm';
+        size?: 'sm' | 'md' | 'lg';
         border?: boolean;
         overflow?: boolean;
       };

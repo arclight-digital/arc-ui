@@ -6,7 +6,7 @@ import '@arclux/arc-ui/toolbar';
 
 export interface ToolbarProps {
   sticky?: boolean;
-  size?: 'md' | 'sm';
+  size?: 'sm' | 'md' | 'lg';
   border?: boolean;
   overflow?: boolean;
   onArcOverflowChange?: (e: CustomEvent) => void;

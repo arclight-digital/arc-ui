@@ -33,6 +33,7 @@ discover them.
 - [The five cuts](#the-five-cuts)
 - [Every component declares a status, and experimental leaves the barrel](#every-component-declares-a-status-and-experimental-leaves-the-barrel)
 - [The merges](#the-merges)
+- [`size` is `sm | md | lg`, and dismissal is `dismissible`](#size-is-sm--md--lg-and-dismissal-is-dismissible)
 
 ## Event contract
 
@@ -714,3 +715,43 @@ uppercase label face — `v3.2.0` becoming `V3.2.0` in a taller box.
 Resolving it means deciding whether ARC has one chip typography or two, which
 is a design-language question rather than a catalog one. Both components stay
 for now, and the row is reopened after the type-scale work.
+
+## `size` is `sm | md | lg`, and dismissal is `dismissible`
+
+The first two of v4's five API conventions. Both are small; the checks behind
+them are the point, since a convention nothing enforces is a preference.
+
+**`arc-toolbar` gains `lg` and reorders its scale.** It declared
+`['md', 'sm']` — the right default, a reversed order, and no `lg` at all, so a
+toolbar was the one control in the library that could not be made taller. It is
+`['sm', 'md', 'lg']` now with `md` still the default, and `lg` is 60px, stepping
+up from the 48px default by the same 12px that `sm` steps down.
+
+**`arc-icon-button` and `arc-theme-toggle` reorder theirs**, from
+`['xs', 'sm', 'md', 'lg']` to `['sm', 'md', 'lg', 'xs']`. `xs` is kept — the
+library's own `arc-signature-pad` renders an icon button at that size — but it
+now sits after the canon rather than in front of it. Both declare an explicit
+`default: 'md'`, so **nothing changes at runtime**; the declaration simply reads
+the way every other size does.
+
+`arc-icon`, `arc-container`, `arc-qr-code` and `arc-resizable` keep their own
+scales and are exempt with reasons: the first two are the type scale and the
+layout scale respectively, and the last two are pixel dimensions that share the
+word `size` and nothing else.
+
+**`arc-modal.closable` becomes `arc-modal.dismissible`.** `closable` still works
+for all of v4 as a two-way alias — set either and both move — and is removed in
+v5. The `no-closable` attribute keeps working alongside `no-dismissible`.
+
+```html
+<!-- before, still works through v4 -->
+<arc-modal no-closable></arc-modal>
+<!-- after -->
+<arc-modal no-dismissible></arc-modal>
+```
+
+**Only the spelling converges, not the default.** A modal is dismissible unless
+you say otherwise; an alert is not dismissible unless you say so. Both defaults
+are right for their component — an inescapable modal is the exception, an alert
+with an X is the exception — so making them agree would trade a naming
+inconsistency for a behavioural one, which is worse.

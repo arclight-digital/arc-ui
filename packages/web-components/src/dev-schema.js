@@ -1144,6 +1144,7 @@ export default {
    "heading",
    "size",
    "fullscreen",
+   "dismissible",
    "closable"
   ],
   "enums": {
@@ -2413,8 +2414,9 @@ export default {
   ],
   "enums": {
    "size": [
+    "sm",
     "md",
-    "sm"
+    "lg"
    ]
   },
   "slug": "toolbar"

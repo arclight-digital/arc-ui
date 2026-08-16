@@ -40,6 +40,13 @@ export class Modal {
     return this._el.fullscreen;
   }
 
+  @Input() set dismissible(value: boolean) {
+    this._el.dismissible = value;
+  }
+  get dismissible(): boolean {
+    return this._el.dismissible;
+  }
+
   @Input() set closable(value: boolean) {
     this._el.closable = value;
   }

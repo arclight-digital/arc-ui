@@ -9,6 +9,7 @@ export interface ModalProps {
   heading?: string;
   size?: 'sm' | 'md' | 'lg';
   fullscreen?: boolean;
+  dismissible?: boolean;
   closable?: boolean;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
@@ -40,7 +41,7 @@ export interface ModalProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Modal: FunctionComponent<ModalProps> = ({ open, heading, size, fullscreen, closable, onArcClose, onArcOpen, children, ...rest }) => {
+export const Modal: FunctionComponent<ModalProps> = ({ open, heading, size, fullscreen, dismissible, closable, onArcClose, onArcOpen, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -58,5 +59,5 @@ export const Modal: FunctionComponent<ModalProps> = ({ open, heading, size, full
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcClose, onArcOpen]);
-  return h('arc-modal', { ref, open, heading, size, fullscreen, closable, ...rest }, children);
+  return h('arc-modal', { ref, open, heading, size, fullscreen, dismissible, closable, ...rest }, children);
 };

@@ -36,6 +36,11 @@ const phases = [
       check('child-registrations'),
       check('event-conventions'),
       check('doc-claims'),
+      // The 4.3 dialect checks. Source assertions, so they run here — before
+      // the prism step whose output would otherwise carry the dialect forward
+      // into six wrapper packages.
+      check('size-canon'),
+      check('dismiss-prop'),
       check('boolean-defaults'),
       check('empty-attributes'),
       check('breakpoint-drift'),

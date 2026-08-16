@@ -1765,7 +1765,9 @@ export declare class ArcModal extends LitElement {
   open: boolean;
   /** Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts. @default 'md' */
   size: 'sm' | 'md' | 'lg';
-  /** When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. @default true */
+  /** When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. Note the default: a modal is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component. @default true */
+  dismissible: boolean;
+  /** @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both. @default true */
   closable: boolean;
   /** Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows. @default false */
   fullscreen: boolean;
@@ -3106,8 +3108,8 @@ export declare class ArcToggle extends LitElement {
 export declare class ArcToolbar extends LitElement {
   /** When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below. @default false */
   sticky: boolean;
-  /** Controls the toolbar height. The default md size is 48px for primary toolbars. The sm size is 36px for secondary or nested toolbars. @default 'md' */
-  size: 'md' | 'sm';
+  /** Controls the toolbar height. `md`, the default, is 48px for primary toolbars; `sm` is 36px for secondary or nested toolbars; `lg` is 60px. The nested arc-icon-button in the overflow menu tracks it. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
   /** Renders a subtle bottom border (--border-subtle) to visually separate the toolbar from the content below. Enabled by default. @default true */
   border: boolean;
   /** Enables responsive overflow collapse. A ResizeObserver measures available width; slotted items that do not fit are collapsed (hidden via the reversible hidden attribute) from the end of the item list, and a "More" trigger opens a menu of proxy items that re-dispatch clicks to the hidden originals. Note: because slotted nodes cannot be moved into the overflow panel, complex custom content is represented in the menu only by its text label (or the label attribute on arc-button / arc-icon-button). @default false */

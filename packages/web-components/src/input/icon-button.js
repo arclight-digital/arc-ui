@@ -29,7 +29,12 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
     name: { type: String, reflect: true },
     text: { type: String },
     variant: oneOf(['ghost', 'secondary', 'primary']),
-    size: oneOf(['xs', 'sm', 'md', 'lg'], { default: 'md' }),
+    // Canon first, extension after (V4-PLAN 4.3). `xs` moved behind `lg` rather
+    // than being dropped — arc-signature-pad renders an icon button at that
+    // size, so it is load-bearing. The explicit `default` means the reorder
+    // changes nothing at runtime; it is the declaration that now reads the way
+    // every other size does.
+    size: oneOf(['sm', 'md', 'lg', 'xs'], { default: 'md' }),
     label: { type: String },
     href: { type: String },
     disabled: flag(false),
