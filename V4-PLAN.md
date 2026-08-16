@@ -799,6 +799,12 @@ deletes — and cutting first shrinks the tree every later workstream touches.
 Non-blocking, may trail into 4.x minors: 4.8 (ships `experimental`), 4.9,
 4.10.
 
+**Status (2026-08-16): 4.1, 4.2, 4.3, 4.4 and 4.5 are done.** The tag still
+needs **4.6** (wrapper matrix), **4.7** (icons split) and **4.11**. 4.5's two
+recorded non-goals — the docs site has never been measured against
+`type-roles` or the extended `gradient-stops`, and the four per-component
+`density` props stay — are follow-ups, not gaps in the row.
+
 ### 4.1 Cuts and satellites (M) — **DONE (2026-08-15)**
 
 - [x] Delete the broken **five** (the plan said four; V4-SCOPE §1.4 settled the
@@ -1225,47 +1231,154 @@ open — see below.
 **Exit:** overlay adoption at 100% of `open`-declaring survivors; the 2.4d
 central dismissal contract green across all of them; a11y-audit green.
 
-### 4.5 The style pass (L) — *the design language, made homogeneous and adaptable*
+### 4.5 The style pass (L) — *the design language, made homogeneous and adaptable* — **DONE**
 
 Runs after 4.1 (style only survivors), parallel with 4.3/4.4; must land
 before any docs screenshots, the beta, or 4.9's conformance statements.
 
-- [ ] **Typography homogenization.** One type scale, expressed as font-role
-      tokens; every component consumes roles, never raw font properties.
-      `font-roles.test.js` / `font-weights.test.js` are the existing guards —
-      extend them to assert *no component styles text outside a role* and let
-      them enforce the pass.
-- [ ] **The illumination vocabulary.** Codify "lobes of light and soft
-      gradients" as first-class tokens — a small set of glow/light-lobe
-      primitives (building on the existing glow scale) and gradient tokens
-      with defined stops. Per-component ad-hoc gradients migrate onto them;
-      `gradient-stops.js` and `pinned-schemes.js` are the guards (the
-      14-gradients-darkened-to-black incident is the exact failure mode).
-      The two hardcoded macOS traffic-light hex triplets (`code-block.js`,
-      `terminal.js`) get tokens or their components left in 4.1.
-- [ ] **The two-color theming contract.** The public theme surface is
-      deliberately tiny: **two primary colors are the inputs**; neutral,
-      radius, and density are optional *preferences*; everything else —
-      surfaces, states, glows, gradients, all schemes — derives at build
-      time through the existing OKLCH pipeline (`shared/color.js`
-      solveContrast + the contrast contract from commit 21be4c70). ARC stays
-      an opinionated design language; adaptation means changing the inputs,
-      never the formula. Document it as *the* theming API. (Named the
-      "two-color contract" everywhere — 4.9, 4.11, DESIGN.md.)
-- [ ] **Scheme parity.** Light scheme becomes first-class alongside dark
-      (dark-first stays the identity). `themes/high-contrast.css` **is
-      folded into the generated pipeline** so its "7:1 AAA" claim is verified
-      by the same build-time assertion as the generated schemes; dropping
-      the claim is the fallback only if `solveContrast` demonstrably cannot
-      reach 7:1 on the palette.
-- [ ] **Density scale.** `compact`/`comfortable` via tokens — enterprise
-      table stakes, nearly free once everything sits on the token pipeline.
-- [ ] **DESIGN.md updated** to codify the language: type roles, illumination
-      vocabulary, the two-color contract, the existing hard bans.
+Six commits: `dd932e46` (type contexts), `1d41ce90` (lobes), `7eac6ced` (the
+AAA preset), `9f0e239d` (density + the two-color contract), with DESIGN.md
+rewritten across them.
 
-**Exit:** full `pnpm check` (token linters), the contrast contract, and a
-complete a11y-audit run across both schemes — visual changes do not merge on
-eyeball approval alone.
+- [x] **Typography homogenization.** A census, then a rule that keeps it at
+      zero. The row assumed the gap was the type *scale*; it was the
+      properties nobody had named — `font-family` was 3 raw of 262 and
+      `line-height` was 80 of 98. The tree published three leadings and the
+      components used ten. `font-weight: 600` appeared 39 times: the label
+      role's own weight, written out in components that could not follow it
+      when a face arrives without a semibold, which is exactly what the role
+      weight exists to prevent.
+
+      Four contexts added for treatments the tree used everywhere and named
+      nowhere: `--ui-lh` (running text in a control), `--glyph-lh` (a box
+      holding one mark), `--numeral-*` (the large figure a stat or clock
+      displays — arc-clock and arc-countdown-timer had independently arrived
+      at the same clamp, character for character), and `--label-*` (the
+      uppercase tracked label, with the older `--section-title-*` now pointing
+      at it). 207 declarations moved by codemod, the rest by hand.
+
+      **Where two spellings disagreed the pass converged them**, and
+      `shared/tokens.js` had already recorded which value was deliberate: 2px
+      is the tracking chosen for the current label face, and the comment there
+      names 1px as the retired Azeret-era value and 3px/4px as Tektur's. All
+      three were still in the tree. arc-table's `th` and arc-data-grid's `th`
+      differed by exactly this — the same element, in a component and its own
+      designated replacement. MIGRATION lists every site that moved on screen.
+
+      New check `type-roles` replaces the "extend the existing guards" plan:
+      the two font-role suites prove an override *reaches* a component and say
+      nothing about the components that never asked. Its second rule paid for
+      itself immediately — `--weight-medium`, read by arc-command-palette and
+      declared by nothing, rendering at its fallback since it was written.
+
+- [x] **The illumination vocabulary.** The row is right that the vocabulary
+      was missing; what it could not know is that most of it was *published
+      and bypassed*. `--glow-line-white` and arc-divider's `line-white`
+      variant were character for character identical apart from one thing: the
+      token fades to zero alpha and the copy faded to `transparent`.
+
+      That difference is the row's real content, and `gradient-stops.js` was
+      already the check for it — scoped to `shared/tokens.js` on the stated
+      grounds that component CSS needed "a real parse". **That was wrong.**
+      The balanced scan it already used walks from a gradient's open paren to
+      its matching close, so a flat `background: transparent` is never inside
+      one; it could have covered the components from the day it was written.
+      Extended, it found **42 against the token file's 14**, 24 of them in
+      arc-divider. Every one is invisible on a near-black page and a hard grey
+      rectangle on a near-white one, which is what makes it a scheme-parity
+      bug rather than a tidy-up.
+
+      The published three could not have absorbed them: a lobe varies on three
+      axes and enumerating them is eighteen tokens. `--lobe-line` /
+      `--lobe-start` / `--lobe-end` / `--lobe-ambient` take their arguments
+      instead, and through one of them the fade cannot be spelled wrong.
+
+      **Two sharp edges, both built wrong first, both silent** — the CSS
+      correct, the components correct, every divider grey. A custom property
+      substitutes its own `var()`s at the element that *declares* it, so the
+      inputs must sit on `:host`. And base.css's forwarding rule wins the
+      cascade against `:host` from the outer tree, which is how a `:root`
+      override reaches shadow DOM and also how it would beat a component's own
+      inputs; `--lobe-*` joins the role slots in `NOT_FORWARDED`. An input set
+      anywhere but `:host` is now a build failure.
+
+      Traffic lights and presets tokenised as the row asked: `--orb-close` /
+      `-minimize` / `-maximize` shared by arc-code-block and arc-terminal, and
+      `--gradient-sunset` / `--gradient-ocean` for arc-gradient-text.
+
+- [x] **The two-color theming contract.** Named, documented as *the* theming
+      API in DESIGN.md, and given a check — which is the row's own lesson
+      applied to itself, one commit after the AAA preset showed what an
+      unverified header is worth. Two colors in, four declarations (CSS cannot
+      turn a color back into a bare channel list), 35 tokens following.
+
+      Three rules, because the first two share a blind spot: both read the
+      accent-dependent set out of `:root`, so a token baked *at* `:root`
+      leaves the set and takes its violation with it. A union across every
+      block was tried and is wrong — a surface is a literal neutral at `:root`
+      and accent-derived inside a softened region, which is what "softened"
+      means. Rule 3 is a floor on the count instead.
+
+- [x] **Scheme parity.** `themes/high-contrast.css` claimed "WCAG AAA
+      compliance (7:1+ contrast ratios)" in its header. **Ten of its thirty
+      foreground pairings missed it** — text-ghost at 6.37 and 6.71, error at
+      6.86 and 6.88, accent-secondary at 6.73, and in light mode success at
+      4.87 and warning at 4.86, which is AA and nothing more. Nothing was
+      wrong with the solver; the file never went through it. It is generated
+      now, from the same `solvePalette` the four shipped schemes use.
+
+      The text ramp is **lifted, not floored**. Dark's steps sit at 7.17, 6.37
+      and 5.71, so `max(r, 7)` yields 7.17, 7.00, 7.00 — three levels
+      collapsed into one, which the base contract's own comment warns about
+      and which the first version of this did. Every step is multiplied
+      instead by whatever the lowest needs.
+
+      `solveContrast` had a rounding gap worth its own line: it searched in
+      continuous OKLCH lightness and shipped three 8-bit channels, so an
+      answer could round back under its own target. That is how the first
+      generated preset came out at 6.97, 6.98 and 6.99 under a header
+      promising 7. **The same gap was in the four shipped schemes** — fixing
+      it moved 24 tokens in base.css by one channel, and the 5.5 contract they
+      carry is now true of the file rather than of the search.
+
+      New check `contrast-contract` measures the emitted stylesheets rather
+      than the tree, because `solvePalette` proves the solver was asked for
+      the right ratio and cannot see a color that never went through it.
+
+- [x] **Density scale.** `[data-density="compact" | "comfortable"]` restates
+      the spacing scale at 0.75x and 1.25x, on the page or on a region. It
+      restates rather than multiplies, and that is load-bearing: base.css
+      forwards `--space-*` with `inherit`, which carries the parent's computed
+      value, so `calc(16px * var(--density))` would have worked on `<html>`
+      and silently done nothing on a section — the lobe trap again, caught
+      this time before it shipped.
+
+      Touch targets and type deliberately do not move: `--touch-min` stays at
+      the WCAG 2.2 24x24 minimum, and shrinking text is a different decision
+      from tightening layout.
+
+- [x] **DESIGN.md updated** — the two-color contract leads it, and the type
+      contexts, the illumination vocabulary and the density rule each carry
+      the name of the check that enforces them.
+
+**Exit — met.** `pnpm check` 33/33 including the four new linters
+(`type-roles`, `contrast-contract`, `two-color-contract`, and `gradient-stops`
+extended over the component tree); `pnpm generate` diff-clean; 4,929 tests
+across 124 files; a11y-audit 182/182 clean across both schemes.
+
+**What this row did not do.** Nothing was cut, but two things are worth
+recording as *not* attempted rather than as done:
+
+- **The docs site was not swept.** `type-roles` and the extended
+  `gradient-stops` are scoped to `packages/web-components/src`. DESIGN.md says
+  docs pages are part of the design language, and `docs/src` has never been
+  measured against either rule. That is a contained follow-up and belongs with
+  4.9 or 4.11 rather than here.
+- **The four per-component `density` props stay.** arc-data-grid, arc-table,
+  arc-alert and arc-footer each tighten themselves regardless of the page,
+  which is a different capability from the page-level scale and not obviously
+  redundant. Folding them into `[data-density]` would be an API break for no
+  gain until someone wants it.
 
 ### 4.6 Wrapper matrix (L) — *gated on 2.4a green AND 4.1 landed*
 
