@@ -49,6 +49,22 @@ const knownTags = new Set(components.keys());
 const stripBlockComments = (src) =>
   src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
 
+/**
+ * Blank the contents of ordinary quoted strings, keeping the quotes.
+ *
+ * A template lives in a backtick, never in `'…'` or `"…"`, so a `<arc-*>` inside
+ * a single- or double-quoted string is prose rather than markup. It took a real
+ * false positive to notice: `arc-dialog` throws a dev-mode error naming
+ * `<arc-confirm>` — the component a consumer of the old tag should move to —
+ * and the check read that sentence as a rendered child and demanded a
+ * `@requires` for a component arc-dialog does not render and must not import.
+ *
+ * Backticks are deliberately left alone. That is where the templates are, and
+ * blanking them would make this check assert nothing at all.
+ */
+const blankQuotedStrings = (src) =>
+  src.replace(/'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"/g, (m) => m[0] + ' '.repeat(m.length - 2) + m[0]);
+
 let failures = 0;
 
 for (const [tag, comp] of components) {
@@ -56,7 +72,9 @@ for (const [tag, comp] of components) {
   const scannable = stripBlockComments(source);
 
   const rendered = new Set();
-  for (const m of scannable.matchAll(/<(arc-[a-z][a-z0-9-]*)/g)) {
+  // Markup only — see blankQuotedStrings. The createElement scan below runs on
+  // the unblanked copy, because there the quoted string *is* the tag name.
+  for (const m of blankQuotedStrings(scannable).matchAll(/<(arc-[a-z][a-z0-9-]*)/g)) {
     if (knownTags.has(m[1])) rendered.add(m[1]);
   }
   for (const m of scannable.matchAll(/createElement\(['"`](arc-[a-z][a-z0-9-]*)['"`]\)/g)) {

@@ -1067,15 +1067,16 @@ export default {
   "attrs": [
    "open",
    "heading",
-   "message",
-   "confirm-label",
-   "cancel-label",
-   "variant"
+   "size",
+   "fullscreen",
+   "dismissible",
+   "closable"
   ],
   "enums": {
-   "variant": [
-    "default",
-    "error"
+   "size": [
+    "sm",
+    "md",
+    "lg"
    ]
   },
   "slug": "dialog"
@@ -1158,7 +1159,8 @@ export default {
     "lg"
    ]
   },
-  "slug": "modal"
+  "slug": "modal",
+  "mergedInto": "arc-dialog"
  },
  "arc-notification-panel": {
   "attrs": [

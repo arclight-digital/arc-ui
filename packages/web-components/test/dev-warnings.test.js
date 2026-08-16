@@ -76,7 +76,9 @@ describe('dev warnings', () => {
 
   it('suggests kebab-case for camelCase attributes', async () => {
     // HTML lowercases attribute names, so confirmLabel arrives as confirmlabel.
-    mount('<arc-dialog confirmLabel="Yes"></arc-dialog>');
+    // On arc-confirm since V4-SCOPE §3.3: `arc-dialog` is the modal primitive
+    // now and has no confirm button to label.
+    mount('<arc-confirm confirmLabel="Yes"></arc-confirm>');
     await settle();
     expect(warnings.some((w) => w.includes('use "confirm-label"'))).to.be.true;
   });

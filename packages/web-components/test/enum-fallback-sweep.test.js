@@ -4,7 +4,7 @@ import { positionStyles } from '../src/shared/position-styles.js';
 
 import '../src/content/icon.register.js';
 import '../src/content/scroll-area.register.js';
-import '../src/feedback/modal.register.js';
+import '../src/feedback/dialog.register.js';
 import '../src/feedback/progress.register.js';
 import '../src/feedback/sheet.register.js';
 import '../src/feedback/tooltip.register.js';
@@ -57,7 +57,7 @@ const CASES = [
   { tag: 'arc-sheet', attr: 'side', def: 'bottom', other: 'right', sel: '.sheet__panel', props: ['bottom', 'right', 'width'] },
   { tag: 'arc-tooltip', attr: 'position', def: 'top', other: 'left', sel: '.tooltip__popup', props: ['bottom', 'right', 'transform'] },
   { tag: 'arc-scroll-to-top', attr: 'position', def: 'bottom-right', other: 'bottom-left', sel: '.scroll-to-top', props: ['left', 'right'] },
-  { tag: 'arc-modal', attr: 'size', def: 'md', other: 'lg', sel: '.modal__dialog', props: ['maxWidth'] },
+  { tag: 'arc-dialog', attr: 'size', def: 'md', other: 'lg', sel: '.dialog__panel', props: ['maxWidth'] },
   { tag: 'arc-float-bar', attr: 'position', def: 'bottom', other: 'top', sel: '.float-bar', props: ['top', 'bottom'] },
   { tag: 'arc-button-group', attr: 'orientation', def: 'horizontal', other: 'vertical', sel: '.button-group, .btn-group', props: ['flexDirection'] },
   { tag: 'arc-anchor-nav', attr: 'orientation', def: 'horizontal', other: 'vertical', sel: null, props: [] },

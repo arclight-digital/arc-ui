@@ -922,3 +922,92 @@ compared** — a sequence, with one layered over the other. `arc-page-header`'s
 `above` and `below` are **the block axis**, where prefix/suffix are the inline
 one. Neither is a side slot, and folding them in would have described the wrong
 thing in the wrong dimension. They are unchanged and stay unchanged.
+
+## The five modal overlays run on `<dialog>`
+
+**Affects `arc-dialog` (was `arc-modal`), `arc-sheet`, `arc-drawer`,
+`arc-lightbox` and `arc-command-palette`.** They render a real `<dialog>` opened
+with `showModal()` instead of a hand-rolled backdrop.
+
+Most of this is invisible and better. Focus is contained by the browser, the
+rest of the page is genuinely `inert` rather than merely untabbable, Escape and
+focus restore come from the platform, and the panel paints in the top layer — so
+an overlay inside a `transform` or a `z-index` stacking context no longer loses
+to it.
+
+### `::part(backdrop)` is gone from four of them
+
+The scrim is `::backdrop` now: a pseudo-element, which cannot carry a part.
+Style it with custom properties on the host instead — `::backdrop` inherits
+from the element it belongs to, which is what makes this work:
+
+```css
+/* before */
+arc-sheet::part(backdrop) { background: rgba(0 0 0 / 0.8); backdrop-filter: none; }
+
+/* after */
+arc-sheet { --sheet-backdrop: rgba(0 0 0 / 0.8); --sheet-backdrop-filter: none; }
+```
+
+The properties are `--dialog-backdrop`, `--sheet-backdrop`, `--drawer-backdrop`
+and `--palette-backdrop`, each with a `-filter` companion where there was a
+blur. **`arc-lightbox` keeps its `backdrop` part** — there the scrim and the
+panel are the same box, so there is still an element to name.
+
+### Initial focus honours `autofocus`
+
+`showModal()` places focus per spec. Where the old code called
+`focusFirst(panel)` unconditionally, an `autofocus` on your own slotted content
+now wins:
+
+```html
+<arc-dialog heading="Rename">
+  <input autofocus>          <!-- focused on open; previously ignored -->
+</arc-dialog>
+```
+
+### Testing Escape needs a different gesture
+
+A dispatched `KeyboardEvent` no longer closes these. The user agent turns
+Escape into a `cancel` event on the dialog, and nothing else produces one:
+
+```js
+// before
+el.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+// after
+el.shadowRoot.querySelector('dialog').dispatchEvent(new Event('cancel', { cancelable: true }));
+```
+
+Same for a backdrop click: there is no backdrop element to click, and a click on
+`::backdrop` is dispatched by the browser to the `<dialog>` itself, so dispatch
+there.
+
+## `arc-modal` is `arc-dialog`, and `arc-dialog` is not what it was
+
+**Three tags became two.** This is the one migration in v4 where a tag name
+survives and means something different, so read it even if you only used one of
+them.
+
+| you had | you want | why |
+| --- | --- | --- |
+| `<arc-modal>` | `<arc-dialog>` | pure rename; `arc-modal` keeps working through v4 |
+| `<arc-dialog heading message …>` | `<arc-confirm heading message …>` | the confirm prompt moved; the name did not |
+| `<arc-confirm>` | `<arc-confirm>` | unchanged, and it absorbed the prompt above |
+
+The element is a dialog, the platform calls it a dialog, and `modal` named one
+of its behaviours rather than what it is. `arc-modal` is an empty subclass of
+`arc-dialog` — same props, events, parts and custom properties — deprecated for
+the whole of v4 and removed in v5.
+
+**The dangerous case is the middle row.** The old `<arc-dialog>` was a small
+confirm prompt: `heading`, `message`, `confirm-label`, `cancel-label`,
+`variant`. The new one is the overlay primitive. It knows `heading` and would
+silently ignore the rest — an empty panel with a title. So it doesn't ignore
+them: `arc-dialog` writes a `console.error` naming `arc-confirm` when it is
+handed `message`, `confirmLabel` or `cancelLabel`. `heading` is deliberately
+not in that list, since it means the same thing in both.
+
+`arc-confirm` kept both of its shapes, which are different rather than
+duplicated: `ArcConfirm.open(): Promise<boolean>` for a call site that has to
+decide something before continuing, and the element itself for a template.

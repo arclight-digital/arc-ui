@@ -365,7 +365,11 @@ describe('dialog and confirm: the variant prop actually does something', () => {
   // Both components documented and reflected `variant: 'default' | 'error'` and
   // neither read it — the confirm button was hardcoded to primary. Implemented
   // rather than deleted: it is documented behaviour a consumer may rely on.
-  const cases = ['arc-dialog', 'arc-confirm'];
+  //
+  // One component now. V4-SCOPE §3.3 merged the old `arc-dialog` — a third
+  // spelling of this same prompt — into arc-confirm, and the `arc-dialog` tag
+  // names the modal primitive, which has no confirm button to recolour.
+  const cases = ['arc-confirm'];
 
   for (const tag of cases) {
     it(`${tag} recolours its confirm button for variant="error"`, async () => {

@@ -6594,6 +6594,9 @@
         .arc-message .message__pending-ellipsis { display: inline; }
       }
 
+/* arc-modal */
+
+
 /* arc-progress */
 .arc-progress { display: block; }
 

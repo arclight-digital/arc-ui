@@ -407,9 +407,14 @@
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(conversation)" },
     { "name": "::part(base)", "description": "The root element." },
+    {
+      "name": "::part(dialog)",
+      "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties."
+    },
+    { "name": "::part(header)" },
+    { "name": "::part(close)" },
     { "name": "::part(body)" },
-    { "name": "::part(cancel)" },
-    { "name": "::part(confirm)" },
+    { "name": "::part(footer)" },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(divider)" },
     { "name": "::part(item)" },
@@ -432,7 +437,7 @@
     { "name": "::part(base)", "description": "The root element." },
     {
       "name": "::part(dialog)",
-      "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--modal-backdrop` and `--modal-backdrop-filter` custom properties."
+      "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties."
     },
     { "name": "::part(header)" },
     { "name": "::part(close)" },

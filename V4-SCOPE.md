@@ -289,8 +289,18 @@ clause.
 Arithmetic check: 13 merged + 5 deleted + 12 `/marketing` + 3 `/media` = 33
 non-default, leaving **174 in the app barrel**.
 
-**Executed so far (V4-PLAN 4.1, 2026-08-15):** the 5 deletions and the 15 group
-moves. 202 tags are registered today. Rows for the five deleted tags stay here —
+**Executed so far (V4-PLAN 4.1, 2026-08-15; 4.4, 2026-08-16):** the 5 deletions,
+the 15 group moves, and §3.3's dialog collision — `arc-modal` renamed to
+`arc-dialog` on native `<dialog>`, today's `arc-dialog` merged into
+`arc-confirm`, and the reused tag name guarded by a dev-time `console.error`
+rather than the throw §3.3 specified. The reason for the change of mechanism is
+worth keeping: a throw from `connectedCallback` is a custom-element reaction, so
+the browser catches it, reports it globally and leaves *that element*
+unupgraded — the call site sees nothing it can catch, and the consumer gets a
+blank dialog plus an unhandleable error instead of a blank dialog. The
+diagnostic has to be loud, not fatal.
+
+202 tags are registered today. Rows for the five deleted tags stay here —
 they are the record of why, and both the docs tombstones and MIGRATION.md point
 back at them. `scripts/checks/scope-coverage.js` reads the verdict text and
 counts a delete/merge/rename verdict for an absent tag as *executed* rather than

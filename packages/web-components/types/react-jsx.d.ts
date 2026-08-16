@@ -384,10 +384,10 @@ declare module 'react' {
       'arc-dialog': ArcBaseAttributes & {
         open?: boolean;
         heading?: string;
-        message?: string;
-        'confirm-label'?: string;
-        'cancel-label'?: string;
-        variant?: 'default' | 'error';
+        size?: 'sm' | 'md' | 'lg';
+        fullscreen?: boolean;
+        dismissible?: boolean;
+        closable?: boolean;
       };
       'arc-diff': ArcBaseAttributes & {
         original?: string;

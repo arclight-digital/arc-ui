@@ -14,12 +14,13 @@ declare module 'solid-js' {
 export interface DialogProps {
   open?: boolean;
   heading?: string;
-  message?: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  variant?: 'default' | 'error';
-  onArcConfirm?: (e: CustomEvent) => void;
-  onArcCancel?: (e: CustomEvent) => void;
+  size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
+  dismissible?: boolean;
+  closable?: boolean;
+  onArcClose?: (e: CustomEvent) => void;
+  onArcOpen?: (e: CustomEvent) => void;
+  children?: JSX.Element;
   class?: string;
   id?: string;
   style?: string;
@@ -48,9 +49,10 @@ export interface DialogProps {
 }
 
 export const Dialog: Component<DialogProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'message', 'confirmLabel', 'cancelLabel', 'variant', 'onArcConfirm', 'onArcCancel']);
+  const [local, rest] = splitProps(props, ['open', 'heading', 'size', 'fullscreen', 'dismissible', 'closable', 'onArcClose', 'onArcOpen', 'children']);
   return (
-    <arc-dialog open={local.open} heading={local.heading} message={local.message} prop:confirmLabel={local.confirmLabel} prop:cancelLabel={local.cancelLabel} variant={local.variant} on:arc-confirm={local.onArcConfirm} on:arc-cancel={local.onArcCancel} {...rest}>
+    <arc-dialog open={local.open} heading={local.heading} size={local.size} fullscreen={local.fullscreen} dismissible={local.dismissible} closable={local.closable} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} {...rest}>
+      {local.children}
     </arc-dialog>
   );
 };

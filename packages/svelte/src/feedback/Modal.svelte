@@ -4,12 +4,6 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    open?: boolean;
-    heading?: string;
-    size?: 'sm' | 'md' | 'lg';
-    fullscreen?: boolean;
-    dismissible?: boolean;
-    closable?: boolean;
     /** <slot name="header"> — put slot="header" on the element inside. */
     header?: Snippet;
     /** <slot name="footer"> — put slot="footer" on the element inside. */
@@ -42,10 +36,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open, heading = '', size, fullscreen, dismissible, closable, header, footer, children, ...rest }: Props = $props();
+  let { header, footer, children, ...rest }: Props = $props();
 </script>
 
-<arc-modal {open} {heading} {size} {fullscreen} {dismissible} {closable} {...rest}>
+<arc-modal {...rest}>
   {@render header?.()}
   {@render footer?.()}
   {@render children?.()}

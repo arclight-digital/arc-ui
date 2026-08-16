@@ -36,7 +36,7 @@
  *     the thing dimming the page behind it.
  *  3. **Some components have no box at all** — see EXEMPT.
  */
-import { run } from '../lib/source-walker.js';
+import { run, baseComponentSource } from '../lib/source-walker.js';
 import { findComponents } from '../lib/component-tags.js';
 
 /**
@@ -111,10 +111,16 @@ const rendersBase = {
     'The docblock declares it; the template has to carry it. Check every root branch —\n' +
     '    fourteen components render a different root element depending on a prop, and\n' +
     '    each branch needs the token.',
-  component({ tag, code, docTag, report }) {
+  component({ tag, code, source, docTag, report }) {
     if (EXEMPT[tag]) return;
     if (!docTag('csspart').some((t) => /^base\b/.test(t.text))) return; // the rule above owns this
     if (/part="[^"]*\bbase\b[^"]*"/.test(code)) return;
+    // A component defined as an empty subclass renders its base's template.
+    // `arc-modal` is the first — V4-SCOPE §2.4's rename alias — and it
+    // documents every part the element has while implementing none of them,
+    // which is the point of an alias with no body.
+    const base = baseComponentSource(source);
+    if (base && /part="[^"]*\bbase\b[^"]*"/.test(base)) return;
     report(1, 'documents a `base` part that no element in the template carries.');
   },
 };

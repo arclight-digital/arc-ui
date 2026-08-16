@@ -42,6 +42,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { baseComponentSource } from '../lib/source-walker.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..', '..');
@@ -93,13 +94,24 @@ for (const tier of fs.readdirSync(SRC, { withFileTypes: true })) {
 
   for (const file of fs.readdirSync(dir)) {
     if (!file.endsWith('.js') || file.endsWith('.register.js') || file === 'index.js') continue;
-    const src = fs.readFileSync(path.join(dir, file), 'utf-8');
-    const classAt = src.search(/^export class /m);
+    const own = fs.readFileSync(path.join(dir, file), 'utf-8');
+    const classAt = own.search(/^export class /m);
     if (classAt === -1) continue;
-    const doc = src.slice(0, classAt);
-    const code = src.slice(classAt);
+    const doc = own.slice(0, classAt);
     const where = `${tier.name}/${file}`;
     checked++;
+
+    // The claims come from this file's docblock; the *evidence* may come from
+    // the component class it extends. `class ArcModal extends ArcDialog {}` is
+    // the alias V4-SCOPE §2.4's rename left behind — it documents every prop,
+    // part and event the element has, and implements none of them, because an
+    // alias with a body is an alias that can drift from what it aliases.
+    //
+    // Only the evidence widens. A subclass that documents something neither it
+    // nor its base has is still a false claim, which is what this check is for.
+    const base = baseComponentSource(own);
+    const src = base ? `${own}\n${base}` : own;
+    const code = base ? `${own.slice(classAt)}\n${base}` : own.slice(classAt);
 
     // ── @csspart ────────────────────────────────────────────
     const rendered = new Set(SHARED_PARTS);

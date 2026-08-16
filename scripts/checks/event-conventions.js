@@ -40,6 +40,7 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { SRC_DIR, TIERS } from '../lib/component-tags.js';
+import { baseComponentSource } from '../lib/source-walker.js';
 
 /**
  * file → reasons. Every entry must explain itself; delete entries that stop
@@ -222,6 +223,18 @@ for (const tier of TIERS) {
     const source = readFileSync(resolve(tierDir, file), 'utf-8');
     const documented = documentedEvents(source);
     const dispatched = new Set();
+
+    // A subclass dispatches whatever its base does. Only the base's dispatch
+    // *names* are inherited — the per-site convention checks below still run on
+    // this file's own sites, so a subclass that adds a badly-formed dispatch is
+    // caught here rather than excused by its parent.
+    const base = baseComponentSource(source);
+    if (base) {
+      for (const args of customEventArgs(base)) {
+        const nameText = args.split('{')[0];
+        for (const m of nameText.matchAll(/['"`]([\w:-]+)['"`]/g)) dispatched.add(m[1]);
+      }
+    }
 
     for (const args of customEventArgs(source)) {
       sites++;

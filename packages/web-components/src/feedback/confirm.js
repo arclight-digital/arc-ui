@@ -1,14 +1,26 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import './dialog.js';
 
 /**
- * Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned
- * promise. Same visual treatment as dialog.
+ * Confirmation prompt, in both of the shapes a confirmation needs.
+ *
+ * **Imperative:** `ArcConfirm.open({ heading, message, variant })` returns a `Promise<boolean>` —
+ * the shape you want at a call site that has to decide something before continuing.
+ * **Declarative:** the element itself, with `open` bound and `arc-confirm`/`arc-cancel` listened
+ * for — the shape you want when the prompt is part of a template.
+ *
+ * V4-SCOPE §3.3: those two are different shapes rather than duplicates of each other, which is why
+ * both survive. The duplicate was the old `<arc-dialog>` — a third spelling of this same prompt,
+ * with a strict subset of these props and no slot — and it merged in here. The `arc-dialog` tag
+ * now names the modal primitive this is built on (renamed from `arc-modal`), and that component
+ * throws in dev if it is handed `message` or `confirmLabel`, so the reuse of the name cannot fail
+ * quietly.
  *
  * @tag arc-confirm
  * @status stable
- * @requires arc-modal
+ * @requires arc-dialog
  * @requires arc-button
  * @prop {boolean} open - Controls whether the confirmation dialog is visible. For declarative usage; the imperative API manages this automatically.
  * @prop {string} heading - The heading text displayed at the top of the confirmation dialog.
@@ -125,11 +137,11 @@ export class ArcConfirm extends DeclaredPropsMixin(LitElement) {
 
   render() {
     return html`
-      <arc-modal part="base"
+      <arc-dialog part="base"
         ?open=${this.open}
         heading=${this.heading}
         size="sm"
-        closable
+        dismissible
         @arc-close=${this._onModalClose}
       >
         <div class="confirm__message" part="message"><slot>${this.message}</slot></div>
@@ -137,7 +149,7 @@ export class ArcConfirm extends DeclaredPropsMixin(LitElement) {
           <arc-button variant="ghost" size="sm" @click=${this._cancel} part="cancel">${this.cancelLabel}</arc-button>
           <arc-button variant="primary" size="sm" @click=${this._confirm} part="confirm">${this.confirmLabel}</arc-button>
         </div>
-      </arc-modal>
+      </arc-dialog>
     `;
   }
 }

@@ -5273,7 +5273,7 @@
         },
         {
           "name": "arc-confirm",
-          "description": "Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned\npromise. Same visual treatment as dialog.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **Slots:**\n - _default_ - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **message**\n- **cancel**\n- **confirm**",
+          "description": "Confirmation prompt, in both of the shapes a confirmation needs.\n\n**Imperative:** `ArcConfirm.open({ heading, message, variant })` returns a `Promise<boolean>` —\nthe shape you want at a call site that has to decide something before continuing.\n**Declarative:** the element itself, with `open` bound and `arc-confirm`/`arc-cancel` listened\nfor — the shape you want when the prompt is part of a template.\n\nV4-SCOPE §3.3: those two are different shapes rather than duplicates of each other, which is why\nboth survive. The duplicate was the old `<arc-dialog>` — a third spelling of this same prompt,\nwith a strict subset of these props and no slot — and it merged in here. The `arc-dialog` tag\nnow names the modal primitive this is built on (renamed from `arc-modal`), and that component\nthrows in dev if it is handed `message` or `confirmLabel`, so the reuse of the name cannot fail\nquietly.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **Slots:**\n - _default_ - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **message**\n- **cancel**\n- **confirm**",
           "doc-url": "",
           "attributes": [
             {
@@ -5555,12 +5555,12 @@
         },
         {
           "name": "arc-dialog",
-          "description": "Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts —\nunsaved changes, session expiry, and discard decisions.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the confirm button is clicked\n- **arc-cancel** - Fired when cancel, escape, or backdrop click occurs\n\n### **Methods:**\n - **confirm()** - Opens the dialog and returns a Promise that resolves to `true` on confirm\nor `false` on cancel (including Escape and backdrop click).\n\n### **CSS Parts:**\n - **base** - The root element.\n- **body**\n- **cancel**\n- **confirm**",
+          "description": "General-purpose modal overlay on the platform's `<dialog>`: the browser's focus containment,\ninert background, Escape handling and top layer, with the library's sizing, header/body/footer\nstructure and cancelable close contract on top.\n\nNamed `arc-modal` before v4. The rename is V4-SCOPE §2.4 — the element is a dialog, the platform\ncalls it a dialog, and `modal` names one of its behaviours rather than what it is. `arc-modal`\nstays as a deprecated alias for the whole of v4.\n\n**This is not the confirm prompt that used to be called `arc-dialog`.** That one is\n`<arc-confirm>` now, and it absorbed both of its old spellings. The tag name is reused here for\na different component, so this one throws in dev when it is handed `message` or `confirmLabel` —\nthe two props that would otherwise be silently ignored, leaving an empty panel.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close.\n- **arc-open** - Fired when the dialog opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **dialog** - The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties.\n- **header**\n- **close**\n- **body**\n- **footer**",
           "doc-url": "",
           "attributes": [
             {
               "name": "open",
-              "description": "Whether the dialog is visible",
+              "description": "Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -5568,101 +5568,112 @@
             },
             {
               "name": "heading",
-              "description": "Dialog title text",
+              "description": "Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
               "value": {
                 "type": "string",
                 "default": "''"
               }
             },
             {
-              "name": "message",
-              "description": "Dialog body message",
+              "name": "size",
+              "description": "Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.",
               "value": {
-                "type": "string",
-                "default": "''"
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
               }
             },
             {
-              "name": "confirm-label",
-              "description": "Text for the confirm button",
+              "name": "fullscreen",
+              "description": "Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.",
               "value": {
-                "type": "string",
-                "default": "'Confirm'"
+                "type": "boolean",
+                "default": "false"
               }
             },
             {
-              "name": "cancel-label",
-              "description": "Text for the cancel button",
+              "name": "dismissible",
+              "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
               "value": {
-                "type": "string",
-                "default": "'Cancel'"
+                "type": "boolean",
+                "default": "true"
               }
             },
             {
-              "name": "variant",
-              "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
+              "name": "closable",
+              "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
               "value": {
-                "type": "'default' | 'error'",
-                "default": "'default'"
+                "type": "boolean",
+                "default": "true"
               }
             }
           ],
-          "slots": [],
-          "events": [
+          "slots": [
             {
-              "name": "arc-confirm",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the confirm button is clicked"
+              "name": "header"
             },
             {
-              "name": "arc-cancel",
+              "name": "",
+              "description": "Default content."
+            },
+            {
+              "name": "footer"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-close",
               "type": "CustomEvent<void>",
-              "description": "Fired when cancel, escape, or backdrop click occurs"
+              "description": "Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close."
+            },
+            {
+              "name": "arc-open",
+              "type": "CustomEvent<void>",
+              "description": "Fired when the dialog opens"
             }
           ],
           "js": {
             "properties": [
               {
                 "name": "heading",
-                "description": "Dialog title text",
-                "type": "string"
-              },
-              {
-                "name": "message",
-                "description": "Dialog body message",
-                "type": "string"
-              },
-              {
-                "name": "confirmLabel",
-                "description": "Text for the confirm button",
-                "type": "string"
-              },
-              {
-                "name": "cancelLabel",
-                "description": "Text for the cancel button",
+                "description": "Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
                 "type": "string"
               },
               {
                 "name": "open",
-                "description": "Whether the dialog is visible",
+                "description": "Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from.",
                 "type": "boolean"
               },
               {
-                "name": "variant",
-                "description": "Visual variant — error adds red accent line, glow border, and red confirm button",
-                "type": "'default' | 'error'"
+                "name": "size",
+                "description": "Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
+                "name": "dismissible",
+                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
+                "type": "boolean"
+              },
+              {
+                "name": "closable",
+                "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
+                "type": "boolean"
+              },
+              {
+                "name": "fullscreen",
+                "description": "Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.",
+                "type": "boolean"
               }
             ],
             "events": [
               {
-                "name": "arc-confirm",
+                "name": "arc-close",
                 "type": "CustomEvent<void>",
-                "description": "Fired when the confirm button is clicked"
+                "description": "Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close."
               },
               {
-                "name": "arc-cancel",
+                "name": "arc-open",
                 "type": "CustomEvent<void>",
-                "description": "Fired when cancel, escape, or backdrop click occurs"
+                "description": "Fired when the dialog opens"
               }
             ]
           }
@@ -5982,20 +5993,19 @@
         },
         {
           "name": "arc-modal",
-          "description": "General-purpose focus-trapping overlay with backdrop blur, slide-up animation, and ESC-to-close\nbehavior for forms, settings, and rich content that needs full user attention.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the modal closes\n- **arc-open** - Fired when the modal opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **dialog** - The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--modal-backdrop` and `--modal-backdrop-filter` custom properties.\n- **header**\n- **close**\n- **body**\n- **footer**",
+          "description": "@deprecated Since v4.0.0 — use `<arc-dialog>`. Same component, same props, same events, same parts, same custom properties; only the tag name changed. Removed in v5. General-purpose modal overlay on the platform's `<dialog>`. Renamed because the element *is* a dialog, the platform calls it a dialog, and `modal` named one of its behaviours rather than what it is (V4-SCOPE §2.4). **A subclass with an empty body, on purpose.** The usual way a rename-with-compatibility-alias rots is that the alias is a copy and one of the two copies gets a fix. There is nothing here to fall behind: no styles, no template, no properties. The one thing `arc-dialog` has that this does not inherit usefully is its reused-tag guard — that guard exists because the name `arc-dialog` used to mean a confirm prompt, and `arc-modal` never meant anything else — but it costs nothing to leave in place, and a page that hands `<arc-modal message=\"...\">` the confirm prompt's props has made the same mistake by a different route.\n\n\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the dialog opens\n- **arc-close** - Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close.\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **dialog** - The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties.\n- **header**\n- **close**\n- **body**\n- **footer**",
           "doc-url": "",
           "attributes": [
             {
               "name": "open",
-              "description": "Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element.",
+              "description": "Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from.",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "boolean"
               }
             },
             {
               "name": "heading",
-              "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
+              "description": "Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -6005,32 +6015,28 @@
               "name": "size",
               "description": "Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.",
               "value": {
-                "type": "'sm' | 'md' | 'lg'",
-                "default": "'md'"
+                "type": "'sm' | 'md' | 'lg'"
               }
             },
             {
               "name": "fullscreen",
-              "description": "Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.",
+              "description": "Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.",
               "value": {
-                "type": "boolean",
-                "default": "false"
+                "type": "boolean"
               }
             },
             {
               "name": "dismissible",
-              "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. Note the default: a modal is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
+              "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
               "value": {
-                "type": "boolean",
-                "default": "true"
+                "type": "boolean"
               }
             },
             {
               "name": "closable",
               "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
               "value": {
-                "type": "boolean",
-                "default": "true"
+                "type": "boolean"
               }
             }
           ],
@@ -6048,36 +6054,36 @@
           ],
           "events": [
             {
-              "name": "arc-close",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the modal closes"
-            },
-            {
               "name": "arc-open",
               "type": "CustomEvent<void>",
-              "description": "Fired when the modal opens"
+              "description": "Fired when the dialog opens"
+            },
+            {
+              "name": "arc-close",
+              "type": "CustomEvent<void>",
+              "description": "Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close."
             }
           ],
           "js": {
             "properties": [
               {
-                "name": "heading",
-                "description": "Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
-                "type": "string"
-              },
-              {
                 "name": "open",
-                "description": "Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element.",
+                "description": "Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from.",
                 "type": "boolean"
               },
               {
+                "name": "heading",
+                "description": "Text displayed in the header bar, and the dialog's accessible name.",
+                "type": "string"
+              },
+              {
                 "name": "size",
-                "description": "Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.",
+                "description": "Maximum width of the panel. `sm` (400px) suits confirmations, `md` (560px) standard forms, and `lg` (720px) content-heavy dialogs with tables or multi-column layouts.",
                 "type": "'sm' | 'md' | 'lg'"
               },
               {
                 "name": "dismissible",
-                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. Note the default: a modal is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
+                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape and backdrop click. Set to `false` for decisions the user must resolve through the footer.",
                 "type": "boolean"
               },
               {
@@ -6087,20 +6093,20 @@
               },
               {
                 "name": "fullscreen",
-                "description": "Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows.",
+                "description": "Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.",
                 "type": "boolean"
               }
             ],
             "events": [
               {
-                "name": "arc-close",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the modal closes"
-              },
-              {
                 "name": "arc-open",
                 "type": "CustomEvent<void>",
-                "description": "Fired when the modal opens"
+                "description": "Fired when the dialog opens"
+              },
+              {
+                "name": "arc-close",
+                "type": "CustomEvent<void>",
+                "description": "Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close."
               }
             ]
           }
@@ -18227,13 +18233,20 @@
           "description": "The root element."
         },
         {
+          "name": "part(dialog)",
+          "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties."
+        },
+        {
+          "name": "part(header)"
+        },
+        {
+          "name": "part(close)"
+        },
+        {
           "name": "part(body)"
         },
         {
-          "name": "part(cancel)"
-        },
-        {
-          "name": "part(confirm)"
+          "name": "part(footer)"
         },
         {
           "name": "part(base)",
@@ -18302,7 +18315,7 @@
         },
         {
           "name": "part(dialog)",
-          "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--modal-backdrop` and `--modal-backdrop-filter` custom properties."
+          "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties."
         },
         {
           "name": "part(header)"

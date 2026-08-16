@@ -7,13 +7,14 @@ import { ArcDialog } from '@arclux/arc-ui/dialog';
 export interface DialogProps {
   open?: boolean;
   heading?: string;
-  message?: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  variant?: 'default' | 'error';
+  size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
+  dismissible?: boolean;
+  closable?: boolean;
   className?: string;
-  onArcConfirm?: (e: CustomEvent) => void;
-  onArcCancel?: (e: CustomEvent) => void;
+  children?: React.ReactNode;
+  onArcClose?: (e: CustomEvent) => void;
+  onArcOpen?: (e: CustomEvent) => void;
 }
 
 export const Dialog = createComponent({
@@ -21,7 +22,7 @@ export const Dialog = createComponent({
   elementClass: ArcDialog,
   react: React,
   events: {
-    onArcConfirm: 'arc-confirm' as EventName<CustomEvent>,
-    onArcCancel: 'arc-cancel' as EventName<CustomEvent>,
+    onArcClose: 'arc-close' as EventName<CustomEvent>,
+    onArcOpen: 'arc-open' as EventName<CustomEvent>,
   },
 });

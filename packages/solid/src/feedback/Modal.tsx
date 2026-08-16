@@ -12,14 +12,6 @@ declare module 'solid-js' {
 }
 
 export interface ModalProps {
-  open?: boolean;
-  heading?: string;
-  size?: 'sm' | 'md' | 'lg';
-  fullscreen?: boolean;
-  dismissible?: boolean;
-  closable?: boolean;
-  onArcClose?: (e: CustomEvent) => void;
-  onArcOpen?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -49,9 +41,9 @@ export interface ModalProps {
 }
 
 export const Modal: Component<ModalProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'heading', 'size', 'fullscreen', 'dismissible', 'closable', 'onArcClose', 'onArcOpen', 'children']);
+  const [local, rest] = splitProps(props, ['children']);
   return (
-    <arc-modal open={local.open} heading={local.heading} size={local.size} fullscreen={local.fullscreen} dismissible={local.dismissible} closable={local.closable} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} {...rest}>
+    <arc-modal {...rest}>
       {local.children}
     </arc-modal>
   );

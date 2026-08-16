@@ -116,6 +116,44 @@ export function lineAt(source, offset) {
   return source.slice(0, offset).split('\n').length;
 }
 
+/**
+ * The source of the component class this one extends, when there is one.
+ *
+ * A component defined as `class ArcModal extends ArcDialog {}` has no
+ * properties, no template, no dispatches and no parts of its own, and documents
+ * all four — it has to, because the manifest, the editor data, the docs tables
+ * and six wrapper packages are generated from that JSDoc. Three separate checks
+ * read one file and concluded the docblock was lying.
+ *
+ * V4-SCOPE §2.4's `arc-modal` → `arc-dialog` rename is the first of these, and
+ * it will not be the last: an empty subclass is how a renamed tag keeps working
+ * for a major without the alias being a copy that can drift from the original.
+ *
+ * Resolved through the import rather than by matching class names, so a rename
+ * that breaks the link reads as "no base" and fails the checks loudly instead
+ * of silently widening what they accept.
+ *
+ * @returns {string | null} the base component's source text
+ */
+export function baseComponentSource(source) {
+  const ext = source.match(/^export\s+class\s+\w+\s+extends\s+(\w+)\s*\{/m);
+  if (!ext) return null;
+  const imported = new RegExp(
+    `import\\s*\\{[^}]*\\b${ext[1]}\\b[^}]*\\}\\s*from\\s*['"]([^'"]+)['"]`,
+  ).exec(source);
+  if (!imported) return null;
+
+  const spec = imported[1];
+  if (!spec.startsWith('.')) return null;
+  for (const meta of findComponents().values()) {
+    const rel = `${meta.tier}/${meta.file}`;
+    if (rel.endsWith(`/${spec.replace(/^\.\//, '')}`) || rel === spec.replace(/^\.\.\//, '')) {
+      return readFileSync(resolve(SRC_DIR, meta.tier, meta.file), 'utf-8');
+    }
+  }
+  return null;
+}
+
 // ── The component view ──────────────────────────────────────────────────────
 
 /**

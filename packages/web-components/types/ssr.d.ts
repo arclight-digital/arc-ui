@@ -1,7 +1,7 @@
 /**
  * Components closed until something opens them.
  *
- * The overlay-mixin set: everything rendered into the top layer and invisible
+ * The OverlayController set: everything rendered into the top layer and invisible
  * until asked for. Nothing inside one can appear in a first paint, so rendering
  * their contents spends bytes on markup no reader and no metric ever sees. On
  * arcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette.

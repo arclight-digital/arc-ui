@@ -917,21 +917,23 @@ export declare class ArcDescriptionList extends LitElement {
 
 /**
  * `<arc-dialog>`
- * Events: arc-confirm, arc-cancel
+ * Events: arc-close, arc-open
  */
 export declare class ArcDialog extends LitElement {
-  /** Dialog title text @default '' */
+  /** The props that belonged to the *old* `arc-dialog`. V4-SCOPE §3.3 requires this and says why: the old `arc-dialog` was a confirm prompt with `heading`, `message` and `confirmLabel`, and it merged into `arc-confirm`. Anyone still writing that markup upgrades into this primitive, which knows `heading` and would silently ignore the other two — rendering an empty panel with a title. That is the quietest possible failure, and a line in MIGRATION.md is not a fix for it. `heading` is deliberately not in the list: it means the same thing in both components, so its presence is not evidence of the mistake. @default ['message', 'confirmLabel', 'cancelLabel'] */
+  REUSED_TAG_PROPS: unknown[];
+  /** Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?"). @default '' */
   heading: string;
-  /** Dialog body message @default '' */
-  message: string;
-  /** Text for the confirm button @default 'Confirm' */
-  confirmLabel: string;
-  /** Text for the cancel button @default 'Cancel' */
-  cancelLabel: string;
-  /** Whether the dialog is visible @default false */
+  /** Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from. @default false */
   open: boolean;
-  /** Visual variant — error adds red accent line, glow border, and red confirm button @default 'default' */
-  variant: 'default' | 'error';
+  /** Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
+  /** When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component. @default true */
+  dismissible: boolean;
+  /** @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both. @default true */
+  closable: boolean;
+  /** Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows. @default false */
+  fullscreen: boolean;
 }
 
 /**
@@ -1756,21 +1758,23 @@ export declare class ArcMeter extends LitElement {
 
 /**
  * `<arc-modal>`
- * Events: arc-close, arc-open
+ * Events: arc-open, arc-close
  */
 export declare class ArcModal extends LitElement {
-  /** Text displayed in the modal header bar. Automatically linked to the dialog via `aria-labelledby` for screen-reader accessibility. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?"). @default '' */
-  heading: string;
-  /** Controls the visible state of the dialog. Set to `true` to open the modal and activate the focus trap; set to `false` to close it, run the exit animation, and restore focus to the previously-focused element. @default false */
+  /** Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from. */
   open: boolean;
-  /** Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts. @default 'md' */
+  /** Text displayed in the header bar, and the dialog's accessible name. @default '' */
+  heading: string;
+  /** Maximum width of the panel. `sm` (400px) suits confirmations, `md` (560px) standard forms, and `lg` (720px) content-heavy dialogs with tables or multi-column layouts. */
   size: 'sm' | 'md' | 'lg';
-  /** When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decision modals where the user must explicitly choose an action from the footer buttons. Note the default: a modal is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component. @default true */
+  /** When `true`, renders the built-in X close button and allows dismissal via Escape and backdrop click. Set to `false` for decisions the user must resolve through the footer. */
   dismissible: boolean;
-  /** @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both. @default true */
+  /** @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both. */
   closable: boolean;
-  /** Makes the modal fill the entire viewport. Useful for mobile forms or complex workflows. @default false */
+  /** Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows. */
   fullscreen: boolean;
+  /** The props that belonged to the *old* `arc-dialog`. V4-SCOPE §3.3 requires this and says why: the old `arc-dialog` was a confirm prompt with `heading`, `message` and `confirmLabel`, and it merged into `arc-confirm`. Anyone still writing that markup upgrades into this primitive, which knows `heading` and would silently ignore the other two — rendering an empty panel with a title. That is the quietest possible failure, and a line in MIGRATION.md is not a fix for it. `heading` is deliberately not in the list: it means the same thing in both components, so its presence is not evidence of the mistake. @default ['message', 'confirmLabel', 'cancelLabel'] */
+  REUSED_TAG_PROPS: unknown[];
 }
 
 /**

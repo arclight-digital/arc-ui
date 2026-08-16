@@ -54,7 +54,7 @@ import { CLIENT_ONLY } from './ssr-client-only.js';
  * their contents spends bytes on markup no reader and no metric ever sees. On
  * arcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette.
  */
-export const CLOSED_OVERLAYS = ['arc-command-palette', 'arc-modal', 'arc-sheet', 'arc-drawer'];
+export const CLOSED_OVERLAYS = ['arc-command-palette', 'arc-dialog', 'arc-modal', 'arc-sheet', 'arc-drawer'];
 
 /**
  * Long repeated lists, and how many of each to render.

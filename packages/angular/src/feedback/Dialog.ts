@@ -7,7 +7,7 @@ import type { ArcDialog } from '@arclux/arc-ui/dialog';
 @Component({
   selector: 'arc-dialog',
   standalone: true,
-  template: ``,
+  template: `<ng-content />`,
 })
 export class Dialog {
   private readonly _el: ArcDialog = inject(ElementRef).nativeElement;
@@ -26,31 +26,31 @@ export class Dialog {
     return this._el.heading;
   }
 
-  @Input() set message(value: string) {
-    this._el.message = value;
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
   }
-  get message(): string {
-    return this._el.message;
-  }
-
-  @Input() set confirmLabel(value: string) {
-    this._el.confirmLabel = value;
-  }
-  get confirmLabel(): string {
-    return this._el.confirmLabel;
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
   }
 
-  @Input() set cancelLabel(value: string) {
-    this._el.cancelLabel = value;
+  @Input() set fullscreen(value: boolean) {
+    this._el.fullscreen = value;
   }
-  get cancelLabel(): string {
-    return this._el.cancelLabel;
+  get fullscreen(): boolean {
+    return this._el.fullscreen;
   }
 
-  @Input() set variant(value: 'default' | 'error') {
-    this._el.variant = value;
+  @Input() set dismissible(value: boolean) {
+    this._el.dismissible = value;
   }
-  get variant(): 'default' | 'error' {
-    return this._el.variant;
+  get dismissible(): boolean {
+    return this._el.dismissible;
+  }
+
+  @Input() set closable(value: boolean) {
+    this._el.closable = value;
+  }
+  get closable(): boolean {
+    return this._el.closable;
   }
 }

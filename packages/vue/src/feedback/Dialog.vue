@@ -7,20 +7,17 @@ defineOptions({ name: 'Dialog' });
 const props = withDefaults(defineProps<{
   open?: boolean;
   heading?: string;
-  message?: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  variant?: 'default' | 'error';
+  size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
+  dismissible?: boolean;
+  closable?: boolean;
 }>(), {
   heading: '',
-  message: '',
-  confirmLabel: 'Confirm',
-  cancelLabel: 'Cancel',
 });
 
 const emit = defineEmits<{
-  'arc-confirm': [event: CustomEvent];
-  'arc-cancel': [event: CustomEvent];
+  'arc-close': [event: CustomEvent];
+  'arc-open': [event: CustomEvent];
 }>();
 </script>
 
@@ -28,12 +25,15 @@ const emit = defineEmits<{
   <arc-dialog
     :open="props.open"
     :heading="props.heading"
-    :message="props.message"
-    :confirmLabel="props.confirmLabel"
-    :cancelLabel="props.cancelLabel"
-    :variant="props.variant"
-    @arc-confirm="(payload: CustomEvent) => emit('arc-confirm', payload)"
-    @arc-cancel="(payload: CustomEvent) => emit('arc-cancel', payload)"
+    :size="props.size"
+    :fullscreen="props.fullscreen"
+    :dismissible="props.dismissible"
+    :closable="props.closable"
+    @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
+    @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >
+    <slot />
+    <slot name="header" />
+    <slot name="footer" />
   </arc-dialog>
 </template>

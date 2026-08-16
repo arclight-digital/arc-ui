@@ -6,10 +6,15 @@
   interface Props {
     open?: boolean;
     heading?: string;
-    message?: string;
-    confirmLabel?: string;
-    cancelLabel?: string;
-    variant?: 'default' | 'error';
+    size?: 'sm' | 'md' | 'lg';
+    fullscreen?: boolean;
+    dismissible?: boolean;
+    closable?: boolean;
+    /** <slot name="header"> — put slot="header" on the element inside. */
+    header?: Snippet;
+    /** <slot name="footer"> — put slot="footer" on the element inside. */
+    footer?: Snippet;
+    children?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -37,16 +42,11 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open, heading = '', message = '', confirmLabel = 'Confirm', cancelLabel = 'Cancel', variant, ...rest }: Props = $props();
-
-  let __el: HTMLElement | undefined = $state();
-  $effect(() => {
-    const el = __el as unknown as Record<string, unknown> | undefined;
-    if (!el) return;
-    if (confirmLabel !== undefined) el.confirmLabel = confirmLabel;
-    if (cancelLabel !== undefined) el.cancelLabel = cancelLabel;
-  });
+  let { open, heading = '', size, fullscreen, dismissible, closable, header, footer, children, ...rest }: Props = $props();
 </script>
 
-<arc-dialog {open} {heading} {message} {variant} bind:this={__el} {...rest}>
+<arc-dialog {open} {heading} {size} {fullscreen} {dismissible} {closable} {...rest}>
+  {@render header?.()}
+  {@render footer?.()}
+  {@render children?.()}
 </arc-dialog>
