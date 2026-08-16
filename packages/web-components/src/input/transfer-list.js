@@ -2,7 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import './icon-button.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
 /**
  * Dual-listbox for moving items between an available and a selected pane, ideal for permissions
@@ -33,8 +33,8 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
   static properties = {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
-    options: { type: Array },
-    value: { type: Array },
+    options: list(),
+    value: list(),
     name: { type: String, reflect: true },
     // NOT flag(): a form-associated custom element whose `disabled` content
     // attribute is merely *present* is "actually disabled" per the HTML spec,
@@ -299,8 +299,6 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
 
   constructor() {
     super();
-    this.options = [];
-    this.value = [];
     this.name = '';
     this.disabled = false;
     this.sourceLabel = 'Available';

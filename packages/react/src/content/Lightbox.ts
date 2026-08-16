@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcLightbox } from '@arclux/arc-ui/lightbox';
 
 export interface LightboxProps {
-  images?: string;
+  images?: unknown[];
   index?: number;
   open?: boolean;
   className?: string;

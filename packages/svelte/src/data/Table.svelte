@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], rows = [], striped, density, ...rest }: Props = $props();
+  let { columns, rows, striped, density, ...rest }: Props = $props();
 </script>
 
 <arc-table {columns} {rows} {striped} {density} {...rest}>

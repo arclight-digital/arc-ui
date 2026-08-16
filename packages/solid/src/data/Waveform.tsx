@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface WaveformProps {
-  peaks?: string;
+  peaks?: unknown[];
   position?: number;
   duration?: number;
   interactive?: boolean;

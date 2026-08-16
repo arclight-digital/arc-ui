@@ -35,7 +35,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { data = [], startLabel = '', endLabel = '', summary = true, ...rest }: Props = $props();
+  let { data, startLabel = '', endLabel = '', summary = true, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

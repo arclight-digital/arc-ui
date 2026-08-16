@@ -12,7 +12,6 @@ const props = withDefaults(defineProps<{
   max?: number;
   legend?: boolean;
 }>(), {
-  data: () => ([]),
   endDate: '',
   weeks: 52,
   weekStart: 'sunday',

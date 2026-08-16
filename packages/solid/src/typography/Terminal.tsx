@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface TerminalProps {
-  lines?: string;
+  lines?: unknown[];
   prompt?: string;
   title?: string;
   speed?: number;

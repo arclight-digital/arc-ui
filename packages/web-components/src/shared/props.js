@@ -240,12 +240,51 @@ export const int = (opts = {}) => num({ ...opts, int: true });
  *   row set back into an attribute on every change is a lot of DOM churn for
  *   something no CSS selector can use. Pass `reflect: true` where a component
  *   genuinely wants it.
+ * - **Every list has a markup form.** There is deliberately no
+ *   `attribute: false` here. Dialect 2 is listed above as a *problem* — a prop
+ *   static HTML cannot set — and a JSON attribute is the answer to it, so a
+ *   list opting out of the attribute would be re-adopting the dialect this
+ *   replaces. A prop that genuinely cannot round-trip is not a list: a render
+ *   callback is a function, and stays a plain `{ attribute: false }`.
+ *
+ * ## `of: Number`, and why the vocabulary needs it
+ *
+ * `arc-knob.detents` is the one array prop whose attribute is not JSON: it
+ * takes `detents="0,25,50,100"`, because a knob's detents read better as the
+ * comma list a patch file would carry. That is a decision about *syntax*, not
+ * a fifth dialect, and before this option the vocabulary could not express it —
+ * so the component kept a hand-rolled converter and dialect 3 was not actually
+ * retired.
+ *
+ * `of: Number` says every member is a number. The attribute then accepts
+ * **either** spelling — `[0,25]` and `0,25` both parse — since JSON is tried
+ * first and a comma list is what is left when it fails. Non-numeric members are
+ * dropped rather than kept as `NaN`, on both the attribute path and the
+ * property path, which is the same "the declaration is the contract on both
+ * paths" rule the rest of this file states. It serialises back as the comma
+ * list, so a reflected value round-trips to what was written.
  *
  * @param {object}   [opts]
  * @param {unknown[]|(() => unknown[])} [opts.default=[]] literal (copied per
  *   element) or factory
+ * @param {NumberConstructor} [opts.of] member type; `Number` is the only one
+ *   with a caller, and an unsupported value throws rather than being ignored
  */
-export function list({ default: fallback = [], attribute, reflect = false, derived = false } = {}) {
+export function list({
+  default: fallback = [],
+  of: member,
+  attribute,
+  reflect = false,
+  derived = false,
+} = {}) {
+  if (member !== undefined && member !== Number) {
+    throw new Error(
+      'list({ of }) supports Number only. A member type that silently did ' +
+        'nothing would be worse than not having the option: the declaration ' +
+        'would read as a contract nothing enforces.',
+    );
+  }
+  const numeric = member === Number;
   // Held as a factory so no two elements share one array. A literal is copied
   // rather than captured: `list({ default: ['a'] })` on two elements must give
   // two arrays, or a component that mutates its own default corrupts the next
@@ -260,20 +299,46 @@ export function list({ default: fallback = [], attribute, reflect = false, deriv
     converter: {
       fromAttribute: (v, type) => {
         if (v === null) return factory();
+        let parsed = null;
         try {
-          const parsed = JSON.parse(v);
-          return Array.isArray(parsed) ? parsed : factory();
+          const json = JSON.parse(v);
+          if (Array.isArray(json)) parsed = json;
         } catch {
           // The point of the helper. Lit's stock Array converter throws here,
           // and it throws inside attributeChangedCallback where nothing at the
           // call site can catch it.
-          return factory();
         }
+        // A comma list is what is left when JSON fails, so it is only tried
+        // second — `[0,25]` stays an array of two rather than becoming the two
+        // strings `[0` and `25]`.
+        if (parsed === null && numeric) parsed = v.split(',');
+        if (parsed === null) return factory();
+        return numeric ? numericMembers(parsed) : parsed;
       },
-      toAttribute: (v) => (Array.isArray(v) ? JSON.stringify(v) : null),
+      toAttribute: (v) => {
+        if (!Array.isArray(v)) return null;
+        return numeric ? numericMembers(v).join(',') : JSON.stringify(v);
+      },
     },
-    [ARC]: { kind: 'list', default: factory, derived },
+    [ARC]: { kind: 'list', default: factory, derived, numeric },
   };
+}
+
+/**
+ * The finite numbers in a list, as a new array.
+ *
+ * Dropping rather than coercing to `NaN`: a detent at `NaN` renders at an
+ * undefined angle and compares false against everything, so it is a value that
+ * cannot be right — the same reasoning `num()` applies when a non-finite value
+ * falls back to the declared default.
+ */
+function numericMembers(values) {
+  return values.map(Number).filter(Number.isFinite);
+}
+
+/** Whether a list is already exactly its numeric normalisation. */
+function allNumeric(values) {
+  return values.every((v) => typeof v === 'number' && Number.isFinite(v));
 }
 
 /**
@@ -354,7 +419,13 @@ export function normalizeValue(el, meta, value) {
     // fixed-point check depends on: `normalizeValue(el, meta, el[name])` has to
     // equal `el[name]`, and returning a fresh copy of an already-valid array
     // would fail that for every list prop in the library.
-    return Array.isArray(value) ? value : defaultOf(el, meta);
+    if (!Array.isArray(value)) return defaultOf(el, meta);
+    // `of: Number` has to hold on the property path too, or `el.detents =
+    // ['a']` keeps a member the attribute path would have dropped. The
+    // already-normal case returns the same array rather than a copy, so the
+    // fixed point survives.
+    if (meta.numeric && !allNumeric(value)) return numericMembers(value);
+    return value;
   }
 
   if (meta.kind === 'number') {
@@ -496,6 +567,15 @@ export const DeclaredPropsMixin = (superClass) =>
         // Before render: normalise, so the contract holds on both the attribute
         // path and the property path. Assigning here is folded into the same
         // update rather than costing a second render.
+        //
+        // Before *render*, and after the host's own `willUpdate` — Lit calls
+        // `willUpdate` first and controllers second. So a component that reads
+        // a declared prop in its own `willUpdate` still sees whatever was
+        // assigned, and has to guard. That is not a gap a controller can close:
+        // `hostUpdate` is the earliest per-update hook there is, and the
+        // alternative — an `updated()`/`willUpdate()` override in the mixin —
+        // is the mechanism this comment block exists to reject. `arc-kanban`
+        // is the worked example; `Array.isArray` there, not `|| []`.
         hostUpdate: () => {
           for (const [name, meta] of declaredProps(this.constructor)) {
             const current = this[name];

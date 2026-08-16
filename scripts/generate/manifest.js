@@ -95,8 +95,18 @@ for (const mod of manifest.modules) {
  */
 const DECL = /^\s*(\w+):\s*(flag|oneOf|num|int|list)\(([\s\S]*?)\),?\s*$/gm;
 
-/** Serialise a JS value the way the analyzer spells defaults. */
+/**
+ * Serialise a JS value the way the analyzer spells defaults.
+ *
+ * A string value is quoted, because that is how the analyzer writes an enum's
+ * `'md'`. A list's default arrives here already spelled — `[]`, or the literal
+ * lifted out of the declaration — so it is passed through as source text.
+ * Without that distinction every list published `"'[]'"`, the *string* `[]`,
+ * to every wrapper and every docs surface. Four props had it before 4.3's
+ * migration made it 56, which is the only reason it was noticed.
+ */
 const spell = (v) => (typeof v === 'string' ? `'${v}'` : String(v));
+const spellLiteral = (v) => String(v);
 
 /**
  * Parse every vocabulary declaration in a component source into the three
@@ -158,6 +168,8 @@ function declaredContracts(source) {
       if (!computed) {
         const explicit = args.match(/default:\s*(\[[\s\S]*?\])/);
         entry.default = explicit ? explicit[1].replace(/\s+/g, ' ') : '[]';
+        // Already source text, not a value — see spell().
+        entry.literal = true;
       }
     } else {
       entry.type = 'number';
@@ -182,7 +194,7 @@ let filled = 0;
  */
 function backfill(node, contract, { isMember }) {
   if (node.default === undefined && contract.default !== undefined) {
-    node.default = spell(contract.default);
+    node.default = (contract.literal ? spellLiteral : spell)(contract.default);
     filled += 1;
   }
   // The JSDoc type is richer than the declaration wherever it exists, so this

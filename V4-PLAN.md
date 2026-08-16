@@ -982,7 +982,7 @@ One release. The five conventions are enforced by five named checks —
 the same walker, so nothing is written twice): `part-base.js`,
 `side-slots.js`, `dismiss-prop.js`, `size-canon.js`, `array-dialect.js`.
 
-**Status (2026-08-15): the walker is built and 2 of 5 conventions have landed.**
+**Status: the walker is built.**
 `scripts/lib/source-walker.js` is the shared reader 4.10 migrates nine existing
 checks onto — the intersection of what they already do (balanced regions,
 comment-blanked source with offsets preserved, the properties block, CSS rules,
@@ -1015,14 +1015,44 @@ catch.
 - prism caught the one mistake made along the way — `lg` styled on `arc-toolbar`
   while its documented union still said `md | sm`.
 
-**Still open in 4.3:** `part-base` (the ~180-component mechanical one),
-`side-slots`, `array-dialect`. Measured while sizing them, and each has the same
-shape of surprise waiting: the side-slot row proposes aliasing `before/after` and
+**Status (2026-08-16): 3 of 5 conventions have landed.** `array-dialect` is
+done — 26 props across 19 components, all four dialects retired, and the check
+that keeps them retired is three rules with one exemption entry between them.
+
+- The row said ~28 props. It was 26 that are lists and **3 that are not**: two
+  render callbacks and one parsed object, all three declared `{ attribute:
+  false }` in exactly the same three words a property-only array uses. That is
+  why the check reads the JSDoc — the declaration cannot tell them apart and the
+  documented type can.
+- Six props **gained** an attribute. Three of them were property-only with a
+  stated reason that was false: *"an array can't survive a round trip through
+  one."* JSON is a round trip; that is the whole premise of `list()`. The
+  vocabulary deliberately has no `attribute: false`, because dialect 2 is listed
+  in its own docstring as a problem and opting back into it would be re-adopting
+  what the helper replaces.
+- `arc-knob.detents` needed the vocabulary to grow, not an exemption. It took a
+  comma list rather than JSON — a real decision about syntax, recorded in the
+  source — and kept a hand-rolled converter only because `list()` could not say
+  it. `list({ of: Number })` says it, accepts both spellings, and drops
+  non-finite members on both paths. Dialect 3 is now actually gone rather than
+  exempted.
+- **Two latent defects surfaced.** `arc-kanban.columns = 'oops'` threw in
+  `willUpdate` — because Lit runs a host's `willUpdate` *before* a controller's
+  `hostUpdate`, so the mixin's normalisation is not in effect there. That is not
+  a gap a controller can close, and it is now recorded in the mixin's docstring
+  next to the reason the mixin is a controller at all. Separately, `manifest.js`
+  published every list default as the *string* `'[]'`; four props had it and the
+  migration made it 56, which is the only reason anybody looked.
+- Conformance now probes 26 props it could not see before — the suite grew by 61
+  cases without a line being written for it, because a declared prop is one the
+  contract suite knows how to interrogate.
+
+**Still open in 4.3:** `part-base` (the ~180-component mechanical one) and
+`side-slots`. The side-slot row proposes aliasing `before/after` and
 `above/below` onto `prefix/suffix`, and neither is a side slot —
 `arc-image-compare`'s before/after are the two images being compared, and
 `arc-page-header`'s above/below are the block axis, where prefix/suffix are the
-inline one. That row needs a decision before it needs a codemod. `array-dialect`
-is ~28 remaining props across `{type: Array}` and `attribute: false`.
+inline one. **That row needs a decision before it needs a codemod.**
 
 - [ ] Root CSS part: every component's outermost part gains the `base` token
       **alongside** its semantic name (`part="base wrapper"` dual-token).
@@ -1033,9 +1063,9 @@ is ~28 remaining props across `{type: Array}` and `attribute: false`.
       `::part()` breaks); not free for us.
 - [ ] Side slots: `prefix`/`suffix` canonical; alias `start/end`,
       `before/after`, `above/below` for one major.
-- [ ] One dismissal prop name across callout/banner/alert/modal/tag.
-- [ ] `size`: canonical `['sm','md','lg']`; fix the 5 verified outliers.
-- [ ] Arrays: sitewide migration of the remaining array props onto the
+- [x] One dismissal prop name across callout/banner/alert/modal/tag.
+- [x] `size`: canonical `['sm','md','lg']`; fix the 5 verified outliers.
+- [x] Arrays: sitewide migration of the remaining array props onto the
       `list()` primitive created in 2.2 (the four dialects — `{type: Array}`,
       `attribute: false`, hand-rolled JSON.parse, JSON-as-String — all
       retire).

@@ -5,7 +5,7 @@ import '@arclux/arc-ui/terminal';
 defineOptions({ name: 'Terminal' });
 
 const props = withDefaults(defineProps<{
-  lines?: string;
+  lines?: unknown[];
   prompt?: string;
   title?: string;
   speed?: number;

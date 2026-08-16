@@ -12,10 +12,10 @@ import type { ArcWaveform } from '@arclux/arc-ui/waveform';
 export class Waveform {
   private readonly _el: ArcWaveform = inject(ElementRef).nativeElement;
 
-  @Input() set peaks(value: string) {
+  @Input() set peaks(value: unknown[]) {
     this._el.peaks = value;
   }
-  get peaks(): string {
+  get peaks(): unknown[] {
     return this._el.peaks;
   }
 

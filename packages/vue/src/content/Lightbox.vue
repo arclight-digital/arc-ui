@@ -5,7 +5,7 @@ import '@arclux/arc-ui/lightbox';
 defineOptions({ name: 'Lightbox' });
 
 const props = defineProps<{
-  images?: string;
+  images?: unknown[];
   index?: number;
   open?: boolean;
 }>();

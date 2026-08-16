@@ -40,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { rows = [], sortable, selectable, sortColumn = '', sortDirection, virtual, rowHeight, overscan, children, ...rest }: Props = $props();
+  let { rows, sortable, selectable, sortColumn = '', sortDirection, virtual, rowHeight, overscan, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

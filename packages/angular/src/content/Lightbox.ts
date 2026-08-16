@@ -15,10 +15,10 @@ import type { ArcLightbox } from '@arclux/arc-ui/lightbox';
 export class Lightbox {
   private readonly _el: ArcLightbox = inject(ElementRef).nativeElement;
 
-  @Input() set images(value: string) {
+  @Input() set images(value: unknown[]) {
     this._el.images = value;
   }
-  get images(): string {
+  get images(): unknown[] {
     return this._el.images;
   }
 

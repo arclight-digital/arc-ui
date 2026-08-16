@@ -32,7 +32,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { items = [], ...rest }: Props = $props();
+  let { items, ...rest }: Props = $props();
 </script>
 
 <arc-menubar {items} {...rest}>

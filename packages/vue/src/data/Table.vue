@@ -4,15 +4,12 @@ import '@arclux/arc-ui/table';
 
 defineOptions({ name: 'Table' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   columns?: string[];
   rows?: string[][];
   striped?: boolean;
   density?: 'default' | 'compact';
-}>(), {
-  columns: () => ([]),
-  rows: () => ([]),
-});
+}>();
 </script>
 
 <template>

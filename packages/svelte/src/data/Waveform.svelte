@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    peaks?: string;
+    peaks?: unknown[];
     position?: number;
     duration?: number;
     interactive?: boolean;

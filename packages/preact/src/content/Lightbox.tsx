@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/lightbox';
 
 export interface LightboxProps {
-  images?: string;
+  images?: unknown[];
   index?: number;
   open?: boolean;
   onArcChange?: (e: CustomEvent) => void;

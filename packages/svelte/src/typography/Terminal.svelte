@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    lines?: string;
+    lines?: unknown[];
     prompt?: string;
     title?: string;
     speed?: number;

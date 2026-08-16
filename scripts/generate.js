@@ -41,6 +41,7 @@ const phases = [
       // into six wrapper packages.
       check('size-canon'),
       check('dismiss-prop'),
+      check('array-dialect'),
       check('boolean-defaults'),
       check('empty-attributes'),
       check('breakpoint-drift'),

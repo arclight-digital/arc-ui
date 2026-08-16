@@ -14,8 +14,6 @@ const props = withDefaults(defineProps<{
   sourceLabel?: string;
   targetLabel?: string;
 }>(), {
-  options: () => ([]),
-  value: () => ([]),
   name: '',
   disabled: false,
   sourceLabel: 'Available',

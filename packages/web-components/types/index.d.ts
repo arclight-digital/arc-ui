@@ -23,8 +23,6 @@ export declare class ArcAccordionItem extends LitElement {
  * `<arc-activity-heatmap>`
  */
 export declare class ArcActivityHeatmap extends LitElement {
-  /** One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. "7 commits"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Property only — set it from script or a framework binding. @default [] */
-  data: Array<{date: string, value: number, label?: string}>;
   /** The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above). @default '' */
   endDate: string;
   /** How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself. @default 52 */
@@ -33,6 +31,8 @@ export declare class ArcActivityHeatmap extends LitElement {
   weekStart: 'sunday' | 'monday';
   /** Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend="false"`. @default true */
   legend: boolean;
+  /** One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. "7 commits"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Set it from script, a framework binding, or a JSON attribute. @default [] */
+  data: Array<{date: string, value: number, label?: string}>;
   /** When set, intensity is a linear scale from 0 to this value instead of the default quartile mapping: each nonzero value lands on step 1-4 by `value / max`. Values at or above `max` render as step 4. @default 0 */
   max: number;
 }
@@ -354,14 +354,14 @@ export declare class ArcCenter extends LitElement {
  * Events: arc-mark-click
  */
 export declare class ArcChart extends LitElement {
-  /** The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend. @default [] */
-  series: Array<{label:string,data:number[]}>;
-  /** Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width. @default [] */
-  labels: string[];
   /** ISO 4217 currency code used when value-format="currency". @default 'USD' */
   currency: string;
   /** The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given). @default 'line' */
   type: 'line' | 'area' | 'bar' | 'donut';
+  /** The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set as a property, or as a JSON attribute for a chart that is static. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend. @default [] */
+  series: Array<{label:string,data:number[]}>;
+  /** Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width. @default [] */
+  labels: string[];
   /** Bar type only. Stacks series segments on a shared baseline with 2px surface gaps between segments; only the outermost segment gets the rounded value end. Assumes non-negative data. @default false */
   stacked: boolean;
   /** Suppresses the legend. By default the legend renders for two or more series and is omitted for a single series. @default false */
@@ -485,12 +485,12 @@ export declare class ArcColorPicker extends LitElement {
   value: string;
   /** @default '' */
   name: string;
-  /** Array of hex color strings to display as quick-select swatches below the hex input. @default [] */
-  presets: string[];
   /** Disables all interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
   /** Label text displayed above the picker in uppercase accent font. @default '' */
   label: string;
+  /** Array of hex color strings to display as quick-select swatches below the hex input. @default [] */
+  presets: string[];
   /** Prevents changing the color via the area, hue slider, hex input, or swatches while the picker stays focusable and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the swatch and trigger. @default 'md' */
@@ -629,7 +629,7 @@ export declare class ArcCommandPalette extends LitElement {
  * `<arc-comparison>`
  */
 export declare class ArcComparison extends LitElement {
-  /** Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='["Storage","Bandwidth"]'`. A malformed value falls back to an empty list rather than throwing. @default '[]' */
+  /** Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='["Storage","Bandwidth"]'`. A malformed value falls back to an empty list rather than throwing. @default [] */
   features: string[];
 }
 
@@ -641,7 +641,7 @@ export declare class ArcComparisonColumn extends LitElement {
   heading: string;
   /** When true, adds an accent background to the header and all cells in this column. @default false */
   highlight: boolean;
-  /** Values matching the features order. Settable as a property, or as a JSON array in markup. Use "true"/"false" for check/cross icons, or any string for text values. @default '[]' */
+  /** Values matching the features order. Settable as a property, or as a JSON array in markup. Use "true"/"false" for check/cross icons, or any string for text values. @default [] */
   values: string[];
 }
 
@@ -785,10 +785,10 @@ export declare class ArcDataGrid extends LitElement {
  * Events: arc-sort, arc-select
  */
 export declare class ArcDataTable extends LitElement {
-  /** The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render. @default [] */
-  rows: Array<Record<string, any>>;
   /** The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header. @default '' */
   sortColumn: string;
+  /** The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render. @default [] */
+  rows: Array<Record<string, any>>;
   /** Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction. @default false */
   sortable: boolean;
   /** Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles. @default false */
@@ -868,8 +868,6 @@ export declare class ArcDateRangePicker extends LitElement {
   min: string;
   /** Maximum selectable date as an ISO string. Later days are dimmed and non-interactive. @default '' */
   max: string;
-  /** Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty. @default [] */
-  presets: Array<{label:string,days:number}>;
   /** Placeholder text shown in the input when no range is selected. @default 'Select date range' */
   placeholder: string;
   /** Disables the picker, reducing opacity and preventing the popup from opening. @default false */
@@ -878,6 +876,8 @@ export declare class ArcDateRangePicker extends LitElement {
   label: string;
   /** Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow. @default 2 */
   months: number;
+  /** Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty. @default [] */
+  presets: Array<{label:string,days:number}>;
   /** Marks the control invalid (valueMissing) until a complete range is selected. @default false */
   required: boolean;
   /** Whether the calendar dropdown is visible. Reflected so it can be opened programmatically or styled from CSS. Held at `false` while `disabled`. @default false */
@@ -1406,7 +1406,7 @@ export declare class ArcJsonTree extends LitElement {
  * Events: arc-card-move, arc-card-click
  */
 export declare class ArcKanban extends LitElement {
-  /** The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render. @default [] */
+  /** The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set as a property, or as a JSON attribute for a board that is static. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render. @default [] */
   columns: Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>;
   /** Disables all pointer and keyboard interaction and dims the board. @default false */
   disabled: boolean;
@@ -1463,8 +1463,6 @@ export declare class ArcKnob extends LitElement {
   disabled: boolean;
   /** Label text displayed above the knob in the label typography role. @default '' */
   label: string;
-  /** Snap values, as an array from script or a comma-separated attribute (for example "0,50,100"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents. @default [] */
-  detents: number[] | string;
   /** `(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number. @default undefined */
   format: Function;
   /** Minimum allowed value at the start of the arc sweep. @default 0 */
@@ -1473,6 +1471,8 @@ export declare class ArcKnob extends LitElement {
   max: number;
   /** Increment granularity. The value snaps to multiples of this number. @default 1 */
   step: number;
+  /** Snap values, as an array from script or a comma-separated attribute (for example "0,50,100"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents. @default [] */
+  detents: number[];
   /** Prevents dragging, wheel, and key changes while the dial stays focusable and the value still submits. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the dial. @default 'md' */
@@ -1541,7 +1541,7 @@ export declare class ArcLevelMeter extends LitElement {
  * Events: arc-change, arc-close, arc-open
  */
 export declare class ArcLightbox extends LitElement {
-  /** The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property — arrays do not round-trip through attributes. @default [] */
+  /** The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property, or as a JSON attribute for a gallery that is static. @default [] */
   images: Array;
   /** Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image. @default 0 */
   index: number;
@@ -1714,7 +1714,7 @@ export declare class ArcMenuItem extends LitElement {
  * Events: arc-select
  */
 export declare class ArcMenubar extends LitElement {
-  /** The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute. @default [] */
+  /** The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set as a property, or as a JSON attribute for a menu structure that is static. @default [] */
   items: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
 }
 
@@ -1778,8 +1778,6 @@ export declare class ArcModal extends LitElement {
  * Events: arc-change, arc-input
  */
 export declare class ArcMultiSelect extends LitElement {
-  /** Array of selected option values. Updated when items are toggled and emitted via `arc-change`. @default [] */
-  value: string[];
   /** Hint text shown inside the control when no items are selected and the input is empty. @default '' */
   placeholder: string;
   /** Visible label rendered above the control in a small uppercase style. @default '' */
@@ -1788,6 +1786,8 @@ export declare class ArcMultiSelect extends LitElement {
   name: string;
   /** Disables the control, preventing interaction and reducing opacity to 50%. @default false */
   disabled: boolean;
+  /** Array of selected option values. Updated when items are toggled and emitted via `arc-change`. @default [] */
+  value: string[];
   /** Prevents toggling options or removing chips while the control stays focusable; the dropdown can still be opened for viewing and the values still submit. @default false */
   readonly: boolean;
   /** Control size. `md` is the default; `sm` and `lg` scale the control height and padding. @default 'md' */
@@ -2857,10 +2857,6 @@ export declare class ArcTag extends LitElement {
  * Events: arc-change, arc-input
  */
 export declare class ArcTagInput extends LitElement {
-  /** Array of current tags. Updated on add/remove and emitted via `arc-change`. @default [] */
-  value: string[];
-  /** Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox. @default [] */
-  suggestions: string[];
   /** Character that commits the current text as a tag when typed; pasted text is split on it. @default ',' */
   delimiter: string;
   /** Visible label rendered above the field in a small uppercase style. @default '' */
@@ -2873,6 +2869,10 @@ export declare class ArcTagInput extends LitElement {
   disabled: boolean;
   /** Error message shown below the field; also applies error styling to the border. @default '' */
   error: string;
+  /** Array of current tags. Updated on add/remove and emitted via `arc-change`. @default [] */
+  value: string[];
+  /** Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox. @default [] */
+  suggestions: string[];
   /** Maximum number of tags (0 = unlimited). At the limit, entry is disabled with a "-- max reached" hint. @default 0 */
   maxTags: number;
   /** When false, only values from `suggestions` can be added; free text is rejected. @default true */
@@ -2899,14 +2899,14 @@ export declare class ArcTagInput extends LitElement {
  * Events: arc-complete
  */
 export declare class ArcTerminal extends LitElement {
-  /** The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Property only — arrays do not survive an attribute. @default [] */
-  lines: Array;
   /** Prompt glyph rendered before each command line. @default '$' */
   prompt: string;
   /** Text centered in the window chrome bar. Empty hides it, leaving only the orbs. @default '' */
   title: string;
   /** Milliseconds per character when typing command lines. @default 50 */
   speed: number;
+  /** The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Set it from script, a framework binding, or a JSON attribute. @default [] */
+  lines: Array;
   /** Start the animation when the element scrolls into view. Defaults to true; disable from JS or a framework wrapper with a false property value, then drive it with play(). @default true */
   autoplay: boolean;
   /** Replay the transcript indefinitely, pausing briefly at the end of each cycle. @default false */
@@ -3160,10 +3160,6 @@ export declare class ArcTopBar extends LitElement {
  * Events: arc-change
  */
 export declare class ArcTransferList extends LitElement {
-  /** The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available. @default [] */
-  options: Array<{value:string,label:string,disabled?:boolean}>;
-  /** Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`. @default [] */
-  value: string[];
   /** Form field name. When set, the component submits one form entry per selected value. @default '' */
   name: string;
   /** Disables the whole control, preventing interaction and reducing opacity. @default false */
@@ -3172,6 +3168,10 @@ export declare class ArcTransferList extends LitElement {
   sourceLabel: string;
   /** Heading for the right (selected) pane. Attribute: `target-label`. @default 'Selected' */
   targetLabel: string;
+  /** The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available. @default [] */
+  options: Array<{value:string,label:string,disabled?:boolean}>;
+  /** Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`. @default [] */
+  value: string[];
   /** Adds a filter input to each pane that narrows that pane only, case-insensitively. Move-all respects the filter. @default false */
   searchable: boolean;
   /** Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form. @default false */
@@ -3211,12 +3211,8 @@ export declare class ArcTreeItem extends LitElement {
  * Events: arc-change
  */
 export declare class ArcTreeSelect extends LitElement {
-  /** Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children. @default [] */
-  items: Array<{value: string, label: string, children?: Array<object>, disabled?: boolean}>;
   /** The selected leaf's value. Setting it programmatically updates the trigger's breadcrumb label, and the branches containing it auto-expand the next time the panel opens. @default '' */
   value: string;
-  /** Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list. @default [] */
-  expandedValues: string[];
   /** Hint text displayed inside the trigger when no leaf is selected. It disappears once a value is chosen. @default 'Select...' */
   placeholder: string;
   /** Visible label rendered above the trigger. Also serves as the accessible name. Always provide one for accessibility compliance. @default '' */
@@ -3227,6 +3223,10 @@ export declare class ArcTreeSelect extends LitElement {
   disabled: boolean;
   /** Error message displayed below the trigger. When set, the trigger border turns red. @default '' */
   error: string;
+  /** Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children. @default [] */
+  items: Array<{value: string, label: string, children?: Array<object>, disabled?: boolean}>;
+  /** Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list. @default [] */
+  expandedValues: string[];
   /** Controls the trigger size. @default 'md' */
   size: 'sm' | 'md' | 'lg';
   /** Controls whether the tree panel is visible. Automatically set to false when a leaf is selected, Escape is pressed, or the user clicks outside. Held at `false` while `disabled`. @default false */
@@ -3291,14 +3291,14 @@ export declare class ArcTypewriter extends LitElement {
 export declare class ArcUptime extends LitElement {
   /** Uptime fraction at or above `up` reads as up; at or above `degraded`, degraded; below, down. @default { up: 0.99, degraded: 0.95 } */
   thresholds: Record<string, unknown>;
-  /** One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is "up", 0.95 and up is "degraded", below is "down"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral "none" track. Property only — set it from script or a framework binding. @default [] */
-  data: Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>;
   /** Caption under the oldest end of the track (e.g. "90 days ago"). @default '' */
   startLabel: string;
   /** Caption under the newest end of the track (e.g. "Today"). @default '' */
   endLabel: string;
   /** Whether to render the overall percentage above the track (default true; set the attribute to the string "false" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless. @default true */
   summary: boolean;
+  /** One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is "up", 0.95 and up is "degraded", below is "down"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral "none" track. Set it from script, a framework binding, or a JSON attribute. @default [] */
+  data: Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>;
 }
 
 /**
@@ -3343,14 +3343,14 @@ export declare class ArcVideo extends LitElement {
 export declare class ArcVirtualList extends LitElement {
   /** The range of currently rendered indices. `end` is exclusive. */
   visibleRange: unknown;
-  /** The full data array. Only the visible slice is rendered at any given time. @default [] */
-  items: Array;
   /** `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used. @default null */
   renderItem: Function;
   /** Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation. @default 40 */
   itemHeight: number;
   /** Rows rendered above and below the visible window to cover fast scrolling. Never negative. @default 5 */
   overscan: number;
+  /** The full data array. Only the visible slice is rendered at any given time. @default [] */
+  items: Array;
 }
 
 /**
@@ -3358,10 +3358,10 @@ export declare class ArcVirtualList extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcWaveform extends LitElement {
-  /** Peak amplitudes as a number array, each value 0 to 1. Property only (no attribute) — set it from script or a framework binding. Values outside the range are clamped. An empty or missing array renders an empty track. @default [] */
-  peaks: Array;
   /** Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise. @default '' */
   label: string;
+  /** Peak amplitudes as a number array, each value 0 to 1. Set it from script, a framework binding, or a JSON attribute. Values outside the range are clamped. An empty or missing array renders an empty track. @default [] */
+  peaks: Array;
   /** Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute. @default 0 */
   position: number;
   /** Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages. @default 0 */

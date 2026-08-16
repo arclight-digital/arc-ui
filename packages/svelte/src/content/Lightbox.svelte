@@ -4,7 +4,7 @@
   import type { Snippet } from 'svelte';
 
   interface Props {
-    images?: string;
+    images?: unknown[];
     index?: number;
     open?: boolean;
     class?: string;

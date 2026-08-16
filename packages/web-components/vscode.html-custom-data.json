@@ -537,6 +537,11 @@
       "description": "Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery\nwith wrapping prev/next navigation, zoom to 2x with drag-to-pan, and dismiss with Escape or a\nbackdrop click.\n\nThe gallery is data, not layout: images are supplied through the `images` property rather than\nslotted children, so the closed component renders nothing and the server render stays empty.\nEntries may be plain `src` strings or `{ src, alt, caption }` objects; the two forms mix freely.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the displayed image changes. `detail.value` is the new index.\n- **arc-close** - Fired when the lightbox closes. Cancelable: call `preventDefault()` to veto the close.\n- **arc-open** - Fired when the lightbox opens\n\n### **Methods:**\n - **show(index)** - Opens the viewer, optionally jumping to a specific image first.\n- **close()** - Closes the viewer through the cancelable arc-close contract.\n- **next()** - Advances to the next image, wrapping past the end.\n- **prev()** - Steps to the previous image, wrapping past the start.\n\n### **CSS Parts:**\n - **backdrop**\n- **bar**\n- **counter**\n- **zoom**\n- **close**\n- **prev**\n- **next**\n- **figure**\n- **image**\n- **caption**",
       "attributes": [
         {
+          "name": "images",
+          "description": "The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property, or as a JSON attribute for a gallery that is static.",
+          "values": [{ "name": "Array" }]
+        },
+        {
           "name": "index",
           "description": "Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image.",
           "values": []
@@ -873,6 +878,15 @@
       "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail — the date and the day's label or value — in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, computed at render time in the browser; when rendering\nserver-side with no `end-date`, the anchor is instead derived from the\nnewest date present in `data`, so the server output is deterministic. Pin\n`end-date` explicitly whenever server and client must agree exactly.\n---\n\n\n### **CSS Parts:**\n - **heatmap**\n- **months**\n- **month**\n- **weekdays**\n- **weekday**\n- **grid**\n- **cell**\n- **detail**\n- **legend**\n- **swatch**",
       "attributes": [
         {
+          "name": "data",
+          "description": "One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. \"7 commits\"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Set it from script, a framework binding, or a JSON attribute.",
+          "values": [
+            { "name": "Array<{date: string" },
+            { "name": "value: number" },
+            { "name": "label?: string}>" }
+          ]
+        },
+        {
           "name": "end-date",
           "description": "The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above).",
           "values": []
@@ -992,7 +1006,7 @@
         },
         {
           "name": "series",
-          "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
+          "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set as a property, or as a JSON attribute for a chart that is static. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
           "values": [
             { "name": "Array<{label:string" },
             { "name": "data:number[]}>" }
@@ -1212,7 +1226,7 @@
       "attributes": [
         {
           "name": "rows",
-          "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.",
+          "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render.",
           "values": [{ "name": "Array<Record<string" }, { "name": "any>>" }]
         },
         {
@@ -1394,7 +1408,7 @@
       "attributes": [
         {
           "name": "columns",
-          "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
+          "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set as a property, or as a JSON attribute for a board that is static. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
           "values": [
             { "name": "Array<{id:string" },
             { "name": "title?:string" },
@@ -1791,6 +1805,17 @@
       "description": "Status-page uptime history strip: one slim tick per period, colored by\nstatus. Hovering or arrow-keying across the strip raises a tick with the\nhouse status glow and shows its detail in a small built-in bubble. Accepts\nplain uptime fractions (thresholds decide the status) or explicit status\nobjects, and renders the computed overall percentage above the track.\n---\n\n\n### **Methods:**\n - **statusOf(value)** - Map an uptime fraction to a status name; anything non-finite is none.\n\n### **CSS Parts:**\n - **uptime**\n- **summary**\n- **track**\n- **tick**\n- **detail**\n- **caption**",
       "attributes": [
         {
+          "name": "data",
+          "description": "One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is \"up\", 0.95 and up is \"degraded\", below is \"down\"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral \"none\" track. Set it from script, a framework binding, or a JSON attribute.",
+          "values": [
+            { "name": "Array<number" },
+            { "name": "{value?: number, status?: 'up'" },
+            { "name": "degraded" },
+            { "name": "down" },
+            { "name": "'none', label?: string}>" }
+          ]
+        },
+        {
           "name": "start-label",
           "description": "Caption under the oldest end of the track (e.g. \"90 days ago\").",
           "values": []
@@ -1826,6 +1851,11 @@
       "name": "arc-waveform",
       "description": "Audio waveform visualization that doubles as a scrubber. Renders a peaks array as an SVG\nwaveform — the played region in accent with a soft glow, the unplayed region muted, and a\nglowing playhead line at the current position. With `interactive` set it becomes a seek\ncontrol: pointer scrubbing and keyboard arrows move the playhead, emitting `arc-input`\nwhile the gesture is in flight and `arc-change` when the value commits.\n\nThe component never touches audio itself — no AudioContext, no decoding. The consumer\ncomputes peak amplitudes (one number per bar, 0 to 1) however it likes and hands them\nover as an array. This keeps the component a pure function of its props, so it\nserver-renders and stays cheap enough for a lane of clips in a DAW timeline.\n\nThe time axis is deliberately direction-fixed: audio time flows left-to-right even in\nRTL contexts, matching every DAW, player, and editor convention.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview — updating a time display or audibly scrubbing.\n- **arc-change** - Fired once when the seek commits: on pointer release, or with each keyboard nudge. Use for the actual seek on your audio source.\n\n### **CSS Parts:**\n - **waveform** - The interactive track region wrapping the SVG and playhead.\n- **svg** - The SVG element.\n- **base** - The unplayed (muted) waveform layer.\n- **played** - The played (accent) waveform layer.\n- **playhead** - The playhead line.\n- **time** - The time readout row (renders only when duration is set).",
       "attributes": [
+        {
+          "name": "peaks",
+          "description": "Peak amplitudes as a number array, each value 0 to 1. Set it from script, a framework binding, or a JSON attribute. Values outside the range are clamped. An empty or missing array renders an empty track.",
+          "values": [{ "name": "Array" }]
+        },
         {
           "name": "position",
           "description": "Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.",
@@ -4281,12 +4311,22 @@
       "description": "Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder\npickers. Group nodes expand and collapse; only leaf nodes are selectable, which keeps\nsingle-select semantics clean.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a leaf is selected. `detail.value` is the leaf value, `detail.label` its label, and `detail.path` the array of ancestor group values from root to parent.\n\n### **CSS Parts:**\n - **tree-select**\n- **label**\n- **trigger**\n- **panel**\n- **row**\n- **error**",
       "attributes": [
         {
+          "name": "items",
+          "description": "Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children.",
+          "values": [
+            { "name": "Array<{value: string" },
+            { "name": "label: string" },
+            { "name": "children?: Array<object>" },
+            { "name": "disabled?: boolean}>" }
+          ]
+        },
+        {
           "name": "value",
           "description": "The selected leaf's value. Setting it programmatically updates the trigger's breadcrumb label, and the branches containing it auto-expand the next time the panel opens.",
           "values": []
         },
         {
-          "name": "expanded-values",
+          "name": "expandedValues",
           "description": "Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list.",
           "values": [{ "name": "string[]" }]
         },
@@ -4976,7 +5016,7 @@
       "attributes": [
         {
           "name": "items",
-          "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
+          "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set as a property, or as a JSON attribute for a menu structure that is static.",
           "values": [
             { "name": "Array<{label:string" },
             { "name": "disabled?:boolean" },
@@ -5692,6 +5732,11 @@
       "name": "arc-terminal",
       "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviors, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when the whole sequence has finished printing (each cycle, when looping)\n\n### **Methods:**\n - **play()** - Play the sequence from the beginning.\n- **reset()** - Return to the blank, pre-animation state without starting playback.\n\n### **CSS Parts:**\n - **terminal**\n- **titlebar**\n- **orbs**\n- **title**\n- **body**\n- **line**\n- **prompt**\n- **text**\n- **cursor**",
       "attributes": [
+        {
+          "name": "lines",
+          "description": "The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Set it from script, a framework binding, or a JSON attribute.",
+          "values": [{ "name": "Array" }]
+        },
         {
           "name": "prompt",
           "description": "Prompt glyph rendered before each command line.",

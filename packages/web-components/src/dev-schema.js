@@ -289,6 +289,7 @@ export default {
  },
  "arc-lightbox": {
   "attrs": [
+   "images",
    "index",
    "open"
   ],
@@ -489,6 +490,7 @@ export default {
  },
  "arc-activity-heatmap": {
   "attrs": [
+   "data",
    "end-date",
    "weeks",
    "weekStart",
@@ -912,6 +914,7 @@ export default {
  },
  "arc-uptime": {
   "attrs": [
+   "data",
    "start-label",
    "end-label",
    "summary"
@@ -928,6 +931,7 @@ export default {
  },
  "arc-waveform": {
   "attrs": [
+   "peaks",
    "position",
    "duration",
    "interactive",
@@ -2124,8 +2128,9 @@ export default {
  },
  "arc-tree-select": {
   "attrs": [
+   "items",
    "value",
-   "expanded-values",
+   "expandedValues",
    "placeholder",
    "label",
    "name",
@@ -2877,6 +2882,7 @@ export default {
  },
  "arc-terminal": {
   "attrs": [
+   "lines",
    "prompt",
    "title",
    "speed",

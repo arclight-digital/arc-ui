@@ -12,10 +12,10 @@ import type { ArcTerminal } from '@arclux/arc-ui/terminal';
 export class Terminal {
   private readonly _el: ArcTerminal = inject(ElementRef).nativeElement;
 
-  @Input() set lines(value: string) {
+  @Input() set lines(value: unknown[]) {
     this._el.lines = value;
   }
-  get lines(): string {
+  get lines(): unknown[] {
     return this._el.lines;
   }
 

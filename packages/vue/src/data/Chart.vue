@@ -15,8 +15,6 @@ const props = withDefaults(defineProps<{
   valueFormat?: 'number' | 'percent' | 'currency';
   currency?: string;
 }>(), {
-  series: () => ([]),
-  labels: () => ([]),
   currency: 'USD',
 });
 

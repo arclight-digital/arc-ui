@@ -1,7 +1,7 @@
 import { LitElement, html, css, svg, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, num, oneOf, list } from '../shared/props.js';
 
 /**
  * Audio waveform visualization that doubles as a scrubber. Renders a peaks array as an SVG
@@ -21,7 +21,7 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  * @tag arc-waveform
  * @arc-group media
  * @status stable
- * @prop {Array} peaks - Peak amplitudes as a number array, each value 0 to 1. Property only (no attribute) — set it from script or a framework binding. Values outside the range are clamped. An empty or missing array renders an empty track.
+ * @prop {Array} peaks - Peak amplitudes as a number array, each value 0 to 1. Set it from script, a framework binding, or a JSON attribute. Values outside the range are clamped. An empty or missing array renders an empty track.
  * @prop {number} position - Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.
  * @prop {number} duration - Total duration in seconds. Optional; when set, time readouts render below the waveform and the slider announces times instead of percentages.
  * @prop {boolean} interactive - Enables scrubbing. The waveform becomes a focusable slider: click or drag to seek, arrow keys to nudge, Home/End to jump. Without it the waveform is a static image.
@@ -39,9 +39,11 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  */
 export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    // No attribute: an array cannot round-trip through one, and peaks lists are
-    // long enough that nobody should be writing them into markup anyway.
-    peaks: { attribute: false },
+    // A peaks list is long enough that nobody sensible writes one into markup,
+    // but "nobody should" is not a reason to make it impossible — a short
+    // envelope in server-rendered HTML is a real case, and the attribute costs
+    // nothing while it goes unused.
+    peaks: list(),
     position: num({ default: 0, min: 0, max: 1, clamp: 'toRange', reflect: true }),
     duration: num({ nullable: true }),
     interactive: flag(false),
@@ -148,7 +150,6 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     // Nullable declarations own their own "unset" default — see props.js.
-    this.peaks = [];
     this.label = '';
     this._onWindowPointerMove = this._onWindowPointerMove.bind(this);
     this._onWindowPointerUp = this._onWindowPointerUp.bind(this);

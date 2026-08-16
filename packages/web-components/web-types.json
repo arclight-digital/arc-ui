@@ -1415,6 +1415,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "images",
+              "description": "The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property, or as a JSON attribute for a gallery that is static.",
+              "value": {
+                "type": "Array",
+                "default": "[]"
+              }
+            },
+            {
               "name": "index",
               "description": "Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image.",
               "value": {
@@ -1453,7 +1461,7 @@
             "properties": [
               {
                 "name": "images",
-                "description": "The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property — arrays do not round-trip through attributes.",
+                "description": "The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property, or as a JSON attribute for a gallery that is static.",
                 "type": "Array"
               },
               {
@@ -2202,11 +2210,6 @@
                 "description": "The range of currently rendered indices. `end` is exclusive."
               },
               {
-                "name": "items",
-                "description": "The full data array. Only the visible slice is rendered at any given time.",
-                "type": "Array"
-              },
-              {
                 "name": "renderItem",
                 "description": "`(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used.",
                 "type": "Function"
@@ -2220,6 +2223,11 @@
                 "name": "overscan",
                 "description": "Rows rendered above and below the visible window to cover fast scrolling. Never negative.",
                 "type": "number"
+              },
+              {
+                "name": "items",
+                "description": "The full data array. Only the visible slice is rendered at any given time.",
+                "type": "Array"
               }
             ],
             "events": [
@@ -2236,6 +2244,14 @@
           "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail — the date and the day's label or value — in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, computed at render time in the browser; when rendering\nserver-side with no `end-date`, the anchor is instead derived from the\nnewest date present in `data`, so the server output is deterministic. Pin\n`end-date` explicitly whenever server and client must agree exactly.\n---\n\n\n### **CSS Parts:**\n - **heatmap**\n- **months**\n- **month**\n- **weekdays**\n- **weekday**\n- **grid**\n- **cell**\n- **detail**\n- **legend**\n- **swatch**",
           "doc-url": "",
           "attributes": [
+            {
+              "name": "data",
+              "description": "One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. \"7 commits\"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Set it from script, a framework binding, or a JSON attribute.",
+              "value": {
+                "type": "Array<{date: string, value: number, label?: string}>",
+                "default": "[]"
+              }
+            },
             {
               "name": "end-date",
               "description": "The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above).",
@@ -2282,11 +2298,6 @@
           "js": {
             "properties": [
               {
-                "name": "data",
-                "description": "One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. \"7 commits\"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Property only — set it from script or a framework binding.",
-                "type": "Array<{date: string, value: number, label?: string}>"
-              },
-              {
                 "name": "endDate",
                 "description": "The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above).",
                 "type": "string"
@@ -2305,6 +2316,11 @@
                 "name": "legend",
                 "description": "Whether to render the Less→More swatch strip under the grid. Default true; disable from markup with either `no-legend` or `legend=\"false\"`.",
                 "type": "boolean"
+              },
+              {
+                "name": "data",
+                "description": "One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. \"7 commits\"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Set it from script, a framework binding, or a JSON attribute.",
+                "type": "Array<{date: string, value: number, label?: string}>"
               },
               {
                 "name": "max",
@@ -2493,7 +2509,7 @@
             },
             {
               "name": "series",
-              "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
+              "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set as a property, or as a JSON attribute for a chart that is static. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
               "value": {
                 "type": "Array<{label:string,data:number[]}>",
                 "default": "[]"
@@ -2567,16 +2583,6 @@
           "js": {
             "properties": [
               {
-                "name": "series",
-                "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
-                "type": "Array<{label:string,data:number[]}>"
-              },
-              {
-                "name": "labels",
-                "description": "Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width.",
-                "type": "string[]"
-              },
-              {
                 "name": "currency",
                 "description": "ISO 4217 currency code used when value-format=\"currency\".",
                 "type": "string"
@@ -2585,6 +2591,16 @@
                 "name": "type",
                 "description": "The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given).",
                 "type": "'line' | 'area' | 'bar' | 'donut'"
+              },
+              {
+                "name": "series",
+                "description": "The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set as a property, or as a JSON attribute for a chart that is static. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an \"Other\" series noted in the legend.",
+                "type": "Array<{label:string,data:number[]}>"
+              },
+              {
+                "name": "labels",
+                "description": "Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width.",
+                "type": "string[]"
               },
               {
                 "name": "stacked",
@@ -2739,7 +2755,7 @@
               "description": "Values matching the features order. Settable as a property, or as a JSON array in markup. Use \"true\"/\"false\" for check/cross icons, or any string for text values.",
               "value": {
                 "type": "string[]",
-                "default": "'[]'"
+                "default": "[]"
               }
             }
           ],
@@ -2776,7 +2792,7 @@
               "description": "Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='[\"Storage\",\"Bandwidth\"]'`. A malformed value falls back to an empty list rather than throwing.",
               "value": {
                 "type": "string[]",
-                "default": "'[]'"
+                "default": "[]"
               }
             }
           ],
@@ -3059,7 +3075,7 @@
           "attributes": [
             {
               "name": "rows",
-              "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.",
+              "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render.",
               "value": {
                 "type": "Array<Record<string, any>>",
                 "default": "[]"
@@ -3143,14 +3159,14 @@
           "js": {
             "properties": [
               {
-                "name": "rows",
-                "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.",
-                "type": "Array<Record<string, any>>"
-              },
-              {
                 "name": "sortColumn",
                 "description": "The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.",
                 "type": "string"
+              },
+              {
+                "name": "rows",
+                "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render.",
+                "type": "Array<Record<string, any>>"
               },
               {
                 "name": "sortable",
@@ -3561,7 +3577,7 @@
           "attributes": [
             {
               "name": "columns",
-              "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
+              "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set as a property, or as a JSON attribute for a board that is static. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
               "value": {
                 "type": "Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>",
                 "default": "[]"
@@ -3593,7 +3609,7 @@
             "properties": [
               {
                 "name": "columns",
-                "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
+                "description": "The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set as a property, or as a JSON attribute for a board that is static. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.",
                 "type": "Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>"
               },
               {
@@ -4611,6 +4627,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "data",
+              "description": "One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is \"up\", 0.95 and up is \"degraded\", below is \"down\"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral \"none\" track. Set it from script, a framework binding, or a JSON attribute.",
+              "value": {
+                "type": "Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>",
+                "default": "[]"
+              }
+            },
+            {
               "name": "start-label",
               "description": "Caption under the oldest end of the track (e.g. \"90 days ago\").",
               "value": {
@@ -4640,11 +4664,6 @@
           "js": {
             "properties": [
               {
-                "name": "data",
-                "description": "One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is \"up\", 0.95 and up is \"degraded\", below is \"down\"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral \"none\" track. Property only — set it from script or a framework binding.",
-                "type": "Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>"
-              },
-              {
                 "name": "startLabel",
                 "description": "Caption under the oldest end of the track (e.g. \"90 days ago\").",
                 "type": "string"
@@ -4658,6 +4677,11 @@
                 "name": "summary",
                 "description": "Whether to render the overall percentage above the track (default true; set the attribute to the string \"false\" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless.",
                 "type": "boolean"
+              },
+              {
+                "name": "data",
+                "description": "One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is \"up\", 0.95 and up is \"degraded\", below is \"down\"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral \"none\" track. Set it from script, a framework binding, or a JSON attribute.",
+                "type": "Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>"
               }
             ],
             "events": []
@@ -4726,6 +4750,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "peaks",
+              "description": "Peak amplitudes as a number array, each value 0 to 1. Set it from script, a framework binding, or a JSON attribute. Values outside the range are clamped. An empty or missing array renders an empty track.",
+              "value": {
+                "type": "Array",
+                "default": "[]"
+              }
+            },
+            {
               "name": "position",
               "description": "Current playhead position as a fraction of the total, 0 to 1. Not seconds: multiply by `duration` yourself if you track seconds. Updated by the component during scrubbing and reflected as an attribute.",
               "value": {
@@ -4782,14 +4814,14 @@
           "js": {
             "properties": [
               {
-                "name": "peaks",
-                "description": "Peak amplitudes as a number array, each value 0 to 1. Property only (no attribute) — set it from script or a framework binding. Values outside the range are clamped. An empty or missing array renders an empty track.",
-                "type": "Array"
-              },
-              {
                 "name": "label",
                 "description": "Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.",
                 "type": "string"
+              },
+              {
+                "name": "peaks",
+                "description": "Peak amplitudes as a number array, each value 0 to 1. Set it from script, a framework binding, or a JSON attribute. Values outside the range are clamped. An empty or missing array renders an empty track.",
+                "type": "Array"
               },
               {
                 "name": "position",
@@ -7329,11 +7361,6 @@
                 "type": "string"
               },
               {
-                "name": "presets",
-                "description": "Array of hex color strings to display as quick-select swatches below the hex input.",
-                "type": "string[]"
-              },
-              {
                 "name": "disabled",
                 "description": "Disables all interaction, reducing opacity to 40% and blocking pointer events.",
                 "type": "boolean"
@@ -7342,6 +7369,11 @@
                 "name": "label",
                 "description": "Label text displayed above the picker in uppercase accent font.",
                 "type": "string"
+              },
+              {
+                "name": "presets",
+                "description": "Array of hex color strings to display as quick-select swatches below the hex input.",
+                "type": "string[]"
               },
               {
                 "name": "readonly",
@@ -7964,11 +7996,6 @@
                 "type": "string"
               },
               {
-                "name": "presets",
-                "description": "Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.",
-                "type": "Array<{label:string,days:number}>"
-              },
-              {
                 "name": "placeholder",
                 "description": "Placeholder text shown in the input when no range is selected.",
                 "type": "string"
@@ -7987,6 +8014,11 @@
                 "name": "months",
                 "description": "Number of month panels shown in the popup. Panels sit side by side and stack vertically when the popup is too narrow.",
                 "type": "number"
+              },
+              {
+                "name": "presets",
+                "description": "Quick ranges rendered as a left rail. Each preset selects the last N days ending today and closes the popup. Hidden when empty.",
+                "type": "Array<{label:string,days:number}>"
               },
               {
                 "name": "required",
@@ -9072,7 +9104,7 @@
               "name": "detents",
               "description": "Snap values, as an array from script or a comma-separated attribute (for example \"0,50,100\"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents.",
               "value": {
-                "type": "number[] | string",
+                "type": "number[]",
                 "default": "[]"
               }
             },
@@ -9126,11 +9158,6 @@
                 "type": "string"
               },
               {
-                "name": "detents",
-                "description": "Snap values, as an array from script or a comma-separated attribute (for example \"0,50,100\"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents.",
-                "type": "number[] | string"
-              },
-              {
                 "name": "format",
                 "description": "`(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number.",
                 "type": "Function"
@@ -9149,6 +9176,11 @@
                 "name": "step",
                 "description": "Increment granularity. The value snaps to multiples of this number.",
                 "type": "number"
+              },
+              {
+                "name": "detents",
+                "description": "Snap values, as an array from script or a comma-separated attribute (for example \"0,50,100\"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents.",
+                "type": "number[]"
               },
               {
                 "name": "readonly",
@@ -9551,11 +9583,6 @@
           "js": {
             "properties": [
               {
-                "name": "value",
-                "description": "Array of selected option values. Updated when items are toggled and emitted via `arc-change`.",
-                "type": "string[]"
-              },
-              {
                 "name": "placeholder",
                 "description": "Hint text shown inside the control when no items are selected and the input is empty.",
                 "type": "string"
@@ -9573,6 +9600,11 @@
                 "name": "disabled",
                 "description": "Disables the control, preventing interaction and reducing opacity to 50%.",
                 "type": "boolean"
+              },
+              {
+                "name": "value",
+                "description": "Array of selected option values. Updated when items are toggled and emitted via `arc-change`.",
+                "type": "string[]"
               },
               {
                 "name": "readonly",
@@ -11827,16 +11859,6 @@
           "js": {
             "properties": [
               {
-                "name": "value",
-                "description": "Array of current tags. Updated on add/remove and emitted via `arc-change`.",
-                "type": "string[]"
-              },
-              {
-                "name": "suggestions",
-                "description": "Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox.",
-                "type": "string[]"
-              },
-              {
                 "name": "delimiter",
                 "description": "Character that commits the current text as a tag when typed; pasted text is split on it.",
                 "type": "string"
@@ -11865,6 +11887,16 @@
                 "name": "error",
                 "description": "Error message shown below the field; also applies error styling to the border.",
                 "type": "string"
+              },
+              {
+                "name": "value",
+                "description": "Array of current tags. Updated on add/remove and emitted via `arc-change`.",
+                "type": "string[]"
+              },
+              {
+                "name": "suggestions",
+                "description": "Autocomplete candidates. When non-empty, typing filters them into a dropdown listbox.",
+                "type": "string[]"
               },
               {
                 "name": "maxTags",
@@ -12619,16 +12651,6 @@
           "js": {
             "properties": [
               {
-                "name": "options",
-                "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",
-                "type": "Array<{value:string,label:string,disabled?:boolean}>"
-              },
-              {
-                "name": "value",
-                "description": "Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`.",
-                "type": "string[]"
-              },
-              {
                 "name": "name",
                 "description": "Form field name. When set, the component submits one form entry per selected value.",
                 "type": "string"
@@ -12647,6 +12669,16 @@
                 "name": "targetLabel",
                 "description": "Heading for the right (selected) pane. Attribute: `target-label`.",
                 "type": "string"
+              },
+              {
+                "name": "options",
+                "description": "The full universe of items. Items whose value is in `value` render in the Selected pane; the rest render in Available.",
+                "type": "Array<{value:string,label:string,disabled?:boolean}>"
+              },
+              {
+                "name": "value",
+                "description": "Values currently in the Selected pane, kept in options order. Updated after every move and emitted via `arc-change`.",
+                "type": "string[]"
               },
               {
                 "name": "searchable",
@@ -12692,6 +12724,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "items",
+              "description": "Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children.",
+              "value": {
+                "type": "Array<{value: string, label: string, children?: Array<object>, disabled?: boolean}>",
+                "default": "[]"
+              }
+            },
+            {
               "name": "value",
               "description": "The selected leaf's value. Setting it programmatically updates the trigger's breadcrumb label, and the branches containing it auto-expand the next time the panel opens.",
               "value": {
@@ -12700,7 +12740,7 @@
               }
             },
             {
-              "name": "expanded-values",
+              "name": "expandedValues",
               "description": "Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list.",
               "value": {
                 "type": "string[]",
@@ -12789,19 +12829,9 @@
           "js": {
             "properties": [
               {
-                "name": "items",
-                "description": "Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children.",
-                "type": "Array<{value: string, label: string, children?: Array<object>, disabled?: boolean}>"
-              },
-              {
                 "name": "value",
                 "description": "The selected leaf's value. Setting it programmatically updates the trigger's breadcrumb label, and the branches containing it auto-expand the next time the panel opens.",
                 "type": "string"
-              },
-              {
-                "name": "expandedValues",
-                "description": "Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list.",
-                "type": "string[]"
               },
               {
                 "name": "placeholder",
@@ -12827,6 +12857,16 @@
                 "name": "error",
                 "description": "Error message displayed below the trigger. When set, the trigger border turns red.",
                 "type": "string"
+              },
+              {
+                "name": "items",
+                "description": "Recursive tree of nodes. A node with a non-empty `children` array is a group header: it expands and collapses but can never be selected. A node without children is a selectable leaf. `disabled` nodes render but cannot be reached by keyboard or selected, and a disabled group hides its children.",
+                "type": "Array<{value: string, label: string, children?: Array<object>, disabled?: boolean}>"
+              },
+              {
+                "name": "expandedValues",
+                "description": "Values of group nodes to render initially expanded. Attribute: `expanded-values` (JSON array). Branches containing the selected value auto-expand on open regardless of this list.",
+                "type": "string[]"
               },
               {
                 "name": "size",
@@ -14628,7 +14668,7 @@
           "attributes": [
             {
               "name": "items",
-              "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
+              "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set as a property, or as a JSON attribute for a menu structure that is static.",
               "value": {
                 "type": "Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>",
                 "default": "[]"
@@ -14647,7 +14687,7 @@
             "properties": [
               {
                 "name": "items",
-                "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.",
+                "description": "The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set as a property, or as a JSON attribute for a menu structure that is static.",
                 "type": "Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>"
               }
             ],
@@ -16647,6 +16687,14 @@
           "doc-url": "",
           "attributes": [
             {
+              "name": "lines",
+              "description": "The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Set it from script, a framework binding, or a JSON attribute.",
+              "value": {
+                "type": "Array",
+                "default": "[]"
+              }
+            },
+            {
               "name": "prompt",
               "description": "Prompt glyph rendered before each command line.",
               "value": {
@@ -16698,11 +16746,6 @@
           "js": {
             "properties": [
               {
-                "name": "lines",
-                "description": "The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Property only — arrays do not survive an attribute.",
-                "type": "Array"
-              },
-              {
                 "name": "prompt",
                 "description": "Prompt glyph rendered before each command line.",
                 "type": "string"
@@ -16716,6 +16759,11 @@
                 "name": "speed",
                 "description": "Milliseconds per character when typing command lines.",
                 "type": "number"
+              },
+              {
+                "name": "lines",
+                "description": "The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Set it from script, a framework binding, or a JSON attribute.",
+                "type": "Array"
               },
               {
                 "name": "autoplay",

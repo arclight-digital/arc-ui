@@ -12,7 +12,7 @@
     name?: string;
     disabled?: boolean;
     label?: string;
-    detents?: number[] | string;
+    detents?: number[];
     format?: Function;
     class?: string;
     id?: string;
@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { size, value = $bindable(0), min, max, step, name = '', disabled = false, label = '', detents = [], format, ...rest }: Props = $props();
+  let { size, value = $bindable(0), min, max, step, name = '', disabled = false, label = '', detents, format, ...rest }: Props = $props();
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise

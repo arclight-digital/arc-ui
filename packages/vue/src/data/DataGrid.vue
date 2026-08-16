@@ -4,7 +4,7 @@ import '@arclux/arc-ui/data-grid';
 
 defineOptions({ name: 'DataGrid' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   columns?: Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>;
   rows?: Array<Record<string, any>>;
   sort?: Array<{key:string,direction:'asc'|'desc'}>;
@@ -15,11 +15,7 @@ const props = withDefaults(defineProps<{
   overscan?: number;
   density?: 'default' | 'compact';
   striped?: boolean;
-}>(), {
-  columns: () => ([]),
-  rows: () => ([]),
-  sort: () => ([]),
-});
+}>();
 
 const emit = defineEmits<{
   'arc-sort': [event: CustomEvent];

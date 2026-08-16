@@ -1,7 +1,7 @@
 import { LitElement, html, css, svg } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, list, oneOf, num } from '../shared/props.js';
 
 /**
  * Rotary knob input for continuous parameters — the control a slider can't be when the panel
@@ -18,7 +18,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @prop {number} max - Maximum allowed value at the end of the arc sweep.
  * @prop {number} step - Increment granularity. The value snaps to multiples of this number.
  * @prop {string} label - Label text displayed above the knob in the label typography role.
- * @prop {number[] | string} detents - Snap values, as an array from script or a comma-separated attribute (for example "0,50,100"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents.
+ * @prop {number[]} detents - Snap values, as an array from script or a comma-separated attribute (for example "0,50,100"). While dragging, the value snaps magnetically to a detent within 2.5% of the range, and each detent renders as a tick mark around the dial. Keyboard and wheel stepping ignore detents.
  * @prop {Function} format - `(value) => string` shaping the readout and the accessible value text, for example adding a unit suffix. Defaults to the plain number.
  * @prop {boolean} disabled - Disables interaction, reducing opacity and blocking pointer events.
  * @prop {boolean} readonly - Prevents dragging, wheel, and key changes while the dial stays focusable and the value still submits.
@@ -51,21 +51,13 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
     // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
-    detents: {
-      // `type` is stated even though `converter` overrides it: without it the
-      // declaration carries no type for prism to read, and `detents` reached
-      // none of the six generated wrappers — documented in full, absent from
-      // every framework surface. Caught by prism 2.12.0's
-      // unparsed-prop-declaration.
-      type: Array,
-      attribute: 'detents',
-      // The default converter for an Array type wants JSON; a knob's detents
-      // read better as the comma list a patch file would carry.
-      converter: {
-        fromAttribute: (v) =>
-          v == null || v === '' ? [] : v.split(',').map(Number).filter(Number.isFinite),
-      },
-    },
+    // `of: Number` is what keeps `detents="0,25,50,100"` — a knob's detents
+    // read better as the comma list a patch file would carry than as JSON.
+    // This was the library's last hand-rolled array converter, and it was one
+    // because the vocabulary could not say "comma list" until V4-PLAN 4.3.
+    // Both spellings parse now, so the markup that was already out there keeps
+    // working and `[0,25]` also does.
+    detents: list({ of: Number }),
     // Attribute is off: a function can't survive a round trip through one.
     format: { attribute: false },
     /** @internal */ _dragging: { state: true },
@@ -194,7 +186,6 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
     this.name = '';
     this.disabled = false;
     this.label = '';
-    this.detents = [];
     this.format = undefined;
     this._dragging = false;
     this._dragStartY = 0;

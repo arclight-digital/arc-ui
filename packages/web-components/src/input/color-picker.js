@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
 /**
  * Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional
@@ -33,7 +33,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
     value: { type: String, reflect: true },
     name: { type: String, reflect: true },
-    presets: { type: Array },
+    presets: list(),
     // NOT flag(): a form-associated custom element whose `disabled` content
     // attribute is merely *present* is "actually disabled" per the HTML spec,
     // so the platform calls formDisabledCallback(true) and the mixin sets the
@@ -213,7 +213,6 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
     super();
     this.value = '#4d7ef7';
     this.name = '';
-    this.presets = [];
     this.disabled = false;
     this.label = '';
     // Seeded from `value` by connectedCallback's _parseHex; these are only the

@@ -5,7 +5,7 @@ import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DismissController } from '../shared/dismiss-controller.js';
-import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list, int } from '../shared/props.js';
 
 /**
  * Dual-calendar picker for selecting a start/end date range with presets and full keyboard
@@ -58,7 +58,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
     min: { type: String },
     max: { type: String },
     months: int({ default: 2, min: 1, clamp: 'toRange' }),
-    presets: { type: Array },
+    presets: list(),
     placeholder: { type: String },
     // NOT flag(): a form-associated custom element whose `disabled` content
     // attribute is merely *present* is "actually disabled" per the HTML spec,
@@ -373,7 +373,6 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
     this.name = '';
     this.min = '';
     this.max = '';
-    this.presets = [];
     this.placeholder = 'Select date range';
     this.disabled = false;
     this.label = '';

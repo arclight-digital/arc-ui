@@ -8,7 +8,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DismissController } from '../shared/dismiss-controller.js';
 import '../shared/option.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
 /**
  * Multi-value select with tag chips, inline search filtering, and keyboard navigation.
@@ -35,7 +35,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
   static properties = {
     size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
 
-    value: { type: Array },
+    value: list(),
     placeholder: { type: String },
     label: { type: String },
     name: { type: String, reflect: true },
@@ -258,7 +258,6 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   constructor() {
     super();
-    this.value = [];
     this.placeholder = '';
     this.label = '';
     this.name = '';

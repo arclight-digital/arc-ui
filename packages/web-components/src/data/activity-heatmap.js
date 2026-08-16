@@ -1,5 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
-import { DeclaredPropsMixin, flag, oneOf, int, num } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list, int, num } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 import { monthNames, weekdayNames, defaultLocale } from '../shared/date-names.js';
 import { PositionController } from '../shared/position-controller.js';
@@ -42,7 +42,7 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  *
  * @tag arc-activity-heatmap
  * @status stable
- * @prop {Array<{date: string, value: number, label?: string}>} data - One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. "7 commits"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Property only — set it from script or a framework binding.
+ * @prop {Array<{date: string, value: number, label?: string}>} data - One entry per day with activity: an ISO `date` (YYYY-MM-DD), a numeric `value` mapped to the intensity ramp, and an optional `label` shown in the hover detail in place of the bare value (e.g. "7 commits"). Days in the rendered span with no entry render as empty cells, so sparse data is fine. Set it from script, a framework binding, or a JSON attribute.
  * @prop {string} endDate - The newest day shown, as an ISO string (YYYY-MM-DD). Unset: today in the browser; on the server, the newest date in `data` (see above).
  * @prop {number} weeks - How many week columns to render, counting back from the week containing the end date (default 52), at least 1. The last column is truncated after the end date, so the newest cell is always the end date itself.
  * @prop {'sunday' | 'monday'} weekStart - Which day starts each column: "sunday" (default, the GitHub convention) or "monday". An unrecognised value falls back to sunday.
@@ -62,7 +62,7 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  */
 export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    data: { attribute: false },
+    data: list(),
     endDate: { type: String, attribute: 'end-date' },
     weeks: int({ default: 52, min: 1, clamp: 'toRange' }),
     weekStart: oneOf(['sunday', 'monday'], { attribute: 'week-start' }),
@@ -274,7 +274,6 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     // Nullable declarations own their own "unset" default — see props.js.
-    this.data = [];
     this.endDate = '';
     this.weeks = 52;
     this.weekStart = 'sunday';

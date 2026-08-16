@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   endLabel?: string;
   summary?: boolean;
 }>(), {
-  data: () => ([]),
   startLabel: '',
   endLabel: '',
   summary: true,

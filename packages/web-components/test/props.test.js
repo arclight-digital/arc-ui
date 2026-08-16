@@ -286,6 +286,65 @@ describe('list()', () => {
     expect(list({ attribute: 'expanded-values' }).attribute).to.equal('expanded-values');
     expect(list().attribute, 'and derives it from the name otherwise').to.equal(undefined);
   });
+
+  describe('of: Number — the comma-list attribute', () => {
+    // `arc-knob.detents` takes `detents="0,25,50,100"`, and before this option
+    // it was the one array prop in the library that kept a hand-rolled
+    // converter — the vocabulary had no way to say "comma list", so dialect 3
+    // was not actually retired. See props.js.
+    const nums = () => list({ of: Number });
+
+    it('parses a comma list', () => {
+      expect(from(nums(), '0,25,50,100')).to.eql([0, 25, 50, 100]);
+      expect(from(nums(), ' 1 , 2 ')).to.eql([1, 2]);
+    });
+
+    it('still parses JSON, because JSON is tried first', () => {
+      // Order matters: split first and `[0,25]` becomes the two strings `[0`
+      // and `25]`, which coerce to NaN and get dropped — so the attribute the
+      // rest of the library writes would silently parse as empty.
+      expect(from(nums(), '[0,25]')).to.eql([0, 25]);
+    });
+
+    it('drops members that are not finite numbers', () => {
+      // Rather than keeping NaN: a detent at NaN renders at an undefined angle
+      // and compares false against everything, so it cannot be right.
+      expect(from(nums(), '0,oops,50')).to.eql([0, 50]);
+      expect(from(nums(), '["a", 3]')).to.eql([3]);
+      expect(from(nums(), 'oops')).to.eql([]);
+    });
+
+    it('returns to the declared default when the attribute is removed', () => {
+      expect(from(nums(), null)).to.eql([]);
+      expect(from(list({ of: Number, default: [50] }), null)).to.eql([50]);
+    });
+
+    it('serialises back as the comma list that was written', () => {
+      expect(nums().converter.toAttribute([0, 25, 50])).to.equal('0,25,50');
+      expect(nums().converter.toAttribute('not an array')).to.equal(null);
+    });
+
+    it('holds on the property path too', () => {
+      const decl = nums();
+      expect(normalizeValue({}, meta(decl), [1, 'x', 3])).to.eql([1, 3]);
+    });
+
+    it('preserves identity for an already-numeric list', () => {
+      // conformance.test.js's fixed-point probe asserts
+      // `normalizeValue(el, meta, el[name]) === el[name]`, so returning a fresh
+      // copy of a list that was already correct would fail it for every
+      // `of: Number` prop.
+      const decl = nums();
+      const value = [1, 2, 3];
+      expect(normalizeValue({}, meta(decl), value)).to.equal(value);
+    });
+
+    it('rejects a member type it cannot enforce', () => {
+      // A declaration that reads as a contract and enforces nothing is worse
+      // than no option at all.
+      expect(() => list({ of: String })).to.throw(/Number only/);
+    });
+  });
 });
 
 

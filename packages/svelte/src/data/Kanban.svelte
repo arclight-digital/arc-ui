@@ -33,7 +33,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], disabled, ...rest }: Props = $props();
+  let { columns, disabled, ...rest }: Props = $props();
 </script>
 
 <arc-kanban {columns} {disabled} {...rest}>

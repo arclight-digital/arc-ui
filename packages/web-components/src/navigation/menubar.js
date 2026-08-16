@@ -3,6 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
+import { DeclaredPropsMixin, list } from '../shared/props.js';
 
 /**
  * Desktop-application-style menu bar (File / Edit / View) with nested submenus, keyboard shortcuts
@@ -10,7 +11,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  *
  * @tag arc-menubar
  * @status beta
- * @prop {Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>} items - The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set via JavaScript — this is a property, not an HTML attribute.
+ * @prop {Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>} items - The menu structure. Entries with an `items` array become submenus (one further nesting level supported); `{ divider: true }` renders a separator. Set as a property, or as a JSON attribute for a menu structure that is static.
  * @fires arc-select - Fired when a leaf menu item is activated. `detail.path` is the array of labels from the top-level menu to the selected leaf, e.g. `["File", "Export", "PNG"]`.
  * @slot none
  * @csspart menu
@@ -20,9 +21,9 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  * @csspart bar
  * @csspart trigger
  */
-export class ArcMenubar extends LitElement {
+export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    items: { type: Array },
+    items: list(),
     _openTop: { state: true },
     _focusedTop: { state: true },
     _activePath: { state: true },
@@ -226,7 +227,6 @@ export class ArcMenubar extends LitElement {
 
   constructor() {
     super();
-    this.items = [];
     this._openTop = -1;
     this._focusedTop = 0;
     this._activePath = [];

@@ -17,8 +17,6 @@ const props = withDefaults(defineProps<{
   disabled?: boolean;
   error?: string;
 }>(), {
-  value: () => ([]),
-  suggestions: () => ([]),
   delimiter: ',',
   label: '',
   placeholder: '',

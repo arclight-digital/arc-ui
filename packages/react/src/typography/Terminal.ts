@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcTerminal } from '@arclux/arc-ui/terminal';
 
 export interface TerminalProps {
-  lines?: string;
+  lines?: unknown[];
   prompt?: string;
   title?: string;
   speed?: number;

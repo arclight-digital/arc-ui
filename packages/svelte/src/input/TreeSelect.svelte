@@ -41,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { items = [], value = $bindable(''), expandedValues = [], placeholder = 'Select...', label = $bindable(''), name = '', disabled = false, size, error = '', open = false, ...rest }: Props = $props();
+  let { items, value = $bindable(''), expandedValues, placeholder = 'Select...', label = $bindable(''), name = '', disabled = false, size, error = '', open = false, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {

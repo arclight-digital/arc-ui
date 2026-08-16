@@ -5,7 +5,7 @@ import '@arclux/arc-ui/waveform';
 defineOptions({ name: 'Waveform' });
 
 const props = withDefaults(defineProps<{
-  peaks?: string;
+  peaks?: unknown[];
   position?: number;
   duration?: number;
   interactive?: boolean;

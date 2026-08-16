@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { DeclaredPropsMixin, num, int } from '../shared/props.js';
+import { DeclaredPropsMixin, num, list, int } from '../shared/props.js';
 import { VirtualController } from '../shared/virtual-controller.js';
 import { tokenStyles } from '../shared-styles.js';
 
@@ -39,7 +39,7 @@ import { tokenStyles } from '../shared-styles.js';
  */
 export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    items: { type: Array },
+    items: list(),
     // Attribute is off: a function can't survive a round trip through one, and
     // leaving it on invites `render-item="handleRow"` that silently sets a string.
     renderItem: { attribute: false },
@@ -79,7 +79,6 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.items = [];
     this.renderItem = null;
     this.itemHeight = 40;
     this.overscan = 5;

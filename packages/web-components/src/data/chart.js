@@ -1,6 +1,6 @@
 import { LitElement, html, css, svg, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num, list } from '../shared/props.js';
 
 const MAX_SERIES = 6; // --chart-1..6; extras fold into "Other"
 const CHAR_W = 6.2; // rough glyph width at --text-xs, for label-fit estimates
@@ -24,7 +24,7 @@ const finiteOrNaN = (v) => {
  * @tag arc-chart
  * @status beta
  * @prop {'line' | 'area' | 'bar' | 'donut'} type - The chart form. Line and area share the x axis across all series; bar renders grouped columns (or stacked with the `stacked` attribute); donut renders one segment per series (or per category when a single series is given).
- * @prop {Array<{label:string,data:number[]}>} series - The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set via JavaScript property, not an attribute. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend.
+ * @prop {Array<{label:string,data:number[]}>} series - The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set as a property, or as a JSON attribute for a chart that is static. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend.
  * @prop {string[]} labels - Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width.
  * @prop {boolean} stacked - Bar type only. Stacks series segments on a shared baseline with 2px surface gaps between segments; only the outermost segment gets the rounded value end. Assumes non-negative data.
  * @prop {boolean} hideLegend - Suppresses the legend. By default the legend renders for two or more series and is omitted for a single series.
@@ -42,8 +42,8 @@ const finiteOrNaN = (v) => {
 export class ArcChart extends DeclaredPropsMixin(LitElement) {
   static properties = {
     type: oneOf(['line', 'area', 'bar', 'donut']),
-    series: { type: Array },
-    labels: { type: Array },
+    series: list(),
+    labels: list(),
     stacked: flag(false),
     hideLegend: flag(false, { attribute: 'hide-legend' }),
     hideAxis: flag(false, { attribute: 'hide-axis' }),
@@ -240,8 +240,6 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.series = [];
-    this.labels = [];
     this.currency = 'USD';
     this._width = 0;
     this._hover = null;

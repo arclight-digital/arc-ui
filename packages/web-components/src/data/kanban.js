@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import { tokenStyles } from '../shared-styles.js';
 import './tag.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, list } from '../shared/props.js';
 
 /**
  * A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and
@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @tag arc-kanban
  * @status beta
  * @requires arc-tag
- * @prop {Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>} columns - The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set via JavaScript — it is not an HTML attribute. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.
+ * @prop {Array<{id:string,title?:string,limit?:number,items:Array<{id:string,label:string,description?:string,tag?:string,variant?:string}>}>} columns - The data array that drives the board. Each entry becomes a column with a header (title plus count badge) and a list of cards. `limit` renders the count as `count/limit` and turns it error-colored when exceeded. Each card needs a unique `id` and a `label`; `description` renders below the label with a two-line clamp, and `tag` renders an arc-tag chip styled by `variant`. Set as a property, or as a JSON attribute for a board that is static. The component works on an internal copy for immediate drag feedback; sync your source of truth from `arc-card-move` and assign a new array to re-render.
  * @prop {boolean} disabled - Disables all pointer and keyboard interaction and dims the board.
  * @fires arc-card-move - Fired when a card is dropped in a new position (pointer or keyboard). detail: { cardId, fromColumn, toColumn, index } where index is the final position in the target column.
  * @fires arc-card-click - Fired when a card is clicked without being dragged. detail: { cardId, columnId }.
@@ -31,7 +31,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  */
 export class ArcKanban extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    columns: { type: Array },
+    columns: list(),
     disabled: flag(false),
     _cols: { state: true },
     _drag: { state: true },
@@ -232,7 +232,6 @@ export class ArcKanban extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.columns = [];
     this._cols = [];
     this._drag = null;
     this._dropTarget = null;
@@ -251,8 +250,17 @@ export class ArcKanban extends DeclaredPropsMixin(LitElement) {
 
   willUpdate(changed) {
     if (changed.has('columns')) {
-      // Internal working copy: mutated for immediate feedback, consumer syncs via events
-      this._cols = (this.columns || []).map((c) => ({ ...c, items: [...(c.items || [])] }));
+      // Internal working copy: mutated for immediate feedback, consumer syncs via events.
+      //
+      // `Array.isArray` rather than `|| []`, and the difference is not
+      // defensive style: Lit runs a host's `willUpdate` *before* a controller's
+      // `hostUpdate`, so `list()`'s normalisation has not happened yet here.
+      // `columns = 'oops'` is truthy, survives `|| []`, and takes `.map` with
+      // it. Same guard as arc-data-grid, for the same reason.
+      this._cols = (Array.isArray(this.columns) ? this.columns : []).map((c) => ({
+        ...c,
+        items: [...(c.items || [])],
+      }));
       this._drag = null;
       this._dropTarget = null;
       this._kbCard = null;

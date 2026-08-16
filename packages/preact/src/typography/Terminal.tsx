@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/terminal';
 
 export interface TerminalProps {
-  lines?: string;
+  lines?: unknown[];
   prompt?: string;
   title?: string;
   speed?: number;

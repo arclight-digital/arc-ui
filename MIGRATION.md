@@ -755,3 +755,63 @@ you say otherwise; an alert is not dismissible unless you say so. Both defaults
 are right for their component — an inescapable modal is the exception, an alert
 with an X is the exception — so making them agree would trade a naming
 inconsistency for a behavioural one, which is worse.
+
+## Every array prop is `list()`, and every one of them has an attribute
+
+**Affects 26 props across 19 components** — the rest of the sitewide migration
+the two sections above began. Nothing here changes what a well-formed value
+does; what changes is what a *malformed* one does, and what markup can reach.
+
+### Six props gained an attribute
+
+`arc-lightbox.images`, `arc-waveform.peaks`, `arc-terminal.lines`,
+`arc-uptime.data`, `arc-activity-heatmap.data` and `arc-tree-select.items` were
+declared `{ attribute: false }` and documented as property-only. Three of them
+said so with a reason that was simply wrong — *"an array can't survive a round
+trip through an attribute"* — which `list()` disproves: JSON is a round trip.
+
+They all take a JSON attribute now, so a server-rendered page can set them:
+
+```html
+<arc-uptime data="[1, 0.97, 0.5]"></arc-uptime>
+```
+
+Setting them from script is unchanged. This is additive; nothing that worked
+stops working.
+
+### Twenty props stopped throwing on bad markup
+
+The rest were `{ type: Array }`, which is Lit's stock converter — it calls
+`JSON.parse` and lets it throw, from inside `attributeChangedCallback`, where a
+custom-element reaction's exception is reported globally rather than propagated.
+One malformed attribute and the element never rendered, with no way for the call
+site to catch it. A malformed attribute now falls back to the declared default.
+
+If you were relying on that throw to detect bad data — nobody was, since it
+could not be caught — check `.length` instead.
+
+### `arc-knob.detents` accepts both spellings
+
+`detents="0,25,50,100"` was the library's last hand-rolled converter, kept
+because a knob's detents read better as the comma list a patch file would carry
+than as JSON. That spelling is now part of the vocabulary (`list({ of: Number })`)
+rather than a one-off, and **both** spellings parse: `detents="0,25"` and
+`detents="[0,25]"` are the same value. Non-numeric members are dropped rather
+than kept as `NaN`, on the property path as well as the attribute path. The
+generated wrapper type tightened from `number[] | string` to `number[]`.
+
+### Constructor defaults are gone, and that is visible in one place
+
+All 26 props dropped their `this.x = []` constructor line — the declaration is
+the default now, and `DeclaredPropsMixin` seeds it at construction. One
+consequence is worth knowing about if you read the generated Svelte wrappers:
+`let { columns = [], rows = [] }` became `let { columns, rows }`, matching every
+other declared prop in the library (`variant`, `dismissible` and friends have
+been spelled that way since 2.2). The element still starts on `[]`.
+
+**One real bug came out of this.** `arc-kanban.columns = 'oops'` used to throw
+in `willUpdate` rather than falling back. It no longer does. The reason it could
+happen at all is worth recording: Lit runs a component's own `willUpdate`
+*before* a controller's `hostUpdate`, so a component that reads a declared prop
+in `willUpdate` sees the raw assigned value, not the normalised one. Guard with
+`Array.isArray`, not `|| []` — a string is truthy.

@@ -1,5 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, list } from '../shared/props.js';
 import { tokenStyles } from '../shared-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
@@ -13,7 +13,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  *
  * @tag arc-uptime
  * @status stable
- * @prop {Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>} data - One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is "up", 0.95 and up is "degraded", below is "down"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral "none" track. Property only — set it from script or a framework binding.
+ * @prop {Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>} data - One entry per period, oldest first. A number is an uptime fraction from 0 to 1, mapped to a status by threshold (0.99 and up is "up", 0.95 and up is "degraded", below is "down"). An object may carry an explicit `status` (which wins over any threshold), a `value` used for the summary math, and a `label` shown in the hover detail. An entry with neither a finite value nor a status renders as the neutral "none" track. Set it from script, a framework binding, or a JSON attribute.
  * @prop {string} startLabel - Caption under the oldest end of the track (e.g. "90 days ago").
  * @prop {string} endLabel - Caption under the newest end of the track (e.g. "Today").
  * @prop {boolean} summary - Whether to render the overall percentage above the track (default true; set the attribute to the string "false" to disable from markup). The percentage is the mean of every finite value in the data; when no entry carries a value the line is omitted regardless.
@@ -27,7 +27,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
  */
 export class ArcUptime extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    data: { attribute: false },
+    data: list(),
     startLabel: { type: String, attribute: 'start-label' },
     endLabel: { type: String, attribute: 'end-label' },
     summary: flag(true, { negative: 'no-summary' }),
@@ -185,7 +185,6 @@ export class ArcUptime extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.data = [];
     this.startLabel = '';
     this.endLabel = '';
     this.summary = true;

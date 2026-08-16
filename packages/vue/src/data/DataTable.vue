@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
   rowHeight?: number;
   overscan?: number;
 }>(), {
-  rows: () => ([]),
   sortColumn: '',
 });
 

@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
-import { DeclaredPropsMixin, flag, oneOf, num, int } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num, list, int } from '../shared/props.js';
 import { VirtualController } from '../shared/virtual-controller.js';
 import { listen } from '../shared/subscriptions.js';
 
@@ -17,7 +17,7 @@ import { listen } from '../shared/subscriptions.js';
  * @status deprecated
  * @arc-merged-into arc-data-grid
  * @requires arc-column
- * @prop {Array<Record<string, any>>} rows - The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.
+ * @prop {Array<Record<string, any>>} rows - The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render.
  * @prop {boolean} sortable - Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.
  * @prop {boolean} selectable - Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.
  * @prop {string} sortColumn - The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.
@@ -37,7 +37,7 @@ import { listen } from '../shared/subscriptions.js';
  */
 export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    rows: { type: Array },
+    rows: list(),
     sortable: flag(false),
     selectable: flag(false),
     sortColumn: { type: String, attribute: 'sort-column' },
@@ -237,7 +237,6 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.rows = [];
     this.sortColumn = '';
     this._columns = [];
     this._selectedRows = new Set();

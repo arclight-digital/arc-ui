@@ -202,3 +202,37 @@ notes above about partial answers stop mattering entirely.
 
 Confirming the sequencing from our side: additive in a 2.x minor, promotion of
 `doc-prop-undeclared` to strict in 3.0.0, against a population near zero.
+
+### One more reason for runtime resolution: wrapper defaults
+
+**2026-08-16, during 4.3's array migration.** Not a bug, and not new — but the
+population just grew enough to be worth quantifying.
+
+Prism reads a prop's default from its constructor assignment. Our declared-props
+vocabulary puts the default in the *declaration* and deletes the constructor
+line, so prism sees no default and the generated wrapper drops it:
+
+```svelte
+- let { columns = [], rows = [], striped, density, ...rest }: Props = $props();
++ let { columns, rows, striped, density, ...rest }: Props = $props();
+```
+
+Every `flag()`, `oneOf()` and `num()` prop in the library has looked like this
+since 2.2 — `variant`, `dismissible`, `density` in the line above are all
+defaulted props with no visible default. Migrating 26 array props onto `list()`
+added those to the same list, which is what made us look.
+
+The behaviour is correct either way: the element seeds its own declared default,
+and a wrapper passing `undefined` gets normalised. What is lost is the *reader's*
+view — the Svelte wrapper no longer shows what a prop starts as, and neither do
+the React prop types.
+
+We already compensate in `scripts/generate/manifest.js`, which parses the
+declaration and backfills `default` into `custom-elements.json` after prism runs.
+That is 588 entries of ours reconstructing something the source states plainly.
+`Ctor.elementProperties` at runtime would make both the hook and the backfill
+unnecessary: by then a `list()` declaration is an ordinary reactive property with
+an ordinary initial value.
+
+No action requested — recording it so the roadmap item has one more concrete
+consumer behind it.

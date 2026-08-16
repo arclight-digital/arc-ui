@@ -5,7 +5,7 @@ import { DismissController } from '../shared/dismiss-controller.js';
 import { PositionController } from '../shared/position-controller.js';
 import { ListboxController } from '../shared/listbox-controller.js';
 import { managedPanelStyles } from '../shared/position-styles.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
 /**
  * Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder
@@ -35,9 +35,9 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  */
 export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
   static properties = {
-    items: { attribute: false },
+    items: list(),
     value: { type: String, reflect: true },
-    expandedValues: { type: Array, attribute: 'expanded-values' },
+    expandedValues: list({ attribute: 'expanded-values' }),
     placeholder: { type: String },
     label: { type: String },
     name: { type: String, reflect: true },
@@ -271,9 +271,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
   constructor() {
     super();
     this._treeSelectId = `tree-select-${++ArcTreeSelect._idCounter}`;
-    this.items = [];
     this.value = '';
-    this.expandedValues = [];
     this.placeholder = 'Select...';
     this.label = '';
     this.name = '';

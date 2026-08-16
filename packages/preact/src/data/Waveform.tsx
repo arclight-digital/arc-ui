@@ -5,7 +5,7 @@ import { useLayoutEffect, useRef } from 'preact/hooks';
 import '@arclux/arc-ui/waveform';
 
 export interface WaveformProps {
-  peaks?: string;
+  peaks?: unknown[];
   position?: number;
   duration?: number;
   interactive?: boolean;

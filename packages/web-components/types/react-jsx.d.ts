@@ -35,6 +35,7 @@ declare module 'react' {
         question?: string;
       };
       'arc-activity-heatmap': ArcBaseAttributes & {
+        data?: string;
         'end-date'?: string;
         weeks?: number | string;
         weekStart?: 'sunday' | 'monday';
@@ -622,6 +623,7 @@ declare module 'react' {
         label?: string;
       };
       'arc-lightbox': ArcBaseAttributes & {
+        images?: string;
         index?: number | string;
         open?: boolean;
       };
@@ -1122,6 +1124,7 @@ declare module 'react' {
         readonly?: boolean;
       };
       'arc-terminal': ArcBaseAttributes & {
+        lines?: string;
         prompt?: string;
         title?: string;
         speed?: number | string;
@@ -1237,8 +1240,9 @@ declare module 'react' {
         expanded?: boolean;
       };
       'arc-tree-select': ArcBaseAttributes & {
+        items?: string;
         value?: string;
-        'expanded-values'?: string;
+        expandedValues?: string;
         placeholder?: string;
         label?: string;
         name?: string;
@@ -1264,6 +1268,7 @@ declare module 'react' {
         'pause-end'?: number | string;
       };
       'arc-uptime': ArcBaseAttributes & {
+        data?: Array<number | {value?: number, status?: 'up' | 'degraded' | 'down' | 'none', label?: string}>;
         'start-label'?: string;
         'end-label'?: string;
         summary?: boolean;
@@ -1289,6 +1294,7 @@ declare module 'react' {
         overscan?: number | string;
       };
       'arc-waveform': ArcBaseAttributes & {
+        peaks?: string;
         position?: number | string;
         duration?: number | string;
         interactive?: boolean;

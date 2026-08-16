@@ -12,7 +12,7 @@ declare module 'solid-js' {
 }
 
 export interface LightboxProps {
-  images?: string;
+  images?: unknown[];
   index?: number;
   open?: boolean;
   onArcChange?: (e: CustomEvent) => void;

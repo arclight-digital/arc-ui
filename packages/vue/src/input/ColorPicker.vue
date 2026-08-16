@@ -14,7 +14,6 @@ const props = withDefaults(defineProps<{
 }>(), {
   value: '#4d7ef7',
   name: '',
-  presets: () => ([]),
   disabled: false,
   label: '',
 });

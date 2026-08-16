@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
 /**
  * @deprecated Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: `columns` becomes `[{ key, label }]` and each row becomes an object keyed by those keys, rather than positional arrays. `striped` and `density` moved across, with `striped` defaulting on — pass `no-striped` for the plain look. Removed in v5.
@@ -24,8 +24,8 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  */
 export class ArcTable extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    columns: { type: Array },
-    rows: { type: Array },
+    columns: list(),
+    rows: list(),
     striped: flag(false),
     density: oneOf(['default', 'compact']),
   };
@@ -110,8 +110,6 @@ export class ArcTable extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.columns = [];
-    this.rows = [];
   }
 
   render() {

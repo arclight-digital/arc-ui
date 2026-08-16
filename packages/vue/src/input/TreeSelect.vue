@@ -16,9 +16,7 @@ const props = withDefaults(defineProps<{
   error?: string;
   open?: boolean;
 }>(), {
-  items: () => ([]),
   value: '',
-  expandedValues: () => ([]),
   placeholder: 'Select...',
   label: '',
   name: '',

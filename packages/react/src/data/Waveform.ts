@@ -5,7 +5,7 @@ import { createComponent, type EventName } from '@lit/react';
 import { ArcWaveform } from '@arclux/arc-ui/waveform';
 
 export interface WaveformProps {
-  peaks?: string;
+  peaks?: unknown[];
   position?: number;
   duration?: number;
   interactive?: boolean;

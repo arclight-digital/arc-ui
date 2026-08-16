@@ -72,10 +72,10 @@ export class Knob {
     return this._el.label;
   }
 
-  @Input() set detents(value: number[] | string) {
+  @Input() set detents(value: number[]) {
     this._el.detents = value;
   }
-  get detents(): number[] | string {
+  get detents(): number[] {
     return this._el.detents;
   }
 

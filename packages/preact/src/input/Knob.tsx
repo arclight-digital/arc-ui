@@ -13,7 +13,7 @@ export interface KnobProps {
   name?: string;
   disabled?: boolean;
   label?: string;
-  detents?: number[] | string;
+  detents?: number[];
   format?: Function;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;

@@ -4,11 +4,9 @@ import '@arclux/arc-ui/menubar';
 
 defineOptions({ name: 'Menubar' });
 
-const props = withDefaults(defineProps<{
+const props = defineProps<{
   items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
-}>(), {
-  items: () => ([]),
-});
+}>();
 
 const emit = defineEmits<{
   'arc-select': [event: CustomEvent];

@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, list } from '../shared/props.js';
 
 /*
  * Pacing between lines when a line carries no explicit delay. A command waits
@@ -29,7 +29,7 @@ const LOOP_PAUSE = 2000;
  *
  * @tag arc-terminal
  * @status stable
- * @prop {Array} lines - The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Property only — arrays do not survive an attribute.
+ * @prop {Array} lines - The transcript, as objects of shape { type: 'command' | 'output' | 'comment', text: string, delay?: number }. Commands get the prompt glyph and type character-by-character; output lines appear whole; comments render muted. `delay` is milliseconds before the line starts (default 500 for commands, 150 otherwise). Set it from script, a framework binding, or a JSON attribute.
  * @prop {string} prompt - Prompt glyph rendered before each command line.
  * @prop {string} title - Text centered in the window chrome bar. Empty hides it, leaving only the orbs.
  * @prop {number} speed - Milliseconds per character when typing command lines.
@@ -49,7 +49,7 @@ const LOOP_PAUSE = 2000;
  */
 export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    lines: { attribute: false },
+    lines: list(),
     prompt: { type: String },
     title: { type: String },
     speed: { type: Number },
@@ -174,7 +174,6 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    this.lines = [];
     this.prompt = '$';
     this.title = '';
     this.speed = 50;

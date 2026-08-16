@@ -2,7 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { keyed } from 'lit/directives/keyed.js';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayMixin } from '../shared/overlay-mixin.js';
-import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, list, int } from '../shared/props.js';
 
 /**
  * Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery
@@ -16,7 +16,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  * @tag arc-lightbox
  * @status stable
  * @requires arc-icon-button
- * @prop {Array} images - The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property — arrays do not round-trip through attributes.
+ * @prop {Array} images - The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property, or as a JSON attribute for a gallery that is static.
  * @prop {number} index - Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image.
  * @prop {boolean} open - Controls the visible state of the viewer. Set to `true` to open at the current `index` and activate the focus trap; set to `false` to close and restore focus to the previously-focused element.
  * @fires {CustomEvent<void>} arc-open - Fired when the lightbox opens
@@ -36,9 +36,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  */
 export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
   static properties = {
-    // Attribute is off: an array can't survive a round trip through one, and
-    // leaving it on invites `images="[...]"` that silently sets a string.
-    images: { attribute: false },
+    images: list(),
     index: int({ default: 0, min: 0, max: '_lastIndex', clamp: 'toRange' }),
     open: flag(false),
     _zoomed: { state: true },
@@ -169,7 +167,6 @@ export class ArcLightbox extends DeclaredPropsMixin(OverlayMixin(LitElement)) {
 
   constructor() {
     super();
-    this.images = [];
     this._zoomed = false;
     this._loaded = false;
     this._panX = 0;

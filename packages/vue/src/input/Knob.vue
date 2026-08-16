@@ -13,14 +13,13 @@ const props = withDefaults(defineProps<{
   name?: string;
   disabled?: boolean;
   label?: string;
-  detents?: number[] | string;
+  detents?: number[];
   format?: Function;
 }>(), {
   value: 0,
   name: '',
   disabled: false,
   label: '',
-  detents: () => ([]),
 });
 
 const emit = defineEmits<{
