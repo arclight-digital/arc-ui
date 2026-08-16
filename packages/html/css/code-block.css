@@ -176,9 +176,9 @@
         border-radius: var(--radius-full);
       }
 
-      .arc-code-block .code-block__orb--close    { background: #ff5f57; }
-      .arc-code-block .code-block__orb--minimize { background: #febc2e; }
-      .arc-code-block .code-block__orb--maximize { background: #28c840; }
+      .arc-code-block .code-block__orb--close    { background: var(--orb-close); }
+      .arc-code-block .code-block__orb--minimize { background: var(--orb-minimize); }
+      .arc-code-block .code-block__orb--maximize { background: var(--orb-maximize); }
 
       .arc-code-block .code-block__titlebar-filename {
         position: absolute;

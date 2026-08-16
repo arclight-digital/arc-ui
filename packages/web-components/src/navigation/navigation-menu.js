@@ -326,7 +326,7 @@ export class ArcNavigationMenu extends LitElement {
         overflow-y: auto;
         overscroll-behavior: contain;
         background:
-          radial-gradient(120% 80% at 50% 0%, rgba(var(--accent-primary-rgb), 0.07), transparent 70%),
+          radial-gradient(120% 80% at 50% 0%, rgba(var(--accent-primary-rgb), 0.07), rgba(var(--accent-primary-rgb), 0) 70%),
           color-mix(in srgb, var(--surface-base) 92%, transparent);
         backdrop-filter: blur(12px) saturate(130%);
         -webkit-backdrop-filter: blur(12px) saturate(130%);

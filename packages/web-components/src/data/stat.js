@@ -31,7 +31,10 @@ export class ArcStat extends DeclaredPropsMixin(LitElement) {
   static styles = [
     tokenStyles,
     css`
-      :host { display: block; }
+      :host {
+        display: block;
+        --lobe-rgb: var(--accent-primary-rgb);
+      }
 
       .stat {
         display: flex;
@@ -58,7 +61,7 @@ export class ArcStat extends DeclaredPropsMixin(LitElement) {
       .stat__rule {
         width: 24px;
         height: 1px;
-        background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+        background: var(--lobe-line);
         opacity: 0.4;
       }
 

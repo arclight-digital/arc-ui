@@ -58,8 +58,8 @@ export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
         position: absolute;
         inset: -60% 0 0 0;
         background:
-          radial-gradient(ellipse 60% 70% at 30% 72%, rgba(var(--accent-primary-rgb), 0.1), transparent 65%),
-          radial-gradient(ellipse 60% 70% at 70% 72%, rgba(var(--accent-secondary-rgb), 0.08), transparent 65%);
+          radial-gradient(ellipse 60% 70% at 30% 72%, rgba(var(--accent-primary-rgb), 0.1), rgba(var(--accent-primary-rgb), 0) 65%),
+          radial-gradient(ellipse 60% 70% at 70% 72%, rgba(var(--accent-secondary-rgb), 0.08), rgba(var(--accent-secondary-rgb), 0) 65%);
         pointer-events: none;
       }
 

@@ -117,6 +117,19 @@ export const hostTokens = css`
     --focus-inset: inset 0 0 0 2px var(--interactive);
     --focus-thumb: 0 0 8px rgba(var(--interactive-rgb), 0.5), 0 0 20px rgba(var(--interactive-rgb), 0.25);
 
+    /* Decorative presets */
+    --gradient-sunset: linear-gradient(135deg, #ff6b6b, #ffa500, #ff4757);
+    --gradient-ocean: linear-gradient(135deg, #00d2ff, #3a7bd5, #6dd5fa);
+    --orb-close: #ff5f57;
+    --orb-minimize: #febc2e;
+    --orb-maximize: #28c840;
+
+    /* Lobes of light */
+    --lobe-line: linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0));
+    --lobe-start: linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0));
+    --lobe-end: linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)));
+    --lobe-ambient: radial-gradient(var(--lobe-shape, ellipse), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 0.08)) 0%, rgba(var(--lobe-rgb, var(--border-default-rgb)), 0) var(--lobe-extent, 70%));
+
     /* Semantic aliases */
     --interactive: var(--accent-primary);
     --interactive-rgb: var(--accent-primary-rgb);

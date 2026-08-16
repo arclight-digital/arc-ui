@@ -46,6 +46,12 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
     css`
       :host {
         display: block;
+        /* The ambient wash behind the rail. Inputs on :host because that is
+           where the shape token is declared — see shared/tokens.js. */
+        --lobe-rgb: var(--accent-primary-rgb);
+        --lobe-alpha: 0.03;
+        --lobe-extent: 60%;
+        --lobe-shape: ellipse at 100% 10%;
         position: sticky;
         top: var(--nav-height);
         height: calc(100vh - var(--nav-height));
@@ -75,11 +81,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         inset-inline-end: 0;
         width: 80%;
         height: 50%;
-        background: radial-gradient(
-          ellipse at 100% 10%,
-          rgba(var(--accent-primary-rgb), 0.03),
-          transparent 60%
-        );
+        background: var(--lobe-ambient);
         pointer-events: none;
       }
 
@@ -100,14 +102,12 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         left: 0;
       }
 
+      /* Mirrored: the wash comes from the edge the rail is docked to. On :host
+         with the other inputs — see shared/tokens.js. */
+      :host([position="right"]) { --lobe-shape: ellipse at 0% 10%; }
       :host([position="right"][glow]) .sidebar::before {
         right: auto;
         left: 0;
-        background: radial-gradient(
-          ellipse at 0% 10%,
-          rgba(var(--accent-primary-rgb), 0.03),
-          transparent 60%
-        );
       }
 
       /* Glow border variant */

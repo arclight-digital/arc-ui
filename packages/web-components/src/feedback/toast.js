@@ -64,7 +64,10 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
   static styles = [
     tokenStyles,
     css`
-      :host { display: block; }
+      :host {
+        display: block;
+        --lobe-rgb: var(--_status-rgb);
+      }
 
       .toast-container {
         position: fixed;
@@ -124,7 +127,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
         inset-inline-start: 0;
         inset-inline-end: 0;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
+        background: var(--lobe-line);
       }
 
       .toast__icon {

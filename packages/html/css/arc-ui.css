@@ -35,6 +35,7 @@
   --accent-secondary-rgb: 148, 102, 255;
   --text-primary-rgb: 232, 232, 236;
   --text-muted-rgb: 142, 142, 155;
+  --border-default-rgb: 34, 34, 41;
   --color-error-rgb: 239, 68, 68;
   --white-rgb: 255, 255, 255;
   --black-rgb: 0, 0, 0;
@@ -232,10 +233,23 @@
   --gradient-divider: linear-gradient(90deg, rgba(24, 24, 30, 0), rgb(24, 24, 30), rgba(24, 24, 30, 0));
   --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), rgba(var(--accent-secondary-rgb),0));
   --gradient-page-ambient: radial-gradient(ellipse, rgba(255, 255, 255,0.015) 0%, rgba(255, 255, 255,0) 70%);
+  --gradient-sunset: linear-gradient(135deg, #ff6b6b, #ffa500, #ff4757);
+  --gradient-ocean: linear-gradient(135deg, #00d2ff, #3a7bd5, #6dd5fa);
+
+  --orb-close: #ff5f57;
+  --orb-minimize: #febc2e;
+  --orb-maximize: #28c840;
 
   --glow-white: 0 0 6px rgba(var(--text-primary-rgb),0.6), 0 0 18px rgba(var(--text-primary-rgb),0.25), 0 0 40px rgba(var(--text-primary-rgb),0.1);
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.4), 0 0 40px rgba(var(--accent-secondary-rgb),0.15);
+
+  /* Lobes of light. The inputs are deliberately not declared: see the note in
+     the tree above. */
+  --lobe-line: linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0));
+  --lobe-start: linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0));
+  --lobe-end: linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)));
+  --lobe-ambient: radial-gradient(var(--lobe-shape, ellipse), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 0.08)) 0%, rgba(var(--lobe-rgb, var(--border-default-rgb)), 0) var(--lobe-extent, 70%));
 
   --glow-line-white: linear-gradient(90deg, rgba(var(--text-primary-rgb),0), rgba(var(--text-primary-rgb),0.35), rgba(var(--text-primary-rgb),0));
   --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.7), rgba(var(--accent-primary-rgb),0));
@@ -674,8 +688,8 @@
         position: absolute;
         inset: -60% 0 0 0;
         background:
-          radial-gradient(ellipse 60% 70% at 30% 72%, rgba(var(--accent-primary-rgb), 0.1), transparent 65%),
-          radial-gradient(ellipse 60% 70% at 70% 72%, rgba(var(--accent-secondary-rgb), 0.08), transparent 65%);
+          radial-gradient(ellipse 60% 70% at 30% 72%, rgba(var(--accent-primary-rgb), 0.1), rgba(var(--accent-primary-rgb), 0) 65%),
+          radial-gradient(ellipse 60% 70% at 70% 72%, rgba(var(--accent-secondary-rgb), 0.08), rgba(var(--accent-secondary-rgb), 0) 65%);
         pointer-events: none;
       }
 
@@ -749,11 +763,15 @@
         background: var(--gradient-divider-glow);
         box-shadow: 0 0 6px rgba(var(--accent-primary-rgb),0.08);
       }
+      .arc-divider[data-variant="glow"] {
+        --lobe-rgb: var(--accent-secondary-rgb);
+        --lobe-alpha: 0.4;
+      }
       .arc-divider[data-variant="glow"] .divider::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(90deg, transparent 0%, rgba(var(--accent-secondary-rgb),0.4) 50%, transparent 100%);
+        background: var(--lobe-line);
         background-size: 200% 100%;
         animation: divider-shimmer 6s ease-in-out infinite;
         mix-blend-mode: screen;
@@ -765,13 +783,21 @@
         height: 2px;
         margin-inline: auto;
       }
+      .arc-divider[data-variant="line-white"] {
+        --lobe-rgb: var(--text-primary-rgb);
+        --lobe-alpha: 0.35;
+      }
       .arc-divider[data-variant="line-white"] .divider {
         max-width: 160px;
-        background: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
+        background: var(--lobe-line);
+      }
+      .arc-divider[data-variant="line-primary"] {
+        --lobe-rgb: var(--accent-primary-rgb);
+        --lobe-alpha: 0.7;
       }
       .arc-divider[data-variant="line-primary"] .divider {
         max-width: 200px;
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
+        background: var(--lobe-line);
         box-shadow: var(--glow-sm);
       }
       .arc-divider[data-variant="line-gradient"] .divider {
@@ -786,72 +812,79 @@
 
       .arc-divider[data-align="left"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]):not([data-data-variant="dashed"]):not([data-data-variant="dotted"]):not([data-data-variant="fade"]):not([data-data-variant="line"]) .divider,
       .arc-divider[data-align="left"][data-variant="subtle"] .divider {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
       .arc-divider[data-align="right"]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]):not([data-data-variant="dashed"]):not([data-data-variant="dotted"]):not([data-data-variant="fade"]):not([data-data-variant="line"]) .divider,
       .arc-divider[data-align="right"][data-variant="subtle"] .divider {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
 
       .arc-divider[data-align="left"][data-variant="glow"] .divider {
-        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), transparent);
+        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-secondary-rgb),0));
       }
       .arc-divider[data-align="right"][data-variant="glow"] .divider {
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-primary-rgb),0.5));
+        background: linear-gradient(90deg, rgba(var(--accent-secondary-rgb),0), rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-primary-rgb),0.5));
       }
 
       .arc-divider[data-align="left"][data-variant="line-white"] .divider {
-        background: linear-gradient(90deg, rgba(var(--text-primary-rgb),0.35), transparent);
+        background: var(--lobe-start);
       }
       .arc-divider[data-align="right"][data-variant="line-white"] .divider {
-        background: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35));
+        background: var(--lobe-end);
       }
 
       .arc-divider[data-align="left"][data-variant="line-primary"] .divider {
-        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.7), transparent);
+        background: var(--lobe-start);
       }
       .arc-divider[data-align="right"][data-variant="line-primary"] .divider {
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7));
+        background: var(--lobe-end);
       }
 
       .arc-divider[data-align="left"][data-variant="line-gradient"] .divider {
-        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), transparent);
+        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
       }
       .arc-divider[data-align="right"][data-variant="line-gradient"] .divider {
-        background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary));
+        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary));
       }
 
       /* ── Vertical ── */
-      .arc-divider[vertical] { display: inline-flex; width: auto; height: 100%; }
+      .arc-divider[vertical] {
+        display: inline-flex;
+        width: auto;
+        height: 100%;
+        /* One declaration turns every lobe below on its side. It has to sit on
+           .arc-divider — see the lobe note in shared/tokens.js. */
+        --lobe-axis: 180deg;
+      }
       .arc-divider[vertical] .divider { width: 1px; height: 100%; }
 
       .arc-divider[vertical]:not([data-data-variant="glow"]):not([data-data-variant="line-gradient"]):not([data-data-variant="line-primary"]):not([data-data-variant="line-white"]):not([data-data-variant="dashed"]):not([data-data-variant="dotted"]):not([data-data-variant="fade"]):not([data-data-variant="line"]) .divider,
       .arc-divider[vertical][data-variant="subtle"] .divider {
-        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       .arc-divider[vertical][data-variant="glow"] .divider {
-        background: linear-gradient(180deg, transparent, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), transparent);
+        background: linear-gradient(180deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-secondary-rgb),0));
       }
 
       .arc-divider[vertical][data-variant="line-gradient"] .divider {
         width: 2px;
         max-width: none;
-        background: linear-gradient(180deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+        background: linear-gradient(180deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
         box-shadow: var(--glow-md);
       }
 
       .arc-divider[vertical][data-variant="line-primary"] .divider {
         width: 2px;
         max-width: none;
-        background: linear-gradient(180deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
+        background: var(--lobe-line);
         box-shadow: var(--glow-sm);
       }
 
       .arc-divider[vertical][data-variant="line-white"] .divider {
         width: 2px;
         max-width: none;
-        background: linear-gradient(180deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
+        background: var(--lobe-line);
       }
 
       /* ── Plain rule styles, absorbed from arc-separator ──
@@ -870,7 +903,7 @@
       .arc-divider[data-variant="dotted"] .divider { border-top: 1px dotted var(--border-default); }
 
       .arc-divider[data-variant="fade"] .divider {
-        background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
         box-shadow: none;
         max-width: none;
       }
@@ -895,7 +928,7 @@
       .arc-divider[vertical][data-variant="dotted"] .divider { border-inline-start: 1px dotted var(--border-default); }
 
       .arc-divider[vertical][data-variant="fade"] .divider {
-        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       .arc-divider[vertical][data-variant="line"] .divider { background: var(--border-default); }
@@ -903,10 +936,10 @@
       /* Align applies to the two gradient-bearing rule styles only. A dashed
          line has no origin to shift. */
       .arc-divider[data-align="left"][data-variant="fade"] .divider {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
       .arc-divider[data-align="right"][data-variant="fade"] .divider {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
 
       /* Labeled divider */
@@ -938,10 +971,10 @@
       /* Each half fades away from the label rather than repeating the
          both-ends fade twice, which would put a hard edge either side of it. */
       .arc-divider[data-variant="fade"] .divider__line:first-child {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
       .arc-divider[data-variant="fade"] .divider__line:last-child {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
 
       .arc-divider .divider__label {
@@ -1007,7 +1040,11 @@
       }
 
 /* arc-feature-card */
-.arc-feature-card { display: block; height: 100%; }
+.arc-feature-card {
+        display: block;
+        height: 100%;
+        --lobe-rgb: var(--accent-primary-rgb);
+      }
 
       .arc-feature-card .card { height: 100%; }
 
@@ -1088,7 +1125,7 @@
       .arc-feature-card .card__rule {
         width: 32px;
         height: 1px;
-        background: linear-gradient(90deg, var(--accent-primary), transparent);
+        background: var(--lobe-start);
         opacity: 0;
         transition: opacity var(--transition-slow), width var(--transition-slow);
       }
@@ -1323,7 +1360,7 @@
       }
 
       .arc-separator[data-variant="fade"] .separator {
-        background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       /* Vertical */
@@ -1347,8 +1384,9 @@
         width: 0;
       }
 
+      .arc-separator[data-orientation="vertical"] { --lobe-axis: 180deg; }
       .arc-separator[data-orientation="vertical"][data-variant="fade"] .separator {
-        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       /* Labeled */
@@ -1380,11 +1418,11 @@
       }
 
       .arc-separator[data-variant="fade"] .separator__line:first-child {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
 
       .arc-separator[data-variant="fade"] .separator__line:last-child {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
 
       .arc-separator .separator__label {
@@ -2312,7 +2350,10 @@
       }
 
 /* arc-stat */
-.arc-stat { display: block; }
+.arc-stat {
+        display: block;
+        --lobe-rgb: var(--accent-primary-rgb);
+      }
 
       .arc-stat .stat {
         display: flex;
@@ -2339,7 +2380,7 @@
       .arc-stat .stat__rule {
         width: 24px;
         height: 1px;
-        background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+        background: var(--lobe-line);
         opacity: 0.4;
       }
 
@@ -2868,7 +2909,7 @@
         inset-inline-start: var(--space-lg);
         inset-inline-end: var(--space-lg);
         height: 1px;
-        background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb), 0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb), 0));
         opacity: 0.4;
       }
 
@@ -3089,9 +3130,9 @@
         border-radius: var(--radius-full);
       }
 
-      .arc-code-block .code-block__orb--close    { background: #ff5f57; }
-      .arc-code-block .code-block__orb--minimize { background: #febc2e; }
-      .arc-code-block .code-block__orb--maximize { background: #28c840; }
+      .arc-code-block .code-block__orb--close    { background: var(--orb-close); }
+      .arc-code-block .code-block__orb--minimize { background: var(--orb-minimize); }
+      .arc-code-block .code-block__orb--maximize { background: var(--orb-maximize); }
 
       .arc-code-block .code-block__titlebar-filename {
         position: absolute;
@@ -3164,13 +3205,13 @@
       }
 
       .arc-gradient-text[data-variant="sunset"] .gradient-text {
-        background: linear-gradient(135deg, #ff6b6b, #ffa500, #ff4757);
+        background: var(--gradient-sunset);
         -webkit-background-clip: text;
         background-clip: text;
       }
 
       .arc-gradient-text[data-variant="ocean"] .gradient-text {
-        background: linear-gradient(135deg, #00d2ff, #3a7bd5, #6dd5fa);
+        background: var(--gradient-ocean);
         -webkit-background-clip: text;
         background-clip: text;
       }
@@ -4824,6 +4865,12 @@
 /* arc-sidebar */
 .arc-sidebar {
         display: block;
+        /* The ambient wash behind the rail. Inputs on .arc-sidebar because that is
+           where the shape token is declared — see shared/tokens.js. */
+        --lobe-rgb: var(--accent-primary-rgb);
+        --lobe-alpha: 0.03;
+        --lobe-extent: 60%;
+        --lobe-shape: ellipse at 100% 10%;
         position: sticky;
         top: var(--nav-height);
         height: calc(100vh - var(--nav-height));
@@ -4853,11 +4900,7 @@
         inset-inline-end: 0;
         width: 80%;
         height: 50%;
-        background: radial-gradient(
-          ellipse at 100% 10%,
-          rgba(var(--accent-primary-rgb), 0.03),
-          transparent 60%
-        );
+        background: var(--lobe-ambient);
         pointer-events: none;
       }
 
@@ -4878,14 +4921,12 @@
         left: 0;
       }
 
+      /* Mirrored: the wash comes from the edge the rail is docked to. On .arc-sidebar
+         with the other inputs — see shared/tokens.js. */
+      .arc-sidebar[data-position="right"] { --lobe-shape: ellipse at 0% 10%; }
       .arc-sidebar[data-position="right"][glow] .sidebar::before {
         right: auto;
         left: 0;
-        background: radial-gradient(
-          ellipse at 0% 10%,
-          rgba(var(--accent-primary-rgb), 0.03),
-          transparent 60%
-        );
       }
 
       /* Glow border variant */
@@ -5253,7 +5294,7 @@
         inset-inline-start: 20%;
         inset-inline-end: 20%;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-secondary-rgb), 0.2), rgba(var(--accent-primary-rgb), 0.15), transparent);
+        background: linear-gradient(90deg, rgba(var(--accent-secondary-rgb), 0), rgba(var(--accent-secondary-rgb), 0.2), rgba(var(--accent-primary-rgb), 0.15), rgba(var(--accent-primary-rgb), 0));
         opacity: 0;
         transition: opacity var(--transition-slow);
         pointer-events: none;
@@ -6318,7 +6359,13 @@
       }
 
 /* arc-alert */
-.arc-alert { display: block; }
+/* Lobe inputs on .arc-alert: a custom property substitutes its own var()s at
+         the element that declares the property, and the shape is declared on
+         .arc-alert — see shared/tokens.js. */
+      .arc-alert {
+        display: block;
+        --lobe-rgb: var(--_status-rgb);
+      }
 
       .arc-alert .alert {
         position: relative;
@@ -6339,7 +6386,7 @@
         inset-inline-start: 0;
         inset-inline-end: 0;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
+        background: var(--lobe-line);
         box-shadow: var(--glow-status);
       }
 

@@ -31,7 +31,7 @@
       }
 
       .arc-separator[data-variant="fade"] .separator {
-        background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       /* Vertical */
@@ -55,8 +55,9 @@
         width: 0;
       }
 
+      .arc-separator[data-orientation="vertical"] { --lobe-axis: 180deg; }
       .arc-separator[data-orientation="vertical"][data-variant="fade"] .separator {
-        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       /* Labeled */
@@ -88,11 +89,11 @@
       }
 
       .arc-separator[data-variant="fade"] .separator__line:first-child {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
 
       .arc-separator[data-variant="fade"] .separator__line:last-child {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
 
       .arc-separator .separator__label {

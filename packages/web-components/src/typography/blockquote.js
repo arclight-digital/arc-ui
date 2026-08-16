@@ -44,7 +44,7 @@ export class ArcBlockquote extends DeclaredPropsMixin(LitElement) {
         inset-inline-start: var(--space-lg);
         inset-inline-end: var(--space-lg);
         height: 1px;
-        background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb), 0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb), 0));
         opacity: 0.4;
       }
 

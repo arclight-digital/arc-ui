@@ -51,11 +51,15 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
         background: var(--gradient-divider-glow);
         box-shadow: 0 0 6px rgba(var(--accent-primary-rgb),0.08);
       }
+      :host([variant="glow"]) {
+        --lobe-rgb: var(--accent-secondary-rgb);
+        --lobe-alpha: 0.4;
+      }
       :host([variant="glow"]) .divider::after {
         content: '';
         position: absolute;
         inset: 0;
-        background: linear-gradient(90deg, transparent 0%, rgba(var(--accent-secondary-rgb),0.4) 50%, transparent 100%);
+        background: var(--lobe-line);
         background-size: 200% 100%;
         animation: divider-shimmer 6s ease-in-out infinite;
         mix-blend-mode: screen;
@@ -67,13 +71,21 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
         height: 2px;
         margin-inline: auto;
       }
+      :host([variant="line-white"]) {
+        --lobe-rgb: var(--text-primary-rgb);
+        --lobe-alpha: 0.35;
+      }
       :host([variant="line-white"]) .divider {
         max-width: 160px;
-        background: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
+        background: var(--lobe-line);
+      }
+      :host([variant="line-primary"]) {
+        --lobe-rgb: var(--accent-primary-rgb);
+        --lobe-alpha: 0.7;
       }
       :host([variant="line-primary"]) .divider {
         max-width: 200px;
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
+        background: var(--lobe-line);
         box-shadow: var(--glow-sm);
       }
       :host([variant="line-gradient"]) .divider {
@@ -88,72 +100,79 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
 
       :host([align="left"]:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"]):not([variant="dashed"]):not([variant="dotted"]):not([variant="fade"]):not([variant="line"])) .divider,
       :host([align="left"][variant="subtle"]) .divider {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
       :host([align="right"]:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"]):not([variant="dashed"]):not([variant="dotted"]):not([variant="fade"]):not([variant="line"])) .divider,
       :host([align="right"][variant="subtle"]) .divider {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
 
       :host([align="left"][variant="glow"]) .divider {
-        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), transparent);
+        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-secondary-rgb),0));
       }
       :host([align="right"][variant="glow"]) .divider {
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-primary-rgb),0.5));
+        background: linear-gradient(90deg, rgba(var(--accent-secondary-rgb),0), rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-primary-rgb),0.5));
       }
 
       :host([align="left"][variant="line-white"]) .divider {
-        background: linear-gradient(90deg, rgba(var(--text-primary-rgb),0.35), transparent);
+        background: var(--lobe-start);
       }
       :host([align="right"][variant="line-white"]) .divider {
-        background: linear-gradient(90deg, transparent, rgba(var(--text-primary-rgb),0.35));
+        background: var(--lobe-end);
       }
 
       :host([align="left"][variant="line-primary"]) .divider {
-        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0.7), transparent);
+        background: var(--lobe-start);
       }
       :host([align="right"][variant="line-primary"]) .divider {
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-primary-rgb),0.7));
+        background: var(--lobe-end);
       }
 
       :host([align="left"][variant="line-gradient"]) .divider {
-        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), transparent);
+        background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
       }
       :host([align="right"][variant="line-gradient"]) .divider {
-        background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-secondary));
+        background: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary));
       }
 
       /* ── Vertical ── */
-      :host([vertical]) { display: inline-flex; width: auto; height: 100%; }
+      :host([vertical]) {
+        display: inline-flex;
+        width: auto;
+        height: 100%;
+        /* One declaration turns every lobe below on its side. It has to sit on
+           :host — see the lobe note in shared/tokens.js. */
+        --lobe-axis: 180deg;
+      }
       :host([vertical]) .divider { width: 1px; height: 100%; }
 
       :host([vertical]:not([variant="glow"]):not([variant="line-gradient"]):not([variant="line-primary"]):not([variant="line-white"]):not([variant="dashed"]):not([variant="dotted"]):not([variant="fade"]):not([variant="line"])) .divider,
       :host([vertical][variant="subtle"]) .divider {
-        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       :host([vertical][variant="glow"]) .divider {
-        background: linear-gradient(180deg, transparent, rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), transparent);
+        background: linear-gradient(180deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.5), rgba(var(--accent-secondary-rgb),0.3), rgba(var(--accent-secondary-rgb),0));
       }
 
       :host([vertical][variant="line-gradient"]) .divider {
         width: 2px;
         max-width: none;
-        background: linear-gradient(180deg, transparent, var(--accent-primary), var(--accent-secondary), transparent);
+        background: linear-gradient(180deg, rgba(var(--accent-primary-rgb),0), var(--accent-primary), var(--accent-secondary), rgba(var(--accent-secondary-rgb),0));
         box-shadow: var(--glow-md);
       }
 
       :host([vertical][variant="line-primary"]) .divider {
         width: 2px;
         max-width: none;
-        background: linear-gradient(180deg, transparent, rgba(var(--accent-primary-rgb),0.7), transparent);
+        background: var(--lobe-line);
         box-shadow: var(--glow-sm);
       }
 
       :host([vertical][variant="line-white"]) .divider {
         width: 2px;
         max-width: none;
-        background: linear-gradient(180deg, transparent, rgba(var(--text-primary-rgb),0.35), transparent);
+        background: var(--lobe-line);
       }
 
       /* ── Plain rule styles, absorbed from arc-separator ──
@@ -172,7 +191,7 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
       :host([variant="dotted"]) .divider { border-top: 1px dotted var(--border-default); }
 
       :host([variant="fade"]) .divider {
-        background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
         box-shadow: none;
         max-width: none;
       }
@@ -197,7 +216,7 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
       :host([vertical][variant="dotted"]) .divider { border-inline-start: 1px dotted var(--border-default); }
 
       :host([vertical][variant="fade"]) .divider {
-        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       :host([vertical][variant="line"]) .divider { background: var(--border-default); }
@@ -205,10 +224,10 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
       /* Align applies to the two gradient-bearing rule styles only. A dashed
          line has no origin to shift. */
       :host([align="left"][variant="fade"]) .divider {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
       :host([align="right"][variant="fade"]) .divider {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
 
       /* Labeled divider */
@@ -240,10 +259,10 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
       /* Each half fades away from the label rather than repeating the
          both-ends fade twice, which would put a hard edge either side of it. */
       :host([variant="fade"]) .divider__line:first-child {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
       :host([variant="fade"]) .divider__line:last-child {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
 
       .divider__label {

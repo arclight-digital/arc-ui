@@ -33,7 +33,13 @@ export class ArcBanner extends DeclaredPropsMixin(LitElement) {
     tokenStyles,
     statusVars,
     css`
-      :host { display: block; }
+      /* The lobe inputs sit on :host because that is where the shape token is
+         declared, and a custom property substitutes its own var()s at the
+         element that declares it — see shared/tokens.js. */
+      :host {
+        display: block;
+        --lobe-rgb: var(--_status-rgb);
+      }
 
       :host([sticky]) {
         position: sticky;
@@ -46,7 +52,7 @@ export class ArcBanner extends DeclaredPropsMixin(LitElement) {
         align-items: center;
         gap: var(--space-md);
         padding: var(--space-md);
-        background: linear-gradient(90deg, rgba(var(--_status-rgb), 0.06), transparent 60%);
+        background: linear-gradient(90deg, rgba(var(--_status-rgb), 0.06), rgba(var(--_status-rgb), 0) 60%);
         border: 1px solid rgba(var(--_status-rgb), 0.2);
         border-radius: var(--radius-md);
         position: relative;
@@ -60,7 +66,7 @@ export class ArcBanner extends DeclaredPropsMixin(LitElement) {
         inset-inline-start: 0;
         inset-inline-end: 0;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
+        background: var(--lobe-line);
       }
 
       .banner__icon {

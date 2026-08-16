@@ -87,3 +87,24 @@ is how a design language dies.
   em-based `padding-block`/`margin-block` (arc-gradient-text already does).
 - A token declared on `:host` in shared-styles.js beats a `:root` override and
   silently breaks consumer theming — only the role slots may be inherited there.
+
+## Illumination
+
+- Light is a **lobe**, and its shape is a token: `var(--lobe-line)` (lit in the
+  middle, fading both ways), `--lobe-start` / `--lobe-end` (anchored to one
+  edge), `--lobe-ambient` (the soft wash behind a section). Drive them with
+  `--lobe-rgb`, `--lobe-alpha`, `--lobe-axis`, and for the wash `--lobe-shape`
+  / `--lobe-extent`.
+- **Set the inputs on `:host`.** A custom property substitutes its own `var()`s
+  at the element that declares it, and the shapes are declared on `:host` — an
+  input on an inner node paints in the fallback color with nothing failing.
+  `check gradient-stops` enforces it.
+- **Never `transparent` in a stop list.** It is `rgba(0, 0, 0, 0)`, so the fade
+  darkens on its way out and leaves a hard edge where it meets its box —
+  invisible on a near-black page, a grey rectangle on a near-white one. Use the
+  adjacent stop's color at zero alpha, or a lobe, which cannot be spelled wrong.
+  Checked across the token file *and* the components.
+- A color that is not on the scale still gets a name: the mock window lights
+  (`--orb-close` / `--orb-minimize` / `--orb-maximize`) and arc-gradient-text's
+  presets (`--gradient-sunset`, `--gradient-ocean`) are tokens, not hexes,
+  because a hex in a stylesheet is a color no theme can reach.

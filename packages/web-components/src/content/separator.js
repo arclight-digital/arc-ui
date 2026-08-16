@@ -60,7 +60,7 @@ export class ArcSeparator extends DeclaredPropsMixin(LitElement) {
       }
 
       :host([variant="fade"]) .separator {
-        background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       /* Vertical */
@@ -84,8 +84,9 @@ export class ArcSeparator extends DeclaredPropsMixin(LitElement) {
         width: 0;
       }
 
+      :host([orientation="vertical"]) { --lobe-axis: 180deg; }
       :host([orientation="vertical"][variant="fade"]) .separator {
-        background: linear-gradient(180deg, transparent, var(--border-default), transparent);
+        background: var(--lobe-line);
       }
 
       /* Labeled */
@@ -117,11 +118,11 @@ export class ArcSeparator extends DeclaredPropsMixin(LitElement) {
       }
 
       :host([variant="fade"]) .separator__line:first-child {
-        background: linear-gradient(90deg, transparent, var(--border-default));
+        background: var(--lobe-end);
       }
 
       :host([variant="fade"]) .separator__line:last-child {
-        background: linear-gradient(90deg, var(--border-default), transparent);
+        background: var(--lobe-start);
       }
 
       .separator__label {

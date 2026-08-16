@@ -59,13 +59,13 @@ export class ArcGradientText extends DeclaredPropsMixin(LitElement) {
       }
 
       :host([variant="sunset"]) .gradient-text {
-        background: linear-gradient(135deg, #ff6b6b, #ffa500, #ff4757);
+        background: var(--gradient-sunset);
         -webkit-background-clip: text;
         background-clip: text;
       }
 
       :host([variant="ocean"]) .gradient-text {
-        background: linear-gradient(135deg, #00d2ff, #3a7bd5, #6dd5fa);
+        background: var(--gradient-ocean);
         -webkit-background-clip: text;
         background-clip: text;
       }

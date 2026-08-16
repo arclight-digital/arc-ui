@@ -97,6 +97,12 @@ export const tokens = {
     accentSecondary: '139, 92, 246',
     textPrimary: '232, 232, 236',
     textMuted: '142, 142, 155',
+    /* Published for one reason: nine component gradients fade a hairline out
+       from --border-default, and a fade needs the adjacent stop's own color at
+       zero alpha. Without a channel the only spelling available was the
+       `transparent` keyword, which is transparent *black* — see the gradient
+       block below. */
+    borderDefault: '34, 34, 41',
     error: '239, 68, 68',
     success: '52, 211, 153',
     warning: '245, 158, 11',
@@ -433,6 +439,84 @@ export const tokens = {
     divider: 'linear-gradient(90deg, rgba(24, 24, 30, 0), rgb(24, 24, 30), rgba(24, 24, 30, 0))',
     dividerGlow:
       'linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), rgba(var(--accent-secondary-rgb),0))',
+    /* arc-gradient-text's two decorative presets. Not brand colors and not
+       derived from the accents — the component's whole purpose is to offer
+       named gradients that are not the house pair — but tokens all the same,
+       because a hex in a stylesheet is a color no theme can reach. */
+    sunset: 'linear-gradient(135deg, #ff6b6b, #ffa500, #ff4757)',
+    ocean: 'linear-gradient(135deg, #00d2ff, #3a7bd5, #6dd5fa)',
+  },
+
+  /* The three lights on a mock window title bar, in arc-code-block and
+     arc-terminal. Both drew them from the same six hex literals, and they are
+     the macOS palette rather than anything of ours — which is exactly why they
+     want names: a consumer building a Windows or Linux-flavoured mock has no
+     other way to change them, and the two components have to keep agreeing. */
+  orb: {
+    close: '#ff5f57',
+    minimize: '#febc2e',
+    maximize: '#28c840',
+  },
+
+  /* ── Lobes of light ─────────────────────────────────────────────────────────
+   *
+   * The house's own description of its surfaces is "lobes of light and soft
+   * gradients", and until 4.5 that was a sentence rather than a vocabulary. The
+   * tree published three lit hairlines — --glow-line-white, --glow-line-blue,
+   * --glow-line-gradient — and the components wrote forty-two gradients by
+   * hand, several of them the published token character for character with one
+   * difference: they faded to the `transparent` keyword and the tokens fade to
+   * zero alpha. See the gradient note above for why that is not cosmetic.
+   *
+   * The published three could not cover it because a lobe has three axes of
+   * variation and enumerating them is eighteen tokens: which color, which way
+   * the element runs, and whether the light is centred or anchored to an edge.
+   * arc-divider alone spells twelve of those combinations.
+   *
+   * So these take their arguments. A component sets the inputs and reads the
+   * shape:
+   *
+   *     .divider {
+   *       --lobe-rgb: var(--accent-primary-rgb);
+   *       --lobe-alpha: 0.7;
+   *       background: var(--lobe-line);
+   *     }
+   *     :host([vertical]) .divider { --lobe-axis: 180deg; }
+   *     :host([align="left"]) .divider { background: var(--lobe-start); }
+   *
+   * ── Two rules, both learned the hard way ──
+   *
+   * **The inputs go on `:host`.** A custom property substitutes its own var()s
+   * when *it* is computed, at the element that declares it, and inheritance
+   * carries the substituted result down. Every component declares the lobes on
+   * `:host` through the generated token layer, so that is where the decision is
+   * made; `--lobe-rgb` on an inner node arrives too late. `check gradient-stops`
+   * fails the build on one set anywhere else, because nothing about it fails at
+   * runtime — the declaration is valid, the gradient is valid, and the element
+   * paints in the fallback color.
+   *
+   * **They are held out of the forwarding rule** (see NOT_FORWARDED). That rule
+   * exists so a `:root` override reaches into shadow DOM, and it works by
+   * winning the cascade against `:host` from the outer tree — which means it
+   * would also beat the inputs a component sets on its own host, and hand every
+   * component `:root`'s already-resolved hairline. The forwarding docstring
+   * names this trade in the abstract; a lobe is the case where it is fatal.
+   *
+   * The fallback is spelled inline — `var(--lobe-rgb, var(--border-default-rgb))`
+   * — rather than declared, for the same reason: a declared default would have
+   * to live on `:host`, where it would beat a consumer's `:root` value.
+   */
+  lobe: {
+    line: 'linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0))',
+    start:
+      'linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0))',
+    end: 'linear-gradient(var(--lobe-axis, 90deg), rgba(var(--lobe-rgb, var(--border-default-rgb)), 0), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 1)))',
+    /* The soft wash behind a section rather than the lit edge of one. Sized and
+       placed by the caller, because where the light comes from is the whole
+       design decision — `--lobe-shape` takes anything radial-gradient's first
+       argument does. */
+    ambient:
+      'radial-gradient(var(--lobe-shape, ellipse), rgba(var(--lobe-rgb, var(--border-default-rgb)), var(--lobe-alpha, 0.08)) 0%, rgba(var(--lobe-rgb, var(--border-default-rgb)), 0) var(--lobe-extent, 70%))',
   },
 
   /* ── Glow (box-shadow presets) ── */
@@ -813,6 +897,7 @@ export const cssVariables = `
   --accent-secondary-rgb: ${tokens.rgb.accentSecondary};
   --text-primary-rgb: ${tokens.rgb.textPrimary};
   --text-muted-rgb: ${tokens.rgb.textMuted};
+  --border-default-rgb: ${tokens.rgb.borderDefault};
   --color-error-rgb: ${tokens.rgb.error};
   --white-rgb: ${tokens.rgb.white};
   --black-rgb: ${tokens.rgb.black};
@@ -1005,10 +1090,23 @@ ${Object.entries(tokens.duration)
   --gradient-divider: ${tokens.gradient.divider};
   --gradient-divider-glow: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.2), rgba(var(--accent-secondary-rgb),0.12), rgba(var(--accent-secondary-rgb),0));
   --gradient-page-ambient: radial-gradient(ellipse, rgba(${tokens.rgb.white},0.015) 0%, rgba(${tokens.rgb.white},0) 70%);
+  --gradient-sunset: ${tokens.gradient.sunset};
+  --gradient-ocean: ${tokens.gradient.ocean};
+
+  --orb-close: ${tokens.orb.close};
+  --orb-minimize: ${tokens.orb.minimize};
+  --orb-maximize: ${tokens.orb.maximize};
 
   --glow-white: ${tokens.glow.white};
   --glow-primary: 0 0 8px rgba(var(--accent-primary-rgb),0.9), 0 0 20px rgba(var(--accent-primary-rgb),0.5), 0 0 44px rgba(var(--accent-primary-rgb),0.25), 0 0 80px rgba(var(--accent-primary-rgb),0.1);
   --glow-secondary: 0 0 8px rgba(var(--accent-secondary-rgb),0.9), 0 0 20px rgba(var(--accent-secondary-rgb),0.4), 0 0 40px rgba(var(--accent-secondary-rgb),0.15);
+
+  /* Lobes of light. The inputs are deliberately not declared: see the note in
+     the tree above. */
+  --lobe-line: ${tokens.lobe.line};
+  --lobe-start: ${tokens.lobe.start};
+  --lobe-end: ${tokens.lobe.end};
+  --lobe-ambient: ${tokens.lobe.ambient};
 
   --glow-line-white: linear-gradient(90deg, rgba(var(--text-primary-rgb),0), rgba(var(--text-primary-rgb),0.35), rgba(var(--text-primary-rgb),0));
   --glow-line-blue: linear-gradient(90deg, rgba(var(--accent-primary-rgb),0), rgba(var(--accent-primary-rgb),0.7), rgba(var(--accent-primary-rgb),0));
@@ -1134,6 +1232,7 @@ export const lightTokens = {
     accentSecondary: '120, 70, 230',
     textPrimary: '35, 35, 55',
     textMuted: '97, 100, 120',
+    borderDefault: '210, 214, 222',
   },
   glow: {
     primary:
@@ -1492,6 +1591,7 @@ const rgbVarMap = {
   accentSecondary: '--accent-secondary-rgb',
   textPrimary: '--text-primary-rgb',
   textMuted: '--text-muted-rgb',
+  borderDefault: '--border-default-rgb',
   success: '--color-success-rgb',
   error: '--color-error-rgb',
   warning: '--color-warning-rgb',
@@ -1771,7 +1871,21 @@ function wrapTagList(tags) {
  * The private size mirrors are excluded for the same reason: --_text-md already
  * reads the public --text-md, which inherits.
  */
-const NOT_FORWARDED = /^--(font-(body|label|mono|display|quote|accent)$|_text-)/;
+/**
+ * Held back from the forwarding rule below.
+ *
+ * The role slots and the private size mirrors were always here. `--lobe-*`
+ * joined them in 4.5 for the reason the forwarding docstring already names as
+ * its own trade: `inherit` delivers a composition *already substituted in the
+ * parent's scope*, so a per-element override of one of its inputs no longer
+ * re-resolves it. For --glow-md that trade is worth making. For a lobe it is
+ * fatal — the whole point is that a component sets --lobe-rgb on its own host
+ * and the shape resolves against it, and forwarding would hand every component
+ * :root's already-resolved hairline instead. This cost an afternoon: the CSS
+ * was correct, the components were correct, and every divider rendered in the
+ * border color regardless.
+ */
+const NOT_FORWARDED = /^--(font-(body|label|mono|display|quote|accent)$|_text-|lobe-)/;
 
 /**
  * Re-expose the :host static token layer to a :root override.
@@ -2044,6 +2158,15 @@ export function generateHostTokensCSS(indent = '    ') {
     ['--focus-inset', tokens.focus.inset],
     ['--focus-thumb', tokens.focus.thumb],
   ]);
+  group('Decorative presets', [
+    ['--gradient-sunset', tokens.gradient.sunset],
+    ['--gradient-ocean', tokens.gradient.ocean],
+    ...Object.entries(tokens.orb).map(([k, v]) => [`--orb-${k}`, v]),
+  ]);
+  group(
+    'Lobes of light',
+    Object.entries(tokens.lobe).map(([k, v]) => [`--lobe-${k}`, v]),
+  );
   group('Semantic aliases', [
     ['--interactive', 'var(--accent-primary)'],
     ['--interactive-rgb', 'var(--accent-primary-rgb)'],

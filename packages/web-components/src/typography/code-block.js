@@ -331,9 +331,9 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-full);
       }
 
-      .code-block__orb--close    { background: #ff5f57; }
-      .code-block__orb--minimize { background: #febc2e; }
-      .code-block__orb--maximize { background: #28c840; }
+      .code-block__orb--close    { background: var(--orb-close); }
+      .code-block__orb--minimize { background: var(--orb-minimize); }
+      .code-block__orb--maximize { background: var(--orb-maximize); }
 
       .code-block__titlebar-filename {
         position: absolute;

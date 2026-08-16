@@ -91,7 +91,7 @@
         inset-inline-start: 20%;
         inset-inline-end: 20%;
         height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(var(--accent-secondary-rgb), 0.2), rgba(var(--accent-primary-rgb), 0.15), transparent);
+        background: linear-gradient(90deg, rgba(var(--accent-secondary-rgb), 0), rgba(var(--accent-secondary-rgb), 0.2), rgba(var(--accent-primary-rgb), 0.15), rgba(var(--accent-primary-rgb), 0));
         opacity: 0;
         transition: opacity var(--transition-slow);
         pointer-events: none;

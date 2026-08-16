@@ -35,7 +35,11 @@ export class ArcFeatureCard extends LitElement {
     tokenStyles,
     cardHoverStyles,
     css`
-      :host { display: block; height: 100%; }
+      :host {
+        display: block;
+        height: 100%;
+        --lobe-rgb: var(--accent-primary-rgb);
+      }
 
       .card { height: 100%; }
 
@@ -116,7 +120,7 @@ export class ArcFeatureCard extends LitElement {
       .card__rule {
         width: 32px;
         height: 1px;
-        background: linear-gradient(90deg, var(--accent-primary), transparent);
+        background: var(--lobe-start);
         opacity: 0;
         transition: opacity var(--transition-slow), width var(--transition-slow);
       }

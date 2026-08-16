@@ -13,12 +13,12 @@
   .arc-feature-card .card:hover .card__action-arrow { transform: translateX(2px); }
   .arc-feature-card .card:hover .card__rule { opacity: 0.5; width: 48px; }
 </style>
-<div class="arc-feature-card" style="display: block; height: 100%">
+<div class="arc-feature-card" style="display: block; height: 100%; --lobe-rgb: 40, 87, 215">
   <div class="card" style="height: 100%"><div class="card__inner" style="padding: inherit; gap: inherit; z-index: 1">
     <div class="card__icon" style="width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: inherit; background: rgba(40, 87, 215, 0.06); border: 1px solid rgba(40, 87, 215, 0.12); color: oklch(from var(--accent-primary) 0.4444 c h); font-size: 20px">★</div>
     <h3 class="card__title" style="font-size: 17px is a self-reference and invalid. Declaring the public name on :host instead is what made an override at :root unreachable — a value set on the host always beats one inherited into it. The indirection gives components a name that is only ever declared, and consumers a name that is only ever read. Emitted here as well as on :host so the standalone CSS build resolves them: there is no shadow root there, so :root is the only declaration site. */ --_text-xs: 12px; font-weight: 600; color: rgb(35, 35, 55); margin: 0">Heading</h3>
     <p style="color: rgb(59, 62, 80); font-family: 'Host Grotesk', system-ui, sans-serif; font-size: 16px; line-height: inherit; flex: 1; margin: 0">Description text goes here</p>
     Action
-    <span class="card__rule" style="width: 32px; height: 1px; background: linear-gradient(90deg, oklch(from var(--accent-primary) 0.4444 c h), transparent); opacity: 0"></span>
+    <span class="card__rule" style="width: 32px; height: 1px; background: linear-gradient(90deg, rgba(var(--border-default-rgb), 1), rgba(var(--border-default-rgb), 0)); opacity: 0"></span>
   </div></div>
 </div>

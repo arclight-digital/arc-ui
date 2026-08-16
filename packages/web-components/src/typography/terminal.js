@@ -99,9 +99,9 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-full);
       }
 
-      .terminal__orb--close    { background: #ff5f57; }
-      .terminal__orb--minimize { background: #febc2e; }
-      .terminal__orb--maximize { background: #28c840; }
+      .terminal__orb--close    { background: var(--orb-close); }
+      .terminal__orb--minimize { background: var(--orb-minimize); }
+      .terminal__orb--maximize { background: var(--orb-maximize); }
 
       .terminal__title {
         position: absolute;

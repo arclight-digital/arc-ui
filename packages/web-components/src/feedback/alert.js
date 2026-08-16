@@ -70,7 +70,13 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
     tokenStyles,
     statusVars,
     css`
-      :host { display: block; }
+      /* Lobe inputs on :host: a custom property substitutes its own var()s at
+         the element that declares the property, and the shape is declared on
+         :host — see shared/tokens.js. */
+      :host {
+        display: block;
+        --lobe-rgb: var(--_status-rgb);
+      }
 
       .alert {
         position: relative;
@@ -91,7 +97,7 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
         inset-inline-start: 0;
         inset-inline-end: 0;
         height: 2px;
-        background: linear-gradient(90deg, transparent, var(--_status-color), transparent);
+        background: var(--lobe-line);
         box-shadow: var(--glow-status);
       }
 

@@ -3,6 +3,12 @@
 /* arc-sidebar */
 .arc-sidebar {
         display: block;
+        /* The ambient wash behind the rail. Inputs on .arc-sidebar because that is
+           where the shape token is declared — see shared/tokens.js. */
+        --lobe-rgb: var(--accent-primary-rgb);
+        --lobe-alpha: 0.03;
+        --lobe-extent: 60%;
+        --lobe-shape: ellipse at 100% 10%;
         position: sticky;
         top: var(--nav-height);
         height: calc(100vh - var(--nav-height));
@@ -32,11 +38,7 @@
         inset-inline-end: 0;
         width: 80%;
         height: 50%;
-        background: radial-gradient(
-          ellipse at 100% 10%,
-          rgba(var(--accent-primary-rgb), 0.03),
-          transparent 60%
-        );
+        background: var(--lobe-ambient);
         pointer-events: none;
       }
 
@@ -57,14 +59,12 @@
         left: 0;
       }
 
+      /* Mirrored: the wash comes from the edge the rail is docked to. On .arc-sidebar
+         with the other inputs — see shared/tokens.js. */
+      .arc-sidebar[data-position="right"] { --lobe-shape: ellipse at 0% 10%; }
       .arc-sidebar[data-position="right"][glow] .sidebar::before {
         right: auto;
         left: 0;
-        background: radial-gradient(
-          ellipse at 0% 10%,
-          rgba(var(--accent-primary-rgb), 0.03),
-          transparent 60%
-        );
       }
 
       /* Glow border variant */
