@@ -8,13 +8,18 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @tag arc-status-bar
  * @status stable
  * @prop {'static' | 'fixed'} position - Controls whether the status bar flows with the document (static) or pins to the bottom of the viewport (fixed). Fixed mode sets bottom: 0, left: 0, right: 0 with z-index: 100.
- * @slot start
+ * @slot prefix - Content pinned to the inline-start edge of the bar.
  * @slot - Default content.
- * @slot end
+ * @slot suffix - Content pinned to the inline-end edge of the bar.
+ * @slot start - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it
+ *   still renders in the same region, ahead of anything slotted into `prefix`.
+ * @slot end - Deprecated alias of `suffix`, kept through v4 and removed in v5.
  * @csspart base
- * @csspart start
+ * @csspart prefix
+ * @csspart start - Alias of `prefix`, on the same element. Kept through v4.
  * @csspart center
- * @csspart end
+ * @csspart suffix
+ * @csspart end - Alias of `suffix`, on the same element. Kept through v4.
  */
 export class ArcStatusBar extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -81,13 +86,15 @@ export class ArcStatusBar extends DeclaredPropsMixin(LitElement) {
   render() {
     return html`
       <div class="status-bar" part="base" role="status">
-        <div class="status-bar__start" part="start">
+        <div class="status-bar__start" part="prefix start">
+          <slot name="prefix"></slot>
           <slot name="start"></slot>
         </div>
         <div class="status-bar__center" part="center">
           <slot></slot>
         </div>
-        <div class="status-bar__end" part="end">
+        <div class="status-bar__end" part="suffix end">
+          <slot name="suffix"></slot>
           <slot name="end"></slot>
         </div>
       </div>

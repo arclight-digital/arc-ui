@@ -786,17 +786,33 @@
     { "name": "::part(handle)" },
     { "name": "::part(secondary)" },
     { "name": "::part(base)" },
-    { "name": "::part(start)" },
+    { "name": "::part(prefix)" },
+    {
+      "name": "::part(start)",
+      "description": "Alias of `prefix`, on the same element. Kept through v4."
+    },
     { "name": "::part(center)" },
-    { "name": "::part(end)" },
+    { "name": "::part(suffix)" },
+    {
+      "name": "::part(end)",
+      "description": "Alias of `suffix`, on the same element. Kept through v4."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(more)" },
     { "name": "::part(overflow-panel)" },
     { "name": "::part(overflow-item)" },
     { "name": "::part(base)" },
-    { "name": "::part(start)" },
+    { "name": "::part(prefix)" },
+    {
+      "name": "::part(start)",
+      "description": "Alias of `prefix`, on the same element. Kept through v4."
+    },
     { "name": "::part(center)" },
-    { "name": "::part(end)" },
+    { "name": "::part(suffix)" },
+    {
+      "name": "::part(end)",
+      "description": "Alias of `suffix`, on the same element. Kept through v4."
+    },
     { "name": "::part(base)" },
     { "name": "::part(link)" },
     { "name": "::part(base)" },

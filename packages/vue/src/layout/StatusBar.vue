@@ -14,7 +14,9 @@ const props = defineProps<{
     :position="props.position"
   >
     <slot />
+    <slot name="prefix" />
     <slot name="start" />
+    <slot name="suffix" />
     <slot name="end" />
   </arc-status-bar>
 </template>

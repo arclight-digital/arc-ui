@@ -5,8 +5,12 @@
 
   interface Props {
     position?: 'static' | 'fixed';
+    /** <slot name="prefix"> — put slot="prefix" on the element inside. */
+    prefix?: Snippet;
     /** <slot name="start"> — put slot="start" on the element inside. */
     start?: Snippet;
+    /** <slot name="suffix"> — put slot="suffix" on the element inside. */
+    suffix?: Snippet;
     /** <slot name="end"> — put slot="end" on the element inside. */
     end?: Snippet;
     children?: Snippet;
@@ -37,11 +41,13 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { position, start, end, children, ...rest }: Props = $props();
+  let { position, prefix, start, suffix, end, children, ...rest }: Props = $props();
 </script>
 
 <arc-status-bar {position} {...rest}>
+  {@render prefix?.()}
   {@render start?.()}
+  {@render suffix?.()}
   {@render end?.()}
   {@render children?.()}
 </arc-status-bar>

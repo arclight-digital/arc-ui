@@ -13886,7 +13886,7 @@
         },
         {
           "name": "arc-status-bar",
-          "description": "Bottom status bar with start, center, and end slots.\n---\n\n\n### **Slots:**\n - **start**\n- _default_ - Default content.\n- **end**\n\n### **CSS Parts:**\n - **base**\n- **start**\n- **center**\n- **end**",
+          "description": "Bottom status bar with start, center, and end slots.\n---\n\n\n### **Slots:**\n - **prefix** - Content pinned to the inline-start edge of the bar.\n- _default_ - Default content.\n- **suffix** - Content pinned to the inline-end edge of the bar.\n- **start** - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`.\n- **end** - Deprecated alias of `suffix`, kept through v4 and removed in v5.\n\n### **CSS Parts:**\n - **base**\n- **prefix**\n- **start** - Alias of `prefix`, on the same element. Kept through v4.\n- **center**\n- **suffix**\n- **end** - Alias of `suffix`, on the same element. Kept through v4.",
           "doc-url": "",
           "attributes": [
             {
@@ -13900,14 +13900,24 @@
           ],
           "slots": [
             {
-              "name": "start"
+              "name": "prefix",
+              "description": "Content pinned to the inline-start edge of the bar."
             },
             {
               "name": "",
               "description": "Default content."
             },
             {
-              "name": "end"
+              "name": "suffix",
+              "description": "Content pinned to the inline-end edge of the bar."
+            },
+            {
+              "name": "start",
+              "description": "Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`."
+            },
+            {
+              "name": "end",
+              "description": "Deprecated alias of `suffix`, kept through v4 and removed in v5."
             }
           ],
           "events": [],
@@ -13981,7 +13991,7 @@
         },
         {
           "name": "arc-toolbar",
-          "description": "Horizontal toolbar with start, center, and end slots.\n---\n\n\n### **Events:**\n - **arc-overflow-change** - Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.\n\n### **Slots:**\n - **start**\n- _default_ - Default content.\n- **end**\n\n### **CSS Parts:**\n - **more**\n- **overflow-panel**\n- **overflow-item**\n- **base**\n- **start**\n- **center**\n- **end**",
+          "description": "Horizontal toolbar with start, center, and end slots.\n---\n\n\n### **Events:**\n - **arc-overflow-change** - Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.\n\n### **Slots:**\n - **prefix** - Content pinned to the inline-start edge of the bar.\n- _default_ - Default content.\n- **suffix** - Content pinned to the inline-end edge of the bar.\n- **start** - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`.\n- **end** - Deprecated alias of `suffix`, kept through v4 and removed in v5.\n\n### **CSS Parts:**\n - **more**\n- **overflow-panel**\n- **overflow-item**\n- **base**\n- **prefix**\n- **start** - Alias of `prefix`, on the same element. Kept through v4.\n- **center**\n- **suffix**\n- **end** - Alias of `suffix`, on the same element. Kept through v4.",
           "doc-url": "",
           "attributes": [
             {
@@ -14019,14 +14029,24 @@
           ],
           "slots": [
             {
-              "name": "start"
+              "name": "prefix",
+              "description": "Content pinned to the inline-start edge of the bar."
             },
             {
               "name": "",
               "description": "Default content."
             },
             {
-              "name": "end"
+              "name": "suffix",
+              "description": "Content pinned to the inline-end edge of the bar."
+            },
+            {
+              "name": "start",
+              "description": "Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`."
+            },
+            {
+              "name": "end",
+              "description": "Deprecated alias of `suffix`, kept through v4 and removed in v5."
             }
           ],
           "events": [
@@ -19405,13 +19425,21 @@
           "name": "part(base)"
         },
         {
-          "name": "part(start)"
+          "name": "part(prefix)"
+        },
+        {
+          "name": "part(start)",
+          "description": "Alias of `prefix`, on the same element. Kept through v4."
         },
         {
           "name": "part(center)"
         },
         {
-          "name": "part(end)"
+          "name": "part(suffix)"
+        },
+        {
+          "name": "part(end)",
+          "description": "Alias of `suffix`, on the same element. Kept through v4."
         },
         {
           "name": "part(base)",
@@ -19430,13 +19458,21 @@
           "name": "part(base)"
         },
         {
-          "name": "part(start)"
+          "name": "part(prefix)"
+        },
+        {
+          "name": "part(start)",
+          "description": "Alias of `prefix`, on the same element. Kept through v4."
         },
         {
           "name": "part(center)"
         },
         {
-          "name": "part(end)"
+          "name": "part(suffix)"
+        },
+        {
+          "name": "part(end)",
+          "description": "Alias of `suffix`, on the same element. Kept through v4."
         },
         {
           "name": "part(base)"

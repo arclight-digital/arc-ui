@@ -29557,24 +29557,42 @@
               "name": "base"
             },
             {
+              "name": "prefix"
+            },
+            {
+              "description": "Alias of `prefix`, on the same element. Kept through v4.",
               "name": "start"
             },
             {
               "name": "center"
             },
             {
+              "name": "suffix"
+            },
+            {
+              "description": "Alias of `suffix`, on the same element. Kept through v4.",
               "name": "end"
             }
           ],
           "slots": [
             {
-              "name": "start"
+              "description": "Content pinned to the inline-start edge of the bar.",
+              "name": "prefix"
             },
             {
               "description": "Default content.",
               "name": ""
             },
             {
+              "description": "Content pinned to the inline-end edge of the bar.",
+              "name": "suffix"
+            },
+            {
+              "description": "Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`.",
+              "name": "start"
+            },
+            {
+              "description": "Deprecated alias of `suffix`, kept through v4 and removed in v5.",
               "name": "end"
             }
           ],
@@ -29754,24 +29772,42 @@
               "name": "base"
             },
             {
+              "name": "prefix"
+            },
+            {
+              "description": "Alias of `prefix`, on the same element. Kept through v4.",
               "name": "start"
             },
             {
               "name": "center"
             },
             {
+              "name": "suffix"
+            },
+            {
+              "description": "Alias of `suffix`, on the same element. Kept through v4.",
               "name": "end"
             }
           ],
           "slots": [
             {
-              "name": "start"
+              "description": "Content pinned to the inline-start edge of the bar.",
+              "name": "prefix"
             },
             {
               "description": "Default content.",
               "name": ""
             },
             {
+              "description": "Content pinned to the inline-end edge of the bar.",
+              "name": "suffix"
+            },
+            {
+              "description": "Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`.",
+              "name": "start"
+            },
+            {
+              "description": "Deprecated alias of `suffix`, kept through v4 and removed in v5.",
               "name": "end"
             }
           ],

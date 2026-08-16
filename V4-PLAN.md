@@ -1015,7 +1015,7 @@ catch.
 - prism caught the one mistake made along the way — `lg` styled on `arc-toolbar`
   while its documented union still said `md | sm`.
 
-**Status (2026-08-16): 4 of 5 conventions have landed.** `array-dialect` is
+**Status (2026-08-16): 4.3 is complete — all five conventions have landed.** `array-dialect` is
 done — 26 props across 19 components, all four dialects retired, and the check
 that keeps them retired is three rules with one exemption entry between them.
 
@@ -1081,11 +1081,23 @@ only part every component is supposed to have and the only one that is not
 conditional. It is driven off the docblock, so the exemption list lives in one
 place.
 
-**Still open in 4.3:** `side-slots`. That row proposes aliasing `before/after` and
-`above/below` onto `prefix/suffix`, and neither is a side slot —
-`arc-image-compare`'s before/after are the two images being compared, and
-`arc-page-header`'s above/below are the block axis, where prefix/suffix are the
-inline one. **That row needs a decision before it needs a codemod.**
+**`side-slots` landed 2026-08-16, as one pair over two components rather than
+three pairs over four.** The row proposed aliasing `start/end`, `before/after`
+and `above/below` onto `prefix/suffix`, and two of the three are not side slots:
+`arc-image-compare`'s before/after are the two images being compared — a
+sequence, with one layered over the other — and `arc-page-header`'s above/below
+are the block axis, where prefix/suffix are the inline one. Folding either in
+would have described the wrong thing in the wrong dimension, so both are
+unchanged and the check records why.
+
+That left `start/end` (arc-toolbar, arc-status-bar) against `prefix/suffix`
+(five components). It converged on `prefix/suffix` — the larger group, and the
+name the rest of the ecosystem uses for a control's leading slot. Both old names
+work through v4: the region renders two slots, and the part carries both tokens,
+so `::part(start)` costs nothing to keep. The check's job is not the rename,
+which is done; it is stopping the *next* component inventing a sixth spelling,
+which is how the library got two in the first place — neither component chose
+`start` over `prefix`, each was written without knowing the other existed.
 
 - [x] Root CSS part: every component's outermost part gains the `base` token
       **alongside** its semantic name (`part="base wrapper"` dual-token).
@@ -1094,8 +1106,9 @@ inline one. **That row needs a decision before it needs a codemod.**
       or `conformance-surface.test.js:140-156` fails the render on the
       undocumented token. Cheaper for *consumers* than a rename (no
       `::part()` breaks); not free for us.
-- [ ] Side slots: `prefix`/`suffix` canonical; alias `start/end`,
-      `before/after`, `above/below` for one major.
+- [x] Side slots: `prefix`/`suffix` canonical; alias `start/end` for one
+      major. `before/after` and `above/below` struck from this row — neither
+      is a side slot.
 - [x] One dismissal prop name across callout/banner/alert/modal/tag.
 - [x] `size`: canonical `['sm','md','lg']`; fix the 5 verified outliers.
 - [x] Arrays: sitewide migration of the remaining array props onto the

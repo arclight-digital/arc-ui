@@ -884,3 +884,41 @@ or `<button>` depending on `href`; `arc-qr-code` renders a card wrapper or a bar
 svg depending on `contrast`. Every branch carries `base`, which is the clearest
 argument for having it: it is the one handle on those components that does not
 depend on how they are configured.
+
+## Side slots are `prefix` and `suffix`
+
+**Affects `arc-toolbar` and `arc-status-bar`.** Both took `start` and `end`;
+five other components — `arc-button`, `arc-input`, `arc-masked-input`,
+`arc-input-group`, `arc-list-item` — already took `prefix` and `suffix` for the
+same thing. One name won, and it is the one already in the majority and already
+in the rest of the ecosystem.
+
+```html
+<!-- before -->
+<arc-toolbar>
+  <arc-button slot="start">Open</arc-button>
+  <arc-button slot="end">Save</arc-button>
+</arc-toolbar>
+
+<!-- after -->
+<arc-toolbar>
+  <arc-button slot="prefix">Open</arc-button>
+  <arc-button slot="suffix">Save</arc-button>
+</arc-toolbar>
+```
+
+**`start` and `end` keep working for all of v4** and are removed in v5. Both
+spellings project into the same region, so a partial migration renders
+correctly; content already in `start` stays ahead of anything newly added to
+`prefix`.
+
+The CSS parts moved the same way and cost nothing: the region carries
+`part="prefix start"`, so `::part(start)` and `::part(prefix)` both select it.
+
+### Two pairs the plan listed and this deliberately did not touch
+
+`arc-image-compare`'s `before` and `after` are **the two images being
+compared** — a sequence, with one layered over the other. `arc-page-header`'s
+`above` and `below` are **the block axis**, where prefix/suffix are the inline
+one. Neither is a side slot, and folding them in would have described the wrong
+thing in the wrong dimension. They are unchanged and stay unchanged.

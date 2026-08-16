@@ -25,7 +25,9 @@ const emit = defineEmits<{
     @arc-overflow-change="(payload: CustomEvent) => emit('arc-overflow-change', payload)"
   >
     <slot />
+    <slot name="prefix" />
     <slot name="start" />
+    <slot name="suffix" />
     <slot name="end" />
   </arc-toolbar>
 </template>

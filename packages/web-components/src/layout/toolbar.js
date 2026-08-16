@@ -17,16 +17,21 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} border - Renders a subtle bottom border (--border-subtle) to visually separate the toolbar from the content below. Enabled by default.
  * @prop {boolean} overflow - Enables responsive overflow collapse. A ResizeObserver measures available width; slotted items that do not fit are collapsed (hidden via the reversible hidden attribute) from the end of the item list, and a "More" trigger opens a menu of proxy items that re-dispatch clicks to the hidden originals. Note: because slotted nodes cannot be moved into the overflow panel, complex custom content is represented in the menu only by its text label (or the label attribute on arc-button / arc-icon-button).
  * @fires arc-overflow-change - Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.
- * @slot start
+ * @slot prefix - Content pinned to the inline-start edge of the bar.
  * @slot - Default content.
- * @slot end
+ * @slot suffix - Content pinned to the inline-end edge of the bar.
+ * @slot start - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it
+ *   still renders in the same region, ahead of anything slotted into `prefix`.
+ * @slot end - Deprecated alias of `suffix`, kept through v4 and removed in v5.
  * @csspart more
  * @csspart overflow-panel
  * @csspart overflow-item
  * @csspart base
- * @csspart start
+ * @csspart prefix
+ * @csspart start - Alias of `prefix`, on the same element. Kept through v4.
  * @csspart center
- * @csspart end
+ * @csspart suffix
+ * @csspart end - Alias of `suffix`, on the same element. Kept through v4.
  */
 export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -429,13 +434,15 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
   render() {
     return html`
       <div class="toolbar" part="base" role="toolbar">
-        <div class="toolbar__start" part="start">
+        <div class="toolbar__start" part="prefix start">
+          <slot name="prefix" @slotchange=${this._onSlotChange}></slot>
           <slot name="start" @slotchange=${this._onSlotChange}></slot>
         </div>
         <div class="toolbar__center" part="center">
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>
-        <div class="toolbar__end" part="end">
+        <div class="toolbar__end" part="suffix end">
+          <slot name="suffix" @slotchange=${this._onSlotChange}></slot>
           <slot name="end" @slotchange=${this._onSlotChange}></slot>
         </div>
         ${this._renderOverflow()}
