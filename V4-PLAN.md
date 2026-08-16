@@ -729,12 +729,12 @@ six packages.
       slots, both emitters needed the change, and `arc-virtual-list` stayed out
       of the sweep (hand-authored per package; the Angular one took the #80
       import fix by hand). See test-findings.md §80–82.
-      **Two release prerequisites before this can go green in CI**, in order:
-      publish prism 2.13.0 (unpublished as of this writing — the registry's
-      latest is 2.12.0), then bump arc-ui's devDependency and refresh the
-      lockfile. Until then `pnpm install --frozen-lockfile` cannot resolve it,
-      and `scripts/checks/prism-version.js` fails `pnpm generate` on purpose —
-      because an older prism does not error, it silently reverts all 235 files.
+      **Both release prerequisites are now met (verified 2026-08-15):**
+      `@arclux/prism` 2.13.0 is published (registry latest), arc-ui's
+      devDependency is `^2.13.0` and the lockfile resolves it, so
+      `pnpm install --frozen-lockfile` works and
+      `scripts/checks/prism-version.js` passes. That check exists because an
+      older prism does not error — it silently reverts all 235 files.
 - [ ] **3.2 (S, after the 1.2 decision)** True patch fixes (v3.2.x), only in
       components 1.2 keeps: memoize `data/diff.js`'s LCS off the render path
       (caller-invisible) and add `data/json-tree.js`'s WeakSet cycle guard
