@@ -21,16 +21,41 @@ is how a design language dies.
   by stepping down the gray ramp. `--text-secondary`, `--text-muted`, and
   `--text-ghost` sit within 17 RGB points of each other; adjacent steps do not
   read as different levels.
-- Accent color enters through the two base pairs (`--accent-primary`,
-  `--accent-secondary`, plus their `-rgb` channels). Compound tokens (gradients,
-  glows, focus rings) must reference them via `var()` — never a hard-coded
-  channel triplet — so a consumer overriding four tokens recolors everything.
+
+## The two-color contract
+
+This is the theming API. There is no other one.
+
+- **Two colors are the inputs**: `--accent-primary` and `--accent-secondary`,
+  each with its `-rgb` channel — four declarations for two decisions. (Four,
+  not two, because CSS cannot turn a color back into a bare channel list.)
+  Thirty-five tokens follow them: every glow, focus ring, gradient, tint,
+  interactive state and ground mix.
+- **Neutral, radius and density are optional preferences.** The surface and
+  text ramps, `--radius-*`, and `[data-density="compact" | "comfortable"]` are
+  there if you want them and correct if you leave them alone.
+- **Everything else derives**, at build time, through the OKLCH pipeline in
+  `shared/color.js` and `shared/tokens.js`. Statuses, chart colors, all four
+  schemes and the AAA preset are solved against their own grounds. ARC is an
+  opinionated design language: **adaptation means changing the inputs, never
+  the formula.**
+- So a compound token must reference the inputs via `var()` — never a
+  hard-coded channel triplet. `scripts/checks/two-color-contract.js` fails the
+  build on a token that spells the brand instead of referencing it, on one that
+  follows the accents at `:root` and stops in another block, and on the count
+  of accent-following tokens dropping. The failure mode it exists for is a
+  local rescue — a pinned literal for one region's contrast — which is correct
+  where it is written and is a place the brand quietly stops.
 
 ## Tokens, not literals
 
 - Every color, spacing, radius, size, and font in component or docs styling is
   a `var(--*)` reference. A literal value is a fork of the design language that
   no theme override can reach.
+- Spacing comes from `--space-*`, which `[data-density]` restates. Never
+  hard-code a gap: a compact region has to be able to tighten it. Touch targets
+  and type deliberately do not move with density — WCAG 2.2 sets a 24×24
+  minimum, and shrinking text is a different decision from tightening layout.
 - Typefaces are **roles**, never names: `var(--font-body)`, `--font-label`,
   `--font-mono`, `--font-display`, `--font-quote`. Writing a typeface name into
   a stylesheet escapes the role system. (`--font-accent` is a legacy alias of
@@ -55,6 +80,27 @@ is how a design language dies.
   `var()` naming a token nothing declares. A value derived from a context —
   `calc(var(--label-inline-size) - 1px)` — is using the scale and passes.
   Genuine one-offs go in that file's `EXEMPT` map **with a reason**.
+
+## Illumination
+
+- Light is a **lobe**, and its shape is a token: `var(--lobe-line)` (lit in the
+  middle, fading both ways), `--lobe-start` / `--lobe-end` (anchored to one
+  edge), `--lobe-ambient` (the soft wash behind a section). Drive them with
+  `--lobe-rgb`, `--lobe-alpha`, `--lobe-axis`, and for the wash `--lobe-shape`
+  / `--lobe-extent`.
+- **Set the inputs on `:host`.** A custom property substitutes its own `var()`s
+  at the element that declares it, and the shapes are declared on `:host` — an
+  input on an inner node paints in the fallback color with nothing failing.
+  `check gradient-stops` enforces it.
+- **Never `transparent` in a stop list.** It is `rgba(0, 0, 0, 0)`, so the fade
+  darkens on its way out and leaves a hard edge where it meets its box —
+  invisible on a near-black page, a grey rectangle on a near-white one. Use the
+  adjacent stop's color at zero alpha, or a lobe, which cannot be spelled wrong.
+  Checked across the token file *and* the components.
+- A color that is not on the scale still gets a name: the mock window lights
+  (`--orb-close` / `--orb-minimize` / `--orb-maximize`) and arc-gradient-text's
+  presets (`--gradient-sunset`, `--gradient-ocean`) are tokens, not hexes,
+  because a hex in a stylesheet is a color no theme can reach.
 
 ## Motion and effects
 
@@ -87,24 +133,3 @@ is how a design language dies.
   em-based `padding-block`/`margin-block` (arc-gradient-text already does).
 - A token declared on `:host` in shared-styles.js beats a `:root` override and
   silently breaks consumer theming — only the role slots may be inherited there.
-
-## Illumination
-
-- Light is a **lobe**, and its shape is a token: `var(--lobe-line)` (lit in the
-  middle, fading both ways), `--lobe-start` / `--lobe-end` (anchored to one
-  edge), `--lobe-ambient` (the soft wash behind a section). Drive them with
-  `--lobe-rgb`, `--lobe-alpha`, `--lobe-axis`, and for the wash `--lobe-shape`
-  / `--lobe-extent`.
-- **Set the inputs on `:host`.** A custom property substitutes its own `var()`s
-  at the element that declares it, and the shapes are declared on `:host` — an
-  input on an inner node paints in the fallback color with nothing failing.
-  `check gradient-stops` enforces it.
-- **Never `transparent` in a stop list.** It is `rgba(0, 0, 0, 0)`, so the fade
-  darkens on its way out and leaves a hard edge where it meets its box —
-  invisible on a near-black page, a grey rectangle on a near-white one. Use the
-  adjacent stop's color at zero alpha, or a lobe, which cannot be spelled wrong.
-  Checked across the token file *and* the components.
-- A color that is not on the scale still gets a name: the mock window lights
-  (`--orb-close` / `--orb-minimize` / `--orb-maximize`) and arc-gradient-text's
-  presets (`--gradient-sunset`, `--gradient-ocean`) are tokens, not hexes,
-  because a hex in a stylesheet is a color no theme can reach.

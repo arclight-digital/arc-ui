@@ -122,6 +122,9 @@ const phases = [
       // is to catch a color that reached a scheme without going through the
       // solver, which is exactly what the hand-written AAA preset was.
       check('contrast-contract'),
+      // The theming API, as an assertion: everything that carries the brand
+      // follows the two inputs, and the brand is spelled once per scheme.
+      check('two-color-contract'),
     ],
   },
 ];

@@ -296,6 +296,37 @@ export const tokens = {
     '4xl': '128px',
   },
 
+  /* ── Density ──
+   *
+   * `[data-density="compact"]` and `[data-density="comfortable"]` restate the
+   * spacing scale at a multiple of itself. Two decisions are load-bearing:
+   *
+   * **It restates the scale rather than multiplying it.** A `--space-md:
+   * calc(16px * var(--density))` would resolve at :root, because base.css
+   * forwards the scale into shadow DOM with `inherit` and a composition
+   * arrives already substituted — so density would work on `<html>` and
+   * silently do nothing on a section. Restating gives a plain length at every
+   * level, which `inherit` carries correctly, so a compact region inside a
+   * default page works. Same shape as the light scheme's override block, and
+   * the same trap the lobes hit; see NOT_FORWARDED.
+   *
+   * **Touch targets do not scale.** --touch-min is 24px because WCAG 2.2
+   * target size (minimum) is 24×24, and a density preset is not a licence to
+   * go under it. Density moves the padding around a control, never the hit
+   * area inside it. Type does not scale either — shrinking text is a different
+   * decision from tightening layout, and only one of them is reversible by the
+   * reader.
+   *
+   * Distinct from the per-component `density` prop on arc-data-grid, arc-table,
+   * arc-alert and arc-footer, which tightens one component regardless of the
+   * page. Both can be set; the component's prop wins inside its own shadow root
+   * because it changes padding directly rather than the scale.
+   */
+  density: {
+    compact: 0.75,
+    comfortable: 1.25,
+  },
+
   /* ── Radii ── */
   radius: {
     // Four components read --radius-xs (breadcrumb, link, notification-panel)
@@ -2380,6 +2411,19 @@ export function generateTokensCSS({ tags = [] } = {}) {
   const undefinedGuard = renderUndefinedGuard(tags);
   const tokenForwarding = renderTokenForwarding(tags);
 
+  /* Density presets: the spacing scale restated, not multiplied. See the
+     density block in the tree for why that distinction matters. */
+  const scaleAt = (factor) =>
+    Object.entries(tokens.space)
+      .map(([step, value]) => `  --space-${step}: ${Math.round(parseFloat(value) * factor)}px;`)
+      .join('\n');
+
+  const densityBlocks = Object.entries(tokens.density)
+    .map(
+      ([name, factor]) => `[data-density="${name}"] {\n${scaleAt(factor)}\n}`,
+    )
+    .join('\n\n');
+
   const touchBlock = [
     '@media (pointer: coarse) {',
     '  :root {',
@@ -2450,6 +2494,12 @@ ${cssVariables}
 }
 
 ${touchBlock}
+
+/* Density presets.
+   Spacing only: touch targets stay at the WCAG 2.2 minimum and type does not
+   move, because tightening a layout and shrinking text are different
+   decisions and only one of them is reversible by the reader. */
+${densityBlocks}
 
 /* Light Theme Overrides */
 [data-theme="light"] {

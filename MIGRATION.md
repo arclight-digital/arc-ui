@@ -1164,3 +1164,48 @@ a hundredth, but under. `solveContrast` now takes its final step on the value
 that actually ships. This moved **24 tokens in base.css by one channel step**.
 Nothing is visibly different; the difference is that the 5.5:1 contract those
 schemes carry is now true of the file rather than of the search.
+
+## `[data-density]`, and the two-color contract as the theming API
+
+**New, both additive.** V4-PLAN 4.5's last two rows.
+
+### Density
+
+`[data-density="compact"]` and `[data-density="comfortable"]` restate the
+spacing scale at 0.75× and 1.25×. Set it on `<html>` for the page or on any
+element for a region:
+
+```html
+<section data-density="compact"> … </section>
+```
+
+It restates the scale rather than multiplying it, and that is not cosmetic:
+base.css forwards `--space-*` into shadow DOM with `inherit`, which carries the
+parent's *computed* value — so a `calc(16px * var(--density))` would have
+resolved once at `:root` and silently done nothing on a section.
+
+Two things deliberately do not move. **Touch targets stay at 24×24**, the WCAG
+2.2 minimum; density moves the padding around a control, never the hit area
+inside it. **Type does not scale**, because tightening a layout and shrinking
+text are different decisions and only one of them is reversible by the reader.
+
+This is distinct from the per-component `density` prop on `arc-data-grid`,
+`arc-table`, `arc-alert` and `arc-footer`, which tightens one component
+regardless of the page. Both work; the prop wins inside its own shadow root
+because it sets padding directly rather than the scale.
+
+### The two-color contract
+
+Nothing changes — this names what the pipeline already does and puts a check
+behind it. **Two colors are the inputs**, `--accent-primary` and
+`--accent-secondary` with their `-rgb` channels: four declarations for two
+decisions, because CSS cannot turn a color back into a bare channel list.
+Thirty-five tokens follow them. Neutral, radius and density are optional
+preferences; statuses, chart colors, all four schemes and the AAA preset derive
+at build time and are not knobs.
+
+`scripts/checks/two-color-contract.js` fails the build on a token that spells
+the brand instead of referencing it, on one that follows the accents at `:root`
+and stops in another block, and on the count of accent-following tokens
+dropping. The failure it exists for is the local rescue — a pinned literal that
+fixes one region's contrast and is a place the brand quietly stops.

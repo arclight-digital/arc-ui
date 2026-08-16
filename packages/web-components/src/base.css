@@ -413,6 +413,32 @@
   }
 }
 
+/* Density presets.
+   Spacing only: touch targets stay at the WCAG 2.2 minimum and type does not
+   move, because tightening a layout and shrinking text are different
+   decisions and only one of them is reversible by the reader. */
+[data-density="compact"] {
+  --space-xs: 3px;
+  --space-sm: 6px;
+  --space-md: 12px;
+  --space-lg: 18px;
+  --space-xl: 30px;
+  --space-2xl: 48px;
+  --space-3xl: 72px;
+  --space-4xl: 96px;
+}
+
+[data-density="comfortable"] {
+  --space-xs: 5px;
+  --space-sm: 10px;
+  --space-md: 20px;
+  --space-lg: 30px;
+  --space-xl: 50px;
+  --space-2xl: 80px;
+  --space-3xl: 120px;
+  --space-4xl: 160px;
+}
+
 /* Light Theme Overrides */
 [data-theme="light"] {
   color-scheme: light;
