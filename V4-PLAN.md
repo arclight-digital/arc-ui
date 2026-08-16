@@ -570,11 +570,56 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
       skip **zero**, because the `pretest` hook regenerates the modules; they
       exist for a fresh checkout run without it, where the alternative is a
       wall of `ERR_MODULE_NOT_FOUND` that reads as a broken suite.
-- [ ] **2.5 (M–L)** The library mutation climb, against the 2.0 re-baseline,
+- [x] **2.5 (M–L)** The library mutation climb, against the 2.0 re-baseline,
       on the sampled-set pairs — using the fixture rules already in HANDOFF
       (observable arithmetic, both ternary branches, non-default `min`).
       Sized honestly: the old 67.52% reading is not the yardstick.
-- [ ] **2.6 (M)** The earned trims — only cuts that survived adversarial
+
+      **DONE 2026-08-15.** The two pairs 2.0 left ungated:
+      `listbox-controller` **50.00% → 98.68%** and `position-controller`
+      **52.83% → 88.46%**, both now ratcheted and no longer skipped in CI.
+      Every remaining survivor is analysed as equivalent in test-findings.md —
+      one in listbox, six in position — which is the form the result should
+      take, per 1.5's note that a score is worth less than "no non-equivalent
+      survivors".
+
+      **The two modules failed for opposite reasons, and that is the lesson.**
+
+      `listbox-controller` had a *blind spot the architecture creates*: fifteen
+      of its 39 survivors were `return true`/`return false` inside
+      `handleKeydown`, because every consumer is `if (handleKeydown(e)) return;`
+      followed by its own switch — so a component behaves correctly even when
+      the controller wrongly declines a key, and no assertion made through
+      `arc-select` can tell the two apart. The contract the whole shared-spine
+      design rests on was the one thing only a direct test could see. A
+      stand-in host fixed it and reached the states a rendered select never
+      sits in: zero options, a shrinking option set, and the three option
+      combinations no consumer sets.
+
+      `position-controller` had *two tests that were wrong in a way that reads
+      as thorough*. The scroll test anchored to a `position: fixed` element and
+      asserted the panel had **not** moved — equally true of a controller with
+      no listener at all. The re-observe test asserted a coordinate that is the
+      same before and after the resize it was testing. Both are HANDOFF's "a
+      comparison is only evidence if both sides were exercised the same way",
+      one step on: **a measurement is only evidence if the thing measured can
+      differ.** Worth a sweep of the suite for assertions whose expected value
+      does not depend on the code under test.
+
+      **A new harness trap, recorded in HANDOFF:** `ResizeObserver.observe()`
+      schedules an initial delivery for every element, and it lands *after* a
+      synchronous test body. A test that observes, perturbs and polls gets its
+      `_update()` either way — so a missing re-observation is invisible.
+      `await observed()` between setup and perturbation is what makes it show.
+
+      **Two source changes fell out**, both of the "one guard written twice"
+      shape: `_step`'s non-wrapping clamp was dead (`_seek` already refuses an
+      out-of-range index when `wrap` is false), and the window listener options
+      are now module constants so `addEventListener` and `removeEventListener`
+      cannot drift — a remove keyed on a different `capture` flag removes
+      nothing and says nothing. Also deleted `selectOnClose`, a `@param` for a
+      feature with no implementation and no consumer.
+- [x] **2.6 (M)** The earned trims — only cuts that survived adversarial
       verification, each with its named mutation pair (ground rule 3):
       - `disabled-open-sweep.test.js:74-87` only (**keep :88-119** — the
         setter-refusal test at :88-105 asserts `isUpdatePending === false`,
@@ -592,6 +637,47 @@ of this file is restated in V4-SCOPE §1.4 with the revised numbers —
         `_rafId` → the observable class flip; `_listbox.activeIndex` →
         `aria-activedescendant`). Pair: each component's source ↔ its own
         test file.
+
+      **DONE 2026-08-15.** All four, and the fourth found a live bug.
+
+      **The first trim's stated justification was wrong, and that is worth more
+      than the trim.** The plan said `conformance.test.js` derives the
+      property-path case from `blockedBy`. It does not — it checks that
+      `blockedBy` names a real property, which is declaration validity, not
+      mechanism. The real replacement is `props.test.js`'s own `blockedBy`
+      block, which covers refusal-while-blocked, the attribute path, reversion
+      when the blocker turns on afterwards, and the allowed-default case. The
+      cut still stands, on the correct grounds, and the file header now records
+      both. A trim justified by coverage that turns out not to exist is exactly
+      what ground rule 1 is for; the only reason it was caught is that the rule
+      says to go and look.
+
+      **The `reconnect-sweep` shrink was 3 of its 9 tests** — the ResizeObserver
+      call-count tests for truncate, code-block and image-cropper. Their job was
+      catching a component that subscribes from `firstUpdated`, from a
+      hand-written list of the four known cases, which is precisely how finding
+      #64 got past them nine components later. `lifecycle-pairing.js` reads
+      every component and needs no list. What stays is behavioural, because that
+      is what pins the *controllers* a static check cannot see into.
+
+      **The private-field pass covered ~150 assertions across 15 files** and is
+      the item that paid. Re-expressing arc-data-grid's `_rafId` as the class
+      its frame writes killed a mutant the old assertion could not: `_rafId` is
+      set *before* the rAF body runs, so `expect(el._rafId).to.not.equal(null)`
+      passes against a callback whose first line is `if (wrapper) return;`. The
+      mutation harness had that exact inversion live in the working tree when
+      the rewritten test failed against it. A private field asserted at the
+      wrong moment is not a weaker test — it is a test of something else.
+
+      Four assertions stay private, each saying why in place: the interval
+      handle in `clock.test.js` (the observable version needs two 1s waits, past
+      Mocha's timeout), the subscription flag in `overlay-adoption.test.js` (a
+      listener firing on a closed panel does nothing anyone can see), the
+      position map in `menubar.test.js` (a leak), and `_formValue()` in
+      `form-data-sweep.test.js` (an unnamed control is not submitted at all).
+      All four are claims about a **resource** rather than a behaviour, which is
+      the test for when the exception applies. The rule and its exceptions are
+      in HANDOFF.
 
 **Gate:** findings ledger empty (fixed or closed-by-removal); vocabulary at
 100% of survivors (achievable — `list()` landed in 2.2); `props.js` mutation

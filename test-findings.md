@@ -4102,6 +4102,190 @@ mutation pair because its subject is 26 components rather than one module, was
 verified by breaking `multi-select`'s `_formValue()` and watching it go red.
 A gate nobody has watched fail is an assumption.
 
+## The two large pairs, climbed — V4-PLAN 2.5
+
+`listbox-controller` **50.00% → 98.68%** and `position-controller` **52.83% →
+88.46%**, the two pairs 2.0 measured and left ungated. They failed for opposite
+reasons and the two reasons are the transferable part.
+
+### listbox-controller: one return value, fifteen survivors
+
+Of 39 survivors, **fifteen were `return true` and `return false` inside
+`handleKeydown`** — every one of them, in every arm of the switch. Nothing in
+the suite ever read what the method returned.
+
+That is not an oversight so much as a blind spot the architecture creates.
+Every consumer is written as
+
+    if (this._listbox.handleKeydown(e)) return;
+    // ...the component's own keys
+
+so a component still does the right thing when the controller wrongly declines
+a key, because the component's own switch picks it up. An assertion made
+through `arc-select` cannot distinguish *the controller consumed this key*
+from *something consumed this key*. The contract that the whole shared-spine
+design rests on was the one thing only a direct test could see.
+
+The fix is a `harness()` in the suite: a ListboxController on a stand-in host
+with `addController`, `requestUpdate` and `updateComplete`. It also reaches
+what a rendered select cannot — zero options, an option set that shrinks
+between renders, and the three option combinations no consumer sets (`wrap:
+false`, no `optionId`, `typeahead` without `getItemLabel`). Those accounted for
+most of the rest.
+
+Two source changes came out of it:
+
+- **`_step`'s non-wrapping clamp was dead.** `Math.max(0, Math.min(next, count
+  - 1))` looked like the bounds check and was not one: `_seek` already refuses
+  an out-of-range index when `wrap` is false, and every index the clamp
+  produced landed back on the option it started from. Two guards written as
+  one. Now `_step` passes the unclamped index through and `_seek` decides what
+  off-the-end means, which is also the only reading under which the two agree.
+- **`selectOnClose` was documented and never implemented.** A `@param` for a
+  feature with no code and no consumer — the same doc/code drift as
+  `arc-aspect-ratio._paddingFallback`. Deleted.
+
+The one survivor left is equivalent: `_pendingScroll = false` in the
+constructor. Set to `true` it queues a scroll that `hostUpdated` then declines,
+because `activeDescendantId` is empty while nothing is active.
+
+### position-controller: two vacuous tests hiding nine mutants
+
+The suite was not thin — it was **wrong in a way that reads as thorough**. Two
+tests asserted things that were true whether or not the code under them ran:
+
+- *"repositions when the page scrolls under a top-layer panel"* anchored to the
+  probe's `position: fixed` element, whose rect is scroll-invariant, and then
+  asserted the panel had **not** moved. Equally true of a controller that
+  registers no scroll listener at all. Every mutant of that registration —
+  `capture`, `passive`, and `_shown`'s initial value — survived it.
+- *"re-observes the panel after a hide/show cycle"* used a `bottom` placement,
+  whose `top` coordinate is `anchor.bottom + offset` and therefore identical
+  before and after a height change. It asserted the number that could not move.
+
+Both are the shape from HANDOFF's *"a comparison is only evidence if both sides
+were exercised the same way"*, one step further along: a measurement is only
+evidence if the thing being measured can differ.
+
+**And a timing trap worth its own line: ResizeObserver's first delivery masks a
+missing re-observation.** After rewriting those two tests they still passed
+under the mutants. `observe()` schedules an initial callback for every element,
+delivered at the end of the frame — after a synchronous test body. So a test
+that calls `show()`, changes the panel's height and polls gets a `_update()`
+either way: the one it was promised, or the initial delivery arriving late.
+`await observed()` between the two makes the difference visible. Any test that
+sets up an observer and perturbs it in the same synchronous block has this
+problem.
+
+The rest of the climb was uncovered surface rather than bad tests. **The entire
+horizontal axis had never been positioned** — every placement assertion in the
+file was `top` or `bottom`, so the side maths and both cross-axis alignments on
+it were written and never run. And `_flip`'s four `>=` comparisons read
+identically to `>` everywhere except at an exact fit, so each now has a fixture
+placing the anchor so the preferred side fits to the pixel, paired with one a
+pixel short that must flip. The pair is the point: the exact-fit test alone
+passes against a controller that never flips.
+
+One source change: `SCROLL_LISTENER` and `RESIZE_LISTENER` as module constants,
+so `addEventListener` and `removeEventListener` cannot drift apart. A remove
+keyed on a different `capture` flag removes nothing and reports nothing, and
+the options were previously spelled out twice.
+
+**Six survivors, all equivalent, and the analysis is the deliverable:**
+
+- `position-controller.js:122`, `:123` — `passive: true` on both listeners. A
+  scheduling hint with no observable behaviour; neither handler ever calls
+  `preventDefault`.
+- `:199` — `(isNewPanel || wasHidden) && typeof ResizeObserver !== 'undefined'`
+  → `||`. Makes the block run on every `show()`; `disconnect()` followed by the
+  same two `observe()` calls is idempotent.
+- `:222` — `floating?.isConnected && this._isOpenPopover(floating)` → `||`.
+  `hidePopover()` on a popover that is not showing is a spec no-op, so the
+  extra call does nothing. It would only differ for a panel that never received
+  the `popover` attribute, which no consumer can produce.
+- `:255` — `this._topLayer && !this._isOpenPopover(floating)` → `||`. The extra
+  `showPopover()` throws straight into the `try/catch` that is already there
+  for the mid-frame-close race.
+- `:270` — `_isOpenPopover`'s catch returning `false`. Reachable only where
+  `:popover-open` is unsupported, which is not the browser this suite runs in.
+
+## The earned trims — V4-PLAN 2.6
+
+Four cuts, and two of them taught something the cut itself did not.
+
+### The first trim's justification did not survive being checked
+
+`disabled-open-sweep.test.js` opened with: *"conformance.test.js derives the
+property-path and markup cases from the declaration for any component that
+declares `blockedBy`."* It does not. What `conformance.test.js` derives for a
+`blockedBy` prop is that the named blocker **is a real property** — a typo
+there would silently mean no constraint at all — which is declaration validity,
+not mechanism. Nothing in it ever sets `open` on a disabled control.
+
+The trim still stands, because the actual replacement exists: `props.test.js`'s
+`blockedBy` block covers refusal while blocked, the attribute path, reversion
+when the blocker turns on *after* a legal assignment, and the allowed-default
+case, all on the spine that implements it. Five per-component copies of one
+assertion whose subject is `props.js` are the "one bug reported 238 times"
+shape.
+
+What is worth recording is the near-miss. A cut justified by coverage that
+turns out not to exist deletes a test and leaves nothing behind, and the write-up
+would still have read as careful. Ground rule 1 — *nothing deleted until its
+replacement is green* — only works if "its replacement" is a file someone opened.
+
+### The private-field pass found a live bug in the assertion it replaced
+
+`arc-data-grid`'s scroll coalescing was tested as `expect(el._rafId).to.not
+.equal(null)`. `_rafId` is assigned **before** the requestAnimationFrame
+callback runs, so that assertion is satisfied by a frame being *booked*. It
+says nothing about the frame doing anything.
+
+Re-expressed against the class the callback writes — `scrolled-x` on the
+wrapper, which lifts the pinned column's shadow — the test immediately failed
+against a working tree that happened to be holding this mutant:
+
+```js
+this._rafId = requestAnimationFrame(() => {
+  this._rafId = null;
+  const wrapper = this.shadowRoot?.querySelector('.grid-wrapper');
+  if (wrapper) return;          // the mutant: `!wrapper` inverted
+  this._scrolledX = Math.abs(wrapper.scrollLeft) > 0;
+  ...
+```
+
+Every `_rafId` assertion in the suite passed against it. The lesson is sharper
+than "prefer public surface": **a private field asserted at the wrong moment is
+not a weaker test, it is a test of a different thing.** `_rafId` tested the
+scheduling; the contract is the work.
+
+### The rule, and the four cases it does not cover
+
+Roughly 150 assertions across 15 files moved to the surface the state actually
+reaches: the selected dot's `aria-selected` (carousel), `[tabindex="0"]` plus
+`data-row`/`data-col` (data-grid), the crosshair and hue-thumb positions read
+out of the raw `style` attribute (color-picker), the fill's `scaleX`
+(scroll-indicator), the ring's `stroke-dashoffset` (scroll-spy),
+`aria-activedescendant` (multi-select), the `--marquee-duration` custom
+property, the rendered overflow menu (toolbar), and `arc-queue-change`'s counts
+(toast). Detection was measured before and after on the three largest
+conversions and was identical each time — the point was never the score.
+
+A handful stay private and say why in place:
+
+| where | what | why there is no surface |
+|---|---|---|
+| `clock.test.js` | the interval handle | the observable version needs two waits of just over a second, past Mocha's 2000ms |
+| `overlay-adoption.test.js` | `_dismiss._active` | a listener that fires and finds the panel already closed does nothing anyone can see |
+| `menubar.test.js`, `position-controller.test.js` | `_positions.size` | a leaked controller-map entry has no rendered consequence |
+| `form-data-sweep.test.js` | `_formValue()` | an unnamed control is not submitted at all, so FormData cannot see it |
+
+Every one is a claim about a **resource** rather than a behaviour, and that is
+the test for when the exception applies. Separately,
+`uncovered-sweep.test.js` asserts `_paddingFallback === undefined` — the
+absence of a private getter, which is the point of that test rather than an
+exception to the rule.
+
 ## A ledger correction: `pnpm generate` was not diff-clean
 
 Caught during this batch's final verification, and it matters for Phase 0

@@ -31,7 +31,23 @@ see "What changed under the plan" below.
   ~3,400 tests with the *same* detection, after fault injection showed one
   broken mechanism was being reported 238 times. See "Test posture" in
   test-findings.md before reading any test-count trend as progress.
-- **V4-PLAN Phase 2 is done except 2.5 and 2.6.** 2.3 closed 2026-08-15: every
+- **V4-PLAN Phase 2 is DONE (2026-08-15).** 2.5 climbed the two large mutation
+  pairs — `listbox-controller` **50.00% → 98.68%** and `position-controller`
+  **52.83% → 88.46%** — and both are now ratcheted and enforced in CI rather
+  than skipped. Two transferable lessons, both in the 2.5 entry of V4-PLAN and
+  in the testing rules below: **a shared module's return value is invisible
+  through its consumers** (fifteen survivors were `handleKeydown`'s `return
+  true`/`return false`, because every consumer falls through to its own switch),
+  and **a measurement is only evidence if the thing measured can differ** (two
+  position-controller tests asserted numbers that could not move).
+  2.6 took the four earned trims. The private-field pass — ~150 assertions
+  across 15 files moved onto rendered surface — found a live bug in the
+  assertion it replaced: `_rafId` is set *before* the rAF body runs, so
+  `expect(el._rafId).to.not.equal(null)` passes against a callback whose first
+  line returns. Its first trim also had the wrong justification written down
+  (`conformance.test.js` does *not* derive the `blockedBy` property-path case;
+  `props.test.js` does), which is worth more than the trim.
+- 2.3 closed the same day: every
   numeric prop in the library is declared, and the vocabulary gained
   **`nullable`** — a kind-agnostic option for props whose *unset* state is a
   third meaning rather than the default. Fourteen props needed it (arc-gauge and
@@ -498,6 +514,31 @@ Three results worth carrying forward:
   `transfer-list`.
 - **Exercise both branches of every ternary.** Home was tested on the low thumb
   and End on the high thumb, never crossed, so both conditionals survived.
+- **Assert the rendered surface, not the private field behind it.** `_current`,
+  `_focusRow`, `_progress`, `_activeIndex` and friends are *state*; a component
+  that tracks state perfectly and stops rendering it satisfies every assertion
+  made against the field and is broken. Nearly always there is a surface: the
+  selected dot's `aria-selected`, `[tabindex="0"]`, the fill's `scaleX`, the
+  `aria-activedescendant` id, the class the frame writes. A handful stay
+  private and each says why in place — the interval handle in
+  `clock.test.js`, the subscription flag in `overlay-adoption.test.js`, the
+  controller map in `menubar.test.js` and `position-controller.test.js`, and
+  `_formValue()` in `form-data-sweep.test.js`. Every one is a claim about a
+  *resource* rather than a behaviour, and that is the test for when the
+  exception applies.
+- **A measurement is only evidence if the thing measured can differ.**
+  `position-controller`'s scroll test anchored to a `position: fixed` element,
+  whose rect is scroll-invariant, and asserted the panel had *not* moved — true
+  of a controller that registers no listener at all. Its sibling asserted a
+  coordinate (`anchor.bottom + offset`) that a panel resize cannot change. Both
+  read as thorough and detected nothing; every mutant under them survived.
+  Before trusting a test, ask what value it would print if the code were
+  deleted.
+- **`ResizeObserver.observe()` schedules an initial delivery, and it lands after
+  your synchronous test body.** So a test that observes, changes a size and
+  polls gets its callback either way: the one it was promised, or the initial
+  one arriving late. A missing re-observation is invisible. Put `await
+  observed()` between setup and perturbation. Same trap for IntersectionObserver.
 - **Poll with `until()`, never sleep a fixed time.** A fixed wait encodes a guess
   about machine load. Its default is 1200ms, deliberately under Mocha's 2000ms,
   so the assertion's message wins over a bare runner timeout.
