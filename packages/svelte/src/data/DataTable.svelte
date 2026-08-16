@@ -11,6 +11,7 @@
     sortDirection?: 'asc' | 'desc';
     virtual?: boolean;
     rowHeight?: number;
+    overscan?: number;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -39,7 +40,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { rows = [], sortable, selectable, sortColumn = '', sortDirection, virtual, rowHeight, children, ...rest }: Props = $props();
+  let { rows = [], sortable, selectable, sortColumn = '', sortDirection, virtual, rowHeight, overscan, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -51,6 +52,6 @@
   });
 </script>
 
-<arc-data-table {rows} {sortable} {selectable} {virtual} bind:this={__el} {...rest}>
+<arc-data-table {rows} {sortable} {selectable} {virtual} {overscan} bind:this={__el} {...rest}>
   {@render children?.()}
 </arc-data-table>

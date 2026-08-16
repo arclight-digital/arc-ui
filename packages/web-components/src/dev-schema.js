@@ -133,7 +133,8 @@ export default {
    "sortable",
    "width"
   ],
-  "slug": "data-table"
+  "slug": "data-table",
+  "mergedInto": "arc-data-grid"
  },
  "arc-cta-banner": {
   "attrs": [
@@ -620,8 +621,17 @@ export default {
    "manualSort",
    "selectable",
    "virtual",
-   "rowHeight"
+   "rowHeight",
+   "overscan",
+   "density",
+   "striped"
   ],
+  "enums": {
+   "density": [
+    "default",
+    "compact"
+   ]
+  },
   "slug": "data-grid"
  },
  "arc-data-table": {
@@ -632,7 +642,8 @@ export default {
    "sort-column",
    "sortDirection",
    "virtual",
-   "rowHeight"
+   "rowHeight",
+   "overscan"
   ],
   "enums": {
    "sortDirection": [
@@ -640,7 +651,8 @@ export default {
     "desc"
    ]
   },
-  "slug": "data-table"
+  "slug": "data-table",
+  "mergedInto": "arc-data-grid"
  },
  "arc-description-item": {
   "attrs": [
@@ -856,7 +868,8 @@ export default {
     "compact"
    ]
   },
-  "slug": "table"
+  "slug": "table",
+  "mergedInto": "arc-data-grid"
  },
  "arc-tag": {
   "attrs": [

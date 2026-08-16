@@ -304,11 +304,14 @@ this plan removes a keep. The 13 merges and 1 rename are 4.2 and 4.4.
 | `arc-carousel`, `arc-cta-banner`, `arc-feature-card`, `arc-hotspot`, `arc-image-compare`, `arc-image-hotspots`, `arc-marquee` | **`/marketing`** — landing-page components |
 | `arc-callout` | **merge → `arc-alert`** (§3.2) |
 | `arc-separator` | **merge → `arc-divider`** |
+| `arc-column` | **merge → `arc-data-grid`** — added in 4.2. Listed as keep in Phase 1, which read it as an
+independent component; its only consumer is `arc-data-table`, and arc-data-grid takes columns as a `columns`
+array rather than as slotted children, so it has no element to migrate to and goes with its parent. |
 | `arc-qr-code` | **keep — app**, with the dependency made lazy + optional and a first test (§2.5) |
 | `arc-icon-library` | **keep — app**; needs `name: oneOf([...])` (finding #79) |
 | `arc-divider` | **keep — app**, absorbs `arc-separator` |
 | `arc-stack` | **keep — app**, absorbs `arc-cluster` |
-| `arc-accordion`, `arc-accordion-item`, `arc-aspect-ratio`, `arc-avatar`, `arc-avatar-group`, `arc-card`, `arc-collapsible`, `arc-color-swatch`, `arc-column`, `arc-empty-state`, `arc-icon`, `arc-image`, `arc-infinite-scroll`, `arc-lightbox`, `arc-scroll-area`, `arc-scroll-indicator`, `arc-skeleton`, `arc-spinner`, `arc-video`, `arc-virtual-list` | keep — app |
+| `arc-accordion`, `arc-accordion-item`, `arc-aspect-ratio`, `arc-avatar`, `arc-avatar-group`, `arc-card`, `arc-collapsible`, `arc-color-swatch`, `arc-empty-state`, `arc-icon`, `arc-image`, `arc-infinite-scroll`, `arc-lightbox`, `arc-scroll-area`, `arc-scroll-indicator`, `arc-skeleton`, `arc-spinner`, `arc-video`, `arc-virtual-list` | keep — app |
 
 ### data (34)
 

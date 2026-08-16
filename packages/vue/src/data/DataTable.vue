@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<{
   sortDirection?: 'asc' | 'desc';
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
 }>(), {
   rows: () => ([]),
   sortColumn: '',
@@ -32,6 +33,7 @@ const emit = defineEmits<{
     :sortDirection="props.sortDirection"
     :virtual="props.virtual"
     :rowHeight="props.rowHeight"
+    :overscan="props.overscan"
     @arc-sort="(payload: CustomEvent) => emit('arc-sort', payload)"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
   >

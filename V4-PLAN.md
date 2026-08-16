@@ -895,15 +895,84 @@ with `group-gating` renamed to `barrel-gating` as it grew the status half.
 `pnpm generate` diff-clean and idempotent. Docs build green, 201 pages
 including five tombstones.
 
-### 4.2 Merges (L)
+### 4.2 Merges (L) — **DONE (2026-08-15), 11 of 12 rows**
 
-- [ ] The 12 non-dialog merges from 1.1 (the dialog family is 4.4's, built
+- [x] The 12 non-dialog merges from 1.1 (the dialog family is 4.4's, built
       directly on `<dialog>` so it is not rewritten twice). Each: merge,
       `@deprecated` alias where cheap, MIGRATION.md entry, docs page folded,
-      wrappers regenerate for free.
-- [ ] Extract the shared `VirtualController` while merging the table family —
+      wrappers regenerate for free. **11 rows landed; `arc-badge → arc-tag` is
+      deferred, see below.** A twelfth tag was added: `arc-column`, which Phase
+      1 listed as a keep.
+- [x] Extract the shared `VirtualController` while merging the table family —
       the windowing math is implemented three times (`virtual-list`,
       `data-table`, `data-grid`); keep `overscan` public on the merged grid.
+
+**"Alias where cheap" resolved to "leave the component alone".** The cheapest
+possible alias is the original, unchanged: a deprecated component keeps working,
+stays in the barrel for the whole major — taking it out is the break the
+deprecation exists to postpone — and only leaves the *catalog*: no card in the
+docs grid, a notice on its page, a dev-mode warning. So the work was never the
+alias. It was making each survivor able to do the job, and that is where the
+plan turned out to be wrong.
+
+**V4-SCOPE §3 was drawn from prop lists, and the differences were in the
+styles.** Four rows of six in the first batch needed the survivor to grow, and
+one did not survive contact at all:
+
+- `arc-divider` had no dashed rule, no dotted rule, and no flat one — `subtle`,
+  its default, is the token *gradient*. It gains `line`/`dashed`/`dotted`/`fade`.
+- `arc-description-list` could only stack; `arc-key-value`'s whole reason to
+  exist was term-beside-detail. It gains `layout`, which has to cross a shadow
+  boundary via a custom property.
+- `arc-tag` gains `info`; `arc-alert` gains `tip` and an `icon` slot;
+  `arc-toast` gains a progress mode; `arc-data-grid` gains `density` and
+  `striped`.
+- `arc-stack` needed nothing, but the migration is four attributes rather than
+  the two §3 claimed.
+
+**`arc-badge → arc-tag` is deferred, on a stated finding.** §3 row 3 reads
+"arc-tag is the superset (it has `removable`) … no new prop needed", true of the
+props and false of the styles: badge is `--font-mono`, normal tracking, sentence
+case; tag is `--font-label`, 2px tracking, UPPERCASE, `min-height:
+var(--touch-min)`. Merging as written re-sets every badge on every page —
+`v3.2.0` becomes `V3.2.0` in a taller box — which is the "quietly delete a
+visual capability" failure §3.2 rules out by name for arc-callout's accent bar.
+Resolving it means deciding whether ARC has one chip typography or two, and
+**4.5 owns typography**; deciding it here would mean re-deciding it three
+workstreams later. The reasoning sits at arc-badge's own source and a test pins
+the measurement that will fail if the two ever converge.
+
+**Two defects fixed by the extraction, both invisible before it:**
+
+1. **`arc-data-table` could render a blank table.** Its windowing computed
+   `visibleCount = end - start` with no floor, where the other two copies of the
+   same five lines clamped at zero. `end` is `min(total, …)` and `start` is
+   `max(0, …)`, so any state where the row set shrank below the current scroll
+   offset inverted them and the slice rendered nothing under a full-height
+   spacer.
+2. **`arc-toast`'s action button has never rendered.** `show()` has only ever
+   stored the payload on `entry.options` and the render read `t.actionLabel`, so
+   the condition was `undefined` for every toast the component ever displayed
+   and the documented `part="action"` could not be delivered. The derived parts
+   sweep cannot catch this — a conditional part is exempt by construction, and
+   it has no way to tell one that is conditional from one that is unreachable.
+
+**Also corrected:** `arc-callout → arc-alert` forced `info` to lose its live
+region, which is a behaviour change for existing `arc-alert` users and not only
+for callout's — §3.2 predicted exactly this and it is why the row needed a
+decision. `arc-alert` gained `live` as the escape hatch.
+
+New: `scripts/checks/css-backticks.js`. A backtick inside a `css` template ends
+the template, and the SyntaxError names an identifier from the CSS several lines
+later. It cost two debugging rounds in one afternoon. The defect cannot ship —
+`check-ssr` and `module-types` both fail on it — so this is diagnosis rather
+than a gate: it runs before the 18s prism step and names the line. Implemented
+as `node --check` after a hand-written scanner reported three files that were
+entirely fine.
+
+**Gate: MET.** `pnpm test` 4,623 passing / 0 failing / 2 skipped (+73 across the
+three commits). `pnpm check` 24/24. `pnpm generate` diff-clean. Docs build green.
+12 tags deprecated, 0 removed — they all go in v5.
 
 ### 4.3 API dialect pass (L)
 

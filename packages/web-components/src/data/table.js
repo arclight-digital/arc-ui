@@ -3,10 +3,13 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: `columns` becomes `[{ key, label }]` and each row becomes an object keyed by those keys, rather than positional arrays. `striped` and `density` moved across, with `striped` defaulting on — pass `no-striped` for the plain look. Removed in v5.
+ *
  * Data-driven table with striped and compact-density variants, powered by columns and rows props.
  *
  * @tag arc-table
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-data-grid
  * @prop {string[]} columns - Array of column header strings.
  * @prop {string[][]} rows - Array of row arrays. Each inner array contains cell values in column order.
  * @prop {boolean} striped - Alternating row backgrounds for improved scanability.

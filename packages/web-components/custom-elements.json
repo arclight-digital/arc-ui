@@ -1130,7 +1130,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Defines a single column within a DataTable. Each Column maps a data field key to a visible table\ncolumn with a header label. Columns are invisible DOM elements that act as declarative\nconfiguration — they do not render any visible content themselves.",
+          "description": "",
           "name": "ArcColumn",
           "slots": [
             {
@@ -1262,10 +1262,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0. Its only consumer is `<arc-data-table>`, which is itself deprecated in favour of `<arc-data-grid>` — and arc-data-grid takes its columns as a `columns` array rather than as slotted children, so there is no element to migrate this one to. Each `<arc-column key label sortable width align>` becomes one `{ key, label, sortable, width, align }` entry in that array. Removed in v5, with its parent. Defines a single column within a DataTable. Each Column maps a data field key to a visible table column with a header label. Columns are invisible DOM elements that act as declarative configuration — they do not render any visible content themselves.",
           "tagName": "arc-column",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-data-grid"
         }
       ],
       "exports": [
@@ -4312,11 +4314,11 @@
           ],
           "events": [
             {
-              "name": "arc-range-change",
               "type": {
                 "text": "CustomEvent<{value: {start: number, end: number}, start: number, end: number}>"
               },
-              "description": "Fired when the visible range changes. `end` is exclusive."
+              "description": "Fired when the visible range changes. `end` is exclusive.",
+              "name": "arc-range-change"
             }
           ],
           "attributes": [
@@ -5759,6 +5761,41 @@
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
               "attribute": "rowHeight",
               "default": "40"
+            },
+            {
+              "kind": "field",
+              "name": "overscan",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
+              "attribute": "overscan",
+              "default": "5"
+            },
+            {
+              "kind": "field",
+              "name": "density",
+              "privacy": "public",
+              "type": {
+                "text": "'default' | 'compact'"
+              },
+              "description": "Row density. `compact` reduces cell padding for dense data displays. Absorbed from `arc-table`.",
+              "attribute": "density",
+              "default": "'default'",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "striped",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Alternating row backgrounds. On by default, which is what this grid has always drawn; `no-striped` turns them off, which is what an unstriped `arc-table` looked like.",
+              "attribute": "striped",
+              "default": "true",
+              "reflects": true
             }
           ],
           "events": [
@@ -5847,6 +5884,33 @@
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
               "fieldName": "rowHeight",
               "default": "40"
+            },
+            {
+              "name": "overscan",
+              "type": {
+                "text": "number"
+              },
+              "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
+              "fieldName": "overscan",
+              "default": "5"
+            },
+            {
+              "name": "density",
+              "type": {
+                "text": "'default' | 'compact'"
+              },
+              "description": "Row density. `compact` reduces cell padding for dense data displays. Absorbed from `arc-table`.",
+              "fieldName": "density",
+              "default": "'default'"
+            },
+            {
+              "name": "striped",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Alternating row backgrounds. On by default, which is what this grid has always drawn; `no-striped` turns them off, which is what an unstriped `arc-table` looked like.",
+              "fieldName": "striped",
+              "default": "true"
             }
           ],
           "mixins": [
@@ -5882,7 +5946,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.",
+          "description": "",
           "name": "ArcDataTable",
           "cssParts": [
             {
@@ -5991,6 +6055,17 @@
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
               "attribute": "rowHeight",
               "default": "40"
+            },
+            {
+              "kind": "field",
+              "name": "overscan",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
+              "attribute": "overscan",
+              "default": "5"
             }
           ],
           "events": [
@@ -6072,6 +6147,15 @@
               "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
               "fieldName": "rowHeight",
               "default": "40"
+            },
+            {
+              "name": "overscan",
+              "type": {
+                "text": "number"
+              },
+              "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
+              "fieldName": "overscan",
+              "default": "5"
             }
           ],
           "mixins": [
@@ -6084,10 +6168,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: the slotted `<arc-column>` children become a `columns` array of the same fields. Sorting becomes the multi-sort `sort` array (a single entry behaves as `sort-column`/`sort-direction` did), and selection, virtual scrolling and `overscan` are unchanged. Removed in v5. A data-driven table component that renders rows from a JavaScript array. Declarative column definitions via `arc-column` children control which fields appear, their headers, widths, and sort behavior. Built-in support for column sorting, row selection with checkboxes, and an empty-state fallback.",
           "tagName": "arc-data-table",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-data-grid"
         }
       ],
       "exports": [
@@ -8351,7 +8437,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Data-driven table with striped and compact-density variants, powered by columns and rows props.",
+          "description": "",
           "name": "ArcTable",
           "cssParts": [
             {
@@ -8470,10 +8556,12 @@
             "name": "LitElement",
             "package": "lit"
           },
+          "deprecated": "Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: `columns` becomes `[{ key, label }]` and each row becomes an object keyed by those keys, rather than positional arrays. `striped` and `density` moved across, with `striped` defaulting on — pass `no-striped` for the plain look. Removed in v5. Data-driven table with striped and compact-density variants, powered by columns and rows props.",
           "tagName": "arc-table",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "deprecated",
+          "mergedInto": "arc-data-grid"
         }
       ],
       "exports": [
@@ -34978,6 +35066,97 @@
           "declaration": {
             "name": "deepActiveElement",
             "module": "./focus-trap.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/virtual-controller.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Fixed-height row windowing, in one place.\n\nThree components implemented this: `arc-virtual-list`, `arc-data-table` and\n`arc-data-grid`. The arithmetic is the same five lines in all three — floor\nthe scroll offset by row height, ceil the viewport by row height, pad both\nends by an overscan, clamp to the row count — and it had drifted in three\nways, each of which is a decision one copy made and the others never saw:\n\n 1. **`arc-data-table` could produce a negative count.** It wrote\n    `this._visibleCount = endIndex - this._startIndex` with no floor, where\n    the other two clamped at zero. `end` is `min(total, …)` and `start` is\n    `max(0, …)`, so any state where the row set shrinks below the current\n    scroll offset — a filter applied, rows removed, `rows` reassigned —\n    inverts them, and the slice that follows renders nothing under a\n    full-height top spacer. A blank table that scrolls.\n 2. **`overscan` was public on one of the three and hardcoded to 5 in the\n    other two.** Same default, no way to change it on a grid.\n 3. **Only `arc-virtual-list` announced the window**, and only when it\n    actually moved — which is the part that matters, since a scroll handler\n    fires every frame of a drag and a consumer re-rendering rows on each one\n    rebuilds an unchanged window sixty times a second.\n\nThe controller takes the union: the clamp, a configurable overscan, and\nchange-only notification. Adopting it is what fixes (1) in `arc-data-table`\nand gives (2) and (3) to both tables.\n\n**The viewport is a getter, not the host.** `arc-virtual-list` scrolls\nitself; the two tables scroll an inner wrapper that does not exist until the\nfirst render. A controller that read `host.scrollTop` would have fit exactly\none of its three consumers, which is how the three copies happened.",
+          "name": "VirtualController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "end",
+              "description": "One past the last rendered row.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "offsetBefore",
+              "description": "Pixels of spacer above the rendered rows.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "offsetAfter",
+              "description": "Pixels of spacer below them.",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "measure",
+              "description": "Recompute the window. Returns true when it moved.\n\nReturning the movement rather than only firing `onChange` is what lets a\nhost skip its own `requestUpdate` on a scroll frame that changed nothing —\nthe notification and the re-render are different decisions, and a host that\nre-renders unconditionally is the cost this replaces."
+            },
+            {
+              "kind": "method",
+              "name": "schedule",
+              "description": "Re-measure on the next frame, coalescing a burst of scroll events into one.\n\nA scroll handler fires far more often than a frame, and measuring in the\nhandler both wastes the work and reads layout mid-scroll."
+            },
+            {
+              "kind": "method",
+              "name": "hostConnected",
+              "description": "Both halves, because a controller with only a teardown is a one-way door —\na host that is disconnected and reconnected (a list moved in the DOM, a\ntable inside a re-parented panel) would come back with no pending frame and\nno way to schedule one. See HANDOFF."
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected"
+            },
+            {
+              "kind": "field",
+              "name": "host",
+              "default": "host"
+            },
+            {
+              "kind": "field",
+              "name": "opts",
+              "type": {
+                "text": "object"
+              },
+              "default": "{ getViewport, getTotal, getRowHeight, getOverscan, onChange }"
+            },
+            {
+              "kind": "field",
+              "name": "start",
+              "type": {
+                "text": "number"
+              },
+              "description": "First rendered row index.",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "count",
+              "type": {
+                "text": "number"
+              },
+              "description": "How many rows are rendered. Never negative — see (1) above.",
+              "default": "0"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "VirtualController",
+          "declaration": {
+            "name": "VirtualController",
+            "module": "src/shared/virtual-controller.js"
           }
         }
       ]

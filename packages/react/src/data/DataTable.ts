@@ -12,6 +12,7 @@ export interface DataTableProps {
   sortDirection?: 'asc' | 'desc';
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
   className?: string;
   children?: React.ReactNode;
   onArcSort?: (e: CustomEvent) => void;

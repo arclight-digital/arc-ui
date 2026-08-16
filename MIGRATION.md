@@ -642,6 +642,66 @@ Nothing caught it because the derived CSS-parts sweep cannot: a conditional part
 is exempt by construction, and it has no way to tell a part that is conditional
 from one that is unreachable.
 
+### The table family
+
+The expensive row, and the only one where the column model itself changes.
+
+| deprecated | use instead | what to change |
+|---|---|---|
+| `arc-table` | `arc-data-grid` | `columns: ['A','B']` → `[{ key:'a', label:'A' }, …]`; `rows: [['1','2']]` → `[{ a:'1', b:'2' }]` |
+| `arc-data-table` | `arc-data-grid` | slotted `<arc-column>` children → a `columns` array of the same fields |
+| `arc-column` | `arc-data-grid`'s `columns` | one array entry per element; there is no successor element |
+
+```html
+<!-- before -->
+<arc-data-table sortable>
+  <arc-column key="name" label="Name" sortable></arc-column>
+  <arc-column key="role" label="Role" width="120px"></arc-column>
+</arc-data-table>
+
+<!-- after -->
+<arc-data-grid></arc-data-grid>
+<script>
+  grid.columns = [
+    { key: 'name', label: 'Name', sortable: true },
+    { key: 'role', label: 'Role', width: '120px' },
+  ];
+</script>
+```
+
+Sorting becomes the multi-sort `sort` array — a single entry behaves exactly as
+`sort-column` plus `sort-direction` did, and `manualSort` is there for
+server-side sorting. Selection, virtual scrolling and `rowHeight` are unchanged.
+
+**`arc-data-grid` gained `density` and `striped`** from `arc-table`. `striped`
+defaults **on**, because that is what this grid has always drawn and a merge is
+not the place to restyle the survivor — pass `no-striped` for the plain look an
+unstriped `arc-table` had.
+
+**`arc-column` was listed as a keep in Phase 1 and is deprecated anyway.** That
+verdict read it as an independent component; its only consumer is
+`arc-data-table`, and `arc-data-grid` takes its columns as an array rather than
+as slotted children, so there is no element for it to migrate to. It goes with
+its parent.
+
+### `overscan` is public on both tables
+
+It was a public prop on `arc-virtual-list` and a hardcoded `5` inside
+`arc-data-table` and `arc-data-grid`. All three now share one
+`VirtualController` and all three expose it. Same default, so nothing changes
+unless you set it — raise it to trade DOM nodes for fewer blank rows on a fling.
+
+### Fixed on the way through: `arc-data-table` could render a blank table
+
+Its windowing computed `visibleCount = end - start` with no floor, where the
+other two implementations of the same five lines clamped at zero. `end` is
+`min(total, …)` and `start` is `max(0, …)`, so any state where the row set
+shrank below the current scroll offset — a filter applied, rows removed, `rows`
+reassigned — inverted them. The slice that followed rendered nothing under a
+full-height spacer: a table that scrolls and shows no rows.
+
+The three copies of the arithmetic are now one, which is how this was found.
+
 ### `arc-badge` is **not** deprecated
 
 It was on the merge list — `arc-tag` has `removable`, so `arc-tag` looked like

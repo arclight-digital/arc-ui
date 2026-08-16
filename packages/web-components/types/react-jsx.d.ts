@@ -325,6 +325,9 @@ declare module 'react' {
         selectable?: boolean;
         virtual?: boolean;
         rowHeight?: number | string;
+        overscan?: number | string;
+        density?: 'default' | 'compact';
+        striped?: boolean;
       };
       'arc-data-table': ArcBaseAttributes & {
         rows?: string;
@@ -334,6 +337,7 @@ declare module 'react' {
         sortDirection?: 'asc' | 'desc';
         virtual?: boolean;
         rowHeight?: number | string;
+        overscan?: number | string;
       };
       'arc-date-picker': ArcBaseAttributes & {
         size?: 'sm' | 'md' | 'lg';

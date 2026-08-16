@@ -12,6 +12,9 @@ const props = withDefaults(defineProps<{
   selectable?: boolean;
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
+  density?: 'default' | 'compact';
+  striped?: boolean;
 }>(), {
   columns: () => ([]),
   rows: () => ([]),
@@ -43,6 +46,9 @@ function onArcSort(payload: CustomEvent) {
     :selectable="props.selectable"
     :virtual="props.virtual"
     :rowHeight="props.rowHeight"
+    :overscan="props.overscan"
+    :density="props.density"
+    :striped="props.striped"
     @arc-sort="onArcSort"
     @arc-select="(payload: CustomEvent) => emit('arc-select', payload)"
     @arc-cell-change="(payload: CustomEvent) => emit('arc-cell-change', payload)"

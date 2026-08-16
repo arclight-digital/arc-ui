@@ -12,6 +12,9 @@ export interface DataGridProps {
   selectable?: boolean;
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
+  density?: 'default' | 'compact';
+  striped?: boolean;
   onArcSort?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;
@@ -42,7 +45,7 @@ export interface DataGridProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort, manualSort, selectable, virtual, rowHeight, onArcSort, onArcSelect, onArcCellChange, ...rest }) => {
+export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort, manualSort, selectable, virtual, rowHeight, overscan, density, striped, onArcSort, onArcSelect, onArcCellChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -65,5 +68,5 @@ export const DataGrid: FunctionComponent<DataGridProps> = ({ columns, rows, sort
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcSort, onArcSelect, onArcCellChange]);
-  return h('arc-data-grid', { ref, columns, rows, sort, manualSort, selectable, virtual, rowHeight, ...rest });
+  return h('arc-data-grid', { ref, columns, rows, sort, manualSort, selectable, virtual, rowHeight, overscan, density, striped, ...rest });
 };

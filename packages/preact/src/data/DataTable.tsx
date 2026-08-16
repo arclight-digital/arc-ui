@@ -12,6 +12,7 @@ export interface DataTableProps {
   sortDirection?: 'asc' | 'desc';
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
   onArcSort?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
@@ -42,7 +43,7 @@ export interface DataTableProps {
   [key: `on${string}`]: unknown;
 }
 
-export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, onArcSort, onArcSelect, children, ...rest }) => {
+export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, overscan, onArcSort, onArcSelect, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -60,5 +61,5 @@ export const DataTable: FunctionComponent<DataTableProps> = ({ rows, sortable, s
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcSort, onArcSelect]);
-  return h('arc-data-table', { ref, rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, ...rest }, children);
+  return h('arc-data-table', { ref, rows, sortable, selectable, sortColumn, sortDirection, virtual, rowHeight, overscan, ...rest }, children);
 };

@@ -1,17 +1,21 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
-import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf, num, int } from '../shared/props.js';
+import { VirtualController } from '../shared/virtual-controller.js';
 import { listen } from '../shared/subscriptions.js';
 
 /**
+ * @deprecated Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: the slotted `<arc-column>` children become a `columns` array of the same fields. Sorting becomes the multi-sort `sort` array (a single entry behaves as `sort-column`/`sort-direction` did), and selection, virtual scrolling and `overscan` are unchanged. Removed in v5.
+ *
  * A data-driven table component that renders rows from a JavaScript array. Declarative column
  * definitions via `arc-column` children control which fields appear, their headers, widths, and
  * sort behavior. Built-in support for column sorting, row selection with checkboxes, and an
  * empty-state fallback.
  *
  * @tag arc-data-table
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-data-grid
  * @requires arc-column
  * @prop {Array<Record<string, any>>} rows - The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set this property via JavaScript — it is not an HTML attribute. Changing this array triggers a re-render.
  * @prop {boolean} sortable - Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.
@@ -20,6 +24,7 @@ import { listen } from '../shared/subscriptions.js';
  * @prop {'asc' | 'desc'} sortDirection - The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.
  * @prop {boolean} virtual - Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.
  * @prop {number} rowHeight - Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.
+ * @prop {number} overscan - Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.
  * @fires {CustomEvent<{ column: string, direction: 'asc' | 'desc' }>} arc-sort - Fired when a sortable column header is clicked
  * @fires arc-select - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.
  * @slot - Default content.
@@ -39,6 +44,11 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
     sortDirection: oneOf(['asc', 'desc'], { attribute: 'sort-direction' }),
     virtual: flag(false),
     rowHeight: num({ default: 40, min: 1, clamp: 'toRange', attribute: 'row-height' }),
+    // Public since 4.2. It was a public prop on arc-virtual-list and a hardcoded
+    // 5 here, which is the kind of divergence that survives precisely because
+    // the two copies of the arithmetic never met. V4-PLAN 4.2 requires it on
+    // the merged grid; arc-data-table gets it for free from the same change.
+    overscan: int({ default: 5, min: 0, clamp: 'toRange' }),
     _columns: { state: true },
     _selectedRows: { state: true },
     _startIndex: { state: true },
@@ -231,6 +241,15 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
     this.sortColumn = '';
     this._columns = [];
     this._selectedRows = new Set();
+        this._window = new VirtualController(this, {
+      // Null until the first render, which is the case the controller is
+      // written to tolerate — a scroll cannot happen before there is something
+      // to scroll, and `measure()` is a no-op until there is.
+      getViewport: () => this.shadowRoot?.querySelector('.table-wrapper'),
+      getTotal: () => this._sortedRows.length,
+      getRowHeight: () => this.rowHeight,
+      getOverscan: () => this.overscan,
+    });
     this._startIndex = 0;
     this._visibleCount = 0;
     this._rafId = null;
@@ -279,21 +298,15 @@ export class ArcDataTable extends DeclaredPropsMixin(LitElement) {
     });
   }
 
+  /**
+   * The window is `VirtualController`'s since 4.2. This file used to carry its
+   * own copy of the arithmetic, and so did arc-data-grid and arc-virtual-list.
+   * The copy here was the one missing the zero-clamp on the count.
+   */
   _recalcVirtual() {
-    const wrapper = this.shadowRoot?.querySelector('.table-wrapper');
-    if (!wrapper) return;
-
-    const scrollTop = wrapper.scrollTop;
-    const viewHeight = wrapper.clientHeight;
-    const total = this._sortedRows.length;
-    const overscan = 5;
-
-    const rawStart = Math.floor(scrollTop / this.rowHeight);
-    const rawVisible = Math.ceil(viewHeight / this.rowHeight);
-
-    this._startIndex = Math.max(0, rawStart - overscan);
-    const endIndex = Math.min(total, rawStart + rawVisible + overscan);
-    this._visibleCount = endIndex - this._startIndex;
+    this._window.measure();
+    this._startIndex = this._window.start;
+    this._visibleCount = this._window.count;
   }
 
   _handleSort(column) {

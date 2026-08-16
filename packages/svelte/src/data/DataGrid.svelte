@@ -11,6 +11,9 @@
     selectable?: boolean;
     virtual?: boolean;
     rowHeight?: number;
+    overscan?: number;
+    density?: 'default' | 'compact';
+    striped?: boolean;
     class?: string;
     id?: string;
     style?: string;
@@ -38,7 +41,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { columns = [], rows = [], sort = $bindable([]), manualSort, selectable, virtual, rowHeight, ...rest }: Props = $props();
+  let { columns = [], rows = [], sort = $bindable([]), manualSort, selectable, virtual, rowHeight, overscan, density, striped, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -60,7 +63,7 @@
   }
 </script>
 
-<arc-data-grid {columns} {rows} {sort} {selectable} {virtual} bind:this={__el} {...rest}
+<arc-data-grid {columns} {rows} {sort} {selectable} {virtual} {overscan} {density} {striped} bind:this={__el} {...rest}
   onarc-sort={__onArcSort}
 >
 </arc-data-grid>

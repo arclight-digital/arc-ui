@@ -19,6 +19,7 @@ export interface DataTableProps {
   sortDirection?: 'asc' | 'desc';
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
   onArcSort?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
   children?: JSX.Element;
@@ -50,9 +51,9 @@ export interface DataTableProps {
 }
 
 export const DataTable: Component<DataTableProps> = (props) => {
-  const [local, rest] = splitProps(props, ['rows', 'sortable', 'selectable', 'sortColumn', 'sortDirection', 'virtual', 'rowHeight', 'onArcSort', 'onArcSelect', 'children']);
+  const [local, rest] = splitProps(props, ['rows', 'sortable', 'selectable', 'sortColumn', 'sortDirection', 'virtual', 'rowHeight', 'overscan', 'onArcSort', 'onArcSelect', 'children']);
   return (
-    <arc-data-table rows={local.rows} sortable={local.sortable} selectable={local.selectable} prop:sortColumn={local.sortColumn} prop:sortDirection={local.sortDirection} virtual={local.virtual} prop:rowHeight={local.rowHeight} on:arc-sort={local.onArcSort} on:arc-select={local.onArcSelect} {...rest}>
+    <arc-data-table rows={local.rows} sortable={local.sortable} selectable={local.selectable} prop:sortColumn={local.sortColumn} prop:sortDirection={local.sortDirection} virtual={local.virtual} prop:rowHeight={local.rowHeight} overscan={local.overscan} on:arc-sort={local.onArcSort} on:arc-select={local.onArcSelect} {...rest}>
       {local.children}
     </arc-data-table>
   );

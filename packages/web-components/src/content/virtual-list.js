@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { DeclaredPropsMixin, num, int } from '../shared/props.js';
+import { VirtualController } from '../shared/virtual-controller.js';
 import { tokenStyles } from '../shared-styles.js';
 
 /**
@@ -86,6 +87,24 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
     this._visibleCount = 0;
     this._rafId = null;
     this._onScroll = this._onScroll.bind(this);
+
+    this._window = new VirtualController(this, {
+      // This component *is* the scroller, which is exactly why the controller
+      // takes a getter: the two tables scroll an inner wrapper that does not
+      // exist until their first render.
+      getViewport: () => this,
+      getTotal: () => this.items?.length || 0,
+      getRowHeight: () => this.itemHeight,
+      getOverscan: () => this.overscan,
+      onChange: ({ start, end }) =>
+        this.dispatchEvent(
+          new CustomEvent('arc-range-change', {
+            detail: { value: { start, end }, start, end },
+            bubbles: true,
+            composed: true,
+          }),
+        ),
+    });
   }
 
   connectedCallback() {
@@ -122,33 +141,17 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
     });
   }
 
+
+  /**
+   * The window is `VirtualController`'s since 4.2 — the same five lines lived
+   * here, in arc-data-table and in arc-data-grid, having drifted three ways.
+   * `_startIndex` and `_visibleCount` stay as reactive state mirroring it: they
+   * are what `render()` reads and what a re-render has to be keyed on.
+   */
   _recalc() {
-    const scrollTop = this.scrollTop;
-    const viewHeight = this.clientHeight;
-    const total = this.items?.length || 0;
-
-    const rawStart = Math.floor(scrollTop / this.itemHeight);
-    const rawVisible = Math.ceil(viewHeight / this.itemHeight);
-
-    const start = Math.max(0, rawStart - this.overscan);
-    const end = Math.min(total, rawStart + rawVisible + this.overscan);
-    const count = Math.max(0, end - start);
-
-    // Announce only real movement. The scroll handler fires on every frame of a
-    // drag, and a consumer re-rendering rows on each one — which is exactly what
-    // the wrappers do — would rebuild an unchanged window sixty times a second.
-    const moved = start !== this._startIndex || count !== this._visibleCount;
-    this._startIndex = start;
-    this._visibleCount = count;
-    if (moved) {
-      this.dispatchEvent(
-        new CustomEvent('arc-range-change', {
-          detail: { value: { start, end: start + count }, start, end: start + count },
-          bubbles: true,
-          composed: true,
-        }),
-      );
-    }
+    this._window.measure();
+    this._startIndex = this._window.start;
+    this._visibleCount = this._window.count;
   }
 
   /** Scroll a row into view. Clamped to the list. */

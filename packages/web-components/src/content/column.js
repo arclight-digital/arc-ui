@@ -2,12 +2,19 @@ import { LitElement, html, css } from 'lit';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
+ * @deprecated Since v4.0.0. Its only consumer is `<arc-data-table>`, which is itself deprecated in
+ *   favour of `<arc-data-grid>` — and arc-data-grid takes its columns as a `columns` array rather
+ *   than as slotted children, so there is no element to migrate this one to. Each
+ *   `<arc-column key label sortable width align>` becomes one `{ key, label, sortable, width, align }`
+ *   entry in that array. Removed in v5, with its parent.
+ *
  * Defines a single column within a DataTable. Each Column maps a data field key to a visible table
  * column with a header label. Columns are invisible DOM elements that act as declarative
  * configuration — they do not render any visible content themselves.
  *
  * @tag arc-column
- * @status stable
+ * @status deprecated
+ * @arc-merged-into arc-data-grid
  * @prop {string} field - The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it.
  * @prop {string} key - Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set.
  * @prop {string} label - The human-readable header text displayed in the table's `<th>` element. This is what users see at the top of the column.

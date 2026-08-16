@@ -772,6 +772,12 @@ export declare class ArcDataGrid extends LitElement {
   virtual: boolean;
   /** Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations. @default 40 */
   rowHeight: number;
+  /** Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative. @default 5 */
+  overscan: number;
+  /** Row density. `compact` reduces cell padding for dense data displays. Absorbed from `arc-table`. @default 'default' */
+  density: 'default' | 'compact';
+  /** Alternating row backgrounds. On by default, which is what this grid has always drawn; `no-striped` turns them off, which is what an unstriped `arc-table` looked like. @default true */
+  striped: boolean;
 }
 
 /**
@@ -793,6 +799,8 @@ export declare class ArcDataTable extends LitElement {
   virtual: boolean;
   /** Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations. @default 40 */
   rowHeight: number;
+  /** Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative. @default 5 */
+  overscan: number;
 }
 
 /**

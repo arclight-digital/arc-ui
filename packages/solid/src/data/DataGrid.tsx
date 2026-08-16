@@ -19,6 +19,9 @@ export interface DataGridProps {
   selectable?: boolean;
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
+  density?: 'default' | 'compact';
+  striped?: boolean;
   onArcSort?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
   onArcCellChange?: (e: CustomEvent) => void;
@@ -50,9 +53,9 @@ export interface DataGridProps {
 }
 
 export const DataGrid: Component<DataGridProps> = (props) => {
-  const [local, rest] = splitProps(props, ['columns', 'rows', 'sort', 'manualSort', 'selectable', 'virtual', 'rowHeight', 'onArcSort', 'onArcSelect', 'onArcCellChange']);
+  const [local, rest] = splitProps(props, ['columns', 'rows', 'sort', 'manualSort', 'selectable', 'virtual', 'rowHeight', 'overscan', 'density', 'striped', 'onArcSort', 'onArcSelect', 'onArcCellChange']);
   return (
-    <arc-data-grid columns={local.columns} rows={local.rows} sort={local.sort} prop:manualSort={local.manualSort} selectable={local.selectable} virtual={local.virtual} prop:rowHeight={local.rowHeight} on:arc-sort={local.onArcSort} on:arc-select={local.onArcSelect} on:arc-cell-change={local.onArcCellChange} {...rest}>
+    <arc-data-grid columns={local.columns} rows={local.rows} sort={local.sort} prop:manualSort={local.manualSort} selectable={local.selectable} virtual={local.virtual} prop:rowHeight={local.rowHeight} overscan={local.overscan} density={local.density} striped={local.striped} on:arc-sort={local.onArcSort} on:arc-select={local.onArcSelect} on:arc-cell-change={local.onArcCellChange} {...rest}>
     </arc-data-grid>
   );
 };

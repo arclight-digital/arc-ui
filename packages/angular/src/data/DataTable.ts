@@ -60,4 +60,11 @@ export class DataTable {
   get rowHeight(): number {
     return this._el.rowHeight;
   }
+
+  @Input() set overscan(value: number) {
+    this._el.overscan = value;
+  }
+  get overscan(): number {
+    return this._el.overscan;
+  }
 }

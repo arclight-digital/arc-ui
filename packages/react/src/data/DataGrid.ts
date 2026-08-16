@@ -12,6 +12,9 @@ export interface DataGridProps {
   selectable?: boolean;
   virtual?: boolean;
   rowHeight?: number;
+  overscan?: number;
+  density?: 'default' | 'compact';
+  striped?: boolean;
   className?: string;
   onArcSort?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;

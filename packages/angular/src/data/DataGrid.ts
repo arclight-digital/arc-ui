@@ -64,6 +64,27 @@ export class DataGrid {
     return this._el.rowHeight;
   }
 
+  @Input() set overscan(value: number) {
+    this._el.overscan = value;
+  }
+  get overscan(): number {
+    return this._el.overscan;
+  }
+
+  @Input() set density(value: 'default' | 'compact') {
+    this._el.density = value;
+  }
+  get density(): 'default' | 'compact' {
+    return this._el.density;
+  }
+
+  @Input() set striped(value: boolean) {
+    this._el.striped = value;
+  }
+  get striped(): boolean {
+    return this._el.striped;
+  }
+
   @Output() sortChange = new EventEmitter<Array<{key:string,direction:'asc'|'desc'}>>();
 
   _onArcSort(event: CustomEvent) {

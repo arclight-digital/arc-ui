@@ -559,7 +559,7 @@
         },
         {
           "name": "arc-column",
-          "description": "Defines a single column within a DataTable. Each Column maps a data field key to a visible table\ncolumn with a header label. Columns are invisible DOM elements that act as declarative\nconfiguration — they do not render any visible content themselves.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
+          "description": "@deprecated Since v4.0.0. Its only consumer is `<arc-data-table>`, which is itself deprecated in favour of `<arc-data-grid>` — and arc-data-grid takes its columns as a `columns` array rather than as slotted children, so there is no element to migrate this one to. Each `<arc-column key label sortable width align>` becomes one `{ key, label, sortable, width, align }` entry in that array. Removed in v5, with its parent. Defines a single column within a DataTable. Each Column maps a data field key to a visible table column with a header label. Columns are invisible DOM elements that act as declarative configuration — they do not render any visible content themselves.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
           "doc-url": "",
           "attributes": [
             {
@@ -2936,6 +2936,30 @@
                 "type": "number",
                 "default": "40"
               }
+            },
+            {
+              "name": "overscan",
+              "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
+              "value": {
+                "type": "number",
+                "default": "5"
+              }
+            },
+            {
+              "name": "density",
+              "description": "Row density. `compact` reduces cell padding for dense data displays. Absorbed from `arc-table`.",
+              "value": {
+                "type": "'default' | 'compact'",
+                "default": "'default'"
+              }
+            },
+            {
+              "name": "striped",
+              "description": "Alternating row backgrounds. On by default, which is what this grid has always drawn; `no-striped` turns them off, which is what an unstriped `arc-table` looked like.",
+              "value": {
+                "type": "boolean",
+                "default": "true"
+              }
             }
           ],
           "slots": [],
@@ -2992,6 +3016,21 @@
                 "name": "rowHeight",
                 "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
                 "type": "number"
+              },
+              {
+                "name": "overscan",
+                "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
+                "type": "number"
+              },
+              {
+                "name": "density",
+                "description": "Row density. `compact` reduces cell padding for dense data displays. Absorbed from `arc-table`.",
+                "type": "'default' | 'compact'"
+              },
+              {
+                "name": "striped",
+                "description": "Alternating row backgrounds. On by default, which is what this grid has always drawn; `no-striped` turns them off, which is what an unstriped `arc-table` looked like.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -3015,7 +3054,7 @@
         },
         {
           "name": "arc-data-table",
-          "description": "A data-driven table component that renders rows from a JavaScript array. Declarative column\ndefinitions via `arc-column` children control which fields appear, their headers, widths, and\nsort behavior. Built-in support for column sorting, row selection with checkboxes, and an\nempty-state fallback.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
+          "description": "@deprecated Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: the slotted `<arc-column>` children become a `columns` array of the same fields. Sorting becomes the multi-sort `sort` array (a single entry behaves as `sort-column`/`sort-direction` did), and selection, virtual scrolling and `overscan` are unchanged. Removed in v5. A data-driven table component that renders rows from a JavaScript array. Declarative column definitions via `arc-column` children control which fields appear, their headers, widths, and sort behavior. Built-in support for column sorting, row selection with checkboxes, and an empty-state fallback.\n\n\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
           "doc-url": "",
           "attributes": [
             {
@@ -3073,6 +3112,14 @@
                 "type": "number",
                 "default": "40"
               }
+            },
+            {
+              "name": "overscan",
+              "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
+              "value": {
+                "type": "number",
+                "default": "5"
+              }
             }
           ],
           "slots": [
@@ -3128,6 +3175,11 @@
               {
                 "name": "rowHeight",
                 "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
+                "type": "number"
+              },
+              {
+                "name": "overscan",
+                "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
                 "type": "number"
               }
             ],
@@ -4312,7 +4364,7 @@
         },
         {
           "name": "arc-table",
-          "description": "Data-driven table with striped and compact-density variants, powered by columns and rows props.\n---\n\n\n### **CSS Parts:**\n - **table-wrap**\n- **table**\n- **head**\n- **body**\n- **row**\n- **cell**",
+          "description": "@deprecated Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: `columns` becomes `[{ key, label }]` and each row becomes an object keyed by those keys, rather than positional arrays. `striped` and `density` moved across, with `striped` defaulting on — pass `no-striped` for the plain look. Removed in v5. Data-driven table with striped and compact-density variants, powered by columns and rows props.\n\n\n---\n\n\n### **CSS Parts:**\n - **table-wrap**\n- **table**\n- **head**\n- **body**\n- **row**\n- **cell**",
           "doc-url": "",
           "attributes": [
             {

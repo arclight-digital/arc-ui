@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, num, int, oneOf } from '../shared/props.js';
+import { VirtualController } from '../shared/virtual-controller.js';
 import { listen } from '../shared/subscriptions.js';
 
 /**
@@ -18,6 +19,9 @@ import { listen } from '../shared/subscriptions.js';
  * @prop {boolean} selectable - Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.
  * @prop {boolean} virtual - Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count.
  * @prop {number} rowHeight - Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.
+ * @prop {number} overscan - Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.
+ * @prop {'default' | 'compact'} density - Row density. `compact` reduces cell padding for dense data displays. Absorbed from `arc-table`.
+ * @prop {boolean} striped - Alternating row backgrounds. On by default, which is what this grid has always drawn; `no-striped` turns them off, which is what an unstriped `arc-table` looked like.
  * @fires arc-sort - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order
  * @fires arc-cell-change - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array
  * @fires arc-select - Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array
@@ -40,6 +44,17 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     selectable: flag(false),
     virtual: flag(false),
     rowHeight: num({ default: 40, min: 1, clamp: 'toRange', attribute: 'row-height' }),
+    // Public since 4.2. It was a public prop on arc-virtual-list and a hardcoded
+    // 5 here, which is the kind of divergence that survives precisely because
+    // the two copies of the arithmetic never met. V4-PLAN 4.2 requires it on
+    // the merged grid; arc-data-table gets it for free from the same change.
+    overscan: int({ default: 5, min: 0, clamp: 'toRange' }),
+    // Absorbed from arc-table (4.2). Its `striped` was opt-in and this grid has
+    // always striped unconditionally, so the flag defaults true — a merge is not
+    // the place to restyle the survivor — and `no-striped` is the migration path
+    // for a plain arc-table.
+    density: oneOf(['default', 'compact']),
+    striped: flag(true, { negative: 'no-striped' }),
     _rows: { state: true },
     _selected: { state: true },
     _startIndex: { state: true },
@@ -141,8 +156,14 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
 
       tbody tr:last-child td { border-bottom: none; }
 
-      tbody tr:nth-child(odd)  { background: var(--surface-primary); }
-      tbody tr:nth-child(even) { background: var(--surface-raised); }
+      :host([striped]) tbody tr:nth-child(odd)  { background: var(--surface-primary); }
+      :host([striped]) tbody tr:nth-child(even) { background: var(--surface-raised); }
+      :host(:not([striped])) tbody tr { background: var(--surface-primary); }
+
+      /* Absorbed from arc-table. Header and body together, or a compact grid
+         would have a full-height header sitting on tightened rows. */
+      :host([density="compact"]) th,
+      :host([density="compact"]) td { padding: var(--space-xs) var(--space-sm); }
       tbody tr:hover           { background: var(--surface-overlay); }
       /* Opaque composite so sticky pinned cells don't show scrolled content through the tint */
       tbody tr.selected {
@@ -275,6 +296,15 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     this.sort = [];
     this._rows = [];
     this._selected = new Set();
+        this._window = new VirtualController(this, {
+      // Null until the first render, which is the case the controller is
+      // written to tolerate — a scroll cannot happen before there is something
+      // to scroll, and `measure()` is a no-op until there is.
+      getViewport: () => this.shadowRoot?.querySelector('.grid-wrapper'),
+      getTotal: () => this._rows.length,
+      getRowHeight: () => this.rowHeight,
+      getOverscan: () => this.overscan,
+    });
     this._startIndex = 0;
     this._visibleCount = 0;
     this._focusRow = 0;
@@ -330,21 +360,14 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     });
   }
 
+  /**
+   * The window is `VirtualController`'s since 4.2. This file used to carry its
+   * own copy of the arithmetic, and so did arc-data-table and arc-virtual-list.
+   */
   _recalcVirtual() {
-    const wrapper = this.shadowRoot?.querySelector('.grid-wrapper');
-    if (!wrapper) return;
-
-    const scrollTop = wrapper.scrollTop;
-    const viewHeight = wrapper.clientHeight;
-    const total = this._rows.length;
-    const overscan = 5;
-
-    const rawStart = Math.floor(scrollTop / this.rowHeight);
-    const rawVisible = Math.ceil(viewHeight / this.rowHeight);
-
-    this._startIndex = Math.max(0, rawStart - overscan);
-    const endIndex = Math.min(total, rawStart + rawVisible + overscan);
-    this._visibleCount = Math.max(0, endIndex - this._startIndex);
+    this._window.measure();
+    this._startIndex = this._window.start;
+    this._visibleCount = this._window.count;
   }
 
   _scrollRowIntoView(i) {

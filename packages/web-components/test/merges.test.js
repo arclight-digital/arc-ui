@@ -16,6 +16,8 @@ import '../src/input/otp-input.register.js';
 import '../src/feedback/alert.register.js';
 import '../src/content/callout.register.js';
 import '../src/feedback/toast.register.js';
+import '../src/data/data-grid.register.js';
+import '../src/data/table.register.js';
 
 /**
  * V4-PLAN 4.2's merges, tested from the side that can actually fail.
@@ -431,6 +433,56 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       el.shadowRoot.querySelector('[part="dismiss"]').click();
       await new Promise((r) => setTimeout(r, 350));
       expect(seen).to.deep.equal([id]);
+    });
+  });
+
+  describe('arc-table + arc-data-table → arc-data-grid', () => {
+    const rows = [{ a: '1', b: '2' }, { a: '3', b: '4' }];
+    const columns = [{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }];
+
+    async function grid(attrs = '') {
+      const el = await render(`<arc-data-grid ${attrs}></arc-data-grid>`);
+      el.columns = columns;
+      el.rows = rows;
+      await el.updateComplete;
+      return el;
+    }
+
+    it('stripes by default, as it always has', async () => {
+      const el = await grid();
+      const [odd, even] = [...el.shadowRoot.querySelectorAll('tbody tr')];
+      expect(getComputedStyle(odd).backgroundColor).to.not.equal(getComputedStyle(even).backgroundColor);
+    });
+
+    it('turns stripes off with no-striped — what a plain arc-table looked like', async () => {
+      // arc-table's `striped` was opt-in and this grid has always striped
+      // unconditionally, so the flag defaults *on*: a merge is not the place to
+      // restyle the survivor. no-striped is the migration path in the other
+      // direction.
+      const el = await grid('no-striped');
+      const [odd, even] = [...el.shadowRoot.querySelectorAll('tbody tr')];
+      expect(getComputedStyle(odd).backgroundColor).to.equal(getComputedStyle(even).backgroundColor);
+    });
+
+    it('tightens cells with density="compact", header and body together', async () => {
+      const loose = await grid();
+      const tight = await grid('density="compact"');
+      for (const sel of ['th', 'td']) {
+        const a = getComputedStyle(loose.shadowRoot.querySelector(sel)).paddingLeft;
+        const b = getComputedStyle(tight.shadowRoot.querySelector(sel)).paddingLeft;
+        expect(parseFloat(b), sel).to.be.lessThan(parseFloat(a));
+      }
+    });
+
+    it('renders the same cell values arc-table did, from the object model', async () => {
+      // The migration §3.1 calls the breaking part: positional arrays become
+      // objects keyed by column. Same output, different input.
+      const table = await render('<arc-table></arc-table>');
+      table.columns = ['A', 'B'];
+      table.rows = [['1', '2'], ['3', '4']];
+      await table.updateComplete;
+      const cells = (el) => [...el.shadowRoot.querySelectorAll('tbody td')].map((td) => td.textContent.trim());
+      expect(cells(await grid())).to.deep.equal(cells(table));
     });
   });
 
