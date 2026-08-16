@@ -1008,10 +1008,10 @@
           "attributes": [
             {
               "name": "name",
-              "description": "Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.",
+              "description": "Which registered icon library to resolve names against — `phosphor` or `lucide` from `@arclux/arc-ui-icons`, or the name a custom library was registered under.",
               "value": {
-                "type": "'phosphor' | 'lucide'",
-                "default": "'phosphor'"
+                "type": "string",
+                "default": "''"
               }
             }
           ],
@@ -1020,8 +1020,8 @@
             "properties": [
               {
                 "name": "name",
-                "description": "Which icon library to resolve names against. An unrecognised value falls back to `phosphor`.",
-                "type": "'phosphor' | 'lucide'"
+                "description": "Which registered icon library to resolve names against — `phosphor` or `lucide` from `@arclux/arc-ui-icons`, or the name a custom library was registered under.",
+                "type": "string"
               }
             ],
             "events": []
@@ -1029,7 +1029,7 @@
         },
         {
           "name": "arc-icon",
-          "description": "Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching\nand custom icon registration.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **icon**",
+          "description": "Renders icons by name from any registered library — Phosphor (1,500+) and Lucide (1,900+) ship in\n`@arclux/arc-ui-icons` — with one-line library switching and custom icon registration.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **icon**",
           "doc-url": "",
           "attributes": [
             {

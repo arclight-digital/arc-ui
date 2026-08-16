@@ -522,7 +522,7 @@ declare module 'solid-js/jsx-runtime' {
         type?: string;
       };
       'arc-icon-library': ArcBaseAttributes & {
-        name?: 'phosphor' | 'lucide';
+        name?: string;
       };
       'arc-image': ArcBaseAttributes & {
         src?: string;

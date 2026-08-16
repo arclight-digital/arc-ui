@@ -200,13 +200,7 @@ export default {
  "arc-icon-library": {
   "attrs": [
    "name"
-  ],
-  "enums": {
-   "name": [
-    "phosphor",
-    "lucide"
-   ]
-  }
+  ]
  },
  "arc-icon": {
   "attrs": [

@@ -913,21 +913,7 @@
     "./themes/high-contrast": "./src/themes/high-contrast.css",
     "./themes/minimal": "./src/themes/minimal.css",
     "./base.css": "./src/base.css",
-    "./utilities.css": "./src/utilities.css",
-    "./icons/lucide": {
-      "types": "./src/icons/lucide.d.ts",
-      "default": "./src/icons/lucide.js"
-    },
-    "./icons/lucide/*": "./src/icons/lucide/*.js",
-    "./icons/phosphor": {
-      "types": "./src/icons/phosphor.d.ts",
-      "default": "./src/icons/phosphor.js"
-    },
-    "./icons/phosphor/*": "./src/icons/phosphor/*.js",
-    "./icons/types": {
-      "types": "./src/icons/types.d.ts",
-      "default": "./src/icons/types.d.ts"
-    }
+    "./utilities.css": "./src/utilities.css"
   },
   "files": [
     "src/",
@@ -986,6 +972,7 @@
     }
   },
   "devDependencies": {
+    "@arclux/arc-ui-icons": "workspace:*",
     "@lit-labs/ssr": "^4.1.0",
     "@shikijs/langs": "^3.22.0",
     "lit": "^3.3.0",

@@ -7,13 +7,21 @@ export const icon: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching and custom icon registration.',
+    'Renders icons by name from any registered library — Phosphor (1,500+) and Lucide (1,900+) ship in `@arclux/arc-ui-icons` — with one-line library switching and custom icon registration.',
 
   overview: `Icon renders SVG icons from a centralized icon registry by name. When the \`name\` property is set, the component dynamically imports the matching icon file, parses it through a DOMParser-based sanitizer that strips all \`<script>\` elements and \`on*\` event handler attributes, and injects the cleaned SVG into the shadow DOM. Parsed SVGs are cached in a module-level Map for efficient re-renders.
 
 **Icons are loaded per-icon on demand.** Each of the 3,400+ icons is its own module (~500 bytes). When \`<arc-icon name="star">\` renders, only \`star.js\` is fetched — not the entire library. This means importing \`arc-icon\` adds **0KB** of icon data to your bundle upfront, and each icon you actually use costs only ~500 bytes. Bundlers automatically tree-shake unused icons out of production builds.
 
-ARC UI ships with two icon libraries built in. **Phosphor Icons** (phosphoricons.com) is the default — a flexible, consistent set of over 1,500 icons with a clean filled style that works well at all sizes. **Lucide** (lucide.dev) is also bundled as an alternative — a community fork of Feather Icons with over 1,900 stroke-based icons that pair well with lighter UI styles. Use the icon browser below to explore both libraries and click any icon to copy its name.
+**Icons live in their own package.** \`@arclux/arc-ui-icons\` carries two libraries: **Phosphor Icons** (phosphoricons.com), a consistent set of over 1,500 glyphs with a clean filled style that works at any size, and **Lucide** (lucide.dev), a community fork of Feather Icons with over 1,900 stroke-based glyphs that pair well with lighter UI. Use the icon browser below to explore both and click any icon to copy its name.
+
+Install it and import a pack. One line registers it, and if nothing else has been selected it becomes the active library — so \`<arc-icon name="star">\` works on the next line:
+
+\`\`\`js
+import '@arclux/arc-ui-icons/phosphor';
+\`\`\`
+
+Nothing is selected by default. Until a pack registers, every named icon renders its slot fallback and the registry logs one line saying so — it will not fail silently, but it will not guess either. Prior to v4 both packs were vendored inside \`@arclux/arc-ui\`, where they were 88% of the published files and 44% of the unpacked bytes of every install, icons or no icons.
 
 To switch libraries globally, use the \`iconRegistry\` API or the declarative \`<arc-icon-library>\` component:
 
@@ -37,11 +45,21 @@ iconRegistry.set({
 });
 \`\`\`
 
-If you need the full icon library as a single import (e.g. for an icon picker), you can still opt in:
+If your app uses a handful of icons, skip the pack registration and import those glyphs directly. This pulls in one module per icon and no resolver at all:
 
 \`\`\`js
-import phosphor from '@arclux/arc-ui/icons/phosphor'; // loads all ~1,500 icons
-import lucide from '@arclux/arc-ui/icons/lucide';     // loads all ~1,900 icons
+import { iconRegistry } from '@arclux/arc-ui';
+import check from '@arclux/arc-ui-icons/phosphor/check';
+import x from '@arclux/arc-ui-icons/phosphor/x';
+
+iconRegistry.set({ check, x });
+\`\`\`
+
+And if you need a whole library as a single import — an icon picker is the usual reason — that is still one line:
+
+\`\`\`js
+import phosphor from '@arclux/arc-ui-icons/all/phosphor'; // loads all ~1,500 icons
+import lucide from '@arclux/arc-ui-icons/all/lucide';     // loads all ~1,900 icons
 \`\`\`
 
 Five size presets — xs (12px), sm (16px), md (20px), lg (24px), and xl (32px) — control the rendered dimensions. The component inherits color from its parent via \`currentColor\`, so icon color naturally follows the surrounding text or container styling. When no matching name is found in the registry, the component falls back to rendering its default slot, allowing you to pass inline SVGs or custom content directly.
@@ -50,7 +68,8 @@ The \`label\` property controls accessibility behavior: when a label is provided
 
   features: [
     'Per-icon lazy loading — only icons you use are fetched (~500 bytes each), 0KB upfront',
-    'Two built-in icon packs: Phosphor (1,500+ filled) and Lucide (1,900+ stroke-based)',
+    'Two icon packs in `@arclux/arc-ui-icons`: Phosphor (1,500+ filled) and Lucide (1,900+ stroke-based)',
+    'Registered, not bundled — core ships no icon data, and any library can register itself',
     'One-line library switching via iconRegistry.use() or `<arc-icon-library>`',
     'Custom icon registration — merge your own SVGs on top of any library (renders instantly)',
     'Five size presets: xs (12px), sm (16px), md (20px), lg (24px), xl (32px)',
@@ -202,7 +221,7 @@ The \`label\` property controls accessibility behavior: when a label is provided
     {
       label: 'Web Component',
       lang: 'html',
-      code: `<!-- Basic usage (Phosphor is the default library) -->
+      code: `<!-- Basic usage, once a pack is registered (see the Registry API tab) -->
 <arc-icon name="star" size="sm"></arc-icon>
 <arc-icon name="heart" size="md"></arc-icon>
 <arc-icon name="gear" size="lg"></arc-icon>
@@ -217,6 +236,7 @@ The \`label\` property controls accessibility behavior: when a label is provided
       label: 'Registry API',
       lang: 'js',
       code: `import { iconRegistry } from '@arclux/arc-ui';
+import '@arclux/arc-ui-icons/lucide';
 
 // Switch all icons to Lucide
 iconRegistry.use('lucide');

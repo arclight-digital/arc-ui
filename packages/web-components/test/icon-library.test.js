@@ -5,8 +5,15 @@
  * declared no props through the vocabulary, exposed no slots and no CSS parts,
  * so both derived suites had nothing to derive from, and no hand-written test
  * named it. Thirty-one lines, entirely side effect — `render()` returns
- * undefined and the element draws nothing. It has a declared `name` now
- * (finding #79), so the derived suites see it too.
+ * undefined and the element draws nothing.
+ *
+ * Finding #79 gave it a declared `name`, which put it back in front of the
+ * derived suites; 4.7 took that away again, because the set of library names is
+ * open now and `oneOf` would rewrite a consumer's own registered library to
+ * `phosphor`. So `name` is a bare string, exactly as `arc-icon.name` is and for
+ * the same reason — both are open-ended names looked up in a registry — and the
+ * two conformance cases it used to derive are replaced below by hand, along
+ * with the one that pins where the loudness went instead.
  *
  * Its whole observable contract is the call it makes, so that call is what is
  * asserted, by standing in for `iconRegistry.use`. The registry's active
@@ -49,18 +56,18 @@ describe('arc-icon-library', () => {
     await settle(el);
   });
 
-  it('defaults to phosphor', async () => {
+  it('selects nothing when it has no name', async () => {
+    // 4.7: core ships no icons and names no default library, so an
+    // `<arc-icon-library>` with no attribute has nothing to say. Selecting a
+    // default here would be worse than doing nothing — it would silently
+    // *deselect* a library the page had already chosen, which is the exact
+    // shape of the bug this element exists to prevent.
     const calls = spyUse();
     const el = mount('<arc-icon-library></arc-icon-library>');
     await settle(el);
 
-    expect(el.name).to.equal('phosphor');
-    // Twice, not once: connectedCallback selects it, and the first update sees
-    // `name` in `changed` (the constructor set it) and selects it again.
-    // Harmless — use() is a plain assignment — but pinned as observed rather
-    // than tidied away, so anyone who makes use() do more work finds this here
-    // instead of in production.
-    expect(calls).to.eql(['phosphor', 'phosphor']);
+    expect(el.name).to.equal('');
+    expect(calls).to.eql([]);
   });
 
   it('re-selects when the name changes', async () => {
@@ -110,20 +117,35 @@ describe('arc-icon-library', () => {
   });
 
   it('reflects its name for styling and inspection', async () => {
-    const el = mount('<arc-icon-library></arc-icon-library>');
+    const el = document.createElement('arc-icon-library');
+    document.body.appendChild(el);
+    el.name = 'lucide';
     await settle(el);
-    expect(el.getAttribute('name')).to.equal('phosphor');
+    expect(el.getAttribute('name')).to.equal('lucide');
   });
 
-  // Was two BUG pins (finding #79). `name` was a bare `{ type: String }` and
-  // `iconRegistry.use()` throws on anything that is not 'phosphor' or
-  // 'lucide' — from inside `connectedCallback`, where a custom-element
-  // reaction's exception is reported *globally* rather than propagated. One
-  // typo in markup therefore raised during element upgrade, nothing at the
-  // call site could catch it, and the element's connect was abandoned partway
-  // through. `oneOf(['phosphor', 'lucide'])` normalises the typo instead,
-  // which is what every other enum in the library already does.
-  it('normalises an unknown library name instead of throwing on upgrade', async () => {
+  /*
+   * Finding #79, and 4.7's deliberate reversal of half of it.
+   *
+   * #79 was that `name` was a bare `{ type: String }` while
+   * `iconRegistry.use()` threw on anything that was not 'phosphor' or 'lucide'
+   * — from inside `connectedCallback`, where a custom-element reaction's
+   * exception is reported *globally* rather than propagated. One typo in
+   * markup raised during element upgrade, nothing at the call site could catch
+   * it, and the element's connect was abandoned partway through.
+   * `oneOf(['phosphor', 'lucide'])` fixed it by normalising the typo away.
+   *
+   * 4.7 removed the throw at the source: libraries register themselves, so the
+   * set of valid names is open and `use()` records whatever it is given. That
+   * makes the enum wrong rather than merely redundant — it would rewrite a
+   * consumer's own registered library to `phosphor`. So the enum is gone and
+   * these two tests pin what has to survive without it: nothing escapes the
+   * upgrade, and the name is *not* quietly changed.
+   *
+   * The loudness #79 cared about did not go anywhere; it moved to `get()`,
+   * which is the place that knows what is registered. That is the test below.
+   */
+  it('passes an unknown library name through without throwing on upgrade', async () => {
     // The reaction is invoked directly rather than by putting the tag in
     // markup: a custom-element reaction that throws is reported as a *global*
     // error, and the runner's own uncaught handler is registered before any
@@ -142,11 +164,11 @@ describe('arc-icon-library', () => {
     }
 
     expect(thrown, 'no exception escapes the upgrade').to.equal(null);
-    expect(calls, 'and the registry is asked for the default').to.eql(['phosphor']);
+    expect(calls, 'and the name reaches the registry unaltered').to.eql(['feather']);
   });
 
-  it('normalises an unknown name assigned after mount', async () => {
-    const el = mount('<arc-icon-library></arc-icon-library>');
+  it('keeps an unknown name assigned after mount', async () => {
+    const el = mount('<arc-icon-library name="lucide"></arc-icon-library>');
     await settle(el);
     const calls = spyUse();
 
@@ -159,8 +181,39 @@ describe('arc-icon-library', () => {
     }
 
     expect(thrown).to.equal(null);
-    expect(el.name, 'the property lands on the default, not on the typo').to.equal('phosphor');
-    expect(calls.every((c) => c === 'phosphor')).to.equal(true);
+    expect(el.name, 'the typo is not rewritten to something that works').to.equal('feather');
+    expect(calls).to.eql(['feather']);
+  });
+
+  it('makes an unregistered library loud, once, from the registry', async () => {
+    // What replaces the enum. A typo used to be normalised into silence; now it
+    // is carried through and reported by the one place that can name the
+    // alternatives. Without this the reversal above would be a pure regression.
+    //
+    // A stub library rather than a real pack, for two reasons: this file must
+    // not depend on generated icons, and the message has two branches — "here
+    // is what is registered" and "here is how to install a pack" — of which
+    // only the first is under test. Asserting on the string 'phosphor' would
+    // have passed against the *other* branch, whose install line names it.
+    iconRegistry.register('stub-library', { icons: { check: '<svg></svg>' } });
+
+    const warnings = [];
+    const realWarn = console.warn;
+    console.warn = (...args) => warnings.push(args.join(' '));
+    try {
+      const el = mount('<arc-icon-library name="feather"></arc-icon-library>');
+      await settle(el);
+      expect(await iconRegistry.get('check'), 'nothing resolves').to.equal(null);
+      await iconRegistry.get('circle');
+    } finally {
+      console.warn = realWarn;
+    }
+
+    expect(warnings.length, 'once per library, not once per icon').to.equal(1);
+    expect(warnings[0], 'names the library that is missing').to.contain('feather');
+    expect(warnings[0], 'and what it could have used instead').to.contain(
+      'Registered: stub-library',
+    );
   });
 
   it('still honours a name it does know', async () => {

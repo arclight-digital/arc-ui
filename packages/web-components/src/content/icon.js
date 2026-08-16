@@ -8,12 +8,17 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 /**
  * An unknown icon name used to render an empty box and say nothing, which is
  * how arc-transfer-list shipped four blank buttons: the names it asked for
- * exist in Lucide but not in the default Phosphor library, and nothing
- * anywhere reported it. A missing glyph is never intentional, so it is worth
- * one line in the console.
+ * exist in Lucide but not in the Phosphor library that was then the default,
+ * and nothing anywhere reported it. A missing glyph is never intentional, so it
+ * is worth one line in the console.
  *
  * Once per name, not per element — a table with fifty rows of the same broken
  * icon should not produce fifty lines.
+ *
+ * Suppressed entirely when no library is registered, because then the name was
+ * never the problem and "check the spelling" is advice that sends a reader the
+ * wrong way. The registry says the useful thing once instead; see
+ * `iconRegistry.hasLibrary()`.
  */
 const _warnedIcons = new Set();
 function warnUnknownIcon(name) {
@@ -21,8 +26,8 @@ function warnUnknownIcon(name) {
   _warnedIcons.add(name);
   console.warn(
     `[arc-icon] No icon named "${name}" in the active library. ` +
-      'Check the spelling against the library in use (Phosphor by default, ' +
-      'Lucide via iconRegistry.use("lucide")), or register it yourself with ' +
+      'Check the spelling against the library in use, switch with ' +
+      'iconRegistry.use("lucide"), or register it yourself with ' +
       'iconRegistry.set({ "' +
       name +
       '": "<svg…>" }).',
@@ -30,8 +35,8 @@ function warnUnknownIcon(name) {
 }
 
 /**
- * Renders icons from Phosphor (1,500+) or Lucide (1,900+) by name, with one-line library switching
- * and custom icon registration.
+ * Renders icons by name from any registered library — Phosphor (1,500+) and Lucide (1,900+) ship in
+ * `@arclux/arc-ui-icons` — with one-line library switching and custom icon registration.
  *
  * @tag arc-icon
  * @status stable
@@ -134,7 +139,7 @@ export class ArcIcon extends DeclaredPropsMixin(LitElement) {
     // Guard against stale responses (name changed while loading)
     if (this.name === currentName) {
       this._svgContent = svg;
-      if (svg === null) warnUnknownIcon(currentName);
+      if (svg === null && iconRegistry.hasLibrary()) warnUnknownIcon(currentName);
     }
   }
 

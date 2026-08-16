@@ -413,6 +413,12 @@ const headings = removed
 <!-- Client-side: register WCs and populate live previews -->
 <script>
   import { iconRegistry } from '@arclux/arc-ui';
+  // Both packs, because the icon page's browser lists them side by side and its
+  // library switcher expects either to resolve. Core has shipped no icons since
+  // v4 — a page that renders a named glyph registers one, and the docs site is
+  // the first consumer of that contract.
+  import '@arclux/arc-ui-icons/phosphor';
+  import '@arclux/arc-ui-icons/lucide';
 
   // Expose to previewSetup scripts (which run via new Function, outside module scope)
   (window as any).__arcIconRegistry = iconRegistry;

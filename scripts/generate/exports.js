@@ -84,9 +84,10 @@ function typesFor(target) {
   if (target === './src/index.js' || target === './src/register.js') return './types/index.d.ts';
   if (/^\.\/src\/[\w-]+\/index\.js$/.test(target)) return './types/index.d.ts';
 
-  // Every other module carries a declaration of its own. Some ship one
-  // alongside the source (the icon packs, written by generate-icons.js); the
-  // rest are emitted from JSDoc into types/ by generate-module-types.js.
+  // Every other module carries a declaration of its own. A co-located one wins
+  // where it exists; the rest are emitted from JSDoc into types/ by
+  // generate-module-types.js. (The icon packs were the co-located case until
+  // 4.7 moved them to @arclux/arc-ui-icons, which writes its own map by hand.)
   const mod = target.match(/^\.\/src\/(.+)\.js$/);
   if (mod) {
     const colocated = `./src/${mod[1]}.d.ts`;
@@ -178,8 +179,7 @@ const componentKeys = Object.keys(withTypes)
     (k) =>
       !specialFirst.includes(k) &&
       !specialLast.includes(k) &&
-      !k.startsWith('./themes/') &&
-      !k.startsWith('./icons/'),
+      !k.startsWith('./themes/'),
   )
   .sort();
 
@@ -190,9 +190,6 @@ for (const k of Object.keys(withTypes).filter((k) => k.startsWith('./themes/')).
 }
 for (const k of specialLast) {
   if (withTypes[k]) sorted[k] = withTypes[k];
-}
-for (const k of Object.keys(withTypes).filter((k) => k.startsWith('./icons/')).sort()) {
-  sorted[k] = withTypes[k];
 }
 
 pkg.exports = sorted;

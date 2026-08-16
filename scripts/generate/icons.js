@@ -3,13 +3,28 @@
  * Generates vendored icon modules from upstream libraries.
  * Run: node scripts/generate/icons.js
  *
- * Outputs per library (phosphor, lucide):
- *   packages/web-components/src/icons/{lib}.js          — monolithic re-export (full library opt-in)
- *   packages/web-components/src/icons/{lib}.d.ts        — type declarations for monolithic
- *   packages/web-components/src/icons/{lib}/{name}.js   — per-icon module (~500 bytes each)
- *   packages/web-components/src/icons/{lib}/_manifest.js — array of all icon names
- *   packages/web-components/src/icons/{lib}/_manifest.d.ts
- *   packages/web-components/src/icons/types.d.ts        — combined IconName type
+ * Outputs per library (phosphor, lucide), all under packages/icons/src:
+ *   {lib}.js             — monolithic re-export (full library opt-in)
+ *   {lib}.d.ts           — type declarations for monolithic
+ *   {lib}/{name}.js      — per-icon module (~500 bytes each)
+ *   {lib}/_resolver.js   — name → () => import('./{name}.js'), what {lib}.register.js registers
+ *   {lib}/_manifest.js   — array of all icon names
+ *   {lib}/_manifest.d.ts
+ *   types.d.ts           — combined IconName type
+ *
+ * These lived in packages/web-components/src/icons until v4. They were 88% of
+ * the core package's published files and 44% of its unpacked bytes, in every
+ * install, whether or not an icon was ever rendered — and the resolver put 3,408
+ * static import specifiers into every consumer's bundle graph by default. 4.7
+ * moved them to @arclux/arc-ui-icons, where a consumer opts in with one import.
+ * The two hand-written {lib}.register.js modules there are the seam; everything
+ * this script writes is downstream of them.
+ *
+ * Also writes packages/icons/LICENSE — see attribution() at the bottom. That is
+ * generated rather than typed for the same reason everything else here is: it
+ * has to be a *copy* of what the installed upstream says, and an upstream that
+ * changes its terms should show up as a diff on the next run rather than as a
+ * notice that quietly stopped being true.
  */
 import { createRequire } from 'node:module';
 import { writeFileSync, mkdirSync, readFileSync, readdirSync } from 'node:fs';
@@ -18,7 +33,7 @@ import { fileURLToPath } from 'node:url';
 
 const require = createRequire(import.meta.url);
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const outDir = resolve(__dirname, '../../packages/web-components/src/icons');
+const outDir = resolve(__dirname, '../../packages/icons/src');
 mkdirSync(outDir, { recursive: true });
 
 function toKebab(str) {
@@ -193,5 +208,82 @@ import type { ${lucideInfo.typeName} } from './lucide.js';
 export type IconName = ${phosphorInfo.typeName} | ${lucideInfo.typeName};
 `;
 writeFileSync(resolve(outDir, 'types.d.ts'), combinedDts);
+
+/* ── Attribution ───────────────────────────────────────────────────────────
+ *
+ * Both icon sets are permissively licensed and both licences say the same thing
+ * about it: Phosphor is MIT — "shall be included in all copies or substantial
+ * portions of the Software" — and Lucide is ISC — "provided that the above
+ * copyright notice and this permission notice appear in all copies". 3,408
+ * vendored glyphs are a substantial portion by any reading, so the notices have
+ * to travel with them.
+ *
+ * They did not. The packs shipped inside @arclux/arc-ui from v1.9.0 with only
+ * ARC's own MIT beside them, which is a compliance gap rather than a licensing
+ * problem — nothing here was ever disallowed, the required notices were simply
+ * missing. 4.7 is the moment to close it, because the packs become a published
+ * package of their own with its own LICENSE.
+ *
+ * Read from the installed packages rather than pasted, so the file is a copy of
+ * what is actually being redistributed. If Lucide relicenses, or Phosphor's
+ * copyright line moves a year, the next `pnpm generate` shows it as a diff.
+ */
+/**
+ * Through node_modules rather than `require.resolve`, which both of these
+ * refuse: their export maps do not publish `./package.json`, and
+ * @phosphor-icons/core is assets with no entry point at all. The Phosphor SVGs
+ * above are read the same way for the same reason.
+ */
+function upstreamDir(pkg) {
+  return resolve(__dirname, '../../node_modules', pkg);
+}
+
+function upstreamLicense(pkg) {
+  const dir = upstreamDir(pkg);
+  for (const name of ['LICENSE', 'LICENSE.md', 'LICENCE', 'license']) {
+    try {
+      return readFileSync(resolve(dir, name), 'utf-8').trim();
+    } catch {
+      /* next candidate */
+    }
+  }
+  throw new Error(
+    `generate-icons: no LICENSE found in ${pkg}. The icon modules cannot be ` +
+      `published without the notice their licence requires — find where it moved ` +
+      `to before regenerating.`,
+  );
+}
+
+const upstreamVersion = (pkg) =>
+  JSON.parse(readFileSync(resolve(upstreamDir(pkg), 'package.json'), 'utf-8')).version;
+
+const licenseText = [
+  readFileSync(resolve(__dirname, '../../LICENSE'), 'utf-8').trim(),
+  '',
+  '',
+  '───────────────────────────────────────────────────────────────────────────',
+  '',
+  'THIRD-PARTY NOTICES',
+  '',
+  'The icon modules in this package are generated from the two sets below and',
+  'are redistributed under their original licences. Only the packaging is ARC',
+  "UI's; the artwork is not. Each glyph is reproduced unchanged apart from the",
+  'removal of fixed width/height and class attributes so it can inherit size',
+  'and colour from its host.',
+  '',
+  '',
+  `Phosphor Icons — https://phosphoricons.com (@phosphor-icons/core ${upstreamVersion('@phosphor-icons/core')})`,
+  '',
+  upstreamLicense('@phosphor-icons/core'),
+  '',
+  '',
+  `Lucide — https://lucide.dev (lucide-static ${upstreamVersion('lucide-static')})`,
+  '',
+  upstreamLicense('lucide-static'),
+  '',
+].join('\n');
+
+writeFileSync(resolve(outDir, '..', 'LICENSE'), licenseText);
+console.log('  LICENSE: ARC UI MIT + Phosphor (MIT) + Lucide (ISC) notices');
 
 console.log('Done.');

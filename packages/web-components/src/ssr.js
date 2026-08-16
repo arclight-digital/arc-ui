@@ -168,6 +168,16 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
     return { html: source, stylesheets, roots: 0, deferred: 0 };
   }
 
+  // Resolves against whatever the rendering process has registered, and since
+  // 4.7 that is nobody by default — core ships no icon packs. A server build
+  // that wants glyphs in its HTML imports one first:
+  //
+  //     import '@arclux/arc-ui-icons/phosphor';
+  //
+  // Without it every name misses, the registry says so once, and each icon
+  // renders its empty-slot fallback. That fallback is the *same* tree the
+  // client produces under the same conditions, so the page still hydrates
+  // cleanly — it is a page with no icons, not a broken one.
   await iconRegistry.preload([...source.matchAll(ICON_NAME)].map((m) => m[1]));
 
   let out = await lit.collectResult(lit.render(lit.html`${lit.unsafeStatic(source)}`));

@@ -1,4 +1,5 @@
 /** Shared helpers for component tests. */
+import { iconRegistry } from '../src/content/icon-registry.js';
 
 /** The actually-focused element, descending through nested shadow roots. */
 export function deepActive() {
@@ -186,24 +187,45 @@ export function pageWith(innerHtml, { above = 0, below = 1500 } = {}) {
 }
 
 /**
- * Whether `pnpm generate:icons` has been run.
+ * Register the built-in icon packs, or report that they are not there.
  *
- * `src/icons/{phosphor,lucide}/` is gitignored — 3,408 generated modules is not
- * a diff anyone wants on an icon-library bump — so on a fresh checkout every
- * icon lookup 404s. Tests that resolve a real icon must skip rather than fail:
- * seventeen assertion errors about chevrons look like a broken suite, and a
- * suite that is red for a reason nobody has to act on trains people to re-run
- * instead of read.
+ * Two things at once, because after 4.7 they are the same question. Core ships
+ * no icons and selects no library: `@arclux/arc-ui-icons` registers itself
+ * through a side-effecting import, and until something does, every name
+ * resolves to null. So a test that wants a real glyph has to do what a consumer
+ * does — which is the other reason this imports the published specifier rather
+ * than reaching across the repo by relative path. It is the one place the
+ * export map's `./phosphor.register` subpath is exercised in a browser.
+ *
+ * The presence check stays. `packages/icons/src/{phosphor,lucide}/` is
+ * gitignored — 3,408 generated modules is not a diff anyone wants on an
+ * icon-library bump — so on a fresh checkout the import would 404. Tests that
+ * resolve a real icon must skip rather than fail: seventeen assertion errors
+ * about chevrons look like a broken suite, and a suite that is red for a reason
+ * nobody has to act on trains people to re-run instead of read.
  *
  * `pretest` regenerates them before `pnpm test`, so this only trips when
  * web-test-runner is invoked directly — an IDE runner, a watch task, a
  * single-file run. Mirrors the guard in scripts/smoke-test-wrappers.js.
+ *
+ * Memoised: the registration is a module side effect either way, and several
+ * files ask.
  */
-export async function generatedIconsPresent() {
-  return fetch(new URL('../src/icons/phosphor/_resolver.js', import.meta.url)).then(
-    (r) => r.ok,
-    () => false
-  );
+let _iconsReady;
+export function generatedIconsPresent() {
+  _iconsReady ??= (async () => {
+    const present = await fetch(
+      new URL('../../icons/src/phosphor/_resolver.js', import.meta.url),
+    ).then((r) => r.ok, () => false);
+    if (!present) return false;
+    await import('@arclux/arc-ui-icons/phosphor');
+    await import('@arclux/arc-ui-icons/lucide');
+    // Registration selects only when nothing is selected, so with both packs
+    // imported the active library is whichever landed first. Say it outright.
+    iconRegistry.use('phosphor');
+    return true;
+  })();
+  return _iconsReady;
 }
 
 /** Message pointing at the fix, so a skipped run says what to do about it. */

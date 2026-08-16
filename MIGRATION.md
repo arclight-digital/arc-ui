@@ -1209,3 +1209,117 @@ the brand instead of referencing it, on one that follows the accents at `:root`
 and stops in another block, and on the count of accent-following tokens
 dropping. The failure it exists for is the local rescue — a pinned literal that
 fixes one region's contrast and is a place the brand quietly stops.
+
+## Icons moved to `@arclux/arc-ui-icons`
+
+**Do this:** install the package and add one line where your app starts.
+
+```bash
+npm i @arclux/arc-ui-icons
+```
+
+```js
+import '@arclux/arc-ui-icons/phosphor';
+```
+
+That import registers Phosphor and, because nothing else has been selected, makes
+it the active library — so `<arc-icon name="star">` behaves exactly as it did in
+v3. `lucide.register` is the same line for the other pack. Everything else in
+this section is what changed underneath and how to tell if it affects you.
+
+### Why
+
+Both icon libraries were vendored inside `@arclux/arc-ui`: 3,408 generated
+modules, one per glyph. They were **88% of the published files** and **44% of the
+unpacked bytes** of the core package, in every install, whether or not anything
+rendered an icon. Splitting them takes core from 3,895 files and 8.5 MB unpacked
+to 476 files and 4.8 MB, and roughly halves the download.
+
+The tarball was the smaller half of it. Each pack's resolver is a map of `() =>
+import('./name.js')` thunks — 1,896 for Lucide, 1,512 for Phosphor — and every
+entry is a static specifier, so a bundler had to walk 3,408 modules and emit a
+chunk each. That is the price of per-icon code splitting and it is worth paying
+*if you use icons*; it was in everyone's build graph by default, because
+`icon-registry.js` reached for the packs by relative path. A relative import is a
+hard edge — no export map, no dependency declaration and no barrel exclusion can
+cut it — so the packs had to leave the package for the coupling to go.
+
+### There is no default library any more
+
+v3 defaulted to Phosphor. v4 selects nothing until something registers, because
+core ships no icons and naming a default would be a promise it cannot keep.
+
+If you upgrade without installing the icons package, every named icon renders its
+slot fallback — an empty box, or whatever you slotted — and the registry logs
+**one** line saying so, with the two lines above in it. It will not fail
+silently. It will not guess either.
+
+`iconRegistry.use()` no longer throws on a name it does not recognise; it records
+the selection whether or not that pack has been imported yet, so registration and
+selection can arrive in either order. A typo is still loud, one step later and
+from the place that can be useful about it: `get()` reports that the library is
+not registered and lists what is.
+
+`<arc-icon-library name="…">` follows from that. Its `name` was an enum of
+`phosphor | lucide` that normalised anything else to `phosphor`; it is now a free
+string, because the set of library names is open and normalising would silently
+rewrite your own registered library to a pack you may not have installed.
+
+### Subpaths
+
+Every `@arclux/arc-ui/icons/*` subpath moved. The names are otherwise unchanged,
+so this is a find-and-replace:
+
+| v3 | v4 |
+| --- | --- |
+| `@arclux/arc-ui/icons/phosphor` (every glyph, eagerly) | `@arclux/arc-ui-icons/all/phosphor` |
+| `@arclux/arc-ui/icons/phosphor/check` | `@arclux/arc-ui-icons/phosphor/check` |
+| `@arclux/arc-ui/icons/lucide` (every glyph, eagerly) | `@arclux/arc-ui-icons/all/lucide` |
+| `@arclux/arc-ui/icons/lucide/arrow-right` | `@arclux/arc-ui-icons/lucide/arrow-right` |
+| `@arclux/arc-ui/icons/types` | `@arclux/arc-ui-icons/types` |
+
+`@arclux/arc-ui/icon`, `@arclux/arc-ui/icon-button`, `@arclux/arc-ui/icon-library`
+and `@arclux/arc-ui/icon-registry` are components and API — they have not moved.
+
+### If you use a handful of icons
+
+The per-icon subpaths are the better shape for you, and always were. Skip the
+pack registration; import the glyphs and hand them to `set()`:
+
+```js
+import { iconRegistry } from '@arclux/arc-ui';
+import check from '@arclux/arc-ui-icons/phosphor/check';
+import x from '@arclux/arc-ui-icons/phosphor/x';
+
+iconRegistry.set({ check, x });
+```
+
+That pulls in two modules and no resolver. Icons registered this way are
+library-independent — they answer to their name whatever `use()` points at, and
+they take precedence over a registered pack, which is how you override one glyph
+without replacing a set.
+
+### A library of your own
+
+The seam is public, and Phosphor and Lucide now arrive through exactly the door
+your own set would:
+
+```js
+iconRegistry.register('brand', {
+  icons: { logo: '<svg…>' },
+  aliases: { 'chevron-right': 'arrow-right' },
+});
+iconRegistry.use('brand');
+```
+
+`aliases` maps ARC UI's canonical icon names — the Lucide spellings, which
+built-in components ask for — onto whatever your library calls them. Supply it
+and the built-in components resolve against your set too.
+
+### Server rendering
+
+`@arclux/arc-ui/ssr` resolves against whatever the rendering process has
+registered, so a server build that wants glyphs in its HTML imports a pack the
+same way a browser bundle does. Without one, icons render their fallback — and
+that is the same tree the client produces under the same conditions, so the page
+still hydrates cleanly. It is a page with no icons, not a broken one.

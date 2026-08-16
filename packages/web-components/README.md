@@ -66,14 +66,21 @@ Dark theme is the default; set `data-theme="light"` (or `"auto"`) on the root el
 
 ## Icons
 
-`<arc-icon>` lazy-loads individual icons from the bundled Phosphor set (Lucide also included):
+Icons ship separately, in `@arclux/arc-ui-icons` — Phosphor (1,500+) and Lucide (1,900+). Core carries no icon data and selects no library, so register one:
+
+```bash
+npm i @arclux/arc-ui-icons
+```
 
 ```js
-import { iconRegistry } from '@arclux/arc-ui';
+import '@arclux/arc-ui-icons/phosphor'; // one line; selects it too
 
-iconRegistry.use('lucide');              // switch the built-in library
-iconRegistry.set({ myLogo: '<svg>…</svg>' }); // register custom icons
+import { iconRegistry } from '@arclux/arc-ui';
+iconRegistry.use('lucide');                   // switch, once both are registered
+iconRegistry.set({ myLogo: '<svg>…</svg>' }); // or register your own icons
 ```
+
+`<arc-icon>` then lazy-loads one module per glyph (~500 bytes), so only the icons a page renders are ever fetched. For an app that uses a dozen, skip the pack and import them directly — `import check from '@arclux/arc-ui-icons/phosphor/check'` — then hand them to `set()`.
 
 ```html
 <arc-icon name="magnifying-glass" size="md"></arc-icon>

@@ -64,6 +64,9 @@ importers:
       '@arclux/arc-ui':
         specifier: workspace:*
         version: link:../packages/web-components
+      '@arclux/arc-ui-icons':
+        specifier: workspace:*
+        version: link:../packages/icons
       '@arclux/arc-ui-svelte':
         specifier: workspace:*
         version: link:../packages/svelte
@@ -132,6 +135,12 @@ importers:
     publishDirectory: dist
 
   packages/html: {}
+
+  packages/icons:
+    devDependencies:
+      '@arclux/arc-ui':
+        specifier: workspace:*
+        version: link:../web-components
 
   packages/preact:
     dependencies:
@@ -233,6 +242,9 @@ importers:
         specifier: ^1.4.4
         version: 1.5.2
     devDependencies:
+      '@arclux/arc-ui-icons':
+        specifier: workspace:*
+        version: link:../icons
       '@lit-labs/ssr':
         specifier: ^4.1.0
         version: 4.1.0(@types/node@24.13.3)

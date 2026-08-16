@@ -72,7 +72,10 @@ const phases = [
     // with the other source assertions: run earlier, it passes locally and
     // fails on every clean checkout.
     title: 'Icons',
-    steps: [gen('icons'), check('icon-names')],
+    steps: [gen('icons'), check('icon-names'), check('icon-attribution')],
+    // icon-independence is not here: two of its three rules read the core
+    // export map, which `gen('exports')` rewrites four phases later. It runs
+    // with the other output assertions.
   },
   {
     // --prune: prism reports orphaned output (wrappers/CSS/examples for a
@@ -142,6 +145,10 @@ const phases = [
       // safe exactly while every wrapper's core floor is a caret stamped at
       // pack time rather than a literal someone typed.
       check('version-floor'),
+      // 4.7's outcome as a rule: nothing in core reaches an icon pack, by path
+      // or by specifier, and the ./icons/ subpaths stay gone from the map that
+      // `gen('exports')` rewrote two phases ago.
+      check('icon-independence'),
     ],
   },
 ];

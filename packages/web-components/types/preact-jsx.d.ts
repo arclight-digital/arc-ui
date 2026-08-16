@@ -520,7 +520,7 @@ declare module 'preact' {
         type?: string;
       };
       'arc-icon-library': ArcBaseAttributes & {
-        name?: 'phosphor' | 'lucide';
+        name?: string;
       };
       'arc-image': ArcBaseAttributes & {
         src?: string;

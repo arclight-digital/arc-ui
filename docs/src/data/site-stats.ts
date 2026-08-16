@@ -23,6 +23,7 @@ export const componentCount = components.length;
  * renders, which is why the SSR claims quote it.
  */
 const wcSrc = new URL('../../../packages/web-components/src/', import.meta.url);
+const iconSrc = new URL('../../../packages/icons/src/', import.meta.url);
 const countRegisters = (dir: URL): number =>
   fs.readdirSync(dir, { withFileTypes: true }).reduce((n, entry) => {
     if (entry.isDirectory()) return n + countRegisters(new URL(`${entry.name}/`, dir));
@@ -73,6 +74,9 @@ const collect = (dir: URL) => {
   }
 };
 collect(wcSrc);
+// `/icons/` is no longer among these — 4.7 moved both packs to
+// @arclux/arc-ui-icons — but the filter stays: it costs nothing and the day it
+// is wrong is the day something has reached back across the split.
 const wcSource = wcFiles
   .filter((f) => !f.pathname.includes('/icons/') && !f.pathname.includes('/generated/'))
   .map((f) => fs.readFileSync(f, 'utf-8'));
@@ -89,14 +93,14 @@ export const slotCount = countTag('slot');
  *  neither is written by hand. */
 export const sourceLineCount = wcSource.reduce((n, src) => n + src.split('\n').length, 0);
 
-/** Icons available to arc-icon, across both sets. */
+/** Icons available to arc-icon, across both sets — read from @arclux/arc-ui-icons. */
 const iconSets = ['phosphor', 'lucide'] as const;
 export const iconCount = iconSets.reduce((n, set) => {
-  const src = fs.readFileSync(new URL(`icons/${set}.js`, wcSrc), 'utf-8');
+  const src = fs.readFileSync(new URL(`${set}.js`, iconSrc), 'utf-8');
   return n + (src.match(/^export const /gm) ?? []).length;
 }, 0);
 
-/** Published packages: the web components plus one generated wrapper each. */
+/** Published packages: the web components, the icon packs, and the wrappers. */
 export const packageCount = fs
   .readdirSync(new URL('../../../packages/', import.meta.url), { withFileTypes: true })
   .filter((e) => e.isDirectory()).length;

@@ -1214,8 +1214,8 @@ export declare class ArcIconButton extends LitElement {
  * `<arc-icon-library>`
  */
 export declare class ArcIconLibrary extends LitElement {
-  /** Which icon library to resolve names against. An unrecognised value falls back to `phosphor`. @default 'phosphor' */
-  name: 'phosphor' | 'lucide';
+  /** Which registered icon library to resolve names against — `phosphor` or `lucide` from `@arclux/arc-ui-icons`, or the name a custom library was registered under. @default '' */
+  name: string;
 }
 
 /**

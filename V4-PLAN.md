@@ -799,9 +799,9 @@ deletes — and cutting first shrinks the tree every later workstream touches.
 Non-blocking, may trail into 4.x minors: 4.8 (ships `experimental`), 4.9,
 4.10.
 
-**Status (2026-08-16): 4.1, 4.2, 4.3, 4.4, 4.5 and 4.6 are done.** The tag
-still needs **4.7** (icons split) and **4.11** — and **prism 3.0**, which now
-ships paired with v4.0; see `PRISM-3.md`. 4.5's two
+**Status (2026-08-16): 4.1 through 4.7 are done.** The tag still needs
+**4.11** — and **prism 3.0**, which now ships paired with v4.0; see
+`PRISM-3.md`. 4.5's two
 recorded non-goals — the docs site has never been measured against
 `type-roles` or the extended `gradient-stops`, and the four per-component
 `density` props stay — are follow-ups, not gaps in the row.
@@ -1498,16 +1498,96 @@ The four wrapper *checks* stay whatever prism does. They are not workarounds;
 they are the acceptance suite, and they are how the next defect gets found —
 every fix in prism's ledger was found by one of them.
 
-### 4.7 Icons split (M) — *after 4.1; independent otherwise*
+### 4.7 Icons split (M) — *after 4.1; independent otherwise* — **DONE**
 
-- [ ] `@arclux/arc-ui-icons`: 16 MB of the 22 MB core tarball is 3,414 icon
-      modules. Redesign `src/content/icon-registry.js`'s relative-path
-      resolution into explicit registration; remove the 821 KB static
-      `lucide.js` barrel and the per-icon dynamic-import resolver from the
-      default graph. Preserve the `barrelExclude` discipline (the shiki
-      lesson) in whatever shape replaces it. The `./icons/*` export
-      wildcards are public subpaths — this is a documented breaking change
-      with a MIGRATION entry, not a cleanup.
+- [x] **`@arclux/arc-ui-icons`.** Both packs left the core package. Core is
+      **3,895 files → 476** and **8.5 MB → 4.8 MB unpacked**, 1.70 MB → 0.88 MB
+      packed; the icons package is the 3,423 files and 3.70 MB that came out.
+
+      **The row's premise was measured with `du` and is 4× high.** 3,408
+      per-icon modules average ~500 bytes against a 4 KB filesystem block, so
+      `du` reports 15.6 MB for 3.7 MB of actual content. "16 MB of 22 MB" was
+      never in a tarball. The number that holds up is the *file count* — icons
+      were **88% of everything core published** — and the build cost below,
+      which is the part that was actually hurting.
+
+      **The relative path was the whole problem.** `icon-registry.js` reached
+      for `../icons/phosphor/_resolver.js`, and a relative import is a hard
+      edge: no export map, no dependency declaration and no `barrelExclude`
+      entry can cut it. That is why the row is a package split and not a
+      configuration change. Each resolver is ~1,900 static `import()`
+      specifiers — the thing that makes per-icon code splitting work, and worth
+      paying for *if you render icons*; it sat in every consumer's bundle graph
+      by default.
+
+      **Explicit registration, and it is now the only door.** `iconRegistry
+      .register(name, { icons, aliases })`; Phosphor and Lucide arrive through
+      exactly the door a consumer's own set would. The alias table moved to the
+      icons package, where the libraries it describes live, and is part of the
+      registration payload so a custom library can make built-in components
+      resolve against it.
+
+      **No default library.** `_libraryName` starts null rather than
+      `'phosphor'`, because after the split that string is a promise core cannot
+      keep. Registration selects when nothing is selected, so one import is
+      still a complete setup. A page that upgrades without installing gets one
+      console line carrying the two-line fix — not fifty per-name warnings, and
+      not silence.
+
+      **Two consequences that reverse earlier decisions, both deliberate.**
+      `use()` no longer throws on an unknown name: registration is a module side
+      effect and selection is often a DOM attribute, so the two arrive in either
+      order. And `arc-icon-library.name` goes back to a bare string — finding
+      #79's `oneOf(['phosphor','lucide'])` fixed a throw that no longer exists,
+      and would now rewrite a consumer's own registered library to `phosphor`,
+      which is #79's failure aimed the other way. The loudness moved to `get()`,
+      which is the only place that can list what *is* registered. The two
+      conformance cases the enum used to derive are replaced by hand.
+
+      **The ergonomics were wrong on the first pass and got fixed.** `./phosphor`
+      was the eager 876 KB barrel and registration was shoved onto
+      `./phosphor.register`, which reads as two imports for one job. The plain
+      subpath now registers — `import '@arclux/arc-ui-icons/phosphor'` — and the
+      barrel moved to `./all/phosphor`. That changes the *meaning* of a v3
+      subpath rather than its location, so the register modules default-export a
+      Proxy that throws naming both replacements: a mechanical rename fails with
+      the fix instead of `undefined`.
+
+      **`scripts/checks/icon-independence.js`** is the shiki lesson pointed at
+      the second heavy dependency — no core module reaches a pack by path or
+      specifier, core declares no non-dev dependency on the package, and the
+      `./icons/` subpaths stay gone from the export map. Proved against all
+      three defects. Its scanner skips string literals as well as comments,
+      because icon-registry.js's own docstring *and* its console warning spell
+      out the import it bans, and the first version reported the file for
+      carrying its own fix.
+
+- [x] **Attribution, which was missing and is a compliance defect.** Both packs
+      are permissive — Phosphor MIT, Lucide ISC with Feather-derived portions
+      under MIT — and both require the copyright and permission notice to
+      travel with copies. 3,408 vendored glyphs shipped inside `@arclux/arc-ui`
+      from v1.9.0 with only ARC's own MIT beside them. Nothing here was ever
+      disallowed; the notices were simply absent, which is the kind of thing a
+      downstream legal review finds rather than anyone here.
+
+      `packages/icons/LICENSE` is **generated** from the installed upstream
+      packages by `generate/icons.js`, so it is a copy rather than a
+      transcription and an upstream relicense shows up as a diff.
+      `scripts/checks/icon-attribution.js` asserts it still matches what is
+      being shipped, names the installed versions, and that the `license` field
+      is `MIT AND ISC` — the field every automated scanner reads instead of the
+      file. Proved against a hand-edited notice, a stale version, and the plain
+      `"MIT"` a new package gets by default.
+
+      **Not audited beyond these two.** Core's own `LICENSE` and the docs site's
+      credits were not reviewed for other third-party material; the row's scope
+      was the packs it moved.
+
+Exit criteria met: `pnpm check` green across 37 checks, `pnpm generate`
+diff-clean and idempotent, 4,929 tests across 124 files, docs site builds with
+198 pages and 19,539 shadow roots and its icons back in the pre-rendered HTML
+(+812 KB), and all three public subpath shapes exercised through the real export
+map.
 
 ### 4.8 Additions (XL) — *after 4.3 + 4.4; visual language from 4.5; ratified in 1.5*
 

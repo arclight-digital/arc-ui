@@ -44,6 +44,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
+/**
+ * Registers Phosphor in the *build* process, which is a separate program from
+ * the browser bundle — `[slug].astro` registering it client-side does nothing
+ * here. Since 4.7 core selects no library, and without this every `<arc-icon
+ * name="…">` across 19,539 pre-rendered shadow roots resolves to null and paints
+ * its empty-slot fallback into the HTML. Not a broken page — the client produces
+ * the same tree, so hydration is clean — but a page whose icons only appear
+ * after JavaScript, which is the thing pre-rendering exists to avoid.
+ */
+import '@arclux/arc-ui-icons/phosphor';
 
 /** Where the shared stylesheets are written, relative to the site root. */
 const SHEET_DIR = '_arc';
