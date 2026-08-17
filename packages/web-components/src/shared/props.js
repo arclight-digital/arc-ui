@@ -137,7 +137,10 @@ export function flag(
  * @param {string[]} values   the legal members; the first is the default unless
  *                            `default` says otherwise
  */
-export function oneOf(values, { default: fallback = values[0], attribute, reflect = true, derived = false } = {}) {
+export function oneOf(
+  values,
+  { default: fallback = values[0], attribute, reflect = true, derived = false } = {},
+) {
   if (!values?.length) throw new Error('oneOf() needs at least one value');
 
   // A set of *numbers* is a real contract and not the same thing as a range.
@@ -154,7 +157,9 @@ export function oneOf(values, { default: fallback = values[0], attribute, reflec
   // is nothing to check here — the throw stays for the literal case, which is
   // every other declaration in the library.
   if (typeof fallback !== 'function' && !values.includes(fallback)) {
-    throw new Error(`oneOf() default ${JSON.stringify(fallback)} is not one of ${values.join('|')}`);
+    throw new Error(
+      `oneOf() default ${JSON.stringify(fallback)} is not one of ${values.join('|')}`,
+    );
   }
   return {
     type: numeric ? Number : String,
@@ -173,19 +178,17 @@ export function oneOf(values, { default: fallback = values[0], attribute, reflec
  * property to read the bound from at normalisation time, which is what a
  * `selected` bounded by the tab count needs.
  */
-export function num(
-  {
-    default: fallback = 0,
-    min,
-    max,
-    step,
-    clamp = null,
-    int = false,
-    nullable = false,
-    attribute,
-    reflect = false,
-  } = {},
-) {
+export function num({
+  default: fallback = 0,
+  min,
+  max,
+  step,
+  clamp = null,
+  int = false,
+  nullable = false,
+  attribute,
+  reflect = false,
+} = {}) {
   // A nullable prop's "unset" state *is* its default, so `default: 0` would be
   // a real value rather than an absence. Overridable, for the rare case that
   // wants both a null state and a non-null starting point.
@@ -290,7 +293,9 @@ export function list({
   // two arrays, or a component that mutates its own default corrupts the next
   // instance to be created.
   const factory =
-    typeof fallback === 'function' ? fallback : () => (Array.isArray(fallback) ? [...fallback] : []);
+    typeof fallback === 'function'
+      ? fallback
+      : () => (Array.isArray(fallback) ? [...fallback] : []);
 
   return {
     type: Array,

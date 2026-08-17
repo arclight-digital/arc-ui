@@ -93,7 +93,10 @@ export class ArcAspectRatio extends LitElement {
 
   /** The normalised ratio, as CSS wants it spaced. */
   get _aspectRatio() {
-    return (ArcAspectRatio.parseRatio(this.ratio) ?? ArcAspectRatio.DEFAULT_RATIO).replace('/', ' / ');
+    return (ArcAspectRatio.parseRatio(this.ratio) ?? ArcAspectRatio.DEFAULT_RATIO).replace(
+      '/',
+      ' / ',
+    );
   }
 
   render() {

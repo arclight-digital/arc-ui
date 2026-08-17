@@ -24,8 +24,13 @@ packages/web-components/src/base.css
 packages/web-components/src/utilities.css
 packages/web-components/src/dev-schema.js
 packages/web-components/src/generated
-packages/web-components/src/icons/lucide.js
-packages/web-components/src/icons/phosphor.js
+
+# scripts/generate/icons.js output inside the icons package (the per-icon
+# module dirs are gitignored but present locally after a generate).
+packages/icons/src/lucide.js
+packages/icons/src/phosphor.js
+packages/icons/src/lucide
+packages/icons/src/phosphor
 
 # shared/tokens.js output.
 shared/base.css

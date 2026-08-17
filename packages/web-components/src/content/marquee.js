@@ -105,7 +105,6 @@ export class ArcMarquee extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-
   _recalcDuration() {
     requestAnimationFrame(() => {
       const group = this.shadowRoot.querySelector('.marquee__group--primary');

@@ -25,7 +25,12 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 export class ArcTag extends DeclaredPropsMixin(LitElement) {
   static properties = {
     variant: oneOf([
-      'default', 'primary', 'secondary', 'success', 'warning', 'error',
+      'default',
+      'primary',
+      'secondary',
+      'success',
+      'warning',
+      'error',
       // Absorbed from arc-badge (4.2), which is the only variant it had that
       // arc-tag did not. V4-SCOPE §3 read this row as "no new prop needed",
       // which is true of the props and not of the enum behind one — a badge

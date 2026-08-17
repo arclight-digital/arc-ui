@@ -15,7 +15,10 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  */
 export class ArcText extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    variant: oneOf(['display', 'heading', 'body', 'muted', 'ghost', 'accent', 'label', 'wordmark', 'code'], { default: 'body' }),
+    variant: oneOf(
+      ['display', 'heading', 'body', 'muted', 'ghost', 'accent', 'label', 'wordmark', 'code'],
+      { default: 'body' },
+    ),
     as: oneOf(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'span'], { reflect: false }),
   };
 

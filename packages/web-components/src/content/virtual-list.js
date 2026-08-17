@@ -141,7 +141,6 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
     });
   }
 
-
   /**
    * The window is `VirtualController`'s since 4.2 — the same five lines lived
    * here, in arc-data-table and in arc-data-grid, having drifted three ways.

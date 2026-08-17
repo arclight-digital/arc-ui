@@ -161,8 +161,7 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
               </span>
             </div>
           </legend>
-        `
-        }
+        `}
         ${this.description ? html`<div class="fieldset__description" part="description">${this.description}</div>` : ''}
         <div class="fieldset__content" part="content">
           <slot></slot>

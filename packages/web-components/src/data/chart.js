@@ -49,7 +49,10 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     hideLegend: flag(false, { attribute: 'hide-legend' }),
     hideAxis: flag(false, { attribute: 'hide-axis' }),
     height: num({ default: 260, min: 1, clamp: 'toRange' }),
-    valueFormat: oneOf(['number', 'percent', 'currency'], { attribute: 'value-format', reflect: false }),
+    valueFormat: oneOf(['number', 'percent', 'currency'], {
+      attribute: 'value-format',
+      reflect: false,
+    }),
     currency: { type: String },
     _width: { state: true },
     _hover: { state: true },

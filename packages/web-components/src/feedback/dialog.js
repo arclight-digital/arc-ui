@@ -64,7 +64,6 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
      * inconsistency for a behavioural one, which is the worse of the two.
      */
     dismissible: flag(true, { negative: 'no-dismissible' }),
-
   };
 
   static styles = [

@@ -1920,7 +1920,7 @@ const schemeNames = collectOverrides(lightTokens, 'light theme').map(([name]) =>
 const dependentDeclarations = (() => {
   const needed = new Set(schemeNames);
   const out = new Map();
-  for (let changed = true; changed; ) {
+  for (let changed = true; changed;) {
     changed = false;
     for (const [name, value] of rootDeclarations) {
       if (needed.has(name) || REGION_EXCLUDED.has(name)) continue;
@@ -2212,8 +2212,14 @@ export function generateHighContrastCSS() {
      carried across unchanged from the hand-written file this replaces. */
   const structural = [
     ['--focus-ring', '0 0 0 3px var(--accent-primary)'],
-    ['--focus-glow', '0 0 0 3px var(--accent-primary), 0 0 0 5px rgba(var(--accent-primary-rgb), 0.4)'],
-    ['--interactive-focus', '0 0 0 3px var(--interactive), 0 0 0 5px rgba(var(--interactive-rgb), 0.4)'],
+    [
+      '--focus-glow',
+      '0 0 0 3px var(--accent-primary), 0 0 0 5px rgba(var(--accent-primary-rgb), 0.4)',
+    ],
+    [
+      '--interactive-focus',
+      '0 0 0 3px var(--interactive), 0 0 0 5px rgba(var(--interactive-rgb), 0.4)',
+    ],
     ['--interactive-focus-ring', '0 0 0 3px var(--interactive)'],
     ['--feedback-error-glow', '0 0 16px rgba(var(--color-error-rgb), 0.25)'],
     ['--feedback-success-glow', '0 0 16px rgba(var(--color-success-rgb), 0.25)'],
@@ -2436,9 +2442,7 @@ export function generateTokensCSS({ tags = [] } = {}) {
       .join('\n');
 
   const densityBlocks = Object.entries(tokens.density)
-    .map(
-      ([name, factor]) => `[data-density="${name}"] {\n${scaleAt(factor)}\n}`,
-    )
+    .map(([name, factor]) => `[data-density="${name}"] {\n${scaleAt(factor)}\n}`)
     .join('\n\n');
 
   const touchBlock = [

@@ -143,9 +143,14 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
     // makes a second toggle agree with the first (finding #15) — each used to
     // sample global state once, on connect, so the one that was not clicked
     // kept rendering the previous theme while the page had already moved.
-    observeAttributes(this, () => document.documentElement, ['data-theme'], () => {
-      this._adoptDocumentTheme();
-    });
+    observeAttributes(
+      this,
+      () => document.documentElement,
+      ['data-theme'],
+      () => {
+        this._adoptDocumentTheme();
+      },
+    );
   }
 
   /** Take the root's theme without writing it back. */

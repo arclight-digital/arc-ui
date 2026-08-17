@@ -25,11 +25,18 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 export class ArcDivider extends DeclaredPropsMixin(LitElement) {
   static properties = {
     variant: oneOf([
-      'subtle', 'glow', 'line-white', 'line-primary', 'line-gradient',
+      'subtle',
+      'glow',
+      'line-white',
+      'line-primary',
+      'line-gradient',
       // Absorbed from arc-separator (4.2). A merge that dropped them would be
       // deleting three visual capabilities and calling it consolidation —
       // arc-divider had no dashed or dotted rule of any kind.
-      'dashed', 'dotted', 'fade', 'line',
+      'dashed',
+      'dotted',
+      'fade',
+      'line',
     ]),
     align: oneOf(['', 'left', 'right']),
     vertical: flag(false),

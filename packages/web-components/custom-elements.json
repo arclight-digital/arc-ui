@@ -32982,7 +32982,7 @@
           "name": "num",
           "parameters": [
             {
-              "name": "{\n    default: fallback = 0,\n    min,\n    max,\n    step,\n    clamp = null,\n    int = false,\n    nullable = false,\n    attribute,\n    reflect = false,\n  }",
+              "name": "{\n  default: fallback = 0,\n  min,\n  max,\n  step,\n  clamp = null,\n  int = false,\n  nullable = false,\n  attribute,\n  reflect = false,\n}",
               "default": "{}"
             }
           ],

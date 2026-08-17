@@ -294,7 +294,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     super();
     this._rows = [];
     this._selected = new Set();
-        this._window = new VirtualController(this, {
+    this._window = new VirtualController(this, {
       // Null until the first render, which is the case the controller is
       // written to tolerate — a scroll cannot happen before there is something
       // to scroll, and `measure()` is a no-op until there is.

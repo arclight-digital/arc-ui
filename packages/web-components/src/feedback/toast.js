@@ -53,7 +53,14 @@ function statusStyle(variant) {
  */
 export class ArcToast extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    position: oneOf(['top-right', 'top-left', 'top-center', 'bottom-right', 'bottom-left', 'bottom-center']),
+    position: oneOf([
+      'top-right',
+      'top-left',
+      'top-center',
+      'bottom-right',
+      'bottom-left',
+      'bottom-center',
+    ]),
     duration: { type: Number },
     maxVisible: { type: Number, attribute: 'max-visible' },
     dedupe: flag(true, { negative: 'no-dedupe', reflect: false }),
@@ -505,7 +512,8 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
                   : ''
               }
             </div>
-            ${/* `t.options.actionLabel`, not `t.actionLabel`.
+            ${
+              /* `t.options.actionLabel`, not `t.actionLabel`.
 
                   show() has only ever put the payload on `entry.options` —
                   `const entry = { id, message, variant, count: 1, options }` —

@@ -51,7 +51,11 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     menuOpen: flag(false, { attribute: 'menu-open' }),
     mobileMenu: { type: String, attribute: 'mobile-menu' },
     menuPosition: { type: String, attribute: 'menu-position' },
-    navAlign: oneOf(['left', 'center', 'right'], { default: 'center', attribute: 'nav-align', reflect: false }),
+    navAlign: oneOf(['left', 'center', 'right'], {
+      default: 'center',
+      attribute: 'nav-align',
+      reflect: false,
+    }),
   };
 
   static styles = [

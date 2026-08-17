@@ -139,8 +139,12 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
    */
   _adoptValue() {
     this._selection = this.multiple
-      ? (this.value ? this.value.split(',').filter(Boolean) : [])
-      : (this.value ? [this.value] : []);
+      ? this.value
+        ? this.value.split(',').filter(Boolean)
+        : []
+      : this.value
+        ? [this.value]
+        : [];
     this._serialised = this.value;
     this._syncSelection();
   }
