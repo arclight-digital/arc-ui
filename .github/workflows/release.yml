@@ -65,11 +65,14 @@ jobs:
       # checkout only has them because `pnpm generate` ran above. Pack the
       # tarball and prove the critical files made it in — v2.3.0 shipped
       # without them and broke every consumer build.
+      # The per-glyph modules are generated and gitignored, so nothing else
+      # notices a tarball packed without them. They lived in core before 4.7
+      # moved the packs to their own package; the check moved with them.
       - name: Tarball contains generated icon modules
         run: |
-          cd packages/web-components
+          cd packages/icons
           TARBALL="$(pnpm pack | tail -n1)"
-          for f in src/icons/phosphor/_resolver.js src/icons/lucide/_resolver.js src/icons/phosphor/_manifest.js src/icons/lucide/_manifest.js; do
+          for f in src/phosphor/_resolver.js src/lucide/_resolver.js src/phosphor/_manifest.js src/lucide/_manifest.js; do
             if ! tar -tzf "$TARBALL" | grep -qx "package/$f"; then
               echo "::error::$f is missing from the npm tarball"
               exit 1
