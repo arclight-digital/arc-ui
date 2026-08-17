@@ -234,10 +234,11 @@ export function initLightplay(canvas, options = {}) {
       float a; vec3 rgb;
       if (u_light > 0.5){
         vec3 pig = em / max(luma * 2.4, 1e-3);
-        // Less of the squared (deepened) pigment and a lower ceiling on
-        // coverage: light mode reads as washes of tint, not dark smudges.
-        pig = mix(pig, pig * pig, 0.25);
-        a = clamp(luma * 2.4, 0.0, 1.0) * 0.62;
+        // Washes of tint, not dark smudges — but with enough of the squared
+        // (deepened) pigment that the lobes and caustic filaments still read
+        // as structure against the white rather than as fog.
+        pig = mix(pig, pig * pig, 0.34);
+        a = clamp(luma * 2.4, 0.0, 1.0) * 0.68;
         rgb = pig * a;
         float edge = 1.0 - vig;
         rgb += vec3(0.030, 0.034, 0.048) * edge;

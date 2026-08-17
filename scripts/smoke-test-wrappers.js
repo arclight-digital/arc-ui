@@ -36,7 +36,11 @@ console.log(`  scratch: ${scratch}`);
 // The per-icon modules are generated and gitignored; packing without them
 // produces the broken tarball that shipped as v2.3.0. Fail here, with the
 // fix, instead of three steps later inside a scratch app's bundler output.
-if (!existsSync(resolve(root, 'packages/web-components/src/icons/phosphor/_resolver.js'))) {
+// packages/icons/src since 4.7 — the packs left core, and this guard checking
+// core's old path passed locally on a stale gitignored copy while failing
+// every fresh checkout, which is how it got past the local gate and stopped
+// the v4.0.0 release run.
+if (!existsSync(resolve(root, 'packages/icons/src/phosphor/_resolver.js'))) {
   console.error('✗ generated icon modules missing — run `pnpm generate:icons` first');
   process.exit(1);
 }
