@@ -173,6 +173,7 @@ const FRAMEWORKS = {
       '@angular/common': '^17.3.12',
       '@angular/compiler': '^17.3.12',
       '@angular/core': '^17.3.12',
+      '@angular/forms': '^17.3.12',
       '@angular/platform-browser': '^17.3.12',
       rxjs: '^7.8.2',
       tslib: '^2.8.1',
@@ -209,7 +210,7 @@ if (unknown.length) {
 // The per-icon modules are generated and gitignored; packing without them is
 // the v2.3.0 broken publish. Fail here, with the fix, rather than inside a
 // scratch app's bundler output three steps later.
-if (!existsSync(resolve(root, 'packages/web-components/src/icons/phosphor/_resolver.js'))) {
+if (!existsSync(resolve(root, 'packages/icons/src/phosphor/_resolver.js'))) {
   console.error('✗ generated icon modules missing — run `pnpm generate:icons` first');
   process.exit(1);
 }
