@@ -24,6 +24,8 @@ ARC UI is written once as [Lit](https://lit.dev) Web Components — the platform
 
 That is a claim two things have to be true for, so both are enforced rather than asserted. Every wrapper package is **mounted in a real browser on every run** and checked against one shared contract, which is how three defects that had shipped since the wrapper packages existed were found — Angular defining no custom elements at all among them. And the visual system is CSS custom properties end to end, so the zero-JavaScript HTML/CSS package gets the same design as the React one.
 
+ARC UI is built AI-first: components are generated, then held to 4,600+ UI tests and a 600-test generator suite before anything ships. That order is the architecture decision — the verification layer, not the author, is the authority.
+
 One runtime dependency: Lit. Heavier extras like syntax highlighting and QR encoding ship only with the components that use them.
 
 ## Quick Start
@@ -87,19 +89,45 @@ The catalog is wide because the point is not having to leave it. 166 components 
 
 | Tier | Count | Highlights |
 |------|-------|------------|
-| **Layout** | 19 | App Shell, Dashboard Grid, Page Layout, Split Pane, Dock, Resizable, Masonry |
+| **Layout** | 19 | App Shell, Auth Shell, Dashboard Grid, Page Layout, Split Pane, Resizable, Masonry |
 | **Navigation** | 22 | Top Bar, Sidebar, Tabs, Menubar, Breadcrumb, Command Bar, Drawer, Tree View |
-| **Content** | 26 | Card, Accordion, Carousel, Avatar, QR Code, Divider, Infinite Scroll, Virtual List |
-| **Data** | 24 | Chart, Data Grid, Data Table, Kanban, Event Calendar, Timeline, Stat, Sparkline |
+| **Content** | 26 | Card, Accordion, Avatar, Lightbox, QR Code, Divider, Infinite Scroll, Virtual List |
+| **Data** | 24 | Chart, Data Grid, Kanban, Calendar, Timeline, Stat, Gauge, Sparkline |
 | **Input** | 43 | Input, Select, Combobox, Date Range Picker, Tag Input, Transfer List, Image Cropper |
-| **Feedback** | 18 | Modal, Dialog, Toast Manager, Command Palette, Tooltip, Sheet, Popover, Guided Tour |
-| **Typography** | 14 | Code Block, Markdown, Kbd, Gradient Text, Typewriter, Prose, Blockquote |
+| **Feedback** | 18 | Dialog, Confirm, Toast, Command Palette, Tooltip, Sheet, Popover, Alert |
+| **Typography** | 14 | Code Block, Markdown, Terminal, Kbd, Keyboard Map, Prose, Blockquote |
 
-Browse the full catalog at [arcui.dev/docs/components](https://arcui.dev/docs/components).
+Twelve marketing components (carousel, CTA banner, typewriter and friends) and three audio/media primitives are published from `@arclux/arc-ui/marketing` and `@arclux/arc-ui/media` — same package, same version, out of the default import so an admin dashboard never bundles a landing-page hero. Browse the full catalog at [arcui.dev/docs/components](https://arcui.dev/docs/components).
+
+## Server Rendering
+
+Every component renders to declarative shadow DOM on the server, and the API is framework-shaped rather than integration-shaped: `renderDeclarativeShadowDOM` takes HTML and returns HTML, so Next, Nuxt, SvelteKit, Angular Universal and Astro are each one call away from markup that hydrates cleanly.
+
+```js
+import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
+
+const page = await renderDeclarativeShadowDOM(appHtml);
+```
+
+This is not new code on trust — it is what renders [arcui.dev](https://arcui.dev): two hundred pages and roughly twenty thousand shadow roots per build.
+
+## Icons
+
+Both packs live in `@arclux/arc-ui-icons` — Phosphor and Lucide, ~3,400 glyphs — registered explicitly and lazy-loaded per glyph, so a page pays only for the icons it renders:
+
+```js
+import '@arclux/arc-ui-icons/phosphor'; // registers and selects; <arc-icon name="star"> just works
+```
+
+Your own icon set arrives through the same registration seam, aliases included, and the built-in components resolve against it.
 
 ## Accessibility
 
 Every component documentation page — live demos included — is audited with [axe-core](https://github.com/dequelabs/axe-core) in both dark and light themes on every commit. Structural WCAG violations fail CI; run the audit yourself with `pnpm audit:a11y`. Live results: [arcui.dev/docs/accessibility](https://arcui.dev/docs/accessibility).
+
+## Verification
+
+The suite is built to make claims checkable rather than assertable: the full browser test suite runs against every component, a build-time check suite fails on undeclared tokens, docs claims no component honours, and generated files that drifted from their source; the shared modules every component leans on are gated by mutation testing, ratcheted so a score can only rise; and the wrapper packages are mounted in a real browser against one contract across all seven targets. A release tag on a red commit does not publish.
 
 ## Design Tokens
 
@@ -125,6 +153,8 @@ Compound tokens (gradients, glows, focus rings) reference the base accents throu
 ```
 
 Use `theme-fixed-dark` / `theme-fixed-light` to pin a region to one scheme regardless of the page theme (e.g., top bar, footer). A pinned dark region is plain near-black on a dark page; on a light page it lifts to a deep color derived from your accent, rather than sitting there as a black slab.
+
+`[data-density="compact"]` and `[data-density="comfortable"]` restate the spacing scale at 0.75x and 1.25x, on the page or on a region — touch targets and type deliberately stay put. A generated high-contrast preset ships at `@arclux/arc-ui/themes/high-contrast`, solved to 7:1 by the same contrast solver as the four shipped schemes.
 
 ### Token Categories
 
@@ -193,9 +223,11 @@ pnpm generate         # Regenerate tokens + all framework wrappers
 Every breaking change since v2 is written up in
 [MIGRATION.md](https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md)
 — one section per change, each with what changed, why, and the mechanical fix.
-Start at the [v4 contents
+Start with the [v4.0.0 release
+notes](https://arcui.dev/docs/changelog) — curation, contracts, platform,
+light — then the [v4 contents
 list](https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md#v4-breaking-changes)
-if you are coming from v3.
+if you are coming from v3. v3 receives patches for a quarter after the v4 tag.
 
 ## License
 
