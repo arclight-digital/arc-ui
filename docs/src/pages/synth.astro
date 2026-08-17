@@ -38,7 +38,9 @@ const description =
     <arc-skip-link target="#synth-stage">Skip to preview</arc-skip-link>
   </nav>
 
-  <SiteTopBar mobileMenu="nav" />
+  {/* Full-width bar: the synth is an app surface, and its workbench runs
+      edge to edge — a contained nav would strand the chrome mid-page. */}
+  <SiteTopBar mobileMenu="nav" contained={null} />
 
   <div class="synth">
     {/*
@@ -284,11 +286,11 @@ const description =
                 ))}
               </div>
             </section>
-            <arc-callout variant="info">
+            <arc-alert variant="info">
               Durations, not the <code>--transition-*</code> shorthands. The shorthands compose from
               these plus the easing scale, so moving a duration retunes every animation that reads
               it instead of replacing the composition with a literal.
-            </arc-callout>
+            </arc-alert>
           </div>
         </div>
       </aside>
@@ -530,11 +532,11 @@ const description =
                 </tbody>
               </table>
 
-              <arc-callout variant="info">
+              <arc-alert variant="info">
                 WCAG 2.1 ratios, computed from the tokens as you set them. Text pairs clearing 7:1
                 are marked AAA. This covers the pairings ARC UI actually paints; a component that
                 composites your colors at partial alpha can still land differently.
-              </arc-callout>
+              </arc-alert>
             </div>
           </div>
 
@@ -569,11 +571,11 @@ const description =
                 <pre class="code-frame__body"><code data-code-output></code></pre>
               </div>
 
-              <arc-callout variant="info">
+              <arc-alert variant="info">
                 Load this after ARC UI's stylesheet. Only what you changed is here — gradients,
                 glows, focus rings and shadows compose from the base tokens at <code>:root</code>,
                 so they re-derive on their own.
-              </arc-callout>
+              </arc-alert>
             </div>
           </div>
         </div>
@@ -590,7 +592,7 @@ const description =
   </div>
 
   <!-- Import -->
-  <arc-modal data-import-modal heading="Import a theme">
+  <arc-dialog data-import-modal heading="Import a theme">
     <p class="modal-lede">
       Paste a stylesheet — what this tool exports, ARC UI's own <code>base.css</code>, or a theme
       you hand-edited. A single color works too, and becomes the primary accent.
@@ -608,7 +610,7 @@ const description =
       <arc-button variant="ghost" size="sm" data-action="import-cancel">Cancel</arc-button>
       <arc-button variant="primary" size="sm" data-action="import-apply">Apply</arc-button>
     </div>
-  </arc-modal>
+  </arc-dialog>
 
   <arc-toast data-toasts position="bottom-right"></arc-toast>
 </BaseLayout>

@@ -20,9 +20,11 @@ interface Props {
   slotName?: string;
   /** arc-top-bar mobile-menu behavior; "nav" on pages with no app-shell sidebar. */
   mobileMenu?: string;
+  /** arc-top-bar content containment; null for a full-width bar (the synth app). */
+  contained?: string | null;
 }
 
-const { activeSlug, search = false, immersive = false, slotName, mobileMenu } = Astro.props;
+const { activeSlug, search = false, immersive = false, slotName, mobileMenu, contained = 'xl' } = Astro.props;
 
 const path = Astro.url.pathname;
 const inDocs = path.startsWith('/docs');
@@ -43,7 +45,7 @@ const isDocs = inDocs && !isComponents && !isTokens && !isSynth;
 <arc-top-bar
   slot={slotName}
   fixed
-  contained="xl"
+  contained={contained ?? undefined}
   immersive={immersive || undefined}
   nav-align="left"
   mobile-menu={mobileMenu}

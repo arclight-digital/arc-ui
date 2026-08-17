@@ -87,8 +87,26 @@ const headings = [
   /* Releases are the page's top-level unit, so they get the page's largest
      gap. Each already opens with the house h2 + arc-divider; separation is
      whitespace's job, not a second rule's. */
+  /* The generic docs chrome gives adjacent sections a hairline ::before and
+     24px of padding — a second rule on a page whose own comment above says the
+     release divider stays the only one. Strip it, and count the docs column's
+     40px flex gap toward the break: 3xl + that gap lands the visual distance
+     at the 4xl this declared before the strays were noticed. */
   .release-body + .release-body {
-    margin-top: var(--space-4xl);
+    margin-top: var(--space-3xl);
+    padding-top: 0;
+  }
+
+  .release-body + .release-body::before {
+    content: none;
+  }
+
+  /* Fenced code blocks. The global reset zeroes the UA's pre margins, and
+     nothing here restored them — prose sat flush against the block's border.
+     Wider than the 640px prose measure on purpose: code wraps badly. */
+  .release-body :global(pre) {
+    margin-block: var(--space-sm) var(--space-lg);
+    overflow-x: auto;
   }
 
   /* h3 → a section heading inside a release.
@@ -188,7 +206,10 @@ const headings = [
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-md);
     padding: 0 var(--space-lg);
-    margin: var(--space-xl) 0;
+    /* No margin of its own: .changelog-page is a flex column with a 40px gap,
+       where margins don't collapse — a vertical margin here triple-counted
+       the separation (gap + two margins = 120px between closed archives). */
+    margin: 0;
   }
 
   .changelog-archive summary {
@@ -198,7 +219,10 @@ const headings = [
     font-size: var(--text-xs);
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: var(--text-muted);
+    /* Secondary, not muted: these rows are the only interactive thing in
+       view once a major archives, and the muted step doesn't read on the
+       deep ground. The lift to primary stays the hover/open state. */
+    color: var(--text-secondary);
     transition: color var(--transition-fast);
   }
 
@@ -207,7 +231,7 @@ const headings = [
   }
 
   .changelog-archive[open] summary {
-    color: var(--text-secondary);
+    color: var(--text-primary);
     border-bottom: 1px solid var(--border-subtle);
     margin-bottom: var(--space-lg);
   }

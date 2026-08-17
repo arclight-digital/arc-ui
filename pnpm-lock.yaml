@@ -77,8 +77,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(lit@3.3.2)
       '@arclux/glint':
-        specifier: ^1.1.0
-        version: 1.1.0
+        specifier: ^1.1.2
+        version: 1.1.2
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
@@ -321,8 +321,8 @@ packages:
     peerDependencies:
       lit: ^3.3.0
 
-  '@arclux/glint@1.1.0':
-    resolution: {integrity: sha512-w0qdMdOCn/o7rUIeVnpm/GL3K/3PrVZhOz9p8/INWL5vSojdOyuRKI7VZDouc0yhTMD5DgCKLUiQQdxaxd8lAA==}
+  '@arclux/glint@1.1.2':
+    resolution: {integrity: sha512-+mDIJ8F850eXsbdDOiByQR7Ue0264kM2us+7vjTVgYqTqp/iVWu6Twn/ZgsoDstmUmq4mcQx+H4NAEIDxTakMA==}
     engines: {node: '>=22.0.0'}
 
   '@arclux/prism@3.0.0':
@@ -5340,7 +5340,7 @@ snapshots:
     dependencies:
       lit: 3.3.2
 
-  '@arclux/glint@1.1.0': {}
+  '@arclux/glint@1.1.2': {}
 
   '@arclux/prism@3.0.0':
     dependencies:
