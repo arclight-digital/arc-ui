@@ -93,15 +93,14 @@ const phases = [
       // would leave the excluded names unreachable for one whole run.
       gen('group-barrels'),
       { name: 'prism', cmd: 'npx', args: ['prism', '--strict', '--prune'] },
-      // Immediately after prism, whose output it rewrites. A bridge, not a
-      // design: generating framework-native bindings is prism's remit and a
-      // ControlValueAccessor is the most framework-native thing Angular has.
-      // Specified upstream in PRISM-3.md §2.1; this step goes when that lands.
-      gen('angular-cva'),
       check('barrel-gating'),
-      // Reads the Angular sources angular-cva just rewrote, against the
-      // elements' own declarations — the pass failing loudly covers it not
-      // running, not it running wrong.
+      // `gen('angular-cva')` used to sit here — a 275-line post-processor that
+      // regex-rewrote prism's Angular output to add a ControlValueAccessor,
+      // because prism had no hook for it. prism 3.0 emits accessors itself from
+      // `config.formAssociated` + `config.formValue`, so the bridge is deleted
+      // and this check now reads prism's own output. It stays: it asserts the
+      // 27 accessors against the elements' own declarations, which is the
+      // acceptance test for the feature rather than a guard on a script.
       check('angular-forms'),
     ],
   },
@@ -109,7 +108,16 @@ const phases = [
     // exports runs last of the type steps: it attaches a "types" condition
     // to every subpath and asserts the declaration files exist.
     title: 'Manifest & types',
-    steps: [gen('wrapper-exports'), gen('manifest'), gen('types'), gen('module-types'), gen('exports')],
+    // `gen('wrapper-exports')` used to lead this phase. prism 3.0 writes each
+    // wrapper package's exports/main/module/types from the file tree it just
+    // generated (`config.<framework>.packageJson`), and derives it rather than
+    // reading a hardcoded tier list — which is how it found that ours omitted
+    // `shared`, leaving arc-menu-item, arc-menu-divider and arc-option without
+    // a deep subpath while all 200 other components had one.
+    //
+    // `gen('types')` stays, minus its JSX half, which prism also took: it still
+    // writes types/index.d.ts, the element classes, which prism does not emit.
+    steps: [gen('manifest'), gen('types'), gen('module-types'), gen('exports')],
   },
   {
     title: 'Editor & docs data',

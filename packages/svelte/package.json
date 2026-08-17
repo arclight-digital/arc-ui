@@ -1042,6 +1042,21 @@
       "types": "./dist/shared/index.d.ts",
       "svelte": "./dist/shared/index.js",
       "default": "./dist/shared/index.js"
+    },
+    "./MenuDivider": {
+      "types": "./dist/shared/MenuDivider.svelte.d.ts",
+      "svelte": "./dist/shared/MenuDivider.svelte",
+      "default": "./dist/shared/MenuDivider.svelte"
+    },
+    "./MenuItem": {
+      "types": "./dist/shared/MenuItem.svelte.d.ts",
+      "svelte": "./dist/shared/MenuItem.svelte",
+      "default": "./dist/shared/MenuItem.svelte"
+    },
+    "./Option": {
+      "types": "./dist/shared/Option.svelte.d.ts",
+      "svelte": "./dist/shared/Option.svelte",
+      "default": "./dist/shared/Option.svelte"
     }
   },
   "files": [

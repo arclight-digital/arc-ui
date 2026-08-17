@@ -1,11 +1,42 @@
-import { propsFrom } from './scripts/prism-props.js';
 import { findExcludedTags } from './scripts/lib/component-tags.js';
 
 export default {
-  // Our property declarations are built by the vocabulary in
-  // src/shared/props.js, which prism's reader cannot follow. See
-  // scripts/prism-props.js — the semantics stay in this repo on purpose.
-  propsFrom,
+  // Resolve props from the class rather than by reading the file.
+  //
+  // prism imports each component module and reads `Ctor.elementProperties`,
+  // Lit's own resolved map — so a declaration built by a helper
+  // (`oneOf(['sm','md','lg'])`) and one contributed by a mixin
+  // (FormControlMixin's `required` and `readonly`) are both ordinary properties
+  // by the time the class exists. Both were invisible to a source reader, and
+  // both needed a hook here to explain them: `propsFrom` re-implemented the
+  // vocabulary's semantics and `formAssociated` re-implemented the mixin's.
+  // Neither exists now.
+  //
+  // `readonly` is why the trade is worth it. Declared once, in
+  // FormControlMixin, it reached no wrapper in any of the six frameworks on 25
+  // of 27 form controls — because the hook only ever read the component's own
+  // file. A second reader of a fact the class already knows will drift from it;
+  // this asks the class.
+  //
+  // The cost is real and is why it is opt-in: reading the class means importing
+  // the module, and importing a module runs it. It degrades rather than fails —
+  // a module that throws on import costs that one component its runtime answer,
+  // reports `runtime-unavailable`, and falls back to the source reader.
+  runtime: true,
+
+
+
+  // The two controls whose value is a pair. A ControlValueAccessor carries one
+  // value and these bind two, with no single `value` between them, so the
+  // accessor carries an object — which is what a reactive form holds for a
+  // compound value anyway. Without these entries `formControlName` would work
+  // on 25 of 27 controls, which is the kind of gap a consumer discovers rather
+  // than reads.
+  formValue: {
+    'arc-date-range-picker': ['start', 'end'],
+    'arc-range-slider': ['low', 'high'],
+  },
+
   // Where to find Lit web components
   components: 'packages/web-components/src',
   // Tier directories to scan (maps to output subdirectories)
@@ -104,6 +135,21 @@ export default {
         'Angular and Solid, and renaming would break five working consumers to ' +
         'repair two. arc-column falls back via `fieldName` (field || key).',
     },
+    {
+      code: 'doc-prop-undeclared',
+      tag: 'arc-date-range-picker',
+      prop: 'value',
+      note:
+        'NOT deliberate — the only one left, and it is real. `value` here is a ' +
+        'get/set accessor pair (the ISO 8601 interval derived from `start` and ' +
+        '`end`, and what the form submits), not a reactive property, so it is ' +
+        'absent from elementProperties too and reaches no wrapper: a React ' +
+        'consumer can set start and end but not the range. Runtime resolution ' +
+        'does not paper over this and should not — the wrappers genuinely ' +
+        'cannot bind it. Making it reactive means a Lit accessor declaration on ' +
+        'a hand-written getter, which is a component change with reactivity ' +
+        'consequences. Tracked; remove this entry when it is fixed.',
+    },
 
     // Nothing here for the eight slots that share a name with a prop
     // (arc-cta-banner's `eyebrow`, arc-page-header's `heading`, …). That pairing
@@ -142,6 +188,9 @@ export default {
   // React output
   react: {
     outDir: 'packages/react/src',
+    // prism writes this package's `exports`, `main`, `module` and `types`
+    // from the file tree it just generated — replacing wrapper-exports.js.
+    packageJson: 'packages/react/package.json',
     wcPackage: '@arclux/arc-ui',
     barrels: true,
   },
@@ -163,6 +212,9 @@ export default {
   // Vue 3 output
   vue: {
     outDir: 'packages/vue/src',
+    // prism writes this package's `exports`, `main`, `module` and `types`
+    // from the file tree it just generated — replacing wrapper-exports.js.
+    packageJson: 'packages/vue/package.json',
     wcPackage: '@arclux/arc-ui',
     barrels: true,
   },
@@ -170,6 +222,9 @@ export default {
   // Svelte 5 output
   svelte: {
     outDir: 'packages/svelte/src',
+    // prism writes this package's `exports`, `main`, `module` and `types`
+    // from the file tree it just generated — replacing wrapper-exports.js.
+    packageJson: 'packages/svelte/package.json',
     wcPackage: '@arclux/arc-ui',
     barrels: true,
   },
@@ -184,6 +239,9 @@ export default {
   // Solid components
   solid: {
     outDir: 'packages/solid/src',
+    // prism writes this package's `exports`, `main`, `module` and `types`
+    // from the file tree it just generated — replacing wrapper-exports.js.
+    packageJson: 'packages/solid/package.json',
     wcPackage: '@arclux/arc-ui',
     barrels: true,
   },
@@ -191,7 +249,24 @@ export default {
   // Preact components
   preact: {
     outDir: 'packages/preact/src',
+    // prism writes this package's `exports`, `main`, `module` and `types`
+    // from the file tree it just generated — replacing wrapper-exports.js.
+    packageJson: 'packages/preact/package.json',
     wcPackage: '@arclux/arc-ui',
     barrels: true,
+  },
+
+  // Opt-in JSX typings for consumers rendering <arc-*> directly instead of
+  // importing a wrapper — replacing the three-target block in
+  // scripts/generate/types.js.
+  jsxTypes: {
+    outDir: 'packages/web-components/types',
+    frameworks: ['react', 'preact', 'solid'],
+    // No `wcPackage` here: prism 3.0 inherits it from the framework sections
+    // below, which already name the package their imports use, and throws at
+    // config load if they disagree. It briefly needed stating — the default was
+    // `@<prefix>/<prefix>-ui`, i.e. `@arc/arc-ui`, which does not exist, so the
+    // activation instruction in the emitted header became the exact silent
+    // no-op that header spends six lines warning about.
   },
 };

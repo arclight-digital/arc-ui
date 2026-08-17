@@ -5,7 +5,15 @@
 import { createSignal, For, onCleanup, onMount, splitProps, type Component, type JSX } from 'solid-js';
 import '@arclux/arc-ui/virtual-list';
 
-declare module 'solid-js' {
+// `solid-js/jsx-runtime`, not `solid-js`. Under the standard Solid setup —
+// `jsx: "preserve"`, `jsxImportSource: "solid-js"` — TypeScript resolves
+// JSX.IntrinsicElements through the jsx-runtime entry, and augmenting the main
+// entry declares a second, unrelated JSX namespace that nothing consults. There
+// is no diagnostic for it, because merging into an unused namespace is not an
+// error. prism 3.0 fixed this in the 200 wrappers it generates; this file is
+// hand-authored and prism does not touch it, so it carried the dead form until
+// the generated ones changed around it.
+declare module 'solid-js/jsx-runtime' {
   namespace JSX {
     interface IntrinsicElements {
       'arc-virtual-list': Record<string, unknown>;

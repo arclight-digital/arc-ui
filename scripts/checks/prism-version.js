@@ -4,6 +4,21 @@
  * Asserts the installed `@arclux/prism` is new enough to emit the wrappers this
  * repo has committed.
  *
+ * ── Overlaps with prism 3.0's own guard, deliberately, for one release ──
+ *
+ * 3.0 reads the version stamp out of the generated files before writing
+ * anything and refuses the run under `--strict` when it would overwrite output
+ * a newer prism wrote (`generator-downgrade`). That covers the same failure
+ * from the other side and is not weaker — but it is prism's own opinion about
+ * prism, and it necessarily runs inside the 35s generate step. This one fails
+ * at the top of the pipeline with a message about *this repo's* dependency on
+ * the emitter, before anything is read.
+ *
+ * Retire it when 3.0's guard has been through a release here. If it stays
+ * longer than that, key it on the highest stamp found in committed output
+ * rather than on this constant — that measures what actually wrote the files
+ * instead of what someone last remembered to type.
+ *
  * The failure this exists to stop is silent and total. `pnpm generate` rewrites
  * all 235 wrapper files from whatever prism happens to be installed, so an
  * older prism does not error — it *reverts*. The three emitter fixes in 2.13.0
@@ -37,13 +52,23 @@ import { readFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-/** Bump when a prism release changes output this repo has committed. */
-const FLOOR = '2.13.1';
+/**
+ * Bump when a prism release changes output this repo has committed.
+ *
+ * On 3.0.0 final. Retire this check when prism's own `generator-downgrade` has
+ * been through a release here: it reads the version stamp out of the generated
+ * files before writing anything and refuses the run, which covers the same
+ * failure from the other side. This one still fails first, at the top of the
+ * pipeline, with a message about *this repo's* dependency on the emitter.
+ */
+const FLOOR = '3.0.0';
 const REASON =
-  'the wrapper emitter fixes for findings #80-82 (Angular element registration, ' +
-  'and children forwarding for named-only slots in Angular and Solid), plus the ' +
-  '2.13.1 barrel fixes this catalog depends on (barrelExclude across a wrapped ' +
-  'barrel, and the prune/sweep ordering on a deletion)';
+  "3.0.0's emitted output, which the committed wrappers are: the Angular " +
+  'ControlValueAccessor on 27 form controls (an older prism regenerates them ' +
+  'without one and formControlName silently stops working), the Solid JSX ' +
+  'augmentation aimed at solid-js/jsx-runtime rather than the entry nothing ' +
+  'consults, and the version stamp in every header — plus everything 2.13.x ' +
+  'fixed before it';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');

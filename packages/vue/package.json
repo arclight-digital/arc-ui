@@ -835,6 +835,18 @@
     "./shared": {
       "types": "./dist/shared/index.d.ts",
       "default": "./dist/shared/index.js"
+    },
+    "./MenuDivider": {
+      "types": "./dist/shared/MenuDivider.vue.d.ts",
+      "default": "./dist/shared/MenuDivider.vue.js"
+    },
+    "./MenuItem": {
+      "types": "./dist/shared/MenuItem.vue.d.ts",
+      "default": "./dist/shared/MenuItem.vue.js"
+    },
+    "./Option": {
+      "types": "./dist/shared/Option.vue.d.ts",
+      "default": "./dist/shared/Option.vue.js"
     }
   },
   "files": [

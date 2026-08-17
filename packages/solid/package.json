@@ -1042,6 +1042,21 @@
       "types": "./dist/shared/index.d.ts",
       "solid": "./src/shared/index.ts",
       "default": "./dist/shared/index.js"
+    },
+    "./MenuDivider": {
+      "types": "./dist/shared/MenuDivider.d.ts",
+      "solid": "./src/shared/MenuDivider.tsx",
+      "default": "./dist/shared/MenuDivider.js"
+    },
+    "./MenuItem": {
+      "types": "./dist/shared/MenuItem.d.ts",
+      "solid": "./src/shared/MenuItem.tsx",
+      "default": "./dist/shared/MenuItem.js"
+    },
+    "./Option": {
+      "types": "./dist/shared/Option.d.ts",
+      "solid": "./src/shared/Option.tsx",
+      "default": "./dist/shared/Option.js"
     }
   },
   "files": [
