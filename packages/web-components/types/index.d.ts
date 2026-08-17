@@ -231,7 +231,7 @@ export declare class ArcBreadcrumbItem extends LitElement {
   resolvedHref: unknown;
   /** textContent already reaches through an anchor child, so this needs no special case. */
   label: unknown;
-  /** Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current="page"` and a bolder font weight automatically. @default '' */
+  /** Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current="page"` and the primary text color automatically. @default '' */
   href: string;
 }
 
@@ -295,17 +295,6 @@ export declare class ArcCalendar extends LitElement {
   year: number;
   /** Which day the week starts on, 1 = Monday … 7 = Sunday. 0 (the default) follows the locale's own convention. An unrecognised value falls back to 0 rather than reaching weekdayOffset() and reordering the week arbitrarily. @default 0 */
   firstDayOfWeek: 0|1|2|3|4|5|6|7;
-}
-
-/**
- * `<arc-callout>`
- * Events: arc-close
- */
-export declare class ArcCallout extends LitElement {
-  /** Semantic variant that controls the color scheme, top accent bar, and default icon @default 'info' */
-  variant: 'info' | 'tip' | 'warning' | 'error';
-  /** Shows a close button that removes the callout. Fires an arc-close event on close. @default false */
-  dismissible: boolean;
 }
 
 /**
@@ -440,18 +429,6 @@ export declare class ArcClock extends LitElement {
 }
 
 /**
- * `<arc-cluster>`
- */
-export declare class ArcCluster extends LitElement {
-  /** Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups. @default 'sm' */
-  gap: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  /** Vertical alignment of items within each row (maps to align-items). @default 'center' */
-  align: 'start' | 'center' | 'end';
-  /** Horizontal distribution of items (maps to justify-content). Use "space-between" for navigation-style spacing. @default 'start' */
-  justify: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
-}
-
-/**
  * `<arc-code-block>`
  */
 export declare class ArcCodeBlock extends LitElement {
@@ -518,24 +495,6 @@ export declare class ArcColorSwatch extends LitElement {
   label: string;
   /** Controls swatch dimensions: sm (32px), md (48px), lg (64px) @default 'md' */
   size: 'sm' | 'md' | 'lg';
-}
-
-/**
- * `<arc-column>`
- */
-export declare class ArcColumn extends LitElement {
-  /** The row property this column reads, from whichever alias was supplied. React and Preact strip `key` in the reconciler, so a React consumer can only ever reach this through `field`. */
-  fieldName: unknown;
-  /** The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it. @default '' */
-  field: string;
-  /** Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set. @default '' */
-  key: string;
-  /** The human-readable header text displayed in the table's `<th>` element. This is what users see at the top of the column. @default '' */
-  label: string;
-  /** Sets a fixed CSS width on the column (e.g., "100px", "20%"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily. @default '' */
-  width: string;
-  /** When true (and the parent DataTable also has `sortable`), clicking this column's header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label. @default false */
-  sortable: boolean;
 }
 
 /**
@@ -781,29 +740,6 @@ export declare class ArcDataGrid extends LitElement {
 }
 
 /**
- * `<arc-data-table>`
- * Events: arc-sort, arc-select
- */
-export declare class ArcDataTable extends LitElement {
-  /** The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header. @default '' */
-  sortColumn: string;
-  /** The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render. @default [] */
-  rows: Array<Record<string, any>>;
-  /** Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction. @default false */
-  sortable: boolean;
-  /** Adds a checkbox column to the left of the table for row selection. A "select all" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles. @default false */
-  selectable: boolean;
-  /** The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors. @default 'asc' */
-  sortDirection: 'asc' | 'desc';
-  /** Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count. @default false */
-  virtual: boolean;
-  /** Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations. @default 40 */
-  rowHeight: number;
-  /** Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative. @default 5 */
-  overscan: number;
-}
-
-/**
  * `<arc-date-picker>`
  * Events: arc-change
  */
@@ -930,8 +866,6 @@ export declare class ArcDialog extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component. @default true */
   dismissible: boolean;
-  /** @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both. @default true */
-  closable: boolean;
   /** Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows. @default false */
   fullscreen: boolean;
 }
@@ -1323,14 +1257,6 @@ export declare class ArcInlineEdit extends LitElement {
 }
 
 /**
- * `<arc-inline-message>`
- */
-export declare class ArcInlineMessage extends LitElement {
-  /** Controls the icon and text color. Use "info" for neutral hints, "success" for valid state feedback, "warning" for caution notes, and "error" for validation failures. @default 'info' */
-  variant: 'info' | 'success' | 'warning' | 'error';
-}
-
-/**
  * `<arc-input>`
  * Events: arc-input, arc-change
  */
@@ -1421,16 +1347,6 @@ export declare class ArcKbd extends LitElement {
 }
 
 /**
- * `<arc-key-value>`
- */
-export declare class ArcKeyValue extends LitElement {
-  /** Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value. @default 'horizontal' */
-  layout: 'horizontal' | 'stacked';
-  /** When true, renders a subtle border between each key-value pair. @default true */
-  dividers: boolean;
-}
-
-/**
  * `<arc-keyboard-map>`
  */
 export declare class ArcKeyboardMap extends LitElement {
@@ -1490,14 +1406,6 @@ export declare class ArcKnob extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
-}
-
-/**
- * `<arc-kv-pair>`
- */
-export declare class ArcKvPair extends LitElement {
-  /** The key/term text displayed in uppercase accent styling. @default '' */
-  label: string;
 }
 
 /**
@@ -1757,27 +1665,6 @@ export declare class ArcMeter extends LitElement {
 }
 
 /**
- * `<arc-modal>`
- * Events: arc-open, arc-close
- */
-export declare class ArcModal extends LitElement {
-  /** Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from. */
-  open: boolean;
-  /** Text displayed in the header bar, and the dialog's accessible name. @default '' */
-  heading: string;
-  /** Maximum width of the panel. `sm` (400px) suits confirmations, `md` (560px) standard forms, and `lg` (720px) content-heavy dialogs with tables or multi-column layouts. */
-  size: 'sm' | 'md' | 'lg';
-  /** When `true`, renders the built-in X close button and allows dismissal via Escape and backdrop click. Set to `false` for decisions the user must resolve through the footer. */
-  dismissible: boolean;
-  /** @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both. */
-  closable: boolean;
-  /** Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows. */
-  fullscreen: boolean;
-  /** The props that belonged to the *old* `arc-dialog`. V4-SCOPE §3.3 requires this and says why: the old `arc-dialog` was a confirm prompt with `heading`, `message` and `confirmLabel`, and it merged into `arc-confirm`. Anyone still writing that markup upgrades into this primitive, which knows `heading` and would silently ignore the other two — rendering an empty panel with a title. That is the quietest possible failure, and a line in MIGRATION.md is not a fix for it. `heading` is deliberately not in the list: it means the same thing in both components, so its presence is not evidence of the mistake. @default ['message', 'confirmLabel', 'cancelLabel'] */
-  REUSED_TAG_PROPS: unknown[];
-}
-
-/**
  * `<arc-multi-select>`
  * Events: arc-change, arc-input
  */
@@ -1917,38 +1804,6 @@ export declare class ArcOption extends LitElement {
   disabled: boolean;
   /** @default false */
   selected: boolean;
-}
-
-/**
- * `<arc-otp-input>`
- * Events: arc-input, arc-change
- */
-export declare class ArcOtpInput extends LitElement {
-  /** The concatenated value of all boxes. Reflected as an attribute and updated on every input. @default '' */
-  value: string;
-  /** @default '' */
-  name: string;
-  /** Disables all input boxes, reducing opacity to 40% and blocking pointer events. @default false */
-  disabled: boolean;
-  /** Number of individual character boxes to render. Reflected as an attribute. @default 6 */
-  length: number;
-  /** Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits. @default false */
-  readonly: boolean;
-  /** Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character. @default 'number' */
-  type: 'number' | 'text';
-  /** Control size. `md` is the default; `sm` and `lg` scale the digit boxes. @default 'md' */
-  size: 'sm' | 'md' | 'lg';
-  /** @default true */
-  formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
-  properties: Record<string, unknown>;
-  /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
-  autoValidates: boolean;
-  form: unknown;
-  validity: unknown;
-  validationMessage: unknown;
-  /** @default false */
-  required: boolean;
 }
 
 /**
@@ -2108,15 +1963,6 @@ export declare class ArcProgress extends LitElement {
   indeterminate: boolean;
   /** Displays the current percentage value next to the label. @default false */
   showValue: boolean;
-}
-
-/**
- * `<arc-progress-toast>`
- * Events: arc-complete, arc-cancel
- */
-export declare class ArcProgressToast extends LitElement {
-  /** Anchors the progress toast stack to a fixed corner of the viewport. @default 'bottom-right' */
-  position: 'top-right' | 'bottom-right';
 }
 
 /**
@@ -2439,18 +2285,6 @@ export declare class ArcSelect extends LitElement {
 }
 
 /**
- * `<arc-separator>`
- */
-export declare class ArcSeparator extends LitElement {
-  /** Optional text displayed centered between two line segments. Only applies to horizontal orientation. @default '' */
-  label: string;
-  /** Controls the divider direction. Vertical separators display as inline-flex with full parent height. @default 'horizontal' */
-  orientation: 'horizontal' | 'vertical';
-  /** Controls the line style. Fade uses a gradient that tapers to transparent at both ends. @default 'line' */
-  variant: 'line' | 'dashed' | 'dotted' | 'fade';
-}
-
-/**
  * `<arc-settings-layout>`
  */
 export declare class ArcSettingsLayout extends LitElement {
@@ -2617,17 +2451,6 @@ export declare class ArcSlider extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
-}
-
-/**
- * `<arc-snackbar>`
- * Events: arc-action, arc-close
- */
-export declare class ArcSnackbar extends LitElement {
-  /** Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars. @default 'bottom-center' */
-  position: 'bottom-center' | 'bottom-left' | 'bottom-right';
-  /** Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed. @default 5000 */
-  duration: number;
 }
 
 /**
@@ -2808,20 +2631,6 @@ export declare class ArcTab extends LitElement {
   label: string;
   /** When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel. @default false */
   disabled: boolean;
-}
-
-/**
- * `<arc-table>`
- */
-export declare class ArcTable extends LitElement {
-  /** Array of column header strings. @default [] */
-  columns: string[];
-  /** Array of row arrays. Each inner array contains cell values in column order. @default [] */
-  rows: string[][];
-  /** Alternating row backgrounds for improved scanability. @default false */
-  striped: boolean;
-  /** Row density. 'compact' reduces cell padding for dense data displays. @default 'default' */
-  density: 'default' | 'compact';
 }
 
 /**
@@ -3401,7 +3210,6 @@ declare global {
     'arc-button': ArcButton;
     'arc-button-group': ArcButtonGroup;
     'arc-calendar': ArcCalendar;
-    'arc-callout': ArcCallout;
     'arc-card': ArcCard;
     'arc-carousel': ArcCarousel;
     'arc-center': ArcCenter;
@@ -3409,12 +3217,10 @@ declare global {
     'arc-checkbox': ArcCheckbox;
     'arc-chip': ArcChip;
     'arc-clock': ArcClock;
-    'arc-cluster': ArcCluster;
     'arc-code-block': ArcCodeBlock;
     'arc-collapsible': ArcCollapsible;
     'arc-color-picker': ArcColorPicker;
     'arc-color-swatch': ArcColorSwatch;
-    'arc-column': ArcColumn;
     'arc-combobox': ArcCombobox;
     'arc-command-bar': ArcCommandBar;
     'arc-command-group': ArcCommandGroup;
@@ -3432,7 +3238,6 @@ declare global {
     'arc-cta-banner': ArcCtaBanner;
     'arc-dashboard-grid': ArcDashboardGrid;
     'arc-data-grid': ArcDataGrid;
-    'arc-data-table': ArcDataTable;
     'arc-date-picker': ArcDatePicker;
     'arc-date-range-picker': ArcDateRangePicker;
     'arc-description-item': ArcDescriptionItem;
@@ -3464,17 +3269,14 @@ declare global {
     'arc-image-hotspots': ArcImageHotspots;
     'arc-infinite-scroll': ArcInfiniteScroll;
     'arc-inline-edit': ArcInlineEdit;
-    'arc-inline-message': ArcInlineMessage;
     'arc-input': ArcInput;
     'arc-input-group': ArcInputGroup;
     'arc-inset': ArcInset;
     'arc-json-tree': ArcJsonTree;
     'arc-kanban': ArcKanban;
     'arc-kbd': ArcKbd;
-    'arc-key-value': ArcKeyValue;
     'arc-keyboard-map': ArcKeyboardMap;
     'arc-knob': ArcKnob;
-    'arc-kv-pair': ArcKvPair;
     'arc-label': ArcLabel;
     'arc-level-meter': ArcLevelMeter;
     'arc-lightbox': ArcLightbox;
@@ -3491,7 +3293,6 @@ declare global {
     'arc-menubar': ArcMenubar;
     'arc-message': ArcMessage;
     'arc-meter': ArcMeter;
-    'arc-modal': ArcModal;
     'arc-multi-select': ArcMultiSelect;
     'arc-nav-item': ArcNavItem;
     'arc-navigation-menu': ArcNavigationMenu;
@@ -3499,7 +3300,6 @@ declare global {
     'arc-number-format': ArcNumberFormat;
     'arc-number-input': ArcNumberInput;
     'arc-option': ArcOption;
-    'arc-otp-input': ArcOtpInput;
     'arc-page-header': ArcPageHeader;
     'arc-page-indicator': ArcPageIndicator;
     'arc-page-layout': ArcPageLayout;
@@ -3508,7 +3308,6 @@ declare global {
     'arc-pin-input': ArcPinInput;
     'arc-popover': ArcPopover;
     'arc-progress': ArcProgress;
-    'arc-progress-toast': ArcProgressToast;
     'arc-prose': ArcProse;
     'arc-qr-code': ArcQrCode;
     'arc-radio': ArcRadio;
@@ -3526,7 +3325,6 @@ declare global {
     'arc-section': ArcSection;
     'arc-segmented-control': ArcSegmentedControl;
     'arc-select': ArcSelect;
-    'arc-separator': ArcSeparator;
     'arc-settings-layout': ArcSettingsLayout;
     'arc-sheet': ArcSheet;
     'arc-sidebar': ArcSidebar;
@@ -3536,7 +3334,6 @@ declare global {
     'arc-skeleton': ArcSkeleton;
     'arc-skip-link': ArcSkipLink;
     'arc-slider': ArcSlider;
-    'arc-snackbar': ArcSnackbar;
     'arc-sortable-list': ArcSortableList;
     'arc-sparkline': ArcSparkline;
     'arc-spinner': ArcSpinner;
@@ -3552,7 +3349,6 @@ declare global {
     'arc-suggestion': ArcSuggestion;
     'arc-switch-group': ArcSwitchGroup;
     'arc-tab': ArcTab;
-    'arc-table': ArcTable;
     'arc-tabs': ArcTabs;
     'arc-tag': ArcTag;
     'arc-tag-input': ArcTagInput;

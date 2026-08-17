@@ -155,6 +155,13 @@ const docsJsonLd = {
     display: block;
     max-width: 1600px;
     margin-inline: auto;
+    /* The page ground belongs to the body: global.css paints --bg-deep plus
+       the fixed ambient backlight lobes behind everything. The shell's default
+       --surface-base is the same color but opaque, so left in place it walls
+       off the lobes across the whole capped column and the glow only survives
+       in the side margins. Transparent here lets the body's illumination read
+       through; an element rule on the host outranks the component's :host. */
+    background: transparent;
   }
 
   .docs-content {

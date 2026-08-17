@@ -20,7 +20,6 @@ export { Input } from './Input';
 export { Label } from './Label';
 export { MultiSelect } from './MultiSelect';
 export { NumberInput } from './NumberInput';
-export { OtpInput } from './OtpInput';
 export { PasswordInput } from './PasswordInput';
 export { PinInput } from './PinInput';
 export { RadioGroup } from './RadioGroup';

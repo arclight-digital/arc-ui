@@ -38,7 +38,6 @@ import '../src/input/checkbox.register.js';
 import '../src/input/toggle.register.js';
 import '../src/input/date-picker.register.js';
 import '../src/input/time-picker.register.js';
-import '../src/input/otp-input.register.js';
 import '../src/input/pin-input.register.js';
 import '../src/input/tag-input.register.js';
 import '../src/input/password-input.register.js';
@@ -56,7 +55,6 @@ const REQUIRED_SWEEP = [
   ['arc-toggle', (el) => { el.checked = true; }],
   ['arc-date-picker', (el) => { el.value = '2026-07-30'; }],
   ['arc-time-picker', (el) => { el.value = '12:30'; }],
-  ['arc-otp-input', (el) => { el.value = '123456'; }],
   ['arc-pin-input', (el) => { el.value = '1234'; }],
   ['arc-tag-input', (el) => { el.value = ['a']; }],
   ['arc-password-input', (el) => { el.value = 'hunter2'; }],

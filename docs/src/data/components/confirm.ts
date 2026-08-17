@@ -13,7 +13,9 @@ export const confirm: ComponentDef = {
 
 Under the hood, Confirm renders a dialog with the same visual treatment — backdrop blur, surface-raised panel, and focus trap — but with a fixed two-button layout: a cancel button (ghost variant) and a confirm button styled by the \`variant\` prop. The \`error\` variant recolors the confirm button with the error color, making it visually clear that the action is destructive.
 
-The component can also be used declaratively as \`<arc-confirm>\` with props and events, but the imperative \`ArcConfirm.open()\` API is the recommended pattern for most use cases. A single \`<arc-confirm>\` element in the layout can be reused for all confirmation prompts in the application.`,
+The component keeps both of its shapes, which are different rather than duplicated: \`ArcConfirm.open()\` for a call site that has to decide something before continuing, and the element itself as \`<arc-confirm>\` for a template — with a default slot for body markup the \`message\` string cannot carry. A single \`<arc-confirm>\` element in the layout can be reused for all confirmation prompts in the application.
+
+**Coming from v3?** The tag \`arc-dialog\` used to be this confirm prompt. In v4 it is the overlay primitive (renamed from \`arc-modal\`), and the prompt — \`heading\`, \`message\`, \`confirm-label\`, \`cancel-label\`, \`variant\` — lives here. The props are unchanged; only the tag name moved.`,
 
   features: [
     'Promise-based ArcConfirm.open() API — await user confirmation in one line',
@@ -230,5 +232,5 @@ export function ConfirmDemo() {
     },
   ],
 
-  seeAlso: ['dialog', 'modal', 'alert'],
+  seeAlso: ['dialog', 'alert'],
 };

@@ -246,8 +246,33 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     this._hover = null;
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * `series` and `labels` are documented as script-set (the JSON attribute is
+   * for a static chart), and @lit-labs/ssr renders a host from its attributes
+   * alone — so the server emits the empty state. A page that assigns them
+   * before the register barrel upgrades this element parks the arrays in Lit's
+   * pre-upgrade instance properties, which are applied at the top of the very
+   * first update: the one that has to adopt the server's markup. A plotted
+   * chart against the server's empty one differs at three parts at once —
+   * body, legend and the sr-only data table — so the first is "Unexpected
+   * TemplateResult rendered to part" and hydration abandons the whole tree.
+   *
+   * So the first render uses what the attributes said, which is exactly what
+   * the server rendered from, and the page's data is handed over in
+   * `firstUpdated`, once the server's DOM has been adopted. Nothing is held
+   * back without a server-rendered shadow root, so a client-only chart still
+   * plots on the first frame. `_width` needs no such care: the ResizeObserver
+   * below delivers its first measurement after layout, which is after the
+   * hydrating render, so the server's 0 is what both sides render from.
+   */
   connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
     super.connectedCallback();
+    if (hydrating) this._ssrState = { series: this.series, labels: this.labels };
     if (typeof ResizeObserver !== 'undefined') {
       this._ro = new ResizeObserver((entries) => {
         const w = entries[0]?.contentRect?.width;
@@ -261,6 +286,24 @@ export class ArcChart extends DeclaredPropsMixin(LitElement) {
     super.disconnectedCallback();
     this._ro?.disconnect();
     this._ro = null;
+  }
+
+  willUpdate() {
+    // See connectedCallback.
+    if (this._ssrState) {
+      this._heldState = { series: this.series, labels: this.labels };
+      Object.assign(this, this._ssrState);
+      this._ssrState = null;
+    }
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's data
+    // can land now, as an ordinary second update.
+    if (this._heldState) {
+      Object.assign(this, this._heldState);
+      this._heldState = null;
+    }
   }
 
   /* ── Formatting ───────────────────────────────────────────── */

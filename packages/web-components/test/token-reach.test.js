@@ -219,7 +219,7 @@ describe('the forwarding rule is scoped and complete', () => {
 
   it('covers a broad sample of ARC tags', async () => {
     const selector = rule();
-    for (const tag of ['arc-button', 'arc-card', 'arc-select', 'arc-modal', 'arc-tooltip']) {
+    for (const tag of ['arc-button', 'arc-card', 'arc-select', 'arc-dialog', 'arc-tooltip']) {
       expect(selector, tag).to.include(tag);
     }
   });

@@ -200,5 +200,5 @@ function Gallery() {
     },
   ],
 
-  seeAlso: ['carousel', 'image', 'modal'],
+  seeAlso: ['carousel', 'image', 'dialog'],
 };

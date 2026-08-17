@@ -66,7 +66,6 @@ const FILL = {
   'arc-date-picker': (el) => { el.value = '2026-07-30'; },
   'arc-date-range-picker': (el) => { el.value = '2026-07-01/2026-07-10'; },
   'arc-time-picker': (el) => { el.value = '12:30'; },
-  'arc-otp-input': (el) => { el.value = '123456'; },
   'arc-pin-input': (el) => { el.value = '1234'; },
   'arc-tag-input': (el) => { el.value = ['a', 'b']; },
   'arc-password-input': (el) => { el.value = 'hunter2'; },

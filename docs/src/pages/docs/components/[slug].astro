@@ -413,12 +413,8 @@ const headings = removed
 <!-- Client-side: register WCs and populate live previews -->
 <script>
   import { iconRegistry } from '@arclux/arc-ui';
-  // Both packs, because the icon page's browser lists them side by side and its
-  // library switcher expects either to resolve. Core has shipped no icons since
-  // v4 — a page that renders a named glyph registers one, and the docs site is
-  // the first consumer of that contract.
-  import '@arclux/arc-ui-icons/phosphor';
-  import '@arclux/arc-ui-icons/lucide';
+  // Both icon packs are registered by BaseLayout — the shell shows named
+  // glyphs on every page, not just this one.
 
   // Expose to previewSetup scripts (which run via new Function, outside module scope)
   (window as any).__arcIconRegistry = iconRegistry;
@@ -428,8 +424,21 @@ const headings = removed
   }
 
   function runPreviewSetup() {
-    // Run any previewSetup scripts embedded as data attributes
-    document.querySelectorAll('.live-preview[data-setup]').forEach((el) => {
+    // Run any previewSetup scripts embedded as data attributes — but only
+    // once every arc-* element in the preview has upgraded. The register
+    // barrel loads lazily (BaseLayout), so running the setup immediately
+    // assigns data as *pre-upgrade* properties, which Lit applies at the top
+    // of the element's first update — the hydrating one that must match the
+    // server's attribute-only render. That mismatch aborted hydration on
+    // every property-driven preview (terminal, waveform, chart, …).
+    document.querySelectorAll('.live-preview[data-setup]').forEach(async (el) => {
+      const arcEls = [...el.querySelectorAll('*')].filter((n) => n.tagName.toLowerCase().startsWith('arc-'));
+      const tags = [...new Set(arcEls.map((n) => n.tagName.toLowerCase()))];
+      await Promise.all(tags.map((t) => customElements.whenDefined(t)));
+      // whenDefined alone is not enough: it resolves before the element's
+      // first async update, and a property set in that window still lands in
+      // the hydrating render. Wait out each element's first update too.
+      await Promise.all(arcEls.map((n) => (n as any).updateComplete));
       try { new Function('el', el.getAttribute('data-setup')!)(el); } catch (err) { console.error('[previewSetup]', err); }
     });
   }

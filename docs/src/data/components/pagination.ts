@@ -120,5 +120,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['data-table', 'breadcrumb', 'infinite-scroll'],
+  seeAlso: ['data-grid', 'breadcrumb', 'infinite-scroll'],
 };

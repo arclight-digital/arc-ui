@@ -77,7 +77,6 @@ export default {
     'arc-tree-item':        'interactive',  // child of arc-tree-view
     'arc-sidebar-section':  'interactive',  // child of arc-sidebar
     'arc-code-block':       'hybrid',       // display works; copy needs JS
-    'arc-callout':          'hybrid',       // box, variants and icon are pure CSS; only dismissal needs JS
     'arc-avatar-group':     'hybrid',       // stacking and overlap are pure layout; only the overflow count needs JS
     'arc-app-shell':        'hybrid',       // full page grid renders from CSS; only the mobile drawer backdrop needs JS
     'arc-top-bar':          'hybrid',       // bar, slots and sticky behaviour are CSS; only the mobile menu toggle needs JS
@@ -125,16 +124,6 @@ export default {
   // strict failure — so this list cannot quietly shelter a real regression or
   // rot into pre-waiving whatever next appears under the same key.
   acknowledge: [
-    {
-      code: 'framework-reserved',
-      tag: 'arc-column',
-      prop: 'key',
-      note:
-        'Deliberate. `field` is the supported name and is what React and Preact ' +
-        'consumers must use; `key` is kept because it works in HTML, Vue, Svelte, ' +
-        'Angular and Solid, and renaming would break five working consumers to ' +
-        'repair two. arc-column falls back via `fieldName` (field || key).',
-    },
     {
       code: 'doc-prop-undeclared',
       tag: 'arc-date-range-picker',

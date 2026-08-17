@@ -17,4 +17,5 @@ export const breakpoints = {
   xl: 1280,
   '2xl': 1536,
   navCollapse: 900,
+  navFit: 480,
 };

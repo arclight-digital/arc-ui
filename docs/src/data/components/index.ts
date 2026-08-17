@@ -17,7 +17,6 @@ import { radioGroup } from './radio-group';
 import { select } from './select';
 import { alert } from './alert';
 import { progress } from './progress';
-import { modal } from './modal';
 import { toast } from './toast';
 import { tooltip } from './tooltip';
 import { appShell } from './app-shell';
@@ -26,7 +25,6 @@ import { avatar } from './avatar';
 import { avatarGroup } from './avatar-group';
 import { breadcrumb } from './breadcrumb';
 import { calendar } from './calendar';
-import { callout } from './callout';
 import { codeBlock } from './code-block';
 import { colorSwatch } from './color-swatch';
 import { combobox } from './combobox';
@@ -35,7 +33,6 @@ import { contextMenu } from './context-menu';
 import { copyButton } from './copy-button';
 import { ctaBanner } from './cta-banner';
 import { dashboardGrid } from './dashboard-grid';
-import { dataTable } from './data-table';
 import { datePicker } from './date-picker';
 import { drawer } from './drawer';
 import { dropdownMenu } from './dropdown-menu';
@@ -67,7 +64,6 @@ import { spinner } from './spinner';
 import { splitPane } from './split-pane';
 import { statusBar } from './status-bar';
 import { stepper } from './stepper';
-import { table } from './table';
 import { tag } from './tag';
 import { textarea } from './textarea';
 import { themeToggle } from './theme-toggle';
@@ -81,7 +77,6 @@ import { numberInput } from './number-input';
 import { collapsible } from './collapsible';
 import { rating } from './rating';
 import { chip } from './chip';
-import { otpInput } from './otp-input';
 import { carousel } from './carousel';
 import { sortableList } from './sortable-list';
 import { colorPicker } from './color-picker';
@@ -98,7 +93,6 @@ import { highlight } from './highlight';
 import { animatedNumber } from './animated-number';
 import { markdown } from './markdown';
 import { scrollToTop } from './scroll-to-top';
-import { separator } from './separator';
 import { image } from './image';
 import { scrollIndicator } from './scroll-indicator';
 import { list } from './list';
@@ -115,7 +109,6 @@ import { aspectGrid } from './aspect-grid';
 import { inset } from './inset';
 import { sticky } from './sticky';
 import { responsiveSwitcher } from './responsive-switcher';
-import { cluster } from './cluster';
 import { center } from './center';
 import { commandBar } from './command-bar';
 import { stepperNav } from './stepper-nav';
@@ -125,16 +118,12 @@ import { anchorNav } from './anchor-nav';
 import { breadcrumbMenu } from './breadcrumb-menu';
 import { rail } from './rail';
 import { pageIndicator } from './page-indicator';
-import { snackbar } from './snackbar';
 import { banner } from './banner';
-import { inlineMessage } from './inline-message';
 import { confirm } from './confirm';
 import { loadingOverlay } from './loading-overlay';
 import { connectionStatus } from './connection-status';
 import { announcement } from './announcement';
-import { progressToast } from './progress-toast';
 import { diff } from './diff';
-import { keyValue } from './key-value';
 import { countdownTimer } from './countdown-timer';
 import { comparison } from './comparison';
 import { sparkline } from './sparkline';
@@ -199,7 +188,6 @@ export const components: ComponentDef[] = [
   select,
   alert,
   progress,
-  modal,
   toast,
   tooltip,
   appShell,
@@ -208,7 +196,6 @@ export const components: ComponentDef[] = [
   avatarGroup,
   breadcrumb,
   calendar,
-  callout,
   codeBlock,
   colorSwatch,
   combobox,
@@ -217,7 +204,6 @@ export const components: ComponentDef[] = [
   copyButton,
   ctaBanner,
   dashboardGrid,
-  dataTable,
   datePicker,
   drawer,
   dropdownMenu,
@@ -249,7 +235,6 @@ export const components: ComponentDef[] = [
   splitPane,
   statusBar,
   stepper,
-  table,
   tag,
   textarea,
   themeToggle,
@@ -263,7 +248,6 @@ export const components: ComponentDef[] = [
   collapsible,
   rating,
   chip,
-  otpInput,
   carousel,
   sortableList,
   colorPicker,
@@ -280,7 +264,6 @@ export const components: ComponentDef[] = [
   animatedNumber,
   markdown,
   scrollToTop,
-  separator,
   image,
   scrollIndicator,
   list,
@@ -297,7 +280,6 @@ export const components: ComponentDef[] = [
   inset,
   sticky,
   responsiveSwitcher,
-  cluster,
   center,
   commandBar,
   stepperNav,
@@ -307,16 +289,12 @@ export const components: ComponentDef[] = [
   breadcrumbMenu,
   rail,
   pageIndicator,
-  snackbar,
   banner,
-  inlineMessage,
   confirm,
   loadingOverlay,
   connectionStatus,
   announcement,
-  progressToast,
   diff,
-  keyValue,
   countdownTimer,
   comparison,
   sparkline,

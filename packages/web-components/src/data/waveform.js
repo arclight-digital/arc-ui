@@ -157,6 +157,53 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
     this._onWindowPointerUp = this._onWindowPointerUp.bind(this);
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * `peaks` has an attribute, but nobody writes a real envelope into markup —
+   * it arrives from script, and @lit-labs/ssr renders a host from its
+   * attributes alone, so the server draws the empty-track hairline. A page that
+   * assigns `peaks` before the register barrel upgrades this element parks the
+   * array in Lit's pre-upgrade instance properties, which are applied at the
+   * top of the very first update: the one that has to adopt the server's
+   * markup. Sixty-four `<rect>` against the server's one `<line>` is a
+   * hydration mismatch — "Primitive found where TemplateResult expected" for
+   * `bars` (an array where the server put a template), "Unexpected
+   * TemplateResult rendered to part" for `mirror` (a `<path>` template where
+   * the server put a `<line>` one) — and hydration abandons the tree there.
+   *
+   * So the first render uses what the attributes said, which is exactly what
+   * the server rendered from, and the script-set envelope is handed over in
+   * `firstUpdated`, once the server's DOM has been adopted. Nothing is held
+   * back without a server-rendered shadow root, so a client-only waveform still
+   * draws its envelope on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) this._ssrState = { peaks: this.peaks };
+  }
+
+  willUpdate() {
+    // See connectedCallback.
+    if (this._ssrState) {
+      this._heldState = { peaks: this.peaks };
+      Object.assign(this, this._ssrState);
+      this._ssrState = null;
+    }
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's
+    // envelope can land now, as an ordinary second update.
+    if (this._heldState) {
+      Object.assign(this, this._heldState);
+      this._heldState = null;
+    }
+  }
+
   disconnectedCallback() {
     super.disconnectedCallback();
     this._endScrub();

@@ -208,5 +208,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['data-table', 'navigation-menu', 'virtual-list'],
+  seeAlso: ['data-grid', 'navigation-menu', 'virtual-list'],
 };

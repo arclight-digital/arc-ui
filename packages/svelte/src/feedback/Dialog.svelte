@@ -9,7 +9,6 @@
     size?: 'sm' | 'md' | 'lg';
     fullscreen?: boolean;
     dismissible?: boolean;
-    closable?: boolean;
     /** <slot name="header"> — put slot="header" on the element inside. */
     header?: Snippet;
     /** <slot name="footer"> — put slot="footer" on the element inside. */
@@ -42,10 +41,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open, heading = '', size, fullscreen, dismissible, closable, header, footer, children, ...rest }: Props = $props();
+  let { open, heading = '', size, fullscreen, dismissible, header, footer, children, ...rest }: Props = $props();
 </script>
 
-<arc-dialog {open} {heading} {size} {fullscreen} {dismissible} {closable} {...rest}>
+<arc-dialog {open} {heading} {size} {fullscreen} {dismissible} {...rest}>
   {@render header?.()}
   {@render footer?.()}
   {@render children?.()}

@@ -11,15 +11,10 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @slot prefix - Content pinned to the inline-start edge of the bar.
  * @slot - Default content.
  * @slot suffix - Content pinned to the inline-end edge of the bar.
- * @slot start - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it
- *   still renders in the same region, ahead of anything slotted into `prefix`.
- * @slot end - Deprecated alias of `suffix`, kept through v4 and removed in v5.
  * @csspart base
  * @csspart prefix
- * @csspart start - Alias of `prefix`, on the same element. Kept through v4.
  * @csspart center
  * @csspart suffix
- * @csspart end - Alias of `suffix`, on the same element. Kept through v4.
  */
 export class ArcStatusBar extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -86,16 +81,14 @@ export class ArcStatusBar extends DeclaredPropsMixin(LitElement) {
   render() {
     return html`
       <div class="status-bar" part="base" role="status">
-        <div class="status-bar__start" part="prefix start">
+        <div class="status-bar__start" part="prefix">
           <slot name="prefix"></slot>
-          <slot name="start"></slot>
         </div>
         <div class="status-bar__center" part="center">
           <slot></slot>
         </div>
-        <div class="status-bar__end" part="suffix end">
+        <div class="status-bar__end" part="suffix">
           <slot name="suffix"></slot>
-          <slot name="end"></slot>
         </div>
       </div>
     `;

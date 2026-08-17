@@ -174,5 +174,5 @@ const features = JSON.stringify(['Storage', 'Bandwidth', 'Custom Domain', 'Suppo
     },
   ],
 
-  seeAlso: ['data-table', 'card', 'feature-card'],
+  seeAlso: ['data-grid', 'card', 'feature-card'],
 };

@@ -109,7 +109,7 @@ function setTheme(theme) {
 // Restore on page load
 const saved = localStorage.getItem('arc-theme') || 'auto';
 document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block></div>
-      <arc-callout variant="tip">The <code>arc-theme-toggle</code> component handles this automatically — just drop it into your layout.</arc-callout>
+      <arc-alert variant="tip">The <code>arc-theme-toggle</code> component handles this automatically — just drop it into your layout.</arc-alert>
     </section>
 
     <section id="fixed-regions">
@@ -139,12 +139,12 @@ document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block><
         deep colour derived from your accent. The top bar and footer here do exactly that —
         flip to light mode and watch them land on blue rather than black.
       </p>
-      <arc-callout variant="tip">
+      <arc-alert variant="tip">
         The lifted colour takes its hue from <code>--accent-primary</code> and its lightness
         from the scheme, so overriding your accent re-colours pinned regions with it. A teal
         brand gives a deep teal nav; a monochrome one stays grey. There is no second palette
         to keep in step.
-      </arc-callout>
+      </arc-alert>
     </section>
 
     <section id="custom-themes">
@@ -169,7 +169,7 @@ document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block><
       <div class="cascade-demo">
         <arc-button id="cascade-toggle" variant="primary">Apply the override</arc-button>
       </div>
-      <arc-callout variant="info">Keep contrast ratios when overriding accent or background tokens: 4.5:1 for text, 3:1 for UI elements.</arc-callout>
+      <arc-alert variant="info">Keep contrast ratios when overriding accent or background tokens: 4.5:1 for text, 3:1 for UI elements.</arc-alert>
     </section>
 
     <section id="synthesizer">

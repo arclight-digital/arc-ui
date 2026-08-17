@@ -231,66 +231,6 @@
           }
         },
         {
-          "name": "arc-callout",
-          "description": "@deprecated Since v4.0.0 — use `<arc-alert>`. It absorbed the `tip` variant and the `icon` slot, and `info` now maps to `role=\"note\"` as this component always did. `variant` carries over; the derived uppercase label has no equivalent — pass `heading` if you want one. Removed in v5. Styled callout box for tips, warnings, and info.\n\n\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dismiss button is clicked on a dismissible callout.\n\n### **Slots:**\n - **icon**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **callout**\n- **header**\n- **icon**\n- **label**\n- **dismiss**\n- **content**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "variant",
-              "description": "Semantic variant that controls the color scheme, top accent bar, and default icon",
-              "value": {
-                "type": "'info' | 'tip' | 'warning' | 'error'",
-                "default": "'info'"
-              }
-            },
-            {
-              "name": "dismissible",
-              "description": "Shows a close button that removes the callout. Fires an arc-close event on close.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "icon"
-            },
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-close",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the dismiss button is clicked on a dismissible callout."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "variant",
-                "description": "Semantic variant that controls the color scheme, top accent bar, and default icon",
-                "type": "'info' | 'tip' | 'warning' | 'error'"
-              },
-              {
-                "name": "dismissible",
-                "description": "Shows a close button that removes the callout. Fires an arc-close event on close.",
-                "type": "boolean"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-close",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the dismiss button is clicked on a dismissible callout."
-              }
-            ]
-          }
-        },
-        {
           "name": "arc-card",
           "description": "Content container with subtle border styling and hover effects. Links the entire card surface\nwhen an href is provided, creating a seamless clickable area with an animated gradient border.\n---\n\n\n### **Slots:**\n - _default_ - Default content. Wrapping the content in a single `<a>` adopts it as the card's link — the recommended form for cards that must work before hydration or without JavaScript. The anchor fills the padded surface; the `footer` slot stays outside it so footer actions remain separately clickable.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **body**\n- **footer**\n- **card**\n- **inner**",
           "doc-url": "",
@@ -552,94 +492,6 @@
                 "name": "size",
                 "description": "Controls swatch dimensions: sm (32px), md (48px), lg (64px)",
                 "type": "'sm' | 'md' | 'lg'"
-              }
-            ],
-            "events": []
-          }
-        },
-        {
-          "name": "arc-column",
-          "description": "@deprecated Since v4.0.0. Its only consumer is `<arc-data-table>`, which is itself deprecated in favour of `<arc-data-grid>` — and arc-data-grid takes its columns as a `columns` array rather than as slotted children, so there is no element to migrate this one to. Each `<arc-column key label sortable width align>` becomes one `{ key, label, sortable, width, align }` entry in that array. Removed in v5, with its parent. Defines a single column within a DataTable. Each Column maps a data field key to a visible table column with a header label. Columns are invisible DOM elements that act as declarative configuration — they do not render any visible content themselves.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "field",
-              "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "key",
-              "description": "Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "label",
-              "description": "The human-readable header text displayed in the table's `<th>` element. This is what users see at the top of the column.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "sortable",
-              "description": "When true (and the parent DataTable also has `sortable`), clicking this column's header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "width",
-              "description": "Sets a fixed CSS width on the column (e.g., \"100px\", \"20%\"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [],
-          "js": {
-            "properties": [
-              {
-                "name": "fieldName",
-                "description": "The row property this column reads, from whichever alias was supplied.\nReact and Preact strip `key` in the reconciler, so a React consumer can\nonly ever reach this through `field`."
-              },
-              {
-                "name": "field",
-                "description": "The property name on each row object whose value should be displayed in this column. Must match a key present in the objects passed to the parent DataTable's `rows` array. Prefer this over `key`, which React and Preact intercept before the component sees it.",
-                "type": "string"
-              },
-              {
-                "name": "key",
-                "description": "Alias of `field`, kept for compatibility. Works in HTML, Vue, Svelte, Angular and Solid, but **not** in React or Preact: both reserve `key` for list reconciliation and strip it before the component receives it. `field` takes precedence when both are set.",
-                "type": "string"
-              },
-              {
-                "name": "label",
-                "description": "The human-readable header text displayed in the table's `<th>` element. This is what users see at the top of the column.",
-                "type": "string"
-              },
-              {
-                "name": "width",
-                "description": "Sets a fixed CSS width on the column (e.g., \"100px\", \"20%\"). Useful for constraining narrow columns like status badges or actions so they do not stretch unnecessarily.",
-                "type": "string"
-              },
-              {
-                "name": "sortable",
-                "description": "When true (and the parent DataTable also has `sortable`), clicking this column's header toggles ascending/descending sort on the corresponding data field. A sort indicator arrow appears next to the label.",
-                "type": "boolean"
               }
             ],
             "events": []
@@ -1769,59 +1621,6 @@
           }
         },
         {
-          "name": "arc-separator",
-          "description": "@deprecated Since v4.0.0 — use `<arc-divider>`. arc-divider absorbed the `dashed`, `dotted` and `fade` variants; `orientation=\"vertical\"` becomes the `vertical` flag. Removed in v5. Visual divider for separating content sections. Supports horizontal and vertical orientations, multiple line styles, and optional inline labels.\n\n\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **separator**\n- **line**\n- **label**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "orientation",
-              "description": "Controls the divider direction. Vertical separators display as inline-flex with full parent height.",
-              "value": {
-                "type": "'horizontal' | 'vertical'",
-                "default": "'horizontal'"
-              }
-            },
-            {
-              "name": "label",
-              "description": "Optional text displayed centered between two line segments. Only applies to horizontal orientation.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "variant",
-              "description": "Controls the line style. Fade uses a gradient that tapers to transparent at both ends.",
-              "value": {
-                "type": "'line' | 'dashed' | 'dotted' | 'fade'",
-                "default": "'line'"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [],
-          "js": {
-            "properties": [
-              {
-                "name": "label",
-                "description": "Optional text displayed centered between two line segments. Only applies to horizontal orientation.",
-                "type": "string"
-              },
-              {
-                "name": "orientation",
-                "description": "Controls the divider direction. Vertical separators display as inline-flex with full parent height.",
-                "type": "'horizontal' | 'vertical'"
-              },
-              {
-                "name": "variant",
-                "description": "Controls the line style. Fade uses a gradient that tapers to transparent at both ends.",
-                "type": "'line' | 'dashed' | 'dotted' | 'fade'"
-              }
-            ],
-            "events": []
-          }
-        },
-        {
           "name": "arc-skeleton",
           "description": "Loading placeholder with shimmer animation.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **skeleton**",
           "doc-url": "",
@@ -2241,7 +2040,7 @@
         },
         {
           "name": "arc-activity-heatmap",
-          "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail — the date and the day's label or value — in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, computed at render time in the browser; when rendering\nserver-side with no `end-date`, the anchor is instead derived from the\nnewest date present in `data`, so the server output is deterministic. Pin\n`end-date` explicitly whenever server and client must agree exactly.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **heatmap**\n- **months**\n- **month**\n- **weekdays**\n- **weekday**\n- **grid**\n- **cell**\n- **detail**\n- **legend**\n- **swatch**",
+          "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail — the date and the day's label or value — in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, adopted in the browser one render after the first; before\nthat — the server render, and the client render that hydrates it — the\nanchor is derived from the newest date present in `data`, so both are\ndeterministic and identical. Pin `end-date` explicitly whenever server and\nclient must agree exactly.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **heatmap**\n- **months**\n- **month**\n- **weekdays**\n- **weekday**\n- **grid**\n- **cell**\n- **detail**\n- **legend**\n- **swatch**",
           "doc-url": "",
           "attributes": [
             {
@@ -3069,151 +2868,6 @@
           }
         },
         {
-          "name": "arc-data-table",
-          "description": "@deprecated Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: the slotted `<arc-column>` children become a `columns` array of the same fields. Sorting becomes the multi-sort `sort` array (a single entry behaves as `sort-column`/`sort-direction` did), and selection, virtual scrolling and `overscan` are unchanged. Removed in v5. A data-driven table component that renders rows from a JavaScript array. Declarative column definitions via `arc-column` children control which fields appear, their headers, widths, and sort behavior. Built-in support for column sorting, row selection with checkboxes, and an empty-state fallback.\n\n\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when a sortable column header is clicked\n- **arc-select** - Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **row**\n- **cell**\n- **wrapper**\n- **table**\n- **head**\n- **body**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "rows",
-              "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render.",
-              "value": {
-                "type": "Array<Record<string, any>>",
-                "default": "[]"
-              }
-            },
-            {
-              "name": "sortable",
-              "description": "Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "selectable",
-              "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "sort-column",
-              "description": "The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "sortDirection",
-              "description": "The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.",
-              "value": {
-                "type": "'asc' | 'desc'",
-                "default": "'asc'"
-              }
-            },
-            {
-              "name": "virtual",
-              "description": "Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "rowHeight",
-              "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-              "value": {
-                "type": "number",
-                "default": "40"
-              }
-            },
-            {
-              "name": "overscan",
-              "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
-              "value": {
-                "type": "number",
-                "default": "5"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-sort",
-              "type": "CustomEvent<{ column: string, direction: 'asc' | 'desc' }>",
-              "description": "Fired when a sortable column header is clicked"
-            },
-            {
-              "name": "arc-select",
-              "type": "CustomEvent",
-              "description": "Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "sortColumn",
-                "description": "The `key` of the currently sorted column. Set this attribute to pre-sort the table on a specific column when it first renders. Updated automatically when the user clicks a sortable column header.",
-                "type": "string"
-              },
-              {
-                "name": "rows",
-                "description": "The data array that drives the table. Each object in the array becomes a row, and its keys are matched against the `key` attribute of each `arc-column` child. Set as a property, or as a JSON attribute for a table that is static. Changing this array triggers a re-render.",
-                "type": "Array<Record<string, any>>"
-              },
-              {
-                "name": "sortable",
-                "description": "Enables the sorting system at the table level. When true, columns that also have their own `sortable` attribute become clickable, toggling between ascending and descending order. The table performs client-side sorting by default and emits an `arc-sort` event with the active column key and direction.",
-                "type": "boolean"
-              },
-              {
-                "name": "selectable",
-                "description": "Adds a checkbox column to the left of the table for row selection. A \"select all\" checkbox appears in the header. Selected rows receive a visual highlight. The component emits `arc-select` with the current selection (detail.value) when any row or the header checkbox is toggled; detail.all marks header toggles.",
-                "type": "boolean"
-              },
-              {
-                "name": "sortDirection",
-                "description": "The current sort direction. Works in tandem with `sort-column` to control the initial sort state. Reflected as an attribute so it can be read from the DOM or targeted with CSS selectors.",
-                "type": "'asc' | 'desc'"
-              },
-              {
-                "name": "virtual",
-                "description": "Enables virtual scrolling for large datasets. When true, only the visible rows plus an overscan buffer are rendered in the DOM, keeping performance constant regardless of row count.",
-                "type": "boolean"
-              },
-              {
-                "name": "rowHeight",
-                "description": "Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.",
-                "type": "number"
-              },
-              {
-                "name": "overscan",
-                "description": "Rows rendered above and below the visible window when `virtual` is on, to cover fast scrolling. Raising it trades DOM nodes for fewer blank rows on a fling; lowering it does the reverse. Never negative.",
-                "type": "number"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-sort",
-                "type": "CustomEvent<{ column: string, direction: 'asc' | 'desc' }>",
-                "description": "Fired when a sortable column header is clicked"
-              },
-              {
-                "name": "arc-select",
-                "type": "CustomEvent",
-                "description": "Fired when row selection changes. detail: { value, selected, row, index } — `value` is the selected row objects themselves, in `rows` order, so it stays correct across sorting; `row` is the one toggled, `index` its position in `rows`, and `all` is true for header select-all toggles."
-              }
-            ]
-          }
-        },
-        {
           "name": "arc-description-item",
           "description": "A single term/detail pair within a description list. The term is rendered as an uppercase label,\nand the default slot holds the detail content.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **item**\n- **term**\n- **detail**",
           "doc-url": "",
@@ -3630,83 +3284,6 @@
                 "description": "Fired when a card is clicked without being dragged. detail: { cardId, columnId }."
               }
             ]
-          }
-        },
-        {
-          "name": "arc-key-value",
-          "description": "@deprecated Since v4.0.0 — use `<arc-description-list>`. arc-description-list absorbed `layout`, but defaults to `stacked` — pass `layout=\"horizontal\"` to keep this one's default. Removed in v5. A styled definition list for displaying labeled key-value pairs. Supports horizontal and stacked layouts with optional dividers between rows.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **list**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "layout",
-              "description": "Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.",
-              "value": {
-                "type": "'horizontal' | 'stacked'",
-                "default": "'horizontal'"
-              }
-            },
-            {
-              "name": "dividers",
-              "description": "When true, renders a subtle border between each key-value pair.",
-              "value": {
-                "type": "boolean",
-                "default": "true"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [],
-          "js": {
-            "properties": [
-              {
-                "name": "layout",
-                "description": "Controls pair arrangement. Horizontal uses a CSS grid with key and value side by side. Stacked places the key above the value.",
-                "type": "'horizontal' | 'stacked'"
-              },
-              {
-                "name": "dividers",
-                "description": "When true, renders a subtle border between each key-value pair.",
-                "type": "boolean"
-              }
-            ],
-            "events": []
-          }
-        },
-        {
-          "name": "arc-kv-pair",
-          "description": "@deprecated Since v4.0.0 — use `<arc-description-item>`. `label` becomes `term`; the `key`/`value` parts become `term`/`detail`. Removed in v5. A single key-value pair within an arc-key-value container. The `label` attribute provides the key text, and the default slot holds the value content.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **key**\n- **value**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "label",
-              "description": "The key/term text displayed in uppercase accent styling.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [],
-          "js": {
-            "properties": [
-              {
-                "name": "label",
-                "description": "The key/term text displayed in uppercase accent styling.",
-                "type": "string"
-              }
-            ],
-            "events": []
           }
         },
         {
@@ -4373,72 +3950,6 @@
                 "name": "active",
                 "description": "Zero-indexed active step — steps before this index show as completed. Clamped to the range of rendered steps.",
                 "type": "number"
-              }
-            ],
-            "events": []
-          }
-        },
-        {
-          "name": "arc-table",
-          "description": "@deprecated Since v4.0.0 — use `<arc-data-grid>`. One column model for the whole family: `columns` becomes `[{ key, label }]` and each row becomes an object keyed by those keys, rather than positional arrays. `striped` and `density` moved across, with `striped` defaulting on — pass `no-striped` for the plain look. Removed in v5. Data-driven table with striped and compact-density variants, powered by columns and rows props.\n\n\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **table-wrap**\n- **table**\n- **head**\n- **body**\n- **row**\n- **cell**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "columns",
-              "description": "Array of column header strings.",
-              "value": {
-                "type": "string[]",
-                "default": "[]"
-              }
-            },
-            {
-              "name": "rows",
-              "description": "Array of row arrays. Each inner array contains cell values in column order.",
-              "value": {
-                "type": "string[][]",
-                "default": "[]"
-              }
-            },
-            {
-              "name": "striped",
-              "description": "Alternating row backgrounds for improved scanability.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "density",
-              "description": "Row density. 'compact' reduces cell padding for dense data displays.",
-              "value": {
-                "type": "'default' | 'compact'",
-                "default": "'default'"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [],
-          "js": {
-            "properties": [
-              {
-                "name": "columns",
-                "description": "Array of column header strings.",
-                "type": "string[]"
-              },
-              {
-                "name": "rows",
-                "description": "Array of row arrays. Each inner array contains cell values in column order.",
-                "type": "string[][]"
-              },
-              {
-                "name": "striped",
-                "description": "Alternating row backgrounds for improved scanability.",
-                "type": "boolean"
-              },
-              {
-                "name": "density",
-                "description": "Row density. 'compact' reduces cell padding for dense data displays.",
-                "type": "'default' | 'compact'"
               }
             ],
             "events": []
@@ -5597,14 +5108,6 @@
                 "type": "boolean",
                 "default": "true"
               }
-            },
-            {
-              "name": "closable",
-              "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
-              "value": {
-                "type": "boolean",
-                "default": "true"
-              }
             }
           ],
           "slots": [
@@ -5651,11 +5154,6 @@
               {
                 "name": "dismissible",
                 "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
-                "type": "boolean"
-              },
-              {
-                "name": "closable",
-                "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
                 "type": "boolean"
               },
               {
@@ -5819,38 +5317,6 @@
           }
         },
         {
-          "name": "arc-inline-message",
-          "description": "@deprecated Since v4.0.0. **Below a form control, use the control's own `error` prop** — every form control in the library renders one, with a `part=\"error\"` and the aria wiring already done, which is a thing a sibling element cannot do for it. Standing alone, use `<arc-alert density=\"compact\">`. Removed in v5. Contextual feedback that sits inline in a form or content area. Same semantic color variants as alert but compact — icon + text only, no background fill.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **icon**\n- **content**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "variant",
-              "description": "Controls the icon and text color. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
-              "value": {
-                "type": "'info' | 'success' | 'warning' | 'error'",
-                "default": "'info'"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [],
-          "js": {
-            "properties": [
-              {
-                "name": "variant",
-                "description": "Controls the icon and text color. Use \"info\" for neutral hints, \"success\" for valid state feedback, \"warning\" for caution notes, and \"error\" for validation failures.",
-                "type": "'info' | 'success' | 'warning' | 'error'"
-              }
-            ],
-            "events": []
-          }
-        },
-        {
           "name": "arc-loading-overlay",
           "description": "Semi-transparent surface-overlay with backdrop blur covering a container or page. Centers a\nspinner with optional progress text.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **overlay**\n- **spinner**\n- **message**",
           "doc-url": "",
@@ -5989,126 +5455,6 @@
               }
             ],
             "events": []
-          }
-        },
-        {
-          "name": "arc-modal",
-          "description": "@deprecated Since v4.0.0 — use `<arc-dialog>`. Same component, same props, same events, same parts, same custom properties; only the tag name changed. Removed in v5. General-purpose modal overlay on the platform's `<dialog>`. Renamed because the element *is* a dialog, the platform calls it a dialog, and `modal` named one of its behaviours rather than what it is (V4-SCOPE §2.4). **A subclass with an empty body, on purpose.** The usual way a rename-with-compatibility-alias rots is that the alias is a copy and one of the two copies gets a fix. There is nothing here to fall behind: no styles, no template, no properties. The one thing `arc-dialog` has that this does not inherit usefully is its reused-tag guard — that guard exists because the name `arc-dialog` used to mean a confirm prompt, and `arc-modal` never meant anything else — but it costs nothing to leave in place, and a page that hands `<arc-modal message=\"...\">` the confirm prompt's props has made the same mistake by a different route.\n\n\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the dialog opens\n- **arc-close** - Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close.\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **dialog** - The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties.\n- **header**\n- **close**\n- **body**\n- **footer**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "open",
-              "description": "Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from.",
-              "value": {
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "heading",
-              "description": "Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. \"Delete Project\" rather than \"Are you sure?\").",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "size",
-              "description": "Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.",
-              "value": {
-                "type": "'sm' | 'md' | 'lg'"
-              }
-            },
-            {
-              "name": "fullscreen",
-              "description": "Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.",
-              "value": {
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "dismissible",
-              "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
-              "value": {
-                "type": "boolean"
-              }
-            },
-            {
-              "name": "closable",
-              "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
-              "value": {
-                "type": "boolean"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "header"
-            },
-            {
-              "name": "",
-              "description": "Default content."
-            },
-            {
-              "name": "footer"
-            }
-          ],
-          "events": [
-            {
-              "name": "arc-open",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the dialog opens"
-            },
-            {
-              "name": "arc-close",
-              "type": "CustomEvent<void>",
-              "description": "Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "open",
-                "description": "Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from.",
-                "type": "boolean"
-              },
-              {
-                "name": "heading",
-                "description": "Text displayed in the header bar, and the dialog's accessible name.",
-                "type": "string"
-              },
-              {
-                "name": "size",
-                "description": "Maximum width of the panel. `sm` (400px) suits confirmations, `md` (560px) standard forms, and `lg` (720px) content-heavy dialogs with tables or multi-column layouts.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
-                "name": "dismissible",
-                "description": "When `true`, renders the built-in X close button and allows dismissal via Escape and backdrop click. Set to `false` for decisions the user must resolve through the footer.",
-                "type": "boolean"
-              },
-              {
-                "name": "closable",
-                "description": "@deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.",
-                "type": "boolean"
-              },
-              {
-                "name": "fullscreen",
-                "description": "Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.",
-                "type": "boolean"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-open",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the dialog opens"
-              },
-              {
-                "name": "arc-close",
-                "type": "CustomEvent<void>",
-                "description": "Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close."
-              }
-            ]
           }
         },
         {
@@ -6279,55 +5625,6 @@
                 "name": "arc-close",
                 "type": "CustomEvent<void>",
                 "description": "Fired when the popover closes."
-              }
-            ]
-          }
-        },
-        {
-          "name": "arc-progress-toast",
-          "description": "@deprecated Since v4.0.0 — use `<arc-toast>`. Pass `progress` to `show()` and arc-toast renders the track, skips dedupe and never auto-dismisses; `updateToast(id, { progress })`, `complete(id)` and the `arc-complete`/`arc-cancel` events all moved across. Removed in v5. Toast variant with embedded progress bar for long-running operations. Same positioning and animation as toast but persists until complete.\n\n\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier.\n- **arc-cancel** - Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **toast**\n- **cancel**\n- **track**\n- **fill**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "position",
-              "description": "Anchors the progress toast stack to a fixed corner of the viewport.",
-              "value": {
-                "type": "'top-right' | 'bottom-right'",
-                "default": "'bottom-right'"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [
-            {
-              "name": "arc-complete",
-              "type": "CustomEvent",
-              "description": "Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier."
-            },
-            {
-              "name": "arc-cancel",
-              "type": "CustomEvent",
-              "description": "Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "position",
-                "description": "Anchors the progress toast stack to a fixed corner of the viewport.",
-                "type": "'top-right' | 'bottom-right'"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-complete",
-                "type": "CustomEvent",
-                "description": "Fired when a progress toast operation reaches 100%. Detail contains { id } with the operation identifier."
-              },
-              {
-                "name": "arc-cancel",
-                "type": "CustomEvent",
-                "description": "Fired when the user clicks the cancel button on a progress toast. Detail contains { id } with the operation identifier."
               }
             ]
           }
@@ -6506,68 +5803,6 @@
                 "name": "arc-open",
                 "type": "CustomEvent<void>",
                 "description": "Fired when the sheet opens"
-              }
-            ]
-          }
-        },
-        {
-          "name": "arc-snackbar",
-          "description": "@deprecated Since v4.0.0 — use `<arc-toast>`. arc-toast already covers every position this had, and now fires `arc-action` as well as calling the `action` callback. `show({ message, action, actionLabel })` is unchanged. Removed in v5. Bottom-anchored single-line notification with optional action button. Darker than toast — surface-base background with accent-colored action link. Slides up, auto-dismisses.\n\n\n---\n\n\n### **Events:**\n - **arc-action** - Fired when the user clicks the action button (e.g. \"Undo\")\n- **arc-close** - Fired when the snackbar is dismissed, either by auto-timeout or user interaction\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **snackbar**\n- **action**\n- **dismiss**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "position",
-              "description": "Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.",
-              "value": {
-                "type": "'bottom-center' | 'bottom-left' | 'bottom-right'",
-                "default": "'bottom-center'"
-              }
-            },
-            {
-              "name": "duration",
-              "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
-              "value": {
-                "type": "number",
-                "default": "5000"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [
-            {
-              "name": "arc-action",
-              "type": "CustomEvent",
-              "description": "Fired when the user clicks the action button (e.g. \"Undo\")"
-            },
-            {
-              "name": "arc-close",
-              "type": "CustomEvent",
-              "description": "Fired when the snackbar is dismissed, either by auto-timeout or user interaction"
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "position",
-                "description": "Anchors the snackbar to a bottom edge of the viewport. Bottom-center is the conventional position for material-style snackbars.",
-                "type": "'bottom-center' | 'bottom-left' | 'bottom-right'"
-              },
-              {
-                "name": "duration",
-                "description": "Time in milliseconds before the snackbar auto-dismisses. Can be overridden per-show via the duration option. Set to 0 to persist until manually dismissed.",
-                "type": "number"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-action",
-                "type": "CustomEvent",
-                "description": "Fired when the user clicks the action button (e.g. \"Undo\")"
-              },
-              {
-                "name": "arc-close",
-                "type": "CustomEvent",
-                "description": "Fired when the snackbar is dismissed, either by auto-timeout or user interaction"
               }
             ]
           }
@@ -9821,150 +9056,6 @@
           }
         },
         {
-          "name": "arc-otp-input",
-          "description": "@deprecated Since v4.0.0 — use `<arc-pin-input>`. Same control: `length` covers 4-vs-6 and `mask` covers the obscured variant. The `otp` part becomes `pin`. Removed in v5. A one-time password input that renders a row of individual character boxes with auto-advance, paste support, and configurable length and input type.\n\n\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every digit entered or deleted, with the partial value.\n- **arc-change** - Fired when the code is complete — every box filled. That is the commit for a fixed-length code.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **otp**\n- **box**",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "size",
-              "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
-              "value": {
-                "type": "'sm' | 'md' | 'lg'",
-                "default": "'md'"
-              }
-            },
-            {
-              "name": "length",
-              "description": "Number of individual character boxes to render. Reflected as an attribute.",
-              "value": {
-                "type": "number",
-                "default": "6"
-              }
-            },
-            {
-              "name": "value",
-              "description": "The concatenated value of all boxes. Reflected as an attribute and updated on every input.",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "name",
-              "value": {
-                "type": "string",
-                "default": "''"
-              }
-            },
-            {
-              "name": "disabled",
-              "description": "Disables all input boxes, reducing opacity to 40% and blocking pointer events.",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "type",
-              "description": "Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.",
-              "value": {
-                "type": "'number' | 'text'",
-                "default": "'number'"
-              }
-            },
-            {
-              "name": "required",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            },
-            {
-              "name": "readonly",
-              "value": {
-                "type": "boolean",
-                "default": "false"
-              }
-            }
-          ],
-          "slots": [],
-          "events": [
-            {
-              "name": "arc-input",
-              "type": "CustomEvent<{ value: string }>",
-              "description": "Fired on every digit entered or deleted, with the partial value."
-            },
-            {
-              "name": "arc-change",
-              "type": "CustomEvent<{ value: string }>",
-              "description": "Fired when the code is complete — every box filled. That is the commit for a fixed-length code."
-            }
-          ],
-          "js": {
-            "properties": [
-              {
-                "name": "value",
-                "description": "The concatenated value of all boxes. Reflected as an attribute and updated on every input.",
-                "type": "string"
-              },
-              {
-                "name": "name",
-                "type": "string"
-              },
-              {
-                "name": "disabled",
-                "description": "Disables all input boxes, reducing opacity to 40% and blocking pointer events.",
-                "type": "boolean"
-              },
-              {
-                "name": "length",
-                "description": "Number of individual character boxes to render. Reflected as an attribute.",
-                "type": "number"
-              },
-              {
-                "name": "readonly",
-                "description": "Prevents typing, pasting, and clearing digits while the boxes stay focusable and the value still submits.",
-                "type": "boolean"
-              },
-              {
-                "name": "type",
-                "description": "Input mode. `number` filters non-digits and uses the numeric keyboard; `text` allows any character.",
-                "type": "'number' | 'text'"
-              },
-              {
-                "name": "size",
-                "description": "Control size. `md` is the default; `sm` and `lg` scale the digit boxes.",
-                "type": "'sm' | 'md' | 'lg'"
-              },
-              {
-                "name": "form"
-              },
-              {
-                "name": "validity"
-              },
-              {
-                "name": "validationMessage"
-              },
-              {
-                "name": "required",
-                "type": "boolean"
-              }
-            ],
-            "events": [
-              {
-                "name": "arc-input",
-                "type": "CustomEvent<{ value: string }>",
-                "description": "Fired on every digit entered or deleted, with the partial value."
-              },
-              {
-                "name": "arc-change",
-                "type": "CustomEvent<{ value: string }>",
-                "description": "Fired when the code is complete — every box filled. That is the commit for a fixed-length code."
-              }
-            ]
-          }
-        },
-        {
           "name": "arc-password-input",
           "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.\n\nTrue when the password contains a 4+ run of consecutive chars (abcd, 4321). *\\/ function\nhasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i\n< s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;\ndesc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }\nSelf-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\\/ function scorePassword(pw) { if\n(!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if\n(pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;\nconst classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\\d/.test(pw) ? 1 :\n0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=\n1; if (/(.)\\1\\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,\nMath.max(1, score)); }\n---\n\n\n### **Events:**\n - **arc-strength-change** - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)\n- **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed, with { value } detail\n\n### **CSS Parts:**\n - **base** - The root element.\n- **strength**\n- **label**\n- **field**\n- **input**\n- **toggle**\n- **error**",
           "doc-url": "",
@@ -13134,64 +12225,6 @@
           }
         },
         {
-          "name": "arc-cluster",
-          "description": "@deprecated Since v4.0.0 — use `<arc-stack>`. `<arc-stack direction=\"horizontal\" wrap>` is exactly this; `justify` spells the two edge values `between` and `around`. Removed in v5. Flex-wrap primitive for variable-width children like tags, chips, and buttons with token gap spacing.\n\n\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
-          "doc-url": "",
-          "attributes": [
-            {
-              "name": "gap",
-              "description": "Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.",
-              "value": {
-                "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
-                "default": "'sm'"
-              }
-            },
-            {
-              "name": "align",
-              "description": "Vertical alignment of items within each row (maps to align-items).",
-              "value": {
-                "type": "'start' | 'center' | 'end'",
-                "default": "'center'"
-              }
-            },
-            {
-              "name": "justify",
-              "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
-              "value": {
-                "type": "'start' | 'center' | 'end' | 'space-between' | 'space-around'",
-                "default": "'start'"
-              }
-            }
-          ],
-          "slots": [
-            {
-              "name": "",
-              "description": "Default content."
-            }
-          ],
-          "events": [],
-          "js": {
-            "properties": [
-              {
-                "name": "gap",
-                "description": "Spacing between items, mapped to design system spacing tokens. Use sm for dense tag groups, md for button groups.",
-                "type": "'xs' | 'sm' | 'md' | 'lg' | 'xl'"
-              },
-              {
-                "name": "align",
-                "description": "Vertical alignment of items within each row (maps to align-items).",
-                "type": "'start' | 'center' | 'end'"
-              },
-              {
-                "name": "justify",
-                "description": "Horizontal distribution of items (maps to justify-content). Use \"space-between\" for navigation-style spacing.",
-                "type": "'start' | 'center' | 'end' | 'space-between' | 'space-around'"
-              }
-            ],
-            "events": []
-          }
-        },
-        {
           "name": "arc-container",
           "description": "Max-width wrapper for page sections.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**",
           "doc-url": "",
@@ -13892,7 +12925,7 @@
         },
         {
           "name": "arc-status-bar",
-          "description": "Bottom status bar with start, center, and end slots.\n---\n\n\n### **Slots:**\n - **prefix** - Content pinned to the inline-start edge of the bar.\n- _default_ - Default content.\n- **suffix** - Content pinned to the inline-end edge of the bar.\n- **start** - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`.\n- **end** - Deprecated alias of `suffix`, kept through v4 and removed in v5.\n\n### **CSS Parts:**\n - **base**\n- **prefix**\n- **start** - Alias of `prefix`, on the same element. Kept through v4.\n- **center**\n- **suffix**\n- **end** - Alias of `suffix`, on the same element. Kept through v4.",
+          "description": "Bottom status bar with start, center, and end slots.\n---\n\n\n### **Slots:**\n - **prefix** - Content pinned to the inline-start edge of the bar.\n- _default_ - Default content.\n- **suffix** - Content pinned to the inline-end edge of the bar.\n\n### **CSS Parts:**\n - **base**\n- **prefix**\n- **center**\n- **suffix**",
           "doc-url": "",
           "attributes": [
             {
@@ -13916,14 +12949,6 @@
             {
               "name": "suffix",
               "description": "Content pinned to the inline-end edge of the bar."
-            },
-            {
-              "name": "start",
-              "description": "Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`."
-            },
-            {
-              "name": "end",
-              "description": "Deprecated alias of `suffix`, kept through v4 and removed in v5."
             }
           ],
           "events": [],
@@ -13997,7 +13022,7 @@
         },
         {
           "name": "arc-toolbar",
-          "description": "Horizontal toolbar with start, center, and end slots.\n---\n\n\n### **Events:**\n - **arc-overflow-change** - Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.\n\n### **Slots:**\n - **prefix** - Content pinned to the inline-start edge of the bar.\n- _default_ - Default content.\n- **suffix** - Content pinned to the inline-end edge of the bar.\n- **start** - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`.\n- **end** - Deprecated alias of `suffix`, kept through v4 and removed in v5.\n\n### **CSS Parts:**\n - **more**\n- **overflow-panel**\n- **overflow-item**\n- **base**\n- **prefix**\n- **start** - Alias of `prefix`, on the same element. Kept through v4.\n- **center**\n- **suffix**\n- **end** - Alias of `suffix`, on the same element. Kept through v4.",
+          "description": "Horizontal toolbar with prefix, center, and suffix slots.\n---\n\n\n### **Events:**\n - **arc-overflow-change** - Fired when the set of collapsed items changes (only with the overflow prop). detail: { hiddenCount: number }.\n\n### **Slots:**\n - **prefix** - Content pinned to the inline-start edge of the bar.\n- _default_ - Default content.\n- **suffix** - Content pinned to the inline-end edge of the bar.\n\n### **CSS Parts:**\n - **more**\n- **overflow-panel**\n- **overflow-item**\n- **base**\n- **prefix**\n- **center**\n- **suffix**",
           "doc-url": "",
           "attributes": [
             {
@@ -14045,14 +13070,6 @@
             {
               "name": "suffix",
               "description": "Content pinned to the inline-end edge of the bar."
-            },
-            {
-              "name": "start",
-              "description": "Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it still renders in the same region, ahead of anything slotted into `prefix`."
-            },
-            {
-              "name": "end",
-              "description": "Deprecated alias of `suffix`, kept through v4 and removed in v5."
             }
           ],
           "events": [
@@ -14218,12 +13235,12 @@
         },
         {
           "name": "arc-breadcrumb-item",
-          "description": "An individual crumb inside a Breadcrumb trail. Each item represents one level of the page\nhierarchy. Items with an `href` render as clickable links; the item without an `href` (typically\nthe last one) is treated as the current page and displayed with stronger visual weight.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
+          "description": "An individual crumb inside a Breadcrumb trail. Each item represents one level of the page\nhierarchy. Items with an `href` render as clickable links; the item without an `href` (typically\nthe last one) is treated as the current page and lifted to the primary text color.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
           "doc-url": "",
           "attributes": [
             {
               "name": "href",
-              "description": "Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current=\"page\"` and a bolder font weight automatically.",
+              "description": "Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current=\"page\"` and the primary text color automatically.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -14249,7 +13266,7 @@
               },
               {
                 "name": "href",
-                "description": "Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current=\"page\"` and a bolder font weight automatically.",
+                "description": "Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current=\"page\"` and the primary text color automatically.",
                 "type": "string"
               }
             ],
@@ -17134,28 +16151,6 @@
           "description": "The root element."
         },
         {
-          "name": "part(callout)"
-        },
-        {
-          "name": "part(header)"
-        },
-        {
-          "name": "part(icon)"
-        },
-        {
-          "name": "part(label)"
-        },
-        {
-          "name": "part(dismiss)"
-        },
-        {
-          "name": "part(content)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
           "name": "part(body)"
         },
         {
@@ -17464,19 +16459,6 @@
           "description": "The root element."
         },
         {
-          "name": "part(separator)"
-        },
-        {
-          "name": "part(line)"
-        },
-        {
-          "name": "part(label)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
           "name": "part(skeleton)"
         },
         {
@@ -17706,28 +16688,6 @@
           "description": "The root element."
         },
         {
-          "name": "part(row)"
-        },
-        {
-          "name": "part(cell)"
-        },
-        {
-          "name": "part(wrapper)"
-        },
-        {
-          "name": "part(table)"
-        },
-        {
-          "name": "part(head)"
-        },
-        {
-          "name": "part(body)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
           "name": "part(item)"
         },
         {
@@ -17851,19 +16811,6 @@
           "description": "The root element."
         },
         {
-          "name": "part(list)"
-        },
-        {
-          "name": "part(key)"
-        },
-        {
-          "name": "part(value)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
           "name": "part(meter)",
           "description": "The outer wrapper carrying role=\"meter\"."
         },
@@ -17975,28 +16922,6 @@
         },
         {
           "name": "part(label)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
-          "name": "part(table-wrap)"
-        },
-        {
-          "name": "part(table)"
-        },
-        {
-          "name": "part(head)"
-        },
-        {
-          "name": "part(body)"
-        },
-        {
-          "name": "part(row)"
-        },
-        {
-          "name": "part(cell)"
         },
         {
           "name": "part(base)",
@@ -18278,12 +17203,6 @@
           "name": "part(card)"
         },
         {
-          "name": "part(icon)"
-        },
-        {
-          "name": "part(content)"
-        },
-        {
           "name": "part(base)",
           "description": "The root element."
         },
@@ -18314,26 +17233,6 @@
           "description": "The root element."
         },
         {
-          "name": "part(dialog)",
-          "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties."
-        },
-        {
-          "name": "part(header)"
-        },
-        {
-          "name": "part(close)"
-        },
-        {
-          "name": "part(body)"
-        },
-        {
-          "name": "part(footer)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
           "name": "part(trigger)"
         },
         {
@@ -18357,25 +17256,6 @@
         },
         {
           "name": "part(panel)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
-          "name": "part(container)"
-        },
-        {
-          "name": "part(toast)"
-        },
-        {
-          "name": "part(cancel)"
-        },
-        {
-          "name": "part(track)"
-        },
-        {
-          "name": "part(fill)"
         },
         {
           "name": "part(base)",
@@ -18421,22 +17301,6 @@
         },
         {
           "name": "part(footer)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
-          "name": "part(container)"
-        },
-        {
-          "name": "part(snackbar)"
-        },
-        {
-          "name": "part(action)"
-        },
-        {
-          "name": "part(dismiss)"
         },
         {
           "name": "part(base)",
@@ -18891,16 +17755,6 @@
         },
         {
           "name": "part(increment)"
-        },
-        {
-          "name": "part(base)",
-          "description": "The root element."
-        },
-        {
-          "name": "part(otp)"
-        },
-        {
-          "name": "part(box)"
         },
         {
           "name": "part(base)",
@@ -19435,18 +18289,10 @@
           "name": "part(prefix)"
         },
         {
-          "name": "part(start)",
-          "description": "Alias of `prefix`, on the same element. Kept through v4."
-        },
-        {
           "name": "part(center)"
         },
         {
           "name": "part(suffix)"
-        },
-        {
-          "name": "part(end)",
-          "description": "Alias of `suffix`, on the same element. Kept through v4."
         },
         {
           "name": "part(base)",
@@ -19468,18 +18314,10 @@
           "name": "part(prefix)"
         },
         {
-          "name": "part(start)",
-          "description": "Alias of `prefix`, on the same element. Kept through v4."
-        },
-        {
           "name": "part(center)"
         },
         {
           "name": "part(suffix)"
-        },
-        {
-          "name": "part(end)",
-          "description": "Alias of `suffix`, on the same element. Kept through v4."
         },
         {
           "name": "part(base)"

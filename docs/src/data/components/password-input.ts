@@ -173,5 +173,5 @@ export class PasswordFormComponent {
     },
   ],
 
-  seeAlso: ['input', 'otp-input', 'pin-input', 'form', '/docs/frameworks'],
+  seeAlso: ['input', 'pin-input', 'form', '/docs/frameworks'],
 };

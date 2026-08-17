@@ -72,74 +72,17 @@
  *   node scripts/checks/boolean-defaults.js
  *
  * Run via: pnpm check boolean-defaults
- */
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SRC = path.join(__dirname, '..', '..', 'packages', 'web-components', 'src');
-const TIERS = ['content', 'data', 'feedback', 'input', 'layout', 'navigation', 'typography', 'shared'];
-
-/** The body of the first `{ … }` at or after `from`, read by brace depth. */
-function balanced(src, from) {
-  const open = src.indexOf('{', from);
-  if (open === -1) return null;
-  let depth = 0;
-  for (let i = open; i < src.length; i++) {
-    if (src[i] === '{') depth++;
-    else if (src[i] === '}' && --depth === 0) return { body: src.slice(open + 1, i), end: i };
-  }
-  return null;
-}
-
-/**
- * Every `name: { … }` entry in the static properties block, mapped to its own
- * declaration text.
  *
- * Read by brace depth rather than by regex so that a nested `converter: { … }`
- * is part of its parent's text instead of being mistaken for an entry of its
- * own — which matters, since the converter is the thing being looked for.
+ * V4-PLAN 4.10 moved this onto `scripts/lib/source-walker.js`. The brace-depth
+ * walk of `static properties` that used to live here is the walker's `props`,
+ * and the reason it has to be a walk rather than a regex — a nested
+ * `converter: { … }` belongs to its parent, and the converter is the thing
+ * being looked for — is recorded there, once, for every check that needs it.
  */
-function declarations(src) {
-  const at = src.indexOf('static properties');
-  if (at === -1) return new Map();
-  const block = balanced(src, at);
-  if (!block) return new Map();
-
-  const out = new Map();
-  const entry = /(\w+)\s*:\s*\{/g;
-  let m;
-  while ((m = entry.exec(block.body))) {
-    const inner = balanced(block.body, m.index);
-    if (!inner) break;
-    out.set(m[1], inner.body);
-    entry.lastIndex = inner.end;
-  }
-  return out;
-}
-
-/**
- * Props assigned `true` at the top level of the constructor.
- *
- * Depth is tracked across the body so an assignment inside a nested object or
- * callback does not count as the shipped default.
- */
-function defaultedTrue(src) {
-  const m = /\n\s*constructor\s*\(/.exec(src);
-  if (!m) return new Set();
-  const ctor = balanced(src, m.index);
-  if (!ctor) return new Set();
-
-  const found = new Set();
-  let depth = 0;
-  for (const line of ctor.body.split('\n')) {
-    const assign = /^\s*this\.(\w+)\s*=\s*true\s*;/.exec(line);
-    if (assign && depth === 0) found.add(assign[1]);
-    depth += (line.match(/[{[(]/g) || []).length - (line.match(/[}\])]/g) || []).length;
-  }
-  return found;
-}
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { run, ComponentSource } from '../lib/source-walker.js';
+import { findComponents, SRC_DIR, TIERS } from '../lib/component-tags.js';
 
 /** The attribute a prop is set through — Lit lowercases the name by default. */
 function attributeFor(prop, decl) {
@@ -171,37 +114,17 @@ function exempted(src) {
   return out;
 }
 
-const problems = [];
-let checked = 0;
-
-for (const tier of TIERS) {
-  const dir = path.join(SRC, tier);
-  if (!fs.existsSync(dir)) continue;
-
-  for (const file of fs.readdirSync(dir)) {
-    if (!file.endsWith('.js') || file.endsWith('.register.js') || file === 'index.js') continue;
-
-    const rel = `${tier}/${file}`;
-    const src = fs.readFileSync(path.join(dir, file), 'utf-8');
-
-    const decls = declarations(src);
-    if (!decls.size) continue;
-    const waived = exempted(src);
-
-    for (const [prop, decl] of decls) {
-      if (!/type\s*:\s*Boolean/.test(decl)) continue;
-      if (/\bstate\s*:\s*true/.test(decl)) continue;
-      if (/attribute\s*:\s*false/.test(decl)) continue;
-
-      checked++;
-      if (waived.has(prop)) continue;
-
-      problems.push(
-        `${rel} — \`${prop}\` is a raw \`type: Boolean\`; declare it with flag() ` +
-          `so \`${attributeFor(prop, decl)}="false"\` means false`,
-      );
-    }
-  }
+/**
+ * A declaration that hands Lit its stock boolean converter.
+ *
+ * `attribute: false` and `state: true` are the two shapes with no markup path
+ * to break, so neither is counted and neither can fail.
+ */
+function isRawBoolean(decl) {
+  if (!/type\s*:\s*Boolean/.test(decl)) return false;
+  if (/\bstate\s*:\s*true/.test(decl)) return false;
+  if (/attribute\s*:\s*false/.test(decl)) return false;
+  return true;
 }
 
 const REMEDY =
@@ -217,17 +140,97 @@ const REMEDY =
   'unset is a third meaning — put a `// NOT flag(): <reason>` comment on the\n' +
   'line above the declaration. The reason is the point; see the header.';
 
-if (problems.length) {
-  console.error(
-    `check-boolean-defaults: ${problems.length} boolean prop(s) not declared through flag()\n`,
+/** REMEDY as a rule hint: run() indents the first line, so indent the rest. */
+const asHint = (text) => text.replace(/^(?=.)/gm, '    ').trimStart();
+
+/** Every boolean prop the sweep looked at, components and shared modules alike. */
+let checked = 0;
+
+const throughFlag = {
+  name: 'boolean-defaults',
+  describe: 'every boolean prop is declared through flag()',
+  hint: asHint(REMEDY),
+  component({ source, props, report }) {
+    const waived = exempted(source);
+    for (const { name, text, line } of props) {
+      if (!isRawBoolean(text)) continue;
+
+      checked++;
+      if (waived.has(name)) continue;
+
+      report(
+        line,
+        `\`${name}\` is a raw \`type: Boolean\`; declare it with flag() ` +
+          `so \`${attributeFor(name, text)}="false"\` means false`,
+      );
+    }
+  },
+};
+
+/**
+ * The tier modules that are not components, swept the same way.
+ *
+ * The original walked every `.js` in every tier rather than the registered
+ * catalog, and two of the files that are not components declare props all the
+ * same: `shared/form-control-mixin.js` declares `required` and `readonly` for
+ * all 26 form controls, and `shared/props.js` is the vocabulary itself. The
+ * walker iterates components, so those keep being read here — through the same
+ * `ComponentSource`, so the shared-module half and the component half cannot
+ * drift into reading a declaration two different ways.
+ */
+function scanSharedModules() {
+  const components = new Set(
+    [...findComponents().values()].map((m) => `${m.tier}/${m.file}`),
   );
-  for (const p of problems) console.error(`  ${p}`);
+  const problems = [];
+
+  for (const tier of TIERS) {
+    for (const file of readdirSync(resolve(SRC_DIR, tier))) {
+      if (!file.endsWith('.js') || file.endsWith('.register.js') || file === 'index.js') continue;
+      const rel = `${tier}/${file}`;
+      if (components.has(rel)) continue;
+
+      const source = readFileSync(resolve(SRC_DIR, tier, file), 'utf-8');
+      const view = new ComponentSource({ tag: rel, tier, file }, source);
+      const waived = exempted(source);
+
+      for (const { name, text, line } of view.props) {
+        if (!isRawBoolean(text)) continue;
+
+        checked++;
+        if (waived.has(name)) continue;
+
+        problems.push(
+          `${view.file}:${line} — \`${name}\` is a raw \`type: Boolean\`; declare it with ` +
+            `flag() so \`${attributeFor(name, text)}="false"\` means false`,
+        );
+      }
+    }
+  }
+  return problems;
+}
+
+const code = run({ name: 'boolean-defaults', rules: [throughFlag] });
+
+// After the sweep, for the same reason size-canon audits its lists there: a
+// shared module's raw boolean is reported beside the component findings rather
+// than instead of them.
+const shared = scanSharedModules();
+if (shared.length) {
+  console.error(
+    `\ncheck-boolean-defaults: ${shared.length} boolean prop(s) not declared through flag() ` +
+      'outside the component catalog\n',
+  );
+  for (const p of shared) console.error(`  ${p}`);
   console.error(`\n${REMEDY}`);
   process.exit(1);
 }
 
-console.log(
-  `check-boolean-defaults: ${checked} boolean prop(s) checked, every one declared ` +
-    'through flag() or exempt with a stated reason',
-);
-process.exit(0);
+if (code === 0) {
+  console.log(
+    `check-boolean-defaults: ${checked} boolean prop(s) checked, every one declared ` +
+      'through flag() or exempt with a stated reason',
+  );
+}
+
+process.exit(code);

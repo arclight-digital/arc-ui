@@ -2,39 +2,34 @@ import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, useBaseCss } from './helpers.js';
 
 import '../src/content/divider.register.js';
-import '../src/content/separator.register.js';
 import '../src/content/stack.register.js';
-import '../src/layout/cluster.register.js';
 import '../src/data/tag.register.js';
 import '../src/data/badge.register.js';
 import '../src/data/description-list.register.js';
 import '../src/data/description-item.register.js';
-import '../src/data/key-value.register.js';
-import '../src/data/kv-pair.register.js';
 import '../src/input/pin-input.register.js';
-import '../src/input/otp-input.register.js';
 import '../src/feedback/alert.register.js';
-import '../src/content/callout.register.js';
 import '../src/feedback/toast.register.js';
 import '../src/data/data-grid.register.js';
-import '../src/data/table.register.js';
 
 /**
  * V4-PLAN 4.2's merges, tested from the side that can actually fail.
  *
- * A merge is two claims. "The deprecated component still works" is the easy one
- * and is covered by everything that already existed. The one worth a suite is
- * **"the survivor can do what the deprecated one did"** — because that is what
- * V4-SCOPE §3 asserted from the names, and it was wrong about it four times out
- * of six. `arc-divider` had no dashed rule and no flat one; `arc-description-
+ * A merge is two claims, and only one can still be tested: the merge sources
+ * were removed outright in the pre-release housecleaning, v4 having never
+ * shipped a deprecation period for them to live through. What remains is the
+ * claim worth a suite anyway — **"the survivor can do what the removed one
+ * did"** — because that is what V4-SCOPE §3 asserted from the names, and it
+ * was wrong about it four times out of six. `arc-divider` had no dashed rule and no flat one; `arc-description-
  * list` could not put a term beside its detail; `arc-tag` had no `info`; and
  * `arc-badge`'s merge was backed out of 4.2 entirely once the two components'
  * typography was compared rather than their prop lists.
  *
- * So each case here pins a capability the *deprecated* component had, asserted
- * against the *survivor*, and several are paired with the deprecated component
- * rendering the same thing — an equivalence a rename can be checked against
- * rather than eyeballed.
+ * So each case here pins a capability the *removed* component had, asserted
+ * against the *survivor*. The cases that used to render both and compare now
+ * pin the values those comparisons measured, as literals — the numbers are
+ * MIGRATION.md's, and a survivor drifting off them is what this suite exists
+ * to catch.
  */
 
 const styleOf = (el, sel) => getComputedStyle(el.shadowRoot.querySelector(sel));
@@ -129,11 +124,6 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       }
     });
 
-    it('still renders arc-separator unchanged', async () => {
-      // The other half of the deprecation promise: nothing about it moved.
-      const el = await render('<arc-separator variant="dashed"></arc-separator>');
-      expect(styleOf(el, '.separator').borderTopStyle).to.equal('dashed');
-    });
   });
 
   describe('arc-key-value → arc-description-list', () => {
@@ -169,52 +159,42 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       expect(s.gridTemplateColumns).to.not.equal('');
     });
 
-    it('still renders arc-key-value unchanged', async () => {
-      const el = await render(
-        '<arc-key-value><arc-kv-pair label="A">1</arc-kv-pair></arc-key-value>',
-      );
-      expect(el.layout).to.equal('horizontal');
-      expect(getComputedStyle(el.querySelector('arc-kv-pair')).display).to.equal('grid');
-    });
   });
 
   describe('arc-cluster → arc-stack', () => {
     it('reproduces a cluster exactly, given the four attributes', async () => {
       // V4-SCOPE §3 said `arc-stack[direction=horizontal][wrap]` "is exactly
-      // what cluster is". It is not — cluster also defaults to gap="sm" and
+      // what cluster is". It is not — cluster also defaulted to gap="sm" and
       // align="center" where stack defaults to md/stretch — so the migration
-      // is four attributes, not two, and MIGRATION.md says all four.
-      const cluster = await render('<arc-cluster><span>a</span></arc-cluster>');
+      // is four attributes, not two, and MIGRATION.md says all four. The
+      // literals are what a rendered arc-cluster measured before its removal;
+      // gap sm is the token's 8px.
       const stack = await render(
         '<arc-stack direction="horizontal" wrap gap="sm" align="center"><span>a</span></arc-stack>',
       );
-      const c = getComputedStyle(cluster);
       const s = getComputedStyle(stack);
-      for (const prop of ['display', 'flexDirection', 'flexWrap', 'columnGap', 'alignItems']) {
-        expect(s[prop], prop).to.equal(c[prop]);
-      }
+      expect(s.display).to.equal('flex');
+      expect(s.flexDirection).to.equal('row');
+      expect(s.flexWrap).to.equal('wrap');
+      expect(s.columnGap).to.equal('8px');
+      expect(s.alignItems).to.equal('center');
     });
 
     it('differs from the two-attribute version §3 proposed', async () => {
       // Anti-vacuity for the case above: if stack's defaults happened to match
       // cluster's, the four-attribute claim would be untested decoration.
-      const cluster = await render('<arc-cluster><span>a</span></arc-cluster>');
       const naive = await render(
         '<arc-stack direction="horizontal" wrap><span>a</span></arc-stack>',
       );
-      const c = getComputedStyle(cluster);
       const n = getComputedStyle(naive);
-      expect([n.columnGap, n.alignItems]).to.not.deep.equal([c.columnGap, c.alignItems]);
+      expect([n.columnGap, n.alignItems]).to.not.deep.equal(['8px', 'center']);
     });
 
     it('maps the two justify values that are spelled differently', async () => {
-      const cluster = await render('<arc-cluster justify="space-between"><span>a</span></arc-cluster>');
       const stack = await render(
         '<arc-stack direction="horizontal" justify="between"><span>a</span></arc-stack>',
       );
-      expect(getComputedStyle(stack).justifyContent).to.equal(
-        getComputedStyle(cluster).justifyContent,
-      );
+      expect(getComputedStyle(stack).justifyContent).to.equal('space-between');
     });
   });
 
@@ -226,12 +206,10 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       }
     });
 
-    it('renders the same number of boxes as the otp it replaces', async () => {
-      const otp = await render('<arc-otp-input length="4"></arc-otp-input>');
+    it('renders the same number of boxes as the otp it replaced', async () => {
+      // arc-otp-input length="4" rendered four boxes; the survivor must too.
       const pin = await render('<arc-pin-input length="4"></arc-pin-input>');
-      expect(pin.shadowRoot.querySelectorAll('input').length).to.equal(
-        otp.shadowRoot.querySelectorAll('input').length,
-      );
+      expect(pin.shadowRoot.querySelectorAll('input').length).to.equal(4);
     });
   });
 
@@ -308,10 +286,6 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       expect(slot.assignedElements()).to.have.lengthOf(1);
     });
 
-    it('still renders arc-callout unchanged, note role and all', async () => {
-      const el = await render('<arc-callout variant="info">x</arc-callout>');
-      expect(el.shadowRoot.querySelector('.callout').getAttribute('role')).to.equal('note');
-    });
   });
 
   describe('arc-snackbar + arc-progress-toast → arc-toast', () => {
@@ -476,13 +450,11 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
 
     it('renders the same cell values arc-table did, from the object model', async () => {
       // The migration §3.1 calls the breaking part: positional arrays become
-      // objects keyed by column. Same output, different input.
-      const table = await render('<arc-table></arc-table>');
-      table.columns = ['A', 'B'];
-      table.rows = [['1', '2'], ['3', '4']];
-      await table.updateComplete;
+      // objects keyed by column. Same output, different input — the expected
+      // cells are what arc-table produced from [['1','2'],['3','4']] before
+      // its removal.
       const cells = (el) => [...el.shadowRoot.querySelectorAll('tbody td')].map((td) => td.textContent.trim());
-      expect(cells(await grid())).to.deep.equal(cells(table));
+      expect(cells(await grid())).to.deep.equal(['1', '2', '3', '4']);
     });
   });
 

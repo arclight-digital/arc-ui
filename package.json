@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "3.2.0",
-  "description": "ARC UI — ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
+  "description": "ARC UI \u2014 ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
   "engines": {
     "node": ">=24.0.0",
     "pnpm": ">=10.0.0"
@@ -19,6 +19,7 @@
     "generate:prism:watch": "npx prism --watch",
     "pretest": "pnpm run generate:icons",
     "test": "web-test-runner",
+    "test:ssr-fuzz": "node --test test/ssr-fuzz.test.js",
     "lint": "eslint 'packages/*/src/**/*.{js,ts}'",
     "lint:fix": "eslint --fix 'packages/*/src/**/*.{js,ts}'",
     "format": "prettier --write 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}' 'docs/src/data/components/*.ts'",
@@ -27,13 +28,15 @@
     "docs:deploy": "cd docs && pnpm wrangler pages deploy",
     "bump-versions": "node scripts/bump-versions.js",
     "check": "node scripts/check.js",
+    "verify": "node scripts/verify.js",
     "publish-all": "pnpm -r publish --access public",
     "smoke:wrappers": "node scripts/smoke-test-wrappers.js",
     "test:wrappers": "node scripts/wrapper-runtime.js",
     "mutate": "node scripts/mutate.js",
     "mutate:props": "node scripts/mutate.js --source packages/web-components/src/shared/props.js --tests packages/web-components/test/props.test.js --gate 90",
     "mutate:sample": "node scripts/mutate-sample.js",
-    "test:log": "bash scripts/test-run.sh"
+    "test:log": "bash scripts/test-run.sh",
+    "typecheck": "tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts packages/web-components/types/shared-styles.d.ts packages/web-components/types/shared/*.d.ts packages/web-components/types/content/*.d.ts packages/web-components/types/dev.d.ts"
   },
   "license": "MIT",
   "devDependencies": {

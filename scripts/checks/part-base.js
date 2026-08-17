@@ -50,7 +50,6 @@ const EXEMPT = {
   // A bare <slot> as the entire shadow root. The host is the box — style the
   // element itself — and a slot has no box for ::part() to reach.
   'arc-accordion-item': 'shadow root is a bare slot; the host is the box',
-  'arc-column': 'shadow root is a bare slot; the host is the box',
   'arc-stack': 'shadow root is a bare slot; the host is the box',
   'arc-step': 'shadow root is a bare slot; the host is the box',
   'arc-timeline-item': 'shadow root is a bare slot; the host is the box',
@@ -59,7 +58,6 @@ const EXEMPT = {
   'arc-radio': 'shadow root is a bare slot; the host is the box',
   'arc-suggestion': 'shadow root is a bare slot; the host is the box',
   'arc-center': 'shadow root is a bare slot; the host is the box',
-  'arc-cluster': 'shadow root is a bare slot; the host is the box',
   'arc-inset': 'shadow root is a bare slot; the host is the box',
   'arc-breadcrumb-item': 'shadow root is a bare slot; the host is the box',
   'arc-nav-item': 'shadow root is a bare slot; the host is the box',
@@ -74,8 +72,6 @@ const EXEMPT = {
   // Peer boxes with the host as their only container. Naming either half `base`
   // would point ::part(base) at something no reader would predict — the icon of
   // an inline message, the key of a key/value pair.
-  'arc-inline-message': 'icon and content are peers; the host is their only container',
-  'arc-kv-pair': 'key and value are peers; the host is their only container',
 
   // Renders nothing: configuration and registry elements that exist to be read
   // by a parent, not to draw.

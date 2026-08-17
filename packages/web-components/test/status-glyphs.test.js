@@ -12,7 +12,6 @@ import { expect } from '@esm-bundle/chai';
 import { getStatusIcon } from '../src/status-utils.js';
 import '../src/feedback/alert.register.js';
 import '../src/feedback/banner.register.js';
-import '../src/feedback/inline-message.register.js';
 import '../src/feedback/toast.register.js';
 import { mount, cleanup } from './helpers.js';
 
@@ -41,7 +40,7 @@ function expectGlyphsHidden(el, tag) {
 describe('status glyphs are aria-hidden', () => {
   afterEach(cleanup);
 
-  for (const tag of ['arc-alert', 'arc-banner', 'arc-inline-message']) {
+  for (const tag of ['arc-alert', 'arc-banner']) {
     it(`${tag} hides its glyph from assistive tech`, async () => {
       const el = mount(`<${tag} variant="success">All good</${tag}>`);
       await el.updateComplete;

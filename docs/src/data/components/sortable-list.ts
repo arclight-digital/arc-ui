@@ -168,5 +168,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['data-table', 'tree-view'],
+  seeAlso: ['data-grid', 'tree-view'],
 };

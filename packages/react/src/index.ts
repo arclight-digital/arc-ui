@@ -15,8 +15,6 @@ export type { AvatarGroupProps } from './content/AvatarGroup.js';
 export { Avatar } from './content/Avatar.js';
 export type { AvatarProps } from './content/Avatar.js';
 
-export { Callout } from './content/Callout.js';
-export type { CalloutProps } from './content/Callout.js';
 
 export { Card } from './content/Card.js';
 export type { CardProps } from './content/Card.js';
@@ -28,8 +26,6 @@ export type { CollapsibleProps } from './content/Collapsible.js';
 export { ColorSwatch } from './content/ColorSwatch.js';
 export type { ColorSwatchProps } from './content/ColorSwatch.js';
 
-export { Column } from './content/Column.js';
-export type { ColumnProps } from './content/Column.js';
 
 
 export { Divider } from './content/Divider.js';
@@ -58,8 +54,6 @@ export type { ScrollAreaProps } from './content/ScrollArea.js';
 export { ScrollIndicator } from './content/ScrollIndicator.js';
 export type { ScrollIndicatorProps } from './content/ScrollIndicator.js';
 
-export { Separator } from './content/Separator.js';
-export type { SeparatorProps } from './content/Separator.js';
 
 export { Skeleton } from './content/Skeleton.js';
 export type { SkeletonProps } from './content/Skeleton.js';
@@ -88,8 +82,6 @@ export type { ChartProps } from './data/Chart.js';
 export { DataGrid } from './data/DataGrid.js';
 export type { DataGridProps } from './data/DataGrid.js';
 
-export { DataTable } from './data/DataTable.js';
-export type { DataTableProps } from './data/DataTable.js';
 
 export { DescriptionItem } from './data/DescriptionItem.js';
 export type { DescriptionItemProps } from './data/DescriptionItem.js';
@@ -104,11 +96,7 @@ export type { DiffProps } from './data/Diff.js';
 export { Kanban } from './data/Kanban.js';
 export type { KanbanProps } from './data/Kanban.js';
 
-export { KeyValue } from './data/KeyValue.js';
-export type { KeyValueProps } from './data/KeyValue.js';
 
-export { KvPair } from './data/KvPair.js';
-export type { KvPairProps } from './data/KvPair.js';
 
 export { ListItem } from './data/ListItem.js';
 export type { ListItemProps } from './data/ListItem.js';
@@ -131,8 +119,6 @@ export type { StepProps } from './data/Step.js';
 export { Stepper } from './data/Stepper.js';
 export type { StepperProps } from './data/Stepper.js';
 
-export { Table } from './data/Table.js';
-export type { TableProps } from './data/Table.js';
 
 export { Tag } from './data/Tag.js';
 export type { TagProps } from './data/Tag.js';
@@ -239,8 +225,6 @@ export type { MultiSelectProps } from './input/MultiSelect.js';
 export { NumberInput } from './input/NumberInput.js';
 export type { NumberInputProps } from './input/NumberInput.js';
 
-export { OtpInput } from './input/OtpInput.js';
-export type { OtpInputProps } from './input/OtpInput.js';
 
 export { PasswordInput } from './input/PasswordInput.js';
 export type { PasswordInputProps } from './input/PasswordInput.js';
@@ -396,8 +380,6 @@ export type { AuthShellProps } from './layout/AuthShell.js';
 export { Center } from './layout/Center.js';
 export type { CenterProps } from './layout/Center.js';
 
-export { Cluster } from './layout/Cluster.js';
-export type { ClusterProps } from './layout/Cluster.js';
 
 export { Container } from './layout/Container.js';
 export type { ContainerProps } from './layout/Container.js';
@@ -482,14 +464,10 @@ export type { DropdownMenuProps } from './feedback/DropdownMenu.js';
 export { HoverCard } from './feedback/HoverCard.js';
 export type { HoverCardProps } from './feedback/HoverCard.js';
 
-export { InlineMessage } from './feedback/InlineMessage.js';
-export type { InlineMessageProps } from './feedback/InlineMessage.js';
 
 export { LoadingOverlay } from './feedback/LoadingOverlay.js';
 export type { LoadingOverlayProps } from './feedback/LoadingOverlay.js';
 
-export { Modal } from './feedback/Modal.js';
-export type { ModalProps } from './feedback/Modal.js';
 
 export { NotificationPanel } from './feedback/NotificationPanel.js';
 export type { NotificationPanelProps } from './feedback/NotificationPanel.js';
@@ -497,8 +475,6 @@ export type { NotificationPanelProps } from './feedback/NotificationPanel.js';
 export { Popover } from './feedback/Popover.js';
 export type { PopoverProps } from './feedback/Popover.js';
 
-export { ProgressToast } from './feedback/ProgressToast.js';
-export type { ProgressToastProps } from './feedback/ProgressToast.js';
 
 export { Progress } from './feedback/Progress.js';
 export type { ProgressProps } from './feedback/Progress.js';
@@ -506,8 +482,6 @@ export type { ProgressProps } from './feedback/Progress.js';
 export { Sheet } from './feedback/Sheet.js';
 export type { SheetProps } from './feedback/Sheet.js';
 
-export { Snackbar } from './feedback/Snackbar.js';
-export type { SnackbarProps } from './feedback/Snackbar.js';
 
 
 export { Toast } from './feedback/Toast.js';

@@ -181,5 +181,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['input', 'otp-input', 'pin-input', 'number-input', 'form'],
+  seeAlso: ['input', 'pin-input', 'number-input', 'form'],
 };

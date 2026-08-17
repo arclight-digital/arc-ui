@@ -6,7 +6,7 @@ export const statusBar: ComponentDef = {
   tag: 'arc-status-bar',
   tier: 'layout',
   interactivity: 'static',
-  description: 'Bottom status bar with start, center, and end slots.',
+  description: 'Bottom status bar with prefix, center, and suffix slots.',
 
   overview: `StatusBar is a compact informational strip designed to sit at the bottom of an application window, mirroring the pattern found in code editors, terminals, and desktop applications. It renders at a fixed 28px height with a monospace font (\`--font-mono\`) and muted text color, providing an unobtrusive surface for status indicators, cursor positions, encoding info, and connection states.
 
@@ -21,15 +21,15 @@ The \`position\` prop controls whether the status bar flows with the page layout
     'Fixed mode pins to viewport bottom with z-index: 100',
     '`role="status"` for accessible live-region announcements',
     'Dark background (`--bg-deep`) with subtle top border for visual separation',
-    'Exposed CSS parts (base, start, center, end) for targeted styling',
+    'Exposed CSS parts (base, prefix, center, suffix) for targeted styling',
     'Muted 11px text that stays out of the way of primary content',
   ],
 
   guidelines: {
     do: [
       'Use StatusBar for editor-style applications that need persistent status indicators',
-      'Place cursor position, line numbers, or encoding info in the start slot',
-      'Put connection status, sync state, or version info in the end slot',
+      'Place cursor position, line numbers, or encoding info in the prefix slot',
+      'Put connection status, sync state, or version info in the suffix slot',
       'Use the center slot for transient messages like "Saved" or "Building..."',
       'Set position="fixed" when the status bar should persist during scrolling',
     ],
@@ -44,12 +44,12 @@ The \`position\` prop controls whether the status bar flows with the page layout
 
   previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
   <arc-status-bar>
-    <span slot="start" style="display:flex;align-items:center;gap:6px">
+    <span slot="prefix" style="display:flex;align-items:center;gap:6px">
       <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent-green)"></span>
       Ln 24, Col 15
     </span>
     <span>UTF-8 &middot; LF &middot; TypeScript</span>
-    <span slot="end">Spaces: 2 &middot; 100%</span>
+    <span slot="suffix">Spaces: 2 &middot; 100%</span>
   </arc-status-bar>
 </div>`,
 
@@ -58,9 +58,9 @@ The \`position\` prop controls whether the status bar flows with the page layout
       label: 'Web Component',
       lang: 'html',
       code: `<arc-status-bar>
-  <div slot="start">Ln 24, Col 15</div>
+  <div slot="prefix">Ln 24, Col 15</div>
   <div>UTF-8</div>
-  <div slot="end">100%</div>
+  <div slot="suffix">100%</div>
 </arc-status-bar>`,
     },
     {
@@ -71,9 +71,9 @@ The \`position\` prop controls whether the status bar flows with the page layout
 export default function Example() {
   return (
     <StatusBar>
-      <div slot="start">Ln 24, Col 15</div>
+      <div slot="prefix">Ln 24, Col 15</div>
       <div>UTF-8</div>
-      <div slot="end">100%</div>
+      <div slot="suffix">100%</div>
     </StatusBar>
   );
 }`,
@@ -87,9 +87,9 @@ import { StatusBar } from '@arclux/arc-ui-vue';
 
 <template>
   <StatusBar>
-    <div slot="start">Ln 24, Col 15</div>
+    <div slot="prefix">Ln 24, Col 15</div>
     <div>UTF-8</div>
-    <div slot="end">100%</div>
+    <div slot="suffix">100%</div>
   </StatusBar>
 </template>`,
     },
@@ -101,9 +101,9 @@ import { StatusBar } from '@arclux/arc-ui-vue';
 </script>
 
 <StatusBar>
-  <div slot="start">Ln 24, Col 15</div>
+  <div slot="prefix">Ln 24, Col 15</div>
   <div>UTF-8</div>
-  <div slot="end">100%</div>
+  <div slot="suffix">100%</div>
 </StatusBar>`,
     },
     {
@@ -116,9 +116,9 @@ import { StatusBar } from '@arclux/arc-ui-angular';
   imports: [StatusBar],
   template: \`
     <arc-status-bar>
-      <div slot="start">Ln 24, Col 15</div>
+      <div slot="prefix">Ln 24, Col 15</div>
       <div>UTF-8</div>
-      <div slot="end">100%</div>
+      <div slot="suffix">100%</div>
     </arc-status-bar>
   \`,
 })
@@ -132,9 +132,9 @@ export class MyComponent {}`,
 export default function Example() {
   return (
     <StatusBar>
-      <div slot="start">Ln 24, Col 15</div>
+      <div slot="prefix">Ln 24, Col 15</div>
       <div>UTF-8</div>
-      <div slot="end">100%</div>
+      <div slot="suffix">100%</div>
     </StatusBar>
   );
 }`,
@@ -147,9 +147,9 @@ export default function Example() {
 export default function Example() {
   return (
     <StatusBar>
-      <div slot="start">Ln 24, Col 15</div>
+      <div slot="prefix">Ln 24, Col 15</div>
       <div>UTF-8</div>
-      <div slot="end">100%</div>
+      <div slot="suffix">100%</div>
     </StatusBar>
   );
 }`,

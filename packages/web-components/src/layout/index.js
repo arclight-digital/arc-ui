@@ -15,7 +15,6 @@ export { ArcStatusBar } from './status-bar.register.js';
 export { ArcToolbar } from './toolbar.register.js';
 export { ArcAspectGrid } from './aspect-grid.register.js';
 export { ArcCenter } from './center.register.js';
-export { ArcCluster } from './cluster.register.js';
 export { ArcFloatBar } from './float-bar.register.js';
 export { ArcInset } from './inset.register.js';
 export { ArcMasonry } from './masonry.register.js';

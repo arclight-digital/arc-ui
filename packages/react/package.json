@@ -36,10 +36,6 @@
       "types": "./dist/content/AvatarGroup.d.ts",
       "default": "./dist/content/AvatarGroup.js"
     },
-    "./Callout": {
-      "types": "./dist/content/Callout.d.ts",
-      "default": "./dist/content/Callout.js"
-    },
     "./Card": {
       "types": "./dist/content/Card.d.ts",
       "default": "./dist/content/Card.js"
@@ -55,10 +51,6 @@
     "./ColorSwatch": {
       "types": "./dist/content/ColorSwatch.d.ts",
       "default": "./dist/content/ColorSwatch.js"
-    },
-    "./Column": {
-      "types": "./dist/content/Column.d.ts",
-      "default": "./dist/content/Column.js"
     },
     "./CtaBanner": {
       "types": "./dist/content/CtaBanner.d.ts",
@@ -120,10 +112,6 @@
       "types": "./dist/content/ScrollIndicator.d.ts",
       "default": "./dist/content/ScrollIndicator.js"
     },
-    "./Separator": {
-      "types": "./dist/content/Separator.d.ts",
-      "default": "./dist/content/Separator.js"
-    },
     "./Skeleton": {
       "types": "./dist/content/Skeleton.d.ts",
       "default": "./dist/content/Skeleton.js"
@@ -184,10 +172,6 @@
       "types": "./dist/data/DataGrid.d.ts",
       "default": "./dist/data/DataGrid.js"
     },
-    "./DataTable": {
-      "types": "./dist/data/DataTable.d.ts",
-      "default": "./dist/data/DataTable.js"
-    },
     "./DescriptionItem": {
       "types": "./dist/data/DescriptionItem.d.ts",
       "default": "./dist/data/DescriptionItem.js"
@@ -211,14 +195,6 @@
     "./Kanban": {
       "types": "./dist/data/Kanban.d.ts",
       "default": "./dist/data/Kanban.js"
-    },
-    "./KeyValue": {
-      "types": "./dist/data/KeyValue.d.ts",
-      "default": "./dist/data/KeyValue.js"
-    },
-    "./KvPair": {
-      "types": "./dist/data/KvPair.d.ts",
-      "default": "./dist/data/KvPair.js"
     },
     "./LevelMeter": {
       "types": "./dist/data/LevelMeter.d.ts",
@@ -251,10 +227,6 @@
     "./Stepper": {
       "types": "./dist/data/Stepper.d.ts",
       "default": "./dist/data/Stepper.js"
-    },
-    "./Table": {
-      "types": "./dist/data/Table.d.ts",
-      "default": "./dist/data/Table.js"
     },
     "./Tag": {
       "types": "./dist/data/Tag.d.ts",
@@ -439,10 +411,6 @@
     "./NumberInput": {
       "types": "./dist/input/NumberInput.d.ts",
       "default": "./dist/input/NumberInput.js"
-    },
-    "./OtpInput": {
-      "types": "./dist/input/OtpInput.d.ts",
-      "default": "./dist/input/OtpInput.js"
     },
     "./PasswordInput": {
       "types": "./dist/input/PasswordInput.d.ts",
@@ -664,10 +632,6 @@
       "types": "./dist/layout/Center.d.ts",
       "default": "./dist/layout/Center.js"
     },
-    "./Cluster": {
-      "types": "./dist/layout/Cluster.d.ts",
-      "default": "./dist/layout/Cluster.js"
-    },
     "./Container": {
       "types": "./dist/layout/Container.d.ts",
       "default": "./dist/layout/Container.js"
@@ -784,10 +748,6 @@
       "types": "./dist/feedback/HoverCard.d.ts",
       "default": "./dist/feedback/HoverCard.js"
     },
-    "./InlineMessage": {
-      "types": "./dist/feedback/InlineMessage.d.ts",
-      "default": "./dist/feedback/InlineMessage.js"
-    },
     "./LoadingOverlay": {
       "types": "./dist/feedback/LoadingOverlay.d.ts",
       "default": "./dist/feedback/LoadingOverlay.js"
@@ -795,10 +755,6 @@
     "./Message": {
       "types": "./dist/feedback/Message.d.ts",
       "default": "./dist/feedback/Message.js"
-    },
-    "./Modal": {
-      "types": "./dist/feedback/Modal.d.ts",
-      "default": "./dist/feedback/Modal.js"
     },
     "./NotificationPanel": {
       "types": "./dist/feedback/NotificationPanel.d.ts",
@@ -812,17 +768,9 @@
       "types": "./dist/feedback/Progress.d.ts",
       "default": "./dist/feedback/Progress.js"
     },
-    "./ProgressToast": {
-      "types": "./dist/feedback/ProgressToast.d.ts",
-      "default": "./dist/feedback/ProgressToast.js"
-    },
     "./Sheet": {
       "types": "./dist/feedback/Sheet.d.ts",
       "default": "./dist/feedback/Sheet.js"
-    },
-    "./Snackbar": {
-      "types": "./dist/feedback/Snackbar.d.ts",
-      "default": "./dist/feedback/Snackbar.js"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.d.ts",

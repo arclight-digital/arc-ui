@@ -6,29 +6,29 @@ export const toolbar: ComponentDef = {
   tag: 'arc-toolbar',
   tier: 'layout',
   interactivity: 'hybrid',
-  description: 'Horizontal toolbar with start, center, and end slots.',
+  description: 'Horizontal toolbar with prefix, center, and suffix slots.',
 
-  overview: `Toolbar is a horizontal action bar that groups related controls — buttons, dropdowns, search fields — into a consistent strip above or within a content region. It follows the classic start/center/end three-slot pattern: the start slot anchors left-aligned actions (like a file menu or back button), the center slot holds a title or contextual info, and the end slot pins right-aligned actions (like save, share, or settings).
+  overview: `Toolbar is a horizontal action bar that groups related controls — buttons, dropdowns, search fields — into a consistent strip above or within a content region. It follows the classic three-slot pattern: the prefix slot anchors inline-start actions (like a file menu or back button), the center (default) slot holds a title or contextual info, and the suffix slot pins inline-end actions (like save, share, or settings). The v3 slot names start/end still work as deprecated aliases through v4.
 
 The component renders with \`role="toolbar"\` for accessibility, signaling to screen readers that the contained controls are a logically grouped set. Two size variants are available: the default \`md\` size (48px height) for primary toolbars and the \`sm\` size (36px height) for secondary or nested toolbars. The \`border\` prop (on by default) adds a subtle bottom border to visually separate the toolbar from the content below.
 
 When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`top: 0\` and a z-index of 50, keeping it visible as the user scrolls through long content. The toolbar background uses \`--bg-card\` to provide a slight elevation from the page surface. Combine Toolbar with SplitPane panels, code editors, or document viewers where contextual actions should remain accessible without scrolling.`,
 
   features: [
-    'Three-slot layout: start (left-pinned), center (flexible), end (right-pinned)',
+    'Three-slot layout: prefix (inline-start), center (flexible), suffix (inline-end)',
     '`role="toolbar"` for accessible grouping of related controls',
     'Two size variants: md (48px) and sm (36px) for primary and secondary toolbars',
     'Optional bottom border via the border prop (enabled by default)',
     'Sticky positioning with top: 0 and z-index: 50 when sticky is set',
     'Card-colored background (`--bg-card`) for subtle elevation above the page surface',
-    'Exposed CSS parts (base, start, center, end) for targeted ::part() styling',
+    'Exposed CSS parts (base, prefix, center, suffix) for targeted ::part() styling',
     'Consistent gap spacing (`--space-sm`) between slotted controls',
   ],
 
   guidelines: {
     do: [
       'Use Toolbar above content panels, editors, and detail views for contextual actions',
-      'Place the most important action (e.g. Save) in the end slot where users expect it',
+      'Place the most important action (e.g. Save) in the suffix slot where users expect it',
       'Use size="sm" for secondary toolbars nested inside panels or split panes',
       'Enable sticky for long scrollable content where the toolbar should remain visible',
       'Group related buttons together in each slot for visual clarity',
@@ -44,13 +44,13 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
 
   previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
   <arc-toolbar border>
-    <div slot="start" style="display:flex;align-items:center;gap:4px">
+    <div slot="prefix" style="display:flex;align-items:center;gap:4px">
       <arc-button variant="ghost" size="sm">File</arc-button>
       <arc-button variant="ghost" size="sm">Edit</arc-button>
       <arc-button variant="ghost" size="sm">View</arc-button>
     </div>
     <span style="font-size:13px;color:var(--text-secondary);font-family:var(--font-body)">Document.txt</span>
-    <div slot="end" style="display:flex;align-items:center;gap:4px">
+    <div slot="suffix" style="display:flex;align-items:center;gap:4px">
       <arc-button variant="ghost" size="sm">Share</arc-button>
       <arc-button variant="primary" size="sm">Save</arc-button>
     </div>
@@ -65,9 +65,9 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
       label: 'Web Component',
       lang: 'html',
       code: `<arc-toolbar border>
-  <div slot="start"><arc-button variant="ghost" size="sm">File</arc-button></div>
+  <div slot="prefix"><arc-button variant="ghost" size="sm">File</arc-button></div>
   <span>Document.txt</span>
-  <div slot="end"><arc-button variant="ghost" size="sm">Save</arc-button></div>
+  <div slot="suffix"><arc-button variant="ghost" size="sm">Save</arc-button></div>
 </arc-toolbar>`,
     },
     {
@@ -77,13 +77,13 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
      Collapsed originals stay in the light DOM with the hidden attribute;
      the menu shows text-label proxies that forward clicks to them. -->
 <arc-toolbar overflow>
-  <arc-button slot="start" variant="ghost" size="sm">File</arc-button>
-  <arc-button slot="start" variant="ghost" size="sm">Edit</arc-button>
-  <arc-button slot="start" variant="ghost" size="sm">View</arc-button>
-  <arc-button slot="start" variant="ghost" size="sm">Insert</arc-button>
-  <arc-button slot="start" variant="ghost" size="sm">Format</arc-button>
-  <arc-icon-button slot="end" name="share" label="Share"></arc-icon-button>
-  <arc-button slot="end" variant="primary" size="sm">Save</arc-button>
+  <arc-button slot="prefix" variant="ghost" size="sm">File</arc-button>
+  <arc-button slot="prefix" variant="ghost" size="sm">Edit</arc-button>
+  <arc-button slot="prefix" variant="ghost" size="sm">View</arc-button>
+  <arc-button slot="prefix" variant="ghost" size="sm">Insert</arc-button>
+  <arc-button slot="prefix" variant="ghost" size="sm">Format</arc-button>
+  <arc-icon-button slot="suffix" name="share" label="Share"></arc-icon-button>
+  <arc-button slot="suffix" variant="primary" size="sm">Save</arc-button>
 </arc-toolbar>
 
 <script>
@@ -101,9 +101,9 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
 export default function Example() {
   return (
     <Toolbar border>
-      <div slot="start"><Button variant="ghost" size="sm">File</Button></div>
+      <div slot="prefix"><Button variant="ghost" size="sm">File</Button></div>
       <span>Document.txt</span>
-      <div slot="end"><Button variant="ghost" size="sm">Save</Button></div>
+      <div slot="suffix"><Button variant="ghost" size="sm">Save</Button></div>
     </Toolbar>
   );
 }`,
@@ -117,9 +117,9 @@ import { Button, Toolbar } from '@arclux/arc-ui-vue';
 
 <template>
   <Toolbar border>
-    <div slot="start"><Button variant="ghost" size="sm">File</Button></div>
+    <div slot="prefix"><Button variant="ghost" size="sm">File</Button></div>
     <span>Document.txt</span>
-    <div slot="end"><Button variant="ghost" size="sm">Save</Button></div>
+    <div slot="suffix"><Button variant="ghost" size="sm">Save</Button></div>
   </Toolbar>
 </template>`,
     },
@@ -131,9 +131,9 @@ import { Button, Toolbar } from '@arclux/arc-ui-vue';
 </script>
 
 <Toolbar border>
-  <div slot="start"><Button variant="ghost" size="sm">File</Button></div>
+  <div slot="prefix"><Button variant="ghost" size="sm">File</Button></div>
   <span>Document.txt</span>
-  <div slot="end"><Button variant="ghost" size="sm">Save</Button></div>
+  <div slot="suffix"><Button variant="ghost" size="sm">Save</Button></div>
 </Toolbar>`,
     },
     {
@@ -146,9 +146,9 @@ import { Button, Toolbar } from '@arclux/arc-ui-angular';
   imports: [Button, Toolbar],
   template: \`
     <arc-toolbar border>
-      <div slot="start"><arc-button variant="ghost" size="sm">File</arc-button></div>
+      <div slot="prefix"><arc-button variant="ghost" size="sm">File</arc-button></div>
       <span>Document.txt</span>
-      <div slot="end"><arc-button variant="ghost" size="sm">Save</arc-button></div>
+      <div slot="suffix"><arc-button variant="ghost" size="sm">Save</arc-button></div>
     </arc-toolbar>
   \`,
 })
@@ -162,9 +162,9 @@ export class MyComponent {}`,
 export default function Example() {
   return (
     <Toolbar border>
-      <div slot="start"><Button variant="ghost" size="sm">File</Button></div>
+      <div slot="prefix"><Button variant="ghost" size="sm">File</Button></div>
       <span>Document.txt</span>
-      <div slot="end"><Button variant="ghost" size="sm">Save</Button></div>
+      <div slot="suffix"><Button variant="ghost" size="sm">Save</Button></div>
     </Toolbar>
   );
 }`,
@@ -177,9 +177,9 @@ export default function Example() {
 export default function Example() {
   return (
     <Toolbar border>
-      <div slot="start"><Button variant="ghost" size="sm">File</Button></div>
+      <div slot="prefix"><Button variant="ghost" size="sm">File</Button></div>
       <span>Document.txt</span>
-      <div slot="end"><Button variant="ghost" size="sm">Save</Button></div>
+      <div slot="suffix"><Button variant="ghost" size="sm">Save</Button></div>
     </Toolbar>
   );
 }`,

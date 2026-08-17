@@ -4,7 +4,6 @@ import { mount, cleanup, nextFrame } from './helpers.js';
 import { VirtualController } from '../src/shared/virtual-controller.js';
 
 import '../src/content/virtual-list.register.js';
-import '../src/data/data-table.register.js';
 import '../src/data/data-grid.register.js';
 
 /**
@@ -168,15 +167,17 @@ describe('VirtualController', () => {
   });
 });
 
-describe('VirtualController: its three consumers use it', () => {
+describe('VirtualController: its consumers use it', () => {
   afterEach(cleanup);
 
   // The half the probe cannot show. Each of these was its own copy of the
   // arithmetic until 4.2, and an extraction that left one behind would look
-  // exactly like one that did not.
+  // exactly like one that did not. arc-data-table was the third consumer —
+  // and the source of the zero-clamp bug the direct cases pin — until it was
+  // removed with the merges; the bug's reproduction stays above because the
+  // controller is where it lived, not the component.
   const cases = [
     ['arc-virtual-list', '<arc-virtual-list></arc-virtual-list>'],
-    ['arc-data-table', '<arc-data-table virtual></arc-data-table>'],
     ['arc-data-grid', '<arc-data-grid virtual></arc-data-grid>'],
   ];
 
@@ -188,17 +189,16 @@ describe('VirtualController: its three consumers use it', () => {
     });
   }
 
-  it('exposes overscan on both tables, not only on the list', async () => {
+  it('exposes overscan on the grid, not only on the list', async () => {
     // V4-PLAN 4.2 requires it on the merged grid. It was public on
-    // arc-virtual-list and hardcoded to 5 in both tables — a divergence that
-    // survived because the two copies of the arithmetic never met.
-    for (const markup of ['<arc-data-table></arc-data-table>', '<arc-data-grid></arc-data-grid>']) {
-      const el = mount(markup);
-      await el.updateComplete;
-      expect(el.overscan, markup).to.equal(5);
-      el.overscan = 12;
-      await el.updateComplete;
-      expect(el._window.opts.getOverscan()).to.equal(12);
-    }
+    // arc-virtual-list and hardcoded to 5 in both of the tables the grid
+    // replaced — a divergence that survived because the copies of the
+    // arithmetic never met.
+    const el = mount('<arc-data-grid></arc-data-grid>');
+    await el.updateComplete;
+    expect(el.overscan).to.equal(5);
+    el.overscan = 12;
+    await el.updateComplete;
+    expect(el._window.opts.getOverscan()).to.equal(12);
   });
 });

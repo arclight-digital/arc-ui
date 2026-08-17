@@ -16,7 +16,6 @@
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, useBaseCss } from './helpers.js';
 
-import '../src/data/table.register.js';
 import '../src/data/data-grid.register.js';
 import '../src/data/badge.register.js';
 import '../src/typography/markdown.register.js';
@@ -27,8 +26,7 @@ import '../src/input/input.register.js';
 import '../src/input/textarea.register.js';
 import '../src/feedback/alert.register.js';
 
-/** Both tables need columns before they render a header row at all. */
-const TABLE = `<arc-table columns='["Name","Size"]' rows='[["a","1"]]'></arc-table>`;
+/** The grid needs columns before it renders a header row at all. */
 const GRID = `<arc-data-grid columns='[{"key":"name","label":"Name"}]' rows='[{"name":"a"}]'></arc-data-grid>`;
 
 const overrides = [];
@@ -56,26 +54,15 @@ async function styleOf(html, selector) {
 }
 
 describe('--label-*: one uppercase tracked label', () => {
-  it('both tables track their headers identically', async () => {
-    // arc-table said 2px and arc-data-grid said 1px, for the same element, and
-    // arc-data-grid is the one arc-table is deprecated in favour of. Neither was chosen — both
-    // were written from memory. This is the assertion that keeps them equal
-    // without either one having to know about the other.
-    const table = await styleOf(TABLE, 'th');
-    const grid = await styleOf(GRID, 'th');
-    expect(table.letterSpacing).to.equal(grid.letterSpacing);
-  });
-
-  it('moves both from one token', async () => {
-    // This is the one that catches a regression. Equality above is vacuous
-    // while the token still holds the value the literal used to be: writing
-    // `letter-spacing: 2px` back into arc-table passes that test and fails
-    // this one. Overriding the token is what tells a shared value from two
-    // matching literals — the state the tree was already in.
+  it('moves the header tracking from the token, not a literal', async () => {
+    // The incident this section records: arc-table said 2px and arc-data-grid
+    // said 1px for the same element, both written from memory. arc-table is
+    // gone (removed with the merges), so the assertion left is the one that
+    // catches the regression pattern itself: writing `letter-spacing: 2px`
+    // back into the grid as a literal fails here, because overriding the token
+    // is what tells a shared value from a matching literal.
     setToken('--label-spacing', '7px');
-    const table = await styleOf(TABLE, 'th');
     const grid = await styleOf(GRID, 'th');
-    expect(table.letterSpacing).to.equal('7px');
     expect(grid.letterSpacing).to.equal('7px');
   });
 
@@ -172,7 +159,7 @@ describe('field labels are one size', () => {
 describe('the role weights reach the components that had spelled them', () => {
   it('600 written out 39 times now follows --font-label-weight', async () => {
     setToken('--font-label-weight', '250');
-    const th = await styleOf(TABLE, 'th');
+    const th = await styleOf(GRID, 'th');
     const alert = await styleOf('<arc-alert heading="Careful">x</arc-alert>', '.alert__heading');
     expect(th.fontWeight).to.equal('250');
     expect(alert.fontWeight, 'arc-alert had font-weight: 600 in its own stylesheet').to.equal('250');

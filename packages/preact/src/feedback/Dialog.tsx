@@ -10,7 +10,6 @@ export interface DialogProps {
   size?: 'sm' | 'md' | 'lg';
   fullscreen?: boolean;
   dismissible?: boolean;
-  closable?: boolean;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
@@ -41,7 +40,7 @@ export interface DialogProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Dialog: FunctionComponent<DialogProps> = ({ open, heading, size, fullscreen, dismissible, closable, onArcClose, onArcOpen, children, ...rest }) => {
+export const Dialog: FunctionComponent<DialogProps> = ({ open, heading, size, fullscreen, dismissible, onArcClose, onArcOpen, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -59,5 +58,5 @@ export const Dialog: FunctionComponent<DialogProps> = ({ open, heading, size, fu
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcClose, onArcOpen]);
-  return h('arc-dialog', { ref, open, heading, size, fullscreen, dismissible, closable, ...rest }, children);
+  return h('arc-dialog', { ref, open, heading, size, fullscreen, dismissible, ...rest }, children);
 };

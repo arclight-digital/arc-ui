@@ -45,7 +45,7 @@ const CANON = 'dismissible';
  * deprecated alias; declaring one instead is the finding.
  */
 const RETIRED = {
-  closable: 'renamed in v4.0.0, removed in v5',
+  closable: 'renamed in v4.0.0, and its alias removed with the pre-release housecleaning',
   dismissable: 'a misspelling — the word has one a',
   hideable: 'never shipped; listed so it cannot arrive',
 };
@@ -65,8 +65,6 @@ const AFFORDANCE = [
  */
 const UNCONDITIONAL = {
   'arc-toast': 'a toast the user cannot dismiss is a toast that traps the screen',
-  'arc-snackbar': 'same, and deprecated into arc-toast',
-  'arc-progress-toast': 'its cancel affordance is driven by an onCancel callback, not a flag; deprecated into arc-toast',
   'arc-notification-panel': 'the panel closes from its own trigger; there is no separate affordance to gate',
   'arc-drawer': 'dismissal is the overlay contract, not a per-instance choice',
   'arc-sheet': 'dismissal is the overlay contract, not a per-instance choice',

@@ -6,7 +6,7 @@
  * uptime's one-tab-stop pattern with grid-semantics arrows.
  */
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup } from './helpers.js';
+import { mount, cleanup, settle } from './helpers.js';
 import { ArcActivityHeatmap } from '../src/data/activity-heatmap.js';
 
 // The .register.js is generated and may not exist yet on a fresh branch;
@@ -139,7 +139,10 @@ describe('empty data', () => {
 
   it('anchors on today when end-date is unset in the browser', async () => {
     const el = mount('<arc-activity-heatmap weeks="2"></arc-activity-heatmap>');
-    await el.updateComplete;
+    // settle(), not one updateComplete: today is adopted the render *after*
+    // the first one, so that the first render stays reproducible from props
+    // alone and hydration can adopt it (activity-heatmap.js _resolveEndEpoch).
+    await settle(el);
     const d = new Date();
     const iso = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
     const dates = cells(el).map((c) => c.dataset.date);

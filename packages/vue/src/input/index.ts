@@ -16,7 +16,6 @@ export { default as InputGroup } from './InputGroup.vue';
 export { default as Label } from './Label.vue';
 export { default as MultiSelect } from './MultiSelect.vue';
 export { default as NumberInput } from './NumberInput.vue';
-export { default as OtpInput } from './OtpInput.vue';
 export { default as PinInput } from './PinInput.vue';
 export { default as RadioGroup } from './RadioGroup.vue';
 export { default as RangeSlider } from './RangeSlider.vue';

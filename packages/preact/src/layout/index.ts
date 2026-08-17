@@ -12,8 +12,6 @@ export type { AuthShellProps } from './AuthShell.js';
 export { Center } from './Center.js';
 export type { CenterProps } from './Center.js';
 
-export { Cluster } from './Cluster.js';
-export type { ClusterProps } from './Cluster.js';
 
 export { Container } from './Container.js';
 export type { ContainerProps } from './Container.js';

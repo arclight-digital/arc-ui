@@ -50,14 +50,18 @@
  *   node scripts/checks/empty-attributes.js
  *
  * Run via: pnpm check empty-attributes
+ *
+ * V4-PLAN 4.10 moved this onto `scripts/lib/source-walker.js`. The depth loop
+ * that used to read an expression out of `=${…}` is the walker's `balanced()`,
+ * asked for the `{` of the `${` — the same brace-depth reading, and the same
+ * reason for it. The scan now runs over the comment-blanked copy, so a docblock
+ * quoting the defect this file exists to describe is prose rather than a
+ * finding; it reads the same 586 bindings either way.
  */
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SRC = path.join(__dirname, '..', '..', 'packages', 'web-components', 'src');
-const TIERS = ['content', 'data', 'feedback', 'input', 'layout', 'navigation', 'typography', 'shared'];
+import { readFileSync, readdirSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { run, ComponentSource, balanced, lineAt } from '../lib/source-walker.js';
+import { findComponents, SRC_DIR, TIERS } from '../lib/component-tags.js';
 
 /**
  * Empty, and meant to stay that way — the rule is strict.
@@ -77,25 +81,23 @@ const BASELINE = [];
 /**
  * Attribute bindings in a source file, as [name, expression] pairs.
  *
+ * Carried as `{ name, expr, line }` now that run() reports against a line.
+ *
  * The name must not be preceded by `@`, `.` or `?` — those are the event,
  * property and boolean-attribute forms, none of which render a stray empty
  * attribute. The expression is read by brace depth so a nested template or
  * object literal does not truncate it mid-way.
  */
-function attributeBindings(src) {
+function attributeBindings(code, source) {
   const out = [];
   const start = /(^|[\s"'`])([a-zA-Z][\w-]*)=\$\{/g;
   let m;
-  while ((m = start.exec(src))) {
-    const name = m[2];
-    let depth = 1;
-    let i = start.lastIndex;
-    for (; i < src.length && depth > 0; i++) {
-      if (src[i] === '{') depth++;
-      else if (src[i] === '}') depth--;
-    }
-    out.push([name, src.slice(start.lastIndex, i - 1)]);
-    start.lastIndex = i;
+  while ((m = start.exec(code))) {
+    // `balanced` from the `{` of the `${`, which is the last character matched.
+    const expr = balanced(code, start.lastIndex - 1);
+    if (!expr) break;
+    out.push({ name: m[2], expr: expr.body, line: lineAt(source, expr.start) });
+    start.lastIndex = expr.end + 1;
   }
   return out;
 }
@@ -108,42 +110,82 @@ function fallsBackToNullish(expr) {
   return /:\s*(undefined|null)\s*$/.test(expr.trim()) || /^\s*(undefined|null)\s*$/.test(expr);
 }
 
-const baseline = new Set(BASELINE);
-const problems = [];
-const outstanding = [];
-let checked = 0;
-
-for (const tier of TIERS) {
-  const dir = path.join(SRC, tier);
-  if (!fs.existsSync(dir)) continue;
-
-  for (const file of fs.readdirSync(dir)) {
-    if (!file.endsWith('.js') || file.endsWith('.register.js') || file === 'index.js') continue;
-
-    const rel = `${tier}/${file}`;
-    const src = fs.readFileSync(path.join(dir, file), 'utf-8');
-
-    for (const [name, expr] of attributeBindings(src)) {
-      checked++;
-      if (!fallsBackToNullish(expr)) continue;
-
-      const id = `${rel}:${name}`;
-      const message =
-        `${rel} — \`${name}\` falls back to ${/null\s*$/.test(expr.trim()) ? 'null' : 'undefined'}, ` +
-        `so it renders as \`${name}=""\` instead of being omitted`;
-
-      if (baseline.has(id)) outstanding.push(message);
-      else problems.push(message);
-      baseline.delete(id);
-    }
-  }
-}
-
 const REMEDY =
   "Import the sentinel and return it instead — `import { nothing } from 'lit'` —\n" +
   '  aria-expanded=${hasChildren ? String(expanded) : nothing}\n' +
   'as arc-chip does for aria-selected/aria-pressed. `nothing` is the only value\n' +
   'that removes an attribute; undefined and null are stringified.';
+
+/** REMEDY as a rule hint: run() indents the first line, so indent the rest. */
+const asHint = (text) => text.replace(/^(?=.)/gm, '    ').trimStart();
+
+const baseline = new Set(BASELINE);
+const outstanding = [];
+let checked = 0;
+
+/**
+ * One binding, judged, wherever it was found.
+ *
+ * The BASELINE id stays `tier/file:attribute` — the spelling an entry would be
+ * written in — rather than the repo-relative path run() reports against, so a
+ * revived BASELINE is written the way the header describes it.
+ */
+function judge(rel, { name, expr, line }, emit) {
+  checked++;
+  if (!fallsBackToNullish(expr)) return;
+
+  const id = `${rel}:${name}`;
+  const message =
+    `\`${name}\` falls back to ${/null\s*$/.test(expr.trim()) ? 'null' : 'undefined'}, ` +
+    `so it renders as \`${name}=""\` instead of being omitted`;
+
+  if (baseline.has(id)) outstanding.push(`${rel} — ${message}`);
+  else emit(line, message);
+  baseline.delete(id);
+}
+
+const sentinelOnly = {
+  name: 'empty-attributes',
+  describe: 'an omitted attribute is `nothing`, not undefined or null',
+  hint: asHint(REMEDY),
+  component({ meta, code, source, report }) {
+    const rel = `${meta.tier}/${meta.file}`;
+    for (const binding of attributeBindings(code, source)) judge(rel, binding, report);
+  },
+};
+
+/**
+ * The tier modules that are not components, swept the same way.
+ *
+ * The original walked every `.js` in every tier rather than the registered
+ * catalog. None of the shared modules renders a template today, so this half
+ * finds nothing — which is the point of keeping it: a controller that grows a
+ * `render()` should not become the one place the convention is unenforced.
+ */
+function scanSharedModules() {
+  const components = new Set(
+    [...findComponents().values()].map((m) => `${m.tier}/${m.file}`),
+  );
+  const problems = [];
+
+  for (const tier of TIERS) {
+    for (const file of readdirSync(resolve(SRC_DIR, tier))) {
+      if (!file.endsWith('.js') || file.endsWith('.register.js') || file === 'index.js') continue;
+      const rel = `${tier}/${file}`;
+      if (components.has(rel)) continue;
+
+      const source = readFileSync(resolve(SRC_DIR, tier, file), 'utf-8');
+      const view = new ComponentSource({ tag: rel, tier, file }, source);
+      for (const binding of attributeBindings(view.code, source)) {
+        judge(rel, binding, (line, message) => problems.push(`${view.file}:${line} — ${message}`));
+      }
+    }
+  }
+  return problems;
+}
+
+const code = run({ name: 'empty-attributes', rules: [sentinelOnly] });
+const shared = scanSharedModules();
 
 if (baseline.size) {
   console.error(
@@ -153,22 +195,25 @@ if (baseline.size) {
   process.exit(1);
 }
 
-if (problems.length) {
+if (shared.length) {
   console.error(
-    `check-empty-attributes: ${problems.length} new attribute binding(s) render empty ` +
-      'instead of being omitted\n',
+    `\ncheck-empty-attributes: ${shared.length} attribute binding(s) render empty instead of ` +
+      'being omitted, outside the component catalog\n',
   );
-  for (const p of problems) console.error(`  ${p}`);
+  for (const p of shared) console.error(`  ${p}`);
   console.error(`\n${REMEDY}`);
   process.exit(1);
 }
 
-console.log(
-  `check-empty-attributes: no new violations (${checked} attribute binding(s) checked)`,
-);
-if (outstanding.length) {
-  console.log(`\n  ${outstanding.length} known violation(s) outstanding, from BASELINE:\n`);
-  for (const p of outstanding) console.log(`    ${p}`);
-  console.log(`\n${REMEDY.replace(/^/gm, '  ')}`);
+if (code === 0) {
+  console.log(
+    `check-empty-attributes: no new violations (${checked} attribute binding(s) checked)`,
+  );
+  if (outstanding.length) {
+    console.log(`\n  ${outstanding.length} known violation(s) outstanding, from BASELINE:\n`);
+    for (const p of outstanding) console.log(`    ${p}`);
+    console.log(`\n${REMEDY.replace(/^/gm, '  ')}`);
+  }
 }
-process.exit(0);
+
+process.exit(code);

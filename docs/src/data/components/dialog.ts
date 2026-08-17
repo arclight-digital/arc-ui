@@ -6,93 +6,97 @@ export const dialog: ComponentDef = {
   tag: 'arc-dialog',
   tier: 'feedback',
   interactivity: 'interactive',
-  searchKeywords: ['prompt', 'popup'],
+  searchKeywords: ['modal', 'popup', 'overlay'],
   description:
-    'Small centered confirmation dialog wrapping arc-modal for simple confirm/cancel prompts — unsaved changes, session expiry, and discard decisions.',
+    'General-purpose focus-trapping overlay on the platform <dialog> — backdrop blur, slide-up entrance, and Escape-to-dismiss for forms, settings, and rich content that needs full user attention.',
 
-  overview: `Dialog is a convenience wrapper around \`arc-modal\` configured with \`size="sm"\` and \`closable\`, rendering as a small centered modal with backdrop blur and a slide-up entrance animation. It is purpose-built for simple confirm/cancel prompts — unsaved changes, session warnings, and discard decisions — where a full Modal would be overkill.
+  overview: `Dialog is the general-purpose overlay primitive, built on the platform's native \`<dialog>\` element. It floats above the page behind a blurred backdrop, moves focus inside on open, and returns focus to the trigger element on close. Use it any time you need a rich container for forms, settings panels, content previews, or multi-step workflows where background interaction must be blocked — the native top layer and \`::backdrop\` do the heavy lifting the way the platform intends.
 
-Because Dialog delegates to arc-modal internally, it inherits all of Modal's accessibility features: focus trapping, Escape key dismissal, and backdrop click handling come for free. The \`variant="error"\` option adds a red accent line and a subtle glow to the card border, reinforcing the severity of the action.
+**Renamed in v4.** This component was \`arc-modal\` through v3; the element is a dialog, the platform calls it a dialog, and *modal* named one of its behaviours rather than what it is. The old tag is gone in v4.0.0 — removed rather than aliased, since v4 never shipped and an alias would have served nobody. Note the hazard in the other direction: the v3 tag \`arc-dialog\` was a small confirm prompt, and that component is now \`arc-confirm\`. Handing this Dialog the old prompt props (\`message\`, \`confirm-label\`, \`cancel-label\`) logs a \`console.error\` naming \`arc-confirm\` rather than silently ignoring them.
 
-The component uses \`role="alertdialog"\` with \`aria-modal="true"\` to properly signal its interruptive nature to screen readers. The \`confirm()\` method returns a \`Promise<boolean>\` — call \`await dialog.confirm()\` and the promise resolves to \`true\` on confirm or \`false\` on cancel. Escape key and backdrop clicks both trigger cancellation.`,
+The component ships with three width presets (\`sm\`/\`md\`/\`lg\`), a \`fullscreen\` mode, and a smooth slide-up entrance. Dismissal is governed by one prop: \`dismissible\` renders the built-in close button and enables Escape and backdrop click, and it defaults to on — a dialog is dismissible unless you say otherwise. Set it to \`false\` for decisions the user must resolve through the footer buttons. The \`arc-close\` event is cancelable, so \`preventDefault()\` can veto a close while a form inside is mid-save.`,
 
   features: [
-    'Centered modal presentation via `arc-modal` with size="sm"',
-    'Backdrop with blur effect for focused attention',
-    'Slide-up entrance animation',
-    'Delegates to `arc-modal` for focus trap and Escape key handling',
-    'Small modal size for compact confirm/cancel prompts',
-    'Promise-based confirm() API — returns true on confirm, false on cancel/escape',
-    'Danger variant with red accent line, glow border, and red confirm button',
-    'Escape key and backdrop click trigger cancellation',
-    '`role="alertdialog"` with `aria-modal` for proper screen reader semantics',
-    'Customizable button labels via confirm-label and cancel-label attributes',
+    'Built on the native `<dialog>` element — top layer, `::backdrop`, and modality from the platform',
+    'Automatic focus trap — focus moves inside on open and returns to the trigger on close',
+    'Backdrop blur and dim, styled via `--dialog-backdrop` and `--dialog-backdrop-filter`',
+    'Slide-up entry and fade-out exit animations',
+    '`dismissible` (default on): built-in close button, Escape key, and backdrop click',
+    'Cancelable `arc-close` event — `preventDefault()` vetoes the close',
+    'Three width presets: sm (400px), md (560px), lg (720px), plus `fullscreen`',
+    '`header` and `footer` slots around arbitrary body content',
+    '`heading` doubles as the dialog’s accessible name',
   ],
 
   guidelines: {
     do: [
-      'Use Dialog for urgent, interruptive prompts — unsaved changes, session expiry, discard warnings',
-      'Keep the message concise — one or two sentences explaining what will happen',
-      'Use variant="error" when the confirmed action is destructive or irreversible',
-      'Use the confirm() promise API for cleaner async flow in your logic',
-      'Set specific button labels: "Discard Changes" is clearer than "Confirm"',
+      'Use Dialog for rich content that blocks the page: edit forms, creation wizards, detail views, settings panels',
+      'Keep `dismissible` on unless abandoning the dialog would lose meaningful user state',
+      'Put primary actions in the `footer` slot, with the confirming action last',
+      'Use `size="sm"` for short single-purpose dialogs and `lg` only for genuinely dense content',
+      'Cancel the `arc-close` event to hold the dialog open while an in-flight save completes',
     ],
     dont: [
-      'Do not use Dialog for complex forms or rich content — use Modal instead',
-      'Do not Stack multiple dialogs — resolve one before opening another',
-      'Do not use Dialog for informational messages — use Alert or Toast instead',
-      "Do not use Dialog for general-purpose overlays — that's what Modal is for",
-      'Do not use variant="error" for non-destructive confirmations — it creates unnecessary anxiety',
+      'Do not use Dialog for a yes/no prompt — that is `arc-confirm`, which exists so you never rebuild the two-button layout',
+      'Do not stack dialogs — resolve one before opening another',
+      'Do not use Dialog for passive notifications — use Alert or Toast, which do not steal focus',
+      'Do not disable `dismissible` for convenience; an inescapable overlay must be earning that severity',
     ],
   },
 
-  previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Discard Draft</arc-button>
-<arc-dialog heading="Discard Draft?" message="You have unsaved changes that will be permanently lost. This action cannot be undone." confirm-label="Discard" cancel-label="Keep Editing" variant="error"></arc-dialog>`,
+  previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Edit Profile</arc-button>
+<arc-dialog heading="Edit Profile" size="sm">
+  <arc-input label="Display Name" value="Ada Lovelace"></arc-input>
+  <arc-input label="Email" type="email" value="ada@example.com" style="margin-top:var(--space-md)"></arc-input>
+  <div slot="footer" style="display:flex;gap:var(--space-sm);justify-content:flex-end">
+    <arc-button variant="ghost" onclick="this.closest('arc-dialog').open = false">Cancel</arc-button>
+    <arc-button variant="primary" onclick="this.closest('arc-dialog').open = false">Save Changes</arc-button>
+  </div>
+</arc-dialog>`,
 
   tabs: [
     {
       label: 'Web Component',
       lang: 'html',
-      code: `<arc-dialog
-  heading="Discard Draft?"
-  message="You have unsaved changes that will be permanently lost."
-  confirm-label="Discard"
-  cancel-label="Keep Editing"
-  variant="error"
-></arc-dialog>
+      code: `<arc-button id="edit">Edit Profile</arc-button>
+
+<arc-dialog heading="Edit Profile" size="sm">
+  <arc-input label="Display Name"></arc-input>
+  <div slot="footer">
+    <arc-button variant="ghost" data-close>Cancel</arc-button>
+    <arc-button variant="primary" data-close>Save Changes</arc-button>
+  </div>
+</arc-dialog>
 
 <script>
   const dialog = document.querySelector('arc-dialog');
-  // Promise-based API
-  const confirmed = await dialog.confirm();
-  if (confirmed) discardDraft();
+  document.getElementById('edit').addEventListener('click', () => {
+    dialog.open = true;
+  });
+  dialog.addEventListener('click', (e) => {
+    if (e.target.closest('[data-close]')) dialog.open = false;
+  });
 </script>`,
     },
     {
       label: 'React',
       lang: 'tsx',
-      code: `import { Dialog } from '@arclux/arc-ui-react';
-import { useRef } from 'react';
+      code: `import { Dialog, Button, Input } from '@arclux/arc-ui-react';
+import { useState } from 'react';
 
-function App() {
-  const ref = useRef(null);
-
-  const handleDiscard = async () => {
-    const confirmed = await ref.current.confirm();
-    if (confirmed) discardDraft();
-  };
+function EditProfile() {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <button onClick={handleDiscard}>Discard</button>
-      <Dialog
-        ref={ref}
-        heading="Discard Draft?"
-        message="You have unsaved changes that will be permanently lost."
-        confirm-label="Discard"
-        cancel-label="Keep Editing"
-        variant="error"
-      />
+      <Button onClick={() => setOpen(true)}>Edit Profile</Button>
+      <Dialog heading="Edit Profile" size="sm" open={open} onArcClose={() => setOpen(false)}>
+        <Input label="Display Name" />
+        <div slot="footer">
+          <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="primary" onClick={() => setOpen(false)}>Save Changes</Button>
+        </div>
+      </Dialog>
     </>
   );
 }`,
@@ -102,131 +106,109 @@ function App() {
       lang: 'html',
       code: `<script setup>
 import { ref } from 'vue';
-import { Dialog } from '@arclux/arc-ui-vue';
+import { Dialog, Button, Input } from '@arclux/arc-ui-vue';
 
-const dialogRef = ref(null);
-
-async function handleDiscard() {
-  const confirmed = await dialogRef.value.confirm();
-  if (confirmed) discardDraft();
-}
+const open = ref(false);
 </script>
 
 <template>
-  <button @click="handleDiscard">Discard</button>
-  <Dialog
-    ref="dialogRef"
-    heading="Discard Draft?"
-    message="You have unsaved changes that will be permanently lost."
-    confirm-label="Discard"
-    cancel-label="Keep Editing"
-    variant="error"
-  />
+  <Button @click="open = true">Edit Profile</Button>
+  <Dialog heading="Edit Profile" size="sm" :open="open" @arc-close="open = false">
+    <Input label="Display Name" />
+    <div slot="footer">
+      <Button variant="ghost" @click="open = false">Cancel</Button>
+      <Button variant="primary" @click="open = false">Save Changes</Button>
+    </div>
+  </Dialog>
 </template>`,
     },
     {
       label: 'Svelte',
       lang: 'html',
       code: `<script>
-  import { Dialog } from '@arclux/arc-ui-svelte';
-  let dialogEl;
-
-  async function handleDiscard() {
-    const confirmed = await dialogEl.confirm();
-    if (confirmed) discardDraft();
-  }
+  import { Dialog, Button, Input } from '@arclux/arc-ui-svelte';
+  let open = false;
 </script>
 
-<button on:click={handleDiscard}>Discard</button>
-<Dialog
-  bind:this={dialogEl}
-  heading="Discard Draft?"
-  message="You have unsaved changes that will be permanently lost."
-  confirmLabel="Discard"
-  cancelLabel="Keep Editing"
-  variant="error"
-/>`,
+<Button on:click={() => (open = true)}>Edit Profile</Button>
+<Dialog heading="Edit Profile" size="sm" {open} on:arc-close={() => (open = false)}>
+  <Input label="Display Name" />
+  <div slot="footer">
+    <Button variant="ghost" on:click={() => (open = false)}>Cancel</Button>
+    <Button variant="primary" on:click={() => (open = false)}>Save Changes</Button>
+  </div>
+</Dialog>`,
     },
     {
       label: 'Angular',
       lang: 'ts',
-      code: `import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Dialog } from '@arclux/arc-ui-angular';
+      code: `import { Component } from '@angular/core';
+import { Dialog, Button, Input } from '@arclux/arc-ui-angular';
 
 @Component({
-  imports: [Dialog],
+  imports: [Dialog, Button, Input],
   template: \`
-    <button (click)="handleDiscard()">Discard</button>
-    <arc-dialog #dialog
-      heading="Discard Draft?"
-      message="You have unsaved changes that will be permanently lost."
-      confirmLabel="Discard"
-      cancelLabel="Keep Editing"
-      variant="error"
-    />
+    <arc-button (click)="open = true">Edit Profile</arc-button>
+    <arc-dialog heading="Edit Profile" size="sm" [open]="open" (arc-close)="open = false">
+      <arc-input label="Display Name" />
+      <div slot="footer">
+        <arc-button variant="ghost" (click)="open = false">Cancel</arc-button>
+        <arc-button variant="primary" (click)="open = false">Save Changes</arc-button>
+      </div>
+    </arc-dialog>
   \`,
 })
-export class MyComponent {
-  @ViewChild('dialog') dialog!: ElementRef;
-
-  async handleDiscard() {
-    const confirmed = await this.dialog.nativeElement.confirm();
-    if (confirmed) this.discardDraft();
-  }
+export class EditProfileComponent {
+  open = false;
 }`,
     },
     {
       label: 'Solid',
       lang: 'tsx',
-      code: `import { Dialog } from '@arclux/arc-ui-solid';
+      code: `import { Dialog, Button, Input } from '@arclux/arc-ui-solid';
+import { createSignal } from 'solid-js';
 
-let dialogEl;
+function EditProfile() {
+  const [open, setOpen] = createSignal(false);
 
-async function handleDiscard() {
-  const confirmed = await dialogEl.confirm();
-  if (confirmed) discardDraft();
-}
-
-<button onClick={handleDiscard}>Discard</button>
-<Dialog
-  ref={dialogEl}
-  heading="Discard Draft?"
-  message="You have unsaved changes that will be permanently lost."
-  confirmLabel="Discard"
-  cancelLabel="Keep Editing"
-  variant="error"
-/>`,
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Edit Profile</Button>
+      <Dialog heading="Edit Profile" size="sm" open={open()} on:arc-close={() => setOpen(false)}>
+        <Input label="Display Name" />
+        <div slot="footer">
+          <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="primary" onClick={() => setOpen(false)}>Save Changes</Button>
+        </div>
+      </Dialog>
+    </>
+  );
+}`,
     },
     {
       label: 'Preact',
       lang: 'tsx',
-      code: `import { Dialog } from '@arclux/arc-ui-preact';
-import { useRef } from 'preact/hooks';
+      code: `import { Dialog, Button, Input } from '@arclux/arc-ui-preact';
+import { useState } from 'preact/hooks';
 
-function App() {
-  const ref = useRef(null);
-
-  const handleDiscard = async () => {
-    const confirmed = await ref.current.confirm();
-    if (confirmed) discardDraft();
-  };
+function EditProfile() {
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      <button onClick={handleDiscard}>Discard</button>
-      <Dialog
-        ref={ref}
-        heading="Discard Draft?"
-        message="You have unsaved changes that will be permanently lost."
-        confirmLabel="Discard"
-        cancelLabel="Keep Editing"
-        variant="error"
-      />
+      <Button onClick={() => setOpen(true)}>Edit Profile</Button>
+      <Dialog heading="Edit Profile" size="sm" open={open} onArcClose={() => setOpen(false)}>
+        <Input label="Display Name" />
+        <div slot="footer">
+          <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+          <Button variant="primary" onClick={() => setOpen(false)}>Save Changes</Button>
+        </div>
+      </Dialog>
     </>
   );
 }`,
     },
   ],
 
-  seeAlso: ['modal', 'alert', 'sheet'],
+  seeAlso: ['confirm', 'sheet', 'drawer'],
 };

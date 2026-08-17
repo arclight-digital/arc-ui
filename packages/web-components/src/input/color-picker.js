@@ -3,6 +3,10 @@ import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
+/** Whether two preset lists would draw the same row of swatches. */
+const sameColors = (a, b) =>
+  Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((c, i) => c === b[i]);
+
 /**
  * Full-featured color picker with a saturation/lightness area, hue slider, hex input, and optional
  * preset swatches.
@@ -47,6 +51,8 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
     _sat: { state: true },
     _lit: { state: true },
     _hexInput: { state: true },
+    // What the swatch row actually renders — see connectedCallback.
+    _presets: { state: true },
     _draggingArea: { state: true },
     _draggingHue: { state: true },
   };
@@ -177,6 +183,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
         gap: var(--space-xs);
       }
 
+
       .picker__swatch {
         width: 22px;
         height: 22px;
@@ -223,6 +230,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
     this._sat = 92;
     this._lit = 64;
     this._hexInput = '#4d7ef7';
+    this._presets = [];
     this._draggingArea = false;
     this._draggingHue = false;
     this._areaEl = null;
@@ -236,11 +244,40 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
     this._parseHex(this.value);
   }
 
+  /**
+   * The swatch row renders from `_presets`, and the first render seeds it from
+   * markup rather than from the property.
+   *
+   * The server only ever sees markup, so the presets it can render are the ones
+   * the `presets` *attribute* carried. A page that instead assigns
+   * `.presets = [...]` from script — the documented way, since most callers
+   * have colours in hand rather than JSON in markup — hands the element that
+   * array before it upgrades, and Lit re-applies it during the first update,
+   * before this. Rendering it here would put a whole swatch row into the
+   * client's first render where the server put nothing, and a part that changes
+   * shape under hydration is the one thing it cannot adopt. Seeding from the
+   * attribute keeps both first renders on the same input; updated() picks the
+   * property up one render later, once the server DOM has been adopted.
+   */
+  willUpdate(changed) {
+    super.willUpdate?.(changed);
+    if (!this.hasUpdated) {
+      const { converter } = this.constructor.elementProperties.get('presets');
+      this._presets = converter.fromAttribute(this.getAttribute('presets'), Array);
+    }
+  }
+
   updated(changed) {
     super.updated(changed);
     if (changed.has('value') && !this._draggingArea && !this._draggingHue) {
       this._parseHex(this.value);
       this._hexInput = this.value;
+    }
+    // Compared by content, not identity: the seed above is a fresh array, so
+    // an identity test would re-render every picker whose presets never
+    // changed — including the ones that have none.
+    if (changed.has('presets') && !sameColors(this._presets, this.presets)) {
+      this._presets = this.presets;
     }
   }
 
@@ -542,10 +579,10 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
         </div>
 
         ${
-          this.presets && this.presets.length
+          this._presets && this._presets.length
             ? html`
           <div class="picker__presets" part="presets" role="listbox" aria-label="Color presets">
-            ${this.presets.map(
+            ${this._presets.map(
               (c) => html`
               <button
                 class="picker__swatch ${c.toLowerCase() === this.value ? 'picker__swatch--active' : ''}"

@@ -216,5 +216,5 @@ export class BoardComponent {
     },
   ],
 
-  seeAlso: ['sortable-list', 'data-table', 'tag'],
+  seeAlso: ['sortable-list', 'data-grid', 'tag'],
 };

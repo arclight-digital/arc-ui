@@ -155,15 +155,39 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
     this.timezone = '';
     this.label = '';
     // Left undefined so the locale decides; a boolean (either way) forces it.
-    // Null until the first client-side tick. The server render (constructor,
-    // willUpdate, render only — no connectedCallback) therefore shows the
-    // static placeholder face and never touches Date or Intl.
+    // Null until the first tick, which is taken after the first render — see
+    // _start(). The server render (constructor, willUpdate, render only — no
+    // connectedCallback) therefore shows the static placeholder face and never
+    // touches Date or Intl, and so does the client's hydrating render.
     this._now = null;
     this._intervalId = null;
   }
 
   connectedCallback() {
     super.connectedCallback();
+    // Reconnect only. On the *first* connect the timer is started by
+    // firstUpdated() instead: see _start().
+    if (this.hasUpdated) this._start();
+  }
+
+  firstUpdated() {
+    this._start();
+  }
+
+  /**
+   * Take the first tick and keep ticking.
+   *
+   * Wall-clock time is the one thing this component renders that the server
+   * cannot agree with, so it must not exist during the first render: hydration
+   * adopts the server's DOM by rendering the same template against the same
+   * state, and a `_now` set in connectedCallback — which runs before that
+   * render — puts the viewer's time where the server wrote 12:00 / --:--, which
+   * throws instead of adopting. firstUpdated() is the first moment after the
+   * comparison is over, so the face is live one frame later and hydration never
+   * sees a value the server could not have had.
+   */
+  _start() {
+    if (this._intervalId) return;
     this._tick();
     this._intervalId = setInterval(() => this._tick(), 1000);
   }

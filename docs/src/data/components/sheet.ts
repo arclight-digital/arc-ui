@@ -393,5 +393,5 @@ function FilterSheet() {
     },
   ],
 
-  seeAlso: ['drawer', 'modal', 'sidebar'],
+  seeAlso: ['drawer', 'dialog', 'sidebar'],
 };

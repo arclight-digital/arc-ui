@@ -182,5 +182,5 @@ function AdaptiveLayout() {
     },
   ],
 
-  seeAlso: ['stack', 'cluster', 'container'],
+  seeAlso: ['stack', 'container'],
 };

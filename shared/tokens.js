@@ -407,6 +407,23 @@ export const tokens = {
      * a build-time constant — see scripts/generate/breakpoints.js.
      */
     navCollapse: '900px',
+    /**
+     * The *container* width below which arc-navigation-menu's desktop pill row
+     * no longer fits and hides.
+     *
+     * Split from `navCollapse` after 4.4 moved the nav's collapse from a media
+     * query onto a container query. The two numbers answer different
+     * questions: `navCollapse` is the viewport point where the mobile
+     * affordances begin — the hamburger, the panel, app-shell's sidebar
+     * behaviour — and `navFit` is the point where the pills themselves stop
+     * fitting in whatever column the bar's other occupants leave them.
+     * Carrying the viewport number into the container query collapsed the nav
+     * on every docs page at every desktop width: the bar's content is capped
+     * at 1280px, search and actions take ~410px of it, and the ~860px left is
+     * "mobile" by a 900px reading while the viewport-keyed hamburger reads
+     * the same moment as "desktop" — no navigation rendered at all.
+     */
+    navFit: '480px',
   },
 
   /* ── Opacity ── */

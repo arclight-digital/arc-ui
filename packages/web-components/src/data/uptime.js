@@ -201,6 +201,56 @@ export class ArcUptime extends DeclaredPropsMixin(LitElement) {
     });
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * @lit-labs/ssr renders a host from its attributes alone, so a strip whose
+   * `data` arrives as a property — the common half of the documented contract,
+   * since ninety periods is not something anyone writes into markup — is
+   * rendered as an empty track on the server. The page assigns it before the
+   * register barrel upgrades this element, which parks it in Lit's pre-upgrade
+   * instance properties and applies it at the top of the very first update: the
+   * one that has to adopt the server's markup. The summary line is the first
+   * part to disagree — a percentage template where the server, having no values
+   * to average, rendered `nothing` — so hydration reports "Unexpected
+   * TemplateResult rendered to part" and abandons the tree there, leaving the
+   * strip with no ticks at all.
+   *
+   * So the first render uses what the attribute said — which is exactly what
+   * the server rendered from, JSON attribute included — and the script-set
+   * history is handed over in `firstUpdated`, once that markup has been
+   * adopted. Nothing is held back without a server-rendered shadow root, so a
+   * client-only strip still paints its ticks on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) this._ssrData = this.data;
+  }
+
+  willUpdate(changed) {
+    super.willUpdate?.(changed);
+    // See connectedCallback. In willUpdate rather than in `render()` so the
+    // declared-props normalisation that follows it sees the same array the
+    // render will.
+    if (this._ssrData !== undefined) {
+      this._heldData = this.data;
+      this.data = this._ssrData;
+      this._ssrData = undefined;
+    }
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's
+    // history can land now, as an ordinary second update.
+    if (this._heldData !== undefined) {
+      this.data = this._heldData;
+      this._heldData = undefined;
+    }
+  }
+
   updated(changed) {
     // Re-run on every step, not just on open: the anchor is a different tick
     // each time the pointer or the arrow keys move.

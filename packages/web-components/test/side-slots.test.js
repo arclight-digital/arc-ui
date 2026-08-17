@@ -1,13 +1,14 @@
 /**
- * The side-slot rename, and what the alias actually promises.
+ * The side-slot rename, finished.
  *
  * V4-PLAN 4.3 converged `start`/`end` onto `prefix`/`suffix` across
- * `arc-toolbar` and `arc-status-bar`. The static half of that is
- * `scripts/checks/side-slots.js`, which reads the JSDoc; it cannot tell whether
- * the old name still *projects*, and that is the whole promise of keeping it
- * for a major. Two slots in one region is the mechanism, so the thing worth
- * asserting is that both reach the same region and that the order is the
- * documented one rather than whatever the template happened to do.
+ * `arc-toolbar` and `arc-status-bar`, briefly keeping the old names as alias
+ * slots; the pre-release housecleaning removed the aliases outright, since v4
+ * never shipped and they served no one. The static half is
+ * `scripts/checks/side-slots.js`, which reads the JSDoc; what it cannot tell
+ * is what the template actually renders — so the canonical slots are asserted
+ * to project, and the retired ones are asserted to be *gone*, because an
+ * alias slot quietly surviving in the template would be undocumented API.
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, settle } from './helpers.js';
@@ -39,47 +40,25 @@ for (const { tag, region, endRegion } of BARS) {
       expect(slot.assignedElements().map((n) => n.id)).to.eql(['s']);
     });
 
-    it('still projects the deprecated start/end into the same regions', async () => {
-      // The promise the deprecation makes. If this fails, the alias is a
-      // documentation claim with nothing behind it and the rename is a break.
-      const el = mount(
-        `<${tag}><span slot="start" id="a">a</span><span slot="end" id="b">b</span></${tag}>`,
-      );
-      await settle(el);
-      expect(
-        el.shadowRoot.querySelector(`${region} slot[name="start"]`).assignedElements(),
-        'start still lands in the inline-start region',
-      ).to.have.lengthOf(1);
-      expect(
-        el.shadowRoot.querySelector(`${endRegion} slot[name="end"]`).assignedElements(),
-        'end still lands in the inline-end region',
-      ).to.have.lengthOf(1);
-    });
-
-    it('puts start ahead of prefix when a consumer uses both mid-migration', async () => {
-      // Not an arbitrary order: content already in `start` was there first, and
-      // a migration that appends to `prefix` should not jump the queue. The
-      // documented order is the rendered order of the two slots, so it is
-      // asserted rather than left to whoever edits the template next.
-      const el = mount(
-        `<${tag}><span slot="prefix" id="new">n</span><span slot="start" id="old">o</span></${tag}>`,
-      );
-      await settle(el);
-      const slots = [...el.shadowRoot.querySelectorAll(`${region} slot`)];
-      expect(slots.map((s) => s.name)).to.eql(['prefix', 'start']);
-      const order = slots.flatMap((s) => s.assignedElements().map((n) => n.id));
-      expect(order).to.eql(['new', 'old']);
-    });
-
-    it('names the region part both ways', async () => {
-      // `::part(start)` was the only handle on this region before v4 and keeps
-      // working, on the same element, beside the new name.
+    it('no longer renders the retired start/end slots', async () => {
+      // The other direction of the removal: an alias slot surviving in the
+      // template after leaving the docs would be undocumented API — reachable,
+      // unlisted, and rot the moment someone depends on it. MIGRATION.md says
+      // content in the old names lands in the default slot now, which is what
+      // "no named slot" means.
       const el = mount(`<${tag}></${tag}>`);
       await settle(el);
-      const start = el.shadowRoot.querySelector(region);
-      expect(start.getAttribute('part').split(/\s+/)).to.include.members(['prefix', 'start']);
-      const end = el.shadowRoot.querySelector(endRegion);
-      expect(end.getAttribute('part').split(/\s+/)).to.include.members(['suffix', 'end']);
+      expect(el.shadowRoot.querySelector('slot[name="start"]')).to.equal(null);
+      expect(el.shadowRoot.querySelector('slot[name="end"]')).to.equal(null);
+    });
+
+    it('names the region part with the canonical name only', async () => {
+      // `::part(start)` was the pre-v4 handle; it went with the slot alias, so
+      // the part list carrying it again would be the same quiet rot.
+      const el = mount(`<${tag}></${tag}>`);
+      await settle(el);
+      expect(el.shadowRoot.querySelector(region).getAttribute('part').split(/\s+/)).to.eql(['prefix']);
+      expect(el.shadowRoot.querySelector(endRegion).getAttribute('part').split(/\s+/)).to.eql(['suffix']);
     });
   });
 }

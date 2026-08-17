@@ -39,6 +39,9 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
     pending: flag(false),
     markdown: flag(false),
     _source: { state: true },
+    // What the meta line actually renders — see willUpdate.
+    _author: { state: true },
+    _timestamp: { state: true },
   };
 
   static styles = [
@@ -168,6 +171,36 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
     this.timestamp = '';
     /** Slotted text captured for the markdown path; state, so updates re-render. */
     this._source = '';
+    this._author = '';
+    this._timestamp = '';
+  }
+
+  /**
+   * The meta line renders from `_author` and `_timestamp`, seeded here from the
+   * attributes rather than from the properties.
+   *
+   * The server renders from markup alone, so an author or timestamp assigned as
+   * a *property* — how a transcript assembled at runtime carries them, and how
+   * the docs page stamps its messages — is a value the server never had. Lit
+   * re-applies a property set before upgrade during the first update, which is
+   * before this, so rendering it here would open the meta line, or the
+   * arc-time-ago inside it, in the client's first render where the server
+   * opened neither. That is a part changing shape under hydration, which is the
+   * one thing it cannot adopt. updated() takes the properties one render later,
+   * after the server DOM has been adopted — the same shape as _source.
+   */
+  willUpdate(changed) {
+    super.willUpdate?.(changed);
+    if (!this.hasUpdated) {
+      this._author = this.getAttribute('author') ?? '';
+      this._timestamp = this.getAttribute('timestamp') ?? '';
+    }
+  }
+
+  updated(changed) {
+    super.updated?.(changed);
+    if (changed.has('author')) this._author = this.author;
+    if (changed.has('timestamp')) this._timestamp = this.timestamp;
   }
 
   /**
@@ -202,11 +235,11 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
   }
 
   _renderMeta() {
-    if (!this.author && !this.timestamp) return '';
+    if (!this._author && !this._timestamp) return '';
     return html`
       <p class="message__meta" part="meta">
-        ${this.author ? html`<span class="message__author">${this.author}</span>` : ''}
-        ${this.timestamp ? html`<arc-time-ago datetime=${this.timestamp}></arc-time-ago>` : ''}
+        ${this._author ? html`<span class="message__author">${this._author}</span>` : ''}
+        ${this._timestamp ? html`<arc-time-ago datetime=${this._timestamp}></arc-time-ago>` : ''}
       </p>
     `;
   }

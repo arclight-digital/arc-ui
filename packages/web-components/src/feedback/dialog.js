@@ -27,7 +27,6 @@ const attrOf = (name) => name.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
  * @prop {string} heading - Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?").
  * @prop {'sm' | 'md' | 'lg'} size - Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.
  * @prop {boolean} dismissible - When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.
- * @prop {boolean} closable - @deprecated Since v4.0.0 — the old name for `dismissible`, kept as a two-way alias for one major and removed in v5. Setting either sets both.
  * @prop {boolean} fullscreen - Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.
  * @fires {CustomEvent<void>} arc-open - Fired when the dialog opens
  * @fires {CustomEvent<void>} arc-close - Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close.
@@ -66,13 +65,6 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
      */
     dismissible: flag(true, { negative: 'no-dismissible' }),
 
-    /**
-     * Deprecated alias, removed in v5. Declared as a real property rather than
-     * a getter pair so the *attribute* keeps working: `<arc-dialog no-closable>`
-     * is markup that exists in consumers' pages, and an accessor alone would
-     * leave Lit with no attribute to observe.
-     */
-    closable: flag(true, { negative: 'no-closable' }),
   };
 
   static styles = [
@@ -294,26 +286,6 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
     )
       return;
     this.open = false;
-  }
-
-  /**
-   * Keep the deprecated `closable` and the canonical `dismissible` in step.
-   *
-   * In `willUpdate` rather than `updated`, so the mirrored assignment is folded
-   * into the same render pass instead of costing a second one. The canonical
-   * name is checked first, so a consumer that sets both in one turn gets the
-   * one they are supposed to be using.
-   *
-   * This cannot loop: the second pass sees the two already equal and the guard
-   * on each branch is an inequality.
-   */
-  willUpdate(changed) {
-    super.willUpdate?.(changed);
-    if (changed.has('dismissible') && this.closable !== this.dismissible) {
-      this.closable = this.dismissible;
-    } else if (changed.has('closable') && this.dismissible !== this.closable) {
-      this.dismissible = this.closable;
-    }
   }
 
   updated(changed) {

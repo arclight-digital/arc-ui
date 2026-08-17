@@ -145,13 +145,12 @@ const OPENABLE = manifest.modules
 
 /** Openable, but with no second path to compare — each with the reason why. */
 const NO_SECOND_PATH = {
-  'arc-modal': 'no trigger of its own; the application opens it',
   'arc-sheet': 'no trigger of its own; the application opens it',
   'arc-drawer': 'no trigger of its own; the application opens it',
   'arc-lightbox': 'no trigger of its own; opened from a gallery click',
   'arc-command-palette': 'no trigger of its own; opened by a global shortcut',
-  'arc-confirm': 'no trigger of its own; wraps arc-modal for an imperative API',
-  'arc-dialog': 'no trigger of its own; wraps arc-modal for an imperative API',
+  'arc-confirm': 'no trigger of its own; wraps arc-dialog for an imperative API',
+  'arc-dialog': 'no trigger of its own; the application opens it',
   'arc-context-menu': 'opens from a contextmenu event on a separate target, not from a click on itself',
   'arc-search': 'the panel opens on typing, so there is no click path to compare',
   'arc-collapsible': 'a disclosure: the heading click is the only path there is',
@@ -163,7 +162,10 @@ describe('open parity: the sweep covers everything that opens', () => {
   it('found the openable population', () => {
     // Anti-vacuity: a manifest shape change must fail here rather than quietly
     // reducing the required coverage to nothing.
-    expect(OPENABLE.length, 'openable components derived from the manifest').to.be.greaterThan(20);
+    // at.least, sitting exactly on today's count: removing the arc-modal
+    // alias took the population from 21 to 20, and the floor should catch
+    // the next silent shrink, not this deliberate one.
+    expect(OPENABLE.length, 'openable components derived from the manifest').to.be.at.least(20);
   });
 
   it('every openable component is either a case or an explained exemption', () => {

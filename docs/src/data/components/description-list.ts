@@ -33,7 +33,7 @@ Dividers (bottom borders between items, and right borders between columns) are e
       'Keep term labels concise — one to three words is ideal',
     ],
     dont: [
-      'Do not use for tabular data with many rows — use `arc-data-table` instead',
+      'Do not use for tabular data with many rows — use `arc-data-grid` instead',
       'Do not nest description lists inside each other',
       'Do not use long paragraph-length terms — move verbose content to the detail slot',
       'Do not mix description items with non-`arc-description-item` children',
@@ -166,5 +166,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['key-value', 'data-table', 'list'],
+  seeAlso: ['data-grid', 'list'],
 };

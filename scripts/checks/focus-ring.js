@@ -24,23 +24,20 @@
  * target — see the note on tokens.focus — is a judgement about the target, and
  * a script that tried to infer it from a selector name would be wrong more
  * often than the components are.
+ *
+ * ── On `scripts/lib/source-walker.js` (V4-PLAN 4.10) ──
+ *
+ * This check contributed its rule reader to the walker, so the migration is
+ * mostly a deletion: `cssRules` is the generator pair below, with the same
+ * reasoning and the same two lessons.
  */
-import fs from 'node:fs';
-import path from 'node:path';
-
-const SRC = 'packages/web-components/src';
-const failures = [];
+import { readFileSync, readdirSync } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
+import { ComponentSource, run } from '../lib/source-walker.js';
+import { findComponents, SRC_DIR } from '../lib/component-tags.js';
 
 /** Focus treatments that are allowed to appear in a focus rule. */
 const TOKEN = /var\(--(interactive-focus|interactive-focus-ring|interactive-focus-error|focus-ring|focus-glow|focus-error|shadow-[a-z]+|interactive-hover)\)/;
-
-function walk(dir) {
-  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, e.name);
-    if (e.isDirectory()) walk(full);
-    else if (e.name.endsWith('.js')) scan(full);
-  }
-}
 
 /**
  * Rules are read as innermost selector/body pairs over the whole source, not
@@ -54,53 +51,34 @@ function walk(dir) {
  * prettier and the declarations landed on their own lines. Same blind spot
  * check-motion-tokens had, and the same fix: normalize the shape before
  * matching, so how a rule is formatted cannot decide whether it is checked.
+ *
+ * Both halves of that now live in the walker's `cssRules`, which was lifted
+ * from the two generators this file used to carry, along with the note on why
+ * they were scoped to the style blocks:
+ *
+ *     The contents of each css`…` tagged template, with its offset in the file.
+ *
+ *     Scoped to the style blocks: run over the whole module and the braces of
+ *     imports, objects and function bodies pair up with CSS braces, which puts
+ *     every selector one rule out of step.
+ *
+ * What is left here is the pair of judgements about a focus rule.
  */
-/** The contents of each css`…` tagged template, with its offset in the file. */
-function* styleBlocks(src) {
-  const open = /\bcss`/g;
-  let m;
-  while ((m = open.exec(src))) {
-    const start = m.index + m[0].length;
-    const end = src.indexOf('`', start);
-    if (end === -1) return;
-    yield { text: src.slice(start, end), offset: start };
-    open.lastIndex = end + 1;
-  }
-}
-
-function* rules(src) {
-  // Scoped to the style blocks: run over the whole module and the braces of
-  // imports, objects and function bodies pair up with CSS braces, which puts
-  // every selector one rule out of step.
-  for (const block of styleBlocks(src)) {
-    for (const m of block.text.matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
-      const at = block.offset + m.index;
-      yield {
-        selector: m[1].trim(),
-        body: m[2],
-        line: src.slice(0, at).split('\n').length,
-      };
-    }
-  }
-}
-
-function scan(file) {
-  const src = fs.readFileSync(file, 'utf8');
-  const rel = path.relative(process.cwd(), file);
-
-  for (const { selector, body, line } of rules(src)) {
-    const at = (msg, text) => failures.push({ file: rel, line, msg, text: text.trim() });
-
+function focusFindings(cssRules) {
+  const out = [];
+  for (const { selector, body, line } of cssRules) {
     // An explicit, greppable opt-out for the rare rule that has a reason. It
     // has to name one — the point is that a deviation stays visible in review
     // rather than being absorbed as normal.
     if (/focus-ring-exempt/.test(selector) || /focus-ring-exempt/.test(body)) continue;
 
+    const at = (kind, msg, text) => out.push({ kind, line, msg, text: text.trim() });
+
     // 1. A box-shadow inside a focus rule that is not built from tokens.
     if (/:focus(-visible|-within)?\b/.test(selector)) {
       const shadow = body.match(/box-shadow:\s*([^;]+);/);
       if (shadow && !TOKEN.test(shadow[1]) && /rgba?\(|\d+px/.test(shadow[1])) {
-        at('hand-rolled focus shadow — use --interactive-focus, -ring or -error', shadow[0]);
+        at('shadow', 'hand-rolled focus shadow — use --interactive-focus, -ring or -error', shadow[0]);
       }
     }
 
@@ -108,16 +86,79 @@ function scan(file) {
     //    :not(:focus) hover suppression).
     if (/outline:\s*none/.test(body)) {
       if (/:focus\b/.test(selector) && !/:focus-visible|:focus-within|:not\(:focus/.test(selector)) {
-        at('outline suppressed under a bare :focus — scope it to :focus-visible', selector);
+        at('outline', 'outline suppressed under a bare :focus — scope it to :focus-visible', selector);
       }
     }
   }
+  return out;
 }
 
-walk(SRC);
+/** A rule object per kind, so `run()` groups the two findings under their own hint. */
+function ruleFor(kind, name, describe, hint) {
+  return {
+    name,
+    describe,
+    hint,
+    component({ cssRules, report }) {
+      for (const f of focusFindings(cssRules)) {
+        if (f.kind === kind) report(f.line, `${f.msg}\n        ${f.text}`);
+      }
+    },
+  };
+}
+
+const handRolledShadow = ruleFor(
+  'shadow',
+  'focus-shadow',
+  'a focus rule paints its indicator from a token',
+  'The error ring was written out by hand in four components before this existed.\n' +
+    '    Use --interactive-focus for a bounded control, --interactive-focus-ring for an\n' +
+    '    inline or dense target, --interactive-focus-error for the invalid state. A rule\n' +
+    '    with a reason to differ can say `focus-ring-exempt` and name it.',
+);
+
+const keyboardScoped = ruleFor(
+  'outline',
+  'focus-outline',
+  '`outline: none` is scoped to :focus-visible, not to a bare :focus',
+  ':focus matches a mouse click too, so suppressing the outline there takes the\n' +
+    '    indicator away from pointer users while the replacement — scoped to\n' +
+    '    :focus-visible — serves only the keyboard. Move the suppression to\n' +
+    '    :focus-visible. `:hover:not(:focus)` is already exempt and needs no change.',
+);
+
+const code = run({ name: 'focus-ring', rules: [handRolledShadow, keyboardScoped] });
+
+// ── Beside run(): the files that are not components ─────────────────────────
+
+/**
+ * The sweep always covered every module under src, and the shared style sheets
+ * — button-styles.js, card-styles.js — carry focus rules for the components
+ * that compose them. `ComponentSource` reads them with the same primitives, so
+ * a rule in a style module is judged exactly as the same rule in a component.
+ */
+function sources(dir, out = []) {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, e.name);
+    if (e.isDirectory()) sources(full, out);
+    else if (e.name.endsWith('.js')) out.push(full);
+  }
+  return out;
+}
+
+const visited = new Set(
+  [...findComponents().values()].map((m) => resolve(SRC_DIR, m.tier, m.file)),
+);
+const failures = [];
+for (const file of sources(SRC_DIR)) {
+  if (visited.has(file)) continue;
+  const rel = relative(SRC_DIR, file);
+  const view = new ComponentSource({ tag: rel, tier: '.', file: rel }, readFileSync(file, 'utf-8'));
+  for (const f of focusFindings(view.cssRules)) failures.push({ file: view.file, ...f });
+}
 
 if (failures.length > 0) {
-  console.error(`\n✗ ${failures.length} focus issue(s):\n`);
+  console.error(`\ncheck-focus-ring: ${failures.length} focus issue(s) outside the components\n`);
   for (const f of failures) {
     console.error(`  ${f.file}:${f.line}  ${f.msg}`);
     console.error(`    ${f.text}\n`);
@@ -125,4 +166,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log('✓ focus indication is tokenised and keyboard-scoped');
+process.exit(code);

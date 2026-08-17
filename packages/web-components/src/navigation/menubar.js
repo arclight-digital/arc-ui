@@ -248,7 +248,49 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
     this._cancelHoverTimer();
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * @lit-labs/ssr renders a host from its attributes alone, so a bar whose
+   * `items` arrive as a property — the common half of the documented contract
+   * — is rendered as an empty bar on the server. The page assigns them before
+   * the register barrel upgrades this element, which parks them in Lit's
+   * pre-upgrade instance properties and applies them at the top of the very
+   * first update: the one that has to adopt the server's markup. Four triggers
+   * against the server's none is "unexpected longer than expected iterable",
+   * and hydration abandons the whole tree there.
+   *
+   * So the first render uses what the attribute said — which is exactly what
+   * the server rendered from, JSON attribute included — and the script-set
+   * structure is handed over in `firstUpdated`, once that markup has been
+   * adopted. Nothing is held back without a server-rendered shadow root, so a
+   * client-only menubar still paints on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) this._ssrItems = this.items;
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's menu
+    // structure can land now, as an ordinary second update.
+    if (this._heldItems !== undefined) {
+      this.items = this._heldItems;
+      this._heldItems = undefined;
+    }
+  }
+
   willUpdate(changed) {
+    // See connectedCallback. Swapping here rather than in `render()` keeps the
+    // open/focus bookkeeping below in step with whichever structure is on show.
+    if (this._ssrItems !== undefined) {
+      this._heldItems = this.items;
+      this.items = this._ssrItems;
+      this._ssrItems = undefined;
+    }
     if (changed.has('items')) {
       this._openTop = -1;
       this._activePath = [];

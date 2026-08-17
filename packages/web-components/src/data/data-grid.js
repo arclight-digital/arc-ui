@@ -314,7 +314,43 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     listen(this, '.grid-wrapper', 'scroll', this._onScroll, { passive: true });
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * @lit-labs/ssr renders a host from its attributes alone, and `columns`,
+   * `rows` and `sort` are documented as script-set — so the server always
+   * emits the empty state. A page then fills them before the register barrel
+   * upgrades this element, which parks them in Lit's pre-upgrade instance
+   * properties and applies them at the top of the very first update: the one
+   * that has to adopt the server's markup. Five `<tr>` against the server's
+   * one empty-state row is "unexpected longer than expected iterable", and
+   * hydration abandons the whole tree at that point.
+   *
+   * So the first render uses what the attributes said — which is exactly what
+   * the server rendered from, including a `rows` attribute if there was one —
+   * and the script-set values are handed over in `firstUpdated`, once the
+   * server's DOM has been adopted. Nothing is held back without a
+   * server-rendered shadow root, so a client-only grid still paints its data
+   * on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) {
+      this._ssrState = { columns: this.columns, rows: this.rows, sort: this.sort };
+    }
+  }
+
   willUpdate(changed) {
+    // See connectedCallback. Swapping here rather than in `render()` keeps the
+    // derived `_rows` copy in step with whichever set is on show.
+    if (this._ssrState) {
+      this._heldState = { columns: this.columns, rows: this.rows, sort: this.sort };
+      Object.assign(this, this._ssrState);
+      this._ssrState = null;
+    }
     if (changed.has('rows')) {
       // Grid displays (and mutates) its own shallow copy; consumer owns source of truth.
       this._rows = Array.isArray(this.rows) ? this.rows.map((r) => ({ ...r })) : [];
@@ -324,6 +360,12 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
   }
 
   firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's data
+    // can land now, as an ordinary second update.
+    if (this._heldState) {
+      Object.assign(this, this._heldState);
+      this._heldState = null;
+    }
     if (this.virtual) this._recalcVirtual();
   }
 

@@ -7,7 +7,7 @@
  * ------                              -----
  * arc-confirm  (the prompt)           arc-confirm  (the prompt, both APIs)
  *   └── arc-dialog (the prompt again)      └── arc-dialog (the primitive, renamed)
- *         └── arc-modal (the primitive)          └── arc-modal (deprecated alias)
+ *         └── arc-modal (the primitive)          └── (removed — the rename is the migration)
  * ```
  *
  * The risky half is the middle row. Anyone still writing `<arc-dialog heading
@@ -18,7 +18,6 @@
  */
 import { expect } from '@esm-bundle/chai';
 import '../src/feedback/dialog.register.js';
-import '../src/feedback/modal.register.js';
 import '../src/feedback/confirm.register.js';
 import { mount, cleanup, tick } from './helpers.js';
 
@@ -75,37 +74,6 @@ describe('arc-dialog is the primitive, not the old confirm prompt', () => {
     await el.updateComplete;
     expect(el.shadowRoot.querySelector('dialog').open).to.equal(true);
     expect(el.size).to.equal('lg');
-  });
-});
-
-describe('arc-modal is an alias with nothing in it', () => {
-  it('is the same component under a different tag', async () => {
-    const el = mount('<arc-modal heading="Settings"><p>body</p></arc-modal>');
-    await el.updateComplete;
-    el.open = true;
-    await el.updateComplete;
-    await tick();
-
-    expect(el.shadowRoot.querySelector('dialog').open).to.equal(true);
-    expect(el.shadowRoot.querySelector('.dialog__panel'), 'the base class renders').to.not.equal(
-      null,
-    );
-  });
-
-  it('adds nothing of its own', () => {
-    // The property that keeps the alias honest: an alias with a body is an
-    // alias that can drift from what it aliases, and this is the cheapest way
-    // to notice one growing one. `styles` and `properties` are inherited
-    // statics, so identity comparison is the test.
-    const ArcModal = customElements.get('arc-modal');
-    const ArcDialog = customElements.get('arc-dialog');
-    expect(Object.getPrototypeOf(ArcModal)).to.equal(ArcDialog);
-    expect(ArcModal.styles).to.equal(ArcDialog.styles);
-    expect(ArcModal.properties).to.equal(ArcDialog.properties);
-    expect(
-      Object.getOwnPropertyNames(ArcModal.prototype).filter((k) => k !== 'constructor'),
-      'the alias defines no methods of its own',
-    ).to.have.lengthOf(0);
   });
 });
 

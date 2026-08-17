@@ -3,7 +3,6 @@ export { AppShell } from './AppShell';
 export { AspectGrid } from './AspectGrid';
 export { AuthShell } from './AuthShell';
 export { Center } from './Center';
-export { Cluster } from './Cluster';
 export { Container } from './Container';
 export { DashboardGrid } from './DashboardGrid';
 export { FloatBar } from './FloatBar';

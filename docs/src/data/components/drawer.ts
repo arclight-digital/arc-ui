@@ -14,7 +14,7 @@ export const drawer: ComponentDef = {
 
 When the Drawer opens it locks body scroll, preventing the user from accidentally interacting with background content. A smooth CSS transform animation slides the panel into view while the backdrop fades in, creating a clear spatial relationship between the panel and the page behind it. Closing is handled automatically via the built-in close button, pressing the Escape key, or clicking the backdrop — all of which fire an \`arc-close\` event so your application state stays in sync.
 
-Choose Drawer over Modal when the supplementary content is navigation-oriented, when users need to glance back at the main page while interacting with the panel, or when the content is tall and benefits from full-height scrolling. For blocking decisions that require explicit user action, use Modal instead.`,
+Choose Drawer over Dialog when the supplementary content is navigation-oriented, when users need to glance back at the main page while interacting with the panel, or when the content is tall and benefits from full-height scrolling. For blocking decisions that require explicit user action, use Dialog instead.`,
 
   features: [
     'Slides in from the left or right edge via CSS transforms with configurable `position` prop',
@@ -39,9 +39,9 @@ Choose Drawer over Modal when the supplementary content is navigation-oriented, 
       'Always listen for the `arc-close` event to keep your open state in sync',
     ],
     dont: [
-      'Do not use a Drawer for critical confirmations — use Modal instead',
+      'Do not use a Drawer for critical confirmations — use Dialog instead',
       'Do not nest a Drawer inside another Drawer',
-      'Do not put complex multi-step forms in a Drawer — consider a full page or Modal',
+      'Do not put complex multi-step forms in a Drawer — consider a full page or Dialog',
       'Do not auto-open a Drawer on page load without a clear user-initiated trigger',
       'Do not remove the backdrop — users expect click-outside-to-close behavior',
       'Do not place unrelated content in the drawer heading area — keep it for the title and close button',
@@ -248,5 +248,5 @@ function MobileNav() {
     },
   ],
 
-  seeAlso: ['modal', 'sheet', 'sidebar'],
+  seeAlso: ['dialog', 'sheet', 'sidebar'],
 };

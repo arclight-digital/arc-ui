@@ -35,10 +35,11 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  * weekday labels down the side, and a Less→More legend sits below.
  *
  * The grid is a pure function of its props. When `end-date` is unset the
- * anchor is today, computed at render time in the browser; when rendering
- * server-side with no `end-date`, the anchor is instead derived from the
- * newest date present in `data`, so the server output is deterministic. Pin
- * `end-date` explicitly whenever server and client must agree exactly.
+ * anchor is today, adopted in the browser one render after the first; before
+ * that — the server render, and the client render that hydrates it — the
+ * anchor is derived from the newest date present in `data`, so both are
+ * deterministic and identical. Pin `end-date` explicitly whenever server and
+ * client must agree exactly.
  *
  * @tag arc-activity-heatmap
  * @status stable
@@ -70,6 +71,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
     max: num({ nullable: true, min: 0, clamp: 'toRange' }),
     legend: flag(true, { negative: 'no-legend' }),
     _activeIndex: { state: true },
+    _today: { state: true },
   };
 
   static styles = [
@@ -280,6 +282,9 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
     this.weekStart = 'sunday';
     this.legend = true;
     this._activeIndex = null;
+    // Null until firstUpdated — the clock is off limits until then. See
+    // _resolveEndEpoch.
+    this._today = null;
     // The anchor is the hovered cell, not the grid: the detail should sit over
     // the day it describes, and the cell moves under the pointer.
     this._position = new PositionController(this, {
@@ -291,6 +296,58 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
     });
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * @lit-labs/ssr renders a host from its attributes alone, so a calendar whose
+   * `data` arrives as a property — the common half of the documented contract,
+   * since a year of days is not something anyone writes into markup — is
+   * rendered on the server from the attributes only. The page assigns the array
+   * before the register barrel upgrades this element, which parks it in Lit's
+   * pre-upgrade instance properties and applies it at the top of the very first
+   * update: the one that has to adopt the server's markup. With no `end-date`
+   * pinned, that array is also what anchors the grid, so the client sizes a
+   * year of cells where the server sized none — "unexpected longer than
+   * expected iterable", and hydration abandons the tree there.
+   *
+   * So the first render uses what the attributes said, which is exactly what
+   * the server rendered from, and the script-set data is handed over in
+   * `firstUpdated`, once the server's DOM has been adopted. Nothing is held
+   * back without a server-rendered shadow root, so a client-only calendar still
+   * paints its year on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) this._ssrData = this.data;
+  }
+
+  willUpdate(changed) {
+    super.willUpdate?.(changed);
+    // See connectedCallback. In willUpdate rather than in `render()` so the
+    // declared-props normalisation that follows it sees the same array the
+    // render will.
+    if (this._ssrData !== undefined) {
+      this._heldData = this.data;
+      this.data = this._ssrData;
+      this._ssrData = undefined;
+    }
+  }
+
+  firstUpdated() {
+    // The two inputs the server could not have had, both taken at the first
+    // moment it is safe to take them: the viewer's date (see _resolveEndEpoch)
+    // and the page's data (see connectedCallback).
+    const now = new Date();
+    this._today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / DAY;
+    if (this._heldData !== undefined) {
+      this.data = this._heldData;
+      this._heldData = undefined;
+    }
+  }
+
   updated(changed) {
     // Re-run on every step, not just on open: the anchor is a different cell
     // each time the pointer or the arrow keys move.
@@ -300,18 +357,23 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * The anchor day. An explicit end-date wins; otherwise today where a
-   * browser exists, and on the server the newest date in the data — the one
-   * derivation that keeps server output a pure function of props. Null when
-   * nothing can anchor the grid (server, no end-date, no data).
+   * The anchor day. An explicit end-date wins; otherwise today once the browser
+   * has handed it over, and before that the newest date in the data — the one
+   * derivation that keeps the render a pure function of props. Null when
+   * nothing can anchor the grid (no end-date, no data, not yet ticked).
+   *
+   * Today is deliberately unavailable during the first render, `_today` being
+   * set no earlier than firstUpdated(). The server renders at build time and
+   * the client at view time, so "today" is the one value the two cannot be
+   * relied on to agree about — and the whole grid is sized from it, so a client
+   * that anchored on its own date would render a different number of cells into
+   * the DOM hydration is adopting and throw. Reading it a render later leaves
+   * the first client render reproducible from props alone.
    */
   _resolveEndEpoch() {
     const explicit = parseISO(this.endDate);
     if (explicit !== null) return explicit;
-    if (typeof window !== 'undefined') {
-      const now = new Date();
-      return Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / DAY;
-    }
+    if (this._today !== null) return this._today;
     const data = Array.isArray(this.data) ? this.data : [];
     let max = null;
     for (const entry of data) {

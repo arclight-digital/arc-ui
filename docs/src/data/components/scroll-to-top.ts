@@ -41,9 +41,9 @@ Accessibility is built in: the button has \`aria-label="Scroll to top"\` and pro
   },
 
   previewHtml: `<div style="display:flex;align-items:center;gap:var(--space-md)">
-  <arc-callout variant="info">
+  <arc-alert variant="info">
     <strong>Live on this page.</strong> Scroll down to see the button appear in the bottom-right corner, then click it to return here.
-  </arc-callout>
+  </arc-alert>
 </div>
 <arc-scroll-to-top threshold="200"></arc-scroll-to-top>`,
 

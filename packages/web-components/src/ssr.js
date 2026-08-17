@@ -54,7 +54,7 @@ import { CLIENT_ONLY } from './ssr-client-only.js';
  * their contents spends bytes on markup no reader and no metric ever sees. On
  * arcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette.
  */
-export const CLOSED_OVERLAYS = ['arc-command-palette', 'arc-dialog', 'arc-modal', 'arc-sheet', 'arc-drawer'];
+export const CLOSED_OVERLAYS = ['arc-command-palette', 'arc-dialog', 'arc-sheet', 'arc-drawer'];
 
 /**
  * Long repeated lists, and how many of each to render.
@@ -74,6 +74,28 @@ export const CLOSED_OVERLAYS = ['arc-command-palette', 'arc-dialog', 'arc-modal'
 export const LIST_BUDGETS = {
   'arc-sidebar-link': 25,
 };
+
+/**
+ * Components that render the text they are given as light DOM, and the
+ * property that carries it.
+ *
+ * Streaming SSR renders a host's shadow root before its children have been
+ * parsed, so `this.textContent` is empty on the server — the one input the
+ * client has that the server does not. Left alone, arc-markdown served an
+ * empty prose block *and* threw on hydration, because the client's first
+ * render parses the real text into a template the server never produced.
+ * Hoisting the text into the component's own attribute before rendering gives
+ * both sides the same source: the server renders the parsed content, and the
+ * element upgrades with the attribute already set, so the client's first
+ * render matches it. Same principle as the icon payload below — hydration is
+ * only clean when the client's first render needs nothing the server had
+ * exclusively.
+ *
+ * Only plain-text light DOM is hoisted: an attribute cannot carry elements,
+ * and the components listed here treat their light DOM as text to parse, not
+ * markup to slot.
+ */
+const TEXT_CONTENT_PROPS = { 'arc-markdown': 'content' };
 
 /** Opening tag of a shadow root, used to find each root's byte span. */
 const SHADOW_OPEN = /<template shadowroot(?:mode)?="[^"]*"[^>]*>/g;
@@ -180,6 +202,8 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
   // cleanly — it is a page with no icons, not a broken one.
   await iconRegistry.preload([...source.matchAll(ICON_NAME)].map((m) => m[1]));
 
+  source = hoistTextContent(source);
+
   let out = await lit.collectResult(lit.render(lit.html`${lit.unsafeStatic(source)}`));
 
   // lit wraps its output in a part marker, and the opening one lands *before*
@@ -242,6 +266,37 @@ function trimLists(page, budgets) {
     }
   }
   return { html: out, deferred: marked };
+}
+
+/**
+ * Hoist plain-text light DOM into the attribute a component reads it from.
+ *
+ * The light DOM stays in place — the attribute takes precedence on both
+ * sides, and removing markup is a bigger intervention than adding to it. An
+ * element that already carries the attribute is left alone: the author has
+ * said what the content is. Light DOM containing markup is skipped rather
+ * than flattened, since silently discarding elements would hide a mistake.
+ */
+function hoistTextContent(page) {
+  for (const [tag, attr] of Object.entries(TEXT_CONTENT_PROPS)) {
+    if (!page.includes(`<${tag}`)) continue;
+    const spans = elementSpans(page, tag);
+    const close = `</${tag}>`;
+    // Back to front, so earlier offsets stay valid.
+    for (let i = spans.length - 1; i >= 0; i--) {
+      const [start, end] = spans[i];
+      const openEnd = page.indexOf('>', start);
+      if (openEnd === -1 || openEnd >= end) continue;
+      if (new RegExp(`\\s${attr}\\s*=`).test(page.slice(start, openEnd + 1))) continue;
+      const inner = page.slice(openEnd + 1, end - close.length);
+      if (!inner.trim() || inner.includes('<')) continue;
+      // The inner text is already entity-encoded HTML; an attribute decodes
+      // entities the same way a text node does, so only the quote needs care.
+      const value = inner.replace(/"/g, '&quot;');
+      page = `${page.slice(0, openEnd)} ${attr}="${value}"${page.slice(openEnd)}`;
+    }
+  }
+  return page;
 }
 
 /** Every top-level shadow root, in document order, with its byte span. */

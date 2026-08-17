@@ -10,7 +10,6 @@ const props = withDefaults(defineProps<{
   size?: 'sm' | 'md' | 'lg';
   fullscreen?: boolean;
   dismissible?: boolean;
-  closable?: boolean;
 }>(), {
   heading: '',
 });
@@ -28,7 +27,6 @@ const emit = defineEmits<{
     :size="props.size"
     :fullscreen="props.fullscreen"
     :dismissible="props.dismissible"
-    :closable="props.closable"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >

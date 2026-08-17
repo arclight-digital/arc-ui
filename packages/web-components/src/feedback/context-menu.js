@@ -6,7 +6,7 @@ import { DismissController } from '../shared/dismiss-controller.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
 import '../content/icon.js';
-import '../content/separator.js';
+import '../content/divider.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
@@ -15,7 +15,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-context-menu
  * @status stable
- * @requires arc-separator
+ * @requires arc-divider
  * @requires arc-icon
  * @prop {boolean} open - Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape.
  * @fires {CustomEvent<void>} arc-open - Fired when the context menu opens
@@ -122,7 +122,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-mono);
       }
 
-      arc-separator {
+      arc-divider {
         margin: var(--space-xs) 0;
       }
 
@@ -363,7 +363,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
       >
         ${this._children.map((child, i) => {
           if (child.tagName === 'ARC-MENU-DIVIDER') {
-            return html`<arc-separator part="divider"></arc-separator>`;
+            return html`<arc-divider variant="line" part="divider"></arc-divider>`;
           }
 
           return html`

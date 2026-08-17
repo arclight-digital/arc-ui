@@ -147,5 +147,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['alert', 'snackbar', 'connection-status'],
+  seeAlso: ['alert', 'toast', 'connection-status'],
 };

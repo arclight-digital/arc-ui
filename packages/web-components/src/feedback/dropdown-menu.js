@@ -7,7 +7,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
-import '../content/separator.js';
+import '../content/divider.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
@@ -16,7 +16,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-dropdown-menu
  * @status stable
- * @requires arc-separator
+ * @requires arc-divider
  * @prop {boolean} open - Controls whether the menu panel is visible. Toggled by clicking the trigger. Set to false when the user selects an item, clicks outside, or presses Escape.
  * @fires {CustomEvent<void>} arc-close - Fired when the dropdown closes
  * @fires arc-select - Fired when a menu item is selected
@@ -123,7 +123,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         opacity: 0.6;
       }
 
-      arc-separator {
+      arc-divider {
         margin: var(--space-xs) 0;
       }
 
@@ -246,7 +246,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
 
   _renderChild(child, globalIndex) {
     if (child.tagName === 'ARC-MENU-DIVIDER') {
-      return html`<arc-separator part="divider"></arc-separator>`;
+      return html`<arc-divider variant="line" part="divider"></arc-divider>`;
     }
 
     const selectableIndex = this._menuItems.indexOf(child);

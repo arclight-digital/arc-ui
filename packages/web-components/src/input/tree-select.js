@@ -321,8 +321,52 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
     });
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * @lit-labs/ssr renders a host from its attributes alone, so a tree whose
+   * `items` arrive as a property is rendered as an empty panel on the server.
+   * The page assigns them before the register barrel upgrades this element,
+   * which parks them in Lit's pre-upgrade instance properties and applies them
+   * at the top of the very first update: the one that has to adopt the
+   * server's markup. Three group rows against the server's none is "unexpected
+   * longer than expected iterable", and hydration abandons the whole tree
+   * there.
+   *
+   * So the first render uses what the attributes said — which is exactly what
+   * the server rendered from — and the script-set tree is handed over in
+   * `firstUpdated`, once that markup has been adopted. `expandedValues` rides
+   * along because it decides how many rows a given tree flattens to, so
+   * applying it a render early would reintroduce the same length mismatch.
+   * Nothing is held back without a server-rendered shadow root, so a
+   * client-only tree still paints on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) this._ssrState = { items: this.items, expandedValues: this.expandedValues };
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's tree
+    // can land now, as an ordinary second update.
+    if (this._heldState) {
+      Object.assign(this, this._heldState);
+      this._heldState = null;
+    }
+  }
+
   willUpdate(changed) {
     super.willUpdate?.(changed);
+    // See connectedCallback. Swapping here rather than in `render()` keeps the
+    // flattened `_rows` model in step with whichever tree is on show.
+    if (this._ssrState) {
+      this._heldState = { items: this.items, expandedValues: this.expandedValues };
+      Object.assign(this, this._ssrState);
+      this._ssrState = null;
+    }
     if (changed.has('expandedValues') && Array.isArray(this.expandedValues)) {
       const next = new Set(this._expandedKeys);
       for (const v of this.expandedValues) next.add(v);

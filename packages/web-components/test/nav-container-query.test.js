@@ -13,7 +13,16 @@
  */
 import { expect } from '@esm-bundle/chai';
 import '../src/navigation/navigation-menu.register.js';
+import { breakpoints } from '../src/generated/breakpoints.js';
 import { mount, cleanup, settle } from './helpers.js';
+
+/* navFit, not navCollapse. The two tokens split when the collapse moved onto
+ * the container: navCollapse (900) stays the viewport point where the mobile
+ * affordances begin, and navFit is the width below which the pill row itself
+ * no longer fits. Deriving the widths from the token is what keeps this file
+ * from asserting a number the source has moved past — which is exactly how
+ * its first version went stale. */
+const FIT = breakpoints.navFit;
 
 afterEach(cleanup);
 
@@ -42,18 +51,18 @@ describe('arc-navigation-menu: the component is the unit', () => {
 
   it('hides the desktop bar when the component is narrow', async () => {
     // The assertion the viewport gate could never make on a wide screen.
-    const el = await navAt(500);
+    const el = await navAt(FIT - 80);
     expect(getComputedStyle(desktopBar(el)).display).to.equal('none');
   });
 
   it('collapses at the token width, not near it', async () => {
-    // 900px is `tokens.breakpoint.navCollapse`, kept in step by
-    // scripts/checks/breakpoint-drift.js. `max-width: 900px` includes 900.
-    const narrow = await navAt(900);
+    // `tokens.breakpoint.navFit`, kept in step by
+    // scripts/checks/breakpoint-drift.js. `max-width` includes the boundary.
+    const narrow = await navAt(FIT);
     expect(getComputedStyle(desktopBar(narrow)).display, 'at the breakpoint').to.equal('none');
     cleanup();
 
-    const wide = await navAt(901);
+    const wide = await navAt(FIT + 1);
     expect(getComputedStyle(desktopBar(wide)).display, 'one pixel past it').to.not.equal('none');
   });
 

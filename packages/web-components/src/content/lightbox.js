@@ -4,6 +4,10 @@ import { tokenStyles } from '../shared-styles.js';
 import { OverlayController } from '../shared/overlay-controller.js';
 import { DeclaredPropsMixin, flag, list, int } from '../shared/props.js';
 
+/** Whether two galleries hold the same entries in the same order. */
+const sameEntries = (a, b) =>
+  Array.isArray(a) && Array.isArray(b) && a.length === b.length && a.every((e, i) => e === b[i]);
+
 /**
  * Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery
  * with wrapping prev/next navigation, zoom to 2x with drag-to-pan, and dismiss with Escape or a
@@ -40,6 +44,8 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     images: list(),
     index: int({ default: 0, min: 0, max: '_lastIndex', clamp: 'toRange' }),
     open: flag(false),
+    // The gallery actually rendered — see willUpdate.
+    _images: { state: true },
     _zoomed: { state: true },
     _loaded: { state: true },
   };
@@ -188,6 +194,7 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
       isOpen: () => this.open,
       onRequestClose: () => this._close(),
     });
+    this._images = [];
     this._zoomed = false;
     this._loaded = false;
     this._panX = 0;
@@ -199,7 +206,7 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
 
   /** Entries normalized to `{ src, alt, caption }` regardless of input form. */
   _normalized() {
-    return (Array.isArray(this.images) ? this.images : []).map((entry) =>
+    return (Array.isArray(this._images) ? this._images : []).map((entry) =>
       typeof entry === 'string' ? { src: entry, alt: '', caption: '' } : entry,
     );
   }
@@ -281,8 +288,22 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
    * The visible src is settled before render so the fresh `<img>` is created
    * already marked loading. Compared by src, not index: a gallery that repeats
    * an image keeps the same element, which never fires `load` again.
+   *
+   * The first render reads the gallery out of the `images` *attribute* rather
+   * than the property. The server renders from markup, so a gallery assigned as
+   * a property — the documented form, since entries are objects — is one it
+   * never saw, and it renders the empty viewer. Lit re-applies a property set
+   * before upgrade during the first update, so rendering it here would put the
+   * figure, the caption and the nav buttons into the client's first render
+   * where the server put nothing: parts changing shape under hydration, which
+   * is the one thing it cannot adopt. updated() takes the property one render
+   * later, once the server DOM has been adopted.
    */
   willUpdate() {
+    if (!this.hasUpdated) {
+      const { converter } = this.constructor.elementProperties.get('images');
+      this._images = converter.fromAttribute(this.getAttribute('images'), Array);
+    }
     const src = this._current()?.src ?? null;
     if (src !== this._pendingSrc) {
       this._pendingSrc = src;
@@ -311,6 +332,11 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     // browser's, via OverlayController and <dialog>. This adds the open event
     // and the navigation keys, which are the lightbox's own.
     super.updated?.(changed);
+    // Compared by content, not identity: the seed above is a fresh array, so an
+    // identity test would re-render every lightbox that has no gallery at all.
+    if (changed.has('images') && !sameEntries(this._images, this.images)) {
+      this._images = this.images;
+    }
     if (changed.has('open')) {
       if (this.open) {
         this._resetZoom();

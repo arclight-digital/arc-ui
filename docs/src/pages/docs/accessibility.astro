@@ -63,7 +63,7 @@ const headings = [
       <h2 class="docs-heading">ARIA Attributes</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Roles are set automatically: <code>arc-modal</code> is a <code>role="dialog"</code>
+        Roles are set automatically: <code>arc-dialog</code> is a <code>role="dialog"</code>
         managing <code>aria-modal</code>; <code>arc-tabs</code> wires up
         <code>tablist</code>/<code>tab</code>/<code>tabpanel</code>. Anything extra passes
         through from the host element:
@@ -141,7 +141,7 @@ const headings = [
       </div>
       <p class="docs-text">
         Focus shows only on keyboard navigation (<code>:focus-visible</code>), never on mouse
-        clicks — click the cards above and nothing appears. Overlays like <code>arc-modal</code>
+        clicks — click the cards above and nothing appears. Overlays like <code>arc-dialog</code>
         and <code>arc-drawer</code> trap focus while open.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Customize focus styles globally */
@@ -206,7 +206,7 @@ const headings = [
           light modes.
         </li>
       </ul>
-      <arc-callout variant="warning">When customizing themes, verify that your color overrides maintain sufficient contrast ratios. Use the <a href="/synth">Theme Synthesizer</a> to preview and test your custom themes for accessibility.</arc-callout>
+      <arc-alert variant="warning">When customizing themes, verify that your color overrides maintain sufficient contrast ratios. Use the <a href="/synth">Theme Synthesizer</a> to preview and test your custom themes for accessibility.</arc-alert>
     </section>
 
     <section id="reduced-motion">

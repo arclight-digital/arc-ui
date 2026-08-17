@@ -423,13 +423,14 @@ does not intend to ship a scheduler.
 
 ## The merges
 
-**Five components are deprecated in v4.0.0 and removed in v5.** They are
-unchanged, still published, and still exported from `@arclux/arc-ui` — nothing
-about them moved, and a v4 upgrade needs no action. What changed is that each
-now has a survivor that can do its job, and `@arclux/arc-ui/dev` says so at the
-console when it sees one.
+**Five components are removed in v4.0.0.** Each has a survivor that can do
+its job, and the tables below are the whole migration. Removed rather than
+deprecated-then-removed: v4 has never shipped, so a deprecation period here
+would be a promise to consumers who cannot exist yet — shelf-stock carried for
+nobody — and v3, where every one of these still works, receives patches for a
+quarter after the v4 tag.
 
-| deprecated | use instead | what to change |
+| removed | use instead | what to change |
 |---|---|---|
 | `arc-separator` | `arc-divider` | `orientation="vertical"` → `vertical`; variants carry over unchanged |
 | `arc-key-value` | `arc-description-list` | add `layout="horizontal"` to keep the old default |
@@ -437,10 +438,9 @@ console when it sees one.
 | `arc-cluster` | `arc-stack` | `direction="horizontal" wrap gap="sm" align="center"`; `justify` values `space-between`/`space-around` → `between`/`around` |
 | `arc-otp-input` | `arc-pin-input` | part `otp` → `pin`; props carry over |
 
-Deprecated components stay in the barrel on purpose. Taking them out is exactly
-the break the deprecation period exists to postpone, so they are importable from
-`@arclux/arc-ui` for all of v4 and only the docs treat them as gone: no card in
-the catalog grid, and a notice on their page.
+Each removed tag keeps its docs URL as a tombstone naming the survivor and
+the exact prop translation — the same treatment as the five cuts, because a
+bookmarked link should say what happened rather than 404.
 
 ### The survivors gained what they were missing
 
@@ -464,10 +464,10 @@ merge list was drawn up from prop lists and the differences were in the styles:
 
 ### The feedback family
 
-Four more, on the same terms — deprecated in v4, removed in v5, unchanged and
-still in the barrel until then.
+Four more, on the same terms — removed in v4.0.0, with the survivor and the
+translation below.
 
-| deprecated | use instead | what to change |
+| removed | use instead | what to change |
 |---|---|---|
 | `arc-callout` | `arc-alert` | `variant` carries over, `tip` included; the derived uppercase label has no equivalent — pass `heading` if you want one |
 | `arc-snackbar` | `arc-toast` | `position` covers every value it had; `show({ message, action, actionLabel })` is unchanged |
@@ -538,7 +538,7 @@ from one that is unreachable.
 
 The expensive row, and the only one where the column model itself changes.
 
-| deprecated | use instead | what to change |
+| removed | use instead | what to change |
 |---|---|---|
 | `arc-table` | `arc-data-grid` | `columns: ['A','B']` → `[{ key:'a', label:'A' }, …]`; `rows: [['1','2']]` → `[{ a:'1', b:'2' }]` |
 | `arc-data-table` | `arc-data-grid` | slotted `<arc-column>` children → a `columns` array of the same fields |
@@ -570,7 +570,7 @@ defaults **on**, because that is what this grid has always drawn and a merge is
 not the place to restyle the survivor — pass `no-striped` for the plain look an
 unstriped `arc-table` had.
 
-**`arc-column` was listed as a keep in Phase 1 and is deprecated anyway.** That
+**`arc-column` was listed as a keep in Phase 1 and is removed anyway.** That
 verdict read it as an independent component; its only consumer is
 `arc-data-table`, and `arc-data-grid` takes its columns as an array rather than
 as slotted children, so there is no element for it to migrate to. It goes with
@@ -698,14 +698,15 @@ them.
 
 | you had | you want | why |
 | --- | --- | --- |
-| `<arc-modal>` | `<arc-dialog>` | pure rename; `arc-modal` keeps working through v4 |
+| `<arc-modal>` | `<arc-dialog>` | pure rename; `arc-modal` is removed in v4.0.0 |
 | `<arc-dialog heading message …>` | `<arc-confirm heading message …>` | the confirm prompt moved; the name did not |
 | `<arc-confirm>` | `<arc-confirm>` | unchanged, and it absorbed the prompt above |
 
 The element is a dialog, the platform calls it a dialog, and `modal` named one
-of its behaviours rather than what it is. `arc-modal` is an empty subclass of
-`arc-dialog` — same props, events, parts and custom properties — deprecated for
-the whole of v4 and removed in v5.
+of its behaviours rather than what it is. The rename is the whole migration —
+same props, events, parts and custom properties — and the old tag is removed in
+v4.0.0 rather than aliased: v4 has never shipped, so an alias would serve
+nobody, and v3 keeps `arc-modal` for as long as it is patched.
 
 **The dangerous case is the middle row.** The old `<arc-dialog>` was a small
 confirm prompt: `heading`, `message`, `confirm-label`, `cancel-label`,
@@ -742,15 +743,15 @@ scales and are exempt with reasons: the first two are the type scale and the
 layout scale respectively, and the last two are pixel dimensions that share the
 word `size` and nothing else.
 
-**`arc-modal.closable` becomes `arc-modal.dismissible`.** `closable` still works
-for all of v4 as a two-way alias — set either and both move — and is removed in
-v5. The `no-closable` attribute keeps working alongside `no-dismissible`.
+**`arc-dialog.closable` becomes `arc-dialog.dismissible`.** The old spelling
+is removed in v4.0.0 — `closable` and `no-closable` stop existing along with
+the tag rename above, in the same pre-release housecleaning.
 
 ```html
-<!-- before, still works through v4 -->
+<!-- before (v3) -->
 <arc-modal no-closable></arc-modal>
 <!-- after -->
-<arc-modal no-dismissible></arc-modal>
+<arc-dialog no-dismissible></arc-dialog>
 ```
 
 **Only the spelling converges, not the default.** A modal is dismissible unless
@@ -781,13 +782,12 @@ in the rest of the ecosystem.
 </arc-toolbar>
 ```
 
-**`start` and `end` keep working for all of v4** and are removed in v5. Both
-spellings project into the same region, so a partial migration renders
-correctly; content already in `start` stays ahead of anything newly added to
-`prefix`.
+**`start` and `end` are removed in v4.0.0.** Content slotted into them
+renders in the default slot rather than the side regions, which is visible
+immediately — rename the slot attribute and you are done.
 
-The CSS parts moved the same way and cost nothing: the region carries
-`part="prefix start"`, so `::part(start)` and `::part(prefix)` both select it.
+The CSS parts moved the same way: the regions are `::part(prefix)` and
+`::part(suffix)`; `::part(start)` and `::part(end)` no longer select anything.
 
 ### Two pairs the plan listed and this deliberately did not touch
 
@@ -1029,25 +1029,35 @@ there.
 
 ## `arc-navigation-menu` collapses on its own width
 
-**Affects `arc-navigation-menu`.** The desktop bar used to hide below a 900px
-*viewport*; it now hides below a 900px *component*. The number is the same and
-most pages will see no difference — a full-bleed nav is as wide as the window.
+**Affects `arc-navigation-menu`.** The desktop pill row used to hide below a
+900px *viewport*; it now hides when the *component* is narrower than **480px**
+(`tokens.breakpoint.navFit`). Two numbers where there used to be one, because
+they answer different questions: 900px (`navCollapse`) remains the viewport
+point where the mobile affordances begin — the hamburger, the panel — and
+480px is the width below which the pill row itself no longer fits in whatever
+column the bar's other occupants leave it.
 
-Where it does differ, it differs in your favour: a nav inside a 700px column
-now collapses to its mobile panel instead of overflowing, and a nav on a wide
-page stays expanded regardless of what a phone is doing to the viewport.
+Where it differs, it differs in your favour: a nav squeezed into a genuinely
+narrow column hides its pills instead of overflowing, and a nav on a wide page
+stays expanded regardless of what a phone is doing to the viewport. Carrying
+the 900px viewport number straight into the container query was tried first
+and collapsed the nav on every docs page at every desktop width — search and
+actions leave the centre column ~860px inside the bar's 1280px cap, which a
+900px reading calls mobile while the viewport-keyed hamburger reads the same
+moment as desktop.
 
 ```html
 <!-- previously: desktop bar, overflowing, because the window is wide -->
-<!-- now:        mobile panel, because the nav is 700px -->
-<div style="width: 700px">
+<!-- now:        the pill row hides, because 400px cannot fit it -->
+<div style="width: 400px">
   <arc-navigation-menu>…</arc-navigation-menu>
 </div>
 ```
 
 If you were relying on the viewport gate — a media query of your own at 900px
-that assumed the nav flipped at the same moment — key it off the nav's own
-width instead, or give the nav a container that matches the viewport.
+that assumed the desktop bar flipped at the same moment — the bar's gate is
+now `navFit` against its own width; key your rule off the nav's container, or
+give the nav a container that matches the viewport.
 
 ## `arc-context-menu` dismisses without covering the page
 

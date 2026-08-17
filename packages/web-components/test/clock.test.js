@@ -1,6 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { ArcClock } from '../src/data/clock.js';
-import { mount, cleanup } from './helpers.js';
+import { mount, cleanup, settle } from './helpers.js';
 
 // clock.register.js is generated from the JSDoc @tag by pnpm generate; define
 // the element the same way here so the test runs before generation and stays
@@ -13,8 +13,14 @@ if (!customElements.get('arc-clock')) customElements.define('arc-clock', ArcCloc
  * runs synchronously after updateComplete, so the pinned time is what renders.
  * Timezones are pinned too (UTC and Asia/Tokyo, which has no DST) so nothing
  * depends on the machine's local zone.
+ *
+ * settle() first, because the clock's first tick lands *after* its first render
+ * (clock.js _start: live time must not exist while hydration is comparing the
+ * client's first render against the server's). A pin written before that render
+ * is overwritten by it, so the pin has to wait for it.
  */
 async function pin(el, epochMs) {
+  await settle(el);
   el._now = epochMs;
   await el.updateComplete;
 }
@@ -24,7 +30,9 @@ describe('arc-clock digital face', () => {
 
   it('renders a plausible time string', async () => {
     const el = mount('<arc-clock timezone="UTC"></arc-clock>');
-    await el.updateComplete;
+    // settle(), not one updateComplete: the first render is the placeholder
+    // face by design, and the time arrives on the render after it.
+    await settle(el);
     const time = el.shadowRoot.querySelector('[part~="time"]');
     expect(time).to.exist;
     expect(time.textContent.trim()).to.match(/\d{1,2}:\d{2}/);
@@ -70,7 +78,7 @@ describe('arc-clock digital face', () => {
 
   it('falls back to local time when the timezone is not recognized', async () => {
     const el = mount('<arc-clock timezone="Not/AZone"></arc-clock>');
-    await el.updateComplete;
+    await settle(el);
     const time = el.shadowRoot.querySelector('[part~="time"]');
     expect(time.textContent.trim()).to.match(/\d{1,2}:\d{2}/);
   });
@@ -143,6 +151,12 @@ describe('arc-clock lifecycle and a11y', () => {
     expect(el._intervalId).to.not.be.null;
     el.remove();
     expect(el._intervalId).to.be.null;
+
+    // Re-connect restarts it. The first connect deliberately does not start the
+    // timer (hydration owns that render — see clock.js _start), so this is the
+    // one path connectedCallback still has to cover on its own.
+    document.body.appendChild(el);
+    expect(el._intervalId).to.not.be.null;
   });
 
   it('exposes the time as visually-hidden text without a live region', async () => {

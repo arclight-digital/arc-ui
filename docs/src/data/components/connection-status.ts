@@ -154,5 +154,5 @@ export function App() {
     },
   ],
 
-  seeAlso: ['banner', 'snackbar', 'alert'],
+  seeAlso: ['banner', 'toast', 'alert'],
 };

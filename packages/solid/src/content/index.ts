@@ -9,8 +9,6 @@ export type { AspectRatioProps } from './AspectRatio.js';
 export { AvatarGroup } from './AvatarGroup.js';
 export type { AvatarGroupProps } from './AvatarGroup.js';
 
-export { Callout } from './Callout.js';
-export type { CalloutProps } from './Callout.js';
 
 export { Card } from './Card.js';
 export type { CardProps } from './Card.js';
@@ -22,8 +20,6 @@ export type { CollapsibleProps } from './Collapsible.js';
 export { ColorSwatch } from './ColorSwatch.js';
 export type { ColorSwatchProps } from './ColorSwatch.js';
 
-export { Column } from './Column.js';
-export type { ColumnProps } from './Column.js';
 
 
 export { Divider } from './Divider.js';
@@ -49,8 +45,6 @@ export type { ScrollAreaProps } from './ScrollArea.js';
 export { ScrollIndicator } from './ScrollIndicator.js';
 export type { ScrollIndicatorProps } from './ScrollIndicator.js';
 
-export { Separator } from './Separator.js';
-export type { SeparatorProps } from './Separator.js';
 
 export { Skeleton } from './Skeleton.js';
 export type { SkeletonProps } from './Skeleton.js';

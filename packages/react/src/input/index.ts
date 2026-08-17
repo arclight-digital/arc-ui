@@ -51,8 +51,6 @@ export type { MultiSelectProps } from './MultiSelect.js';
 export { NumberInput } from './NumberInput.js';
 export type { NumberInputProps } from './NumberInput.js';
 
-export { OtpInput } from './OtpInput.js';
-export type { OtpInputProps } from './OtpInput.js';
 
 export { PinInput } from './PinInput.js';
 export type { PinInputProps } from './PinInput.js';

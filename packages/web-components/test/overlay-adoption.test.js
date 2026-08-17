@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import '../src/feedback/modal.register.js';
+import '../src/feedback/dialog.register.js';
 import '../src/feedback/command-palette.register.js';
 import '../src/feedback/popover.register.js';
 import '../src/feedback/dropdown-menu.register.js';
@@ -38,11 +38,11 @@ function clickAt(target) {
   }));
 }
 
-describe('OverlayController adoption: arc-modal', () => {
+describe('OverlayController adoption: arc-dialog', () => {
   afterEach(cleanup);
 
   async function openModal() {
-    const el = mount('<arc-modal heading="Test"><button>Inside</button></arc-modal>');
+    const el = mount('<arc-dialog heading="Test"><button>Inside</button></arc-dialog>');
     await el.updateComplete;
     el.open = true;
     await el.updateComplete;
@@ -67,11 +67,11 @@ describe('OverlayController adoption: arc-modal', () => {
     expect(el.open).to.equal(false);
   });
 
-  it('does not close on Escape when closable is false', async () => {
+  it('does not close on Escape when dismissible is false', async () => {
     // Consolidating dismissal into _close() has to preserve this: an
-    // undismissable modal must stay put on every path, not just the X button.
+    // undismissable dialog must stay put on every path, not just the X button.
     const el = await openModal();
-    el.closable = false;
+    el.dismissible = false;
     await el.updateComplete;
 
     escape(el);
@@ -79,9 +79,9 @@ describe('OverlayController adoption: arc-modal', () => {
     expect(el.open).to.equal(true);
   });
 
-  it('does not close on a backdrop click when closable is false', async () => {
+  it('does not close on a backdrop click when dismissible is false', async () => {
     const el = await openModal();
-    el.closable = false;
+    el.dismissible = false;
     await el.updateComplete;
 
     backdropClick(el);
@@ -89,7 +89,7 @@ describe('OverlayController adoption: arc-modal', () => {
     expect(el.open).to.equal(true);
   });
 
-  it('closes on a backdrop click when closable', async () => {
+  it('closes on a backdrop click when dismissible', async () => {
     const el = await openModal();
     backdropClick(el);
     await el.updateComplete;
@@ -111,7 +111,7 @@ describe('OverlayController adoption: arc-modal', () => {
   });
 
   it('still emits arc-open, which the mixin knows nothing about', async () => {
-    const el = mount('<arc-modal heading="Test"><button>Inside</button></arc-modal>');
+    const el = mount('<arc-dialog heading="Test"><button>Inside</button></arc-dialog>');
     await el.updateComplete;
     let fired = 0;
     el.addEventListener('arc-open', () => { fired++; });

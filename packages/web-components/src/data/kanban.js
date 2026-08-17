@@ -249,7 +249,49 @@ export class ArcKanban extends DeclaredPropsMixin(LitElement) {
     this._scrollRaf = null;
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * @lit-labs/ssr renders a host from its attributes alone, so a board whose
+   * `columns` arrive as a property — the common half of the documented
+   * contract — is rendered empty on the server. The page assigns them before
+   * the register barrel upgrades this element, which parks them in Lit's
+   * pre-upgrade instance properties and applies them at the top of the very
+   * first update: the one that has to adopt the server's markup. Three columns
+   * of cards against the server's none is "unexpected longer than expected
+   * iterable", and hydration abandons the whole tree there.
+   *
+   * So the first render uses what the attribute said — which is exactly what
+   * the server rendered from, JSON attribute included — and the script-set
+   * board is handed over in `firstUpdated`, once that markup has been adopted.
+   * Nothing is held back without a server-rendered shadow root, so a
+   * client-only board still paints on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) this._ssrColumns = this.columns;
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's
+    // board can land now, as an ordinary second update.
+    if (this._heldColumns !== undefined) {
+      this.columns = this._heldColumns;
+      this._heldColumns = undefined;
+    }
+  }
+
   willUpdate(changed) {
+    // See connectedCallback. Swapping here rather than in `render()` keeps the
+    // internal `_cols` copy in step with whichever board is on show.
+    if (this._ssrColumns !== undefined) {
+      this._heldColumns = this.columns;
+      this.columns = this._ssrColumns;
+      this._ssrColumns = undefined;
+    }
     if (changed.has('columns')) {
       // Internal working copy: mutated for immediate feedback, consumer syncs via events.
       //

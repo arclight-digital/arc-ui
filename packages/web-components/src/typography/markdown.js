@@ -332,6 +332,11 @@ export class ArcMarkdown extends LitElement {
   }
 
   render() {
+    // On the server, `this.textContent` is empty — streaming SSR renders this
+    // shadow root before the light-DOM children are parsed. ssr.js hoists the
+    // light-DOM text into the `content` attribute (TEXT_CONTENT_PROPS) so the
+    // server parses the real source and the client's hydrating first render,
+    // seeing the same attribute, produces the identical template.
     const source = this.content || this.textContent || '';
     const parsed = sanitizeHtml(parseMarkdown(source));
     return html`

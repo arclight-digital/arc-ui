@@ -184,5 +184,5 @@ export class TrafficChartComponent {
     },
   ],
 
-  seeAlso: ['sparkline', 'stat', 'data-table', 'meter'],
+  seeAlso: ['sparkline', 'stat', 'data-grid', 'meter'],
 };

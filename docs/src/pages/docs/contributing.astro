@@ -54,11 +54,11 @@ pnpm install"></arc-code-block></div>
         <code>shared/tokens.js</code>, regenerate everything — framework wrappers, HTML examples, and CSS:
       </p>
       <div class="docs-code"><arc-code-block language="bash" code="pnpm generate"></arc-code-block></div>
-      <arc-callout variant="warning">
+      <arc-alert variant="warning">
         Never hand-edit files in <code>packages/react/</code>, <code>packages/vue/</code>,
         <code>packages/html/css/</code>, or <code>shared/base.css</code>. These are generated
         by Prism and will be overwritten.
-      </arc-callout>
+      </arc-alert>
       <p class="docs-text">
         Version bumps go through a script that updates every package at once — never edit
         <code>package.json</code> versions by hand:

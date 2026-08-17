@@ -20,9 +20,11 @@
  *    the two axes it meant.
  *
  * So the convergence is one pair over two components: `arc-toolbar` and
- * `arc-status-bar` moved from `start`/`end`, keeping both as aliases through
- * v4. Five components already used `prefix`/`suffix`, which is also what the
- * rest of the ecosystem calls the leading slot on a control.
+ * `arc-status-bar` moved from `start`/`end`. The aliases they briefly carried
+ * were removed in the pre-release housecleaning — v4 never shipped, so they
+ * had no consumers to serve. Five components already used `prefix`/`suffix`,
+ * which is also what the rest of the ecosystem calls the leading slot on a
+ * control.
  *
  * ## What this rule actually guards
  *
@@ -51,11 +53,12 @@ const RETIRED = {
  * An entry is only valid while the canonical slot is *also* declared — which is
  * what makes it an alias rather than a holdout, and is checked below rather
  * than trusted.
+ *
+ * Empty since the pre-release housecleaning removed arc-toolbar's and
+ * arc-status-bar's start/end aliases along with everything else deprecated.
+ * The mechanism stays for the next rename that does ship an alias period.
  */
-const ALIASES = {
-  'arc-toolbar': 'renamed in v4.0.0; start/end removed in v5',
-  'arc-status-bar': 'renamed in v4.0.0; start/end removed in v5',
-};
+const ALIASES = {};
 
 /**
  * Slot names that look like an axis and are not one.
@@ -73,9 +76,9 @@ const canonicalNames = {
   name: 'side-slots',
   describe: 'a side slot is `prefix` or `suffix`',
   hint:
-    'Rename the slot to prefix/suffix. Keeping the old name working through one major\n' +
-    '    means rendering both slots into the same region and documenting the old one as\n' +
-    '    deprecated — see arc-toolbar, which is the worked example.',
+    'Rename the slot to prefix/suffix. If the old name must keep working through a\n' +
+    '    major, render both slots into the same region, document the old one as\n' +
+    '    deprecated, and add the tag to ALIASES with the reason.',
   component({ tag, docTag, report }) {
     if (NOT_AN_AXIS[tag]) return;
     const slots = docTag('slot');

@@ -312,6 +312,56 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
     this._announcement = '';
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * `_renderPane`'s comment already notes that an un-hydrated pane is
+   * genuinely empty in the delivered HTML, because `options` is a property.
+   * The other half of that is what happens next: the page assigns `options`
+   * and `value` before the register barrel upgrades this element, which parks
+   * them in Lit's pre-upgrade instance properties and applies them at the top
+   * of the very first update — the one that has to adopt the server's markup.
+   * Hydration walks into the `tl__empty` message the server rendered, finds an
+   * option row where its text was, and reports "Unexpected TemplateResult
+   * rendered to part" before abandoning the tree.
+   *
+   * So the first render uses what the attributes said — which is exactly what
+   * the server rendered from — and the script-set lists are handed over in
+   * `firstUpdated`, once that markup has been adopted. `value` rides along
+   * with `options` because it decides which pane each item lands in, so
+   * applying it a render early would move rows the server never drew. The form
+   * reset baseline is unaffected: `_formResetState` is captured in
+   * `connectedCallback`, which already ran before Lit applied either value.
+   * Nothing is held back without a server-rendered shadow root, so a
+   * client-only control still paints its panes on the first frame.
+   */
+  connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
+    super.connectedCallback();
+    if (hydrating) this._ssrState = { options: this.options, value: this.value };
+  }
+
+  willUpdate(changed) {
+    super.willUpdate?.(changed);
+    // See connectedCallback.
+    if (this._ssrState) {
+      this._heldState = { options: this.options, value: this.value };
+      Object.assign(this, this._ssrState);
+      this._ssrState = null;
+    }
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's
+    // lists can land now, as an ordinary second update.
+    if (this._heldState) {
+      Object.assign(this, this._heldState);
+      this._heldState = null;
+    }
+  }
+
   /** Submits one FormData entry per selected value under `name`. */
   _formValue() {
     const selected = this.value || [];

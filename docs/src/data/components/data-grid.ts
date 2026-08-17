@@ -246,5 +246,5 @@ export class PositionsGridComponent {
     },
   ],
 
-  seeAlso: ['data-table', 'table', 'pagination'],
+  seeAlso: ['pagination'],
 };

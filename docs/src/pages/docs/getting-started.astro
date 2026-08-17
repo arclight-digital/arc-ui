@@ -138,10 +138,10 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
         </div>
       </div>
 
-      <arc-callout variant="info" style="margin-top:var(--space-sm)">
+      <arc-alert variant="info" style="margin-top:var(--space-sm)">
         <code>arc-code-block</code> is the one exception: it carries a syntax highlighter, so it
         is excluded from every barrel. Import it at <code>@arclux/arc-ui/code-block</code>.
-      </arc-callout>
+      </arc-alert>
     </section>
 
     <!-- Framework Setup -->
@@ -338,7 +338,7 @@ arc-button:not(:defined) {
   .import-table,
   .quick-demo,
   .token-preview,
-  .getting-started :global(arc-callout) {
+  .getting-started :global(arc-alert) {
     max-width: var(--docs-measure);
   }
 

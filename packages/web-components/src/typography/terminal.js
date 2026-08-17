@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, flag, list } from '../shared/props.js';
+import { observeIntersect } from '../shared/subscriptions.js';
 
 /*
  * Pacing between lines when a line carries no explicit delay. A command waits
@@ -183,11 +184,51 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     this._started = false;
     this._complete = false;
     this._timeoutId = null;
-    this._observer = null;
+    this._watching = false;
     this._reducedMotion = false;
+    // The scroll-into-view watch. A controller rather than a hand-rolled
+    // IntersectionObserver: attach/detach are keyed to the host's connection,
+    // so a reparented terminal keeps (or regains) its watch without a second
+    // teardown path to pair. `_watching` is how the watch is switched off for
+    // a *state* — armed becomes playing — rather than a lifecycle: play()
+    // clears it, the resolver returns null, the controller releases.
+    observeIntersect(
+      this,
+      () => (this._watching ? this : null),
+      (entries) => {
+        // play() clears _watching synchronously, so a second entry queued
+        // behind the first cannot restart playback from the top.
+        if (this._watching && entries.some((entry) => entry.isIntersecting)) this.play();
+      },
+      { threshold: 0.2 },
+    );
   }
 
+  /**
+   * The hydrating render has to be the *server's* render, not the page's.
+   *
+   * Two things pull it away from that. `lines` is documented property-only, and
+   * @lit-labs/ssr renders a host from its attributes alone — so the server
+   * emits whatever the markup said, usually an empty transcript. A page that
+   * fills `lines` before the register barrel upgrades this element parks the
+   * array in Lit's pre-upgrade instance properties, which are applied at the
+   * top of the very first update: the one that has to adopt the server's
+   * markup. Six lines against the server's none is "unexpected longer than
+   * expected iterable", and hydration abandons the whole tree at that point.
+   * And arming autoplay blanks the transcript, which is the opposite of the
+   * completed one the server wrote.
+   *
+   * So the first render is the attribute-only, un-blanked one — the same render
+   * the server did — and the page's transcript and the blanking both land in
+   * `firstUpdated`, once the server's DOM has been adopted. Nothing is held
+   * back without a server-rendered shadow root, so a client-only terminal still
+   * has its transcript on the first frame; and `firstUpdated` runs before the
+   * frame is painted either way, so a full transcript never flashes.
+   */
   connectedCallback() {
+    // Before super: ReactiveElement attaches the render root here, so a shadow
+    // root that already exists is the server's `<template shadowrootmode>`.
+    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
     super.connectedCallback();
     this._mqListener = (e) => {
       this._reducedMotion = e.matches;
@@ -196,30 +237,58 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     this._reducedMotion = this._mq.matches;
     this._mq.addEventListener('change', this._mqListener);
 
-    if (this.autoplay && !this._complete) {
-      if (typeof IntersectionObserver === 'undefined') {
-        this.play();
-        return;
-      }
-      // Blank the transcript before first client paint so a server-rendered
-      // full transcript doesn't flash and then wipe. Under reduced motion the
-      // transcript must stay visible the whole time, so it is never blanked.
-      if (!this._reducedMotion) this._started = true;
-      this._observer = new IntersectionObserver(
-        (entries) => {
-          if (entries.some((entry) => entry.isIntersecting)) this.play();
-        },
-        { threshold: 0.2 },
-      );
-      this._observer.observe(this);
+    if (hydrating) this._ssrState = { lines: this.lines };
+    // No reconnect handling here: the observeIntersect controller re-attaches
+    // an armed watch on hostConnected by itself. On the *first* connect
+    // autoplay is armed by firstUpdated() instead: see _armAutoplay().
+  }
+
+  willUpdate() {
+    // See connectedCallback.
+    if (this._ssrState) {
+      this._heldState = { lines: this.lines };
+      Object.assign(this, this._ssrState);
+      this._ssrState = null;
     }
+  }
+
+  firstUpdated() {
+    // See connectedCallback: the server's markup is adopted, so the page's
+    // transcript can land now, as an ordinary second update.
+    if (this._heldState) {
+      Object.assign(this, this._heldState);
+      this._heldState = null;
+    }
+    this._armAutoplay();
+  }
+
+  /**
+   * Blank the transcript and wait for the element to scroll into view.
+   *
+   * Deliberately not called from the first connectedCallback — see the comment
+   * there. A blanked transcript is not what the server rendered, so it cannot
+   * be the state the client's first render runs against.
+   */
+  _armAutoplay() {
+    if (!this.autoplay || this._complete) return;
+    if (typeof IntersectionObserver === 'undefined') {
+      this.play();
+      return;
+    }
+    // Blank the transcript before the first client *paint* so a server-rendered
+    // full transcript doesn't flash and then wipe. Under reduced motion the
+    // transcript must stay visible the whole time, so it is never blanked.
+    if (!this._reducedMotion) this._started = true;
+    this._watching = true;
+    // _watching is deliberately not reactive state, so guarantee the update
+    // that lets the controller's resolver see it — under reduced motion the
+    // blanking above schedules nothing.
+    this.requestUpdate();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this._clearTimeout();
-    this._observer?.disconnect();
-    this._observer = null;
     if (this._mq) {
       this._mq.removeEventListener('change', this._mqListener);
     }
@@ -228,7 +297,19 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
   updated(changed) {
     // A new transcript restarts a running animation. Before any playback the
     // static full transcript simply re-renders from the new array.
-    if (changed.has('lines') && changed.get('lines') !== undefined && this._started) {
+    //
+    // Running, not merely armed: while the watch is still waiting for the
+    // element to scroll in, `_started` is true but nothing is playing, and
+    // play() here would drop that watch and type an off-screen terminal. The
+    // waiting watch picks up the new array by itself. That distinction is
+    // also what keeps the firstUpdated handover above from reading as a new
+    // transcript.
+    if (
+      changed.has('lines') &&
+      changed.get('lines') !== undefined &&
+      this._started &&
+      !this._watching
+    ) {
       this.play();
     }
   }
@@ -253,8 +334,9 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
   /** Play the sequence from the beginning. */
   play() {
     this._clearTimeout();
-    this._observer?.disconnect();
-    this._observer = null;
+    // Armed → playing: the resolver sees this and the controller releases the
+    // scroll watch on the update this method's state changes schedule.
+    this._watching = false;
     this._started = true;
     this._complete = false;
     this._lineIndex = 0;

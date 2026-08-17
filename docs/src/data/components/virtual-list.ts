@@ -236,5 +236,5 @@ const items = Array.from({ length: 10000 }, (_, i) => ({
     },
   ],
 
-  seeAlso: ['list', 'data-table', 'infinite-scroll'],
+  seeAlso: ['list', 'data-grid', 'infinite-scroll'],
 };

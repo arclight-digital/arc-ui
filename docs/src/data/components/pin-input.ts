@@ -161,5 +161,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['otp-input', 'input'],
+  seeAlso: ['input'],
 };

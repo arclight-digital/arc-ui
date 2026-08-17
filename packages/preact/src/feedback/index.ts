@@ -37,14 +37,10 @@ export type { DropdownMenuProps } from './DropdownMenu.js';
 export { HoverCard } from './HoverCard.js';
 export type { HoverCardProps } from './HoverCard.js';
 
-export { InlineMessage } from './InlineMessage.js';
-export type { InlineMessageProps } from './InlineMessage.js';
 
 export { LoadingOverlay } from './LoadingOverlay.js';
 export type { LoadingOverlayProps } from './LoadingOverlay.js';
 
-export { Modal } from './Modal.js';
-export type { ModalProps } from './Modal.js';
 
 export { NotificationPanel } from './NotificationPanel.js';
 export type { NotificationPanelProps } from './NotificationPanel.js';
@@ -52,8 +48,6 @@ export type { NotificationPanelProps } from './NotificationPanel.js';
 export { Popover } from './Popover.js';
 export type { PopoverProps } from './Popover.js';
 
-export { ProgressToast } from './ProgressToast.js';
-export type { ProgressToastProps } from './ProgressToast.js';
 
 export { Progress } from './Progress.js';
 export type { ProgressProps } from './Progress.js';
@@ -61,8 +55,6 @@ export type { ProgressProps } from './Progress.js';
 export { Sheet } from './Sheet.js';
 export type { SheetProps } from './Sheet.js';
 
-export { Snackbar } from './Snackbar.js';
-export type { SnackbarProps } from './Snackbar.js';
 
 
 export { Toast } from './Toast.js';

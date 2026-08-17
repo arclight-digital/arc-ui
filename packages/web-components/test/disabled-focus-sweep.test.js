@@ -48,7 +48,6 @@ import '../src/input/label.register.js';
 import '../src/input/masked-input.register.js';
 import '../src/input/multi-select.register.js';
 import '../src/input/number-input.register.js';
-import '../src/input/otp-input.register.js';
 import '../src/input/password-input.register.js';
 import '../src/input/pin-input.register.js';
 import '../src/input/radio-group.register.js';

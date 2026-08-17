@@ -146,5 +146,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['callout', 'toast', 'dialog'],
+  seeAlso: ['toast', 'dialog'],
 };

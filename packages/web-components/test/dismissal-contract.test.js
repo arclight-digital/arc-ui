@@ -89,7 +89,6 @@ await import('../src/input/suggestion.register.js');
  */
 const POLICY = {
   // ── Overlays: dismissible, whatever mechanism they currently use ──────────
-  'arc-modal': { escape: true, outside: true },
   'arc-lightbox': { escape: true, outside: null, why: 'outside: the backdrop is the viewer' },
   'arc-command-palette': { escape: true, outside: true },
   'arc-sheet': { escape: true, outside: true },
@@ -138,7 +137,10 @@ describe('dismissal contract: the derivation itself', () => {
   // added after this file was written, must fail here rather than quietly
   // shrinking the sweep to nothing.
   it('found the open-declaring population', () => {
-    expect(SUBJECTS.length, 'subjects derived from the manifest').to.be.greaterThan(20);
+    // at.least, sitting exactly on today's count: removing the arc-modal
+    // alias took the population from 21 to 20, and the floor should catch
+    // the next silent shrink, not this deliberate one.
+    expect(SUBJECTS.length, 'subjects derived from the manifest').to.be.at.least(20);
   });
 
   // The reason POLICY is allowed to be hand-written: it cannot go stale. A new

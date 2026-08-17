@@ -36,10 +36,6 @@
       "types": "./dist/content/AvatarGroup.vue.d.ts",
       "default": "./dist/content/AvatarGroup.vue.js"
     },
-    "./Callout": {
-      "types": "./dist/content/Callout.vue.d.ts",
-      "default": "./dist/content/Callout.vue.js"
-    },
     "./Card": {
       "types": "./dist/content/Card.vue.d.ts",
       "default": "./dist/content/Card.vue.js"
@@ -55,10 +51,6 @@
     "./ColorSwatch": {
       "types": "./dist/content/ColorSwatch.vue.d.ts",
       "default": "./dist/content/ColorSwatch.vue.js"
-    },
-    "./Column": {
-      "types": "./dist/content/Column.vue.d.ts",
-      "default": "./dist/content/Column.vue.js"
     },
     "./CtaBanner": {
       "types": "./dist/content/CtaBanner.vue.d.ts",
@@ -120,10 +112,6 @@
       "types": "./dist/content/ScrollIndicator.vue.d.ts",
       "default": "./dist/content/ScrollIndicator.vue.js"
     },
-    "./Separator": {
-      "types": "./dist/content/Separator.vue.d.ts",
-      "default": "./dist/content/Separator.vue.js"
-    },
     "./Skeleton": {
       "types": "./dist/content/Skeleton.vue.d.ts",
       "default": "./dist/content/Skeleton.vue.js"
@@ -184,10 +172,6 @@
       "types": "./dist/data/DataGrid.vue.d.ts",
       "default": "./dist/data/DataGrid.vue.js"
     },
-    "./DataTable": {
-      "types": "./dist/data/DataTable.vue.d.ts",
-      "default": "./dist/data/DataTable.vue.js"
-    },
     "./DescriptionItem": {
       "types": "./dist/data/DescriptionItem.vue.d.ts",
       "default": "./dist/data/DescriptionItem.vue.js"
@@ -211,14 +195,6 @@
     "./Kanban": {
       "types": "./dist/data/Kanban.vue.d.ts",
       "default": "./dist/data/Kanban.vue.js"
-    },
-    "./KeyValue": {
-      "types": "./dist/data/KeyValue.vue.d.ts",
-      "default": "./dist/data/KeyValue.vue.js"
-    },
-    "./KvPair": {
-      "types": "./dist/data/KvPair.vue.d.ts",
-      "default": "./dist/data/KvPair.vue.js"
     },
     "./LevelMeter": {
       "types": "./dist/data/LevelMeter.vue.d.ts",
@@ -251,10 +227,6 @@
     "./Stepper": {
       "types": "./dist/data/Stepper.vue.d.ts",
       "default": "./dist/data/Stepper.vue.js"
-    },
-    "./Table": {
-      "types": "./dist/data/Table.vue.d.ts",
-      "default": "./dist/data/Table.vue.js"
     },
     "./Tag": {
       "types": "./dist/data/Tag.vue.d.ts",
@@ -439,10 +411,6 @@
     "./NumberInput": {
       "types": "./dist/input/NumberInput.vue.d.ts",
       "default": "./dist/input/NumberInput.vue.js"
-    },
-    "./OtpInput": {
-      "types": "./dist/input/OtpInput.vue.d.ts",
-      "default": "./dist/input/OtpInput.vue.js"
     },
     "./PasswordInput": {
       "types": "./dist/input/PasswordInput.vue.d.ts",
@@ -664,10 +632,6 @@
       "types": "./dist/layout/Center.vue.d.ts",
       "default": "./dist/layout/Center.vue.js"
     },
-    "./Cluster": {
-      "types": "./dist/layout/Cluster.vue.d.ts",
-      "default": "./dist/layout/Cluster.vue.js"
-    },
     "./Container": {
       "types": "./dist/layout/Container.vue.d.ts",
       "default": "./dist/layout/Container.vue.js"
@@ -784,10 +748,6 @@
       "types": "./dist/feedback/HoverCard.vue.d.ts",
       "default": "./dist/feedback/HoverCard.vue.js"
     },
-    "./InlineMessage": {
-      "types": "./dist/feedback/InlineMessage.vue.d.ts",
-      "default": "./dist/feedback/InlineMessage.vue.js"
-    },
     "./LoadingOverlay": {
       "types": "./dist/feedback/LoadingOverlay.vue.d.ts",
       "default": "./dist/feedback/LoadingOverlay.vue.js"
@@ -795,10 +755,6 @@
     "./Message": {
       "types": "./dist/feedback/Message.vue.d.ts",
       "default": "./dist/feedback/Message.vue.js"
-    },
-    "./Modal": {
-      "types": "./dist/feedback/Modal.vue.d.ts",
-      "default": "./dist/feedback/Modal.vue.js"
     },
     "./NotificationPanel": {
       "types": "./dist/feedback/NotificationPanel.vue.d.ts",
@@ -812,17 +768,9 @@
       "types": "./dist/feedback/Progress.vue.d.ts",
       "default": "./dist/feedback/Progress.vue.js"
     },
-    "./ProgressToast": {
-      "types": "./dist/feedback/ProgressToast.vue.d.ts",
-      "default": "./dist/feedback/ProgressToast.vue.js"
-    },
     "./Sheet": {
       "types": "./dist/feedback/Sheet.vue.d.ts",
       "default": "./dist/feedback/Sheet.vue.js"
-    },
-    "./Snackbar": {
-      "types": "./dist/feedback/Snackbar.vue.d.ts",
-      "default": "./dist/feedback/Snackbar.vue.js"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.vue.d.ts",

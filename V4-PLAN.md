@@ -907,6 +907,16 @@ including five tombstones.
 
 ### 4.2 Merges (L) — **DONE (2026-08-15), 11 of 12 rows**
 
+> **Superseded on the deprecation half (2026-08-16):** the deprecated shells
+> this section left in the barrel were removed outright in the pre-release
+> housecleaning — all 13 (the merge sources, arc-modal, and the closable and
+> start/end aliases). Rationale: v4 has never shipped, so a deprecation
+> period was shelf-stock carried for consumers who cannot exist yet; v3
+> keeps everything and receives patches for a quarter. MIGRATION.md is
+> rewritten to removed-in-v4.0.0, every tag keeps its docs URL as a
+> tombstone naming the survivor, and dev.js's deprecation warning machinery
+> stays (tested by leasing `mergedInto` onto a live schema entry).
+
 - [x] The 12 non-dialog merges from 1.1 (the dialog family is 4.4's, built
       directly on `<dialog>` so it is not rewritten twice). Each: merge,
       `@deprecated` alias where cheap, MIGRATION.md entry, docs page folded,
@@ -1653,7 +1663,20 @@ else.
       hidden in Phase 5)** — the library's own biggest consumer is the
       proof.
 
-### 4.10 Tooling consolidation (M) — *after 4.3 (which builds the shared walker); anytime before the tag; non-blocking*
+### 4.10 Tooling consolidation (M) — *after 4.3 (which builds the shared walker); anytime before the tag; non-blocking* — **DONE (2026-08-16)**
+
+All five rows landed. The nine checks are on the walker with every incident
+comment surviving verbatim (machine-diffed) and each rule proved to fire by
+reintroducing its defect; `pinned-schemes` gained the anti-vacuity guard the
+others already had (the original printed a passing count while asserting
+nothing once the pinned classes were renamed away). `scripts/checks/ssr.js`
+went 402 → 148 lines: the bare-render + CLIENT_ONLY/UPSTREAM_BLOCKED contract
+stayed a check, the enum-variant fuzzer + PROPERTY_SAMPLES moved to
+`test/ssr-fuzz.test.js` (node --test, `pnpm test:ssr-fuzz` — Node-side beside
+test/wrapper-runtime, since @lit-labs/ssr cannot run under the browser
+suite). `pnpm verify` = generate → checks → tests → ssr-fuzz → typecheck with
+a staleness report; `pnpm typecheck` now owns the tsc line CI used to inline.
+The two hunting configs live in `scripts/debug/` with a README.
 
 - [ ] Migrate the 5 token-discipline linters (`breakpoint-drift`,
       `gradient-stops`, `motion-tokens`, `focus-ring`, `pinned-schemes`)
@@ -1753,10 +1776,15 @@ commit on the branch traced to a MIGRATION section.
 
 ## Phase 5 — Ship
 
-- [ ] `v4.0.0-beta.1` with MIGRATION.md, once 4.1–4.7 + 4.11 are done.
-- [ ] Soak: observation only — the rebuilt docs site (4.9) running on the
-      beta, plus at least one external consumer if one exists.
-- [ ] `v4.0.0`. v3 branch receives patches for one quarter.
+- [ ] ~~`v4.0.0-beta.1` with MIGRATION.md~~ — **skipped by decision
+      (2026-08-17):** the maintainer chose to tag v4.0.0 directly. The soak
+      the beta existed to buy had effectively happened — the docs site ran on
+      the release tree throughout the cycle — and the release workflow gates
+      the tag on the full suite regardless.
+- [ ] ~~Soak~~ — absorbed into the above.
+- [x] **`v4.0.0` — tagged 2026-08-17.** Release notes in
+      `docs/src/content/releases/4-0-0.md` (they also drive the homepage's
+      what-changed chapter). v3 branch receives patches for one quarter.
 
 ---
 

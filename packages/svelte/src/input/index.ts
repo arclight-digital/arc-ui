@@ -16,7 +16,6 @@ export { default as InputGroup } from './InputGroup.svelte';
 export { default as Label } from './Label.svelte';
 export { default as MultiSelect } from './MultiSelect.svelte';
 export { default as NumberInput } from './NumberInput.svelte';
-export { default as OtpInput } from './OtpInput.svelte';
 export { default as PinInput } from './PinInput.svelte';
 export { default as RadioGroup } from './RadioGroup.svelte';
 export { default as RangeSlider } from './RangeSlider.svelte';

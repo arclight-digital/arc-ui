@@ -217,9 +217,20 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
         justify-content: flex-end;
       }
 
+      /* The nav stretches to fill this wrapper (its query container is
+         inline-size-contained, so it cannot shrink-to-fit — see the :host
+         comment in navigation-menu.js), which makes wrapper-level centering
+         inert. flex: 1 1 0 keeps the middle column's centre on the bar's
+         centre against the equalised sides, and --nav-justify carries the
+         alignment down into the nav's own row. */
       :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__center,
       :host([nav-align="center"]) .topbar__center {
-        flex: 0 1 auto;
+        flex: 1 1 0;
+        --nav-justify: center;
+      }
+
+      :host([nav-align="right"]) .topbar__center {
+        --nav-justify: flex-end;
       }
 
       .topbar__menu-btn {

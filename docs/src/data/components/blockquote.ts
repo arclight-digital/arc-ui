@@ -174,5 +174,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['text', 'callout', 'card'],
+  seeAlso: ['text', 'alert', 'card'],
 };

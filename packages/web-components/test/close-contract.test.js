@@ -10,7 +10,7 @@
  * alongside (checkbox keeps `checked`).
  */
 import { expect } from '@esm-bundle/chai';
-import '../src/feedback/modal.register.js';
+import '../src/feedback/dialog.register.js';
 import '../src/feedback/alert.register.js';
 import '../src/input/checkbox.register.js';
 import { mount, cleanup, tick } from './helpers.js';
@@ -18,8 +18,8 @@ import { mount, cleanup, tick } from './helpers.js';
 describe('cancelable arc-close', () => {
   afterEach(cleanup);
 
-  it('modal: preventDefault() on arc-close vetoes the close', async () => {
-    const el = mount('<arc-modal heading="m"><p>body</p></arc-modal>');
+  it('dialog: preventDefault() on arc-close vetoes the close', async () => {
+    const el = mount('<arc-dialog heading="m"><p>body</p></arc-dialog>');
     el.open = true;
     await el.updateComplete;
     await tick();
@@ -27,15 +27,15 @@ describe('cancelable arc-close', () => {
     el.addEventListener('arc-close', (e) => e.preventDefault(), { once: true });
     el.shadowRoot.querySelector('arc-icon-button').click();
     await el.updateComplete;
-    expect(el.open, 'vetoed close must leave the modal open').to.equal(true);
+    expect(el.open, 'vetoed close must leave the dialog open').to.equal(true);
 
     el.shadowRoot.querySelector('arc-icon-button').click();
     await el.updateComplete;
     expect(el.open, 'unvetoed close must close').to.equal(false);
   });
 
-  it('modal: arc-close fires before the state flips', async () => {
-    const el = mount('<arc-modal heading="m"><p>body</p></arc-modal>');
+  it('dialog: arc-close fires before the state flips', async () => {
+    const el = mount('<arc-dialog heading="m"><p>body</p></arc-dialog>');
     el.open = true;
     await el.updateComplete;
 

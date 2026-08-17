@@ -43,11 +43,6 @@
       "solid": "./src/content/AvatarGroup.tsx",
       "default": "./dist/content/AvatarGroup.js"
     },
-    "./Callout": {
-      "types": "./dist/content/Callout.d.ts",
-      "solid": "./src/content/Callout.tsx",
-      "default": "./dist/content/Callout.js"
-    },
     "./Card": {
       "types": "./dist/content/Card.d.ts",
       "solid": "./src/content/Card.tsx",
@@ -67,11 +62,6 @@
       "types": "./dist/content/ColorSwatch.d.ts",
       "solid": "./src/content/ColorSwatch.tsx",
       "default": "./dist/content/ColorSwatch.js"
-    },
-    "./Column": {
-      "types": "./dist/content/Column.d.ts",
-      "solid": "./src/content/Column.tsx",
-      "default": "./dist/content/Column.js"
     },
     "./CtaBanner": {
       "types": "./dist/content/CtaBanner.d.ts",
@@ -148,11 +138,6 @@
       "solid": "./src/content/ScrollIndicator.tsx",
       "default": "./dist/content/ScrollIndicator.js"
     },
-    "./Separator": {
-      "types": "./dist/content/Separator.d.ts",
-      "solid": "./src/content/Separator.tsx",
-      "default": "./dist/content/Separator.js"
-    },
     "./Skeleton": {
       "types": "./dist/content/Skeleton.d.ts",
       "solid": "./src/content/Skeleton.tsx",
@@ -228,11 +213,6 @@
       "solid": "./src/data/DataGrid.tsx",
       "default": "./dist/data/DataGrid.js"
     },
-    "./DataTable": {
-      "types": "./dist/data/DataTable.d.ts",
-      "solid": "./src/data/DataTable.tsx",
-      "default": "./dist/data/DataTable.js"
-    },
     "./DescriptionItem": {
       "types": "./dist/data/DescriptionItem.d.ts",
       "solid": "./src/data/DescriptionItem.tsx",
@@ -262,16 +242,6 @@
       "types": "./dist/data/Kanban.d.ts",
       "solid": "./src/data/Kanban.tsx",
       "default": "./dist/data/Kanban.js"
-    },
-    "./KeyValue": {
-      "types": "./dist/data/KeyValue.d.ts",
-      "solid": "./src/data/KeyValue.tsx",
-      "default": "./dist/data/KeyValue.js"
-    },
-    "./KvPair": {
-      "types": "./dist/data/KvPair.d.ts",
-      "solid": "./src/data/KvPair.tsx",
-      "default": "./dist/data/KvPair.js"
     },
     "./LevelMeter": {
       "types": "./dist/data/LevelMeter.d.ts",
@@ -312,11 +282,6 @@
       "types": "./dist/data/Stepper.d.ts",
       "solid": "./src/data/Stepper.tsx",
       "default": "./dist/data/Stepper.js"
-    },
-    "./Table": {
-      "types": "./dist/data/Table.d.ts",
-      "solid": "./src/data/Table.tsx",
-      "default": "./dist/data/Table.js"
     },
     "./Tag": {
       "types": "./dist/data/Tag.d.ts",
@@ -547,11 +512,6 @@
       "types": "./dist/input/NumberInput.d.ts",
       "solid": "./src/input/NumberInput.tsx",
       "default": "./dist/input/NumberInput.js"
-    },
-    "./OtpInput": {
-      "types": "./dist/input/OtpInput.d.ts",
-      "solid": "./src/input/OtpInput.tsx",
-      "default": "./dist/input/OtpInput.js"
     },
     "./PasswordInput": {
       "types": "./dist/input/PasswordInput.d.ts",
@@ -828,11 +788,6 @@
       "solid": "./src/layout/Center.tsx",
       "default": "./dist/layout/Center.js"
     },
-    "./Cluster": {
-      "types": "./dist/layout/Cluster.d.ts",
-      "solid": "./src/layout/Cluster.tsx",
-      "default": "./dist/layout/Cluster.js"
-    },
     "./Container": {
       "types": "./dist/layout/Container.d.ts",
       "solid": "./src/layout/Container.tsx",
@@ -978,11 +933,6 @@
       "solid": "./src/feedback/HoverCard.tsx",
       "default": "./dist/feedback/HoverCard.js"
     },
-    "./InlineMessage": {
-      "types": "./dist/feedback/InlineMessage.d.ts",
-      "solid": "./src/feedback/InlineMessage.tsx",
-      "default": "./dist/feedback/InlineMessage.js"
-    },
     "./LoadingOverlay": {
       "types": "./dist/feedback/LoadingOverlay.d.ts",
       "solid": "./src/feedback/LoadingOverlay.tsx",
@@ -992,11 +942,6 @@
       "types": "./dist/feedback/Message.d.ts",
       "solid": "./src/feedback/Message.tsx",
       "default": "./dist/feedback/Message.js"
-    },
-    "./Modal": {
-      "types": "./dist/feedback/Modal.d.ts",
-      "solid": "./src/feedback/Modal.tsx",
-      "default": "./dist/feedback/Modal.js"
     },
     "./NotificationPanel": {
       "types": "./dist/feedback/NotificationPanel.d.ts",
@@ -1013,20 +958,10 @@
       "solid": "./src/feedback/Progress.tsx",
       "default": "./dist/feedback/Progress.js"
     },
-    "./ProgressToast": {
-      "types": "./dist/feedback/ProgressToast.d.ts",
-      "solid": "./src/feedback/ProgressToast.tsx",
-      "default": "./dist/feedback/ProgressToast.js"
-    },
     "./Sheet": {
       "types": "./dist/feedback/Sheet.d.ts",
       "solid": "./src/feedback/Sheet.tsx",
       "default": "./dist/feedback/Sheet.js"
-    },
-    "./Snackbar": {
-      "types": "./dist/feedback/Snackbar.d.ts",
-      "solid": "./src/feedback/Snackbar.tsx",
-      "default": "./dist/feedback/Snackbar.js"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.d.ts",

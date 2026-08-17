@@ -3,7 +3,6 @@ export { default as AppShell } from './AppShell.vue';
 export { default as AspectGrid } from './AspectGrid.vue';
 export { default as AuthShell } from './AuthShell.vue';
 export { default as Center } from './Center.vue';
-export { default as Cluster } from './Cluster.vue';
 export { default as Container } from './Container.vue';
 export { default as DashboardGrid } from './DashboardGrid.vue';
 export { default as FloatBar } from './FloatBar.vue';

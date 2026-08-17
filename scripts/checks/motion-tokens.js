@@ -24,11 +24,22 @@
  * Literal *durations* are allowed. A component tuning 80ms or 250ms against a
  * specific gesture is doing design work; a component picking its own curve is
  * leaving the system.
+ *
+ * ── On `scripts/lib/source-walker.js` (V4-PLAN 4.10) ──
+ *
+ * Line-based still, and deliberately not on `cssRules`: arc-prose builds a
+ * light-DOM stylesheet in a plain template literal — no `css` tag, so no style
+ * block to find — and the declaration in it is a motion declaration like any
+ * other. What the walker does replace is the comment strip this never had: the
+ * scan reads `code`, so a transition quoted in a note is prose rather than a
+ * finding, and offsets are preserved so the line is still the real one.
  */
-import fs from 'node:fs';
-import path from 'node:path';
+import { readFileSync, readdirSync } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
+import { ComponentSource, run } from '../lib/source-walker.js';
+import { findComponents, SRC_DIR } from '../lib/component-tags.js';
 
-const SRC = 'packages/web-components/src';
+const ROOT = resolve(SRC_DIR, '..', '..', '..');
 
 /** Timing keywords that have a token equivalent, and should use it. */
 const KEYWORDS = ['ease', 'ease-in', 'ease-out', 'ease-in-out'];
@@ -50,29 +61,14 @@ const KEYWORDS = ['ease', 'ease-in', 'ease-out', 'ease-in-out'];
  */
 const isLoop = (line) => /\binfinite\b/.test(line);
 
-const failures = [];
-
-function walk(dir) {
-  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-    const full = path.join(dir, entry.name);
-    if (entry.isDirectory()) walk(full);
-    else if (entry.name.endsWith('.js')) check(full);
-  }
-}
-
-function check(file) {
-  // The generated token layer is where the literal curves are supposed to live.
-  if (file.endsWith('generated/host-tokens.js')) return;
-
-  const src = fs.readFileSync(file, 'utf8');
-  const rel = path.relative(process.cwd(), file);
-
+/** Every motion value in one module, reported through `emit(line, msg, text)`. */
+function scanMotion(code, emit) {
   // Join multi-line declarations onto the line they start on. A transition
   // wrapped across four lines hid a bare `ease` from the first version of this
   // check — the continuation lines carry no `transition:` to match against, so
   // they were skipped, and the check reported clean while the keyword was still
   // there. Line numbers are preserved by padding the consumed lines out.
-  const raw = src.split('\n');
+  const raw = code.split('\n');
   const lines = [];
   for (let i = 0; i < raw.length; i++) {
     if (/\b(transition|animation)(-timing-function)?\s*:/.test(raw[i]) && !raw[i].includes(';')) {
@@ -91,7 +87,7 @@ function check(file) {
   }
 
   lines.forEach((line, i) => {
-    const at = (msg) => failures.push({ file: rel, line: i + 1, msg, text: line.trim() });
+    const at = (msg) => emit(i + 1, msg, line.trim());
 
     // Only look at declarations that actually set motion.
     if (!/\b(transition|animation)(-timing-function)?\s*:/.test(line)) return;
@@ -126,10 +122,48 @@ function check(file) {
   });
 }
 
-walk(SRC);
+const fromTheTokenTree = {
+  name: 'motion-tokens',
+  describe: 'every curve in a transition or animation is an --ease-* token',
+  hint:
+    'The curves live in shared/tokens.js and reach CSS as --ease-*. A literal keyword\n' +
+    '    or cubic-bezier() means the token tree was reached past; a curve token with no\n' +
+    '    duration in front of it means the property does not animate at all. Durations\n' +
+    '    stay literal on purpose — tuning 80ms against a gesture is design work.',
+  component({ code, report }) {
+    scanMotion(code, (line, msg, text) => report(line, `${msg}\n        ${text}`));
+  },
+};
+
+const code = run({ name: 'motion-tokens', rules: [fromTheTokenTree] });
+
+// ── Beside run(): the files that are not components ─────────────────────────
+
+/** Every .js under src. */
+function sources(dir, out = []) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name);
+    if (entry.isDirectory()) sources(full, out);
+    else if (entry.name.endsWith('.js')) out.push(full);
+  }
+  return out;
+}
+
+const visited = new Set(
+  [...findComponents().values()].map((m) => resolve(SRC_DIR, m.tier, m.file)),
+);
+const failures = [];
+for (const file of sources(SRC_DIR)) {
+  if (visited.has(file)) continue;
+  // The generated token layer is where the literal curves are supposed to live.
+  if (file.endsWith(join('generated', 'host-tokens.js'))) continue;
+  const rel = relative(SRC_DIR, file);
+  const view = new ComponentSource({ tag: rel, tier: '.', file: rel }, readFileSync(file, 'utf-8'));
+  scanMotion(view.code, (line, msg, text) => failures.push({ file: view.file, line, msg, text }));
+}
 
 if (failures.length > 0) {
-  console.error(`\n✗ ${failures.length} motion value(s) outside the token tree:\n`);
+  console.error(`\ncheck-motion-tokens: ${failures.length} motion value(s) outside the components\n`);
   for (const f of failures) {
     console.error(`  ${f.file}:${f.line}  ${f.msg}`);
     console.error(`    ${f.text}\n`);
@@ -137,4 +171,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log('✓ motion values all come from tokens');
+process.exit(code);

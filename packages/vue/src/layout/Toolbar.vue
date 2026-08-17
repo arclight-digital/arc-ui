@@ -26,8 +26,6 @@ const emit = defineEmits<{
   >
     <slot />
     <slot name="prefix" />
-    <slot name="start" />
     <slot name="suffix" />
-    <slot name="end" />
   </arc-toolbar>
 </template>

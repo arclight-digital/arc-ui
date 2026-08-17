@@ -163,10 +163,6 @@ declare module 'preact' {
         month?: number | string;
         year?: number | string;
       };
-      'arc-callout': ArcBaseAttributes & {
-        variant?: 'info' | 'tip' | 'warning' | 'error';
-        dismissible?: boolean;
-      };
       'arc-card': ArcBaseAttributes & {
         href?: string;
         padding?: 'none' | 'sm' | 'md' | 'lg';
@@ -228,11 +224,6 @@ declare module 'preact' {
         'show-timezone'?: boolean;
         showTimezone?: boolean;
       };
-      'arc-cluster': ArcBaseAttributes & {
-        gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-        align?: 'start' | 'center' | 'end';
-        justify?: 'start' | 'center' | 'end' | 'space-between' | 'space-around';
-      };
       'arc-code-block': ArcBaseAttributes & {
         language?: string;
         filename?: string;
@@ -257,13 +248,6 @@ declare module 'preact' {
         color?: string;
         label?: string;
         size?: 'sm' | 'md' | 'lg';
-      };
-      'arc-column': ArcBaseAttributes & {
-        field?: string;
-        key?: string;
-        label?: string;
-        sortable?: boolean;
-        width?: string;
       };
       'arc-combobox': ArcBaseAttributes & {
         required?: boolean;
@@ -364,19 +348,6 @@ declare module 'preact' {
         density?: 'default' | 'compact';
         striped?: boolean;
       };
-      'arc-data-table': ArcBaseAttributes & {
-        rows?: Array<Record<string, any>>;
-        sortable?: boolean;
-        selectable?: boolean;
-        'sort-column'?: string;
-        sortColumn?: string;
-        'sort-direction'?: 'asc' | 'desc';
-        sortDirection?: 'asc' | 'desc';
-        virtual?: boolean;
-        'row-height'?: number | string;
-        rowHeight?: number | string;
-        overscan?: number | string;
-      };
       'arc-date-picker': ArcBaseAttributes & {
         required?: boolean;
         readonly?: boolean;
@@ -426,7 +397,6 @@ declare module 'preact' {
         size?: 'sm' | 'md' | 'lg';
         fullscreen?: boolean;
         dismissible?: boolean;
-        closable?: boolean;
       };
       'arc-diff': ArcBaseAttributes & {
         original?: string;
@@ -588,9 +558,6 @@ declare module 'preact' {
         multiline?: boolean;
         disabled?: boolean;
       };
-      'arc-inline-message': ArcBaseAttributes & {
-        variant?: 'info' | 'success' | 'warning' | 'error';
-      };
       'arc-input': ArcBaseAttributes & {
         required?: boolean;
         readonly?: boolean;
@@ -624,10 +591,6 @@ declare module 'preact' {
         disabled?: boolean;
       };
       'arc-kbd': ArcBaseAttributes;
-      'arc-key-value': ArcBaseAttributes & {
-        layout?: 'horizontal' | 'stacked';
-        dividers?: boolean;
-      };
       'arc-keyboard-map': ArcBaseAttributes & {
         layout?: 'compact' | 'ansi';
         highlight?: string|string[];
@@ -648,9 +611,6 @@ declare module 'preact' {
         label?: string;
         detents?: number[];
         format?: Function;
-      };
-      'arc-kv-pair': ArcBaseAttributes & {
-        label?: string;
       };
       'arc-label': ArcBaseAttributes & {
         for?: string;
@@ -755,14 +715,6 @@ declare module 'preact' {
         optimum?: number | string;
         label?: string;
       };
-      'arc-modal': ArcBaseAttributes & {
-        open?: boolean;
-        heading?: string;
-        size?: 'sm' | 'md' | 'lg';
-        fullscreen?: boolean;
-        dismissible?: boolean;
-        closable?: boolean;
-      };
       'arc-multi-select': ArcBaseAttributes & {
         required?: boolean;
         readonly?: boolean;
@@ -812,16 +764,6 @@ declare module 'preact' {
         value?: string;
         disabled?: boolean;
         selected?: boolean;
-      };
-      'arc-otp-input': ArcBaseAttributes & {
-        required?: boolean;
-        readonly?: boolean;
-        size?: 'sm' | 'md' | 'lg';
-        length?: number | string;
-        value?: string;
-        name?: string;
-        disabled?: boolean;
-        type?: 'number' | 'text';
       };
       'arc-page-header': ArcBaseAttributes & {
         heading?: string;
@@ -885,9 +827,6 @@ declare module 'preact' {
         'show-value'?: boolean;
         showValue?: boolean;
         label?: string;
-      };
-      'arc-progress-toast': ArcBaseAttributes & {
-        position?: 'top-right' | 'bottom-right';
       };
       'arc-prose': ArcBaseAttributes & {
         size?: 'sm' | 'md' | 'lg';
@@ -1008,11 +947,6 @@ declare module 'preact' {
         error?: string;
         open?: boolean;
       };
-      'arc-separator': ArcBaseAttributes & {
-        orientation?: 'horizontal' | 'vertical';
-        label?: string;
-        variant?: 'line' | 'dashed' | 'dotted' | 'fade';
-      };
       'arc-settings-layout': ArcBaseAttributes & {
         'nav-position'?: 'left' | 'top';
         navPosition?: 'left' | 'top';
@@ -1075,10 +1009,6 @@ declare module 'preact' {
         name?: string;
         disabled?: boolean;
         label?: string;
-      };
-      'arc-snackbar': ArcBaseAttributes & {
-        position?: 'bottom-center' | 'bottom-left' | 'bottom-right';
-        duration?: number | string;
       };
       'arc-sortable-list': ArcBaseAttributes & {
         disabled?: boolean;
@@ -1151,12 +1081,6 @@ declare module 'preact' {
       'arc-tab': ArcBaseAttributes & {
         label?: string;
         disabled?: boolean;
-      };
-      'arc-table': ArcBaseAttributes & {
-        columns?: string[];
-        rows?: string[][];
-        striped?: boolean;
-        density?: 'default' | 'compact';
       };
       'arc-tabs': ArcBaseAttributes & {
         selected?: number | string;

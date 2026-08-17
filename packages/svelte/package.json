@@ -43,11 +43,6 @@
       "svelte": "./dist/content/AvatarGroup.svelte",
       "default": "./dist/content/AvatarGroup.svelte"
     },
-    "./Callout": {
-      "types": "./dist/content/Callout.svelte.d.ts",
-      "svelte": "./dist/content/Callout.svelte",
-      "default": "./dist/content/Callout.svelte"
-    },
     "./Card": {
       "types": "./dist/content/Card.svelte.d.ts",
       "svelte": "./dist/content/Card.svelte",
@@ -67,11 +62,6 @@
       "types": "./dist/content/ColorSwatch.svelte.d.ts",
       "svelte": "./dist/content/ColorSwatch.svelte",
       "default": "./dist/content/ColorSwatch.svelte"
-    },
-    "./Column": {
-      "types": "./dist/content/Column.svelte.d.ts",
-      "svelte": "./dist/content/Column.svelte",
-      "default": "./dist/content/Column.svelte"
     },
     "./CtaBanner": {
       "types": "./dist/content/CtaBanner.svelte.d.ts",
@@ -148,11 +138,6 @@
       "svelte": "./dist/content/ScrollIndicator.svelte",
       "default": "./dist/content/ScrollIndicator.svelte"
     },
-    "./Separator": {
-      "types": "./dist/content/Separator.svelte.d.ts",
-      "svelte": "./dist/content/Separator.svelte",
-      "default": "./dist/content/Separator.svelte"
-    },
     "./Skeleton": {
       "types": "./dist/content/Skeleton.svelte.d.ts",
       "svelte": "./dist/content/Skeleton.svelte",
@@ -228,11 +213,6 @@
       "svelte": "./dist/data/DataGrid.svelte",
       "default": "./dist/data/DataGrid.svelte"
     },
-    "./DataTable": {
-      "types": "./dist/data/DataTable.svelte.d.ts",
-      "svelte": "./dist/data/DataTable.svelte",
-      "default": "./dist/data/DataTable.svelte"
-    },
     "./DescriptionItem": {
       "types": "./dist/data/DescriptionItem.svelte.d.ts",
       "svelte": "./dist/data/DescriptionItem.svelte",
@@ -262,16 +242,6 @@
       "types": "./dist/data/Kanban.svelte.d.ts",
       "svelte": "./dist/data/Kanban.svelte",
       "default": "./dist/data/Kanban.svelte"
-    },
-    "./KeyValue": {
-      "types": "./dist/data/KeyValue.svelte.d.ts",
-      "svelte": "./dist/data/KeyValue.svelte",
-      "default": "./dist/data/KeyValue.svelte"
-    },
-    "./KvPair": {
-      "types": "./dist/data/KvPair.svelte.d.ts",
-      "svelte": "./dist/data/KvPair.svelte",
-      "default": "./dist/data/KvPair.svelte"
     },
     "./LevelMeter": {
       "types": "./dist/data/LevelMeter.svelte.d.ts",
@@ -312,11 +282,6 @@
       "types": "./dist/data/Stepper.svelte.d.ts",
       "svelte": "./dist/data/Stepper.svelte",
       "default": "./dist/data/Stepper.svelte"
-    },
-    "./Table": {
-      "types": "./dist/data/Table.svelte.d.ts",
-      "svelte": "./dist/data/Table.svelte",
-      "default": "./dist/data/Table.svelte"
     },
     "./Tag": {
       "types": "./dist/data/Tag.svelte.d.ts",
@@ -547,11 +512,6 @@
       "types": "./dist/input/NumberInput.svelte.d.ts",
       "svelte": "./dist/input/NumberInput.svelte",
       "default": "./dist/input/NumberInput.svelte"
-    },
-    "./OtpInput": {
-      "types": "./dist/input/OtpInput.svelte.d.ts",
-      "svelte": "./dist/input/OtpInput.svelte",
-      "default": "./dist/input/OtpInput.svelte"
     },
     "./PasswordInput": {
       "types": "./dist/input/PasswordInput.svelte.d.ts",
@@ -828,11 +788,6 @@
       "svelte": "./dist/layout/Center.svelte",
       "default": "./dist/layout/Center.svelte"
     },
-    "./Cluster": {
-      "types": "./dist/layout/Cluster.svelte.d.ts",
-      "svelte": "./dist/layout/Cluster.svelte",
-      "default": "./dist/layout/Cluster.svelte"
-    },
     "./Container": {
       "types": "./dist/layout/Container.svelte.d.ts",
       "svelte": "./dist/layout/Container.svelte",
@@ -978,11 +933,6 @@
       "svelte": "./dist/feedback/HoverCard.svelte",
       "default": "./dist/feedback/HoverCard.svelte"
     },
-    "./InlineMessage": {
-      "types": "./dist/feedback/InlineMessage.svelte.d.ts",
-      "svelte": "./dist/feedback/InlineMessage.svelte",
-      "default": "./dist/feedback/InlineMessage.svelte"
-    },
     "./LoadingOverlay": {
       "types": "./dist/feedback/LoadingOverlay.svelte.d.ts",
       "svelte": "./dist/feedback/LoadingOverlay.svelte",
@@ -992,11 +942,6 @@
       "types": "./dist/feedback/Message.svelte.d.ts",
       "svelte": "./dist/feedback/Message.svelte",
       "default": "./dist/feedback/Message.svelte"
-    },
-    "./Modal": {
-      "types": "./dist/feedback/Modal.svelte.d.ts",
-      "svelte": "./dist/feedback/Modal.svelte",
-      "default": "./dist/feedback/Modal.svelte"
     },
     "./NotificationPanel": {
       "types": "./dist/feedback/NotificationPanel.svelte.d.ts",
@@ -1013,20 +958,10 @@
       "svelte": "./dist/feedback/Progress.svelte",
       "default": "./dist/feedback/Progress.svelte"
     },
-    "./ProgressToast": {
-      "types": "./dist/feedback/ProgressToast.svelte.d.ts",
-      "svelte": "./dist/feedback/ProgressToast.svelte",
-      "default": "./dist/feedback/ProgressToast.svelte"
-    },
     "./Sheet": {
       "types": "./dist/feedback/Sheet.svelte.d.ts",
       "svelte": "./dist/feedback/Sheet.svelte",
       "default": "./dist/feedback/Sheet.svelte"
-    },
-    "./Snackbar": {
-      "types": "./dist/feedback/Snackbar.svelte.d.ts",
-      "svelte": "./dist/feedback/Snackbar.svelte",
-      "default": "./dist/feedback/Snackbar.svelte"
     },
     "./Toast": {
       "types": "./dist/feedback/Toast.svelte.d.ts",

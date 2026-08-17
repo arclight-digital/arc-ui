@@ -8,8 +8,6 @@ export type { BadgeProps } from './Badge.js';
 
 
 
-export { DataTable } from './DataTable.js';
-export type { DataTableProps } from './DataTable.js';
 
 export { DescriptionItem } from './DescriptionItem.js';
 export type { DescriptionItemProps } from './DescriptionItem.js';
@@ -20,11 +18,7 @@ export type { DescriptionListProps } from './DescriptionList.js';
 export { Diff } from './Diff.js';
 export type { DiffProps } from './Diff.js';
 
-export { KeyValue } from './KeyValue.js';
-export type { KeyValueProps } from './KeyValue.js';
 
-export { KvPair } from './KvPair.js';
-export type { KvPairProps } from './KvPair.js';
 
 export { ListItem } from './ListItem.js';
 export type { ListItemProps } from './ListItem.js';
@@ -67,8 +61,6 @@ export type { KanbanProps } from './Kanban.js';
 export { List } from './List.js';
 export type { ListProps } from './List.js';
 
-export { Table } from './Table.js';
-export type { TableProps } from './Table.js';
 
 export { Timeline } from './Timeline.js';
 export type { TimelineProps } from './Timeline.js';

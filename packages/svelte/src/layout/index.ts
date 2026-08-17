@@ -3,7 +3,6 @@ export { default as AppShell } from './AppShell.svelte';
 export { default as AspectGrid } from './AspectGrid.svelte';
 export { default as AuthShell } from './AuthShell.svelte';
 export { default as Center } from './Center.svelte';
-export { default as Cluster } from './Cluster.svelte';
 export { default as Container } from './Container.svelte';
 export { default as DashboardGrid } from './DashboardGrid.svelte';
 export { default as FloatBar } from './FloatBar.svelte';

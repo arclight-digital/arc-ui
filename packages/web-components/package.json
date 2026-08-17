@@ -109,10 +109,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/calendar.register.js"
     },
-    "./callout": {
-      "types": "./types/index.d.ts",
-      "default": "./src/content/callout.register.js"
-    },
     "./card": {
       "types": "./types/index.d.ts",
       "default": "./src/content/card.register.js"
@@ -169,10 +165,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/data/clock.register.js"
     },
-    "./cluster": {
-      "types": "./types/index.d.ts",
-      "default": "./src/layout/cluster.register.js"
-    },
     "./code-block": {
       "types": "./types/index.d.ts",
       "default": "./src/typography/code-block.register.js"
@@ -188,10 +180,6 @@
     "./color-swatch": {
       "types": "./types/index.d.ts",
       "default": "./src/content/color-swatch.register.js"
-    },
-    "./column": {
-      "types": "./types/index.d.ts",
-      "default": "./src/content/column.register.js"
     },
     "./combobox": {
       "types": "./types/index.d.ts",
@@ -260,10 +248,6 @@
     "./data-grid": {
       "types": "./types/index.d.ts",
       "default": "./src/data/data-grid.register.js"
-    },
-    "./data-table": {
-      "types": "./types/index.d.ts",
-      "default": "./src/data/data-table.register.js"
     },
     "./date-picker": {
       "types": "./types/index.d.ts",
@@ -401,10 +385,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/inline-edit.register.js"
     },
-    "./inline-message": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/inline-message.register.js"
-    },
     "./input": {
       "types": "./types/index.d.ts",
       "default": "./src/input/input.register.js"
@@ -429,10 +409,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/typography/kbd.register.js"
     },
-    "./key-value": {
-      "types": "./types/index.d.ts",
-      "default": "./src/data/key-value.register.js"
-    },
     "./keyboard-map": {
       "types": "./types/index.d.ts",
       "default": "./src/typography/keyboard-map.register.js"
@@ -440,10 +416,6 @@
     "./knob": {
       "types": "./types/index.d.ts",
       "default": "./src/input/knob.register.js"
-    },
-    "./kv-pair": {
-      "types": "./types/index.d.ts",
-      "default": "./src/data/kv-pair.register.js"
     },
     "./label": {
       "types": "./types/index.d.ts",
@@ -521,10 +493,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/data/meter.register.js"
     },
-    "./modal": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/modal.register.js"
-    },
     "./multi-select": {
       "types": "./types/index.d.ts",
       "default": "./src/input/multi-select.register.js"
@@ -552,10 +520,6 @@
     "./option": {
       "types": "./types/index.d.ts",
       "default": "./src/shared/option.register.js"
-    },
-    "./otp-input": {
-      "types": "./types/index.d.ts",
-      "default": "./src/input/otp-input.register.js"
     },
     "./page-header": {
       "types": "./types/index.d.ts",
@@ -591,10 +555,6 @@
     "./progress": {
       "types": "./types/index.d.ts",
       "default": "./src/feedback/progress.register.js"
-    },
-    "./progress-toast": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/progress-toast.register.js"
     },
     "./prose": {
       "types": "./types/index.d.ts",
@@ -667,10 +627,6 @@
       "types": "./types/index.d.ts",
       "default": "./src/input/select.register.js"
     },
-    "./separator": {
-      "types": "./types/index.d.ts",
-      "default": "./src/content/separator.register.js"
-    },
     "./settings-layout": {
       "types": "./types/index.d.ts",
       "default": "./src/layout/settings-layout.register.js"
@@ -726,10 +682,6 @@
     "./slider": {
       "types": "./types/index.d.ts",
       "default": "./src/input/slider.register.js"
-    },
-    "./snackbar": {
-      "types": "./types/index.d.ts",
-      "default": "./src/feedback/snackbar.register.js"
     },
     "./solid-jsx": {
       "types": "./types/solid-jsx.d.ts"
@@ -797,10 +749,6 @@
     "./tab": {
       "types": "./types/index.d.ts",
       "default": "./src/navigation/tab.register.js"
-    },
-    "./table": {
-      "types": "./types/index.d.ts",
-      "default": "./src/data/table.register.js"
     },
     "./tabs": {
       "types": "./types/index.d.ts",

@@ -39,12 +39,27 @@ export class ArcNavigationMenu extends LitElement {
         display: block;
         position: relative;
         font-family: var(--font-body);
+        /* container-type: inline-size on .nav__container (below) makes the
+           component's intrinsic inline size zero — containment is the point,
+           but it means a shrink-to-fit parent has nothing to measure. As a
+           flex item this host therefore sized to 0, the collapse query read
+           0 <= 900, and the desktop bar display:none'd itself at every
+           viewport — the site's own top-bar nav vanished on the day the
+           container query landed. A contained container must be sized from
+           outside, so the host claims the row's free space instead of asking
+           its contents. In non-flex contexts flex is inert and display:block
+           already spans. */
+        flex: 1 1 auto;
+        min-width: 0;
       }
 
       .nav {
         display: flex;
         align-items: center;
         gap: var(--space-xs);
+        /* With the host stretching (above), where the items sit inside it is
+           the embedder's call — arc-top-bar sets this from nav-align. */
+        justify-content: var(--nav-justify, flex-start);
       }
 
       .nav__item {
@@ -282,17 +297,24 @@ export class ArcNavigationMenu extends LitElement {
       }
 
       /* ── Mobile panel ── */
-      /* nav-collapse: keep in step with tokens.breakpoint.navCollapse.
+      /* nav-fit: keep in step with tokens.breakpoint.navFit.
          Literal for prism's sake — see the note in arc-top-bar. Guarded by
          check-breakpoint-drift.js.
 
          A container query, not a media query (V4-PLAN 4.4). The unit here is
-         the component: a nav in a 700px sidebar should collapse whatever the
+         the component: a nav in a narrow sidebar should collapse whatever the
          viewport is doing, and a nav in a wide page should not collapse because
          a phone is holding the page. It is also what makes the desktop bar
          testable — a test can set the container's width, and could never set
-         the viewport's. */
-      @container nav (max-width: 900px) {
+         the viewport's.
+
+         navFit, not navCollapse: this measures the *column the pills sit in*,
+         not the page. Carrying the 900px viewport number into a container
+         query hid the nav on every docs page at every desktop width — the
+         search box and actions leave the centre column ~860px inside the
+         bar's 1280px cap, which a 900px reading calls mobile while the
+         viewport-keyed hamburger stays hidden. See the token's comment. */
+      @container nav (max-width: 480px) {
         .nav { display: none; }
       }
 
@@ -762,7 +784,7 @@ export class ArcNavigationMenu extends LitElement {
   _onResize() {
     const container = this.shadowRoot?.querySelector('.nav__container');
     const width = container?.getBoundingClientRect().width ?? 0;
-    if (width > breakpoints.navCollapse && this._mobileOpen) {
+    if (width > breakpoints.navFit && this._mobileOpen) {
       this._closeMobile();
     }
   }

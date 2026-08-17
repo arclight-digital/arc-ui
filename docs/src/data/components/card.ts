@@ -361,5 +361,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['feature-card', 'value-card', 'callout'],
+  seeAlso: ['feature-card', 'value-card', 'alert'],
 };

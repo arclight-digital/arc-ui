@@ -120,6 +120,14 @@ const siteJsonLd = {
       // upgrades almost immediately. The full 164-component barrel follows
       // as a lazy chunk behind the base.css :not(:defined) fade.
       import '@arclux/arc-ui/icon';
+      // The packs register resolvers, not glyphs — each named glyph loads as
+      // its own chunk on demand. Core ships no icons since v4, and every page
+      // shows named glyphs in the shell (sidebar tiers, top-bar actions), so
+      // registration belongs to the layout, not to the pages that remember to
+      // do it. Both packs, because the icon browser's library switcher expects
+      // either to resolve.
+      import '@arclux/arc-ui-icons/phosphor';
+      import '@arclux/arc-ui-icons/lucide';
       import '@arclux/arc-ui/button';
       import '@arclux/arc-ui/icon-button';
       import '@arclux/arc-ui/badge';

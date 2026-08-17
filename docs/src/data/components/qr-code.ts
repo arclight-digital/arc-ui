@@ -156,5 +156,5 @@ export function SharePanel() {
     },
   ],
 
-  seeAlso: ['image', 'copy-button', 'otp-input'],
+  seeAlso: ['image', 'copy-button', 'pin-input'],
 };

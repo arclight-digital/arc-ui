@@ -22,8 +22,6 @@
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, settle, nextFrame } from './helpers.js';
 
-import '../src/feedback/snackbar.register.js';
-import '../src/feedback/progress-toast.register.js';
 import '../src/feedback/hover-card.register.js';
 import '../src/data/countdown-timer.register.js';
 import '../src/typography/time-ago.register.js';
@@ -43,8 +41,6 @@ afterEach(() => cleanup());
  * nothing.
  */
 const TIMED = [
-  ['arc-snackbar', '<arc-snackbar duration="50"></arc-snackbar>'],
-  ['arc-progress-toast', '<arc-progress-toast></arc-progress-toast>'],
   ['arc-hover-card', '<arc-hover-card open-delay="20"><span>t</span></arc-hover-card>'],
   ['arc-countdown-timer', '<arc-countdown-timer target="2099-01-01T00:00:00Z"></arc-countdown-timer>'],
   ['arc-time-ago', '<arc-time-ago live datetime="2026-07-31T00:00:00Z"></arc-time-ago>'],

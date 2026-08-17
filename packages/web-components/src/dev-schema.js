@@ -61,22 +61,6 @@ export default {
   },
   "slug": "avatar"
  },
- "arc-callout": {
-  "attrs": [
-   "variant",
-   "dismissible"
-  ],
-  "enums": {
-   "variant": [
-    "info",
-    "tip",
-    "warning",
-    "error"
-   ]
-  },
-  "slug": "callout",
-  "mergedInto": "arc-alert"
- },
  "arc-card": {
   "attrs": [
    "href",
@@ -124,17 +108,6 @@ export default {
    ]
   },
   "slug": "color-swatch"
- },
- "arc-column": {
-  "attrs": [
-   "field",
-   "key",
-   "label",
-   "sortable",
-   "width"
-  ],
-  "slug": "data-table",
-  "mergedInto": "arc-data-grid"
  },
  "arc-cta-banner": {
   "attrs": [
@@ -360,27 +333,6 @@ export default {
    ]
   },
   "slug": "scroll-indicator"
- },
- "arc-separator": {
-  "attrs": [
-   "orientation",
-   "label",
-   "variant"
-  ],
-  "enums": {
-   "orientation": [
-    "horizontal",
-    "vertical"
-   ],
-   "variant": [
-    "line",
-    "dashed",
-    "dotted",
-    "fade"
-   ]
-  },
-  "slug": "separator",
-  "mergedInto": "arc-divider"
  },
  "arc-skeleton": {
   "attrs": [
@@ -630,26 +582,6 @@ export default {
   },
   "slug": "data-grid"
  },
- "arc-data-table": {
-  "attrs": [
-   "rows",
-   "sortable",
-   "selectable",
-   "sort-column",
-   "sortDirection",
-   "virtual",
-   "rowHeight",
-   "overscan"
-  ],
-  "enums": {
-   "sortDirection": [
-    "asc",
-    "desc"
-   ]
-  },
-  "slug": "data-table",
-  "mergedInto": "arc-data-grid"
- },
  "arc-description-item": {
   "attrs": [
    "term"
@@ -719,27 +651,6 @@ export default {
    "disabled"
   ],
   "slug": "kanban"
- },
- "arc-key-value": {
-  "attrs": [
-   "layout",
-   "dividers"
-  ],
-  "enums": {
-   "layout": [
-    "horizontal",
-    "stacked"
-   ]
-  },
-  "slug": "key-value",
-  "mergedInto": "arc-description-list"
- },
- "arc-kv-pair": {
-  "attrs": [
-   "label"
-  ],
-  "slug": "key-value",
-  "mergedInto": "arc-description-item"
  },
  "arc-level-meter": {
   "attrs": [
@@ -850,22 +761,6 @@ export default {
    "active"
   ],
   "slug": "stepper"
- },
- "arc-table": {
-  "attrs": [
-   "columns",
-   "rows",
-   "striped",
-   "density"
-  ],
-  "enums": {
-   "density": [
-    "default",
-    "compact"
-   ]
-  },
-  "slug": "table",
-  "mergedInto": "arc-data-grid"
  },
  "arc-tag": {
   "attrs": [
@@ -1063,8 +958,7 @@ export default {
    "heading",
    "size",
    "fullscreen",
-   "dismissible",
-   "closable"
+   "dismissible"
   ],
   "enums": {
    "size": [
@@ -1097,21 +991,6 @@ export default {
   },
   "slug": "hover-card"
  },
- "arc-inline-message": {
-  "attrs": [
-   "variant"
-  ],
-  "enums": {
-   "variant": [
-    "info",
-    "success",
-    "warning",
-    "error"
-   ]
-  },
-  "slug": "inline-message",
-  "mergedInto": "arc-alert"
- },
  "arc-loading-overlay": {
   "attrs": [
    "active",
@@ -1136,25 +1015,6 @@ export default {
    ]
   },
   "slug": "conversation"
- },
- "arc-modal": {
-  "attrs": [
-   "open",
-   "heading",
-   "size",
-   "fullscreen",
-   "dismissible",
-   "closable"
-  ],
-  "enums": {
-   "size": [
-    "sm",
-    "md",
-    "lg"
-   ]
-  },
-  "slug": "modal",
-  "mergedInto": "arc-dialog"
  },
  "arc-notification-panel": {
   "attrs": [
@@ -1185,19 +1045,6 @@ export default {
    ]
   },
   "slug": "popover"
- },
- "arc-progress-toast": {
-  "attrs": [
-   "position"
-  ],
-  "enums": {
-   "position": [
-    "top-right",
-    "bottom-right"
-   ]
-  },
-  "slug": "progress-toast",
-  "mergedInto": "arc-toast"
  },
  "arc-progress": {
   "attrs": [
@@ -1234,21 +1081,6 @@ export default {
    ]
   },
   "slug": "sheet"
- },
- "arc-snackbar": {
-  "attrs": [
-   "position",
-   "duration"
-  ],
-  "enums": {
-   "position": [
-    "bottom-center",
-    "bottom-left",
-    "bottom-right"
-   ]
-  },
-  "slug": "snackbar",
-  "mergedInto": "arc-toast"
  },
  "arc-toast": {
   "attrs": [
@@ -1714,31 +1546,6 @@ export default {
   },
   "slug": "number-input"
  },
- "arc-otp-input": {
-  "attrs": [
-   "size",
-   "length",
-   "value",
-   "name",
-   "disabled",
-   "type",
-   "required",
-   "readonly"
-  ],
-  "enums": {
-   "size": [
-    "sm",
-    "md",
-    "lg"
-   ],
-   "type": [
-    "number",
-    "text"
-   ]
-  },
-  "slug": "otp-input",
-  "mergedInto": "arc-pin-input"
- },
  "arc-password-input": {
   "attrs": [
    "name",
@@ -2192,36 +1999,6 @@ export default {
    "text"
   ],
   "slug": "center"
- },
- "arc-cluster": {
-  "attrs": [
-   "gap",
-   "align",
-   "justify"
-  ],
-  "enums": {
-   "gap": [
-    "xs",
-    "sm",
-    "md",
-    "lg",
-    "xl"
-   ],
-   "align": [
-    "start",
-    "center",
-    "end"
-   ],
-   "justify": [
-    "start",
-    "center",
-    "end",
-    "space-between",
-    "space-around"
-   ]
-  },
-  "slug": "cluster",
-  "mergedInto": "arc-stack"
  },
  "arc-container": {
   "attrs": [

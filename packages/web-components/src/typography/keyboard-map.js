@@ -501,13 +501,23 @@ export class ArcKeyboardMap extends DeclaredPropsMixin(LitElement) {
     this.labels = true;
     this.platform = 'auto';
     this.caption = '';
-    /* Server-safe default; the real detection waits for connectedCallback,
-       so a Node render never reads navigator (the connection-status rule). */
+    /* Server-safe default; the real detection waits for firstUpdated, so a
+       Node render never reads navigator (the connection-status rule). */
     this._detected = 'mac';
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  /**
+   * Detection lands here, not in connectedCallback, because navigator is the
+   * one input the server does not have. A server-rendered board is always the
+   * mac board; connectedCallback runs before the client's first render, so
+   * detecting there made that first render the win board instead — a different
+   * bottom row, and `mod` lighting Ctrl where the server lit Cmd. Those keys
+   * swap between the hit and the plain template, which is a part changing shape
+   * under hydration and the one thing it cannot adopt. By firstUpdated the
+   * server DOM has been adopted, and the re-render this schedules corrects the
+   * board within the same frame — before paint on a client-only page too.
+   */
+  firstUpdated() {
     if (typeof navigator !== 'undefined') {
       const p = navigator.platform || navigator.userAgent || '';
       this._detected = /mac|iphone|ipad|ipod/i.test(p) ? 'mac' : 'win';

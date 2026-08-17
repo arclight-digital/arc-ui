@@ -186,5 +186,5 @@ export function PageCTA() {
     },
   ],
 
-  seeAlso: ['callout', 'feature-card', 'button'],
+  seeAlso: ['alert', 'feature-card', 'button'],
 };

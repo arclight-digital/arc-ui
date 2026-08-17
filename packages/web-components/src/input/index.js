@@ -20,7 +20,6 @@ export { ArcInputGroup } from './input-group.register.js';
 export { ArcLabel } from './label.register.js';
 export { ArcMultiSelect } from './multi-select.register.js';
 export { ArcNumberInput } from './number-input.register.js';
-export { ArcOtpInput } from './otp-input.register.js';
 export { ArcPinInput } from './pin-input.register.js';
 export { ArcRadio } from './radio.register.js';
 export { ArcRadioGroup } from './radio-group.register.js';

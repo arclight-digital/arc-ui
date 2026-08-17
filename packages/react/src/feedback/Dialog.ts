@@ -10,7 +10,6 @@ export interface DialogProps {
   size?: 'sm' | 'md' | 'lg';
   fullscreen?: boolean;
   dismissible?: boolean;
-  closable?: boolean;
   className?: string;
   children?: React.ReactNode;
   onArcClose?: (e: CustomEvent) => void;

@@ -13,7 +13,6 @@ import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, tick, record, only } from './helpers.js';
 
 import '../src/input/number-input.register.js';
-import '../src/input/otp-input.register.js';
 import '../src/input/pin-input.register.js';
 import '../src/input/color-picker.register.js';
 import '../src/input/input.register.js';
@@ -69,7 +68,7 @@ describe('arc-number-input', () => {
   });
 });
 
-for (const [tag, len] of [['arc-otp-input', 4], ['arc-pin-input', 4]]) {
+for (const [tag, len] of [['arc-pin-input', 4]]) {
   describe(tag, () => {
     async function typeInto(el, chars) {
       const boxes = [...el.shadowRoot.querySelectorAll('input')];

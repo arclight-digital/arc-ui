@@ -46,11 +46,4 @@ export class Dialog {
   get dismissible(): boolean {
     return this._el.dismissible;
   }
-
-  @Input() set closable(value: boolean) {
-    this._el.closable = value;
-  }
-  get closable(): boolean {
-    return this._el.closable;
-  }
 }

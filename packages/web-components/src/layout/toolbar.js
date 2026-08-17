@@ -7,7 +7,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
- * Horizontal toolbar with start, center, and end slots.
+ * Horizontal toolbar with prefix, center, and suffix slots.
  *
  * @tag arc-toolbar
  * @status stable
@@ -20,18 +20,13 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @slot prefix - Content pinned to the inline-start edge of the bar.
  * @slot - Default content.
  * @slot suffix - Content pinned to the inline-end edge of the bar.
- * @slot start - Deprecated alias of `prefix`, kept through v4 and removed in v5. Content in it
- *   still renders in the same region, ahead of anything slotted into `prefix`.
- * @slot end - Deprecated alias of `suffix`, kept through v4 and removed in v5.
  * @csspart more
  * @csspart overflow-panel
  * @csspart overflow-item
  * @csspart base
  * @csspart prefix
- * @csspart start - Alias of `prefix`, on the same element. Kept through v4.
  * @csspart center
  * @csspart suffix
- * @csspart end - Alias of `suffix`, on the same element. Kept through v4.
  */
 export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -258,7 +253,7 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
     this._lastFocusedIndex = idx;
   }
 
-  /** Slotted elements across start/center/end slots, in visual order. Skips items the consumer hid themselves. */
+  /** Slotted elements across prefix/center/suffix slots, in visual order. Skips items the consumer hid themselves. */
   get _slottedItems() {
     const slots = this.shadowRoot?.querySelectorAll('slot') || [];
     const items = [];
@@ -434,16 +429,14 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
   render() {
     return html`
       <div class="toolbar" part="base" role="toolbar">
-        <div class="toolbar__start" part="prefix start">
+        <div class="toolbar__start" part="prefix">
           <slot name="prefix" @slotchange=${this._onSlotChange}></slot>
-          <slot name="start" @slotchange=${this._onSlotChange}></slot>
         </div>
         <div class="toolbar__center" part="center">
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>
-        <div class="toolbar__end" part="suffix end">
+        <div class="toolbar__end" part="suffix">
           <slot name="suffix" @slotchange=${this._onSlotChange}></slot>
-          <slot name="end" @slotchange=${this._onSlotChange}></slot>
         </div>
         ${this._renderOverflow()}
       </div>
