@@ -872,7 +872,8 @@
     "vscode.css-custom-data.json"
   ],
   "scripts": {
-    "build": "echo 'No build step — plain JS modules'"
+    "build": "echo 'No build step — plain JS modules'",
+    "prepublishOnly": "node ../../scripts/publish-guard.js"
   },
   "sideEffects": [
     "./src/**/*.register.js",

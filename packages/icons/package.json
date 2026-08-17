@@ -7,6 +7,9 @@
   ],
   "license": "MIT AND ISC",
   "type": "module",
+  "scripts": {
+    "prepublishOnly": "node ../../scripts/publish-guard.js"
+  },
   "files": [
     "src/"
   ],

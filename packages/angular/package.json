@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "ng-packagr -p ng-package.json -c tsconfig.json",
-    "prepack": "pnpm run build"
+    "prepack": "pnpm run build",
+    "prepublishOnly": "node ../../scripts/publish-guard.js"
   },
   "peerDependencies": {
     "@angular/common": ">=17.0.0 <22.0.0",

@@ -7,6 +7,9 @@
   ],
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "prepublishOnly": "node ../../scripts/publish-guard.js"
+  },
   "files": [
     "css/",
     "examples/"

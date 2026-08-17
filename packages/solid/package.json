@@ -1000,7 +1000,8 @@
   ],
   "scripts": {
     "build": "vite build && tsc -p tsconfig.json",
-    "prepack": "pnpm run build"
+    "prepack": "pnpm run build",
+    "prepublishOnly": "node ../../scripts/publish-guard.js"
   },
   "peerDependencies": {
     "@arclux/arc-ui": "workspace:^",
