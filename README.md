@@ -18,15 +18,13 @@
 
 ---
 
-A component library is usually a bet on a framework. Rewrite the app and you rewrite the design system with it — the tokens, the a11y work, the focus behaviour, the eighteen months of small corrections nobody wrote down.
+A component library is a bet on a framework. Rewrite the app and you rewrite the design system with it.
 
-ARC UI is written once as [Lit](https://lit.dev) Web Components — the platform's own component model, not a framework's — and **Prism**, our generator, produces native wrappers for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source. Same elements, same shadow DOM, same tokens, same rendered pixels. Move a team from Angular to React and the design system does not move with them; the import path changes.
+ARC UI is written once as [Lit](https://lit.dev) Web Components, and **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source. Same elements, same tokens, same pixels — change framework and only the import path moves.
 
-That is a claim two things have to be true for, so both are enforced rather than asserted. Every wrapper package is **mounted in a real browser on every run** and checked against one shared contract, which is how three defects that had shipped since the wrapper packages existed were found — Angular defining no custom elements at all among them. And the visual system is CSS custom properties end to end, so the zero-JavaScript HTML/CSS package gets the same design as the React one.
+Built AI-first: components are generated, then held to 4,600+ UI tests and a 600-test generator suite before anything ships. The verification layer, not the author, is the authority — every wrapper package mounts in a real browser on every run, and the visual system is CSS custom properties end to end, so the zero-JS HTML package wears the same design as the React one.
 
-ARC UI is built AI-first: components are generated, then held to 4,600+ UI tests and a 600-test generator suite before anything ships. That order is the architecture decision — the verification layer, not the author, is the authority.
-
-One runtime dependency: Lit. Heavier extras like syntax highlighting and QR encoding ship only with the components that use them.
+One runtime dependency: Lit.
 
 ## Quick Start
 
