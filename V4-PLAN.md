@@ -799,10 +799,12 @@ deletes — and cutting first shrinks the tree every later workstream touches.
 Non-blocking, may trail into 4.x minors: 4.8 (ships `experimental`), 4.9,
 4.10.
 
-**Status (2026-08-16): every row the v4.0.0 tag requires is done** — 4.1
-through 4.7, and 4.11. What remains before the tag is outside this plan:
-**prism 3.0**, which now ships paired with v4.0 (see `PRISM-3.md`), and Phase
-5's beta and soak. 4.5's two
+**Status (2026-08-17): every row the v4.0.0 tag requires is done** — 4.1
+through 4.7, and 4.11 — **and prism 3.0.0 has shipped** (`PRISM-3.md` in full;
+arc-ui regenerated on it in `7fc51b2b`, deleting the 784 lines of generator work
+that existed only because prism could not do it). What remains before the tag is
+Phase 5: the branch has never been pushed and CI has never run on any of its 67
+commits, then the beta and its soak. 4.5's two
 recorded non-goals — the docs site has never been measured against
 `type-roles` or the extended `gradient-stops`, and the four per-component
 `density` props stay — are follow-ups, not gaps in the row.
