@@ -1,9 +1,0 @@
-{
-  "detector": {
-    "ignoreRules": [
-      "gradient-text"
-    ],
-    "ignoreFiles": [],
-    "ignoreValues": []
-  }
-}

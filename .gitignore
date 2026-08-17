@@ -36,3 +36,6 @@ docs/public/search-index.json
 
 # SvelteKit build artifacts — 430 files that were tracked by mistake.
 .svelte-kit/
+
+# Impeccable design-plugin config — machine-local, not codified
+.impeccable/
