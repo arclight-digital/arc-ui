@@ -34,6 +34,7 @@ if (!version) {
 const packages = [
   '.',
   'packages/web-components',
+  'packages/icons',
   'packages/react',
   'packages/vue',
   'packages/svelte',
