@@ -1,7 +1,7 @@
 {
   "name": "@arclux/arc-ui-icons",
-  "version": "4.0.1",
-  "description": "ARC UI \u2014 Phosphor and Lucide icon packs, registered into @arclux/arc-ui on demand.",
+  "version": "4.1.0",
+  "description": "ARC UI — Phosphor and Lucide icon packs, registered into @arclux/arc-ui on demand.",
   "sideEffects": [
     "./src/*.register.js"
   ],
