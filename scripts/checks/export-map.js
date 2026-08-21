@@ -29,7 +29,31 @@
  * What is always checked is anything resolving to committed source, which is
  * where both real defects lived.
  *
- * Run via: pnpm check export-map (and as part of pnpm generate)
+ * ── Types are part of the promise ──
+ *
+ * A subpath that resolves to JavaScript with no `types` condition installs
+ * fine, imports fine, and hands every TypeScript consumer TS7016 — "could not
+ * find a declaration file … implicitly has an 'any' type". The package looks
+ * typed, because its root entry is; the deep import the docs recommend is not.
+ *
+ * generate-exports.js has asserted this since 4.1, but only for
+ * @arclux/arc-ui, whose map it writes. @arclux/arc-ui-icons writes its own by
+ * hand and was never covered: all five of its JavaScript subpaths — both packs'
+ * per-glyph wildcards, both register modules, and `./aliases` — published no
+ * types, so `import check from '@arclux/arc-ui-icons/phosphor/check'` was
+ * implicitly `any` for the whole of v4.0. That is the same defect
+ * `./shared/time-scale` had in 2.x, arriving in the one package the generator
+ * does not touch, which is why the assertion belongs here instead: this check
+ * reads every published map, whoever wrote it.
+ *
+ * An explicit `types` condition satisfies it. So does a `.d.ts` beside the
+ * target, which is how a tsc-built `dist/` is laid out and which TypeScript
+ * resolves on its own — a wrapper package is not made wrong by being built
+ * conventionally. Wildcards have no single sibling to find, so they must say
+ * `types` outright.
+ *
+ * Run via: pnpm check export-map (and directly in CI, before the wrapper
+ * tarballs are packed, where dist/ exists and its targets are real)
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -60,10 +84,32 @@ function unbuilt(pkgRoot, target) {
   return !fs.existsSync(path.join(pkgRoot, first));
 }
 
+const JS = /\.(?:js|mjs|cjs)$/;
+
+/** The `types` target anywhere inside an entry, however deeply nested. */
+function typesTarget(node) {
+  if (!node || typeof node !== 'object') return undefined;
+  if (typeof node.types === 'string') return node.types;
+  for (const v of Object.values(node)) {
+    const found = typesTarget(v);
+    if (found !== undefined) return found;
+  }
+  return undefined;
+}
+
+/** A wildcard target resolves to a directory; anything else to a file. */
+function resolves(pkgRoot, target) {
+  const probe = target.includes('*')
+    ? path.join(pkgRoot, target.slice(0, target.indexOf('*')))
+    : path.join(pkgRoot, target);
+  return fs.existsSync(probe);
+}
+
 const problems = [];
 let checked = 0;
 let skipped = 0;
 let packages = 0;
+let typed = 0;
 
 for (const dir of fs.readdirSync(PACKAGES)) {
   const manifestPath = path.join(PACKAGES, dir, 'package.json');
@@ -90,6 +136,45 @@ for (const dir of fs.readdirSync(PACKAGES)) {
       if (!fs.existsSync(probe)) {
         problems.push(`${dir}: "${subpath}" → ${target} does not exist`);
       }
+    }
+
+    // Every JavaScript subpath must reach a declaration file. See the header:
+    // without one the import is implicitly `any`, and nothing about installing
+    // or importing the package says so.
+    const js = targets(node).filter((t) => t.startsWith('.') && JS.test(t));
+    if (js.length === 0) continue;
+    if (js.some((t) => unbuilt(pkgRoot, t))) continue;
+
+    const declared = typesTarget(node);
+    if (declared !== undefined) {
+      if (resolves(pkgRoot, declared)) {
+        typed += 1;
+      } else {
+        problems.push(`${dir}: "${subpath}" → types: ${declared} does not exist`);
+      }
+      continue;
+    }
+
+    if (subpath.includes('*')) {
+      problems.push(
+        `${dir}: "${subpath}" is a wildcard with no "types" condition — ` +
+          'a wildcard has no sibling declaration for TypeScript to find'
+      );
+      continue;
+    }
+
+    // No condition, but TypeScript still finds a `.d.ts` sitting beside the
+    // target on its own. That is what a tsc-built dist/ looks like.
+    const missing = js.filter(
+      (t) => !fs.existsSync(path.join(pkgRoot, t.replace(JS, '.d.ts')))
+    );
+    if (missing.length) {
+      problems.push(
+        `${dir}: "${subpath}" → ${missing.join(', ')} publishes no types ` +
+          '(add a "types" condition, or a .d.ts beside the target)'
+      );
+    } else {
+      typed += 1;
     }
   }
 
@@ -120,6 +205,7 @@ if (problems.length === 0) {
   console.log(
     `check-export-map: ${checked} export target(s) across ${packages} published package(s) all resolve${note}`
   );
+  console.log(`  ${typed} JavaScript subpath(s) reach a declaration file`);
   process.exit(0);
 }
 
@@ -129,6 +215,9 @@ console.error(
   '\nAn export map is a promise to consumers. A subpath pointing at a deleted\n' +
     'file installs fine, leaves the barrel working, and throws\n' +
     'ERR_MODULE_NOT_FOUND only for whoever imports it — which is why two of\n' +
-    'these shipped unnoticed. Remove the entry or restore the file.'
+    'these shipped unnoticed. Remove the entry or restore the file.\n\n' +
+    'A subpath that publishes no types is quieter still: it imports fine and\n' +
+    'is implicitly `any`, so the failure is a type nobody was ever given.\n' +
+    'Add a "types" condition, or put a .d.ts beside the target.'
 );
 process.exit(1);

@@ -36,7 +36,7 @@
     "mutate:props": "node scripts/mutate.js --source packages/web-components/src/shared/props.js --tests packages/web-components/test/props.test.js --gate 90",
     "mutate:sample": "node scripts/mutate-sample.js",
     "test:log": "bash scripts/test-run.sh",
-    "typecheck": "tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts packages/web-components/types/shared-styles.d.ts packages/web-components/types/shared/*.d.ts packages/web-components/types/content/*.d.ts packages/web-components/types/dev.d.ts"
+    "typecheck": "tsc --noEmit --skipLibCheck --moduleResolution bundler --module esnext --target es2022 packages/web-components/types/index.d.ts packages/web-components/types/shared-styles.d.ts packages/web-components/types/shared/*.d.ts packages/web-components/types/content/*.d.ts packages/web-components/types/dev.d.ts packages/icons/src/glyph.d.ts packages/icons/src/aliases.d.ts packages/icons/src/*.register.d.ts packages/icons/src/types.d.ts"
   },
   "license": "MIT",
   "devDependencies": {

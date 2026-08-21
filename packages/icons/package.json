@@ -1,7 +1,7 @@
 {
   "name": "@arclux/arc-ui-icons",
   "version": "4.0.1",
-  "description": "ARC UI — Phosphor and Lucide icon packs, registered into @arclux/arc-ui on demand.",
+  "description": "ARC UI \u2014 Phosphor and Lucide icon packs, registered into @arclux/arc-ui on demand.",
   "sideEffects": [
     "./src/*.register.js"
   ],
@@ -14,10 +14,22 @@
     "src/"
   ],
   "exports": {
-    "./phosphor": "./src/phosphor.register.js",
-    "./phosphor/*": "./src/phosphor/*.js",
-    "./lucide": "./src/lucide.register.js",
-    "./lucide/*": "./src/lucide/*.js",
+    "./phosphor": {
+      "types": "./src/phosphor.register.d.ts",
+      "default": "./src/phosphor.register.js"
+    },
+    "./phosphor/*": {
+      "types": "./src/glyph.d.ts",
+      "default": "./src/phosphor/*.js"
+    },
+    "./lucide": {
+      "types": "./src/lucide.register.d.ts",
+      "default": "./src/lucide.register.js"
+    },
+    "./lucide/*": {
+      "types": "./src/glyph.d.ts",
+      "default": "./src/lucide/*.js"
+    },
     "./all/phosphor": {
       "types": "./src/phosphor.d.ts",
       "default": "./src/phosphor.js"
@@ -26,7 +38,10 @@
       "types": "./src/lucide.d.ts",
       "default": "./src/lucide.js"
     },
-    "./aliases": "./src/aliases.js",
+    "./aliases": {
+      "types": "./src/aliases.d.ts",
+      "default": "./src/aliases.js"
+    },
     "./types": {
       "types": "./src/types.d.ts",
       "default": "./src/types.d.ts"
