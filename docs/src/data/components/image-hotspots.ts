@@ -14,6 +14,8 @@ export const imageHotspots: ComponentDef = {
 
 Each pin is a real button: keyboard-focusable, labeled for screen readers, and carrying \`aria-expanded\` popover semantics. Clicking or activating a pin opens its popover anchored above the pin, flipping to fit near viewport edges. The parent keeps one popover open at a time, and an open popover closes on Escape, on a click anywhere else, or on a second click of its pin.
 
+**Every close goes through one method, and it can be vetoed.** A hotspot's \`close()\` fires the cancelable \`arc-close\` before it does anything, so a listener calling \`preventDefault()\` keeps the popover open — whoever asked for the close. That includes the parent: enforcing one-open-at-a-time is itself a \`close()\` call, so a hotspot holding an unsaved note can refuse to be closed by the pin you just clicked, not only by the user pressing Escape. Call it yourself to dismiss a popover from script; the optional first argument, \`restoreFocus\`, defaults to true and returns focus to the pin that opened it — pass \`false\` when you are closing one popover in order to open another, so focus lands on the new pin instead of bouncing back.
+
 The pins render server-side at their coordinates because positioning is pure CSS derived from attributes; only the popover interaction needs JavaScript. Every hotspot reports its activity through \`arc-open\` and \`arc-close\` events that bubble to the parent, with \`detail.value\` carrying the hotspot's label — or its index when no label is set.`,
 
   features: [
@@ -24,6 +26,8 @@ The pins render server-side at their coordinates because positioning is pure CSS
     'Popovers flip and shift to stay inside the viewport',
     'Pins are real buttons: focusable, labeled, `aria-expanded` state',
     '`arc-open` / `arc-close` events with `detail.value` naming the hotspot',
+    '`arc-close` is cancelable — `preventDefault()` vetoes the close, including the parent’s one-at-a-time enforcement',
+    '`close(restoreFocus)` dismisses a popover from script, with focus return under your control',
     'Pins server-render at their positions; popovers stay closed without JS',
     'Ambient pulse is suppressed under `prefers-reduced-motion`',
   ],
@@ -35,11 +39,13 @@ The pins render server-side at their coordinates because positioning is pure CSS
       'Place pins on the feature they describe, not beside it — coordinates are the whole message',
       'Use a handful of pins per image; three to six is the comfortable range',
       'Constrain the component to a readable width so pin targets stay comfortably apart',
+      'Cancel `arc-close` while a popover holds unsaved input — the veto applies to the parent’s auto-close too, not just to Escape',
+      'Pass `close(false)` when your own code closes one popover in order to open another, so focus follows the user forward',
     ],
     dont: [
       "Do not crowd pins so close together that their popovers cover each other's targets",
       'Do not put critical information only in a popover — undiscovered pins go unread',
-      "Do not use Image Hotspots for step-by-step onboarding — that is Guided Tour's job",
+      'Do not use Image Hotspots for step-by-step onboarding — pins are a flat set with no order, and nothing here sequences them (`arc-guided-tour` was cut in v4; `arc-tour` is the planned rebuild)',
       'Do not rely on pixel positions in your head; x and y are percentages of the image box',
     ],
   },

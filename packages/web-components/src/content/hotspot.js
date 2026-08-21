@@ -283,9 +283,17 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * Close the popover, firing the cancelable arc-close first. Public: the
-   * parent calls this to enforce one-open-at-a-time, so a consumer's veto is
-   * honoured there too.
+   * Close the popover, firing the cancelable `arc-close` first — so a listener
+   * that calls `preventDefault()` keeps it open, whoever asked for the close.
+   *
+   * arc-image-hotspots calls this to enforce one-open-at-a-time, which is why
+   * a consumer's veto is honoured there too and not only on a manual close.
+   *
+   * @param {boolean} [restoreFocus] Return focus to the pin that opened it.
+   *   Pass false when closing as a side effect of opening another pin, so
+   *   focus lands on the new one instead of bouncing back.
+   *
+   * @returns {void}
    */
   close(restoreFocus = true) {
     if (!this.open) return;

@@ -17,6 +17,8 @@ Use Form whenever you collect more than a single field from the user — contact
 
 **Fields can sit anywhere inside the form.** Nesting a control inside Fieldset, Card, or any layout component makes no difference to whether it is found, validated, serialized, or disabled along with the form.
 
+**\`submit()\` is for the submit control the form cannot own.** A button outside the \`<arc-form>\` does not trigger it — a wizard's Next in a parent toolbar, a Save in an app-level header, a keyboard shortcut. Calling \`submit()\` runs validation and fires \`arc-submit\` cancelably, exactly as pressing a submit button inside the form does, and it routes through the real \`<form>\` so action-mode submits still navigate. It is not a way to skip validation.
+
 **\`reset()\` restores, it does not empty.** Each control returns to the state it had when it first connected, which is what reset means in HTML — a field that shipped with a default value gets that value back, rather than being blanked.
 
 All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup) implement the \`ElementInternals\` form-association API, so they participate in native \`FormData\` collection automatically. This means you can use them inside a plain \`<form action="/api/contact" method="POST">\` for zero-JS static site submissions, or wrap them in \`<arc-form>\` for the full JS validation + \`arc-submit\` experience. For completely framework-free sites, ARC UI ships a \`form.css\` stylesheet that applies the same design tokens to native HTML form elements.`,
@@ -30,6 +32,7 @@ All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup)
     'Works with any form-associated element, including native inputs and ARC UI components',
     'Prevents double-submission by disabling the submit button while `loading` is true',
     'Reset support via `arc-reset` event and programmatic `.reset()` method — restores initial values rather than blanking fields',
+    '`submit()` submits from outside the form — a toolbar button or shortcut — with validation and `arc-submit` unchanged',
     'Finds controls at any depth, including inside Fieldset and layout components',
     'Delegates validity to each control, so custom form-associated elements participate',
     'Keyboard-accessible — Enter key inside a single-line input triggers submission',

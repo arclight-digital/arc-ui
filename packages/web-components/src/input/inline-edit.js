@@ -194,7 +194,11 @@ export class ArcInlineEdit extends DeclaredPropsMixin(FormControlMixin(LitElemen
     this._draft = '';
   }
 
-  /** Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing. */
+  /**
+   * Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.
+   *
+   * @returns {void}
+   */
   edit() {
     if (this.disabled || this.readonly || this._editing) return;
     this._draft = this.value ?? '';
@@ -208,12 +212,20 @@ export class ArcInlineEdit extends DeclaredPropsMixin(FormControlMixin(LitElemen
     });
   }
 
-  /** Commit the current draft and leave edit mode. Fires arc-change only if the value changed. */
+  /**
+   * Commit the current draft and leave edit mode. Fires arc-change only if the value changed.
+   *
+   * @returns {void}
+   */
   commit() {
     this._finish({ commit: true, restoreFocus: false });
   }
 
-  /** Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel. */
+  /**
+   * Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel.
+   *
+   * @returns {void}
+   */
   cancel() {
     this._finish({ commit: false, restoreFocus: false });
   }

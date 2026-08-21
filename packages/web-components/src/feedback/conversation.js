@@ -113,7 +113,11 @@ export class ArcConversation extends DeclaredPropsMixin(LitElement) {
     return Math.max(0, c.scrollHeight - c.scrollTop - c.clientHeight);
   }
 
-  /** Scroll the transcript to its newest message. */
+  /**
+   * Scroll the transcript to its newest message.
+   *
+   * @returns {void}
+   */
   scrollToEnd() {
     const c = this._container;
     if (!c) return;

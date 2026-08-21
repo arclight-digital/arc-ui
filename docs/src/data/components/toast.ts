@@ -6,7 +6,7 @@ export const toast: ComponentDef = {
   tag: 'arc-toast',
   tier: 'feedback',
   interactivity: 'interactive',
-  searchKeywords: ['notification'],
+  searchKeywords: ['notification', 'progress', 'snackbar', 'action'],
   description:
     'Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable position, and smooth enter/exit animations.',
 
@@ -20,6 +20,10 @@ A single \`<arc-toast>\` element acts as the toaster: you place it once in your 
 
 Toasts can also be raised from anywhere without a reference to the element: dispatch an \`arc-toast\` event on \`document\` with the same options \`show()\` takes.
 
+**Progress mode** covers long-running work. Pass a numeric \`progress\` to \`show()\` and the toast renders a track beneath its message, then exempts itself from the two behaviours that assume a message is momentary: it is never deduped, and it never auto-dismisses. Two uploads of a file with the same name are two uploads, so coalescing them would leave one bar tracking both; and the toast ends when the work does, not when a timer says so. Move the bar with \`updateToast(id, { progress })\` — which can revise the message in the same call — and finish with \`complete(id)\`, which dismisses it and fires \`arc-complete\`. Supplying an \`onCancel\` callback turns the close button into a cancel button and fires \`arc-cancel\`; without one the toast keeps an ordinary dismiss. \`complete\` is deliberately not \`dismiss\`: the operation finishing and the user closing the toast are different events, and code waiting on the first should not be woken by the second. The mode is chosen at \`show()\` and cannot be switched on later — a track appearing mid-life would relayout a notification the reader is already reading.
+
+**An action button** turns a toast into an undo or a retry. \`actionLabel\` renders a ghost button in the toast, and a click runs the \`action\` callback, fires \`arc-action\`, and dismisses. Both the callback and the event exist because a callback cannot be attached declaratively, and either is a valid way to listen.
+
 Four built-in variants — info, success, warning, and error — apply a colored bottom-edge indicator and a matching icon so users can parse the severity at a glance. The six position options let you anchor the toast stack to any corner or center-edge of the viewport, and a responsive breakpoint ensures toasts span the full width on small screens. The container carries \`role="status"\` and \`aria-live="polite"\` so screen readers announce new messages without stealing focus.`,
 
   features: [
@@ -27,6 +31,10 @@ Four built-in variants — info, success, warning, and error — apply a colored
     '`max-visible` caps on-screen toasts (default 3) and queues the rest; `queue-limit` bounds the backlog',
     '`dedupe` collapses a repeated message into a "(×N)" counter, updated in place',
     '`dismiss(id)` removes a toast whether it is visible or still queued',
+    'Progress mode — pass `progress` to `show()` for a track that skips dedupe and never auto-dismisses',
+    '`updateToast(id, { progress, message })` moves the bar and revises the text; `complete(id)` ends it and fires `arc-complete`',
+    '`onCancel` turns the close button into a cancel button and fires `arc-cancel`',
+    '`action` and `actionLabel` render an undo/retry button that fires `arc-action` before dismissing',
     'Document-level `arc-toast` event raises a toast without a reference to the element',
     '`arc-queue-change` and `arc-queue-overflow` report queue state',
     'Four variants (info, success, warning, error) with color-coded bottom indicators and icons',
@@ -49,18 +57,24 @@ Four built-in variants — info, success, warning, and error — apply a colored
       'Use the error variant for failures that need acknowledgment but not a blocking dialog',
       'Set duration to 0 for critical messages that the user must dismiss manually',
       'Pair with form submissions and async operations to provide immediate feedback',
+      'Use progress mode for work with a knowable percentage — uploads, exports, batch jobs',
+      'Give a progress toast an onCancel whenever the work can actually be abandoned, so the button means something',
+      'Call complete(id) when the work finishes, so listeners can tell completion from the user closing the toast',
     ],
     dont: [
       'Do not create multiple <arc-toast> elements on the same page — use one shared instance',
-      'Do not use toasts for information that requires user decision or input; use a Modal instead',
+      'Do not use toasts for information that requires user decision or input; use a Dialog, or Confirm for a yes/no',
       'Do not display sensitive data (passwords, tokens) in a toast — they are visible to anyone nearby',
       'Do not set very short durations (under 2 000 ms); users may not have time to read the message',
       'Do not rely solely on color to convey meaning — the icon and message text must stand on their own',
       'Do not fire toasts in rapid succession for batch operations; summarize into a single notification',
+      'Do not use progress mode for work of unknown duration — a bar that cannot advance honestly is a Spinner',
+      'Do not leave a progress toast open after its work ends; it never auto-dismisses, so complete(id) or dismiss(id) is required',
+      'Do not put the only route to an irreversible action in a toast action button — it dismisses on its own',
     ],
   },
 
-  previewHtml: `<div style="width:100%"><arc-toast id="demo-toaster" position="top-right"></arc-toast><div style="display:flex;gap:8px;flex-wrap:wrap"><arc-button variant="primary" id="demo-toast-success">Show Success Toast</arc-button><arc-button variant="secondary" id="demo-toast-error">Show Error Toast</arc-button></div></div>`,
+  previewHtml: `<div style="width:100%"><arc-toast id="demo-toaster" position="top-right"></arc-toast><div style="display:flex;gap:8px;flex-wrap:wrap"><arc-button variant="primary" id="demo-toast-success">Show Success Toast</arc-button><arc-button variant="secondary" id="demo-toast-error">Show Error Toast</arc-button><arc-button variant="ghost" id="demo-toast-progress">Upload a File</arc-button></div></div>`,
 
   previewSetup: `
       const toaster = document.getElementById('demo-toaster');
@@ -69,6 +83,27 @@ Four built-in variants — info, success, warning, and error — apply a colored
       });
       document.getElementById('demo-toast-error')?.addEventListener('click', () => {
         toaster?.show({ message: 'Something went wrong. Please try again.', variant: 'error' });
+      });
+      document.getElementById('demo-toast-progress')?.addEventListener('click', () => {
+        let pct = 0;
+        let timer;
+        // onCancel is what puts the cancel button on the toast, so the demo has
+        // to clear its own timer when the reader uses it.
+        const id = toaster?.show({
+          message: 'Uploading report.pdf…',
+          progress: 0,
+          onCancel: () => clearInterval(timer),
+        });
+        timer = setInterval(() => {
+          pct += 8;
+          if (pct >= 100) {
+            clearInterval(timer);
+            toaster?.updateToast(id, { progress: 100, message: 'Uploaded report.pdf' });
+            setTimeout(() => toaster?.complete(id), 700);
+            return;
+          }
+          toaster?.updateToast(id, { progress: pct });
+        }, 240);
       });
     `,
 
@@ -93,21 +128,76 @@ Four built-in variants — info, success, warning, and error — apply a colored
     onclick="document.getElementById('toaster').show({ message: 'Deployment in progress...', variant: 'warning', duration: 6000 })">
     Warning (6 s)
   </arc-button>
-</div>`,
+  <arc-button variant="ghost" onclick="upload()">Upload</arc-button>
+</div>
+
+<script>
+  // Progress mode: a numeric progress option renders the track. The toast then
+  // skips dedupe and never auto-dismisses — it ends when complete() says so.
+  async function upload() {
+    const toaster = document.getElementById('toaster');
+    const controller = new AbortController();
+    const id = toaster.show({
+      message: 'Uploading report.pdf…',
+      progress: 0,
+      onCancel: () => controller.abort(),   // this is what renders the cancel button
+    });
+
+    try {
+      for (let sent = 0; sent <= 100; sent += 10) {
+        await sendChunk(sent, { signal: controller.signal });
+        toaster.updateToast(id, { progress: sent });
+      }
+      toaster.updateToast(id, { message: 'Uploaded report.pdf' });
+      toaster.complete(id);                 // dismisses and fires arc-complete
+    } catch {
+      toaster.dismiss(id);
+      toaster.show({ message: 'Upload failed.', variant: 'error' });
+    }
+  }
+
+  // Completion and cancellation are distinct events, so a listener can tell
+  // "the work finished" from "the user closed it".
+  document.getElementById('toaster').addEventListener('arc-complete', (e) => {
+    console.log('upload finished', e.detail.id);
+  });
+</script>`,
     },
     {
       label: 'React',
       lang: 'tsx',
       code: `import { Toast, Button } from '@arclux/arc-ui-react';
+import type { ArcToast } from '@arclux/arc-ui/toast';
 import { useRef } from 'react';
 
 export function NotificationDemo() {
-  const toastRef = useRef<HTMLElement>(null);
+  // Typing the ref as ArcToast is what makes show()/updateToast()/complete()
+  // and the shape of the options object visible to TypeScript.
+  const toastRef = useRef<ArcToast>(null);
 
   const showSuccess = () =>
-    (toastRef.current as any)?.show({ message: 'Changes saved successfully.', variant: 'success' });
+    toastRef.current?.show({ message: 'Changes saved successfully.', variant: 'success' });
   const showError = () =>
-    (toastRef.current as any)?.show({ message: 'Something went wrong.', variant: 'error' });
+    toastRef.current?.show({ message: 'Something went wrong.', variant: 'error' });
+
+  // Progress mode. show() returns the id every later call needs, and the toast
+  // stays until complete() or dismiss() — there is no timer to race.
+  const upload = async () => {
+    const toaster = toastRef.current;
+    if (!toaster) return;
+    const controller = new AbortController();
+    const id = toaster.show({
+      message: 'Uploading report.pdf…',
+      progress: 0,
+      onCancel: () => controller.abort(),
+    });
+
+    for (let sent = 0; sent <= 100; sent += 10) {
+      await sendChunk(sent, { signal: controller.signal });
+      toaster.updateToast(id, { progress: sent });
+    }
+    toaster.complete(id);
+  };
 
   return (
     <>
@@ -115,6 +205,7 @@ export function NotificationDemo() {
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <Button variant="primary" onClick={showSuccess}>Success</Button>
         <Button variant="secondary" onClick={showError}>Error</Button>
+        <Button variant="ghost" onClick={upload}>Upload</Button>
       </div>
     </>
   );
@@ -162,6 +253,7 @@ const showError   = () => toaster.value?.show({ message: 'Something went wrong.'
       lang: 'ts',
       code: `import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Button, Toast } from '@arclux/arc-ui-angular';
+import type { ArcToast } from '@arclux/arc-ui/toast';
 
 @Component({
   imports: [Button, Toast],
@@ -174,7 +266,7 @@ import { Button, Toast } from '@arclux/arc-ui-angular';
   \`,
 })
 export class NotificationDemoComponent {
-  @ViewChild('toaster') toaster!: ElementRef;
+  @ViewChild('toaster') toaster!: ElementRef<ArcToast>;
 
   showSuccess() {
     this.toaster.nativeElement.show({ message: 'Changes saved successfully.', variant: 'success' });
@@ -188,20 +280,21 @@ export class NotificationDemoComponent {
       label: 'Solid',
       lang: 'tsx',
       code: `import { Button, Toast } from '@arclux/arc-ui-solid';
+import type { ArcToast } from '@arclux/arc-ui/toast';
 
 export function NotificationDemo() {
-  let toaster: HTMLElement | undefined;
+  let toaster: ArcToast | undefined;
 
   return (
     <>
       <Toast ref={toaster} position="top-right" />
       <div style={{ display: 'flex', gap: '8px', 'flex-wrap': 'wrap' }}>
         <Button variant="primary"
-          onClick={() => (toaster as any)?.show({ message: 'Changes saved successfully.', variant: 'success' })}>
+          onClick={() => toaster?.show({ message: 'Changes saved successfully.', variant: 'success' })}>
           Success
         </Button>
         <Button variant="secondary"
-          onClick={() => (toaster as any)?.show({ message: 'Something went wrong.', variant: 'error' })}>
+          onClick={() => toaster?.show({ message: 'Something went wrong.', variant: 'error' })}>
           Error
         </Button>
       </div>
@@ -213,15 +306,16 @@ export function NotificationDemo() {
       label: 'Preact',
       lang: 'tsx',
       code: `import { Button, Toast } from '@arclux/arc-ui-preact';
+import type { ArcToast } from '@arclux/arc-ui/toast';
 import { useRef } from 'preact/hooks';
 
 export function NotificationDemo() {
-  const toastRef = useRef<HTMLElement>(null);
+  const toastRef = useRef<ArcToast>(null);
 
   const showSuccess = () =>
-    (toastRef.current as any)?.show({ message: 'Changes saved successfully.', variant: 'success' });
+    toastRef.current?.show({ message: 'Changes saved successfully.', variant: 'success' });
   const showError = () =>
-    (toastRef.current as any)?.show({ message: 'Something went wrong.', variant: 'error' });
+    toastRef.current?.show({ message: 'Something went wrong.', variant: 'error' });
 
   return (
     <>

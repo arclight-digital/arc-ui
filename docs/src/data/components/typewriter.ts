@@ -13,6 +13,8 @@ export const typewriter: ComponentDef = {
 
 The \`speed\` prop controls milliseconds per character (default 50ms, roughly 20 characters per second), and an optional \`delay\` defers the start for staggered or sequenced reveals. When \`loop\` is enabled, the text clears after a configurable \`pause-end\` duration (default 2s) and replays indefinitely, useful for rotating taglines or feature highlights.
 
+\`replay()\` restarts the animation from the beginning, which is the method behind a "watch again" control and the way to re-trigger a one-shot reveal after the content around it changes. It restarts the same sequence rather than queueing a second one, so calling it mid-type is safe.
+
 A blinking cursor (the classic \`|\` caret) appears by default and automatically fades out once typing completes. The cursor color follows \`--accent-primary\`, so it adapts to any theme. When \`prefers-reduced-motion\` is active, the full text is shown immediately with no animation — the content is never hidden from users who need reduced motion.`,
 
   features: [
@@ -21,7 +23,7 @@ A blinking cursor (the classic \`|\` caret) appears by default and automatically
     'Blinking cursor that fades out on completion',
     'Loop mode with configurable pause between cycles',
     'Respects `prefers-reduced-motion` — shows full text immediately',
-    'Public replay() method for manual restart',
+    '`replay()` restarts the animation from the beginning, safe to call mid-type',
     'Fires `arc-complete` event when typing finishes',
     'Inherits font from parent — works with any typography',
   ],

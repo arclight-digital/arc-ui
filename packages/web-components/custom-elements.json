@@ -1613,10 +1613,20 @@
               "parameters": [
                 {
                   "name": "restoreFocus",
-                  "default": "true"
+                  "default": "true",
+                  "description": "Return focus to the pin that opened it.\nPass false when closing as a side effect of opening another pin, so\nfocus lands on the new one instead of bouncing back.",
+                  "optional": true,
+                  "type": {
+                    "text": "boolean"
+                  }
                 }
               ],
-              "description": "Close the popover, firing the cancelable arc-close first. Public: the\nparent calls this to enforce one-open-at-a-time, so a consumer's veto is\nhonoured there too."
+              "description": "Close the popover, firing the cancelable `arc-close` first — so a listener\nthat calls `preventDefault()` keeps it open, whoever asked for the close.\n\narc-image-hotspots calls this to enforce one-open-at-a-time, which is why\na consumer's veto is honoured there too and not only on a manual close.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -2596,25 +2606,50 @@
               "name": "show",
               "parameters": [
                 {
-                  "name": "index"
+                  "name": "index",
+                  "description": "Zero-based; wraps, so -1 opens the last image.",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
                 }
               ],
-              "description": "Opens the viewer, optionally jumping to a specific image first."
+              "description": "Open the viewer, optionally jumping to a specific image first.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "close",
-              "description": "Closes the viewer through the cancelable arc-close contract."
+              "description": "Closes the viewer through the cancelable arc-close contract.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "next",
-              "description": "Advances to the next image, wrapping past the end."
+              "description": "Advances to the next image, wrapping past the end.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "prev",
-              "description": "Steps to the previous image, wrapping past the start."
+              "description": "Steps to the previous image, wrapping past the start.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -3978,10 +4013,19 @@
               "name": "scrollToIndex",
               "parameters": [
                 {
-                  "name": "index"
+                  "name": "index",
+                  "description": "Zero-based, clamped to the list rather than ignored,\nso an index past the end scrolls to the last row.",
+                  "type": {
+                    "text": "number"
+                  }
                 }
               ],
-              "description": "Scroll a row into view. Clamped to the list."
+              "description": "Scroll a row into view.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -9525,12 +9569,7 @@
               "name": "open",
               "privacy": "public",
               "static": true,
-              "parameters": [
-                {
-                  "name": "{ heading, message, confirmLabel, cancelLabel, variant }",
-                  "default": "{}"
-                }
-              ],
+              "parameters": [],
               "description": "Controls whether the confirmation dialog is visible. For declarative usage; the imperative API manages this automatically.",
               "type": {
                 "text": "boolean"
@@ -9915,7 +9954,12 @@
             {
               "kind": "method",
               "name": "scrollToEnd",
-              "description": "Scroll the transcript to its newest message."
+              "description": "Scroll the transcript to its newest message.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -11389,10 +11433,15 @@
               "parameters": [
                 {
                   "name": "options",
-                  "default": "{}"
+                  "default": "{}",
+                  "description": "`duration` overrides the element's own for this toast alone and\n`persistent` pins it until something dismisses it; progress mode ignores\nboth, being persistent by definition.",
+                  "optional": true,
+                  "type": {
+                    "text": "{ message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }"
+                  }
                 }
               ],
-              "description": "Show a toast, or coalesce it into an identical one that is already showing.",
+              "description": "Show a toast, or coalesce it into an identical one that is already showing.\n\nPassing `progress` puts the toast in progress mode, absorbed from\narc-progress-toast in 4.2: it renders a track beneath the message, exempts\nitself from dedupe and from the auto-dismiss timer, and — given `onCancel`\n— offers a cancel button that fires `arc-cancel`. Move the bar with\n`updateToast(id, { progress })` and end it with `complete(id)`, which fires\n`arc-complete`. The mode is chosen here and is not switchable afterwards: a\ntrack appearing mid-life would relayout a notification the reader is\nalready reading.\n\n`action` and `actionLabel` arrive from arc-snackbar the same way. The label\nrenders a ghost button; a click runs the callback and fires `arc-action`\nbefore the toast dismisses.",
               "return": {
                 "type": {
                   "text": "number"
@@ -11410,12 +11459,22 @@
                   }
                 }
               ],
-              "description": "Dismiss a toast by the id show() returned, whether it is visible or still\nqueued. Unknown ids are ignored."
+              "description": "Dismiss a toast by the id show() returned, whether it is visible or still\nqueued. Unknown ids are ignored.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "clear",
-              "description": "Dismiss everything on screen and discard the queue."
+              "description": "Dismiss everything on screen and discard the queue.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
@@ -11428,27 +11487,36 @@
                   }
                 },
                 {
-                  "name": "{ progress, message }",
-                  "default": "{}"
-                },
-                {
                   "name": "changes",
                   "type": {
                     "text": "{ progress?: number, message?: string }"
                   }
                 }
               ],
-              "description": "Move a progress toast's bar, its message, or both. Unknown ids are ignored,\nmatching dismiss().\n\nNamed `updateToast` rather than `update` because `update` is Lit's — the\nname arc-progress-toast used, and the reason it also carried a do-nothing\n`update(changedProps) { super.update(changedProps); }` override that read\nas if it meant something."
+              "description": "Move a progress toast's bar, its message, or both. Unknown ids are ignored,\nmatching dismiss().\n\nNamed `updateToast` rather than `update` because `update` is Lit's — the\nname arc-progress-toast used, and the reason it also carried a do-nothing\n`update(changedProps) { super.update(changedProps); }` override that read\nas if it meant something.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "complete",
               "parameters": [
                 {
-                  "name": "id"
+                  "name": "id",
+                  "type": {
+                    "text": "number"
+                  }
                 }
               ],
-              "description": "Finish a progress toast: dismiss it and fire `arc-complete`.\n\nDistinct from `dismiss()` on purpose — the operation finishing and the user\nclosing the toast are different events, and a consumer waiting on the first\nshould not be woken by the second."
+              "description": "Finish a progress toast: dismiss it and fire `arc-complete`.\n\nDistinct from `dismiss()` on purpose — the operation finishing and the user\nclosing the toast are different events, and a consumer waiting on the first\nshould not be woken by the second.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -12546,6 +12614,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -12554,6 +12628,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13074,6 +13154,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13082,6 +13168,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13455,6 +13547,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13463,6 +13561,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13976,6 +14080,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -13984,6 +14094,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -14520,6 +14636,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -14528,6 +14650,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -15108,12 +15236,22 @@
             {
               "kind": "method",
               "name": "submit",
-              "description": "Programmatic submit — call from outside"
+              "description": "Submit the form as though its submit button had been pressed: validation\nruns, and `arc-submit` fires cancelably.\n\nThe path for a submit control the form cannot own — a wizard's \"Next\" in a\nparent toolbar, a keyboard shortcut — since a button outside the form does\nnot trigger it. Routed through the real `<form>` so action-mode submits\nstill navigate.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "reset",
-              "description": "Reset every child control to the state it had when it first connected,\nand clear error display.\n\nDelegates to each control's formResetCallback — the same path a native\nform.reset() takes, which never reaches these controls because they live\nin this element's light DOM rather than inside the shadow <form>. The form\nused to blank them instead (`value = ''`, `checked = false`), which is not\nwhat reset means: a control that shipped with a default lost it, and a\nnon-string value (a multi-select's array, a date range's object) was left\nuntouched entirely."
+              "description": "Reset every child control to the state it had when it first connected,\nand clear error display.\n\nDelegates to each control's formResetCallback — the same path a native\nform.reset() takes, which never reaches these controls because they live\nin this element's light DOM rather than inside the shadow <form>. The form\nused to blank them instead (`value = ''`, `checked = false`), which is not\nwhat reset means: a control that shipped with a default lost it, and a\nnon-string value (a multi-select's array, a date range's object) was left\nuntouched entirely.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -15660,7 +15798,12 @@
             {
               "kind": "method",
               "name": "getCrop",
-              "description": "Current crop in natural image pixels: { x, y, width, height }, or null before load."
+              "description": "Current crop in natural image pixels, or null before the image has loaded.",
+              "return": {
+                "type": {
+                  "text": "{ x: number, y: number, width: number, height: number } | null"
+                }
+              }
             },
             {
               "kind": "method",
@@ -15668,13 +15811,28 @@
               "parameters": [
                 {
                   "name": "type",
-                  "default": "'image/png'"
+                  "default": "'image/png'",
+                  "description": "MIME type, `image/png` by default.",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
                 },
                 {
-                  "name": "quality"
+                  "name": "quality",
+                  "description": "Encoder quality 0–1, for the lossy types.",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
                 }
               ],
-              "description": "Export the crop as a Blob at natural resolution."
+              "description": "Export the crop as a Blob at natural resolution.",
+              "return": {
+                "type": {
+                  "text": "Promise<Blob>"
+                }
+              }
             },
             {
               "kind": "method",
@@ -15682,13 +15840,28 @@
               "parameters": [
                 {
                   "name": "type",
-                  "default": "'image/png'"
+                  "default": "'image/png'",
+                  "description": "MIME type, `image/png` by default.",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
                 },
                 {
-                  "name": "quality"
+                  "name": "quality",
+                  "description": "Encoder quality 0–1, for the lossy types.",
+                  "optional": true,
+                  "type": {
+                    "text": "number"
+                  }
                 }
               ],
-              "description": "Export the crop as a data URL at natural resolution."
+              "description": "Export the crop as a data URL at natural resolution.",
+              "return": {
+                "type": {
+                  "text": "Promise<string>"
+                }
+              }
             },
             {
               "kind": "field",
@@ -15843,17 +16016,32 @@
             {
               "kind": "method",
               "name": "edit",
-              "description": "Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing."
+              "description": "Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "commit",
-              "description": "Commit the current draft and leave edit mode. Fires arc-change only if the value changed."
+              "description": "Commit the current draft and leave edit mode. Fires arc-change only if the value changed.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "cancel",
-              "description": "Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel."
+              "description": "Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -16061,6 +16249,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -16069,6 +16263,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -16591,6 +16791,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -16599,6 +16805,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17069,6 +17281,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17077,6 +17295,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17687,6 +17911,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -17695,6 +17925,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18084,6 +18320,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18092,6 +18334,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18485,6 +18733,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18493,6 +18747,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18916,6 +19176,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -18924,6 +19190,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -19360,6 +19632,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -19368,6 +19646,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -19744,6 +20028,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -19752,6 +20042,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -20254,6 +20550,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -20262,6 +20564,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -20673,6 +20981,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -20681,6 +20995,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -21218,6 +21538,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -21226,6 +21552,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -21589,6 +21921,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -21597,6 +21935,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -21829,7 +22173,12 @@
             {
               "kind": "method",
               "name": "clear",
-              "description": "Wipe the canvas, empty the value, and bring the placeholder back."
+              "description": "Wipe the canvas, empty the value, and bring the placeholder back.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
@@ -21837,10 +22186,20 @@
               "parameters": [
                 {
                   "name": "type",
-                  "default": "'image/png'"
+                  "default": "'image/png'",
+                  "description": "MIME type, `image/png` by default.",
+                  "optional": true,
+                  "type": {
+                    "text": "string"
+                  }
                 }
               ],
-              "description": "The current canvas as a data-URL in the requested format (PNG by\ndefault). Unlike `value`, this reads the canvas directly, so a blank pad\nreturns a blank image rather than an empty string."
+              "description": "The current canvas as a data-URL in the requested format (PNG by\ndefault). Unlike `value`, this reads the canvas directly, so a blank pad\nreturns a blank image rather than an empty string.",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              }
             },
             {
               "kind": "field",
@@ -22034,6 +22393,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -22042,6 +22407,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -22428,6 +22799,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -22436,6 +22813,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -23184,6 +23567,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -23192,6 +23581,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -23663,6 +24058,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -23671,6 +24072,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -24276,6 +24683,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -24284,6 +24697,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -24676,6 +25095,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -24684,6 +25109,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -25078,6 +25509,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -25086,6 +25523,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -25499,6 +25942,12 @@
             {
               "kind": "method",
               "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -25507,6 +25956,12 @@
             {
               "kind": "method",
               "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
               "inheritedFrom": {
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
@@ -30199,7 +30654,13 @@
             },
             {
               "kind": "method",
-              "name": "toggle"
+              "name": "toggle",
+              "description": "Collapse an open section or expand a collapsed one, firing `arc-toggle`.\n\nA no-op unless `collapsible` is set: a section that cannot collapse has\nnothing to toggle, and silently doing nothing is better than a state the\nheader offers no way back from.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -32139,11 +32600,23 @@
             },
             {
               "kind": "method",
-              "name": "checkValidity"
+              "name": "checkValidity",
+              "description": "Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
             },
             {
               "kind": "method",
-              "name": "reportValidity"
+              "name": "reportValidity",
+              "description": "As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
             },
             {
               "kind": "field",
@@ -33011,7 +33484,7 @@
               "name": "opts",
               "optional": true,
               "type": {
-                "text": "@param {unknown[]|(() => unknown[])} [opts.default=[]] literal (copied per\n *   element) or factory\n * @param {NumberConstructor} [opts.of] member type; `Number` is the only one\n *   with a caller, and an unsupported value throws rather than being ignored\n "
+                "text": "@param {unknown[]|(() => unknown[])} [opts.default=[]] literal (copied per element) or factory @param {NumberConstructor} [opts.of] member type; `Number` is the only one with a caller, and an unsupported value throws rather than being ignored"
               }
             }
           ],
@@ -33177,7 +33650,7 @@
             {
               "name": "config",
               "type": {
-                "text": "@param {Set<string>} config.banned      Tags dropped with their whole subtree.\n * @param {Set<string>} config.urlAttributes Attributes whose value is a URL.\n * @param {(value: string) => boolean} config.isSafeUrl\n * @param {string} [config.rootTag]        Keep only this element and its\n *   contents, discarding anything around it. Returns null when it is absent.\n * @param {(tag: {name: string, attributes: Array}) => void} [config.onTag]\n *   Last look at a surviving opening tag, for additions like `rel` on links.\n * "
+                "text": "@param {Set<string>} config.banned Tags dropped with their whole subtree. @param {Set<string>} config.urlAttributes Attributes whose value is a URL. @param {(value: string) => boolean} config.isSafeUrl @param {string} [config.rootTag] Keep only this element and its contents, discarding anything around it. Returns null when it is absent. @param {(tag: {name: string, attributes: Array}) => void} [config.onTag] Last look at a surviving opening tag, for additions like `rel` on links."
               }
             }
           ],
@@ -33934,14 +34407,14 @@
               "default": "{}",
               "optional": true,
               "type": {
-                "text": "@param {boolean} [options.lift=true] Lift shadow stylesheets into shared\n *   files instead of inlining a copy per component instance. Strongly\n *   recommended: browsers share one constructable stylesheet per component\n *   type, declarative shadow DOM cannot express that, and inlining measured at\n *   89% of all output bytes.\n * @param {string} [options.stylesheetPath='/_arc'] URL prefix the lifted\n *   stylesheets are linked with. The caller serves them from here.\n * @param {string[]} [options.closedOverlays=CLOSED_OVERLAYS] Hosts whose\n *   contents are left for the client. Pass `[]` to render everything.\n * @param {Record<string, number>} [options.listBudgets=LIST_BUDGETS] How many\n *   of each repeated component to render before deferring the rest to the\n *   client. Pass {} to render every one.\n * @param {boolean} [options.inlineIcons=true] Embed the icons the page uses, so\n *   the client's first render matches the server's instead of falling back to\n *   an empty slot while a dynamic import resolves.\n * "
+                "text": "@param {boolean} [options.lift=true] Lift shadow stylesheets into shared files instead of inlining a copy per component instance. Strongly recommended: browsers share one constructable stylesheet per component type, declarative shadow DOM cannot express that, and inlining measured at 89% of all output bytes. @param {string} [options.stylesheetPath='/_arc'] URL prefix the lifted stylesheets are linked with. The caller serves them from here. @param {string[]} [options.closedOverlays=CLOSED_OVERLAYS] Hosts whose contents are left for the client. Pass `[]` to render everything. @param {Record<string, number>} [options.listBudgets=LIST_BUDGETS] How many of each repeated component to render before deferring the rest to the client. Pass {} to render every one. @param {boolean} [options.inlineIcons=true] Embed the icons the page uses, so the client's first render matches the server's instead of falling back to an empty slot while a dynamic import resolves."
               }
             }
           ],
           "description": "Render every ARC component in `source` to declarative shadow DOM.",
           "return": {
             "type": {
-              "text": "Promise<{html: string, stylesheets: Map<string, string>,\n *   roots: number, deferred: number}>"
+              "text": "Promise<{html: string, stylesheets: Map<string, string>, roots: number, deferred: number}>"
             }
           }
         }
@@ -35032,12 +35505,22 @@
             {
               "kind": "method",
               "name": "play",
-              "description": "Play the sequence from the beginning."
+              "description": "Play the sequence from the beginning.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "method",
               "name": "reset",
-              "description": "Return to the blank, pre-animation state without starting playback."
+              "description": "Return to the blank, pre-animation state without starting playback.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",
@@ -35534,7 +36017,12 @@
             {
               "kind": "method",
               "name": "replay",
-              "description": "Restart the typing animation from the beginning."
+              "description": "Restart the typing animation from the beginning.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
             },
             {
               "kind": "field",

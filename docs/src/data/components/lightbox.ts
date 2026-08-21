@@ -10,20 +10,23 @@ export const lightbox: ComponentDef = {
   description:
     'Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery with wrapping prev/next navigation, zoom to 2x with drag-to-pan, and dismiss with Escape or a backdrop click.',
 
-  overview: `Lightbox displays a gallery of images at full screen, above the page behind a blurred backdrop. It shares the overlay infrastructure with Modal and Sheet: keyboard focus is trapped while open, page scroll is locked, Escape and a backdrop click dismiss, and focus returns to the trigger element on close. Open it from a thumbnail with \`show(index)\`, or set \`open\` and \`index\` directly.
+  overview: `Lightbox displays a gallery of images at full screen, above the page behind a blurred backdrop. It shares the overlay infrastructure with Dialog and Sheet: keyboard focus is trapped while open, page scroll is locked, Escape and a backdrop click dismiss, and focus returns to the trigger element on close. Open it from a thumbnail with \`show(index)\`, or set \`open\` and \`index\` directly.
 
 The gallery is supplied through the \`images\` property rather than slotted children. Each entry is either a plain \`src\` string or a \`{ src, alt, caption }\` object, and the two forms mix freely — captions render below the image and alt text carries through to the rendered \`<img>\`. A monospace counter in the top bar shows the current position, and prev/next arrow buttons (or the arrow keys) step through the gallery, wrapping at both ends.
 
-Zoom is deliberately a single level: press \`+\`, click the zoom button, or double-click the image to magnify to 2x, then drag to pan around it. Navigating to another image or closing the viewer resets the zoom. The component fires \`arc-change\` with the new index on every navigation, and \`arc-close\` is cancelable, so a consumer can veto a dismissal in progress.`,
+Zoom is deliberately a single level: press \`+\`, click the zoom button, or double-click the image to magnify to 2x, then drag to pan around it. Navigating to another image or closing the viewer resets the zoom. The component fires \`arc-change\` with the new index on every navigation, and \`arc-close\` is cancelable, so a consumer can veto a dismissal in progress.
+
+Every one of those interactions has a method behind it, which is what you need when the controls live outside the viewer — a filmstrip below it, a play/pause slideshow, a global keyboard map. \`next()\` and \`prev()\` step through the gallery and wrap at both ends, the same as the arrow buttons, firing \`arc-change\`. \`close()\` goes through the same cancelable \`arc-close\` contract as Escape and the backdrop, so a veto applies to a programmatic close too — there is no back door that skips the listener.`,
 
   features: [
-    'Full-screen overlay with backdrop blur, sharing the focus-trap and scroll-lock infrastructure used by Modal and Sheet',
+    'Full-screen overlay with backdrop blur, sharing the focus-trap and scroll-lock infrastructure used by Dialog and Sheet',
     'Accepts plain `src` strings or `{ src, alt, caption }` objects in the same `images` array',
     'Prev/next arrow buttons and arrow-key navigation, wrapping at both ends',
     'Single-level 2x zoom via the `+`/`-` keys, the zoom button, or a double-click, with drag-to-pan while zoomed',
     'Monospace `3 / 12` position counter with a live region for screen readers',
     'Caption rendered below the image when an entry provides one',
     'Escape and backdrop click dismiss; `arc-close` is cancelable for veto',
+    '`show(index)`, `close()`, `next()` and `prev()` drive it from outside — same events, same veto, same wrapping',
     'Fires `arc-change` with the new index on `detail.value` on every navigation',
     'Focus is trapped while open and restored to the trigger element on close',
   ],
@@ -37,7 +40,7 @@ Zoom is deliberately a single level: press \`+\`, click the zoom button, or doub
       'Listen for `arc-change` when something outside the viewer should track the current image',
     ],
     dont: [
-      'Do not use Lightbox for non-image content — Modal is the general-purpose overlay',
+      'Do not use Lightbox for non-image content — Dialog is the general-purpose overlay',
       "Do not open it on page load; a full-screen takeover should always be the user's choice",
       'Do not pass tiny thumbnails as the `src` — supply full-resolution sources, since the whole point is a closer look',
       'Do not mix it with a second overlay at once; close one surface before opening another',

@@ -38,6 +38,15 @@ export class ArcSidebarSection extends DeclaredPropsMixin(LitElement) {
     return [...this.querySelectorAll(':scope > arc-sidebar-link')];
   }
 
+  /**
+   * Collapse an open section or expand a collapsed one, firing `arc-toggle`.
+   *
+   * A no-op unless `collapsible` is set: a section that cannot collapse has
+   * nothing to toggle, and silently doing nothing is better than a state the
+   * header offers no way back from.
+   *
+   * @returns {void}
+   */
   toggle() {
     if (this.collapsible) {
       this.open = !this.open;

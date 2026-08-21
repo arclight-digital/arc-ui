@@ -16,6 +16,8 @@ The display text inherits the surrounding typography, and the edit field matches
 
 While the user types, keystrokes accumulate in an internal draft and stream out as \`arc-input\` events. The \`value\` prop — and the value a surrounding form submits — only changes when the edit commits, which fires a single \`arc-change\`. Committing an unchanged value fires nothing, so listeners never see a rename that didn't happen. Cancelling fires \`arc-cancel\` and restores the previous text.
 
+**The same three transitions are available from script.** \`edit()\` enters edit mode with the field focused and its text selected — the path for a "Rename" item in a context menu, or for focusing a freshly added row so the user can name it without hunting for it. \`commit()\` and \`cancel()\` leave edit mode the two ways the keyboard does, firing the same \`arc-change\` (or nothing, if the value is unchanged) and \`arc-cancel\`. Reach for \`commit()\` when something outside the component ends the edit — a toolbar Save, a route change — and \`cancel()\` when a save fails and the previous text should come back. \`edit()\` is a no-op when the component is disabled, readonly, or already editing, so it is safe to call without checking first.
+
 Inline Edit participates in forms through the same ElementInternals machinery as Input: give it a \`name\` and the committed value is submitted, \`required\` makes an empty committed value invalid (shown as a quiet error tint even in display state), and \`form.reset()\` restores the initial text. The \`multiline\` prop swaps the edit field to a textarea, where Enter inserts a newline and Cmd/Ctrl+Enter commits.`,
 
   features: [
@@ -27,7 +29,7 @@ Inline Edit participates in forms through the same ElementInternals machinery as
     '`arc-input` streams the draft on every keystroke while editing',
     'Multiline mode edits in a textarea: Enter inserts a newline, Cmd/Ctrl+Enter commits',
     'Full form participation: named submission of the committed value, `required` validation, reset support',
-    'Programmatic control through `edit()`, `commit()`, and `cancel()` methods',
+    'Programmatic control through `edit()`, `commit()`, and `cancel()` — the same three transitions the keyboard drives, firing the same events',
     'Pencil affordance and hover tint follow the design tokens; the swap animates subtly and honors reduced motion',
   ],
 

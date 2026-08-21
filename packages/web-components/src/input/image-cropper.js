@@ -598,7 +598,11 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
 
   /* ---- Public API ---- */
 
-  /** Current crop in natural image pixels: { x, y, width, height }, or null before load. */
+  /**
+   * Current crop in natural image pixels, or null before the image has loaded.
+   *
+   * @returns {{ x: number, y: number, width: number, height: number } | null}
+   */
   getCrop() {
     const g = this._geom;
     const r = this._rect;
@@ -640,7 +644,13 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
     );
   }
 
-  /** Export the crop as a Blob at natural resolution. */
+  /**
+   * Export the crop as a Blob at natural resolution.
+   *
+   * @param {string} [type] MIME type, `image/png` by default.
+   * @param {number} [quality] Encoder quality 0–1, for the lossy types.
+   * @returns {Promise<Blob>}
+   */
   async getCroppedBlob(type = 'image/png', quality) {
     const canvas = this._drawCropCanvas();
     return new Promise((resolve, reject) => {
@@ -663,7 +673,13 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
     });
   }
 
-  /** Export the crop as a data URL at natural resolution. */
+  /**
+   * Export the crop as a data URL at natural resolution.
+   *
+   * @param {string} [type] MIME type, `image/png` by default.
+   * @param {number} [quality] Encoder quality 0–1, for the lossy types.
+   * @returns {Promise<string>}
+   */
   async getCroppedDataUrl(type = 'image/png', quality) {
     const canvas = this._drawCropCanvas();
     try {

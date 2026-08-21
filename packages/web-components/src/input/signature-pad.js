@@ -238,7 +238,11 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
 
   /* ---- Public API ---- */
 
-  /** Wipe the canvas, empty the value, and bring the placeholder back. */
+  /**
+   * Wipe the canvas, empty the value, and bring the placeholder back.
+   *
+   * @returns {void}
+   */
   clear() {
     this._drawing = false;
     this._hasInk = false;
@@ -262,6 +266,9 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
    * The current canvas as a data-URL in the requested format (PNG by
    * default). Unlike `value`, this reads the canvas directly, so a blank pad
    * returns a blank image rather than an empty string.
+   *
+   * @param {string} [type] MIME type, `image/png` by default.
+   * @returns {string}
    */
   toDataURL(type = 'image/png') {
     const canvas = this._canvasEl;

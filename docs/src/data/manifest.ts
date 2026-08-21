@@ -22,6 +22,29 @@ export interface ApiEvent {
   description: string;
 }
 
+/**
+ * An imperative method on the element — `toaster.show({ … })`.
+ *
+ * Carried here because until now nothing did: `ComponentApi` had props, events,
+ * slots and CSS parts, so a component's whole imperative surface stopped at the
+ * JSDoc it was written in. That is 26 methods across 13 components with no
+ * documented home — arc-inline-edit's `edit`/`commit`/`cancel`, arc-lightbox's
+ * `show`/`close`/`next`/`prev`, arc-toast's progress mode — plus
+ * `checkValidity`/`reportValidity` on every form control. Six of those
+ * components mentioned no method anywhere in their page prose, and arc-toast's
+ * Events table documented `arc-complete` as "fired when a progress toast is
+ * completed with complete(id)" on a page that named neither.
+ */
+export interface ApiMethod {
+  /** Name with parameter names, `show(options?)` — one string, never broken. */
+  name: string;
+  /** `id: number, changes: { … }`; absent when the method takes no arguments. */
+  params?: string;
+  /** Absent when the method returns nothing. */
+  returns?: string;
+  description: string;
+}
+
 export interface ApiSlot {
   /** Empty string = default slot. */
   name: string;
@@ -45,6 +68,7 @@ export interface ComponentApi {
   /** The tag that replaces this one. Present only when `status` is `deprecated`. */
   mergedInto?: string;
   props: ApiProp[];
+  methods: ApiMethod[];
   events: ApiEvent[];
   slots: ApiSlot[];
   cssParts: { name: string; description: string }[];
@@ -78,6 +102,46 @@ for (const mod of manifest.modules) {
           default: m.default,
           description: m.description ?? '',
         })),
+      /**
+       * Three exclusions, none of them "it has no description":
+       *
+       * - `static` — `ArcAspectRatio.parseRatio` and `ArcUptime.statusOf` are
+       *   class methods. Listed under a tag they read as `el.parseRatio()`,
+       *   which is not a thing that exists.
+       * - `*Callback` — `formDisabledCallback` and its two siblings are called
+       *   by the browser as part of the form-associated protocol. Nobody calls
+       *   them; documenting them as if a consumer might is an invitation to.
+       * - private/protected, as with props.
+       *
+       * `checkValidity`/`reportValidity` survive on all 26 form controls, which
+       * is right — they are the standard constraint-validation API and the
+       * reason a control is form-associated at all.
+       */
+      methods: (decl.members ?? [])
+        .filter(
+          (m: any) =>
+            m.kind === 'method' &&
+            m.privacy !== 'private' &&
+            m.privacy !== 'protected' &&
+            !m.static &&
+            !/Callback$/.test(m.name ?? ''),
+        )
+        .map((m: any) => {
+          const params = m.parameters ?? [];
+          const spell = (p: any) => `${p.name}${p.optional ? '?' : ''}`;
+          return {
+            name: `${m.name}(${params.map(spell).join(', ')})`,
+            // All-or-nothing: a partly-typed list reads as if the untyped
+            // parameters take anything, when it only means nobody wrote the
+            // tag. The signature above still carries their names and arity.
+            params: params.every((p: any) => p.type?.text)
+              ? params.map((p: any) => `${spell(p)}: ${p.type.text}`).join(', ') || undefined
+              : undefined,
+            returns:
+              m.return?.type?.text && m.return.type.text !== 'void' ? m.return.type.text : undefined,
+            description: m.description ?? '',
+          };
+        }),
       events: (decl.events ?? []).map((e: any) => ({
         name: e.name,
         detail: detailOf(e.type?.text),

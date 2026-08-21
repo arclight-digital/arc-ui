@@ -242,6 +242,31 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
   /**
    * Show a toast, or coalesce it into an identical one that is already showing.
    *
+   * Passing `progress` puts the toast in progress mode, absorbed from
+   * arc-progress-toast in 4.2: it renders a track beneath the message, exempts
+   * itself from dedupe and from the auto-dismiss timer, and — given `onCancel`
+   * — offers a cancel button that fires `arc-cancel`. Move the bar with
+   * `updateToast(id, { progress })` and end it with `complete(id)`, which fires
+   * `arc-complete`. The mode is chosen here and is not switchable afterwards: a
+   * track appearing mid-life would relayout a notification the reader is
+   * already reading.
+   *
+   * `action` and `actionLabel` arrive from arc-snackbar the same way. The label
+   * renders a ghost button; a click runs the callback and fires `arc-action`
+   * before the toast dismisses.
+   *
+   * @param {{
+   *   message?: string,
+   *   variant?: 'info' | 'success' | 'warning' | 'error',
+   *   duration?: number,
+   *   persistent?: boolean,
+   *   progress?: number,
+   *   action?: () => void,
+   *   actionLabel?: string,
+   *   onCancel?: () => void,
+   * }} [options] `duration` overrides the element's own for this toast alone and
+   *   `persistent` pins it until something dismisses it; progress mode ignores
+   *   both, being persistent by definition.
    * @returns {number} the toast's id, for a later dismiss(). A dedupe hit returns
    *   the id of the toast it merged into, so a caller that tracks ids never ends
    *   up holding one that was never created.
@@ -310,6 +335,8 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * queued. Unknown ids are ignored.
    *
    * @param {number} id
+   *
+   * @returns {void}
    */
   dismiss(id) {
     if (this._toasts.some((t) => t.id === id)) {
@@ -321,7 +348,11 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
     if (this._queue.length !== before) this._notify();
   }
 
-  /** Dismiss everything on screen and discard the queue. */
+  /**
+   * Dismiss everything on screen and discard the queue.
+   *
+   * @returns {void}
+   */
   clear() {
     this._queue = [];
     for (const t of [...this._toasts]) this._dismiss(t.id);
@@ -394,6 +425,8 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    *
    * @param {number} id
    * @param {{ progress?: number, message?: string }} changes
+   *
+   * @returns {void}
    */
   updateToast(id, { progress, message } = {}) {
     let touched = false;
@@ -419,6 +452,10 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * Distinct from `dismiss()` on purpose — the operation finishing and the user
    * closing the toast are different events, and a consumer waiting on the first
    * should not be woken by the second.
+   *
+   * @param {number} id
+   *
+   * @returns {void}
    */
   complete(id) {
     if (!this._toasts.some((t) => t.id === id) && !this._queue.some((t) => t.id === id)) return;

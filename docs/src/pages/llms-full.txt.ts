@@ -11,7 +11,7 @@ export const prerender = true;
 
 const mdEscape = (s: string) => s.replace(/\|/g, '\\|').replace(/\n/g, ' ');
 
-/** Props/events/slots/parts sections for one element, from the manifest. */
+/** Props/methods/events/slots/parts sections for one element, from the manifest. */
 function renderApi(api: ComponentApi, h = '###'): string[] {
   const lines: string[] = [];
 
@@ -23,6 +23,16 @@ function renderApi(api: ComponentApi, h = '###'): string[] {
     lines.push('|------|------|---------|-------------|');
     for (const p of api.props) {
       lines.push(`| \`${p.name}\` | \`${mdEscape(p.type)}\` | ${p.default ?? '—'} | ${mdEscape(p.description)} |`);
+    }
+  }
+
+  if (api.methods.length) {
+    lines.push('');
+    lines.push(`${h} Methods`);
+    lines.push('');
+    for (const m of api.methods) {
+      lines.push(`- \`${m.name}\`${m.returns ? ` → \`${m.returns}\`` : ''} — ${mdEscape(m.description)}`);
+      if (m.params) lines.push(`  - parameters: \`${mdEscape(m.params)}\``);
     }
   }
 
@@ -214,7 +224,7 @@ export const GET: APIRoute = async () => {
   sections.push('');
   sections.push('This is the complete reference for LLM consumption. For a concise overview, see /llms.txt.');
   sections.push('');
-  sections.push('The APIs below are the Web Component surface. Framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) are generated from this source and expose the same props, events, slots, and CSS parts.');
+  sections.push('The APIs below are the Web Component surface. Framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) are generated from this source and expose the same props, methods, events, slots, and CSS parts.');
   sections.push('');
 
   // Token reference

@@ -159,7 +159,11 @@ export class ArcTypewriter extends DeclaredPropsMixin(LitElement) {
     this._timeoutId = setTimeout(() => this._typeNextChar(index + 1), this.speed);
   }
 
-  /** Restart the typing animation from the beginning. */
+  /**
+   * Restart the typing animation from the beginning.
+   *
+   * @returns {void}
+   */
   replay() {
     this._startAnimation();
   }

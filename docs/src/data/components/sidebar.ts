@@ -11,12 +11,16 @@ export const sidebar: ComponentDef = {
 
   overview: `Sidebar provides a structured vertical navigation panel that organizes links into collapsible, headed sections. It is the standard way to present multi-level navigation in documentation sites, admin dashboards, settings panels, and any application where the user needs to move between many related pages without losing context.
 
-Each SidebarSection groups links under an optional heading, creating a clear visual hierarchy that mirrors your information architecture. The active prop on SidebarLink highlights the current page, giving users an immediate sense of where they are within the navigation tree. Sections can be expanded or collapsed to keep long navigation lists manageable.
+Each SidebarSection groups links under an optional heading, creating a clear visual hierarchy that mirrors your information architecture. The active prop on SidebarLink highlights the current page, giving users an immediate sense of where they are within the navigation tree. An \`icon\` on a section renders before its heading.
+
+**Collapsing is opt-in and has an imperative half.** A section is a static group until you set \`collapsible\`, which turns its heading into a toggle button; \`open\` then controls whether the links are showing, and defaults to expanded (\`no-open\` starts it collapsed). Either state change fires \`arc-toggle\` with \`{ open }\` in the detail. You can drive it from script with \`section.toggle()\` — which is how you expand the section containing the current route on load, or collapse everything but one. It fires the same event the header does, so a listener sees both paths identically. Note that it is a deliberate no-op on a section without \`collapsible\`: a section whose header offers no way back would otherwise be collapsible from script into a state the user cannot undo.
 
 Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying the left rail. It reads the full viewport height by default and scrolls independently of the main content area, so deep navigation trees remain accessible even on long pages. Pair it with TopBar for a complete application chrome.`,
 
   features: [
     'Collapsible sections with heading labels for grouped navigation',
+    '`toggle()` on a section expands or collapses it from script, firing `arc-toggle` exactly as the header does',
+    '`arc-toggle` carries `{ open }` and bubbles, so one listener on the sidebar covers every section',
     'Active link highlighting to indicate the current page',
     'Independent scroll region for deep navigation trees',
     'Composable with SidebarSection and SidebarLink sub-components',
@@ -30,6 +34,7 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
     do: [
       'Group related links under a SidebarSection with a descriptive heading',
       'Set the active prop on the link that matches the current route',
+      'Call `toggle()` on the section holding the active route at page load, so a deep link arrives with its group already open',
       'Keep section headings short — one to three words that name the category',
       'Place the Sidebar inside an AppShell or PageLayout for consistent layout',
       'Use a Drawer to present the Sidebar on narrow viewports',
@@ -38,6 +43,7 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
     dont: [
       'Do not nest Sidebars inside each other — use sections and indentation instead',
       'Do not mark more than one link as active at the same time',
+      'Do not expect `toggle()` to do anything on a section without `collapsible` — it deliberately no-ops rather than hiding links behind a header that cannot bring them back',
       'Do not use Sidebar for top-level site-wide navigation — prefer TopBar for that role',
       'Do not add more than eight to ten links per section; split large groups into sub-sections',
       'Do not omit headings on sections — unlabeled groups make navigation harder to scan',

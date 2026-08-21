@@ -153,7 +153,14 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
     this._visibleCount = this._window.count;
   }
 
-  /** Scroll a row into view. Clamped to the list. */
+  /**
+   * Scroll a row into view.
+   *
+   * @param {number} index Zero-based, clamped to the list rather than ignored,
+   *   so an index past the end scrolls to the last row.
+   *
+   * @returns {void}
+   */
   scrollToIndex(index) {
     const total = this.items?.length || 0;
     if (!total) return;

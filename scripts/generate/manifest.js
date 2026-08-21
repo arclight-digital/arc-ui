@@ -41,6 +41,18 @@ for (const mod of manifest.modules) {
     if (decl.events) {
       decl.events = decl.events.filter((e) => e.name);
     }
+    // A destructured parameter has no name the analyzer can record, so it lands
+    // as the pattern itself — `{ progress, message }` — and the `@param` tag
+    // that documents it arrives as a *second*, extra parameter. Published, the
+    // method reads as taking one more argument than it does. The pattern entry
+    // is the one to drop: it carries no name to render and no type, and the
+    // tagged entry is the documentation of the same slot. Fires once today
+    // (arc-toast's updateToast); the rule is here so the next one is free.
+    for (const member of decl.members ?? []) {
+      if (member.parameters) {
+        member.parameters = member.parameters.filter((p) => !/^[{[]/.test(p.name ?? ''));
+      }
+    }
     // `@slot none` is prism's spelling for "this component has no default slot
     // and its wrappers take no children" — the name of an absence, which the
     // analyzer has no reason to know and records as a slot called "none".
@@ -299,6 +311,51 @@ if (statuses.null) {
   process.exit(1);
 }
 
+/**
+ * Collapse a JSDoc type that was written across more than one line.
+ *
+ * The analyzer records a type annotation as the verbatim source text between
+ * its braces, so a type broken over several lines for readability keeps the
+ * comment's own ` * ` continuation markers inside it —
+ * `{\n *   message?: string,\n *   variant?: 'info' | …}`. Every downstream
+ * reader publishes that verbatim: the docs API list, web-types.json, the VS
+ * Code data, the generated .d.ts. A type nobody can write in source is not a
+ * type, so "keep every JSDoc type on one line" was a rule of this repo that
+ * nothing enforced and the first multi-line type broke.
+ *
+ * Whitespace only. The trailing comma the multi-line form invites goes with it,
+ * since `{ a?: string, }` is not how the collapsed type would have been
+ * written by hand.
+ *
+ * **This is not permission to break a `@prop` type over lines.** prism holds
+ * the stricter contract on the same input: it lifts `@prop` type text verbatim
+ * and gates it on SAFE_DOC_TYPE, whose character class excludes `*`, so a
+ * multi-line `@prop` fails with an `unusable-doc-type` warning and silently
+ * falls back to the `static properties` type. The manifest would then publish
+ * the rich JSDoc type while every wrapper published the fallback — the two
+ * disagreeing about the same prop. Prism's warning is the thing that catches
+ * it, and `pnpm generate` is clean of them today (0 multi-line `@prop` types in
+ * src/). What this pass exists for is `@param` and return types, which prism
+ * does not read and which nothing else was normalising.
+ */
+const collapseType = (text) =>
+  text
+    .replace(/\n\s*\*\s?/g, ' ')
+    .replace(/\s+/g, ' ')
+    .replace(/,\s*\}/g, ' }')
+    .trim();
+
+let collapsed = 0;
+(function walk(node) {
+  if (Array.isArray(node)) return node.forEach(walk);
+  if (!node || typeof node !== 'object') return;
+  if (typeof node.type?.text === 'string' && /\n/.test(node.type.text)) {
+    node.type.text = collapseType(node.type.text);
+    collapsed += 1;
+  }
+  for (const value of Object.values(node)) walk(value);
+})(manifest);
+
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
 
 const count = manifest.modules
@@ -306,6 +363,6 @@ const count = manifest.modules
   .filter((d) => d.customElement && d.tagName).length;
 console.log(
   `✓ custom-elements.json — ${count} custom elements, ${filled} facts recovered from declarations, ` +
-    `${grouped} in a domain group, ` +
+    `${grouped} in a domain group, ${collapsed} multi-line type(s) collapsed, ` +
     Object.entries(statuses).sort().map(([k, n]) => `${n} ${k}`).join('/')
 );

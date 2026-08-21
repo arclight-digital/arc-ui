@@ -275,7 +275,17 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
     );
   }
 
-  /** Programmatic submit — call from outside */
+  /**
+   * Submit the form as though its submit button had been pressed: validation
+   * runs, and `arc-submit` fires cancelably.
+   *
+   * The path for a submit control the form cannot own — a wizard's "Next" in a
+   * parent toolbar, a keyboard shortcut — since a button outside the form does
+   * not trigger it. Routed through the real `<form>` so action-mode submits
+   * still navigate.
+   *
+   * @returns {void}
+   */
   submit() {
     // Route through the real <form> so action-mode submits actually navigate;
     // requestSubmit() fires a genuine cancelable submit event into
@@ -299,6 +309,8 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
    * what reset means: a control that shipped with a default lost it, and a
    * non-string value (a multi-select's array, a date range's object) was left
    * untouched entirely.
+   *
+   * @returns {void}
    */
   reset() {
     const controls = this._getFormControls();

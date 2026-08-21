@@ -45,18 +45,40 @@ interface Row {
   default?: string;
   /** Events: the detail payload type. */
   detail?: string;
+  /** Methods: the typed parameter list. */
+  params?: string;
+  /** Methods: the return type, absent when it returns nothing. */
+  returns?: string;
   description: string;
 }
 
 interface Props {
   rows: Row[];
-  kind?: 'prop' | 'event';
+  kind?: 'prop' | 'event' | 'method';
 }
 
 const { rows, kind = 'prop' } = Astro.props;
 
-/** Second cell: the type for a prop, the detail payload for an event. */
-const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
+/**
+ * Split a description into alternating plain and code-span parts.
+ *
+ * Lives in the frontmatter rather than inline in the template because the
+ * pattern is written with backticks, and a backtick inside an Astro template
+ * expression is a template literal waiting to happen.
+ */
+const codeSplit = (text: string) =>
+  text.split(/`([^`]+)`/g).map((value, i) => ({ value, code: i % 2 === 1 }));
+
+/**
+ * Second cell: the type for a prop, the detail payload for an event, the typed
+ * parameters for a method.
+ *
+ * A method reuses this row wholesale rather than getting a layout of its own,
+ * because the three slots already spell a signature — `name`, its type, and a
+ * trailing annotation — and that is exactly what a method is. Read across, the
+ * row is the d.ts line: `show(options?)` · `options?: { … }` · `→ number`.
+ */
+const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ? r.params : r.type);
 ---
 
 <dl class="api">
@@ -73,8 +95,23 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
         {kind === 'prop' && r.default && (
           <code class="api__default"><span class="api__eq" aria-hidden="true">=</span>{r.default}</code>
         )}
+        {kind === 'method' && r.returns && (
+          <code class="api__default"><span class="api__eq" aria-hidden="true">&#8594;</span>{r.returns}</code>
+        )}
       </dt>
-      <dd class="api__desc">{r.description}</dd>
+          <dd class="api__desc">
+        {/* Descriptions are authored as markdown in the component JSDoc and were
+            rendered as plain text, so 519 of the manifest's 2 461 descriptions
+            published their backticks literally — `ring` draws a progress arc,
+            with the ticks. Splitting on paired backticks is the whole fix: odd
+            indices of the split are the code spans. Deliberately not a markdown
+            renderer and deliberately not set:html — the text comes from source
+            JSDoc, but nothing about being generated makes a string safe to
+            inject, and inline code is the only markdown these descriptions use. */}
+        {codeSplit(r.description).map((part) =>
+          part.code ? (<code class="api__code">{part.value}</code>) : (part.value)
+        )}
+      </dd>
     </div>
   ))}
 </dl>
@@ -152,6 +189,12 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
     margin-inline-end: 0.4ch;
   }
 
+  /* A method's parameters carry their names inline — `id: number, changes:
+     { … }` — so unlike a prop's type they are prose-shaped and may break at the
+     commas rather than only `anywhere`. Nothing extra is needed for that: the
+     inherited `overflow-wrap: anywhere` breaks a long object literal, and real
+     spaces break first wherever they exist. */
+
   /* An event's payload is not its type: it arrives on `event.detail`, and with
      the column headers gone a bare object next to an event name claimed a
      relationship that doesn't exist. Naming the key says it in the language the
@@ -159,6 +202,20 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : r.type);
   .api .api__key {
     color: var(--text-ghost);
     margin-inline-end: 0.6ch;
+  }
+
+  /* An inline code span inside a description. Marked by family and a faint
+     ground rather than a border or a chip: it sits mid-sentence in support
+     text, so anything heavier would out-rank the signature above it — which is
+     the one thing on the row that should be read first. */
+  .api .api__code {
+    font-family: var(--font-mono);
+    font-size: 0.92em;
+    color: var(--text-primary);
+    background: var(--surface-raised);
+    padding: 0.1em 0.34em;
+    border-radius: 3px;
+    overflow-wrap: anywhere;
   }
 
   /* Support text, and sized like it. At body size and full card width this ran

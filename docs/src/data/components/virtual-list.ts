@@ -22,7 +22,7 @@ list.renderItem = (item, index) => \`\${index + 1}. \${item.name}\`;
 
 In a framework, use the wrapper's own idiom — a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, a \`rowTemplate\` in Angular. These wrappers are not thin pass-throughs like the rest of the library: each listens for \`arc-range-change\`, tracks the visible range itself, and renders exactly those rows. The element owns the scroll geometry; your framework owns the rows, so a React row is a real React element.
 
-Working directly with the element, you can also drive it yourself: it renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` (with \`{ start, end }\`, \`end\` exclusive) whenever that range moves — once per row crossed, not once per frame. \`visibleRange\` reads the same values on demand, and \`scrollToIndex(n)\` jumps to a row.`,
+Working directly with the element, you can also drive it yourself: it renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` (with \`{ start, end }\`, \`end\` exclusive) whenever that range moves — once per row crossed, not once per frame. \`visibleRange\` reads the same values on demand, and \`scrollToIndex(n)\` jumps to a row — clamped to the list rather than ignored, so an index past the end scrolls to the last row instead of doing nothing.`,
 
   features: [
     'Windowed rendering — a row does not exist until it is on screen',
@@ -33,7 +33,7 @@ Working directly with the element, you can also drive it yourself: it renders an
     'rAF-throttled scroll handler for smooth 60fps performance',
     'Configurable overscan buffer to prevent flicker during fast scrolling',
     'Fixed item height for predictable layout calculations',
-    '`visibleRange` getter and `scrollToIndex()` for driving it yourself',
+    '`visibleRange` getter and `scrollToIndex(index)` for driving it yourself — the index is clamped, never ignored',
     'Exposed CSS parts: spacer, item',
   ],
 

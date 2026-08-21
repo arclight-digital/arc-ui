@@ -228,7 +228,13 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     return images[this.index];
   }
 
-  /** Opens the viewer, optionally jumping to a specific image first. */
+  /**
+   * Open the viewer, optionally jumping to a specific image first.
+   *
+   * @param {number} [index] Zero-based; wraps, so -1 opens the last image.
+   *
+   * @returns {void}
+   */
   show(index) {
     if (typeof index === 'number' && Number.isFinite(index)) {
       const total = this._normalized().length;
@@ -237,17 +243,29 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     this.open = true;
   }
 
-  /** Closes the viewer through the cancelable arc-close contract. */
+  /**
+   * Closes the viewer through the cancelable arc-close contract.
+   *
+   * @returns {void}
+   */
   close() {
     this._close();
   }
 
-  /** Advances to the next image, wrapping past the end. */
+  /**
+   * Advances to the next image, wrapping past the end.
+   *
+   * @returns {void}
+   */
   next() {
     this._goTo(this.index + 1);
   }
 
-  /** Steps to the previous image, wrapping past the start. */
+  /**
+   * Steps to the previous image, wrapping past the start.
+   *
+   * @returns {void}
+   */
   prev() {
     this._goTo(this.index - 1);
   }

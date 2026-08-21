@@ -203,9 +203,22 @@ export const FormControlMixin = (superClass) =>
     get validationMessage() {
       return this._internals.validationMessage;
     }
+    /**
+     * Whether the control currently satisfies its constraints, per the native
+     * constraint-validation API. Fires `invalid` on the element when it does
+     * not, and reports nothing to the user.
+     *
+     * @returns {boolean}
+     */
     checkValidity() {
       return this._internals.checkValidity();
     }
+    /**
+     * As checkValidity(), but also shows the browser's validation message
+     * against the control when it fails.
+     *
+     * @returns {boolean}
+     */
     reportValidity() {
       return this._internals.reportValidity();
     }

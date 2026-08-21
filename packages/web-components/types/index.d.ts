@@ -395,6 +395,10 @@ export declare class ArcCheckbox extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -483,6 +487,10 @@ export declare class ArcColorPicker extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -527,6 +535,10 @@ export declare class ArcCombobox extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -660,6 +672,8 @@ export declare class ArcContextMenu extends LitElement {
 export declare class ArcConversation extends LitElement {
   /** Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer. @default true */
   autoScroll: boolean;
+  /** Scroll the transcript to its newest message. */
+  scrollToEnd(): void;
 }
 
 /**
@@ -779,6 +793,10 @@ export declare class ArcDatePicker extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -829,6 +847,10 @@ export declare class ArcDateRangePicker extends LitElement {
   validationMessage: unknown;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1017,6 +1039,10 @@ export declare class ArcForm extends LitElement {
   loading: boolean;
   /** When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually. @default true */
   errorSummary: boolean;
+  /** Submit the form as though its submit button had been pressed: validation runs, and `arc-submit` fires cancelably. The path for a submit control the form cannot own — a wizard's "Next" in a parent toolbar, a keyboard shortcut — since a button outside the form does not trigger it. Routed through the real `<form>` so action-mode submits still navigate. */
+  submit(): void;
+  /** Reset every child control to the state it had when it first connected, and clear error display. Delegates to each control's formResetCallback — the same path a native form.reset() takes, which never reaches these controls because they live in this element's light DOM rather than inside the shadow <form>. The form used to blank them instead (`value = ''`, `checked = false`), which is not what reset means: a control that shipped with a default lost it, and a non-string value (a multi-select's array, a date range's object) was left untouched entirely. */
+  reset(): void;
 }
 
 /**
@@ -1095,6 +1121,8 @@ export declare class ArcHotspot extends LitElement {
   y: number;
   /** Whether the pin's popover is currently visible. Reflected as an attribute. Opens on click; closes on Escape, outside click, or a second click on the pin. @default false */
   open: boolean;
+  /** Close the popover, firing the cancelable `arc-close` first — so a listener that calls `preventDefault()` keeps it open, whoever asked for the close. arc-image-hotspots calls this to enforce one-open-at-a-time, which is why a consumer's veto is honoured there too and not only on a manual close. */
+  close(restoreFocus?: boolean): void;
 }
 
 /**
@@ -1201,6 +1229,12 @@ export declare class ArcImageCropper extends LitElement {
   aspect: number;
   /** Image zoom factor, clamped to 1-4 on the property as well as on the slider. Scales the image around its center; also settable via the built-in slider. @default 1 */
   zoom: number;
+  /** Current crop in natural image pixels, or null before the image has loaded. */
+  getCrop(): { x: number, y: number, width: number, height: number } | null;
+  /** Export the crop as a Blob at natural resolution. */
+  getCroppedBlob(type?: string, quality?: number): Promise<Blob>;
+  /** Export the crop as a data URL at natural resolution. */
+  getCroppedDataUrl(type?: string, quality?: number): Promise<string>;
 }
 
 /**
@@ -1254,6 +1288,16 @@ export declare class ArcInlineEdit extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing. */
+  edit(): void;
+  /** Commit the current draft and leave edit mode. Fires arc-change only if the value changed. */
+  commit(): void;
+  /** Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel. */
+  cancel(): void;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1294,6 +1338,10 @@ export declare class ArcInput extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1406,6 +1454,10 @@ export declare class ArcKnob extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1457,6 +1509,14 @@ export declare class ArcLightbox extends LitElement {
   index: number;
   /** Controls the visible state of the viewer. Set to `true` to open at the current `index` and activate the focus trap; set to `false` to close and restore focus to the previously-focused element. @default false */
   open: boolean;
+  /** Open the viewer, optionally jumping to a specific image first. */
+  show(index?: number): void;
+  /** Closes the viewer through the cancelable arc-close contract. */
+  close(): void;
+  /** Advances to the next image, wrapping past the end. */
+  next(): void;
+  /** Steps to the previous image, wrapping past the start. */
+  prev(): void;
 }
 
 /**
@@ -1581,6 +1641,10 @@ export declare class ArcMaskedInput extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1694,6 +1758,10 @@ export declare class ArcMultiSelect extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1790,6 +1858,10 @@ export declare class ArcNumberInput extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1894,6 +1966,10 @@ export declare class ArcPasswordInput extends LitElement {
   validationMessage: unknown;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -1932,6 +2008,10 @@ export declare class ArcPinInput extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2030,6 +2110,10 @@ export declare class ArcRadioGroup extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2083,6 +2167,10 @@ export declare class ArcRangeSlider extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2115,6 +2203,10 @@ export declare class ArcRating extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2246,6 +2338,10 @@ export declare class ArcSegmentedControl extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2282,6 +2378,10 @@ export declare class ArcSelect extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2359,6 +2459,8 @@ export declare class ArcSidebarSection extends LitElement {
   collapsible: boolean;
   /** Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true. @default true */
   open: boolean;
+  /** Collapse an open section or expand a collapsed one, firing `arc-toggle`. A no-op unless `collapsible` is set: a section that cannot collapse has nothing to toggle, and silently doing nothing is better than a state the header offers no way back from. */
+  toggle(): void;
 }
 
 /**
@@ -2393,6 +2495,14 @@ export declare class ArcSignaturePad extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** Wipe the canvas, empty the value, and bring the placeholder back. */
+  clear(): void;
+  /** The current canvas as a data-URL in the requested format (PNG by default). Unlike `value`, this reads the canvas directly, so a blank pad returns a blank image rather than an empty string. */
+  toDataURL(type?: string): string;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2451,6 +2561,10 @@ export declare class ArcSlider extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2705,6 +2819,10 @@ export declare class ArcTagInput extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2724,6 +2842,10 @@ export declare class ArcTerminal extends LitElement {
   autoplay: boolean;
   /** Replay the transcript indefinitely, pausing briefly at the end of each cycle. @default false */
   loop: boolean;
+  /** Play the sequence from the beginning. */
+  play(): void;
+  /** Return to the blank, pre-animation state without starting playback. */
+  reset(): void;
 }
 
 /**
@@ -2776,6 +2898,10 @@ export declare class ArcTextarea extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2845,6 +2971,10 @@ export declare class ArcTimePicker extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -2882,6 +3012,16 @@ export declare class ArcToast extends LitElement {
   dedupe: boolean;
   /** Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count. @default 20 */
   queueLimit: number;
+  /** Show a toast, or coalesce it into an identical one that is already showing. Passing `progress` puts the toast in progress mode, absorbed from arc-progress-toast in 4.2: it renders a track beneath the message, exempts itself from dedupe and from the auto-dismiss timer, and — given `onCancel` — offers a cancel button that fires `arc-cancel`. Move the bar with `updateToast(id, { progress })` and end it with `complete(id)`, which fires `arc-complete`. The mode is chosen here and is not switchable afterwards: a track appearing mid-life would relayout a notification the reader is already reading. `action` and `actionLabel` arrive from arc-snackbar the same way. The label renders a ghost button; a click runs the callback and fires `arc-action` before the toast dismisses. */
+  show(options?: { message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }): number;
+  /** Dismiss a toast by the id show() returned, whether it is visible or still queued. Unknown ids are ignored. */
+  dismiss(id: number): void;
+  /** Dismiss everything on screen and discard the queue. */
+  clear(): void;
+  /** Move a progress toast's bar, its message, or both. Unknown ids are ignored, matching dismiss(). Named `updateToast` rather than `update` because `update` is Lit's — the name arc-progress-toast used, and the reason it also carried a do-nothing `update(changedProps) { super.update(changedProps); }` override that read as if it meant something. */
+  updateToast(id: number, changes: { progress?: number, message?: string }): void;
+  /** Finish a progress toast: dismiss it and fire `arc-complete`. Distinct from `dismiss()` on purpose — the operation finishing and the user closing the toast are different events, and a consumer waiting on the first should not be woken by the second. */
+  complete(id: number): void;
 }
 
 /**
@@ -2912,6 +3052,10 @@ export declare class ArcToggle extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -3002,6 +3146,10 @@ export declare class ArcTransferList extends LitElement {
   validationMessage: unknown;
   /** @default false */
   required: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -3057,6 +3205,10 @@ export declare class ArcTreeSelect extends LitElement {
   required: boolean;
   /** @default false */
   readonly: boolean;
+  /** Whether the control currently satisfies its constraints, per the native constraint-validation API. Fires `invalid` on the element when it does not, and reports nothing to the user. */
+  checkValidity(): boolean;
+  /** As checkValidity(), but also shows the browser's validation message against the control when it fails. */
+  reportValidity(): boolean;
 }
 
 /**
@@ -3096,6 +3248,8 @@ export declare class ArcTypewriter extends LitElement {
   loop: boolean;
   /** @default false */
   nowrap: boolean;
+  /** Restart the typing animation from the beginning. */
+  replay(): void;
 }
 
 /**
@@ -3164,6 +3318,8 @@ export declare class ArcVirtualList extends LitElement {
   overscan: number;
   /** The full data array. Only the visible slice is rendered at any given time. @default [] */
   items: Array;
+  /** Scroll a row into view. */
+  scrollToIndex(index: number): void;
 }
 
 /**

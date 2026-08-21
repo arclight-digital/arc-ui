@@ -47,6 +47,26 @@ for (const el of elements) {
     (m) => m.kind === 'field' && m.privacy !== 'private' && m.privacy !== 'protected'
   );
   const events = (el.events ?? []).map((e) => e.name).filter(Boolean);
+  /**
+   * Instance methods, on the same terms the docs Methods table uses: no
+   * statics (they are not reachable through an element reference), no
+   * `*Callback` (the browser calls those, not the consumer).
+   *
+   * Absent until now, so every imperative API in the library was invisible to
+   * TypeScript: `ArcToast` declared five props and none of `show`, `dismiss`,
+   * `clear`, `updateToast`, `complete`. That is what every `(ref.current as
+   * any).show(…)` in the docs and the READMEs is working around — the cast is
+   * not a style choice, it is the only way to call a method this file never
+   * declared.
+   */
+  const methods = (el.members ?? []).filter(
+    (m) =>
+      m.kind === 'method' &&
+      m.privacy !== 'private' &&
+      m.privacy !== 'protected' &&
+      !m.static &&
+      !/Callback$/.test(m.name ?? '')
+  );
 
   lines.push('/**');
   lines.push(` * \`<${el.tagName}>\``);
@@ -59,6 +79,16 @@ for (const el of elements) {
     if (f.default !== undefined) doc.push(`@default ${f.default}`);
     if (doc.length) lines.push(`  /** ${doc.join(' ')} */`);
     lines.push(`  ${f.name}: ${tsType(f)};`);
+  }
+  for (const m of methods) {
+    if (m.description) lines.push(`  /** ${m.description.replace(/\s+/g, ' ')} */`);
+    // An undocumented parameter is `unknown`, not `any`: a call with the wrong
+    // argument should fail here rather than at runtime, and `unknown` is what
+    // the field mapping above already resolves an unknown type to.
+    const params = (m.parameters ?? [])
+      .map((p) => `${p.name}${p.optional ? '?' : ''}: ${p.type?.text ?? 'unknown'}`)
+      .join(', ');
+    lines.push(`  ${m.name}(${params}): ${m.return.type.text};`);
   }
   lines.push('}');
   lines.push('');
@@ -97,7 +127,58 @@ lines.push('');
 
 mkdirSync(resolve(wcDir, 'types'), { recursive: true });
 writeFileSync(resolve(wcDir, 'types/index.d.ts'), lines.join('\n'));
-console.log(`✓ types/index.d.ts — ${elements.length} classes + HTMLElementTagNameMap`);
+/**
+ * Every published method must declare its return type.
+ *
+ * The first version of this defaulted a missing `@returns` to `void`, which is
+ * a claim the generator is in no position to make: the analyzer infers nothing
+ * from a plain-JS body, so "no `@returns`" means "nobody wrote one", not "it
+ * returns nothing". Four methods shipped into index.d.ts as `void` that way —
+ * `getCrop()`, `getCroppedBlob()`, `getCroppedDataUrl()`, `toDataURL()` — three
+ * of them `async`, so the declared type was not merely imprecise but the wrong
+ * kind of thing. It broke the docs' own examples: `const blob = await
+ * ref.getCroppedBlob()` typed `blob` as `void`, and the `FormData.append` on
+ * the next line stopped compiling.
+ *
+ * Failing here rather than guessing makes `void` something an author wrote.
+ * The 21 command methods that really do return nothing say `@returns {void}`,
+ * which is a sentence, and the next value-returning method added without one
+ * stops the build instead of publishing a lie.
+ */
+const undeclared = elements.flatMap((el) =>
+  (el.members ?? [])
+    .filter(
+      (m) =>
+        m.kind === 'method' &&
+        m.privacy !== 'private' &&
+        m.privacy !== 'protected' &&
+        !m.static &&
+        !/Callback$/.test(m.name ?? '') &&
+        !m.return?.type?.text
+    )
+    .map((m) => `${el.tagName}.${m.name}()`)
+);
+if (undeclared.length) {
+  console.error(
+    `generate-types: ${undeclared.length} method(s) with no @returns — add one ` +
+      `(use {void} if it returns nothing):\n  ${undeclared.join('\n  ')}`
+  );
+  process.exit(1);
+}
+
+const methodCount = elements
+  .flatMap((el) => el.members ?? [])
+  .filter(
+    (m) =>
+      m.kind === 'method' &&
+      m.privacy !== 'private' &&
+      m.privacy !== 'protected' &&
+      !m.static &&
+      !/Callback$/.test(m.name ?? '')
+  ).length;
+console.log(
+  `✓ types/index.d.ts — ${elements.length} classes, ${methodCount} methods + HTMLElementTagNameMap`
+);
 
 // The three `types/<framework>-jsx.d.ts` files used to be generated here too.
 // prism 3.0 emits them from `config.jsxTypes`, which is the right side of the

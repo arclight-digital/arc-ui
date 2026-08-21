@@ -47,7 +47,7 @@ const { component, removed } = Astro.props as { component: any; removed: Removed
 // tag on purpose (that throw is what keeps a stale docs page from rendering an
 // empty API table as if it were the truth). So tombstones get an explicitly
 // empty surface here rather than a weakened `getApi`.
-const EMPTY_API = { tag: component.tag, description: '', group: null, props: [], events: [], slots: [], cssParts: [] };
+const EMPTY_API = { tag: component.tag, description: '', group: null, props: [], methods: [], events: [], slots: [], cssParts: [] };
 const api = removed ? EMPTY_API : getApi(component.tag);
 const subComponents = (component.subComponents ?? []).map((sub: any) => ({
   ...sub,
@@ -126,6 +126,7 @@ const headings = removed
   { id: 'preview', label: 'Preview' },
   { id: 'usage', label: 'Usage' },
   ...(api.props.length > 0 ? [{ id: 'api', label: 'API' }] : []),
+  ...(api.methods.length > 0 ? [{ id: 'methods', label: 'Methods' }] : []),
   ...(api.events.length > 0 ? [{ id: 'events', label: 'Events' }] : []),
   ...subComponents.map((sub: any) => ({
     id: sub.tag,
@@ -343,6 +344,20 @@ const headings = removed
       </section>
     )}
 
+    {/* Methods — between the props and the events on purpose: the imperative
+        surface is what a consumer reaches for after the declarative one, and
+        several events (arc-toast's arc-complete) only make sense once the
+        method that fires them has been read. */}
+    {api.methods.length > 0 && (
+      <section id="methods">
+        <h2 class="docs-heading">Methods</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+        <div class="component-page__api">
+          <ApiList rows={api.methods} kind="method" />
+        </div>
+      </section>
+    )}
+
     {/* Events */}
     {api.events.length > 0 && (
       <section id="events">
@@ -364,6 +379,23 @@ const headings = removed
         {sub.api.props.length > 0 && (
           <div class="component-page__api" style="margin-top:var(--space-md)">
             <ApiList rows={sub.api.props} />
+          </div>
+        )}
+        {/* A sub-component's methods and events used to render nowhere: this
+            block was props-only, so arc-hotspot's close() and
+            arc-sidebar-section's toggle() were in the manifest, in the .d.ts
+            and in the editor data, and absent from the one page that documents
+            them. Four events were invisible the same way. */}
+        {sub.api.methods.length > 0 && (
+          <div class="component-page__api" style="margin-top:var(--space-md)">
+            <h3 class="component-page__sub-heading">Methods</h3>
+            <ApiList rows={sub.api.methods} kind="method" />
+          </div>
+        )}
+        {sub.api.events.length > 0 && (
+          <div class="component-page__api" style="margin-top:var(--space-md)">
+            <h3 class="component-page__sub-heading">Events</h3>
+            <ApiList rows={sub.api.events} kind="event" />
           </div>
         )}
       </section>
@@ -527,6 +559,15 @@ const headings = removed
   .docs-heading {
     font-size: var(--text-lg);
     font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  /* Labels a sub-component's Methods and Events tables. A step below
+     .docs-heading, which names the sub-component itself. */
+  .component-page__sub-heading {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
     margin-bottom: var(--space-xs);
   }
 

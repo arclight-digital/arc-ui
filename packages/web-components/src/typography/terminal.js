@@ -331,7 +331,11 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     }));
   }
 
-  /** Play the sequence from the beginning. */
+  /**
+   * Play the sequence from the beginning.
+   *
+   * @returns {void}
+   */
   play() {
     this._clearTimeout();
     // Armed → playing: the resolver sees this and the controller releases the
@@ -349,7 +353,11 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     this._advance(0);
   }
 
-  /** Return to the blank, pre-animation state without starting playback. */
+  /**
+   * Return to the blank, pre-animation state without starting playback.
+   *
+   * @returns {void}
+   */
   reset() {
     this._clearTimeout();
     this._started = true;

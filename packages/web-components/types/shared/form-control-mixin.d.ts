@@ -45,8 +45,21 @@ export declare const FormControlMixin: (superClass: any) => {
         get form(): any;
         get validity(): any;
         get validationMessage(): any;
-        checkValidity(): any;
-        reportValidity(): any;
+        /**
+         * Whether the control currently satisfies its constraints, per the native
+         * constraint-validation API. Fires `invalid` on the element when it does
+         * not, and reports nothing to the user.
+         *
+         * @returns {boolean}
+         */
+        checkValidity(): boolean;
+        /**
+         * As checkValidity(), but also shows the browser's validation message
+         * against the control when it fails.
+         *
+         * @returns {boolean}
+         */
+        reportValidity(): boolean;
     };
     [x: string]: any;
     formAssociated: boolean;
