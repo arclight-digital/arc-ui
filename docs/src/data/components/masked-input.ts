@@ -24,7 +24,7 @@ The decision that makes the component composable: \`value\` holds only the raw c
 
 Editing behaves the way users expect from a good mask. Typing inserts at the caret and skips literals forward; Backspace deletes the previous fillable character, skipping literals backward; pasting strips non-conforming characters and fills the remaining positions, so a card number pasted with dashes lands cleanly in a space-grouped mask. A character that does not fit its slot is silently rejected and the caret stays put. Before typing begins, the native placeholder shows the mask shape; once typing starts, the unfilled remainder renders in the field as a muted hint, such as \`12/__/____\`.
 
-MaskedInput follows the v3 commit contract: \`arc-input\` fires on each accepted edit, and \`arc-change\` fires on blur or Enter when the value changed — and immediately when the last mask position fills, the same fixed-length commit that OTP Input established. Constraint validation is built in: a required empty field fails with \`valueMissing\`, and a partially filled mask fails with an "Incomplete value" pattern error, so a half-typed card number cannot pass a form's validation.`,
+MaskedInput follows the v3 commit contract: \`arc-input\` fires on each accepted edit, and \`arc-change\` fires on blur or Enter when the value changed — and immediately when the last mask position fills, the same fixed-length commit Pin Input uses. Constraint validation is built in: a required empty field fails with \`valueMissing\`, and a partially filled mask fails with an "Incomplete value" pattern error, so a half-typed card number cannot pass a form's validation.`,
 
   features: [
     'Declarative mask pattern: `#` digit, `A` uppercase letter, `a` any letter, `*` alphanumeric, everything else a literal',
@@ -50,7 +50,7 @@ MaskedInput follows the v3 commit contract: \`arc-input\` fires on each accepted
     ],
     dont: [
       'Do not mask free-form values like names, email addresses, or search queries — a mask that fights variable-length input is worse than no mask; use Input instead',
-      'Do not use MaskedInput for short fixed-length verification codes — OTP Input and Pin Input give each character its own box and auto-advance',
+      'Do not use MaskedInput for short fixed-length verification codes — Pin Input gives each character its own box and auto-advances',
       'Do not mask international phone numbers with a single pattern — number lengths vary by country, and a wrong mask locks users out of entering their own number',
       'Do not parse `formattedValue` on the server — submit and store the raw value, and format at the display edge',
       'Do not use the mask as a substitute for validation of meaning — `##/##/####` accepts 99/99/9999; check that a date is real before accepting it',

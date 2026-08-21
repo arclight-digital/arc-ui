@@ -68,15 +68,18 @@ Use announcement for any dynamic state change that sighted users can perceive vi
       label: 'React',
       lang: 'tsx',
       code: `import { Announcement, Button } from '@arclux/arc-ui-react';
+import type { ArcAnnouncement } from '@arclux/arc-ui/announcement';
 import { useRef } from 'react';
 
 export function SearchDemo() {
-  const announcerRef = useRef<HTMLElement>(null);
+  // Typing the ref as ArcAnnouncement is what makes \`message\` visible to
+  // TypeScript — an HTMLElement has no such property.
+  const announcerRef = useRef<ArcAnnouncement>(null);
 
   const handleSearch = () => {
     // perform search...
     if (announcerRef.current) {
-      (announcerRef.current as any).message = '42 results found.';
+      announcerRef.current.message = '42 results found.';
     }
   };
 
@@ -146,12 +149,13 @@ export class SearchDemoComponent {
       label: 'Solid',
       lang: 'tsx',
       code: `import { Announcement, Button } from '@arclux/arc-ui-solid';
+import type { ArcAnnouncement } from '@arclux/arc-ui/announcement';
 
 export function SearchDemo() {
-  let announcer: HTMLElement | undefined;
+  let announcer: ArcAnnouncement | undefined;
 
   const handleSearch = () => {
-    if (announcer) (announcer as any).message = '42 results found.';
+    if (announcer) announcer.message = '42 results found.';
   };
 
   return (
@@ -166,14 +170,15 @@ export function SearchDemo() {
       label: 'Preact',
       lang: 'tsx',
       code: `import { Announcement, Button } from '@arclux/arc-ui-preact';
+import type { ArcAnnouncement } from '@arclux/arc-ui/announcement';
 import { useRef } from 'preact/hooks';
 
 export function SearchDemo() {
-  const announcerRef = useRef<HTMLElement>(null);
+  const announcerRef = useRef<ArcAnnouncement>(null);
 
   const handleSearch = () => {
     if (announcerRef.current) {
-      (announcerRef.current as any).message = '42 results found.';
+      announcerRef.current.message = '42 results found.';
     }
   };
 

@@ -10,14 +10,14 @@ export const toolbar: ComponentDef = {
 
   overview: `Toolbar is a horizontal action bar that groups related controls — buttons, dropdowns, search fields — into a consistent strip above or within a content region. It follows the classic three-slot pattern: the prefix slot anchors inline-start actions (like a file menu or back button), the center (default) slot holds a title or contextual info, and the suffix slot pins inline-end actions (like save, share, or settings). The v3 slot names start/end still work as deprecated aliases through v4.
 
-The component renders with \`role="toolbar"\` for accessibility, signaling to screen readers that the contained controls are a logically grouped set. Two size variants are available: the default \`md\` size (48px height) for primary toolbars and the \`sm\` size (36px height) for secondary or nested toolbars. The \`border\` prop (on by default) adds a subtle bottom border to visually separate the toolbar from the content below.
+The component renders with \`role="toolbar"\` for accessibility, signaling to screen readers that the contained controls are a logically grouped set. Three size variants are available: the default \`md\` (48px height) for primary toolbars, \`sm\` (36px) for secondary or nested ones, and \`lg\` (60px) for a prominent application bar. \`lg\` was added in v4 when the size enum was canonicalised across the library — this component declared only \`md\` and \`sm\`, so a toolbar was the one control that could not be made taller. The nested arc-icon-button in the overflow menu tracks whichever size you set. The \`border\` prop (on by default) adds a subtle bottom border to visually separate the toolbar from the content below.
 
 When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`top: 0\` and a z-index of 50, keeping it visible as the user scrolls through long content. The toolbar background uses \`--bg-card\` to provide a slight elevation from the page surface. Combine Toolbar with SplitPane panels, code editors, or document viewers where contextual actions should remain accessible without scrolling.`,
 
   features: [
     'Three-slot layout: prefix (inline-start), center (flexible), suffix (inline-end)',
     '`role="toolbar"` for accessible grouping of related controls',
-    'Two size variants: md (48px) and sm (36px) for primary and secondary toolbars',
+    'Three size variants: `md` (48px), `sm` (36px), and `lg` (60px), with the overflow menu’s icon button tracking the size',
     'Optional bottom border via the border prop (enabled by default)',
     'Sticky positioning with top: 0 and z-index: 50 when sticky is set',
     'Card-colored background (`--bg-card`) for subtle elevation above the page surface',

@@ -13,7 +13,7 @@ export const floatBar: ComponentDef = {
 
 The most common pattern is a bulk-action bar that appears when one or more items are selected in a data table or list: "3 items selected — Delete | Archive | Export." FloatBar also works well as an unsaved-changes prompt ("You have unsaved changes — Save | Discard") or a cookie consent banner. The bar fires arc-open and arc-close events so your application can track its visibility state.
 
-Unlike Dock, which auto-hides and reveals on hover, FloatBar is explicitly controlled via the \`open\` prop — it appears in response to application state (e.g. items selected, form dirty) and disappears when the triggering condition resolves. This makes FloatBar the right choice for transient contextual toolbars, while Dock is better for persistent utility panels.`,
+FloatBar is explicitly controlled via the \`open\` prop — it appears in response to application state (e.g. items selected, form dirty) and disappears when the triggering condition resolves. That makes it the right choice for a transient contextual toolbar. For a bar that is always there, use Toolbar; for a panel the user opens and closes, use Drawer.`,
 
   features: [
     'Viewport-fixed floating bar with spring easing slide-in animation',
@@ -37,7 +37,7 @@ Unlike Dock, which auto-hides and reveals on hover, FloatBar is explicitly contr
     ],
     dont: [
       'Do not use FloatBar for permanent toolbars — use Toolbar instead',
-      'Do not put navigation links in a FloatBar — use TopBar or Dock',
+      'Do not put navigation links in a FloatBar — use TopBar or Sidebar',
       'Do not leave the FloatBar open indefinitely — it should be transient and context-dependent',
       'Do not place complex forms or multi-step flows inside a FloatBar',
       'Do not show multiple Float Bars simultaneously at the same position',

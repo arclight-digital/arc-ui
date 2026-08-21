@@ -4,7 +4,7 @@ import { statusVars } from '../status-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
- * Compact pill-shaped label for status indicators, category tags, and notification counts. Three
+ * Compact pill-shaped label for status indicators, category tags, and notification counts. Seven
  * color variants let you encode meaning at a glance across dashboards, tables, and card layouts.
  *
  * @tag arc-badge

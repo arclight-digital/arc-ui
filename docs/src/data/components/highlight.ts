@@ -12,7 +12,7 @@ export const highlight: ComponentDef = {
 
 The matching is case-insensitive by default, which suits most search UIs. Set \`case-sensitive\` for exact-case matching in technical contexts like code search or regex patterns. The query string is escaped for regex safety, so special characters like \`.\`, \`(\`, and \`*\` are matched literally rather than interpreted as regex operators.
 
-Highlight is designed to pair with Search, DataTable, CommandPalette, and any component that displays filtered results. The mark styling uses \`var(--accent-primary)\` with low opacity for the background and a stronger underline, ensuring matches are visible without overwhelming the surrounding text.`,
+Highlight is designed to pair with Search, DataGrid, CommandPalette, and any component that displays filtered results. The mark styling uses \`var(--accent-primary)\` with low opacity for the background and a stronger underline, ensuring matches are visible without overwhelming the surrounding text.`,
 
   features: [
     'Automatic text splitting and mark wrapping at match boundaries',
@@ -27,7 +27,7 @@ Highlight is designed to pair with Search, DataTable, CommandPalette, and any co
     do: [
       'Use Highlight in search result lists to show why each result matched',
       'Pair with Search or CommandPalette to highlight the active query in results',
-      'Use in DataTable cells to highlight filtered column values',
+      'Use in DataGrid cells to highlight filtered column values',
       'Update the query prop reactively as the user types for live highlighting',
     ],
     dont: [

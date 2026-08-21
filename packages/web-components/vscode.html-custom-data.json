@@ -881,7 +881,7 @@
     },
     {
       "name": "arc-badge",
-      "description": "Compact pill-shaped label for status indicators, category tags, and notification counts. Three\ncolor variants let you encode meaning at a glance across dashboards, tables, and card layouts.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **badge**",
+      "description": "Compact pill-shaped label for status indicators, category tags, and notification counts. Seven\ncolor variants let you encode meaning at a glance across dashboards, tables, and card layouts.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **badge**",
       "attributes": [
         {
           "name": "variant",
@@ -1702,7 +1702,7 @@
     },
     {
       "name": "arc-alert",
-      "description": "Contextual alert banner with four semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a dismissible alert is closed\n\n### **Slots:**\n - **icon** - Replaces the built-in status glyph. Absorbed from arc-callout, whose icon was slottable.\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **alert**\n- **icon**\n- **heading**\n- **content**\n- **dismiss**",
+      "description": "Contextual alert banner with five semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when a dismissible alert is closed\n\n### **Slots:**\n - **icon** - Replaces the built-in status glyph. Absorbed from arc-callout, whose icon was slottable.\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **alert**\n- **icon**\n- **heading**\n- **content**\n- **dismiss**",
       "attributes": [
         {
           "name": "variant",

@@ -4537,7 +4537,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Compact pill-shaped label for status indicators, category tags, and notification counts. Three\ncolor variants let you encode meaning at a glance across dashboards, tables, and card layouts.",
+          "description": "Compact pill-shaped label for status indicators, category tags, and notification counts. Seven\ncolor variants let you encode meaning at a glance across dashboards, tables, and card layouts.",
           "name": "ArcBadge",
           "cssParts": [
             {
@@ -8752,7 +8752,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Contextual alert banner with four semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.",
+          "description": "Contextual alert banner with five semantic variants and optional dismiss button for delivering\ntimely, prominent feedback to users.",
           "name": "ArcAlert",
           "cssParts": [
             {

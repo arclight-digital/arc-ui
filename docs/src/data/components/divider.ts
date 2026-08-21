@@ -6,34 +6,46 @@ export const divider: ComponentDef = {
   tag: 'arc-divider',
   tier: 'content',
   interactivity: 'static',
+  searchKeywords: ['separator', 'hr', 'rule', 'dashed', 'dotted'],
   description: 'Horizontal rule with multiple visual styles from subtle to glowing.',
 
-  overview: `Divider provides a horizontal rule that separates content sections with visual clarity. Unlike a plain \`<hr>\`, it ships with five distinct variants designed for dark-themed interfaces: the default "subtle" uses a gradient that fades at both edges, while "glow" adds an animated shimmer effect using a violet-accented overlay with mix-blend-mode screen.
+  overview: `Divider provides a horizontal rule that separates content sections with visual clarity. Unlike a plain \`<hr>\`, it ships with nine variants in two families, and which family you want is the first decision.
 
-The line variants — line-white, line-primary, and line-gradient — render a centered 2px rule with constrained max-width (160px, 200px, and 240px respectively), making them ideal for decorative section breaks in hero areas or between card groups. Line-blue and line-gradient include a box-shadow glow for added depth against dark backgrounds.
+**The illuminated set** is what Divider has always drawn, designed for dark-themed interfaces. The default \`subtle\` uses a gradient that fades at both edges; \`glow\` adds an animated shimmer using a violet-accented overlay with \`mix-blend-mode: screen\`. The line variants — \`line-white\`, \`line-primary\`, and \`line-gradient\` — render a centered 2px rule with a constrained max-width (160px, 200px, and 240px respectively), making them ideal for decorative section breaks in hero areas or between card groups. \`line-primary\` and \`line-gradient\` include a box-shadow glow for added depth against dark backgrounds.
 
-Divider renders a single \`<div>\` with \`role="separator"\` for proper accessibility semantics. The glow variant's shimmer animation runs over a 6-second cycle and automatically disables when the user has prefers-reduced-motion enabled, ensuring an inclusive experience without sacrificing visual impact.`,
+**The plain set arrived with \`arc-separator\` in v4**, which merged in here. Before that this component drew the token gradient and nothing else — there was no dashed or dotted rule at any width, which is why the two components coexisted. \`dashed\` and \`dotted\` are the ordinary rules those names describe. \`line\` is a flat single-color rule with no fade at all. \`fade\` is a flat edge-to-edge fade, and it is worth separating from \`subtle\` since they read as the same idea: \`subtle\` is the token gradient, \`fade\` is the flat one. Migrating from Separator, the variants carry over unchanged and \`orientation="vertical"\` becomes the \`vertical\` flag — see [the tombstone](/docs/components/separator).
+
+Any variant can run vertically with the \`vertical\` flag, which switches the host to \`inline-flex\` and rotates the gradient to run top-to-bottom — use it inside a flex row to separate inline content. \`label\` puts text in the middle of a horizontal divider, splitting it into two lines, which is the \`OR\` between two form options. \`align\` shifts a gradient's origin so it fades from one edge instead of both.
+
+Divider renders a single \`<div>\` with \`role="separator"\` for proper accessibility semantics. The glow variant's shimmer animation runs over a 6-second cycle and automatically disables when the user has \`prefers-reduced-motion\` enabled, ensuring an inclusive experience without sacrificing visual impact.`,
 
   features: [
-    'Five visual variants: subtle, glow, line-white, line-primary, and line-gradient',
-    'Animated shimmer on glow variant using a 6-second CSS keyframe cycle',
+    'Five illuminated variants: `subtle`, `glow`, `line-white`, `line-primary`, and `line-gradient`',
+    'Four plain rule variants absorbed from `arc-separator`: `dashed`, `dotted`, `fade`, and `line`',
+    'Animated shimmer on the `glow` variant using a 6-second CSS keyframe cycle',
     'Centered decorative line variants with constrained max-width for elegant section breaks',
-    'Box-shadow glow on line-primary and line-gradient for depth on dark backgrounds',
+    'Box-shadow glow on `line-primary` and `line-gradient` for depth on dark backgrounds',
+    '`vertical` renders any variant as a top-to-bottom rule for use inside flex rows',
+    '`label` splits a horizontal divider around centered text — the `OR` between two options',
+    '`align` shifts a gradient to fade from one edge instead of both',
     'Built-in `prefers-reduced-motion` support that disables the shimmer animation',
     'Semantic `role="separator"` for assistive technology',
-    'Exposed "divider" CSS part for external style customization',
+    'Exposed `divider` CSS part for external style customization',
   ],
 
   guidelines: {
     do: [
-      'Use the subtle variant as a general-purpose content separator between sections',
-      'Use line-gradient or line-primary as decorative breaks in hero and feature sections',
-      'Place glow dividers sparingly to draw attention to major section transitions',
+      'Use the `subtle` variant as a general-purpose content separator between sections',
+      'Use `dashed` or `dotted` where the rule marks a boundary rather than decorating one — drop zones, optional sections, cut lines',
+      'Use `line` when you want a plain flat rule and nothing else; it is the closest thing here to a bare `<hr>`',
+      'Use `line-gradient` or `line-primary` as decorative breaks in hero and feature sections',
+      'Place `glow` dividers sparingly to draw attention to major section transitions',
       'Combine with arc-section or arc-container to define clear visual boundaries',
     ],
     dont: [
-      'Do not Stack multiple glow dividers close together — the shimmer effect becomes distracting',
-      'Do not use line variants for dense UI layouts; their centered max-width leaves dead space',
+      'Do not stack multiple glow dividers close together — the shimmer effect becomes distracting',
+      'Do not use the centered line variants for dense UI layouts; their constrained max-width leaves dead space',
+      'Do not reach for `subtle` when you meant `fade` — `subtle` is the token gradient and picks up theme accents, `fade` is a flat neutral',
       'Do not rely solely on the divider for semantic separation; use proper heading structure too',
       'Do not override the animation timing without testing prefers-reduced-motion behavior',
     ],
@@ -45,6 +57,10 @@ Divider renders a single \`<div>\` with \`role="separator"\` for proper accessib
   <arc-divider variant="line-white"></arc-divider>
   <arc-divider variant="line-primary"></arc-divider>
   <arc-divider variant="line-gradient"></arc-divider>
+  <arc-divider variant="dashed"></arc-divider>
+  <arc-divider variant="dotted"></arc-divider>
+  <arc-divider variant="fade"></arc-divider>
+  <arc-divider variant="line"></arc-divider>
   <arc-divider label="OR"></arc-divider>
   <arc-divider variant="glow" align="left"></arc-divider>
   <div style="display: flex; align-items: center; gap: 16px; height: 40px;">
@@ -61,6 +77,12 @@ Divider renders a single \`<div>\` with \`role="separator"\` for proper accessib
       code: `<arc-divider></arc-divider>
 <arc-divider variant="glow"></arc-divider>
 <arc-divider variant="line-gradient"></arc-divider>
+
+<!-- The plain rules, absorbed from arc-separator -->
+<arc-divider variant="dashed"></arc-divider>
+<arc-divider variant="dotted"></arc-divider>
+<arc-divider variant="fade"></arc-divider>
+<arc-divider variant="line"></arc-divider>
 
 <!-- Labeled divider -->
 <arc-divider label="OR"></arc-divider>

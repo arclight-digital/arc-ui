@@ -7,11 +7,15 @@ export const badge: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'Compact pill-shaped label for status indicators, category tags, and notification counts. Three color variants let you encode meaning at a glance across dashboards, tables, and card layouts.',
+    'Compact pill-shaped label for status indicators, category tags, and notification counts. Seven color variants let you encode meaning at a glance across dashboards, tables, and card layouts.',
 
   overview: `Badge is a small, pill-shaped label designed to communicate status, category, or count at a glance. Its compact form factor makes it the right choice whenever you need to annotate another element — a table row, a card header, a sidebar item — without disrupting the surrounding layout or visual hierarchy.
 
-The three color variants map to distinct semantic roles. Default (neutral gray) works for general-purpose labels like categories or metadata. Primary conveys an active or informational state — think "In Progress", "New", or a notification count. Secondary signals a distinct or highlighted category such as "Featured", "Beta", or "Archived", giving you a third color lane that stays visually separated from the default and primary tones.
+The seven color variants split into two groups. **Three are neutral lanes** for labels that categorise rather than report: \`default\` (neutral gray) for general-purpose labels like categories or metadata; \`primary\` for an active or informational state — think "In Progress", "New", or a notification count; and \`secondary\` for a distinct or highlighted category such as "Featured", "Beta", or "Archived", a third lane that stays visually separated from the other two.
+
+**Four are the library's status set** — \`success\`, \`warning\`, \`error\` and \`info\` — mapping to the semantic color tokens, so a badge reporting a state matches an Alert or a Tag reporting the same one. Reach for these when the badge is a status rather than a label: a build result, a health indicator, a severity. \`info\` is the newest of them and exists so every status set in the library has the same four members. If none of the seven fit, the \`color\` prop takes an RGB triplet and overrides the variant entirely, for category colors that come from data rather than design tokens.
+
+**Badge and Tag are two chip faces, deliberately.** Badge is monospace, sentence case, and compact; Tag is the label face, uppercase with 2px tracking and a touch-sized minimum height. They were slated to merge in v4 and did not: merging would have re-set every badge on every page in an uppercase label face — \`v3.2.0\` becoming \`V3.2.0\` in a taller box — which is a visual capability being deleted rather than consolidated. Use Badge for dense inline annotation and Tag for filter chips and categorical labels.
 
 Because Badge is a static content element with no interactive behavior, it renders as a simple \`<span>\` and carries no ARIA roles beyond its text content. This keeps the DOM lightweight and ensures badges inside table cells, list items, and cards don't introduce unexpected focus stops or interaction patterns.`,
 
@@ -35,7 +39,7 @@ Because Badge is a static content element with no interactive behavior, it rende
       'Combine multiple badge variants in a row to show compound status (e.g. category + state)',
     ],
     dont: [
-      'Do not use badges for long descriptions — switch to an Alert or Callout for multi-word messages',
+      'Do not use badges for long descriptions — switch to an Alert for multi-word messages',
       'Do not rely on color alone to convey meaning; always include a text label alongside the color',
       'Do not Stack more than three or four badges in a single row — the density becomes unreadable',
       'Do not use Badge as an interactive element; if users need to click it, use a Tag or Button instead',

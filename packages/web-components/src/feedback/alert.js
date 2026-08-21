@@ -6,7 +6,7 @@ import { getStatusIcon } from '../status-utils.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
- * Contextual alert banner with four semantic variants and optional dismiss button for delivering
+ * Contextual alert banner with five semantic variants and optional dismiss button for delivering
  * timely, prominent feedback to users.
  *
  * @tag arc-alert

@@ -35,8 +35,8 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
       'Populate the `footer` slot with primary and secondary action buttons for task-oriented sheets',
     ],
     dont: [
-      'Do not nest a Sheet inside another Sheet — use a Modal for layered overlays instead',
-      'Do not use Sheet for brief confirmations or alerts — use Modal or Toast for those patterns',
+      'Do not nest a Sheet inside another Sheet — use a Dialog for layered overlays instead',
+      'Do not use Sheet for brief confirmations or alerts — use Confirm or Toast for those patterns',
       'Do not set both `side="bottom"` and `side="right"` — only one placement is active at a time',
       'Do not place critical navigation inside a Sheet — it is dismissible and should contain optional content',
       'Avoid overloading the sheet body with too many form fields — consider a full page for complex forms',

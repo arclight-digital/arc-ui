@@ -41,7 +41,7 @@ The component is fully responsive: on viewports below 768px, padding compresses 
     ],
     dont: [
       'Do not Stack multiple CTA banners on the same page — one is enough',
-      'Do not use for informational content — use Callout or Card instead',
+      'Do not use for informational content — use an Alert or Card instead',
       'Do not omit both headline and eyebrow — the banner needs at least a headline',
       'Do not add more than two action buttons — too many choices reduces conversion',
     ],

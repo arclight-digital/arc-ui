@@ -35,7 +35,7 @@ The card supports four positions — \`bottom\` (default), \`top\`, \`left\`, an
     ],
     dont: [
       'Do not use HoverCard for critical information that the user must see — hover is not discoverable on touch devices',
-      'Do not place complex interactive forms inside the card; use a Popover or Modal for those use cases',
+      'Do not place complex interactive forms inside the card; use a Popover or Dialog for those use cases',
       'Do not set open-delay to 0, as this causes cards to flash on every accidental hover',
       'Do not nest a HoverCard inside another HoverCard — the stacking and delay logic will conflict',
       'Do not forget the content slot; without it, the card renders as an empty floating panel',

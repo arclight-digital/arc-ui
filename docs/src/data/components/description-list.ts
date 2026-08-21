@@ -6,18 +6,22 @@ export const descriptionList: ComponentDef = {
   tag: 'arc-description-list',
   tier: 'data',
   interactivity: 'static',
+  searchKeywords: ['key value', 'metadata', 'definition list', 'dl', 'spec sheet'],
   description:
     'Structured term/detail pair list in a responsive grid layout with optional dividers.',
 
   overview: `DescriptionList renders term/detail pairs in a grid layout, ideal for metadata displays, specification tables, and detail panels. Each child \`arc-description-item\` contains a term label and a detail slot, with the term displayed as an uppercase accent label and the detail rendered below it.
 
-The \`columns\` prop controls the grid layout — set it to 2, 3, or 4 to arrange items side by side. Vertical dividers appear automatically between columns when \`dividers\` is enabled. On screens narrower than 640px the layout collapses to a single column for readability.
+**Two props control arrangement and they are about different axes.** \`columns\` is how many *items* sit across — set it to 2, 3, or 4 to arrange pairs side by side. \`layout\` is how each item arranges its own term and detail: \`stacked\` (the default) puts the term above the detail, and \`horizontal\` puts them side by side on a shared two-column grid so terms align down the list. They compose — one item can be horizontal inside a three-column list. Vertical dividers appear automatically between columns when \`dividers\` is enabled, and on screens narrower than 640px the grid collapses to a single column for readability.
+
+**\`layout\` arrived with \`arc-key-value\`, which merged in here in v4.** A term beside its detail was that component's whole reason to exist as a separate element, so absorbing it meant absorbing the arrangement. One thing to watch when migrating: Key Value defaulted to the horizontal arrangement and this component defaults to \`stacked\`, so add \`layout="horizontal"\` to keep what you had. The survivor's default is unchanged deliberately — a merge is not the place to restyle the component that survived. See [the tombstone](/docs/components/key-value) for the full translation.
 
 Dividers (bottom borders between items, and right borders between columns) are enabled by default and can be toggled off with the \`dividers\` attribute. The container uses \`role="list"\` and each item uses \`role="listitem"\` for assistive technology support.`,
 
   features: [
     'ARIA list/listitem roles for assistive technology support',
     'Responsive grid layout with configurable column count',
+    '`layout="horizontal"` puts each term beside its detail on a shared grid, so terms align down the list',
     'Automatic single-column fallback below 640px',
     'Optional horizontal and vertical dividers between items',
     'Uppercase accent-font term labels for visual hierarchy',
@@ -29,23 +33,32 @@ Dividers (bottom borders between items, and right borders between columns) are e
     do: [
       'Use for structured key/value metadata such as profile details, order summaries, or spec sheets',
       'Set `columns` to 2 or 3 for wider layouts where items are short and scannable',
+      'Use `layout="horizontal"` when terms are short and you want them to align down a single column of pairs',
       'Pair with cards or panels for contained metadata displays',
       'Keep term labels concise — one to three words is ideal',
     ],
     dont: [
       'Do not use for tabular data with many rows — use `arc-data-grid` instead',
       'Do not nest description lists inside each other',
+      'Do not combine `layout="horizontal"` with a high `columns` count — each item then needs room for two columns of its own, and both collapse to nothing',
       'Do not use long paragraph-length terms — move verbose content to the detail slot',
       'Do not mix description items with non-`arc-description-item` children',
     ],
   },
 
-  previewHtml: `<arc-description-list columns="2" style="max-width: 480px;">
-  <arc-description-item term="Name">Arclight Platform</arc-description-item>
-  <arc-description-item term="Status">Active</arc-description-item>
-  <arc-description-item term="Region">US-West-2</arc-description-item>
-  <arc-description-item term="Version">4.2.1</arc-description-item>
-</arc-description-list>`,
+  previewHtml: `<div style="display:flex;flex-direction:column;gap:var(--space-xl);max-width:480px;width:100%">
+  <arc-description-list columns="2">
+    <arc-description-item term="Name">Arclight Platform</arc-description-item>
+    <arc-description-item term="Status">Active</arc-description-item>
+    <arc-description-item term="Region">US-West-2</arc-description-item>
+    <arc-description-item term="Version">4.2.1</arc-description-item>
+  </arc-description-list>
+  <arc-description-list layout="horizontal">
+    <arc-description-item term="Name">Arclight Platform</arc-description-item>
+    <arc-description-item term="Status">Active</arc-description-item>
+    <arc-description-item term="Region">US-West-2</arc-description-item>
+  </arc-description-list>
+</div>`,
 
   subComponents: [
     {
@@ -65,6 +78,12 @@ Dividers (bottom borders between items, and right borders between columns) are e
   <arc-description-item term="Status">Active</arc-description-item>
   <arc-description-item term="Region">US-West-2</arc-description-item>
   <arc-description-item term="Version">4.2.1</arc-description-item>
+</arc-description-list>
+
+<!-- Term beside detail. This is what arc-key-value defaulted to. -->
+<arc-description-list layout="horizontal">
+  <arc-description-item term="Name">Arclight Platform</arc-description-item>
+  <arc-description-item term="Status">Active</arc-description-item>
 </arc-description-list>`,
     },
     {

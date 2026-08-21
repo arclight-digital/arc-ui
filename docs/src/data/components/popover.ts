@@ -30,14 +30,14 @@ Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`ari
     do: [
       'Use the `trigger` slot with a focusable element like a button for keyboard accessibility',
       'Choose a `position` that keeps the panel visible within the viewport for your layout',
-      'Keep popover content concise — for complex forms, consider a Modal or Drawer instead',
+      'Keep popover content concise — for complex forms, consider a Dialog or Drawer instead',
       'Use `arc-close` events to clean up temporary state when the popover dismisses',
       'Nest interactive content like links, buttons, or small forms inside the default slot',
     ],
     dont: [
       'Do not use Popover for critical information that the user must see — it can be dismissed accidentally',
       'Do not nest a Popover inside another Popover — stacking z-index and focus management becomes unreliable',
-      'Do not place very large content (tables, long lists) inside a popover — use a Drawer or Modal for that',
+      'Do not place very large content (tables, long lists) inside a popover — use a Drawer or Dialog for that',
       'Do not use Popover as a tooltip — use the Tooltip component for brief hover-triggered hints',
       'Avoid placing the trigger inside a scrollable container without testing that the panel remains aligned',
     ],

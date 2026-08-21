@@ -34,7 +34,7 @@ The component uses CSS parts (\`blockquote\`, \`quote\`, \`cite\`) for fine-grai
       'Pair with Text and Card components for rich editorial layouts',
     ],
     dont: [
-      'Do not use Blockquote for generic content boxes - use Callout or Card instead',
+      'Do not use Blockquote for generic content boxes — use an Alert (`variant="tip"`) or Card instead',
       'Do not Stack multiple accent-variant blockquotes on the same page',
       'Do not use overly long quotations that would be better served by inline text',
       'Do not remove the cite attribute if the quote has a known author',
