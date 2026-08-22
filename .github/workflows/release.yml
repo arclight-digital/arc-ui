@@ -12,7 +12,14 @@ jobs:
       contents: write
       id-token: write
     steps:
+      # fetch-depth: 0 because the publish scope is "what changed since the
+      # previous tag", and the default shallow clone reaches neither the tag
+      # nor the history between them. Without it release-scope.js cannot
+      # answer, and before v4.1.0 the step it replaced answered anyway — it
+      # took its own "no previous tag" branch and published all twelve.
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v6
 
@@ -88,42 +95,27 @@ jobs:
             exit 1
           fi
 
-      # Which packages this tag actually publishes.
+      # Which packages this tag actually publishes — see
+      # scripts/release-scope.js, which carries the reasoning and the two ways
+      # the inline version of this step silently published everything instead.
+      # It is runnable outside CI (`node scripts/release-scope.js v4.1.0`),
+      # which is how its answer is checked before a tag rather than after.
       #
-      # Every release published all nine at the same version whether or not
-      # anything in them had changed, which puts eight identical tarballs on
-      # npm per patch and makes a package's version history say nothing about
-      # whether the package moved. pnpm's own `[<since>]` filter answers it
-      # from git: the packages whose *files* changed since the previous tag.
-      # Deliberately without the `...` dependents prefix — a wrapper whose
-      # files did not change does not need republishing when core moves,
-      # because the copy already on npm declares `^<older core>` and a caret
-      # accepts the newer one.
-      #
-      # Except across a major, where a caret does not. A wrapper still
-      # declaring ^3 refuses core 4 and the consumer gets a peer conflict on
-      # upgrade, so a major republishes everything regardless of diff. This is
-      # also the safe direction to be wrong in: the cost is a few identical
-      # tarballs, and the cost of the other mistake is a broken upgrade path.
+      # Assigned to a variable rather than interpolated straight into the echo:
+      # `echo "filter=$(cmd)"` reports echo's exit status, so a script that
+      # refused to guess would leave an empty filter and `pnpm publish` would
+      # take that as "everything" — the same silent-fallback shape being fixed
+      # here. A bare assignment propagates the substitution's status under
+      # `set -e`, and the empty check covers the rest.
       - name: Choose packages to publish
         id: scope
         run: |
-          PREV="$(git describe --tags --abbrev=0 "${GITHUB_REF_NAME}^" 2>/dev/null || true)"
-          if [ -z "$PREV" ]; then
-            echo "No previous tag — publishing everything."
-            echo "filter=-r" >> "$GITHUB_OUTPUT"
-            exit 0
+          FILTER="$(node scripts/release-scope.js "$GITHUB_REF_NAME")"
+          if [ -z "$FILTER" ]; then
+            echo "::error::release-scope produced no filter — refusing to publish."
+            exit 1
           fi
-          NEW_MAJOR="${GITHUB_REF_NAME#v}"; NEW_MAJOR="${NEW_MAJOR%%.*}"
-          OLD_MAJOR="${PREV#v}"; OLD_MAJOR="${OLD_MAJOR%%.*}"
-          if [ "$NEW_MAJOR" != "$OLD_MAJOR" ]; then
-            echo "Major bump $PREV → $GITHUB_REF_NAME — publishing everything."
-            echo "filter=-r" >> "$GITHUB_OUTPUT"
-          else
-            echo "Publishing packages changed since $PREV:"
-            pnpm --filter "[$PREV]" list --depth -1 || true
-            echo "filter=--filter [$PREV]" >> "$GITHUB_OUTPUT"
-          fi
+          echo "filter=$FILTER" >> "$GITHUB_OUTPUT"
 
       # OIDC trusted publishing: no token; provenance is generated
       # automatically. NPM_CONFIG_PROVENANCE stays as a guard so a silent

@@ -2,7 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [main, v3]
+    # dev is here because it was not: four commits sat on it unverified before
+    # v4.1.0, and the first real signal would otherwise have arrived from the
+    # release workflow, at the moment of shipping.
+    branches: [main, dev, v3]
   pull_request:
 
 jobs:
