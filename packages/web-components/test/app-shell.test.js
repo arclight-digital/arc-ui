@@ -42,6 +42,27 @@ async function openDrawer(el) {
   el.sidebarOpen = true;
   await settle(el);
   await nextFrame();
+
+  /*
+   * And then until focus has actually moved, rather than for a fixed number of
+   * frames.
+   *
+   * The shell moves focus into the drawer from a `requestAnimationFrame` of its
+   * own, scheduled during `updated()` — "after the visibility flip, or there is
+   * nothing focusable to land on". One `nextFrame()` is the same frame it
+   * schedules in, and on a loaded CI runner that race is losable: the release
+   * workflow for v4.2.1 failed here with focus still on the button outside,
+   * against a tree whose five local runs were green.
+   *
+   * A frame count is the wrong thing to wait for in any case. What the tests
+   * below assert is that focus *moved*; waiting for that is both the honest
+   * condition and the one that cannot drift with machine speed. Bounded, so a
+   * genuine failure to move still fails rather than hanging.
+   */
+  for (let i = 0; i < 10 && el.contains(deepActive()) === false; i++) {
+    if (!el.hasAttribute('mobile') || !el.sidebarOpen) break;
+    await nextFrame();
+  }
 }
 
 describe('arc-app-shell rendering', () => {
@@ -62,8 +83,9 @@ describe('arc-app-shell rendering', () => {
 
   it('marks an empty toc so the column can collapse', async () => {
     const el = await shell();
-    expect(el.shadowRoot.querySelector('.shell__toc').classList.contains('shell__toc--empty'))
-      .to.equal(true);
+    expect(
+      el.shadowRoot.querySelector('.shell__toc').classList.contains('shell__toc--empty'),
+    ).to.equal(true);
   });
 });
 
@@ -129,9 +151,7 @@ describe('arc-app-shell drawer as a modal surface', () => {
     const el = await shell();
     await openDrawer(el);
 
-    expect(deepActive(), 'the first focusable in the drawer').to.equal(
-      el.querySelector('#nav-a'),
-    );
+    expect(deepActive(), 'the first focusable in the drawer').to.equal(el.querySelector('#nav-a'));
   });
 
   it('returns focus to whatever had it before opening', async () => {
@@ -153,8 +173,9 @@ describe('arc-app-shell drawer as a modal surface', () => {
     await settle(el);
     await nextFrame();
 
-    expect(document.body.style.overflow, 'no scroll lock on a static sidebar')
-      .to.not.equal('hidden');
+    expect(document.body.style.overflow, 'no scroll lock on a static sidebar').to.not.equal(
+      'hidden',
+    );
   });
 });
 
@@ -204,7 +225,13 @@ describe('arc-app-shell dismissal announces itself', () => {
     const el = await shell();
     await openDrawer(el);
     let event = null;
-    document.body.addEventListener('arc-sidebar-toggle', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-sidebar-toggle',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     pressKey('Escape');
     await settle(el);
