@@ -842,6 +842,10 @@
     { "name": "::part(controls)" },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(tabs)" },
+    {
+      "name": "::part(indicator)",
+      "description": "The light that travels between tabs: the underline in the default variant, the ground behind the selection in `pills` and in vertical bars."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(menu-btn)" },
     { "name": "::part(content)" },

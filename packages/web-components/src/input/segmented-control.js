@@ -120,18 +120,21 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
   }
 
   /**
-   * Read the options once the first render has a slot to read from.
+   * The DSD read, and nothing beside it.
    *
    * `slotchange` alone is not enough under declarative shadow DOM: the parser
    * attaches the shadow root and assigns the slot before Lit adopts the tree,
    * so the assignment has already happened by the time this component's
-   * listener exists and the event never arrives. A server-rendered control
-   * therefore upgraded with zero options and collapsed to an 8px sliver —
-   * on every page that used one, including its own documentation.
+   * listener exists and the event never arrives. `hydrateSlots` delivers it —
+   * that is the whole of its job, and the reader below runs from the same
+   * handler a real slotchange reaches.
+   *
+   * There used to be a direct call here as well, which is where this
+   * component's share of Lit's `change-in-update` warning came from: a second
+   * read, of the same slot, writing state from inside the update.
    */
   firstUpdated() {
     hydrateSlots(this);
-    this._readOptions(this.shadowRoot?.querySelector('slot'));
   }
 
   _onSlotChange(e) {

@@ -31,6 +31,35 @@ describe('dev warnings', () => {
     expect(warnings.some((w) => w.includes('"primry" is not a valid variant') && w.includes('primary | secondary | ghost'))).to.be.true;
   });
 
+  /**
+   * The rename that goes unnoticed. `variant="danger"` was valid before v4 and
+   * is coerced to the default now, so the alert still renders — as an ordinary
+   * `info` notice. A consumer shipped four of those on their failure path and
+   * only found out when they loaded this module. Naming the destination is what
+   * turns "that is not a variant" into "this is what you are looking at".
+   */
+  it('names the value an unrecognised one falls back to', async () => {
+    mount('<arc-alert variant="danger">Upload failed</arc-alert>');
+    await settle();
+    expect(
+      warnings.some(
+        (w) => w.includes('"danger" is not a valid variant') && w.includes('rendering as "info"'),
+      ),
+      warnings.join('\n'),
+    ).to.be.true;
+  });
+
+  it('leaves the fallback out when the default is computed', async () => {
+    // Not every oneOf has a literal default; those entries carry no fallback
+    // and the warning stops at the value list rather than inventing one.
+    for (const [tag, entry] of Object.entries(schema)) {
+      for (const name of Object.keys(entry.enums ?? {})) {
+        if (entry.fallbacks?.[name] === undefined) continue;
+        expect(entry.enums[name], `${tag}.${name}`).to.include(entry.fallbacks[name]);
+      }
+    }
+  });
+
   it('includes a docs link', async () => {
     mount('<arc-button size="xxl">Go</arc-button>');
     await settle();

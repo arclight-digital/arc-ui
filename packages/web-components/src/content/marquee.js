@@ -96,7 +96,6 @@ export class ArcMarquee extends DeclaredPropsMixin(LitElement) {
 
   firstUpdated() {
     hydrateSlots(this);
-    this._updateDuplicate();
   }
 
   updated(changed) {

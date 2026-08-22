@@ -5043,3 +5043,281 @@ reading it had a defect of its own.
 
 
 ---
+
+## The frame batch — eleven items from an application, #90–#99
+
+Reported by a consumer building two shells against 4.0.1, collected in one batch
+rather than a trickle (`../dawn-music-playground/docs/arc-ui-feedback.md`). Nine
+were arc-ui's; two are prism's and are written up as PRISM-3 §2.4 and §2.5.
+
+What makes this batch worth a heading of its own is not the defects. It is that
+the suite was sound — 4,694 tests, a mutation run against the shared core, four
+VACUOUS assertions out of 712 — and caught none of them. The companion analysis
+is `test-frame.md`: a padded test asserts something that cannot fail, and is
+found by reading the assertion; a **framed** test asserts something real in a
+situation the consumer is never in, and is invisible no matter how carefully you
+read it. Four frames account for the whole batch — only-one-state, only-alone,
+only-empty, only-relative-to-self — and underneath them, only-what-the-code-does.
+
+The two test files that close them are `composition.test.js` (documented
+pairings, mounted as pairs) and `closed-overflow.test.js` (overlays measured
+against the document, closed).
+
+---
+
+### 90. `arc-top-bar` never gets `fixed` inside `arc-app-shell` — **correctness — FIXED**
+
+`.shell__body` carries `padding-top: var(--nav-height)` on the assumption that
+the slotted bar is out of flow. Nothing put it there: `arc-top-bar` is only
+`position: fixed` under `:host([fixed])`, and `grep -n fixed app-shell.js`
+matched two mobile overlay rules and nothing else. So the default composition —
+`<arc-app-shell><arc-top-bar slot="topbar">` — rendered 64px of bar in normal
+flow *plus* 64px of reserved padding: **a 128px gap at the top of every page**,
+with no error and nothing in the console.
+
+What makes it a defect rather than a gotcha is that arc-top-bar's own JSDoc
+documents the behaviour that was missing — "Automatically applied when TopBar is
+placed inside an AppShell". The shell now sets the attribute from the `topbar`
+slot's change handler, which is also the path `hydrateSlots` covers under DSD.
+
+**Frame: only-alone.** Two components that ship together, are documented as
+composing, and visibly break when composed. All 121 test files mounted
+components singly or in parent-child pairs the component itself renders.
+`doc-claims` cannot reach it either: it validates `@csspart`, `@fires` and
+`@prop` because those are single-component surfaces, and this is a claim about
+two components in a relationship.
+
+---
+
+### 91. `arc-app-shell` flattens the sidebar it is documented to compose with — **correctness — FIXED**
+
+The shell's `::slotted(arc-sidebar)` block forces `height: auto !important`,
+correctly — `.shell__sidebar` owns sticky and height. But that left the sidebar
+host at content height, and `.sidebar { min-height: 100% }` resolves against the
+host's *height*, which is definite standalone and auto here. So the rail filled
+the page everywhere except the layout it ships with, and its divider — a
+`.sidebar::after` pinned `top: 0; bottom: 0` — stopped at the last link, leaving
+the sidebar looking half-drawn down a tall page. Measured by the reporter at a
+950px viewport: wrapper 886px, host 329px.
+
+Fixed on both sides of the boundary, which is the part worth keeping: the shell
+adds `min-height: 100%` (the one property its override block was *not* forcing),
+and `arc-sidebar` stops relying on a percentage that needs a definite parent —
+its host is `display: grid`, so `.sidebar` stretches to whatever box it is
+given. `min-height: 100%` is gone from the component rather than left in as
+dead defence.
+
+**Frame: only-alone**, again, and a second reading of the `!important` block:
+four unvalidated claims about another component's internals. `slotted-overrides`
+(test-frame §4.4) is the check that would make each name its property and carry
+a reason.
+
+---
+
+### 92. `arc-sidebar`'s `width` was declared, defaulted, and read by nothing — **correctness — FIXED**
+
+No `styleMap`, no custom property, no `:host([width])` selector, no `this.width`
+anywhere. The 280px a consumer saw came from `.shell__sidebar`, so the prop
+looked like it worked right up until someone passed a different value, at which
+point it was silently ignored.
+
+Wired rather than deleted: the host reads `--_width` (the `layout/center.js`
+idiom), the shell's rail reads `--sidebar-width` so one token moves the wrapper
+and its contents together, and the constructor default drops from `'280px'` to
+`''` — a default describing another component's rail, which nothing applied, was
+indistinguishable from one that did.
+
+**Frame: only-what-the-code-does.** Tests are written from the implementation,
+so a prop nothing reads gets no test, because there was never a behaviour to
+assert. Delete the `@prop` line and the failing-test count is zero. The
+mechanical guard is `dead-props` (test-frame §4.1): every entry in `static
+properties` needs a read somewhere other than its constructor default and its
+docs. **Not built** — the highest-value item left from this batch.
+
+---
+
+### 93. `AppShell.sidebarOpen` is one-way — **PRISM — PRISM-3 §2.4**
+
+The shell closes the drawer on Escape, on a backdrop click and on navigation,
+announcing each with `arc-sidebar-toggle`, and the generated Svelte wrapper
+marks the prop one-way. A consumer's copy of the state drifts the first time the
+user dismisses the drawer by any route other than the hamburger.
+`SidebarSection.open` **is** `$bindable()`, so the generator can already do
+this; the rule keys off the prop's name rather than off "the component also
+mutates this".
+
+---
+
+### 94. Public methods are unreachable from the non-React wrappers — **PRISM — PRISM-3 §2.5; the arc-ui half FIXED**
+
+Svelte binds the element to a private `__el` it never exports and Vue has no
+`defineExpose` anywhere in the package, so `arc-toast`'s `show()`, `dismiss()`,
+`complete()` and `clear()` have no caller. React is fine — `@lit/react` forwards
+refs — which is why this surfaced in an application and not in a build.
+
+arc-ui's half: `arc-toast` had a document-level `arc-toast` listener for
+`show()` alone, which left a consumer able to raise a toast and unable to do
+anything else with it — `show()` returns the id the others take, and the return
+value of a method you did not call goes nowhere. The route is now complete
+(`arc-toast-dismiss`, `-update`, `-complete`, `-clear`) and `detail.id` on the
+way in lets the caller name the toast, so it holds the id without needing the
+return value.
+
+**That is not a general answer, and should not be read as one.** It works
+because this component was already designed to be driven from a distance.
+`arc-inline-edit.edit()` and `arc-carousel.next()` are not, and should not each
+grow an event bus to work around a missing handle.
+
+---
+
+### 95. A closed `arc-dropdown-menu` puts a horizontal scrollbar on the page — **correctness, 3 components — FIXED**
+
+The one with the worst symptom-to-cause distance: a scrollbar appears and
+nothing is visibly off-screen. The panel is hidden with `opacity: 0;
+visibility: hidden` so the open transition has two states to run between, and is
+also `position: absolute; inset-inline-start: 0; min-width: 200px`. A
+`visibility: hidden` box still takes part in layout and still contributes
+scrollable overflow, so anchored to a right-edge trigger — a table's row-action
+menu, the canonical placement — the closed panel hangs 200px past the document
+edge. Measured by the reporter at a 1680px viewport: `scrollWidth` 1800 against
+`clientWidth` 1680.
+
+**The library already solved this one component over.** `arc-menubar` renders
+its panel only while open, so there is no closed box. The fix here takes the
+other route — `display: none` while closed, with `transition-behavior:
+allow-discrete` and `@starting-style` to keep both transitions — which is the
+same pairing `shared/position-styles.js` has carried since the managed panels
+moved to the top layer, for exactly this reason, on the managed half of the same
+stylesheet. What was missing was the resting half.
+
+`arc-popover` and `arc-toolbar` were flagged as unmeasured siblings. Measured
+now, by the sweep: **arc-popover 59px, arc-hover-card 61px** of page overflow at
+the runner's viewport, both fixed the same way. `arc-toolbar`'s panel is
+`inset-inline-end: 0`, so it overflows leftward and produces no scrollbar in
+LTR — it is the RTL case, and it is fixed with the others rather than left as a
+known-quiet instance. `arc-navigation-menu` measured clean.
+
+**Frames: all four at once, which is why it survived four test files.**
+Only-one-state — every assertion in `menu-width.test.js` runs through a helper
+named `openMenubar`, in a file whose header reasons carefully about `min-width`
+and even warns that *"an empty panel would sit at min-width and pass the width
+assertions"*. The `min-width: 200px` it so carefully defends is the exact
+declaration that makes the closed panel 200px of off-page overflow. That test is
+not padded and not lazy; it is framed. Only-empty — the reporter's own earlier
+sweep came back clean against an empty library, because a right-edge trigger
+only exists once a row is wide enough to push one there. Only-relative-to-self —
+`scrollWidth` appears in ten test files, all measuring an element against its
+own container; this panel is correct relative to its trigger and wrong relative
+to the page.
+
+---
+
+### 96. Seven components logged Lit's `change-in-update` warning, from one line — **FIXED**
+
+Reported as three (`arc-sidebar`, `arc-search`, `arc-segmented-control`) with
+the right instinct attached: *"it is now five components rather than one, which
+reads less like a sanctioned exception and more like a pattern."* It was seven,
+and it was one line.
+
+`hydrateSlots(this)` is called from `firstUpdated`, which runs **inside** the
+update. Every handler it reaches is read-and-store by contract, so every one of
+them wrote reactive state after the update completed. The dispatch is now
+queued as a microtask — the earliest point outside the cycle, observably
+identical otherwise, since the write already scheduled a second update either
+way. Four components (`arc-segmented-control`, `arc-navigation-menu`,
+`arc-message`, `arc-marquee`) also carried a *direct* read beside the call, from
+before `hydrateSlots` existed; those are the duplicate half and are gone.
+`arc-app-shell`'s came from a different place — `sidebarOpen = false` written
+from `updated()` on the mobile→desktop transition — and moved to
+`_checkMobile()`, which runs outside the cycle on both its paths.
+
+`arc-icon` still warns and should: its registry lookup is async, so the write
+genuinely lands after render. That is the sanctioned exception, and it is now
+legible as one instead of being one of seven.
+
+The regression test needed rewriting rather than deleting, which is the
+interesting part: `conversation.test.js` asserted the DSD read by stubbing
+`_onSlotChange` out and checking that the direct read saved the render. With one
+mechanism instead of two, stubbing the handler defeats the thing under test. It
+now drops the *trusted* event — the one a server-rendered upgrade never gets —
+and asserts the synthetic dispatch does the work.
+
+---
+
+### 97. `arc-page-header` reserved space for slots that were empty — **layout — FIXED**
+
+`__above`, `__below` and `__content` were always rendered with their margins
+(`--space-sm`, `--space-md`, `--space-md`) whether or not the matching slot had
+anything in it, so a header with just a heading and a description carried about
+48px of trailing space that nothing accounted for. Not broken, and defensible —
+but invisible from the outside, so the first attempt at a layout under one was
+always slightly wrong.
+
+The wrappers still render and only the margin drops. Removing the wrapper would
+remove the `<slot>` with it, and a slot that is not in the shadow tree can never
+be filled again — `slotchange` only fires on assignment changes to a slot that
+exists. Whitespace-only text does not count as content, or a slot written across
+two lines in the consumer's markup would report itself full.
+
+**Frame: only-empty**, from the other direction — fixtures are minimal, and this
+only shows up when a component is *less* filled than a fixture makes it.
+
+---
+
+### 98. `arc-inline-edit` could not be focused from outside — **a11y — FIXED**
+
+No `delegatesFocus`, and everything focusable lives in the shadow root, so
+`el.focus()` on the host did nothing at all, silently. It cost the reporter a
+"Rename" menu item that appeared to do nothing. `edit()` is the way *into*
+editing and stays that way; `focus()` is now overridden to land on whichever
+element is currently the control — the field while editing, the display row
+otherwise. `delegatesFocus` would have done it too, at the cost of changing
+click-focus and tab-stop semantics for a component that had neither problem.
+
+---
+
+### 99. Three v4 renames fail silently — **documentation + dev warning — FIXED**
+
+Not defects: the renames are improvements and `arc-modal` even kept a deprecated
+alias. The problem is the failure mode. Content with an unrecognised `slot=`
+renders nothing (`start`/`end` → `prefix`/`suffix`); `oneOf` coerces an unknown
+enum to the declared default, so `arc-confirm variant="danger"` renders a
+destructive dialog as an ordinary one; an ignored `closable` just leaves the
+close affordance absent.
+
+`@arclux/arc-ui/dev` already caught all three — and, in the reporter's own app,
+four `<Alert variant="danger">` that had never matched a real variant and had
+been resolving to `info` since they were written, so their failure alerts had
+always rendered as neutral notices. MIGRATION.md now opens the v4 section with
+those three and the one import that finds them, and the enum warning names the
+destination as well as the expectation: *rendering as "info"*. The fallback is
+recorded per attribute in `custom-elements.json` and `src/dev-schema.js`, so a
+codemod can be written against the coercion rather than against a list of
+renames.
+
+---
+
+### What this batch establishes
+
+**Frame is a property of the fixture, not of the assertion.** Every guard worth
+building from it is about the *situation* a component is put in, not about what
+is then checked: mount it closed, mount it composed, mount it furnished, measure
+it against the document. `test-frame.md §4` ranks six; two are built here
+(composition tests, the closed-state pass) and four are not — `dead-props`,
+`wrapper-methods`, `bindable-mutations`, `slotted-overrides`, in that order of
+value-per-line.
+
+**A check that has never been observed to fail is not known to be a check.**
+Arrived at with prism over three instances of the same shape — an augmentation
+nothing consults, a hook returning a well-formed partial answer, a checker
+reading no files — and it applies to every test in this batch. Each of the six
+in `composition.test.js` and `closed-overflow.test.js` was watched failing
+against the unfixed source before the fix landed, which is the only reason their
+passing means anything. The remedy where that is not natural is cheap: poison
+the input, require the failure, restore. `prism-feedback.md` carries the longer
+version.
+
+**A report from someone building with the library is worth more per item than a
+sweep of the source.** Nine of eleven were real, every one was reachable in the
+first hour of use, and three of them (#90, #91, #95) were in components covered
+by four test files each.

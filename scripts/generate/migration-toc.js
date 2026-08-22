@@ -39,6 +39,9 @@ const TOC_MARKER = '**v4:**';
  * any of the others.
  */
 const ORDER = [
+  // How you find out
+  'Three of these changes fail silently',
+
   // What exists
   'The five cuts',
   'The merges',

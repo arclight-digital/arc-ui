@@ -108,6 +108,8 @@ export declare class ArcAppShell extends LitElement {
   breakpoint: number;
   /** Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation. @default false */
   sidebarOpen: boolean;
+  /** Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen — a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for. @default false */
+  embedded: boolean;
 }
 
 /**
@@ -1288,6 +1290,8 @@ export declare class ArcInlineEdit extends LitElement {
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
+  /** Move focus to whichever element is currently the control: the field while editing, the display row otherwise. The host sets no `delegatesFocus` and everything focusable lives in the shadow root, so `el.focus()` used to do nothing at all — silently, which cost a consumer a "Rename" menu item that appeared dead. `edit()` is the way *into* editing and stays that way; this is only the obvious call landing where a caller expects it. */
+  focus(options?: FocusOptions): void;
   /** Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing. */
   edit(): void;
   /** Commit the current draft and leave edit mode. Fires arc-change only if the value changed. */
@@ -2412,13 +2416,13 @@ export declare class ArcSheet extends LitElement {
 export declare class ArcSidebar extends LitElement {
   /** The href of the currently active sidebar link. Used to highlight the matching link with accent styling. @default '' */
   active: string;
-  /** Width of the sidebar. Accepts any CSS length value. @default '280px' */
+  /** Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together. @default '' */
   width: string;
   /** @default 'Sidebar navigation' */
   label: string;
   /** Controls which side the sidebar appears on. Moves the border line to the opposite edge. @default 'left' */
   position: 'left' | 'right';
-  /** When true, collapses the sidebar to icon-only mode, hiding labels and reducing width. @default false */
+  /** When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail — the VS Code activity-bar shape — use `arc-rail`, which is a different component with its own labels and tooltips. @default false */
   collapsed: boolean;
   /** Enables an accent glow effect on the active sidebar link for enhanced visual emphasis. @default false */
   glow: boolean;
@@ -3013,15 +3017,15 @@ export declare class ArcToast extends LitElement {
   /** Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count. @default 20 */
   queueLimit: number;
   /** Show a toast, or coalesce it into an identical one that is already showing. Passing `progress` puts the toast in progress mode, absorbed from arc-progress-toast in 4.2: it renders a track beneath the message, exempts itself from dedupe and from the auto-dismiss timer, and — given `onCancel` — offers a cancel button that fires `arc-cancel`. Move the bar with `updateToast(id, { progress })` and end it with `complete(id)`, which fires `arc-complete`. The mode is chosen here and is not switchable afterwards: a track appearing mid-life would relayout a notification the reader is already reading. `action` and `actionLabel` arrive from arc-snackbar the same way. The label renders a ghost button; a click runs the callback and fires `arc-action` before the toast dismisses. */
-  show(options?: { message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }): number;
+  show(options?: { id?: number|string, message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }): number|string;
   /** Dismiss a toast by the id show() returned, whether it is visible or still queued. Unknown ids are ignored. */
-  dismiss(id: number): void;
+  dismiss(id: number|string): void;
   /** Dismiss everything on screen and discard the queue. */
   clear(): void;
   /** Move a progress toast's bar, its message, or both. Unknown ids are ignored, matching dismiss(). Named `updateToast` rather than `update` because `update` is Lit's — the name arc-progress-toast used, and the reason it also carried a do-nothing `update(changedProps) { super.update(changedProps); }` override that read as if it meant something. */
-  updateToast(id: number, changes: { progress?: number, message?: string }): void;
+  updateToast(id: number|string, changes: { progress?: number, message?: string }): void;
   /** Finish a progress toast: dismiss it and fire `arc-complete`. Distinct from `dismiss()` on purpose — the operation finishing and the user closing the toast are different events, and a consumer waiting on the first should not be woken by the second. */
-  complete(id: number): void;
+  complete(id: number|string): void;
 }
 
 /**

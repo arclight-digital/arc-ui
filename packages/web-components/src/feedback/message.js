@@ -204,15 +204,21 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * Read the slot here as well as on slotchange: under declarative shadow DOM
-   * the parser assigns the slot before this component's listener exists, so
-   * the initial slotchange has already fired and a slotchange-only read
-   * upgrades empty. See the dsd-slotchange-trap note; arc-segmented-control
-   * shipped that bug.
+   * The DSD read, and nothing beside it.
+   *
+   * `slotchange` alone is not enough under declarative shadow DOM: the parser
+   * attaches the shadow root and assigns the slot before Lit adopts the tree,
+   * so the assignment has already happened by the time this component's
+   * listener exists and the event never arrives. `hydrateSlots` delivers it —
+   * that is the whole of its job, and the reader below runs from the same
+   * handler a real slotchange reaches.
+   *
+   * There used to be a direct call here as well, which is where this
+   * component's share of Lit's `change-in-update` warning came from: a second
+   * read, of the same slot, writing state from inside the update.
    */
   firstUpdated() {
     hydrateSlots(this);
-    this._readSlottedSource();
   }
 
   _onSlotChange() {

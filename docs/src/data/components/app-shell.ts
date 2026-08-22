@@ -48,7 +48,7 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
   previewHeight: '480px',
 
   previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;position:relative">
-  <arc-app-shell>
+  <arc-app-shell embedded style="height:100%">
     <arc-top-bar slot="topbar" heading="Dashboard"></arc-top-bar>
     <nav slot="sidebar" style="width:200px;padding:var(--space-md);display:flex;flex-direction:column;gap:var(--space-xs);border-right:1px solid var(--border-subtle)">
       <span style="font-size:var(--text-xs);text-transform:uppercase;letter-spacing:1.5px;color:var(--text-muted);margin-bottom:var(--space-xs)">Navigation</span>

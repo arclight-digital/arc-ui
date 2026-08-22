@@ -195,6 +195,25 @@ export class ArcInlineEdit extends DeclaredPropsMixin(FormControlMixin(LitElemen
   }
 
   /**
+   * Move focus to whichever element is currently the control: the field while
+   * editing, the display row otherwise.
+   *
+   * The host sets no `delegatesFocus` and everything focusable lives in the
+   * shadow root, so `el.focus()` used to do nothing at all — silently, which
+   * cost a consumer a "Rename" menu item that appeared dead. `edit()` is the
+   * way *into* editing and stays that way; this is only the obvious call
+   * landing where a caller expects it.
+   *
+   * @param {FocusOptions} [options]
+   * @returns {void}
+   */
+  focus(options) {
+    const target = this.shadowRoot?.querySelector('.inline-edit__field, .inline-edit__display');
+    if (target) target.focus(options);
+    else super.focus(options);
+  }
+
+  /**
    * Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.
    *
    * @returns {void}

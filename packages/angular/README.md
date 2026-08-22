@@ -7,7 +7,7 @@ Angular standalone component wrappers for [ARC UI](https://arcui.dev) web compon
 ## Installation
 
 ```bash
-npm install @arclux/arc-ui-angular @arclux/arc-ui
+npm install @arclux/arc-ui-angular @arclux/arc-ui lit
 ```
 
 Requires `@angular/core >= 17.0.0`.

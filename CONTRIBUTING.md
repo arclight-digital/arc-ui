@@ -93,6 +93,21 @@ shipped bug, add a test that pins the invariant that broke.
   typography docs)
 - **JSDoc is load-bearing**: component JSDoc generates the docs API tables, the
   type declarations, and the editor data. An undocumented prop is an untyped prop.
+- **Every path that changes a shared prop announces it.** If a component assigns
+  to one of its own public props outside the constructor, every such path fires
+  the event that reports the new value — not most of them. Route them through
+  one method (`arc-app-shell._setOpen()` is the pattern) rather than assigning
+  in several places, and check it as a property of the component, once.
+
+  This is not a style preference. The wrapper generator decides a prop is
+  two-way by looking for exactly this — an assignment outside the constructor
+  plus an event carrying the value — so a prop with three announced paths and
+  one silent one is emitted as bindable and then drifts on the silent one. The
+  drift is invisible in the component's own tests, because the copy that goes
+  stale belongs to the consumer. `arc-app-shell` shipped that: hamburger,
+  backdrop and Escape announced, the mobile→desktop resize did not. Nothing was
+  wrong with the silent assignment until the prop became two-way, at which point
+  the meaning of the line changed without the line changing.
 
 ### Pull Requests
 

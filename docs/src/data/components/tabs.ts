@@ -12,12 +12,12 @@ export const tabs: ComponentDef = {
 
 The component follows the WAI-ARIA Tabs pattern out of the box. Each tab button carries \`role="tab"\` and its corresponding panel carries \`role="tabpanel"\`, linked via \`aria-controls\` and \`aria-labelledby\`. Focus management uses a roving tabindex so arrow keys move between tabs while Tab moves focus out of the tab list entirely, matching the behavior users expect from native OS tab controls.
 
-Transitions between panels are handled with a crossfade animation driven by CSS, keeping the switch feeling instantaneous on fast machines while remaining smooth on lower-end hardware. Panels that are not active are removed from the accessibility tree and hidden with \`display: none\` so screen readers never encounter stale content.`,
+Switching tabs moves one indicator between them — the underline in the default variant, the ground behind the selection in \`pills\` and in vertical bars — and the incoming panel rises into place rather than cutting. Both are CSS, both stop under \`prefers-reduced-motion\`, and a bar holding more tabs than room scrolls the selection into view without moving the page around it. Panels that are not active are removed from the accessibility tree and hidden with \`display: none\` so screen readers never encounter stale content.`,
 
   features: [
     'Arrow-key keyboard navigation between tabs (left/right for horizontal, up/down for vertical)',
     'Automatic WAI-ARIA roles: tab, tablist, and tabpanel with proper `aria-controls` linking',
-    'Smooth crossfade transition when switching panels',
+    'One indicator that travels between tabs, and a panel that rises in behind it',
     'Disabled tab support — individual tabs can be non-interactive while remaining visible',
     'Programmatic selected index via the `selected` property',
     'Roving tabindex so only the active tab participates in the page Tab order',

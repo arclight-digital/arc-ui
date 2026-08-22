@@ -7,7 +7,7 @@ Svelte 5 component wrappers for [ARC UI](https://arcui.dev) web components, usin
 ## Installation
 
 ```bash
-npm install @arclux/arc-ui-svelte @arclux/arc-ui
+npm install @arclux/arc-ui-svelte @arclux/arc-ui lit
 ```
 
 Requires `svelte >= 5.0.0`.

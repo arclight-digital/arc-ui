@@ -93,10 +93,18 @@ function checkAttr(el, entry, name) {
   const value = el.getAttribute(name);
 
   if (entry.enums && name in entry.enums && value !== null && !entry.enums[name].includes(value)) {
+    // Say what it is rendering as, not only what it should have been. An
+    // unrecognised value is coerced to the declared default rather than
+    // ignored, so the component is showing something — and a wrong variant that
+    // still looks like a variant is exactly the failure that goes unnoticed:
+    // four `variant="danger"` alerts rendered as neutral `info` notices for
+    // months in a consumer's app, because nothing said which one they got.
+    const fallback = entry.fallbacks?.[name];
     warn(
       el,
       `${name}=${value}`,
-      `"${value}" is not a valid ${name} — expected ${entry.enums[name].join(' | ')}.`,
+      `"${value}" is not a valid ${name} — expected ${entry.enums[name].join(' | ')}` +
+        (fallback ? `; rendering as "${fallback}".` : '.'),
     );
     return;
   }

@@ -5,8 +5,17 @@
  * dev-warnings module (import '@arclux/arc-ui/dev').
  *
  * Per tag: the list of known attributes, the allowed values for attributes
- * whose type is a union of string literals, the docs slug, and — for a
- * component being merged away — the tag that replaces it.
+ * whose type is a union of string literals, the value an unrecognised one
+ * falls back to, the docs slug, and — for a component being merged away — the
+ * tag that replaces it.
+ *
+ * The fallback is the half that was missing. `oneOf()` coerces an unknown value
+ * to the declared default rather than ignoring it, so `variant="danger"` on a
+ * v4 alert is not an inert attribute — it renders as `info`, which is why a
+ * consumer's four failure alerts read as neutral notices for months without
+ * anyone noticing. Naming the destination turns "that value is wrong" into
+ * "this is what you are looking at", and puts the coercion where a codemod can
+ * read it.
  *
  * (Called automatically by `pnpm generate`, after generate-manifest.js)
  */
@@ -51,12 +60,20 @@ for (const mod of manifest.modules) {
     if (!decl.customElement || !decl.tagName) continue;
     const attrs = (decl.attributes ?? []).map((a) => a.name);
     const enums = {};
+    const fallbacks = {};
     for (const a of decl.attributes ?? []) {
       const values = literalUnion(a.type?.text);
-      if (values) enums[a.name] = values;
+      if (!values) continue;
+      enums[a.name] = values;
+      // The manifest carries the default as source text — "'info'". A computed
+      // default (oneOf resolves those per element) has no single answer, so it
+      // is left out rather than guessed at.
+      const literal = /^'([^']*)'$/.exec(a.default ?? '');
+      if (literal && values.includes(literal[1])) fallbacks[a.name] = literal[1];
     }
     schema[decl.tagName] = { attrs };
     if (Object.keys(enums).length) schema[decl.tagName].enums = enums;
+    if (Object.keys(fallbacks).length) schema[decl.tagName].fallbacks = fallbacks;
     const slug = slugByTag.get(decl.tagName);
     if (slug) schema[decl.tagName].slug = slug;
     // A deprecated component keeps working and stays in the barrel for the

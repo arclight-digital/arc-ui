@@ -6,7 +6,7 @@ Two libraries, 3,408 glyphs, one module each — so a page downloads the icons i
 renders and nothing else.
 
 ```bash
-npm i @arclux/arc-ui @arclux/arc-ui-icons
+npm i @arclux/arc-ui @arclux/arc-ui-icons lit
 ```
 
 ## Register a pack

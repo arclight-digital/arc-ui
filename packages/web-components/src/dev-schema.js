@@ -30,6 +30,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "overlap": "md"
+  },
   "slug": "avatar-group"
  },
  "arc-avatar": {
@@ -59,6 +62,11 @@ export default {
     "away"
    ]
   },
+  "fallbacks": {
+   "size": "md",
+   "shape": "circle",
+   "status": ""
+  },
   "slug": "avatar"
  },
  "arc-card": {
@@ -74,6 +82,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "padding": "md"
   },
   "slug": "card"
  },
@@ -106,6 +117,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "color-swatch"
  },
@@ -141,6 +155,10 @@ export default {
     "left",
     "right"
    ]
+  },
+  "fallbacks": {
+   "variant": "subtle",
+   "align": ""
   },
   "slug": "divider"
  },
@@ -190,6 +208,9 @@ export default {
     "xl"
    ]
   },
+  "fallbacks": {
+   "size": "sm"
+  },
   "slug": "icon"
  },
  "arc-image-compare": {
@@ -205,6 +226,9 @@ export default {
     "horizontal",
     "vertical"
    ]
+  },
+  "fallbacks": {
+   "orientation": "horizontal"
   },
   "slug": "image-compare"
  },
@@ -243,6 +267,11 @@ export default {
     "eager"
    ]
   },
+  "fallbacks": {
+   "aspect": "",
+   "fit": "cover",
+   "loading": "lazy"
+  },
   "slug": "image"
  },
  "arc-infinite-scroll": {
@@ -275,6 +304,9 @@ export default {
     "right"
    ]
   },
+  "fallbacks": {
+   "direction": "left"
+  },
   "slug": "marquee"
  },
  "arc-qr-code": {
@@ -294,6 +326,9 @@ export default {
     "H"
    ]
   },
+  "fallbacks": {
+   "level": "M"
+  },
   "slug": "qr-code"
  },
  "arc-scroll-area": {
@@ -307,6 +342,9 @@ export default {
     "horizontal",
     "both"
    ]
+  },
+  "fallbacks": {
+   "orientation": "vertical"
   },
   "slug": "scroll-area"
  },
@@ -332,6 +370,11 @@ export default {
     "gradient"
    ]
   },
+  "fallbacks": {
+   "position": "top",
+   "size": "sm",
+   "color": "accent"
+  },
   "slug": "scroll-indicator"
  },
  "arc-skeleton": {
@@ -347,6 +390,9 @@ export default {
     "circle",
     "rect"
    ]
+  },
+  "fallbacks": {
+   "variant": "text"
   },
   "slug": "skeleton"
  },
@@ -366,6 +412,10 @@ export default {
     "secondary",
     "white"
    ]
+  },
+  "fallbacks": {
+   "size": "md",
+   "variant": "primary"
   },
   "slug": "spinner"
  },
@@ -404,6 +454,12 @@ export default {
     "around"
    ]
   },
+  "fallbacks": {
+   "direction": "vertical",
+   "gap": "md",
+   "align": "stretch",
+   "justify": "start"
+  },
   "slug": "stack"
  },
  "arc-video": {
@@ -423,6 +479,9 @@ export default {
     "metadata",
     "auto"
    ]
+  },
+  "fallbacks": {
+   "preload": "metadata"
   },
   "slug": "video"
  },
@@ -449,6 +508,9 @@ export default {
     "monday"
    ]
   },
+  "fallbacks": {
+   "weekStart": "sunday"
+  },
   "slug": "activity-heatmap"
  },
  "arc-animated-number": {
@@ -467,6 +529,9 @@ export default {
     "currency",
     "percent"
    ]
+  },
+  "fallbacks": {
+   "format": "number"
   },
   "slug": "animated-number"
  },
@@ -491,6 +556,10 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "variant": "default",
+   "size": "md"
   },
   "slug": "badge"
  },
@@ -519,6 +588,10 @@ export default {
     "currency"
    ]
   },
+  "fallbacks": {
+   "type": "line",
+   "valueFormat": "number"
+  },
   "slug": "chart"
  },
  "arc-clock": {
@@ -535,6 +608,9 @@ export default {
     "digital",
     "analog"
    ]
+  },
+  "fallbacks": {
+   "variant": "digital"
   },
   "slug": "clock"
  },
@@ -580,6 +656,9 @@ export default {
     "compact"
    ]
   },
+  "fallbacks": {
+   "density": "default"
+  },
   "slug": "data-grid"
  },
  "arc-description-item": {
@@ -600,6 +679,9 @@ export default {
     "horizontal"
    ]
   },
+  "fallbacks": {
+   "layout": "stacked"
+  },
   "slug": "description-list"
  },
  "arc-diff": {
@@ -613,6 +695,9 @@ export default {
     "inline",
     "side-by-side"
    ]
+  },
+  "fallbacks": {
+   "mode": "inline"
   },
   "slug": "diff"
  },
@@ -634,6 +719,9 @@ export default {
     "full",
     "half"
    ]
+  },
+  "fallbacks": {
+   "variant": "full"
   },
   "slug": "gauge"
  },
@@ -670,6 +758,9 @@ export default {
     "horizontal"
    ]
   },
+  "fallbacks": {
+   "orientation": "vertical"
+  },
   "slug": "level-meter"
  },
  "arc-list-item": {
@@ -702,6 +793,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "variant": "default",
+   "size": "md"
+  },
   "slug": "list"
  },
  "arc-meter": {
@@ -731,6 +826,9 @@ export default {
     "bar"
    ]
   },
+  "fallbacks": {
+   "type": "line"
+  },
   "slug": "sparkline"
  },
  "arc-stat": {
@@ -747,6 +845,9 @@ export default {
     "down",
     "neutral"
    ]
+  },
+  "fallbacks": {
+   "trend": ""
   },
   "slug": "stat"
  },
@@ -785,6 +886,10 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "variant": "default",
+   "size": "md"
   },
   "slug": "tag"
  },
@@ -833,6 +938,9 @@ export default {
     "mirror"
    ]
   },
+  "fallbacks": {
+   "variant": "bars"
+  },
   "slug": "waveform"
  },
  "arc-alert": {
@@ -862,6 +970,11 @@ export default {
     "compact"
    ]
   },
+  "fallbacks": {
+   "variant": "info",
+   "live": "auto",
+   "density": "default"
+  },
   "slug": "alert"
  },
  "arc-announcement": {
@@ -874,6 +987,9 @@ export default {
     "polite",
     "assertive"
    ]
+  },
+  "fallbacks": {
+   "politeness": "polite"
   },
   "slug": "announcement"
  },
@@ -890,6 +1006,9 @@ export default {
     "warning",
     "error"
    ]
+  },
+  "fallbacks": {
+   "variant": "info"
   },
   "slug": "banner"
  },
@@ -932,6 +1051,9 @@ export default {
     "error"
    ]
   },
+  "fallbacks": {
+   "variant": "default"
+  },
   "slug": "confirm"
  },
  "arc-connection-status": {
@@ -967,6 +1089,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "dialog"
  },
  "arc-dropdown-menu": {
@@ -988,6 +1113,9 @@ export default {
     "left",
     "right"
    ]
+  },
+  "fallbacks": {
+   "position": "bottom"
   },
   "slug": "hover-card"
  },
@@ -1014,6 +1142,9 @@ export default {
     "system"
    ]
   },
+  "fallbacks": {
+   "speaker": "user"
+  },
   "slug": "conversation"
  },
  "arc-notification-panel": {
@@ -1027,6 +1158,9 @@ export default {
     "top-right",
     "top-left"
    ]
+  },
+  "fallbacks": {
+   "position": "top-right"
   },
   "slug": "notification-panel"
  },
@@ -1043,6 +1177,9 @@ export default {
     "left",
     "right"
    ]
+  },
+  "fallbacks": {
+   "position": "bottom"
   },
   "slug": "popover"
  },
@@ -1066,6 +1203,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "variant": "bar",
+   "size": "md"
+  },
   "slug": "progress"
  },
  "arc-sheet": {
@@ -1079,6 +1220,9 @@ export default {
     "bottom",
     "right"
    ]
+  },
+  "fallbacks": {
+   "side": "bottom"
   },
   "slug": "sheet"
  },
@@ -1100,6 +1244,9 @@ export default {
     "bottom-center"
    ]
   },
+  "fallbacks": {
+   "position": "top-right"
+  },
   "slug": "toast"
  },
  "arc-tooltip": {
@@ -1115,6 +1262,9 @@ export default {
     "left",
     "right"
    ]
+  },
+  "fallbacks": {
+   "position": "top"
   },
   "slug": "tooltip"
  },
@@ -1134,6 +1284,10 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "orientation": "horizontal",
+   "size": "md"
   },
   "slug": "button-group"
  },
@@ -1162,6 +1316,11 @@ export default {
     "submit",
     "reset"
    ]
+  },
+  "fallbacks": {
+   "variant": "primary",
+   "size": "md",
+   "type": "button"
   },
   "slug": "button"
  },
@@ -1196,6 +1355,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "checkbox"
  },
  "arc-chip": {
@@ -1224,6 +1386,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "color-picker"
  },
  "arc-combobox": {
@@ -1243,6 +1408,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "combobox"
  },
@@ -1276,6 +1444,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "date-picker"
  },
  "arc-date-range-picker": {
@@ -1304,6 +1475,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "date-range-picker"
  },
  "arc-fieldset": {
@@ -1319,6 +1493,9 @@ export default {
     "default",
     "card"
    ]
+  },
+  "fallbacks": {
+   "variant": "default"
   },
   "slug": "fieldset"
  },
@@ -1374,6 +1551,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "variant": "ghost",
+   "size": "md"
+  },
   "slug": "icon-button"
  },
  "arc-image-cropper": {
@@ -1409,6 +1590,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "input-group"
  },
  "arc-input": {
@@ -1440,6 +1624,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "type": "text",
+   "size": "md"
+  },
   "slug": "input"
  },
  "arc-knob": {
@@ -1463,6 +1651,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "knob"
  },
  "arc-label": {
@@ -1478,6 +1669,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "label"
  },
@@ -1502,6 +1696,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "masked-input"
  },
  "arc-multi-select": {
@@ -1521,6 +1718,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "multi-select"
  },
@@ -1544,6 +1744,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "number-input"
  },
  "arc-password-input": {
@@ -1566,6 +1769,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "password-input"
  },
@@ -1595,6 +1801,10 @@ export default {
     "text"
    ]
   },
+  "fallbacks": {
+   "size": "md",
+   "type": "number"
+  },
   "slug": "pin-input"
  },
  "arc-radio-group": {
@@ -1617,6 +1827,10 @@ export default {
     "vertical",
     "horizontal"
    ]
+  },
+  "fallbacks": {
+   "size": "md",
+   "orientation": "vertical"
   },
   "slug": "radio-group"
  },
@@ -1649,6 +1863,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "range-slider"
  },
  "arc-rating": {
@@ -1668,6 +1885,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "rating"
  },
@@ -1712,6 +1932,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "select"
  },
  "arc-signature-pad": {
@@ -1747,6 +1970,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "slider"
  },
  "arc-sortable-list": {
@@ -1779,6 +2005,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "orientation": "vertical",
+   "size": "md"
+  },
   "slug": "switch-group"
  },
  "arc-tag-input": {
@@ -1803,6 +2033,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "tag-input"
  },
@@ -1835,6 +2068,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "resize": "vertical",
+   "size": "md"
+  },
   "slug": "textarea"
  },
  "arc-theme-toggle": {
@@ -1856,6 +2093,10 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "theme": "auto",
+   "size": "md"
   },
   "slug": "theme-toggle"
  },
@@ -1886,6 +2127,10 @@ export default {
     "24h"
    ]
   },
+  "fallbacks": {
+   "size": "md",
+   "format": "12h"
+  },
   "slug": "time-picker"
  },
  "arc-toggle": {
@@ -1904,6 +2149,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "toggle"
  },
@@ -1926,6 +2174,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "transfer-list"
  },
@@ -1951,11 +2202,15 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "tree-select"
  },
  "arc-app-shell": {
   "attrs": [
    "sidebarOpen",
+   "embedded",
    "breakpoint"
   ],
   "slug": "app-shell"
@@ -1978,6 +2233,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "ratio": "1/1",
+   "gap": "md"
+  },
   "slug": "aspect-grid"
  },
  "arc-auth-shell": {
@@ -1989,6 +2248,9 @@ export default {
     "centered",
     "split"
    ]
+  },
+  "fallbacks": {
+   "variant": "centered"
   },
   "slug": "auth-shell"
  },
@@ -2021,6 +2283,10 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md",
+   "padding": "md"
+  },
   "slug": "container"
  },
  "arc-dashboard-grid": {
@@ -2042,6 +2308,9 @@ export default {
     "top"
    ]
   },
+  "fallbacks": {
+   "position": "bottom"
+  },
   "slug": "float-bar"
  },
  "arc-inset": {
@@ -2059,6 +2328,9 @@ export default {
     "2xl"
    ]
   },
+  "fallbacks": {
+   "space": "md"
+  },
   "slug": "inset"
  },
  "arc-masonry": {
@@ -2072,6 +2344,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "gap": "md"
   },
   "slug": "masonry"
  },
@@ -2097,6 +2372,9 @@ export default {
     "wide"
    ]
   },
+  "fallbacks": {
+   "layout": "centered"
+  },
   "slug": "page-layout"
  },
  "arc-resizable": {
@@ -2111,6 +2389,9 @@ export default {
     "horizontal",
     "vertical"
    ]
+  },
+  "fallbacks": {
+   "direction": "horizontal"
   },
   "slug": "resizable"
  },
@@ -2127,6 +2408,9 @@ export default {
     "lg",
     "xl"
    ]
+  },
+  "fallbacks": {
+   "gap": "md"
   },
   "slug": "responsive-switcher"
  },
@@ -2146,6 +2430,9 @@ export default {
     "top"
    ]
   },
+  "fallbacks": {
+   "navPosition": "left"
+  },
   "slug": "settings-layout"
  },
  "arc-split-pane": {
@@ -2162,6 +2449,9 @@ export default {
     "vertical"
    ]
   },
+  "fallbacks": {
+   "orientation": "horizontal"
+  },
   "slug": "split-pane"
  },
  "arc-status-bar": {
@@ -2173,6 +2463,9 @@ export default {
     "static",
     "fixed"
    ]
+  },
+  "fallbacks": {
+   "position": "static"
   },
   "slug": "status-bar"
  },
@@ -2197,6 +2490,9 @@ export default {
     "lg"
    ]
   },
+  "fallbacks": {
+   "size": "md"
+  },
   "slug": "toolbar"
  },
  "arc-anchor-nav": {
@@ -2210,6 +2506,9 @@ export default {
     "vertical",
     "horizontal"
    ]
+  },
+  "fallbacks": {
+   "orientation": "horizontal"
   },
   "slug": "anchor-nav"
  },
@@ -2261,6 +2560,9 @@ export default {
     "right"
    ]
   },
+  "fallbacks": {
+   "position": "left"
+  },
   "slug": "drawer"
  },
  "arc-footer": {
@@ -2279,6 +2581,10 @@ export default {
     "left",
     "center"
    ]
+  },
+  "fallbacks": {
+   "density": "default",
+   "align": "left"
   },
   "slug": "footer"
  },
@@ -2302,6 +2608,10 @@ export default {
     "never"
    ]
   },
+  "fallbacks": {
+   "variant": "default",
+   "underline": "hover"
+  },
   "slug": "link"
  },
  "arc-menubar": {
@@ -2323,6 +2633,9 @@ export default {
     "primary",
     "muted"
    ]
+  },
+  "fallbacks": {
+   "variant": "default"
   },
   "slug": "navigation-menu"
  },
@@ -2371,6 +2684,9 @@ export default {
     "both"
    ]
   },
+  "fallbacks": {
+   "progress": "none"
+  },
   "slug": "scroll-spy"
  },
  "arc-scroll-to-top": {
@@ -2385,6 +2701,9 @@ export default {
     "bottom-right",
     "bottom-left"
    ]
+  },
+  "fallbacks": {
+   "position": "bottom-right"
   },
   "slug": "scroll-to-top"
  },
@@ -2421,6 +2740,9 @@ export default {
     "left",
     "right"
    ]
+  },
+  "fallbacks": {
+   "position": "left"
   },
   "slug": "sidebar"
  },
@@ -2474,6 +2796,11 @@ export default {
     "vertical"
    ]
   },
+  "fallbacks": {
+   "align": "start",
+   "variant": "underline",
+   "orientation": "horizontal"
+  },
   "slug": "tabs"
  },
  "arc-top-bar": {
@@ -2495,6 +2822,9 @@ export default {
     "center",
     "right"
    ]
+  },
+  "fallbacks": {
+   "navAlign": "center"
   },
   "slug": "top-bar"
  },
@@ -2543,6 +2873,9 @@ export default {
     "accent"
    ]
   },
+  "fallbacks": {
+   "variant": "default"
+  },
   "slug": "blockquote"
  },
  "arc-code-block": {
@@ -2558,6 +2891,9 @@ export default {
     "window",
     "basic"
    ]
+  },
+  "fallbacks": {
+   "variant": "default"
   },
   "slug": "code-block"
  },
@@ -2575,6 +2911,9 @@ export default {
     "ocean",
     "custom"
    ]
+  },
+  "fallbacks": {
+   "variant": "accent"
   },
   "slug": "gradient-text"
  },
@@ -2609,6 +2948,10 @@ export default {
     "win"
    ]
   },
+  "fallbacks": {
+   "layout": "compact",
+   "platform": "auto"
+  },
   "slug": "keyboard-map"
  },
  "arc-markdown": {
@@ -2638,6 +2981,10 @@ export default {
     "compact"
    ]
   },
+  "fallbacks": {
+   "type": "number",
+   "notation": "standard"
+  },
   "slug": "number-format"
  },
  "arc-prose": {
@@ -2650,6 +2997,9 @@ export default {
     "md",
     "lg"
    ]
+  },
+  "fallbacks": {
+   "size": "md"
   },
   "slug": "prose"
  },
@@ -2691,6 +3041,10 @@ export default {
     "h6",
     "span"
    ]
+  },
+  "fallbacks": {
+   "variant": "body",
+   "as": "p"
   },
   "slug": "text"
  },

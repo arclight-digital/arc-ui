@@ -92,6 +92,63 @@ consumers may not know to reach for it.
 
 ---
 
+## Two dead type imports in 140 wrappers — **fixed in 3.1.0-beta.1, unpublished**
+
+**2026-08-22.** Found by prism's own new `test:types` harness — which generates
+the corpus's wrappers and compiles them with each framework's checker — and
+confirmed against this catalog before the release notes were written.
+
+Every `@slot none` component emitted an import with nothing left to refer to:
+`import type { Snippet } from 'svelte'` in the Svelte wrapper, `type JSX` in the
+Solid one. **70 of 188 wrappers in each package**, the same 70 components both
+times, which is the whole `@slot none` set.
+
+The reason it matters more here than a lint nit: **svelte and solid ship `src/`,
+not `dist/`** — the export map points at source — so it is the *consumer's*
+compiler that reads these files, and `skipLibCheck` does not cover `.tsx` or
+`.svelte`. With `noUnusedLocals` on, which both frameworks' starter templates
+set, the consumer's build reports an error in our file:
+
+```
+packages/solid/src/content/Divider.tsx(3,43): error TS6133: 'JSX' is declared but its value is never read.
+```
+
+Our own packages compile because nothing here turns that flag on over the
+wrapper trees — the file is checked by a config that cannot fail on it.
+
+**A grep trap worth keeping**, because it hid the Solid half: the augmentation
+block `declare module 'solid-js/jsx-runtime' { namespace JSX { … } }` puts the
+identifier in the file while the import stays dead, so a naive
+`grep -c JSX` reports the file as clean. The assertion has to be against
+`type JSX`, not `JSX`.
+
+**No action here.** Both imports are conditional on a member that names the type
+as of `v3.1.0-beta.1`, so regenerating on it drops 140 dead imports and arc-ui
+changes nothing. The beta is tagged and **not published** — there is no prism
+with the fix to point at yet, and whether the 140 files shipping in 4.x warrant
+a patch once there is one is a separate call.
+
+### The generalisation, which is the reusable part
+
+Three instances now, all the same shape:
+
+- the Solid `IntrinsicElements` block that augmented a module nothing consults;
+- a `propsFrom` hook that returned a well-formed partial answer;
+- prism's first type harness, which put the generated tree under `node_modules/`
+  where `svelte-check` does not look and reported a clean pass on a file that
+  could not compile.
+
+What separates the healthy from the inert in every one is that **nobody made the
+check fail on purpose**. A check that has never been observed to fail is not
+known to be a check — it is known to print what a passing one prints. The
+remedy is cheap enough to be routine: poison the input, require the failure,
+restore. arc-ui reached this from the other direction, compiling its JSX
+augmentations rather than asserting them
+(`scripts/checks/jsx-augmentations.js`), and prism's harness now runs a
+deliberate type error per framework that it has to fail.
+
+---
+
 ## Both 2.13.0 barrel defects: **fixed in 2.13.1, verified here**
 
 Turned around the same day. Verified against the reproductions rather than

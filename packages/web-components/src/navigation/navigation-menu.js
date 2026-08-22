@@ -672,11 +672,14 @@ export class ArcNavigationMenu extends LitElement {
    * renders an empty bar and hides the real links behind it. The site's whole
    * top-bar nav disappeared on the first server-rendered deploy.
    *
-   * Same fix, same reason, as arc-segmented-control.
+   * Same fix, same reason, as arc-segmented-control — and, as there, the
+   * direct read that used to sit beside this call is gone. hydrateSlots
+   * delivers the event the parser ate, `_onSlotChange` does the reading, and a
+   * second read from inside the update is what produced this component's
+   * `change-in-update` warning.
    */
   firstUpdated() {
     hydrateSlots(this);
-    this._readItems(this.shadowRoot?.querySelector('.nav__slot-host slot'));
   }
 
   _onSlotChange(e) {

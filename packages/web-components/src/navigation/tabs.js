@@ -1,7 +1,18 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { observeResize } from '../shared/subscriptions.js';
 import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
+
+/**
+ * The smallest scroll offset that puts `[start, start + size]` inside a port of
+ * `port` currently at `offset` — the one-axis form of "nearest".
+ */
+function nearestScroll(offset, port, start, size) {
+  if (start < offset) return start;
+  if (start + size > offset + port) return start + size - port;
+  return offset;
+}
 
 /**
  * Tabbed content navigation with keyboard support and ARIA roles.
@@ -17,6 +28,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
  * @slot - Default content.
  * @csspart base - The root element.
  * @csspart tabs
+ * @csspart indicator - The light that travels between tabs: the underline in the default variant, the ground behind the selection in `pills` and in vertical bars.
  */
 export class ArcTabs extends DeclaredPropsMixin(LitElement) {
   /**
@@ -40,21 +52,97 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
   static styles = [
     tokenStyles,
     css`
-      :host { display: block; }
+      :host {
+        display: block;
+        /* The indicator's light. A lobe shape substitutes its var()s at the
+           element that declares it, and the shapes are declared on :host — an
+           input set on the indicator itself would paint in the fallback color
+           with nothing failing. */
+        --lobe-rgb: var(--interactive-rgb);
+        --lobe-alpha: 1;
+      }
 
       .tabs__list {
+        position: relative;
         display: flex;
         border-bottom: 1px solid var(--divider);
         gap: var(--space-xs);
         overflow-x: auto;
         overflow-y: hidden;
+        scroll-behavior: smooth;
+        /* A scrollbar here would lie directly on the divider and read as a
+           second rule under the bar. Overflow announces itself through the
+           half-cut tab at the edge, and the selection scrolls itself into
+           view, so nothing depends on the bar being visible. */
+        scrollbar-width: none;
       }
+
+      .tabs__list::-webkit-scrollbar { display: none; }
 
       /* Alignment */
       :host([align="center"]) .tabs__list { justify-content: center; }
       :host([align="end"]) .tabs__list { justify-content: flex-end; }
 
+      /* ── The indicator ──
+         One element for every variant and orientation: the component hands it
+         the selected button's box and CSS decides what to paint inside that
+         box. This is what makes a selection *travel* — the tab you left and
+         the tab you chose are connected by the same piece of light moving
+         between them, which is the one authored moment here. Everything else
+         in the bar stays quiet so the move stays legible. */
+      .tabs__ind {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        width: var(--_ind-w, 0px);
+        height: var(--_ind-h, 0px);
+        transform: translate(var(--_ind-x, 0px), var(--_ind-y, 0px));
+        pointer-events: none;
+        opacity: 0;
+        transition:
+          transform var(--duration-base) var(--ease-out),
+          width var(--duration-base) var(--ease-out),
+          height var(--duration-base) var(--ease-out),
+          opacity var(--transition-fast);
+      }
+
+      /* Measured for the first time, or re-measured after a resize. Neither is
+         a selection, so neither travels — without this the indicator flies in
+         from the list's origin on load and lurches on every reflow. */
+      .tabs__ind.is-instant { transition: none; }
+
+      .tabs__ind.is-on { opacity: 1; }
+
+      /* Underline: a lobe laid along the divider, brightest under the label
+         and thinning to nothing at both ends, rather than a 2px rectangle
+         that starts and stops. */
+      .tabs__ind::after {
+        content: '';
+        position: absolute;
+        inset-inline: 0;
+        bottom: 0;
+        height: 2px;
+        background: var(--lobe-line);
+        box-shadow: 0 0 10px rgba(var(--interactive-rgb), 0.45);
+      }
+
+      /* …and the light that line throws back up into the tab it marks. Glow
+         over definition: the selected tab is lit, not outlined. */
+      .tabs__ind::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(var(--interactive-rgb), 0.14),
+          rgba(var(--interactive-rgb), 0) 72%
+        );
+      }
+
       .tabs__tab {
+        position: relative;
+        z-index: 1;
         font-family: var(--font-label);
         font-weight: var(--font-label-weight, 600);
         font-size: var(--_text-xs);
@@ -66,25 +154,34 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         padding: var(--touch-pad) var(--space-md);
         min-height: var(--touch-min);
         cursor: pointer;
+        /* Not a state — the gutter the indicator's line sits in, and the 1px
+           of overlap that puts it on top of the divider rather than above it. */
         border-bottom: 2px solid transparent;
         margin-bottom: -1px;
-        transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), transform 150ms var(--ease-out-expo);
+        border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        transition:
+          color var(--transition-fast),
+          background var(--transition-fast),
+          transform 150ms var(--ease-out);
         white-space: nowrap;
       }
 
-      .tabs__tab:hover:not(:disabled) { color: var(--text-primary); }
-      .tabs__tab:active:not(:disabled) { transform: scale(0.95); }
+      .tabs__tab:hover:not(:disabled):not([aria-selected="true"]) {
+        color: var(--text-primary);
+        background: rgba(var(--text-primary-rgb), 0.045);
+      }
+
+      .tabs__tab:active:not(:disabled) { transform: scale(0.97); }
 
       .tabs__tab:disabled {
         opacity: 0.5;
         cursor: not-allowed;
       }
 
-      .tabs__tab[aria-selected="true"] {
-        color: var(--interactive);
-        border-bottom-color: var(--interactive);
-        box-shadow: 0 2px 12px rgba(var(--interactive-rgb), 0.2);
-      }
+      /* The selected tab lifts to the accent and stops there. Its ground, its
+         underline and its glow all belong to the indicator, so that they can
+         move. */
+      .tabs__tab[aria-selected="true"] { color: var(--interactive); }
 
       /* Pills variant */
       :host([variant="pills"]) .tabs__list {
@@ -98,15 +195,20 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-sm);
       }
 
-      :host([variant="pills"]) .tabs__tab:hover {
+      :host([variant="pills"]) .tabs__tab:hover:not(:disabled):not([aria-selected="true"]) {
         background: rgba(var(--text-primary-rgb), 0.08);
       }
 
-      :host([variant="pills"]) .tabs__tab[aria-selected="true"] {
-        background: rgba(var(--interactive-rgb), 0.1);
-        color: var(--interactive);
+      /* The travelling line is an underline's device; a pill's is the ground
+         itself, which the same element becomes. */
+      :host([variant="pills"]) .tabs__ind::after { display: none; }
+
+      :host([variant="pills"]) .tabs__ind::before {
+        background: rgba(var(--interactive-rgb), 0.12);
+        border-radius: var(--radius-sm);
         box-shadow: var(--interactive-hover);
       }
+
       .tabs__tab:focus-visible {
         outline: none;
         box-shadow: var(--interactive-focus-ring);
@@ -118,6 +220,19 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         color: var(--text-secondary);
         font-size: var(--body-size);
         line-height: var(--body-lh);
+      }
+
+      /* The panel does not cut — it arrives, once, on the switch that caused
+         it. The docs have promised this transition since v2. */
+      .tabs__panel.is-entering {
+        animation: tabs-panel-in var(--duration-enter) var(--ease-out) both;
+      }
+
+      @keyframes tabs-panel-in {
+        from {
+          opacity: 0;
+          transform: translateY(4px);
+        }
       }
 
       .tabs__panel[hidden] { display: none; }
@@ -140,14 +255,21 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
       :host([orientation="vertical"]) .tabs__tab {
         border-bottom: none;
         margin-bottom: 0;
-        border-inline-end: 2px solid transparent;
-        margin-inline-end: -1px;
+        margin-inline-end: var(--space-xs);
+        border-radius: var(--radius-sm);
         text-align: start;
       }
 
-      :host([orientation="vertical"]) .tabs__tab[aria-selected="true"] {
-        border-bottom-color: transparent;
-        border-inline-end-color: var(--interactive);
+      /* State is tint, glow and accent text. The colored edge this used to run
+         down the side of the selected tab is the house's hardest ban, and the
+         rail beside it is structure — one flat --divider that never changes
+         colour — so the selection has to be carried by light instead. */
+      :host([orientation="vertical"]) .tabs__ind::after { display: none; }
+
+      :host([orientation="vertical"]) .tabs__ind::before {
+        background: rgba(var(--interactive-rgb), 0.12);
+        border-radius: var(--radius-sm);
+        box-shadow: inset 0 0 14px -6px rgba(var(--interactive-rgb), 0.9);
       }
 
       :host([orientation="vertical"]) .tabs__panel {
@@ -162,8 +284,14 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
       }
 
       :host([orientation="vertical"][variant="pills"]) .tabs__tab {
-        border-inline-end: none;
         margin-inline-end: 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .tabs__list { scroll-behavior: auto; }
+        .tabs__ind,
+        .tabs__tab { transition: none; }
+        .tabs__panel.is-entering { animation: none; }
       }
     `,
   ];
@@ -171,6 +299,88 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this._tabs = [];
+    // Re-measure when the bar's width changes. Wrapping, a font landing late, a
+    // pane being dragged — each of them moves every tab after the first, and an
+    // indicator that only measured on selection would be left behind by all
+    // three. Connection-scoped, so reparenting the bar does not silently end it.
+    observeResize(this, '.tabs__list', () => this._syncIndicator({ instant: true }));
+  }
+
+  /**
+   * Give the indicator the selected button's box. `instant` suppresses the
+   * transition for the measurements that are not selections — the first one,
+   * and every resize — so the indicator appears where it belongs instead of
+   * travelling there from the list's origin.
+   */
+  _syncIndicator({ instant = false } = {}) {
+    const root = this.shadowRoot;
+    const indicator = root?.querySelector('.tabs__ind');
+    if (!indicator) return;
+
+    const button = root.querySelectorAll('.tabs__tab')[this.selected];
+    if (!button) {
+      indicator.classList.remove('is-on');
+      return;
+    }
+
+    if (instant) indicator.classList.add('is-instant');
+
+    indicator.style.setProperty('--_ind-x', `${button.offsetLeft}px`);
+    indicator.style.setProperty('--_ind-y', `${button.offsetTop}px`);
+    indicator.style.setProperty('--_ind-w', `${button.offsetWidth}px`);
+    indicator.style.setProperty('--_ind-h', `${button.offsetHeight}px`);
+    indicator.classList.add('is-on');
+
+    if (instant) {
+      // Flush the jump before motion is allowed back, or the class comes off
+      // in the same frame and the jump animates after all.
+      void indicator.offsetWidth;
+      indicator.classList.remove('is-instant');
+    }
+
+    this._revealInBar(button, instant);
+  }
+
+  /**
+   * Bring the selected button inside the bar's own scrollport — because the
+   * arrow keys walked past the edge, or because the bar opened on a tab that
+   * was never on screen, which is how a bar with more tabs than room used to
+   * render with no visible selection at all.
+   *
+   * The bar scrolls and nothing else: `scrollIntoView` walks up through every
+   * ancestor scroller, so on load it would drag the visitor down the page to a
+   * tab bar they had not looked at yet. `behavior: 'auto'` defers to the list's
+   * own `scroll-behavior`, which reduced motion turns off.
+   */
+  _revealInBar(button, instant) {
+    const list = this.shadowRoot?.querySelector('.tabs__list');
+    if (!list) return;
+
+    const left = nearestScroll(
+      list.scrollLeft,
+      list.clientWidth,
+      button.offsetLeft,
+      button.offsetWidth,
+    );
+    const top = nearestScroll(
+      list.scrollTop,
+      list.clientHeight,
+      button.offsetTop,
+      button.offsetHeight,
+    );
+    if (left === list.scrollLeft && top === list.scrollTop) return;
+
+    list.scrollTo({ left, top, behavior: instant ? 'instant' : 'auto' });
+  }
+
+  /** Restart the panel's entrance on the switch that caused it. */
+  _playPanelEnter() {
+    const panel = this.shadowRoot?.querySelector('.tabs__panel');
+    if (!panel) return;
+
+    panel.classList.remove('is-entering');
+    void panel.offsetWidth;
+    panel.classList.add('is-entering');
   }
 
   _onSlotChange(e) {
@@ -248,20 +458,35 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
   }
 
   updated(changed) {
-    if (changed.has('selected')) {
-      this._syncVisibility();
-    }
+    const switched = changed.has('selected');
+
+    if (switched) this._syncVisibility();
+
+    // Any render can add, remove or rename a tab, so the box the indicator was
+    // given may no longer be the one it marks. Only a switch travels.
+    this._syncIndicator({ instant: !switched });
+
+    // `changed.get` is undefined on the first update, which is how a bar that
+    // opens on tab 3 is told apart from a visitor who moved to it.
+    if (switched && changed.get('selected') !== undefined) this._playPanelEnter();
   }
 
   /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
+    this._syncIndicator({ instant: true });
   }
 
   render() {
     return html`
       <div class="tabs" part="base tabs">
         <div class="tabs__list" role="tablist" aria-orientation=${this.orientation} @keydown=${this._handleKeydown}>
+          <!--
+            Hidden from assistive tech rather than given a role: a tablist's
+            children are tabs, and this one is light. What it marks is already
+            said by aria-selected on the button underneath it.
+          -->
+          <div class="tabs__ind" part="indicator" aria-hidden="true"></div>
           ${this._tabs.map(
             (tab, i) => html`
             <button

@@ -32,25 +32,25 @@ export const GET: APIRoute = async () => {
 
 \`\`\`bash
 # Web Components (canonical)
-npm install @arclux/arc-ui
+npm install @arclux/arc-ui lit
 
 # React
-npm install @arclux/arc-ui-react
+npm install @arclux/arc-ui-react @arclux/arc-ui lit
 
 # Vue
-npm install @arclux/arc-ui-vue
+npm install @arclux/arc-ui-vue @arclux/arc-ui lit
 
 # Svelte
-npm install @arclux/arc-ui-svelte
+npm install @arclux/arc-ui-svelte @arclux/arc-ui lit
 
 # Angular
-npm install @arclux/arc-ui-angular
+npm install @arclux/arc-ui-angular @arclux/arc-ui lit
 
 # Solid
-npm install @arclux/arc-ui-solid
+npm install @arclux/arc-ui-solid @arclux/arc-ui lit
 
 # Preact
-npm install @arclux/arc-ui-preact
+npm install @arclux/arc-ui-preact @arclux/arc-ui lit
 
 # Plain HTML (standalone HTML/CSS package, no JS)
 npm install @arclux/arc-ui-html

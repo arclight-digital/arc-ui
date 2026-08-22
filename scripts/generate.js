@@ -99,7 +99,7 @@ const phases = [
       // because prism had no hook for it. prism 3.0 emits accessors itself from
       // `config.formAssociated` + `config.formValue`, so the bridge is deleted
       // and this check now reads prism's own output. It stays: it asserts the
-      // 27 accessors against the elements' own declarations, which is the
+      // 26 accessors against the elements' own declarations, which is the
       // acceptance test for the feature rather than a guard on a script.
       check('angular-forms'),
     ],

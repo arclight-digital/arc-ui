@@ -69,19 +69,42 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-md);
         padding: var(--space-xs) 0;
         box-shadow: var(--shadow-overlay);
+        /* display, not visibility alone. A visibility:hidden box still takes
+           part in layout and still contributes scrollable overflow, so a closed
+           panel anchored to the inline-start edge of a trigger at the inline-end
+           edge of a full-width row hangs its min-width past the document and the
+           page gains a permanent horizontal scrollbar — with nothing visibly
+           off-screen to explain it. Finding #95; see test/closed-overflow.js.
+
+           display is a discrete property, so animating out of it needs the same
+           allow-discrete + @starting-style pairing the managed panels have
+           carried since they moved to the top layer (shared/position-styles.js
+           has the long version). Without it the panel pops instead of fading:
+           an element entering the rendered tree has no before-change style to
+           interpolate from. */
+        display: none;
         opacity: 0;
         visibility: hidden;
         transform: translateY(-4px);
         transition:
           opacity var(--transition-base),
           visibility var(--transition-base),
-          transform var(--transition-base);
+          transform var(--transition-base),
+          display var(--transition-base) allow-discrete;
       }
 
       :host([open]) .dropdown__panel {
+        display: block;
         opacity: 1;
         visibility: visible;
         transform: translateY(0);
+      }
+
+      @starting-style {
+        :host([open]) .dropdown__panel {
+          opacity: 0;
+          transform: translateY(-4px);
+        }
       }
 
       .dropdown__item {

@@ -7,7 +7,7 @@ Solid component wrappers for [ARC UI](https://arcui.dev) web components with typ
 ## Installation
 
 ```bash
-npm install @arclux/arc-ui-solid @arclux/arc-ui
+npm install @arclux/arc-ui-solid @arclux/arc-ui lit
 ```
 
 Requires `solid-js >= 1.8.0`.

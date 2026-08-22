@@ -43,7 +43,7 @@ npm install @arclux/arc-ui lit
 ### React
 
 ```bash
-npm install @arclux/arc-ui-react
+npm install @arclux/arc-ui-react @arclux/arc-ui lit
 ```
 
 ```tsx
@@ -71,12 +71,12 @@ function App() {
 | Framework | Package | Install |
 |-----------|---------|---------|
 | Web Components | `@arclux/arc-ui` | `npm i @arclux/arc-ui lit` |
-| React | `@arclux/arc-ui-react` | `npm i @arclux/arc-ui-react` |
-| Vue 3 | `@arclux/arc-ui-vue` | `npm i @arclux/arc-ui-vue` |
-| Svelte 5 | `@arclux/arc-ui-svelte` | `npm i @arclux/arc-ui-svelte` |
-| Angular | `@arclux/arc-ui-angular` | `npm i @arclux/arc-ui-angular` |
-| Solid | `@arclux/arc-ui-solid` | `npm i @arclux/arc-ui-solid` |
-| Preact | `@arclux/arc-ui-preact` | `npm i @arclux/arc-ui-preact` |
+| React | `@arclux/arc-ui-react` | `npm i @arclux/arc-ui-react @arclux/arc-ui lit` |
+| Vue 3 | `@arclux/arc-ui-vue` | `npm i @arclux/arc-ui-vue @arclux/arc-ui lit` |
+| Svelte 5 | `@arclux/arc-ui-svelte` | `npm i @arclux/arc-ui-svelte @arclux/arc-ui lit` |
+| Angular | `@arclux/arc-ui-angular` | `npm i @arclux/arc-ui-angular @arclux/arc-ui lit` |
+| Solid | `@arclux/arc-ui-solid` | `npm i @arclux/arc-ui-solid @arclux/arc-ui lit` |
+| Preact | `@arclux/arc-ui-preact` | `npm i @arclux/arc-ui-preact @arclux/arc-ui lit` |
 | HTML / CSS | `@arclux/arc-ui-html` | `npm i @arclux/arc-ui-html` |
 
 All framework packages are generated from the same Lit source and stay in sync automatically. Icons are a separate install — `@arclux/arc-ui-icons` carries Phosphor and Lucide, so a project that renders no icons pays for none.

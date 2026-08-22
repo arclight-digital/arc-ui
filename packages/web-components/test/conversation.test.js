@@ -114,21 +114,32 @@ describe('arc-message markdown', () => {
     expect(md.shadowRoot.querySelector('em'), 'a slot update must re-parse').to.exist;
   });
 
-  it('reads the slot in firstUpdated even when slotchange never reaches it (DSD ordering)', async () => {
+  it('reads the slot when no native slotchange ever arrives (DSD ordering)', async () => {
     // Under declarative shadow DOM the parser assigns the slot before the
-    // component's listener exists, so the initial slotchange is missed.
-    // Simulate that by stubbing the instance handler out before first render:
-    // only the firstUpdated read can populate the source.
+    // component's listener exists, so the initial slotchange is missed. Model
+    // that by dropping the *trusted* event — the one the browser sends, which a
+    // server-rendered upgrade never gets — and leaving only the synthetic
+    // dispatch from hydrateSlots.
+    //
+    // This used to stub the handler out entirely and assert that a second,
+    // direct read in firstUpdated saved the render. That read is gone:
+    // hydrateSlots delivers the missing event through the same handler a real
+    // slotchange reaches, which is one mechanism instead of two, and stubbing
+    // the handler now defeats the thing under test rather than isolating it.
     const el = document.createElement('arc-message');
     el.markdown = true;
-    el._onSlotChange = () => {};
+    const read = el._onSlotChange.bind(el);
+    el._onSlotChange = (e) => {
+      if (!e.isTrusted) read(e);
+    };
     el.append(document.createTextNode('**upgraded**'));
     document.body.append(el);
     await el.updateComplete;
-    await el.updateComplete; // the state set in firstUpdated re-renders
+    await tick(); // the hydration dispatch, and the render it schedules
+    await el.updateComplete;
 
     const md = el.shadowRoot.querySelector('arc-markdown');
-    expect(md, 'firstUpdated must have read the already-assigned slot').to.exist;
+    expect(md, 'the hydration dispatch must have read the already-assigned slot').to.exist;
     await md.updateComplete;
     expect(md.shadowRoot.querySelector('strong')).to.exist;
   });

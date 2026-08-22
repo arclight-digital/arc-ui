@@ -26,6 +26,14 @@ function statusStyle(variant) {
  * to gain its "(×N)" suffix — a visible flicker for what is conceptually a counter increment. Owning
  * the render state makes that an in-place update.
  *
+ * Every method has a document-level event beside it, so a consumer who cannot
+ * reach the element — a framework wrapper that exposes no handle, a module with
+ * no reference to the page's toast host — can still drive it:
+ * `arc-toast` (show), `arc-toast-update`, `arc-toast-complete`,
+ * `arc-toast-dismiss` and `arc-toast-clear`. Pass `detail.id` to `arc-toast` to
+ * name the toast yourself; the other four take that id back. A CustomEvent's
+ * `detail` is never cloned, so an `action` callback survives the trip.
+ *
  * @tag arc-toast
  * @status stable
  * @requires arc-button
@@ -213,20 +221,42 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
     this._counter = 0;
     this._timers = new Set();
     this._lastCounts = { visible: 0, queued: 0 };
-    // Lets any component raise a toast without holding a reference to this one.
-    this._onDocToast = (e) => {
-      this.show(e.detail ?? {});
+    /*
+     * The document route, and the whole of it.
+     *
+     * `arc-toast` has always let any component raise a toast without holding a
+     * reference to this one — the useful half of an imperative API made
+     * declarative, and the half that survives a framework wrapper that exposes
+     * no element handle. The other three methods had no such route, so a
+     * consumer who could raise a toast could not dismiss, complete or clear
+     * one: `show()` returns the id those need, and the return value of a method
+     * you did not call goes nowhere.
+     *
+     * `detail.id` on the way in closes that. Supply one and it is the toast's
+     * id, so the caller already holds what dismiss() and complete() take.
+     * Omit it and the counter names the toast as before.
+     */
+    this._docHandlers = {
+      'arc-toast': (e) => this.show(e.detail ?? {}),
+      'arc-toast-dismiss': (e) => this.dismiss(e.detail?.id),
+      'arc-toast-update': (e) => this.updateToast(e.detail?.id, e.detail ?? {}),
+      'arc-toast-complete': (e) => this.complete(e.detail?.id),
+      'arc-toast-clear': () => this.clear(),
     };
   }
 
   connectedCallback() {
     super.connectedCallback();
-    document.addEventListener('arc-toast', this._onDocToast);
+    for (const [name, handler] of Object.entries(this._docHandlers)) {
+      document.addEventListener(name, handler);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    document.removeEventListener('arc-toast', this._onDocToast);
+    for (const [name, handler] of Object.entries(this._docHandlers)) {
+      document.removeEventListener(name, handler);
+    }
     for (const timer of this._timers) clearTimeout(timer);
     this._timers.clear();
   }
@@ -256,6 +286,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * before the toast dismisses.
    *
    * @param {{
+   *   id?: number|string,
    *   message?: string,
    *   variant?: 'info' | 'success' | 'warning' | 'error',
    *   duration?: number,
@@ -267,12 +298,13 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * }} [options] `duration` overrides the element's own for this toast alone and
    *   `persistent` pins it until something dismisses it; progress mode ignores
    *   both, being persistent by definition.
-   * @returns {number} the toast's id, for a later dismiss(). A dedupe hit returns
-   *   the id of the toast it merged into, so a caller that tracks ids never ends
-   *   up holding one that was never created.
+   * @returns {number|string} the toast's id, for a later dismiss(). A dedupe hit
+   *   returns the id of the toast it merged into — including over a supplied
+   *   `id`, so a caller that tracks ids never ends up holding one that was
+   *   never created.
    */
   show(options = {}) {
-    const { message = '', variant = 'info', progress } = options;
+    const { message = '', variant = 'info', progress, id: givenId } = options;
     const isProgress = typeof progress === 'number';
 
     // A progress toast is never deduped and never auto-dismisses. Two uploads
@@ -297,7 +329,11 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
     }
 
     const entry = {
-      id: ++this._counter,
+      // A caller-supplied id is the one case where this element is not the
+      // source of truth for a toast's identity — see the document route in the
+      // constructor. Uniqueness is the caller's to keep; nothing here can check
+      // it against ids that have already been dismissed.
+      id: givenId ?? ++this._counter,
       message,
       variant,
       count: 1,
@@ -334,7 +370,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * Dismiss a toast by the id show() returned, whether it is visible or still
    * queued. Unknown ids are ignored.
    *
-   * @param {number} id
+   * @param {number|string} id
    *
    * @returns {void}
    */
@@ -423,7 +459,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * `update(changedProps) { super.update(changedProps); }` override that read
    * as if it meant something.
    *
-   * @param {number} id
+   * @param {number|string} id
    * @param {{ progress?: number, message?: string }} changes
    *
    * @returns {void}
@@ -453,7 +489,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * closing the toast are different events, and a consumer waiting on the first
    * should not be woken by the second.
    *
-   * @param {number} id
+   * @param {number|string} id
    *
    * @returns {void}
    */
@@ -487,7 +523,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * @param {number} id
+   * @param {number|string} id
    * @param {{ silent?: boolean }} [opts] - `silent` suppresses `arc-close`, for
    *   the two paths that have already announced themselves: `complete()` fires
    *   `arc-complete` and `_cancel()` fires `arc-cancel`. Emitting `arc-close`

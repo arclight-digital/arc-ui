@@ -7,7 +7,7 @@ React wrappers for [ARC UI](https://arcui.dev) web components with full TypeScri
 ## Installation
 
 ```bash
-npm install @arclux/arc-ui-react @arclux/arc-ui
+npm install @arclux/arc-ui-react @arclux/arc-ui lit
 ```
 
 Requires `react >= 18.0.0` and `react-dom >= 18.0.0`.

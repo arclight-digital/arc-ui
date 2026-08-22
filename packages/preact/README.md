@@ -7,7 +7,7 @@ Preact component wrappers for [ARC UI](https://arcui.dev) web components with ty
 ## Installation
 
 ```bash
-npm install @arclux/arc-ui-preact @arclux/arc-ui
+npm install @arclux/arc-ui-preact @arclux/arc-ui lit
 ```
 
 Requires `preact >= 10.19.0`.

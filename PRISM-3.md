@@ -3,6 +3,25 @@
 Reporter: `arc-ui`, against `@arclux/prism` **2.13.1**.
 Target: **prism 3.0 ships alongside arc-ui v4.0.**
 
+> **Status, 2026-08-22 — most of this has shipped.** prism **3.0.0** took §1.1,
+> §1.2, §2.1, §2.2 and §2.3; **3.1.0** took §2.4 and §2.5. Four of the seven
+> files in the frame table below are already deleted, which is what the
+> sequencing table at the end said would happen. The per-section text is left as
+> written — it is the specification each release was built against, and rewriting
+> it in the past tense would lose the reason each item existed. Each landed
+> section carries a status line; anything without one is still open.
+
+**This file is read downstream as a specification, so a number asserted here
+propagates.** §2.1 said "27 form controls"; prism took that figure into its own
+code comments and changelog, and it was wrong — it counted files mentioning
+`FormControlMixin` rather than classes applying it, and `arc-form` mentions it
+while extending `DeclaredPropsMixin(LitElement)`. The real number is 26, and
+`scripts/checks/angular-forms.js` had been printing it on every run the whole
+time. The rule that follows: **a count in this document should come from a check
+that computes it, and should name that check** — a number a check computes beats
+a number a document asserts, and this one travelled into another repo before
+anyone read the two side by side.
+
 This is not a bug list. Every open bug is already in `prism-feedback.md` and
 `prism-handoff.md`, and both are short. This is the other thing those files have
 been accumulating without naming: **the work arc-ui does that prism should be
@@ -10,17 +29,24 @@ doing**, and the reason 3.0 is the release to move it.
 
 ## The frame
 
-Seven files in this repo, about 1,235 lines, exist only because of prism:
+Seven files in this repo, about 1,235 lines, existed only because of prism.
+**Four are gone as of prism 3.0**, each deleted by the item that replaced it:
 
-| file | lines | what it is |
-| --- | ---: | --- |
-| `scripts/generate/angular-cva.js` | 275 | **rewrites prism's output** |
-| `scripts/checks/wrapper-slots.js` | 231 | asserts prism forwards slots |
-| `scripts/checks/barrel-gating.js` | 222 | asserts `barrelExclude` round-trips |
-| `scripts/prism-props.js` | 205 | supplies prism a vocabulary it cannot read |
-| `scripts/generate/wrapper-exports.js` | 126 | writes the wrapper packages' export maps |
-| `scripts/checks/prism-version.js` | 90 | stops an old prism silently reverting 235 files |
-| `scripts/checks/wrapper-types.js` | 86 | asserts the emitted types |
+| file | lines | what it is | now |
+| --- | ---: | --- | --- |
+| `scripts/generate/angular-cva.js` | 275 | **rewrites prism's output** | **deleted** — 3.0 emits accessors from `config.formAssociated` + `config.formValue` |
+| `scripts/checks/wrapper-slots.js` | 231 | asserts prism forwards slots | stays (acceptance) |
+| `scripts/checks/barrel-gating.js` | 222 | asserts `barrelExclude` round-trips | stays (acceptance) |
+| `scripts/prism-props.js` | 205 | supplies prism a vocabulary it cannot read | **deleted** — 3.0 resolves from `Ctor.elementProperties` (§1.2) |
+| `scripts/generate/wrapper-exports.js` | 126 | writes the wrapper packages' export maps | **deleted** — 3.0 writes them (§2.3) |
+| `scripts/checks/prism-version.js` | 90 | stops an old prism silently reverting 235 files | stays, 115 lines |
+| `scripts/checks/wrapper-types.js` | 86 | asserts the emitted types | stays (acceptance) |
+
+Two checks joined them rather than replacing anything:
+`scripts/checks/jsx-augmentations.js` (204 lines, compiles the augmentations
+instead of asserting their text — §1.1's lesson) and
+`scripts/checks/angular-forms.js` (120 lines, which now reads prism's own
+accessors rather than guarding a script that wrote them).
 
 Four of the seven are verification. That is the pattern worth naming: **arc-ui
 has become prism's test suite.** Every fix in the ledger — the two 2.13.0 barrel
@@ -42,6 +68,8 @@ no hook for it. That file is a bridge with a deletion trigger, not a design.
 ## 1. Breaking changes 3.0 should take
 
 ### 1.1 The Solid `IntrinsicElements` block is inert — **found 2026-08-16**
+
+> **Landed in prism 3.0.0.** arc-ui compiles its augmentations rather than asserting them (`scripts/checks/jsx-augmentations.js`).
 
 Every generated Solid wrapper carries:
 
@@ -84,6 +112,8 @@ is exactly the class of defect §4 is about.
 
 ### 1.2 Resolve properties from `Ctor.elementProperties` at runtime
 
+> **Landed in prism 3.0.0.** `scripts/prism-props.js` is deleted, and with it the `propsFrom` hook and its partial-answer trap.
+
 Already on your roadmap and already agreed in `prism-handoff.md` §4; restating
 it here because 3.0 is where its strict half belongs.
 
@@ -103,6 +133,8 @@ what it does, but the version that needs no hook is better.
 
 ### 2.1 Angular `ControlValueAccessor` — the big one
 
+> **Landed in prism 3.0.0.** The 275-line post-processor is deleted; `scripts/checks/angular-forms.js` now asserts prism's own output against the elements' declarations, and reports **26** form-associated elements.
+
 **`formControlName`, `formControl` and `ngModel` work on zero Angular
 wrappers.** That is most of the reason an Angular wrapper package exists: an
 Angular team reaching for a component library reaches for reactive forms in the
@@ -112,13 +144,13 @@ element on screen holds the user's text.
 
 arc-ui v4.0 ships this as a post-processing pass because 4.6 is required for the
 tag. **The shape below is generated, compiles under `ng-packagr` with
-`strictTemplates`, and covers 27 controls.** It is offered as a specification,
+`strictTemplates`, and covers 26 controls.** It is offered as a specification,
 not a request to review our workaround.
 
 #### Which components
 
 Not "every component with a value". The precise set is **components that are
-form-associated** — in arc-ui, the 27 that extend `FormControlMixin`
+form-associated** — in arc-ui, the 26 that extend `FormControlMixin`
 (`static formAssociated = true` + `attachInternals`). A general rule prism can
 apply: *the element's class has `static formAssociated = true`.* That is the
 platform's own definition and needs no configuration.
@@ -210,7 +242,7 @@ export class Input implements ControlValueAccessor {
    }
    ```
 
-   Leaving them out would mean `formControlName` working on 25 of 27 — the kind
+   Leaving them out would mean `formControlName` working on 24 of 26 — the kind
    of gap a consumer discovers rather than reads. A `FormGroup` with a control
    per `@Input` is the better shape for validating the two ends separately and
    works today without any of this; it just cannot be reached from `[(ngModel)]`.
@@ -226,6 +258,8 @@ type: `''` for string, `false` for boolean, `0` for number, `[]` for arrays.
 Angular calls `writeValue(null)` on reset routinely.
 
 ### 2.2 The JSX type augmentations
+
+> **Landed in prism 3.0.0.** The three-target block is out of `scripts/generate/types.js`.
 
 prism generates six framework wrappers. It does not generate the *other* thing a
 framework consumer needs: a declaration file that types the custom elements for
@@ -276,6 +310,8 @@ shape copied three times:
 
 ### 2.3 Wrapper package export maps
 
+> **Landed in prism 3.0.0.** `scripts/generate/wrapper-exports.js` is deleted.
+
 `scripts/generate/wrapper-exports.js` (126 lines) writes the `exports` map for
 each wrapper package from prism's own file tree: a subpath per component
 (`@arclux/arc-ui-react/Button`), `dist/` targets for the built packages
@@ -288,6 +324,66 @@ program that has to re-infer the build mode per package.
 
 Lower priority than 2.1 and 2.2, and listed because it is the third case of the
 same shape: prism produces a package and something else finishes it.
+
+### 2.4 Two-way binding derived from behaviour, not from a prop's name
+
+> **Landed in prism 3.1.0.** 8 props gain a binding; `arc-checkbox.value` loses one that was carrying a boolean into a string. Not yet regenerated here.
+
+**Found 2026-08-21, from an application building on 4.0.1.**
+
+`arc-app-shell`'s `sidebarOpen` is emitted as a one-way property on the Svelte
+wrapper (`AppShell.svelte:49`), and the component owns that state as much as its
+consumer does: it closes the drawer on Escape, on a backdrop click and on
+navigation, announcing each with `arc-sidebar-toggle` carrying the new value. A
+consumer's copy of the state therefore drifts the first time a user dismisses
+the drawer by any route other than the hamburger — silently, and in the
+direction that leaves a "close" button that reopens nothing.
+
+`SidebarSection.open` **is** `$bindable()`, with a generated `arc-toggle`
+handler mirroring it back, so the generator can already emit exactly what is
+needed here. The rule appears to key off the prop's name rather than off what
+the component does with it.
+
+**The rule that would be right:** a prop is two-way when the component assigns
+to it outside its constructor *and* fires an event carrying the new value. Both
+halves are visible in the source prism already parses, and together they are
+the definition of state the component shares rather than receives. Keying on
+names cannot see `sidebarOpen`, and would keep needing new names — the same
+shape reaches `arc-tabs`' `selected`, `arc-carousel`'s `index` and every
+`open`-like prop that a dismiss path can move.
+
+arc-ui's workaround is to mirror `arc-sidebar-toggle` by hand at each call site,
+which is the shape of workaround that says the rule is wrong rather than the
+component.
+
+### 2.5 An imperative API needs a handle in every wrapper
+
+> **Landed in prism 3.1.0**, with `wrapper-missing-handle` as a strict-failing check. Not yet regenerated here.
+
+**Same report.** `arc-toast` is driven by methods — `show(options)` returns an
+id, `dismiss(id)` takes it back, plus `updateToast()`, `complete()` and
+`clear()`. The generated Svelte wrapper keeps the element in a private `__el`
+and marks nothing `$bindable`, so `bind:this` on `<Toast>` yields the Svelte
+component and the element is unreachable. Vue has no `defineExpose` anywhere in
+the package. React is fine — `@lit/react` forwards refs — which is why this was
+found in an app and not in a build.
+
+Every capability of such a component sits on the far side of that gap, and the
+manifest now carries the methods (55ce81cc), so the condition is mechanical:
+**a component with public methods must expose an element handle in every
+wrapper.** arc-ui has added `scripts/checks/` coverage for slots and types at
+the output level; this belongs beside them, but the fix belongs in the
+generator.
+
+arc-ui has closed the arc-toast case from its own side by completing the
+document-event route — `arc-toast-dismiss`, `arc-toast-update`,
+`arc-toast-complete` and `arc-toast-clear` beside the `arc-toast` event that
+already existed, with a caller-supplied `detail.id` so the id `show()` returns
+is not the only way to name a toast. That is a better public contract
+regardless, and it is not a general answer: it works because this component was
+already designed to be driven from a distance. `arc-inline-edit.edit()`,
+`arc-carousel.next()` and the rest are not, and should not each grow an event
+bus to work around a missing handle.
 
 ---
 
@@ -369,13 +465,20 @@ document.
 
 ## Sequencing, and what arc-ui deletes
 
-| prism 3.0 lands | arc-ui v4 removes |
-| --- | --- |
-| 2.1 Angular CVA | `scripts/generate/angular-cva.js` — 275 lines, and its generate step |
-| 2.2 JSX augmentations | the three-target block in `scripts/generate/types.js` |
-| 2.3 Wrapper export maps | `scripts/generate/wrapper-exports.js` — 126 lines |
-| 1.2 runtime `elementProperties` | `scripts/prism-props.js` — 205 lines |
-| 3.1 version stamping | `scripts/checks/prism-version.js` — 90 lines |
+| prism lands | arc-ui v4 removes | status |
+| --- | --- | --- |
+| 2.1 Angular CVA | `scripts/generate/angular-cva.js` — 275 lines, and its generate step | **done, 3.0.0** |
+| 2.2 JSX augmentations | the three-target block in `scripts/generate/types.js` | **done, 3.0.0** |
+| 2.3 Wrapper export maps | `scripts/generate/wrapper-exports.js` — 126 lines | **done, 3.0.0** |
+| 1.2 runtime `elementProperties` | `scripts/prism-props.js` — 205 lines | **done, 3.0.0** |
+| 3.1 version stamping | `scripts/checks/prism-version.js` — 90 lines | open; the check stays for now |
+| 2.4 behavioural two-way binding | the hand-written `arc-sidebar-toggle` mirrors at each consumer's call site | shipped 3.1.0, **not yet regenerated here** |
+| 2.5 element handles on wrappers | nothing here — the cost is a consumer's, which is why it took an application to find it | shipped 3.1.0, **not yet regenerated here** |
+
+**606 lines deleted from this repo so far**, and the two 3.1.0 items land in the
+wrapper packages rather than in scripts: 8 props gain a two-way binding, one
+loses a wrong one, and every component with public methods gains an element
+handle in five packages.
 
 The four checks (`wrapper-slots`, `wrapper-types`, `barrel-gating`,
 `jsx-augmentations`) **stay** whatever happens. They are not workarounds; they

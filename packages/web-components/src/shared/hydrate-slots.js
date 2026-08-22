@@ -35,7 +35,23 @@ export function hydrateSlots(host) {
     }
   };
 
-  fire();
+  /*
+   * Queued rather than called outright. `firstUpdated` runs inside the update,
+   * so a handler that stores what it read — every handler this reaches, since
+   * read-and-store is the contract — is writing reactive state after the update
+   * completed, which is Lit's `change-in-update` warning. It fired for
+   * arc-sidebar, arc-search, arc-segmented-control, arc-dropdown-menu,
+   * arc-navigation-menu and arc-context-menu: one dev-mode warning per
+   * component on first render, all of them from this one line, and enough of
+   * them to read like a pattern rather than the sanctioned post-render write it
+   * is (arc-icon's async registry lookup is the genuine article).
+   *
+   * A microtask is the earliest point outside the cycle. It changes no timing
+   * that anything can observe: the write already scheduled a second update
+   * either way, `updateComplete` already resolved before that second render,
+   * and both land in the same frame.
+   */
+  queueMicrotask(fire);
 
   /*
    * And again once parsing finishes, because first render is not always after

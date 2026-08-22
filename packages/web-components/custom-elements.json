@@ -11396,7 +11396,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix — a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.",
+          "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix — a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.\n\nEvery method has a document-level event beside it, so a consumer who cannot\nreach the element — a framework wrapper that exposes no handle, a module with\nno reference to the page's toast host — can still drive it:\n`arc-toast` (show), `arc-toast-update`, `arc-toast-complete`,\n`arc-toast-dismiss` and `arc-toast-clear`. Pass `detail.id` to `arc-toast` to\nname the toast yourself; the other four take that id back. A CustomEvent's\n`detail` is never cloned, so an `action` callback survives the trip.",
           "name": "ArcToast",
           "cssParts": [
             {
@@ -11437,14 +11437,14 @@
                   "description": "`duration` overrides the element's own for this toast alone and\n`persistent` pins it until something dismisses it; progress mode ignores\nboth, being persistent by definition.",
                   "optional": true,
                   "type": {
-                    "text": "{ message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }"
+                    "text": "{ id?: number|string, message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }"
                   }
                 }
               ],
               "description": "Show a toast, or coalesce it into an identical one that is already showing.\n\nPassing `progress` puts the toast in progress mode, absorbed from\narc-progress-toast in 4.2: it renders a track beneath the message, exempts\nitself from dedupe and from the auto-dismiss timer, and — given `onCancel`\n— offers a cancel button that fires `arc-cancel`. Move the bar with\n`updateToast(id, { progress })` and end it with `complete(id)`, which fires\n`arc-complete`. The mode is chosen here and is not switchable afterwards: a\ntrack appearing mid-life would relayout a notification the reader is\nalready reading.\n\n`action` and `actionLabel` arrive from arc-snackbar the same way. The label\nrenders a ghost button; a click runs the callback and fires `arc-action`\nbefore the toast dismisses.",
               "return": {
                 "type": {
-                  "text": "number"
+                  "text": "number|string"
                 }
               }
             },
@@ -11455,7 +11455,7 @@
                 {
                   "name": "id",
                   "type": {
-                    "text": "number"
+                    "text": "number|string"
                   }
                 }
               ],
@@ -11483,7 +11483,7 @@
                 {
                   "name": "id",
                   "type": {
-                    "text": "number"
+                    "text": "number|string"
                   }
                 },
                 {
@@ -11507,7 +11507,7 @@
                 {
                   "name": "id",
                   "type": {
-                    "text": "number"
+                    "text": "number|string"
                   }
                 }
               ],
@@ -16013,6 +16013,25 @@
             }
           ],
           "members": [
+            {
+              "kind": "method",
+              "name": "focus",
+              "parameters": [
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "FocusOptions"
+                  }
+                }
+              ],
+              "description": "Move focus to whichever element is currently the control: the field while\nediting, the display row otherwise.\n\nThe host sets no `delegatesFocus` and everything focusable lives in the\nshadow root, so `el.focus()` used to do nothing at all — silently, which\ncost a consumer a \"Rename\" menu item that appeared dead. `edit()` is the\nway *into* editing and stays that way; this is only the obvious call\nlanding where a caller expects it.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
             {
               "kind": "method",
               "name": "edit",
@@ -26160,7 +26179,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a\ncohesive application frame. Handles responsive collapse, sidebar toggling, and optional\ntable-of-contents rail out of the box.",
+          "description": "Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a\ncohesive application frame. Handles responsive collapse, sidebar toggling, and optional\ntable-of-contents rail out of the box.\n\nA slotted `arc-top-bar` is put out of flow for you — the body already\nreserves `--nav-height` of padding for it — and whatever is slotted into the\nsidebar is stretched to the full height of the rail, `arc-sidebar` or a plain\n`<nav>` alike, so anything drawing an edge draws it the whole way down. The\nrail is 280px wide; set `--sidebar-width` on the shell to change it, which\nmoves the wrapper and the sidebar inside it together.\n\nBy default the shell is a page layout: at least `100vh` tall, with the page\nas the scroll context and a sticky sidebar rail. Set `embedded` to put the\nsame layout inside a box — a card, a dashboard cell, a split pane, a preview\n— where it takes its height from the container you give it and scrolls\ninside itself instead of moving the page.",
           "name": "ArcAppShell",
           "cssParts": [
             {
@@ -26223,6 +26242,18 @@
               "attribute": "sidebarOpen",
               "default": "false",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "embedded",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen — a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for.",
+              "attribute": "embedded",
+              "default": "false",
+              "reflects": true
             }
           ],
           "events": [
@@ -26231,7 +26262,7 @@
               "type": {
                 "text": "CustomEvent<{ value: boolean }>"
               },
-              "description": "Fired when the shell itself opens or closes the mobile sidebar — on a backdrop click, on Escape, or on navigation. Listened to by arc-top-bar so its hamburger stays in step. Not fired for a toggle the shell merely received, so the two cannot echo each other."
+              "description": "Fired when the shell itself opens or closes the mobile sidebar — on a backdrop click, on Escape, on navigation, or when the viewport widens past the breakpoint and the drawer stops existing. Listened to by arc-top-bar so its hamburger stays in step, and by any wrapper binding `sidebarOpen`. Not fired for a toggle the shell merely received, so the two cannot echo each other."
             }
           ],
           "attributes": [
@@ -26242,6 +26273,15 @@
               },
               "description": "Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.",
               "fieldName": "sidebarOpen",
+              "default": "false"
+            },
+            {
+              "name": "embedded",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen — a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for.",
+              "fieldName": "embedded",
               "default": "false"
             },
             {
@@ -27160,6 +27200,7 @@
           ],
           "slots": [
             {
+              "description": "Content above the title row — breadcrumbs, a back link, a status chip. The space it occupies is reserved only when something is in it.",
               "name": "above"
             },
             {
@@ -30849,8 +30890,8 @@
               "type": {
                 "text": "string"
               },
-              "default": "'280px'",
-              "description": "Width of the sidebar. Accepts any CSS length value.",
+              "default": "''",
+              "description": "Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.",
               "attribute": "width"
             },
             {
@@ -30882,7 +30923,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.",
+              "description": "When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail — the VS Code activity-bar shape — use `arc-rail`, which is a different component with its own labels and tooltips.",
               "attribute": "collapsed",
               "default": "false",
               "reflects": true
@@ -30921,7 +30962,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.",
+              "description": "When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail — the VS Code activity-bar shape — use `arc-rail`, which is a different component with its own labels and tooltips.",
               "fieldName": "collapsed",
               "default": "false"
             },
@@ -30939,8 +30980,8 @@
               "type": {
                 "text": "string"
               },
-              "default": "'280px'",
-              "description": "Width of the sidebar. Accepts any CSS length value.",
+              "default": "''",
+              "description": "Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.",
               "fieldName": "width"
             },
             {
@@ -31393,6 +31434,10 @@
             },
             {
               "name": "tabs"
+            },
+            {
+              "description": "The light that travels between tabs: the underline in the default variant, the ground behind the selection in `pills` and in vertical bars.",
+              "name": "indicator"
             }
           ],
           "slots": [

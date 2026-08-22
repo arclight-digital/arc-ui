@@ -15,8 +15,8 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @requires arc-icon
  * @prop {'left' | 'right'} position - Controls which side the sidebar appears on. Moves the border line to the opposite edge.
  * @prop {string} active - The href of the currently active sidebar link. Used to highlight the matching link with accent styling.
- * @prop {boolean} collapsed - When true, collapses the sidebar to icon-only mode, hiding labels and reducing width.
- * @prop {string} width - Width of the sidebar. Accepts any CSS length value.
+ * @prop {boolean} collapsed - When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail — the VS Code activity-bar shape — use `arc-rail`, which is a different component with its own labels and tooltips.
+ * @prop {string} width - Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.
  * @prop {boolean} glow - Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.
  * @fires arc-navigate - Fired when a sidebar link is clicked
  * @slot - Default content.
@@ -45,7 +45,13 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
     tokenStyles,
     css`
       :host {
-        display: block;
+        /* grid, not block: the one visible child is .sidebar, and a grid item
+           stretches to the host box. It used to reach full height through
+           .sidebar { min-height: 100% }, which resolves against the host's
+           *height* — definite when the sidebar stands alone, auto inside
+           arc-app-shell, whose ::slotted rule forces it. So the rail filled the
+           page everywhere except the layout it ships with. Finding #91. */
+        display: grid;
         /* The ambient wash behind the rail. Inputs on :host because that is
            where the shape token is declared — see shared/tokens.js. */
         --lobe-rgb: var(--accent-primary-rgb);
@@ -55,6 +61,12 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         position: sticky;
         top: var(--nav-height);
         height: calc(100vh - var(--nav-height));
+        /* Declared, defaulted to 280px, and read by nothing: no styleMap, no
+           custom property, no :host([width]) selector. The 280px a consumer
+           saw came from .shell__sidebar in arc-app-shell, so the prop appeared
+           to work right up until someone passed a different value, at which
+           point it was silently ignored. Finding #92. */
+        width: var(--_width, auto);
         overflow-y: auto;
         overflow-x: hidden;
         scrollbar-width: thin;
@@ -68,7 +80,6 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         flex-direction: column;
         gap: var(--space-md);
         padding: var(--space-lg);
-        min-height: 100%;
         position: relative;
         box-sizing: border-box;
       }
@@ -360,7 +371,10 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this.active = '';
-    this.width = '280px';
+    // Empty, not '280px'. The old default described the shell's rail rather
+    // than this component's own behaviour, which is to fill its container —
+    // and a default nothing applied was indistinguishable from one that did.
+    this.width = '';
     this.label = 'Sidebar navigation';
     this._sections = [];
   }
@@ -393,6 +407,12 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
   }
 
   /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  updated(changed) {
+    if (changed.has('width')) {
+      this.style.setProperty('--_width', this.width || 'auto');
+    }
+  }
+
   firstUpdated() {
     hydrateSlots(this);
   }

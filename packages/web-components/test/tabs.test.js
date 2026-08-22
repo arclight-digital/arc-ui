@@ -431,3 +431,98 @@ describe('arc-tabs enum fallbacks', () => {
       .to.equal('horizontal');
   });
 });
+
+/**
+ * The indicator — the one element that carries the selection in every variant
+ * and orientation, positioned from the selected button's own box.
+ *
+ * Worth pinning as behaviour rather than as looks: the bar hands it four
+ * measurements, and every failure mode here is a measurement that never
+ * happened. It marked the wrong tab, it marked a tab that no longer exists, or
+ * — the one that shipped in 4.1.0's predecessor of this component — it marked
+ * a tab the visitor could not see, because a bar that opens on a tab outside
+ * its own scrollport never scrolled to it.
+ */
+describe('arc-tabs indicator', () => {
+  const indicator = (el) => el.shadowRoot.querySelector('.tabs__ind');
+  const box = (el) => {
+    const style = indicator(el).style;
+    return {
+      x: style.getPropertyValue('--_ind-x'),
+      y: style.getPropertyValue('--_ind-y'),
+      w: style.getPropertyValue('--_ind-w'),
+      h: style.getPropertyValue('--_ind-h'),
+    };
+  };
+
+  it('takes the selected button\'s box', async () => {
+    const el = await tabs();
+    const button = buttons(el)[0];
+    expect(box(el)).to.deep.equal({
+      x: `${button.offsetLeft}px`,
+      y: `${button.offsetTop}px`,
+      w: `${button.offsetWidth}px`,
+      h: `${button.offsetHeight}px`,
+    });
+  });
+
+  it('moves to the tab that was selected', async () => {
+    const el = await tabs();
+    const before = box(el);
+
+    buttons(el)[2].click();
+    await settle(el);
+
+    expect(box(el).x, 'the indicator travelled').to.not.equal(before.x);
+    expect(box(el).x).to.equal(`${buttons(el)[2].offsetLeft}px`);
+  });
+
+  it('is hidden while the bar holds no tabs', async () => {
+    const el = await tabs('', '');
+    expect(indicator(el).classList.contains('is-on')).to.be.false;
+  });
+
+  /**
+   * `selected` is an index, not a tab, so inserting ahead of it hands the
+   * selection to a different tab in a bar whose every button has also moved.
+   * The indicator has to end up on the box that index now names — measuring
+   * only on selection would leave it on neither.
+   */
+  it('re-measures when a tab is added ahead of the selection', async () => {
+    const el = await tabs('selected="2"');
+    const before = box(el).x;
+
+    el.insertBefore(
+      Object.assign(document.createElement('arc-tab'), { label: 'Zeroth' }),
+      el.firstChild,
+    );
+    await settle(el);
+
+    expect(labels(el)[2], 'the index now names the tab before the one it did')
+      .to.equal('Second');
+    expect(box(el).x, 'and the indicator moved with it').to.not.equal(before);
+    expect(box(el).x).to.equal(`${buttons(el)[2].offsetLeft}px`);
+  });
+
+  /**
+   * The scroll is the bar's own. `scrollIntoView` would walk up through every
+   * ancestor scroller and drag the page to the bar on load, which is why this
+   * pins the page having stayed put as well as the bar having moved.
+   */
+  it('scrolls a selection outside the scrollport into the bar, and not the page', async () => {
+    const many = Array.from(
+      { length: 12 },
+      (_, i) => `<arc-tab label="Section number ${i}">Panel ${i}</arc-tab>`,
+    ).join('');
+
+    const pageScroll = document.scrollingElement.scrollTop;
+    const el = await tabs('selected="11" style="max-width:240px"', many);
+    const list = el.shadowRoot.querySelector('.tabs__list');
+
+    expect(list.scrollWidth, 'the bar has to overflow for this to mean anything')
+      .to.be.greaterThan(list.clientWidth);
+    expect(list.scrollLeft, 'the bar scrolled to its selection').to.be.greaterThan(0);
+    expect(document.scrollingElement.scrollTop, 'the page did not move')
+      .to.equal(pageScroll);
+  });
+});

@@ -7,7 +7,7 @@ Vue 3 component wrappers for [ARC UI](https://arcui.dev) web components, with ty
 ## Installation
 
 ```bash
-npm install @arclux/arc-ui-vue @arclux/arc-ui
+npm install @arclux/arc-ui-vue @arclux/arc-ui lit
 ```
 
 Requires `vue >= 3.3.0`.

@@ -35,6 +35,7 @@ exist.
 
 **v4:**
 
+- [Three of these changes fail silently](#three-of-these-changes-fail-silently)
 - [The five cuts](#the-five-cuts)
 - [The merges](#the-merges)
 - [Domain groups: marketing and media leave the default barrel](#domain-groups-marketing-and-media-leave-the-default-barrel)
@@ -310,6 +311,42 @@ relied on published examples fetch them from the docs site instead.
 ---
 
 # v4 breaking changes
+
+## Three of these changes fail silently
+
+Every other section here describes a change you find out about. This one is
+about the three that you do not, and it is first because the fix for all three
+is one import.
+
+A rename fails loudly when the old spelling stops resolving — a missing tag, a
+prop that throws, a build that breaks. These three fail by rendering something
+plausible instead:
+
+| Change | What a stale call site does |
+|---|---|
+| `arc-toolbar` / `arc-status-bar` slots `start`/`end` → `prefix`/`suffix` ([section](#side-slots-are-prefix-and-suffix)) | content with an unrecognised `slot=` is not rendered at all — the same symptom as the 2.10.0 wrapper bug that dropped named slots, so the two are easy to confuse |
+| `arc-confirm` `variant="danger"` → `"error"` ([section](#props-that-documented-a-rule-now-enforce-it)) | `oneOf` coerces the unknown value to the declared default, so a destructive dialog renders as an ordinary one |
+| `closable` → `dismissible` on `arc-dialog` ([section](#size-is-sm--md--lg-and-dismissal-is-dismissible)) | the prop is ignored and the close affordance is simply absent |
+
+**`@arclux/arc-ui/dev` catches all three**, at the point of use, with the tag and
+the attribute named:
+
+```js
+if (import.meta.env.DEV) import('@arclux/arc-ui/dev');
+```
+
+It is worth loading permanently behind your dev flag rather than reaching for it
+during an upgrade. The report this section comes from found four
+`variant="danger"` alerts that had never matched a real variant — they predated
+v4 entirely, and had been rendering as neutral `info` notices since the day they
+were written.
+
+That case is why the enum warning names the destination as well as the
+expectation: *"danger" is not a valid variant — expected info | tip | success |
+warning | error; rendering as "info".* The fallback is recorded per attribute in
+`custom-elements.json` (as the attribute's `default`) and in
+`src/dev-schema.js`, so a codemod can be written against the coercion rather
+than against a list of renames.
 
 ## The five cuts
 

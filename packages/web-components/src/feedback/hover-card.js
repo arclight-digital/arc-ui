@@ -52,13 +52,26 @@ export class ArcHoverCard extends DeclaredPropsMixin(LitElement) {
         box-shadow: var(--shadow-overlay);
         min-width: 200px;
         max-width: 360px;
+        /* Out of layout while closed, not merely invisible — a
+           visibility:hidden box still contributes scrollable overflow, and a
+           panel anchored inside a trigger at the page's inline-end edge turns
+           its min-width into a permanent horizontal scrollbar. Finding #95; the
+           long version is in feedback/dropdown-menu.js. No @starting-style here:
+           the enter animation for an adopted panel comes from
+           managedPanelStyles, and the resting transform this would have to
+           interpolate from is per-branch (see shared/position-styles.js). */
+        display: none;
         opacity: 0;
         transform: scale(0.96);
         pointer-events: none;
-        transition: opacity var(--transition-base), transform var(--transition-base);
+        transition:
+          opacity var(--transition-base),
+          transform var(--transition-base),
+          display var(--transition-base) allow-discrete;
       }
 
       .hovercard__card--visible {
+        display: block;
         opacity: 1;
         transform: scale(1);
         pointer-events: auto;
