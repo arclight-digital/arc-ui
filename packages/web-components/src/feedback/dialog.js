@@ -249,7 +249,8 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
       `[arc-dialog] received ${stray.map((n) => `\`${n}\``).join(', ')}, which it does not ` +
         'have. In v4 `arc-dialog` is the modal primitive (renamed from `arc-modal`); the ' +
         'confirm prompt that used to be called `arc-dialog` is now `<arc-confirm>`, and it ' +
-        'takes all of them. See MIGRATION.md.',
+        'takes all of them. See ' +
+        'https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md.',
     );
   }
 

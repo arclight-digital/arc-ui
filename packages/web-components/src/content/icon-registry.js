@@ -122,30 +122,62 @@ function readInlinePayload() {
  * thing about it fifty times over — "check the spelling" is bad advice when the
  * spelling was never the problem. This fires once and carries the fix, and
  * arc-icon defers to it (see `hasLibrary`).
+ *
+ * It names the icon that missed, and scopes its claim to what is actually
+ * broken. The first version said "every named icon renders as an empty slot",
+ * which is true of an empty page and false of a hand-registered one: `get()`
+ * consults `_custom` *before* it asks for a library, so a page that registers
+ * its own glyphs resolves every one of them and only reaches here for a name it
+ * never registered. A consumer read that message as "hand-registration is
+ * unsupported, install a pack" when their real gap was one missing glyph —
+ * `pencil`, which arc-inline-edit had been rendering as an empty slot since
+ * they upgraded. Naming it would have pointed at the gap instead of at their
+ * strategy.
  */
 const _warnedLibraries = new Set();
-function warnNoLibrary(name) {
-  const key = name ?? '';
+function warnNoLibrary(library, icon) {
+  const key = library ?? '';
   if (_warnedLibraries.has(key)) return;
   _warnedLibraries.add(key);
   const registered = [..._libraries.keys()];
-  console.warn(
-    (name
-      ? `[arc-ui] Icon library "${name}" is not registered, so every named icon renders as an empty slot.`
-      : '[arc-ui] No icon library is selected, so every named icon renders as an empty slot.') +
-      (registered.length
-        ? ` Registered: ${registered.join(', ')}. Select one with iconRegistry.use("${registered[0]}").`
-        : ' Icon packs moved out of @arclux/arc-ui in v4:\n' +
-          '    npm i @arclux/arc-ui-icons\n' +
-          "    import '@arclux/arc-ui-icons/phosphor';\n" +
-          '  See MIGRATION.md — "Icons moved to @arclux/arc-ui-icons".'),
-  );
+  const custom = Object.keys(_custom).length;
+  const missed = icon ? `"${icon}"` : 'a named icon';
+
+  // Which of the three sentences is true depends on what the page has, and they
+  // are three different problems: the wrong library name, one unregistered
+  // glyph on a page that hand-registers, and no icons at all.
+  const problem = library
+    ? `[arc-ui] Icon library "${library}" is not registered, so ${missed} renders as an empty slot.`
+    : custom
+      ? `[arc-ui] ${missed} is not in the custom icon map and no icon library is selected, so it renders as an empty slot.` +
+        ` ${custom} icon${custom === 1 ? '' : 's'} registered by hand resolve normally; this is the first name that did not.`
+      : `[arc-ui] No icon library is selected, so ${missed} — and every other named icon — renders as an empty slot.`;
+
+  const fix = registered.length
+    ? ` Registered: ${registered.join(', ')}. Select one with iconRegistry.use("${registered[0]}").`
+    : custom
+      ? ` Register it with iconRegistry.register(), or install a pack:\n` +
+        '    npm i @arclux/arc-ui-icons\n' +
+        "    import '@arclux/arc-ui-icons/phosphor';"
+      : ' Icon packs moved out of @arclux/arc-ui in v4:\n' +
+        '    npm i @arclux/arc-ui-icons\n' +
+        "    import '@arclux/arc-ui-icons/phosphor';\n" +
+        '  See https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md' +
+        ' — "Icons moved to @arclux/arc-ui-icons".';
+
+  console.warn(problem + fix);
 }
 
-/** The active library's entry, or null — warning once if it cannot be had. */
-function activeLibrary() {
+/**
+ * The active library's entry, or null — warning once if it cannot be had.
+ *
+ * Takes the icon name only to put it in that warning. The lookup does not use
+ * it: which library is active has nothing to do with which glyph was asked for,
+ * and the caller has already missed in the custom map by the time it gets here.
+ */
+function activeLibrary(icon) {
   const entry = _libraryName === null ? null : (_libraries.get(_libraryName) ?? null);
-  if (!entry) warnNoLibrary(_libraryName);
+  if (!entry) warnNoLibrary(_libraryName, icon);
   return entry;
 }
 
@@ -231,7 +263,7 @@ export const iconRegistry = {
     //    is a working page with no library at all.
     if (_custom[name]) return _custom[name];
     // 2. Otherwise the active library's entry for the name, aliased.
-    const library = activeLibrary();
+    const library = activeLibrary(name);
     if (!library) return null;
     try {
       const entry = library.icons[library.aliases[name] ?? name] ?? library.icons[name];
