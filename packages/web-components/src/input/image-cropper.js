@@ -2,6 +2,7 @@ import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { observeResize } from '../shared/subscriptions.js';
 import { DeclaredPropsMixin, num } from '../shared/props.js';
+import { hydrateImages } from '../shared/hydrate-images.js';
 
 const MIN_SIZE = 32;
 const HANDLES = ['nw', 'n', 'ne', 'e', 'se', 's', 'sw', 'w'];
@@ -297,6 +298,12 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
         this._scheduleChange();
       }
     });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // The server's <img> may have finished loading before this listener existed.
+    hydrateImages(this);
   }
 
   firstUpdated() {

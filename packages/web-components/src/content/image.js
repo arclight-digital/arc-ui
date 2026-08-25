@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { hydrateImages } from '../shared/hydrate-images.js';
 
 /**
  * Enhanced image component with shimmer loading skeleton, smooth fade-in transition, error
@@ -130,6 +131,12 @@ export class ArcImage extends DeclaredPropsMixin(LitElement) {
     this.alt = '';
     this.fallback = '';
     this._state = 'loading'; // loading | loaded | error
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // The server's <img> may have finished loading before this listener existed.
+    hydrateImages(this);
   }
 
   updated(changed) {

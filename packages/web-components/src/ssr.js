@@ -53,8 +53,23 @@ import { CLIENT_ONLY } from './ssr-client-only.js';
  * until asked for. Nothing inside one can appear in a first paint, so rendering
  * their contents spends bytes on markup no reader and no metric ever sees. On
  * arcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette.
+ *
+ * arc-lightbox was absent from its own set from 3.0 to 4.2: this renderer
+ * shipped the day before the component did, and nothing since went back for it.
+ * A gallery passed as a property renders empty anyway, which is what made the
+ * gap look deliberate — but the documented static form is a JSON `images`
+ * attribute, and the server can read that. Those pages shipped a full figure,
+ * four icon-button roots and an eager fetch of a full-size photograph, inside a
+ * display:none dialog, on a paint that could never show any of it. display:none
+ * does not stop an image from downloading.
  */
-export const CLOSED_OVERLAYS = ['arc-command-palette', 'arc-dialog', 'arc-sheet', 'arc-drawer'];
+export const CLOSED_OVERLAYS = [
+  'arc-command-palette',
+  'arc-dialog',
+  'arc-sheet',
+  'arc-drawer',
+  'arc-lightbox',
+];
 
 /**
  * Long repeated lists, and how many of each to render.

@@ -3,6 +3,7 @@ import { keyed } from 'lit/directives/keyed.js';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayController } from '../shared/overlay-controller.js';
 import { DeclaredPropsMixin, flag, list, int } from '../shared/props.js';
+import { hydrateImages } from '../shared/hydrate-images.js';
 
 /** Whether two galleries hold the same entries in the same order. */
 const sameEntries = (a, b) =>
@@ -14,8 +15,11 @@ const sameEntries = (a, b) =>
  * backdrop click.
  *
  * The gallery is data, not layout: images are supplied through the `images` property rather than
- * slotted children, so the closed component renders nothing and the server render stays empty.
- * Entries may be plain `src` strings or `{ src, alt, caption }` objects; the two forms mix freely.
+ * slotted children, so the closed component renders nothing. Entries may be plain `src` strings or
+ * `{ src, alt, caption }` objects; the two forms mix freely. The server render stays empty either
+ * way — a property is one it never sees, and the static JSON attribute form it does see is skipped
+ * as a closed overlay, which is what keeps a full-size photograph from being fetched for a first
+ * paint that cannot show it.
  *
  * @tag arc-lightbox
  * @status stable
@@ -369,6 +373,12 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     if (changed.has('index') && (this._zoomed || this._panX || this._panY)) {
       this._resetZoom();
     }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // The server's <img> may have finished loading before this listener existed.
+    hydrateImages(this);
   }
 
   disconnectedCallback() {

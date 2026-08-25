@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { hydrateImages } from '../shared/hydrate-images.js';
 
 /**
  * User avatar with image or initials fallback.
@@ -152,6 +153,12 @@ export class ArcAvatar extends DeclaredPropsMixin(LitElement) {
     this.src = '';
     this.name = '';
     this._imgState = 'loading';
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // The server's <img> may have finished loading before this listener existed.
+    hydrateImages(this);
   }
 
   updated(changed) {
