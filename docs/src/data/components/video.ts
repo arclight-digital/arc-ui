@@ -46,7 +46,7 @@ The component takes a single \`src\` — there is no \`<source>\` fallback chain
   previewHtml: `<div style="max-width: 560px; width: 100%;">
   <arc-video
     src="https://mdn.github.io/shared-assets/videos/flower.mp4"
-    poster="https://picsum.photos/800/450?random=41"
+    poster="/demo/video-poster-800x450.jpg"
     label="Flower demo clip"
   ></arc-video>
 </div>`,

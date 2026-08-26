@@ -48,8 +48,8 @@ The divider carries a circular grab handle that is also the keyboard control: a 
   after-label="Graded"
   style="width: 100%; max-width: 560px;"
 >
-  <img slot="before" src="https://picsum.photos/id/1015/800/500?grayscale" alt="River valley before color grading" />
-  <img slot="after" src="https://picsum.photos/id/1015/800/500" alt="River valley after color grading" />
+  <img slot="before" src="/demo/valley-800x500-grayscale.jpg" alt="River valley before color grading" />
+  <img slot="after" src="/demo/valley-800x500.jpg" alt="River valley after color grading" />
 </arc-image-compare>`,
 
   tabs: [

@@ -42,8 +42,8 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
   },
 
   previewHtml: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 600px;">
-  <arc-image src="https://picsum.photos/300/200?random=1" alt="Sample landscape" aspect="16/9"></arc-image>
-  <arc-image src="https://picsum.photos/300/300?random=2" alt="Sample square" aspect="1/1"></arc-image>
+  <arc-image src="/demo/landscape-300x200.jpg" alt="Sample landscape" aspect="16/9"></arc-image>
+  <arc-image src="/demo/square-300x300.jpg" alt="Sample square" aspect="1/1"></arc-image>
   <arc-image src="https://invalid-url.example/broken.jpg" alt="Broken image" aspect="16/9"></arc-image>
 </div>`,
 
@@ -52,7 +52,7 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
       label: 'Web Component',
       lang: 'html',
       code: `<arc-image
-  src="https://picsum.photos/600/400"
+  src="/demo/mountain-600x400.jpg"
   alt="Mountain landscape"
   aspect="16/9"
 ></arc-image>
@@ -62,7 +62,7 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
   src="https://example.com/missing.jpg"
   alt="Product photo"
   aspect="1/1"
-  fallback="https://picsum.photos/200/200"
+  fallback="/demo/fallback-200x200.jpg"
 ></arc-image>`,
     },
     {
@@ -73,7 +73,7 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
 export default function Example() {
   return (
     <>
-      <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+      <Image src="/demo/mountain-600x400.jpg" alt="Mountain landscape" aspect="16/9" />
       <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
     </>
   );
@@ -87,7 +87,7 @@ import { Image } from '@arclux/arc-ui-vue';
 </script>
 
 <template>
-  <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+  <Image src="/demo/mountain-600x400.jpg" alt="Mountain landscape" aspect="16/9" />
   <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
 </template>`,
     },
@@ -98,7 +98,7 @@ import { Image } from '@arclux/arc-ui-vue';
   import { Image } from '@arclux/arc-ui-svelte';
 </script>
 
-<Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+<Image src="/demo/mountain-600x400.jpg" alt="Mountain landscape" aspect="16/9" />
 <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />`,
     },
     {
@@ -110,7 +110,7 @@ import { Image } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Image],
   template: \`
-    <arc-image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+    <arc-image src="/demo/mountain-600x400.jpg" alt="Mountain landscape" aspect="16/9" />
     <arc-image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
   \`,
 })
@@ -124,7 +124,7 @@ export class GalleryComponent {}`,
 export default function Example() {
   return (
     <>
-      <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+      <Image src="/demo/mountain-600x400.jpg" alt="Mountain landscape" aspect="16/9" />
       <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
     </>
   );
@@ -138,7 +138,7 @@ export default function Example() {
 export default function Example() {
   return (
     <>
-      <Image src="https://picsum.photos/600/400" alt="Mountain landscape" aspect="16/9" />
+      <Image src="/demo/mountain-600x400.jpg" alt="Mountain landscape" aspect="16/9" />
       <Image src="/missing.jpg" alt="Product" aspect="1/1" fallback="/placeholder.png" />
     </>
   );

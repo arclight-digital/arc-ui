@@ -48,13 +48,13 @@ Every one of those interactions has a method behind it, which is what you need w
   },
 
   previewHtml: `<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; max-width:480px;">
-  <arc-image id="lb-thumb-0" src="https://picsum.photos/id/1015/300/200" alt="River between mountains" aspect="4/3" style="cursor:pointer;"></arc-image>
-  <arc-image id="lb-thumb-1" src="https://picsum.photos/id/1018/300/200" alt="Mountain slope" aspect="4/3" style="cursor:pointer;"></arc-image>
-  <arc-image id="lb-thumb-2" src="https://picsum.photos/id/1016/300/200" alt="Canyon river" aspect="4/3" style="cursor:pointer;"></arc-image>
+  <arc-image id="lb-thumb-0" src="/demo/valley-300x200.jpg" alt="River between mountains" aspect="4/3" style="cursor:pointer;"></arc-image>
+  <arc-image id="lb-thumb-1" src="/demo/slope-300x200.jpg" alt="Mountain slope" aspect="4/3" style="cursor:pointer;"></arc-image>
+  <arc-image id="lb-thumb-2" src="/demo/canyon-300x200.jpg" alt="Canyon river" aspect="4/3" style="cursor:pointer;"></arc-image>
 </div>
 <arc-lightbox id="demo-lightbox"></arc-lightbox>`,
 
-  previewSetup: `const lb = el.querySelector('#demo-lightbox'); const images = [ { src: 'https://picsum.photos/id/1015/1200/800', alt: 'River between mountains', caption: 'A river valley in evening light' }, { src: 'https://picsum.photos/id/1018/1200/800', alt: 'Mountain slope', caption: 'The slope above the treeline' }, 'https://picsum.photos/id/1016/1200/800' ]; if (lb) lb.images = images; images.forEach((img, i) => { el.querySelector('#lb-thumb-' + i)?.addEventListener('click', () => lb?.show(i)); });`,
+  previewSetup: `const lb = el.querySelector('#demo-lightbox'); const images = [ { src: '/demo/valley-1200x800.jpg', alt: 'River between mountains', caption: 'A river valley in evening light' }, { src: '/demo/slope-1200x800.jpg', alt: 'Mountain slope', caption: 'The slope above the treeline' }, '/demo/canyon-1200x800.jpg' ]; if (lb) lb.images = images; images.forEach((img, i) => { el.querySelector('#lb-thumb-' + i)?.addEventListener('click', () => lb?.show(i)); });`,
 
   tabs: [
     {
