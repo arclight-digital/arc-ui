@@ -15,7 +15,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {string} name - The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.
  * @prop {boolean} disabled - Disables the entire control, reducing opacity to 40% and blocking pointer events.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selected segment changes
- * @slot - Default content.
+ * @slot - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart control
  * @csspart option

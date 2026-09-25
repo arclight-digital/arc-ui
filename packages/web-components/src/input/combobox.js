@@ -23,7 +23,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the field padding.
  * @fires arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires arc-change - Fired when an option is selected. `event.detail.value` contains the selected option value.
- * @slot - Default content.
+ * @slot - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart label
  * @csspart wrapper
@@ -305,24 +305,29 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
     this._listbox.handleKeydown(e);
   }
 
+  willUpdate(changed) {
+    super.willUpdate(changed);
+    // The field shows the chosen option's label. Written before the pass, not
+    // after it, so a bound value renders its label in the same update.
+    if (changed.has('value') && !this._open) {
+      const item = this._normalizedItems.find((i) => i.value === this.value);
+      if (item) this._query = item.label;
+    }
+    // Virtual focus is render-time state, so it is settled here, before the
+    // pass, rather than in updated(): moved afterwards, it paints one frame
+    // stale and schedules a second update to correct it (Lit's change-in-update).
+    // Filtering can leave fewer options than the active index, which would point
+    // aria-activedescendant at an option that no longer exists.
+    if (changed.has('_query') || changed.has('_options')) this._listbox.clampToCount();
+  }
+
   updated(changed) {
     super.updated(changed);
     if (changed.has('_open')) {
       this._open ? this._position.show() : this._position.hide();
-    }
-    if (changed.has('value')) {
-      if (!this._open) {
-        const item = this._normalizedItems.find((i) => i.value === this.value);
-        if (item) this._query = item.label;
-      }
-    }
-    if (changed.has('_open')) {
       if (this._open) this._dismiss.activate();
       else this._dismiss.deactivate();
     }
-    // Filtering can leave fewer options than the active index, which would point
-    // aria-activedescendant at an option that no longer exists.
-    if (changed.has('_query') || changed.has('_options')) this._listbox.clampToCount();
   }
 
   /** The slotchange DSD swallows — see shared/hydrate-slots.js. */

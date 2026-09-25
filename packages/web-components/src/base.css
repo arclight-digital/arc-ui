@@ -137,6 +137,12 @@
   --chart-4: #8b5cf6;
   --chart-5: #db2777;
   --chart-6: #65a30d;
+  --chart-1-rgb: 77, 126, 247;
+  --chart-2-rgb: 234, 88, 12;
+  --chart-3-rgb: 13, 148, 136;
+  --chart-4-rgb: 139, 92, 246;
+  --chart-5-rgb: 219, 39, 119;
+  --chart-6-rgb: 101, 163, 13;
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
@@ -242,6 +248,7 @@
   --wordmark-spacing: clamp(8px, 1.2vw, 14px);
   --glyph-lh: 1;
   --ui-lh: 1.4;
+  --ui-size: 14px;
   --numeral-size: clamp(24px, 3vw, 36px);
   --numeral-weight: 200;
   --label-size: var(--text-xs);
@@ -466,6 +473,9 @@
   --text-primary-rgb: 35, 35, 55;
   --text-muted-rgb: 84, 87, 107;
   --border-default-rgb: 210, 214, 222;
+  --chart-1-rgb: 55, 105, 235;
+  --chart-4-rgb: 120, 70, 230;
+  --chart-6-rgb: 77, 124, 15;
   --shadow-xs: 0 1px 2px rgba(var(--accent-primary-rgb),0.06);
   --shadow-sm: 0 2px 4px rgba(var(--accent-primary-rgb),0.08), 0 1px 2px rgba(var(--accent-secondary-rgb),0.04);
   --shadow-md: 0 4px 12px rgba(var(--accent-primary-rgb),0.1), 0 2px 4px rgba(var(--accent-secondary-rgb),0.05);
@@ -529,6 +539,9 @@
     --text-primary-rgb: 35, 35, 55;
     --text-muted-rgb: 84, 87, 107;
     --border-default-rgb: 210, 214, 222;
+    --chart-1-rgb: 55, 105, 235;
+    --chart-4-rgb: 120, 70, 230;
+    --chart-6-rgb: 77, 124, 15;
     --shadow-xs: 0 1px 2px rgba(var(--accent-primary-rgb),0.06);
     --shadow-sm: 0 2px 4px rgba(var(--accent-primary-rgb),0.08), 0 1px 2px rgba(var(--accent-secondary-rgb),0.04);
     --shadow-md: 0 4px 12px rgba(var(--accent-primary-rgb),0.1), 0 2px 4px rgba(var(--accent-secondary-rgb),0.05);
@@ -617,6 +630,7 @@
   --wordmark-weight: inherit;
   --wordmark-spacing: inherit;
   --glyph-lh: inherit;
+  --ui-size: inherit;
   --ui-lh: inherit;
   --numeral-size: inherit;
   --numeral-weight: inherit;
@@ -756,6 +770,9 @@
   --text-primary-rgb: 232, 232, 236;
   --text-muted-rgb: 142, 142, 155;
   --border-default-rgb: 34, 34, 41;
+  --chart-1-rgb: 77, 126, 247;
+  --chart-4-rgb: 139, 92, 246;
+  --chart-6-rgb: 101, 163, 13;
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -847,6 +864,12 @@
   --color-success-rgb: 52, 211, 153;
   --color-warning-rgb: 245, 158, 11;
   --color-info-rgb: 79, 151, 255;
+  --chart-1-rgb: 77, 126, 247;
+  --chart-2-rgb: 234, 88, 12;
+  --chart-3-rgb: 13, 148, 136;
+  --chart-4-rgb: 139, 92, 246;
+  --chart-5-rgb: 219, 39, 119;
+  --chart-6-rgb: 101, 163, 13;
   --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
   --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
   --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -907,6 +930,12 @@
     --color-success-rgb: 52, 211, 153;
     --color-warning-rgb: 245, 158, 11;
     --color-info-rgb: 79, 151, 255;
+    --chart-1-rgb: 77, 126, 247;
+    --chart-2-rgb: 234, 88, 12;
+    --chart-3-rgb: 13, 148, 136;
+    --chart-4-rgb: 139, 92, 246;
+    --chart-5-rgb: 219, 39, 119;
+    --chart-6-rgb: 101, 163, 13;
     --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
     --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
     --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -967,6 +996,9 @@
   --text-primary-rgb: 35, 35, 55;
   --text-muted-rgb: 84, 87, 107;
   --border-default-rgb: 210, 214, 222;
+  --chart-1-rgb: 55, 105, 235;
+  --chart-4-rgb: 120, 70, 230;
+  --chart-6-rgb: 77, 124, 15;
   --shadow-xs: 0 1px 2px rgba(var(--accent-primary-rgb),0.06);
   --shadow-sm: 0 2px 4px rgba(var(--accent-primary-rgb),0.08), 0 1px 2px rgba(var(--accent-secondary-rgb),0.04);
   --shadow-md: 0 4px 12px rgba(var(--accent-primary-rgb),0.1), 0 2px 4px rgba(var(--accent-secondary-rgb),0.05);
@@ -1061,6 +1093,12 @@
   --color-success-rgb: 0, 92, 62;
   --color-warning-rgb: 114, 70, 0;
   --color-info-rgb: 9, 73, 174;
+  --chart-1-rgb: 55, 105, 235;
+  --chart-2-rgb: 234, 88, 12;
+  --chart-3-rgb: 13, 148, 136;
+  --chart-4-rgb: 120, 70, 230;
+  --chart-5-rgb: 219, 39, 119;
+  --chart-6-rgb: 77, 124, 15;
   --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
   --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
   --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);
@@ -1121,6 +1159,12 @@
     --color-success-rgb: 0, 92, 62;
     --color-warning-rgb: 114, 70, 0;
     --color-info-rgb: 9, 73, 174;
+    --chart-1-rgb: 55, 105, 235;
+    --chart-2-rgb: 234, 88, 12;
+    --chart-3-rgb: 13, 148, 136;
+    --chart-4-rgb: 120, 70, 230;
+    --chart-5-rgb: 219, 39, 119;
+    --chart-6-rgb: 77, 124, 15;
     --accent-primary-subtle: rgba(var(--accent-primary-rgb), 0.06);
     --accent-primary-border: rgba(var(--accent-primary-rgb), 0.12);
     --accent-primary-glow: rgba(var(--accent-primary-rgb), 0.2);

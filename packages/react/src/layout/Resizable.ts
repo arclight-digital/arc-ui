@@ -6,6 +6,7 @@ import { ArcResizable } from '@arclux/arc-ui/resizable';
 
 export interface ResizableProps {
   direction?: 'horizontal' | 'vertical';
+  handle?: 'end' | 'start';
   minSize?: number;
   maxSize?: number;
   size?: number;

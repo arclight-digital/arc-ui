@@ -46,6 +46,12 @@
   --color-error-rgb: 255, 94, 90;
   --color-warning-rgb: 245, 158, 11;
   --color-info-rgb: 77, 149, 255;
+  --chart-1-rgb: 77, 126, 247;
+  --chart-2-rgb: 234, 88, 12;
+  --chart-3-rgb: 13, 148, 136;
+  --chart-4-rgb: 139, 92, 246;
+  --chart-5-rgb: 219, 39, 119;
+  --chart-6-rgb: 101, 163, 13;
   --bg-hover: rgba(255, 255, 255, 0.08);
 
   --focus-ring: 0 0 0 3px var(--accent-primary);
@@ -88,6 +94,12 @@
   --color-error-rgb: 176, 24, 29;
   --color-warning-rgb: 124, 79, 0;
   --color-info-rgb: 22, 83, 185;
+  --chart-1-rgb: 55, 105, 235;
+  --chart-2-rgb: 234, 88, 12;
+  --chart-3-rgb: 13, 148, 136;
+  --chart-4-rgb: 120, 70, 230;
+  --chart-5-rgb: 219, 39, 119;
+  --chart-6-rgb: 77, 124, 15;
   --bg-hover: rgba(0, 0, 0, 0.06);
 }
 
@@ -120,6 +132,12 @@
     --color-error-rgb: 176, 24, 29;
     --color-warning-rgb: 124, 79, 0;
     --color-info-rgb: 22, 83, 185;
+    --chart-1-rgb: 55, 105, 235;
+    --chart-2-rgb: 234, 88, 12;
+    --chart-3-rgb: 13, 148, 136;
+    --chart-4-rgb: 120, 70, 230;
+    --chart-5-rgb: 219, 39, 119;
+    --chart-6-rgb: 77, 124, 15;
     --bg-hover: rgba(0, 0, 0, 0.06);
   }
 }

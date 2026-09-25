@@ -5,6 +5,7 @@
 
   interface Props {
     direction?: 'horizontal' | 'vertical';
+    handle?: 'end' | 'start';
     minSize?: number;
     maxSize?: number;
     size?: number;
@@ -36,7 +37,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { direction, minSize, maxSize, size = $bindable(300), children, ...rest }: Props = $props();
+  let { direction, handle, minSize, maxSize, size = $bindable(300), children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -58,7 +59,7 @@
   }
 </script>
 
-<arc-resizable {direction} {size} bind:this={__el} {...rest}
+<arc-resizable {direction} {handle} {size} bind:this={__el} {...rest}
   onarc-resize={__onArcResize}
 >
   {@render children?.()}

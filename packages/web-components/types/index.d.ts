@@ -2220,8 +2220,10 @@ export declare class ArcRating extends LitElement {
 export declare class ArcResizable extends LitElement {
   /** Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property. @default 300 */
   size: number;
-  /** Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height. @default 'horizontal' */
+  /** Which dimension the handle resizes. Horizontal resizes width, with the handle on an inline edge; vertical resizes height, with the handle on the top or bottom edge. @default 'horizontal' */
   direction: 'horizontal' | 'vertical';
+  /** Which edge the handle sits on. `end` (the default) is the inline end — the right edge in a left-to-right page — or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way. @default 'end' */
+  handle: 'end' | 'start';
   /** Minimum allowed size in pixels. The panel cannot be dragged smaller than this value. @default 100 */
   minSize: number;
   /** Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit. @default 0 */
@@ -2405,7 +2407,7 @@ export declare class ArcSheet extends LitElement {
   heading: string;
   /** Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically. @default false */
   open: boolean;
-  /** Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide. @default 'bottom' */
+  /** Which edge the panel slides in from. Bottom sheets are at most `--sheet-max-height` tall (default 80dvh); right sheets are `--sheet-width` wide (default 400px). @default 'bottom' */
   side: 'bottom' | 'right';
 }
 

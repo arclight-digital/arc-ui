@@ -5321,3 +5321,183 @@ version.
 sweep of the source.** Nine of eleven were real, every one was reachable in the
 first hour of use, and three of them (#90, #91, #95) were in components covered
 by four test files each.
+
+## The Halteres batch — fourteen items from an application, #100–#113
+
+Reported by a consumer building a Lit + Vite application against 4.2.2, in one
+file (`../halteres/docs/ARC-UI-NOTES.md`). Five were marked verified in a browser,
+nine were from reading the package. All fourteen are arc-ui's; none routes to
+prism. Six changed code, five changed documentation, three are deferred as
+features that need design before code.
+
+Each code fix below has a regression test that was run against the unfixed
+source and seen to fail, then restored.
+
+---
+
+### 100. `arc-select` logged `change-in-update` on first render — **FIXED**
+
+Two causes, one of them in every listbox host. `ListboxController.reset()`
+called `requestUpdate()` unconditionally, and every host called `reset()` from
+`updated()` when `open` changed. On the first render `open` has always changed,
+from undefined to false, so every first render scheduled a second. The reporter
+guessed a property set in `updated()` while syncing the selected option, which
+was right about the mechanism and wrong about the property.
+
+The second cause was on the open path: `setActive()` and `clampToCount()` ran
+after the render they affect. `arc-tree-select` already did this correctly, in
+`willUpdate()`, with a comment explaining why ("virtual focus is render-time
+state"), and the other four hosts had not followed it. `arc-select`,
+`arc-combobox` and `arc-multi-select` now settle virtual focus in
+`willUpdate()`. `arc-combobox`'s value-to-label sync moved there too, since it
+wrote `_query` after the pass. `arc-tag-input` keeps its clamp in `updated()`,
+because its item count reads declared props that DeclaredPropsMixin normalises
+*after* the host's `willUpdate`. Moving it there threw on a non-array `value`,
+which the declared-contract sweep caught. `reset()` now returns early when
+there is nothing to reset, which makes the remaining clamp free unless the list
+really shrinks under the active option.
+
+Pinned by `listbox-controller.test.js`, using Lit's own check: an update is
+pending at the moment `updated()` returns. It covers five hosts × {first
+connect, open and close}.
+
+---
+
+### 101. `arc-resizable` had its handle on one edge only, and got RTL backwards — **FIXED**
+
+The report asked for a start-edge handle for a right-docked panel, and that is
+now `handle="start"` (default `end`). Working out the sign for it surfaced an
+existing defect. The handle was placed with `inset-inline-end`, a logical
+property, but the drag and the arrow keys were physical (`clientX` up means
+bigger). In a right-to-left page the handle sat on the left edge and dragging it
+outward shrank the panel. `_sign()` now resolves the handle's physical edge from
+`handle`, `direction` and the computed `direction`, and both input paths follow
+one rule: moving the handle away from the panel grows it.
+
+The RTL test fails against the unfixed source, which is the evidence that this
+was a defect and not only a missing option.
+
+---
+
+### 102. ARC's own chrome rendered blank without an icon pack — **FIXED**
+
+Close buttons in six overlays, the move buttons of `arc-transfer-list`, the
+overflow of `arc-toolbar`, the edit affordance of `arc-inline-edit`, and the
+play/pause of `arc-video` all resolved through the registry, and since 4.7 core
+has no library to resolve against. The warning explained it well. The reporter's
+point stands anyway: a component whose built-in affordance breaks without an
+extra import is a trap.
+
+`content/icon-builtins.js` carries nine glyphs, consulted only when no library
+is active or the active one lacks the name, so a registered pack still restyles
+them. `getSync()` returns the built-in only in the same cases. A library that has
+the glyph but has not loaded it yet returns null, as before, so a page with a
+pack never flashes the built-in first.
+
+The glyphs are **drawn here**, not copied from Lucide. Vendoring Lucide artwork
+into core would carry its ISC notice into a package whose `license` field is
+plain MIT, which is exactly the compliance gap 4.7 closed for the packs.
+`icon-independence` still passes, because nothing imports a pack.
+
+The set is held in both directions by `icon-names`. Every literal name a
+component renders needs a built-in, and every built-in needs a component that
+renders it, so the set cannot grow into a library. The check found three names
+(`chevrons-left`, `chevrons-right`, `dots-three`) that a first survey by grep
+had missed, because their `name` attributes sit on a later line than the tag.
+
+---
+
+### 103. `arc-sheet`'s height was a literal `80vh` — **FIXED**
+
+`max-height: var(--sheet-max-height, 80dvh)`, plus `--sheet-width` for the right
+side, which had the same shape (`width: 400px`). The switch to `dvh` is
+deliberate: `vh` is the viewport with the browser chrome retracted, so on a phone
+with the address bar showing, the old sheet ran its footer off the screen.
+`sheet.test.js` is new. arc-sheet had no test file of its own, only sweep
+coverage.
+
+---
+
+### 104. The chart palette had no `-rgb` channels — **FIXED**
+
+`--chart-1-rgb` … `--chart-6-rgb`, derived by `syncChannels` from the solids, so
+they cannot drift. The light scheme's three shifted series (1, 4, 6) carry their
+own channels. Unlike the status set, where light mode keeps the brighter channel
+for tints on purpose, a chart tint has to be the same series as its line.
+`two-color-contract` flagged `--chart-1-rgb` for spelling the brand's triplet.
+The exemption for `--chart-N` now covers the channels too, for the reason already
+written there: a series colour is data, not chrome.
+
+---
+
+### 105. The type scale stepped from 12px straight to 16px — **FIXED**
+
+`--ui-size: 14px`, paired with the existing `--ui-lh`. It is a role, not a scale
+step: `TEXT_SIZE_KEYS` generates `.arc-text-<step>` utilities, and nothing fits
+between `xs` and `sm` without renaming the steps around it. It joins the
+generated inherit block like every other role token, so a `:root` override
+reaches inside components. The tokens page's type table was stale, listing
+`--body-size` as a clamp and `--code-size` at 13px. It now reads the token tree,
+like the chart swatches beside it.
+
+---
+
+### 106. Nothing on getting-started said to load the fonts — **FIXED (docs)**
+
+`base.css` names three faces and loads none of them. The report named two; the
+label role's Tomorrow is the third. Getting-started now has a "Load the fonts"
+step with a Google Fonts link at the weights the roles use, pointing to
+Typography → Loading the Font Files for self-hosting.
+
+### 107. The manifest did not say which children a parent expects — **FIXED (docs)**
+
+Twenty-five parents carried the boilerplate `@slot - Default content.`, and now
+name their children, which flows into `custom-elements.json`, web-types and the
+VS Code data. Seventeen of them read the children as data and render copies,
+and their slot description says so ("read as data … target the rendered copy,
+by role and text, in tests"), which also answers #109 at the point of use. A
+structured `subComponents` field would be better for tools. It is a prism
+manifest-shape question and is not raised here.
+
+### 108. App components written with Lit miss the box-sizing reset — **FIXED (docs)**
+
+The requested `resetStyles` already exists: `@arclux/arc-ui/shared-styles`
+exports `tokenStyles`, which carries the reset, the static token defaults and
+the reduced-motion rule, and is what every ARC component adopts. It was typed
+and exported but documented nowhere a consumer would look. Getting-started now
+has a "Your Own Components" section.
+
+### 109. Authored `arc-menu-item`s and `arc-option`s are `display: none` — **CLOSED, by design; documented**
+
+The parents render copies from the authored elements, which is how seventeen
+components work (see #107). Slotting the authored items instead would be a
+rewrite of each. Getting-started has a Testing section with the Playwright
+pattern (role locators pierce shadow roots), and the slot docs mark every
+component this applies to.
+
+### 110. Two-frame sprites under reduced motion show both frames — **CLOSED; documented**
+
+The rule the reporter hit is ARC's own, in `tokenStyles`. A collapsed
+animation runs once, at once, and the element shows its un-animated styles.
+Accessibility → Reduced Motion now says to put the resting state in the base
+styles and let keyframes move away from it, with the sprite as the worked example.
+
+---
+
+### 111. `arc-sheet` has no snap points — **DEFERRED (feature)**
+### 112. `arc-sheet` / `arc-drawer` have no non-modal mode — **DEFERRED (feature)**
+
+The two belong together, since a peek height is only useful if the page behind
+it stays interactive. The sheet is a `<dialog>` opened with `showModal()`, so
+non-modal means `show()`, and that is a different contract for focus, Escape,
+`inert`, scroll lock and the dismissal sweep (`dismissal-contract.test.js`).
+This needs a design pass, not a flag.
+
+### 113. No document-list pattern with a hover-revealed trailing action — **DEFERRED (feature)**
+
+`arc-list-item` is the nearest fit and has no trailing-action slot. The
+hover-or-focus reveal is the part that needs care, because an action that only
+appears on hover is invisible to touch users and a trap for keyboard users unless
+`:focus-within` reveals it too. Worth doing as an `actions` slot on
+`arc-list-item`, designed against the chat-sessions use case the report
+describes.

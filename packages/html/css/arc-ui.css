@@ -65,6 +65,12 @@
   --chart-4: #8b5cf6;
   --chart-5: #db2777;
   --chart-6: #65a30d;
+  --chart-1-rgb: 77, 126, 247;
+  --chart-2-rgb: 234, 88, 12;
+  --chart-3-rgb: 13, 148, 136;
+  --chart-4-rgb: 139, 92, 246;
+  --chart-5-rgb: 219, 39, 119;
+  --chart-6-rgb: 101, 163, 13;
 
   --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.15);
@@ -170,6 +176,7 @@
   --wordmark-spacing: clamp(8px, 1.2vw, 14px);
   --glyph-lh: 1;
   --ui-lh: 1.4;
+  --ui-size: 14px;
   --numeral-size: clamp(24px, 3vw, 36px);
   --numeral-weight: 200;
   --label-size: var(--text-xs);

@@ -11,7 +11,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * @requires arc-step
  * @prop {number} active - Zero-indexed active step — steps before this index show as completed.
  *   Clamped to the range of rendered steps.
- * @slot - Default content.
+ * @slot - `arc-step` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart stepper
  * @csspart step

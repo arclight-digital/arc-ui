@@ -394,6 +394,8 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
       );
       if (selected >= 0) this._listbox.setActive(selected);
     }
+    if (changed.has('open') && !this.open) this._listbox.reset();
+    if (changed.has('_expandedKeys') || changed.has('items')) this._listbox.clampToCount();
   }
 
   updated(changed) {
@@ -405,14 +407,12 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
       } else {
         this._dismiss.deactivate();
         this._position.hide();
-        this._listbox.reset();
       }
     }
     // Expanding or collapsing a branch changes the panel's height, which can
     // change whether it still fits below the trigger.
-    if (changed.has('_expandedKeys') || changed.has('items')) {
-      this._listbox.clampToCount();
-      if (this.open) this._position.show();
+    if ((changed.has('_expandedKeys') || changed.has('items')) && this.open) {
+      this._position.show();
     }
   }
 

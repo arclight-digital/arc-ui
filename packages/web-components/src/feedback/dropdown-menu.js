@@ -20,7 +20,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} open - Controls whether the menu panel is visible. Toggled by clicking the trigger. Set to false when the user selects an item, clicks outside, or presses Escape.
  * @fires {CustomEvent<void>} arc-close - Fired when the dropdown closes
  * @fires arc-select - Fired when a menu item is selected
- * @slot - Default content.
+ * @slot - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @slot trigger
  * @csspart base - The root element.
  * @csspart divider

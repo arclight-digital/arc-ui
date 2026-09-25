@@ -226,6 +226,21 @@ const headings = [
     transition-duration: 0.01ms !important;
   }
 }`}></arc-code-block></div>
+      <p class="docs-text">
+        The same rule reaches your own components if they adopt <code>tokenStyles</code>, and it
+        has one consequence worth designing for. A collapsed animation runs once, at once, and
+        then the element shows its <em>un-animated</em> styles. Whatever the base styles say is
+        what a reduced-motion user sees. So put the resting state there, and let the keyframes
+        move away from it. A two-frame sprite that swaps layers by opacity shows both frames
+        stacked if both are visible by default. Hide the second frame in the base styles, and
+        the keyframes that reveal it simply never get time to:
+      </p>
+      <div class="docs-code"><arc-code-block language="css" code={`.frame-b { opacity: 0; }            /* resting state: frame A only */
+.frame-a { animation: swap-a 800ms steps(1) infinite; }
+.frame-b { animation: swap-b 800ms steps(1) infinite; }
+
+@keyframes swap-a { 50% { opacity: 0; } }
+@keyframes swap-b { 50% { opacity: 1; } }`}></arc-code-block></div>
     </section>
 
     <section id="no-javascript">

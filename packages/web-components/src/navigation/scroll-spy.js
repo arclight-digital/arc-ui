@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  * @prop {number} offset - Pixel distance from the top of the viewport at which a section counts as current. Increase it to account for taller sticky headers.
  * @prop {'none' | 'ring' | 'read' | 'both'} progress - How the reader's position through the document is shown. `ring` draws a progress arc beside the heading; `read` recedes the entries already scrolled past; `both` does each. Defaults to `none`, and an unrecognized value lands there too.
  * @fires arc-change - Fired when the active spy target changes during scroll
- * @slot - Default content.
+ * @slot - `arc-spy-link` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart scroll-spy
  * @csspart heading

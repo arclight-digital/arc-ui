@@ -22,6 +22,13 @@ export class Resizable {
     return this._el.direction;
   }
 
+  @Input() set handle(value: 'end' | 'start') {
+    this._el.handle = value;
+  }
+  get handle(): 'end' | 'start' {
+    return this._el.handle;
+  }
+
   @Input() set minSize(value: number) {
     this._el.minSize = value;
   }

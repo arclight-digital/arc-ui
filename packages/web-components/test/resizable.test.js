@@ -299,3 +299,62 @@ describe('arc-resizable enum fallback', () => {
     expect(el.size).to.equal(205);
   });
 });
+
+/**
+ * `handle="start"` — a panel docked on the far side of its container, reported
+ * by a consumer building a right-docked panel (test-findings #101). The rule
+ * both input paths follow: moving the handle away from the panel grows it.
+ * Pointer and arrow keys are physical, and the horizontal edge is logical, so
+ * a right-to-left page flips the sign — which the end-edge handle got wrong
+ * before this option existed.
+ */
+describe('arc-resizable handle edge', () => {
+  const edge = (el) => {
+    const h = handle(el).getBoundingClientRect();
+    const host = el.getBoundingClientRect();
+    return { left: h.left - host.left, top: h.top - host.top, right: host.right - h.right, bottom: host.bottom - h.bottom };
+  };
+
+  it('puts a start handle on the left edge, and grows on a leftward drag', async () => {
+    const el = await panel('handle="start" size="200" style="width: 400px; height: 100px"');
+    expect(edge(el).left).to.equal(0);
+    await drag(el, { dx: -60 });
+    expect(el.size).to.equal(260);
+    keyOn(handle(el), 'ArrowRight');
+    await settle(el);
+    expect(el.size, 'ArrowRight moves the handle toward the panel').to.equal(255);
+  });
+
+  it('puts a vertical start handle on the top edge, and grows on an upward drag', async () => {
+    const el = await panel('direction="vertical" handle="start" size="200" style="height: 300px"');
+    expect(edge(el).top).to.equal(0);
+    await drag(el, { dy: -40 });
+    expect(el.size).to.equal(240);
+    keyOn(handle(el), 'ArrowDown');
+    await settle(el);
+    expect(el.size).to.equal(235);
+  });
+
+  it('defaults to the end edge', async () => {
+    const el = await panel('size="200" style="width: 400px; height: 100px"');
+    expect(el.handle).to.equal('end');
+    expect(edge(el).right).to.equal(0);
+  });
+
+  it('mirrors in a right-to-left page', async () => {
+    const el = await panel('dir="rtl" size="200" style="width: 400px; height: 100px"');
+    expect(edge(el).left, 'the inline end is the left edge').to.equal(0);
+    await drag(el, { dx: -60 });
+    expect(el.size, 'dragging it outward still grows the panel').to.equal(260);
+    keyOn(handle(el), 'ArrowLeft');
+    await settle(el);
+    expect(el.size).to.equal(265);
+  });
+
+  it('mirrors a start handle in a right-to-left page', async () => {
+    const el = await panel('dir="rtl" handle="start" size="200" style="width: 400px; height: 100px"');
+    expect(edge(el).right).to.equal(0);
+    await drag(el, { dx: 60 });
+    expect(el.size).to.equal(260);
+  });
+});

@@ -23,7 +23,7 @@ import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the control height and padding.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.
  * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired when the selected values change
- * @slot - Default content.
+ * @slot - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart label
  * @csspart control
@@ -321,17 +321,22 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
       .filter((el) => el.tagName === 'ARC-OPTION');
   }
 
+  willUpdate(changed) {
+    super.willUpdate(changed);
+    // Virtual focus is render-time state, so it is settled here, before the
+    // pass, rather than in updated(): moved afterwards, it paints one frame
+    // stale and schedules a second update to correct it (Lit's change-in-update).
+    if (changed.has('_query') || changed.has('_options') || changed.has('suggestions')) {
+      this._listbox.clampToCount();
+    }
+  }
+
   updated(changed) {
     super.updated(changed);
     if (changed.has('_open')) {
       this._open ? this._position.show() : this._position.hide();
-    }
-    if (changed.has('_open')) {
       if (this._open) this._dismiss.activate();
       else this._dismiss.deactivate();
-    }
-    if (changed.has('_query') || changed.has('_options') || changed.has('suggestions')) {
-      this._listbox.clampToCount();
     }
   }
 

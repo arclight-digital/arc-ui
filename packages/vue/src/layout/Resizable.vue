@@ -6,6 +6,7 @@ defineOptions({ name: 'Resizable' });
 
 const props = withDefaults(defineProps<{
   direction?: 'horizontal' | 'vertical';
+  handle?: 'end' | 'start';
   minSize?: number;
   maxSize?: number;
   size?: number;
@@ -30,6 +31,7 @@ function onArcResize(payload: CustomEvent) {
 <template>
   <arc-resizable
     :direction="props.direction"
+    :handle="props.handle"
     :minSize="props.minSize"
     :maxSize="props.maxSize"
     :size="props.size"

@@ -13,6 +13,7 @@ declare module 'solid-js/jsx-runtime' {
 
 export interface ResizableProps {
   direction?: 'horizontal' | 'vertical';
+  handle?: 'end' | 'start';
   minSize?: number;
   maxSize?: number;
   size?: number;
@@ -46,9 +47,9 @@ export interface ResizableProps {
 }
 
 export const Resizable: Component<ResizableProps> = (props) => {
-  const [local, rest] = splitProps(props, ['direction', 'minSize', 'maxSize', 'size', 'onArcResize', 'children']);
+  const [local, rest] = splitProps(props, ['direction', 'handle', 'minSize', 'maxSize', 'size', 'onArcResize', 'children']);
   return (
-    <arc-resizable direction={local.direction} prop:minSize={local.minSize} prop:maxSize={local.maxSize} size={local.size} on:arc-resize={local.onArcResize} {...rest}>
+    <arc-resizable direction={local.direction} handle={local.handle} prop:minSize={local.minSize} prop:maxSize={local.maxSize} size={local.size} on:arc-resize={local.onArcResize} {...rest}>
       {local.children}
     </arc-resizable>
   );

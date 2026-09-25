@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} open - Controls whether a collapsible section is expanded (true) or collapsed (false). Only relevant when collapsible is true.
  * @prop {string} icon - Name of an icon to render before the heading. Ignored when the section has no heading.
  * @fires {CustomEvent<{ open: boolean }>} arc-toggle - Fired when a collapsible section expands or collapses.
- * @slot - Default content.
+ * @slot - `arc-sidebar-link` elements.
  */
 export class ArcSidebarSection extends DeclaredPropsMixin(LitElement) {
   static properties = {

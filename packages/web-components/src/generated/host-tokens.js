@@ -42,6 +42,7 @@ export const hostTokens = css`
     --wordmark-weight: var(--font-display-weight, 500);
     --wordmark-spacing: clamp(8px, 1.2vw, 14px);
     --glyph-lh: 1;
+    --ui-size: 14px;
     --ui-lh: 1.4;
     --numeral-size: clamp(24px, 3vw, 36px);
     --numeral-weight: 200;

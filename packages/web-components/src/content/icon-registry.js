@@ -34,6 +34,8 @@
  * than a bug report.
  */
 
+import { builtinIcons } from './icon-builtins.js';
+
 const _custom = {};
 
 /**
@@ -151,7 +153,8 @@ function warnNoLibrary(library, icon) {
     : custom
       ? `[arc-ui] ${missed} is not in the custom icon map and no icon library is selected, so it renders as an empty slot.` +
         ` ${custom} icon${custom === 1 ? '' : 's'} registered by hand resolve normally; this is the first name that did not.`
-      : `[arc-ui] No icon library is selected, so ${missed} — and every other named icon — renders as an empty slot.`;
+      : `[arc-ui] No icon library is selected, so ${missed} — and every other named icon — renders as an empty slot.` +
+        " (ARC's own close, chevron and edit glyphs are built in and still draw.)";
 
   const fix = registered.length
     ? ` Registered: ${registered.join(', ')}. Select one with iconRegistry.use("${registered[0]}").`
@@ -176,9 +179,25 @@ function warnNoLibrary(library, icon) {
  * and the caller has already missed in the custom map by the time it gets here.
  */
 function activeLibrary(icon) {
-  const entry = _libraryName === null ? null : (_libraries.get(_libraryName) ?? null);
+  const entry = registeredLibrary();
   if (!entry) warnNoLibrary(_libraryName, icon);
   return entry;
+}
+
+function registeredLibrary() {
+  return _libraryName === null ? null : (_libraries.get(_libraryName) ?? null);
+}
+
+/**
+ * The built-in glyph for a name the active library cannot answer — because
+ * there is no library, or because it has no such glyph. A library that has the
+ * name always wins, loaded or not, so a registered pack restyles ARC's chrome
+ * rather than being overruled by it. See icon-builtins.js.
+ */
+function builtinFor(name, library = registeredLibrary()) {
+  if (!Object.hasOwn(builtinIcons, name)) return null;
+  if (library && (library.icons[library.aliases[name] ?? name] ?? library.icons[name])) return null;
+  return builtinIcons[name];
 }
 
 export const iconRegistry = {
@@ -262,7 +281,11 @@ export const iconRegistry = {
     //    whose icons are all registered by hand, or inlined by a server build,
     //    is a working page with no library at all.
     if (_custom[name]) return _custom[name];
-    // 2. Otherwise the active library's entry for the name, aliased.
+    // 2. A glyph ARC's own chrome renders, when no library can supply it —
+    //    before the complaint too: a close button that draws is not a problem.
+    const builtin = builtinFor(name);
+    if (builtin) return builtin;
+    // 3. Otherwise the active library's entry for the name, aliased.
     const library = activeLibrary(name);
     if (!library) return null;
     try {
@@ -300,7 +323,7 @@ export const iconRegistry = {
     if (!name) return null;
     readInlinePayload();
     if (_custom[name]) return _custom[name];
-    return _resolved.get(`${_libraryName}:${name}`) ?? null;
+    return _resolved.get(`${_libraryName}:${name}`) ?? builtinFor(name);
   },
 
   /**

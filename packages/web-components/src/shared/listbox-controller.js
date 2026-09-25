@@ -149,8 +149,12 @@ export class ListboxController {
 
   /** Clear virtual focus — on close, or when the option set changes wholesale. */
   reset() {
-    this._activeIndex = -1;
     this._clearTypeahead();
+    // Hosts call this from updated() whenever `open` changes, and on the first
+    // render it always has. An unconditional request there scheduled a second
+    // render of every listbox host, and Lit's change-in-update warning with it.
+    if (this._activeIndex === -1) return;
+    this._activeIndex = -1;
     this.host.requestUpdate();
   }
 

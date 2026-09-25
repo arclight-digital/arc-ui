@@ -11,7 +11,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @status stable
  * @requires arc-accordion-item
  * @prop {boolean} multiple - When true, allows multiple accordion panels to be open simultaneously. When false (default), opening one panel closes any other open panel.
- * @slot - Default content.
+ * @slot - `arc-accordion-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart accordion
  */

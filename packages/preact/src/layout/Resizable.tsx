@@ -6,6 +6,7 @@ import '@arclux/arc-ui/resizable';
 
 export interface ResizableProps {
   direction?: 'horizontal' | 'vertical';
+  handle?: 'end' | 'start';
   minSize?: number;
   maxSize?: number;
   size?: number;
@@ -38,7 +39,7 @@ export interface ResizableProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Resizable: FunctionComponent<ResizableProps> = ({ direction, minSize, maxSize, size, onArcResize, children, ...rest }) => {
+export const Resizable: FunctionComponent<ResizableProps> = ({ direction, handle, minSize, maxSize, size, onArcResize, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -51,5 +52,5 @@ export const Resizable: FunctionComponent<ResizableProps> = ({ direction, minSiz
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcResize]);
-  return h('arc-resizable', { ref, direction, minSize, maxSize, size, ...rest }, children);
+  return h('arc-resizable', { ref, direction, handle, minSize, maxSize, size, ...rest }, children);
 };

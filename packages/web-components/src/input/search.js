@@ -23,7 +23,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-clear - Fired when the clear button is clicked
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard
  * @fires arc-select - Fired when a suggestion is selected (before the accompanying arc-change)
- * @slot - Default content.
+ * @slot - `arc-suggestion` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart label
  * @csspart wrapper

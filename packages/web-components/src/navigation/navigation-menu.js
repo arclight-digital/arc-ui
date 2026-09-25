@@ -14,7 +14,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @requires arc-nav-item
  * @fires arc-navigate - Fired when a navigation item is selected
  * @fires {CustomEvent<{ value: boolean }>} arc-mobile-menu-toggle - Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work.
- * @slot - Default content.
+ * @slot - `arc-nav-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart nav
  * @csspart item

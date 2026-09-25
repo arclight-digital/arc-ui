@@ -2380,6 +2380,7 @@ export default {
  "arc-resizable": {
   "attrs": [
    "direction",
+   "handle",
    "minSize",
    "maxSize",
    "size"
@@ -2388,10 +2389,15 @@ export default {
    "direction": [
     "horizontal",
     "vertical"
+   ],
+   "handle": [
+    "end",
+    "start"
    ]
   },
   "fallbacks": {
-   "direction": "horizontal"
+   "direction": "horizontal",
+   "handle": "end"
   },
   "slug": "resizable"
  },

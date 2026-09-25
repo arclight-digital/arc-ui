@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {'vertical' | 'horizontal'} orientation - Layout direction. Vertical stacks toggles, horizontal arranges them in a row.
  * @prop {'sm' | 'md' | 'lg'} size - Size cascaded to all child arc-toggle elements.
  * @prop {boolean} disabled - Disables all child toggles and dims the group.
- * @slot - Default content.
+ * @slot - `arc-toggle` elements.
  * @csspart base - The root element.
  * @csspart fieldset
  * @csspart legend

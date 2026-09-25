@@ -109,6 +109,15 @@ export const tokens = {
     info: '59, 130, 246',
     white: '255, 255, 255',
     black: '0, 0, 0',
+    /* Chart series channels, for tinting a series (a band, an area fill, a
+       highlighted range). syncChannels derives them from the solids below, so
+       the values written here are placeholders that cannot drift. */
+    chart1: '',
+    chart2: '',
+    chart3: '',
+    chart4: '',
+    chart5: '',
+    chart6: '',
   },
 
   /* ── Typography ──
@@ -198,6 +207,12 @@ export const tokens = {
     numeral: 'clamp(24px, 3vw, 36px)',
     sectionTitle: 'var(--label-size)',
     uiAccent: '16px',
+    /* Dense interface text — a chip, a toolbar button, a meta line, a mono
+       label beside body copy. The scale steps from 12px straight to 16px, and
+       the only name in between was --code-size, which is named for code.
+       Paired with --ui-lh. A role, not a scale step: nothing fits between
+       `xs` and `sm` without renaming the steps around it. */
+    ui: '14px',
     code: '14px',
     // 10px, not var(--text-xs) (12px). The two sources disagreed: shared-styles
     // declared 10px on :host, which shadows :root, so web-component consumers
@@ -981,6 +996,12 @@ export const cssVariables = `
   --chart-4: ${tokens.color.chart4};
   --chart-5: ${tokens.color.chart5};
   --chart-6: ${tokens.color.chart6};
+  --chart-1-rgb: ${tokens.rgb.chart1};
+  --chart-2-rgb: ${tokens.rgb.chart2};
+  --chart-3-rgb: ${tokens.rgb.chart3};
+  --chart-4-rgb: ${tokens.rgb.chart4};
+  --chart-5-rgb: ${tokens.rgb.chart5};
+  --chart-6-rgb: ${tokens.rgb.chart6};
 
   --shadow-xs: ${tokens.shadow.xs};
   --shadow-sm: ${tokens.shadow.sm};
@@ -1086,6 +1107,7 @@ export const cssVariables = `
   --wordmark-spacing: ${tokens.letterSpacing.wordmark};
   --glyph-lh: ${tokens.lineHeight.glyph};
   --ui-lh: ${tokens.lineHeight.ui};
+  --ui-size: ${tokens.fontSize.ui};
   --numeral-size: ${tokens.fontSize.numeral};
   --numeral-weight: ${tokens.fontWeight.numeral};
   --label-size: ${tokens.fontSize.label};
@@ -1287,6 +1309,11 @@ export const lightTokens = {
     textPrimary: '35, 35, 55',
     textMuted: '97, 100, 120',
     borderDefault: '210, 214, 222',
+    /* Unlike the status set, a chart channel must follow its solid: the tint
+       is the same series, not a softer relative of it. Derived by syncChannels. */
+    chart1: '',
+    chart4: '',
+    chart6: '',
   },
   glow: {
     primary:
@@ -1734,6 +1761,12 @@ const rgbVarMap = {
   info: '--color-info-rgb',
   white: '--white-rgb',
   black: '--black-rgb',
+  chart1: '--chart-1-rgb',
+  chart2: '--chart-2-rgb',
+  chart3: '--chart-3-rgb',
+  chart4: '--chart-4-rgb',
+  chart5: '--chart-5-rgb',
+  chart6: '--chart-6-rgb',
 };
 
 const focusVarMap = {

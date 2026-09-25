@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "@arclux/arc-ui",
-  "version": "4.2.2",
+  "version": "4.3.0",
   "description-markup": "markdown",
   "contributions": {
     "html": {
@@ -44,7 +44,7 @@
         },
         {
           "name": "arc-accordion",
-          "description": "Expandable content sections with smooth height animations. Ideal for FAQs, settings panels, and\nany UI that benefits from progressive disclosure.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **accordion**",
+          "description": "Expandable content sections with smooth height animations. Ideal for FAQs, settings panels, and\nany UI that benefits from progressive disclosure.\n---\n\n\n### **Slots:**\n - _default_ - `arc-accordion-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **accordion**",
           "doc-url": "",
           "attributes": [
             {
@@ -59,7 +59,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-accordion-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [],
@@ -1049,13 +1049,13 @@
         },
         {
           "name": "arc-image-hotspots",
-          "description": "An annotated image: glowing pins positioned over a slotted picture, each opening a small\npopover of detail content. Built for product-feature callouts, annotated screenshots, and\nsimple maps. Slot the image and the arc-hotspot pins together as children — the pins position\nthemselves by percentage coordinates, so source order never matters. The parent keeps one\npopover open at a time; open and close activity arrives as the arc-open and arc-close events\nbubbling up from each arc-hotspot child, with detail.value naming the hotspot.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**",
+          "description": "An annotated image: glowing pins positioned over a slotted picture, each opening a small\npopover of detail content. Built for product-feature callouts, annotated screenshots, and\nsimple maps. Slot the image and the arc-hotspot pins together as children — the pins position\nthemselves by percentage coordinates, so source order never matters. The parent keeps one\npopover open at a time; open and close activity arrives as the arc-open and arc-close events\nbubbling up from each arc-hotspot child, with detail.value naming the hotspot.\n---\n\n\n### **Slots:**\n - _default_ - `arc-hotspot` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**",
           "doc-url": "",
           "attributes": [],
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-hotspot` elements."
             }
           ],
           "events": [],
@@ -2583,7 +2583,7 @@
         },
         {
           "name": "arc-comparison",
-          "description": "A two-column or multi-column comparison table for pricing tiers, feature breakdowns, or\nbefore/after comparisons. Each column is defined with an arc-comparison-column child element.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **table**\n- **header**\n- **feature**\n- **cell**",
+          "description": "A two-column or multi-column comparison table for pricing tiers, feature breakdowns, or\nbefore/after comparisons. Each column is defined with an arc-comparison-column child element.\n---\n\n\n### **Slots:**\n - _default_ - `arc-comparison-column` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **table**\n- **header**\n- **feature**\n- **cell**",
           "doc-url": "",
           "attributes": [
             {
@@ -2598,7 +2598,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-comparison-column` elements."
             }
           ],
           "events": [],
@@ -3511,7 +3511,7 @@
         },
         {
           "name": "arc-list",
-          "description": "Structured list container with optional selection, keyboard navigation, and multiple visual\nvariants. Pairs with arc-list-item for rich content rows.\n---\n\n\n### **Events:**\n - **arc-select** - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.\n- **arc-change** - Fired when the selection changes. `event.detail.value` contains the new value string.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **list**",
+          "description": "Structured list container with optional selection, keyboard navigation, and multiple visual\nvariants. Pairs with arc-list-item for rich content rows.\n---\n\n\n### **Events:**\n - **arc-select** - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.\n- **arc-change** - Fired when the selection changes. `event.detail.value` contains the new value string.\n\n### **Slots:**\n - _default_ - `arc-list-item` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **list**",
           "doc-url": "",
           "attributes": [
             {
@@ -3566,7 +3566,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-list-item` elements."
             }
           ],
           "events": [
@@ -3925,7 +3925,7 @@
         },
         {
           "name": "arc-stepper",
-          "description": "Step indicator for multi-step workflows.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **stepper**\n- **step**\n- **line**\n- **circle**\n- **label**",
+          "description": "Step indicator for multi-step workflows.\n---\n\n\n### **Slots:**\n - _default_ - `arc-step` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **stepper**\n- **step**\n- **line**\n- **circle**\n- **label**",
           "doc-url": "",
           "attributes": [
             {
@@ -3940,7 +3940,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-step` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [],
@@ -4102,7 +4102,7 @@
         },
         {
           "name": "arc-timeline",
-          "description": "Vertical timeline with dated events.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **timeline**\n- **item**\n- **marker**\n- **dot**\n- **line**\n- **content**\n- **title**\n- **description**\n- **date**",
+          "description": "Vertical timeline with dated events.\n---\n\n\n### **Slots:**\n - _default_ - `arc-timeline-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **timeline**\n- **item**\n- **marker**\n- **dot**\n- **line**\n- **content**\n- **title**\n- **description**\n- **date**",
           "doc-url": "",
           "attributes": [
             {
@@ -4117,7 +4117,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-timeline-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [],
@@ -4704,7 +4704,7 @@
         },
         {
           "name": "arc-command-palette",
-          "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **item**\n- **match**\n- **description**\n- **dialog** - The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--palette-backdrop` custom property.\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
+          "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - `arc-command-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **item**\n- **match**\n- **description**\n- **dialog** - The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--palette-backdrop` custom property.\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
           "doc-url": "",
           "attributes": [
             {
@@ -4735,7 +4735,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-command-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -4945,7 +4945,7 @@
         },
         {
           "name": "arc-context-menu",
-          "description": "Right-click context menu with keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the context menu opens\n- **arc-close** - Fired when the context menu closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - Default content.\n- **content**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **menu**\n- **divider**",
+          "description": "Right-click context menu with keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the context menu opens\n- **arc-close** - Fired when the context menu closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n- **content**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **menu**\n- **divider**",
           "doc-url": "",
           "attributes": [
             {
@@ -4960,7 +4960,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             },
             {
               "name": "content"
@@ -5178,7 +5178,7 @@
         },
         {
           "name": "arc-dropdown-menu",
-          "description": "Menu dropdown triggered by a button with keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dropdown closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - Default content.\n- **trigger**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **divider**\n- **item**\n- **shortcut**\n- **trigger**\n- **panel**",
+          "description": "Menu dropdown triggered by a button with keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dropdown closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n- **trigger**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **divider**\n- **item**\n- **shortcut**\n- **trigger**\n- **panel**",
           "doc-url": "",
           "attributes": [
             {
@@ -5193,7 +5193,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             },
             {
               "name": "trigger"
@@ -5723,7 +5723,7 @@
         },
         {
           "name": "arc-sheet",
-          "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties.\n- **handle**\n- **header**\n- **body**\n- **footer**",
+          "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part.\n- **handle**\n- **header**\n- **body**\n- **footer**",
           "doc-url": "",
           "attributes": [
             {
@@ -5736,7 +5736,7 @@
             },
             {
               "name": "side",
-              "description": "Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.",
+              "description": "Which edge the panel slides in from. Bottom sheets are at most `--sheet-max-height` tall (default 80dvh); right sheets are `--sheet-width` wide (default 400px).",
               "value": {
                 "type": "'bottom' | 'right'",
                 "default": "'bottom'"
@@ -5789,7 +5789,7 @@
               },
               {
                 "name": "side",
-                "description": "Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.",
+                "description": "Which edge the panel slides in from. Bottom sheets are at most `--sheet-max-height` tall (default 80dvh); right sheets are `--sheet-width` wide (default 400px).",
                 "type": "'bottom' | 'right'"
               }
             ],
@@ -6656,7 +6656,7 @@
         },
         {
           "name": "arc-combobox",
-          "description": "Searchable dropdown with type-ahead filtering.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n- **arc-change** - Fired when an option is selected. `event.detail.value` contains the selected option value.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **wrapper**\n- **input**\n- **listbox**\n- **option**",
+          "description": "Searchable dropdown with type-ahead filtering.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n- **arc-change** - Fired when an option is selected. `event.detail.value` contains the selected option value.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **wrapper**\n- **input**\n- **listbox**\n- **option**",
           "doc-url": "",
           "attributes": [
             {
@@ -6724,7 +6724,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -8738,7 +8738,7 @@
         },
         {
           "name": "arc-multi-select",
-          "description": "Multi-value select with tag chips, inline search filtering, and keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected values change\n- **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **control**\n- **tag**\n- **input**\n- **dropdown**\n- **option**",
+          "description": "Multi-value select with tag chips, inline search filtering, and keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected values change\n- **arc-input** - Fired on every keystroke in the filter input. `event.detail.value` contains the current query text.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **control**\n- **tag**\n- **input**\n- **dropdown**\n- **option**",
           "doc-url": "",
           "attributes": [
             {
@@ -8806,7 +8806,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -9446,7 +9446,7 @@
         },
         {
           "name": "arc-radio-group",
-          "description": "Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Ideal for\npricing tiers, settings panels, and any context where exactly one choice must be made from a\nvisible set of options.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected radio value changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **group**\n- **circle**\n- **label**",
+          "description": "Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Ideal for\npricing tiers, settings panels, and any context where exactly one choice must be made from a\nvisible set of options.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected radio value changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - `arc-radio` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **group**\n- **circle**\n- **label**",
           "doc-url": "",
           "attributes": [
             {
@@ -9507,7 +9507,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-radio` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -9951,7 +9951,7 @@
         },
         {
           "name": "arc-search",
-          "description": "Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete\nsuggestions dropdown.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke in the search field\n- **arc-clear** - Fired when the clear button is clicked\n- **arc-change** - Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard\n- **arc-select** - Fired when a suggestion is selected (before the accompanying arc-change)\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **wrapper**\n- **icon**\n- **input**\n- **spinner**\n- **clear**\n- **suggestions**\n- **suggestion**",
+          "description": "Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete\nsuggestions dropdown.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke in the search field\n- **arc-clear** - Fired when the clear button is clicked\n- **arc-change** - Fired when the value is committed: Enter in the field, or a suggestion selected by click or keyboard\n- **arc-select** - Fired when a suggestion is selected (before the accompanying arc-change)\n\n### **Slots:**\n - _default_ - `arc-suggestion` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **wrapper**\n- **icon**\n- **input**\n- **spinner**\n- **clear**\n- **suggestions**\n- **suggestion**",
           "doc-url": "",
           "attributes": [
             {
@@ -10006,7 +10006,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-suggestion` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -10090,7 +10090,7 @@
         },
         {
           "name": "arc-segmented-control",
-          "description": "A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually\nexclusive buttons with an active highlight.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected segment changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **control**\n- **option**",
+          "description": "A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually\nexclusive buttons with an active highlight.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected segment changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **control**\n- **option**",
           "doc-url": "",
           "attributes": [
             {
@@ -10135,7 +10135,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -10191,7 +10191,7 @@
         },
         {
           "name": "arc-select",
-          "description": "Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics\nfor accessible form inputs.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected option changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **select**\n- **label**\n- **trigger**\n- **dropdown**\n- **error**",
+          "description": "Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics\nfor accessible form inputs.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected option changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **select**\n- **label**\n- **trigger**\n- **dropdown**\n- **error**",
           "doc-url": "",
           "attributes": [
             {
@@ -10276,7 +10276,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -10763,7 +10763,7 @@
         },
         {
           "name": "arc-switch-group",
-          "description": "Groups multiple toggle switches under a shared label with consistent sizing and disabled state.\nSupports vertical and horizontal layouts.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **fieldset**\n- **legend**\n- **group**",
+          "description": "Groups multiple toggle switches under a shared label with consistent sizing and disabled state.\nSupports vertical and horizontal layouts.\n---\n\n\n### **Slots:**\n - _default_ - `arc-toggle` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **fieldset**\n- **legend**\n- **group**",
           "doc-url": "",
           "attributes": [
             {
@@ -10802,7 +10802,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-toggle` elements."
             }
           ],
           "events": [],
@@ -12651,10 +12651,18 @@
           "attributes": [
             {
               "name": "direction",
-              "description": "Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.",
+              "description": "Which dimension the handle resizes. Horizontal resizes width, with the handle on an inline edge; vertical resizes height, with the handle on the top or bottom edge.",
               "value": {
                 "type": "'horizontal' | 'vertical'",
                 "default": "'horizontal'"
+              }
+            },
+            {
+              "name": "handle",
+              "description": "Which edge the handle sits on. `end` (the default) is the inline end — the right edge in a left-to-right page — or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way.",
+              "value": {
+                "type": "'end' | 'start'",
+                "default": "'end'"
               }
             },
             {
@@ -12704,8 +12712,13 @@
               },
               {
                 "name": "direction",
-                "description": "Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.",
+                "description": "Which dimension the handle resizes. Horizontal resizes width, with the handle on an inline edge; vertical resizes height, with the handle on the top or bottom edge.",
                 "type": "'horizontal' | 'vertical'"
+              },
+              {
+                "name": "handle",
+                "description": "Which edge the handle sits on. `end` (the default) is the inline end — the right edge in a left-to-right page — or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way.",
+                "type": "'end' | 'start'"
               },
               {
                 "name": "minSize",
@@ -13339,7 +13352,7 @@
         },
         {
           "name": "arc-breadcrumb",
-          "description": "Wayfinding navigation trail that shows the user their current location within a hierarchical\npage structure, with separator icons and current-page indication.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when a breadcrumb item is clicked\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **breadcrumb**\n- **current**\n- **link**\n- **separator**",
+          "description": "Wayfinding navigation trail that shows the user their current location within a hierarchical\npage structure, with separator icons and current-page indication.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when a breadcrumb item is clicked\n\n### **Slots:**\n - _default_ - `arc-breadcrumb-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **breadcrumb**\n- **current**\n- **link**\n- **separator**",
           "doc-url": "",
           "attributes": [
             {
@@ -13361,7 +13374,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-breadcrumb-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -13759,7 +13772,7 @@
         },
         {
           "name": "arc-nav-item",
-          "description": "A single entry inside NavigationMenu. When used at the top level and containing nested NavItem\nchildren, it becomes a dropdown trigger. When used without children, it renders as a direct\nnavigation link. Nest one level deep to populate a dropdown panel.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
+          "description": "A single entry inside NavigationMenu. When used at the top level and containing nested NavItem\nchildren, it becomes a dropdown trigger. When used without children, it renders as a direct\nnavigation link. Nest one level deep to populate a dropdown panel.\n---\n\n\n### **Slots:**\n - _default_ - Nested `arc-nav-item` elements, forming a submenu.",
           "doc-url": "",
           "attributes": [
             {
@@ -13798,7 +13811,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "Nested `arc-nav-item` elements, forming a submenu."
             }
           ],
           "events": [],
@@ -13844,7 +13857,7 @@
         },
         {
           "name": "arc-navigation-menu",
-          "description": "Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard\naccessibility. Designed for marketing sites, documentation hubs, and product landing pages where\ntop-level sections expand into categorised link lists.\n---\n\n\n### **Events:**\n - **arc-mobile-menu-toggle** - Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work.\n- **arc-navigate** - Fired when a navigation item is selected\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **nav**\n- **item**\n- **trigger**\n- **dropdown**\n- **dropdown-item**",
+          "description": "Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard\naccessibility. Designed for marketing sites, documentation hubs, and product landing pages where\ntop-level sections expand into categorised link lists.\n---\n\n\n### **Events:**\n - **arc-mobile-menu-toggle** - Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work.\n- **arc-navigate** - Fired when a navigation item is selected\n\n### **Slots:**\n - _default_ - `arc-nav-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **nav**\n- **item**\n- **trigger**\n- **dropdown**\n- **dropdown-item**",
           "doc-url": "",
           "attributes": [
             {
@@ -13858,7 +13871,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-nav-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -14107,7 +14120,7 @@
         },
         {
           "name": "arc-scroll-spy",
-          "description": "Tracks scroll position and highlights the active navigation link.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the active spy target changes during scroll\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **scroll-spy**\n- **heading**\n- **ring**\n- **list**\n- **link**",
+          "description": "Tracks scroll position and highlights the active navigation link.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the active spy target changes during scroll\n\n### **Slots:**\n - _default_ - `arc-spy-link` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **scroll-spy**\n- **heading**\n- **ring**\n- **list**\n- **link**",
           "doc-url": "",
           "attributes": [
             {
@@ -14138,7 +14151,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-spy-link` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -14335,7 +14348,7 @@
         },
         {
           "name": "arc-sidebar-section",
-          "description": "A collapsible group within a Sidebar. Each section renders an optional heading label above its\nchild links, creating a visual and semantic grouping that mirrors your information architecture.\nFires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a collapsible section expands or collapses.\n\n### **Methods:**\n - **toggle(): _void_** - Collapse an open section or expand a collapsed one, firing `arc-toggle`.\n\nA no-op unless `collapsible` is set: a section that cannot collapse has\nnothing to toggle, and silently doing nothing is better than a state the\nheader offers no way back from.\n\n### **Slots:**\n - _default_ - Default content.",
+          "description": "A collapsible group within a Sidebar. Each section renders an optional heading label above its\nchild links, creating a visual and semantic grouping that mirrors your information architecture.\nFires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a collapsible section expands or collapses.\n\n### **Methods:**\n - **toggle(): _void_** - Collapse an open section or expand a collapsed one, firing `arc-toggle`.\n\nA no-op unless `collapsible` is set: a section that cannot collapse has\nnothing to toggle, and silently doing nothing is better than a state the\nheader offers no way back from.\n\n### **Slots:**\n - _default_ - `arc-sidebar-link` elements.",
           "doc-url": "",
           "attributes": [
             {
@@ -14374,7 +14387,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-sidebar-link` elements."
             }
           ],
           "events": [
@@ -14422,7 +14435,7 @@
         },
         {
           "name": "arc-sidebar",
-          "description": "Collapsible navigation sidebar with grouped sections, heading labels, and active link\nhighlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent\nvertical navigation.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when a sidebar link is clicked\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **sidebar**\n- **section**\n- **toggle**\n- **heading**\n- **links**\n- **link**\n- **link-icon**\n- **heading-icon**",
+          "description": "Collapsible navigation sidebar with grouped sections, heading labels, and active link\nhighlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent\nvertical navigation.\n---\n\n\n### **Events:**\n - **arc-navigate** - Fired when a sidebar link is clicked\n\n### **Slots:**\n - _default_ - `arc-sidebar-section` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **sidebar**\n- **section**\n- **toggle**\n- **heading**\n- **links**\n- **link**\n- **link-icon**\n- **heading-icon**",
           "doc-url": "",
           "attributes": [
             {
@@ -14476,7 +14489,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-sidebar-section` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -14732,7 +14745,7 @@
         },
         {
           "name": "arc-tabs",
-          "description": "Tabbed content navigation with keyboard support and ARIA roles.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the active tab changes\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tabs**\n- **indicator** - The light that travels between tabs: the underline in the default variant, the ground behind the selection in `pills` and in vertical bars.",
+          "description": "Tabbed content navigation with keyboard support and ARIA roles.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the active tab changes\n\n### **Slots:**\n - _default_ - `arc-tab` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tabs**\n- **indicator** - The light that travels between tabs: the underline in the default variant, the ground behind the selection in `pills` and in vertical bars.",
           "doc-url": "",
           "attributes": [
             {
@@ -14771,7 +14784,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-tab` elements."
             }
           ],
           "events": [
@@ -14998,7 +15011,7 @@
         },
         {
           "name": "arc-tree-item",
-          "description": "Node within a TreeView. Can nest for sub-trees.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
+          "description": "Node within a TreeView. Can nest for sub-trees.\n---\n\n\n### **Slots:**\n - _default_ - Nested `arc-tree-item` elements, the children of this branch.",
           "doc-url": "",
           "attributes": [
             {
@@ -15029,7 +15042,7 @@
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "Nested `arc-tree-item` elements, the children of this branch."
             }
           ],
           "events": [],
@@ -15063,13 +15076,13 @@
         },
         {
           "name": "arc-tree-view",
-          "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.\n- **arc-select** - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
+          "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.\n- **arc-select** - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.\n\n### **Slots:**\n - _default_ - `arc-tree-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
           "doc-url": "",
           "attributes": [],
           "slots": [
             {
               "name": "",
-              "description": "Default content."
+              "description": "`arc-tree-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests."
             }
           ],
           "events": [
@@ -17302,7 +17315,7 @@
         },
         {
           "name": "part(panel)",
-          "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties."
+          "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part."
         },
         {
           "name": "part(handle)"

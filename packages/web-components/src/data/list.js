@@ -18,7 +18,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} label - Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name.
  * @fires {CustomEvent<{ value: string }>} arc-select - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selection changes. `event.detail.value` contains the new value string.
- * @slot - Default content.
+ * @slot - `arc-list-item` elements.
  * @csspart base - The root element.
  * @csspart list
  */

@@ -25,7 +25,7 @@ function nearestScroll(offset, port, start, size) {
  * @prop {'underline' | 'pills'} variant - Visual style of the tabs. Options: 'underline', 'pills'.
  * @prop {'horizontal' | 'vertical'} orientation - Layout direction of the tab list. Use 'vertical' to place tabs in a sidebar column with the panel to the right. Arrow-key navigation automatically switches to up/down in vertical mode.
  * @fires arc-change - Fired when the active tab changes
- * @slot - Default content.
+ * @slot - `arc-tab` elements.
  * @csspart base - The root element.
  * @csspart tabs
  * @csspart indicator - The light that travels between tabs: the underline in the default variant, the ground behind the selection in `pills` and in vertical bars.

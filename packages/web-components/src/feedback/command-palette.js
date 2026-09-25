@@ -28,7 +28,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {number} maxResults - How many ranked results to render. Truncation happens after ranking, so what survives is the best of the set. Raise it for a short command list; the default suits a large one.
  * @fires {CustomEvent<{ value: string, item: { label: string, shortcut: string, value: string } }>} arc-select - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.
  * @fires {CustomEvent<void>} arc-close - Fired when the palette closes
- * @slot - Default content.
+ * @slot - `arc-command-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart item
  * @csspart match

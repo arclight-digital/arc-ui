@@ -21,6 +21,17 @@
  * Consumer-supplied names are out of scope; they get the runtime warning in
  * arc-icon instead.
  *
+ * ── The built-in fallback set ──
+ *
+ * The same names must also have a glyph in `content/icon-builtins.js`, which
+ * is what a page with no pack renders (test-findings #102). That set is held
+ * in both directions. A name a component renders with no built-in is a blank
+ * button on a pack-less page, which is the defect the set exists to close. A
+ * built-in nothing renders is the set growing into a library, and core's no
+ * library rule (V4-PLAN 4.7) is what keeps it small. A name a template picks
+ * with an expression (`name=\${playing ? 'pause' : 'play'}`) counts as
+ * rendered when it appears as a quoted literal in a file that renders an icon.
+ *
  * Run via: pnpm check icon-names (and as part of pnpm generate)
  */
 import fs from 'node:fs';
@@ -88,6 +99,26 @@ function usedNames() {
   return found;
 }
 
+const { builtinIcons } = await import(
+  pathToFileURL(path.join(SRC, 'content/icon-builtins.js')).href
+);
+
+/** Quoted string literals in every source file that renders an arc-icon. */
+function quotedInIconFiles() {
+  const quoted = new Set();
+  for (const tier of fs.readdirSync(SRC, { withFileTypes: true })) {
+    if (!tier.isDirectory()) continue;
+    const dir = path.join(SRC, tier.name);
+    for (const file of fs.readdirSync(dir)) {
+      if (!file.endsWith('.js') || file === 'icon-builtins.js') continue;
+      const src = fs.readFileSync(path.join(dir, file), 'utf-8');
+      if (!/<arc-icon(?:-button)?[\s>]/.test(src)) continue;
+      for (const m of src.matchAll(/'([a-z0-9-]+)'/g)) quoted.add(m[1]);
+    }
+  }
+  return quoted;
+}
+
 const available = Object.fromEntries(LIBRARIES.map((l) => [l, libraryNames(l)]));
 const used = usedNames();
 
@@ -104,18 +135,32 @@ for (const { name, file } of used) {
   }
 }
 
+for (const { name, file } of used) {
+  if (!Object.hasOwn(builtinIcons, name)) {
+    failures.push(`  ${file}: "${name}" has no built-in glyph in content/icon-builtins.js`);
+  }
+}
+const usedSet = new Set(used.map((u) => u.name));
+const quoted = quotedInIconFiles();
+for (const name of Object.keys(builtinIcons)) {
+  if (!usedSet.has(name) && !quoted.has(name)) {
+    failures.push(`  content/icon-builtins.js: "${name}" is built in, but no component renders it`);
+  }
+}
+
 if (failures.length > 0) {
   console.error(`check-icon-names: ${failures.length} icon name(s) render nothing\n`);
   console.error([...new Set(failures)].join('\n'));
   console.error(
     '\nEither use a name both libraries have, or add an alias to\n' +
     'packages/icons/src/aliases.js. A name missing from one library renders an\n' +
-    'empty box for anyone using that library.'
+    'empty box for anyone using that library. A name a component renders also\n' +
+    'needs a built-in glyph, and a built-in nothing renders should be removed.'
   );
   process.exit(1);
 }
 
 const distinct = new Set(used.map((u) => u.name));
 console.log(
-  `check-icon-names: ${distinct.size} icon name(s) across ${used.length} usage(s) resolve in ${LIBRARIES.join(' + ')}`
+  `check-icon-names: ${distinct.size} icon name(s) across ${used.length} usage(s) resolve in ${LIBRARIES.join(' + ')} and the built-in set`
 );

@@ -3,6 +3,7 @@ import '../src/input/select.register.js';
 import '../src/input/combobox.register.js';
 import '../src/input/multi-select.register.js';
 import '../src/input/tag-input.register.js';
+import '../src/input/tree-select.register.js';
 // arc-option must be a defined element, not just parsed markup: unupgraded, its
 // `label` property doesn't exist and every option reads as blank.
 import '../src/shared/option.register.js';
@@ -830,4 +831,79 @@ describe('arc-option disabled: every consumer refuses the click', () => {
       expect(read(el)).to.equal('a');
     });
   }
+});
+
+/**
+ * Lit's `change-in-update` warning, reported by a consumer against arc-select
+ * with `.value` bound and arc-option children (test-findings #100). Two causes:
+ * `reset()` requested an update unconditionally and every host called it from
+ * `updated()` whenever `open` changed — which on the first render it always
+ * has — and the hosts moved virtual focus (`setActive`, `clampToCount`) after
+ * the pass rather than before it, so opening scheduled a second render too.
+ *
+ * The check is Lit's own: an update pending at the moment `updated()` returns.
+ */
+describe('ListboxController: no update scheduled from inside updated()', () => {
+  afterEach(cleanup);
+
+  const OPTIONS = '<arc-option value="a">A</arc-option><arc-option value="b">B</arc-option>';
+  const hosts = [
+    { tag: 'arc-select', open: 'open', value: 'b' },
+    { tag: 'arc-combobox', open: '_open', value: 'b' },
+    { tag: 'arc-multi-select', open: '_open' },
+    { tag: 'arc-tag-input', open: '_open' },
+    {
+      tag: 'arc-tree-select',
+      open: 'open',
+      value: 'b',
+      items: [{ value: 'g', label: 'G', children: [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }] }],
+    },
+  ];
+
+  /** Mount `tag`, recording the changed keys of any update that scheduled another. */
+  async function watched({ tag, value, items }) {
+    const el = document.createElement(tag);
+    if (!items) el.innerHTML = OPTIONS;
+    else el.items = items;
+    if (value) el.value = value;
+    const scheduled = [];
+    const updated = el.updated.bind(el);
+    el.updated = (changed) => {
+      updated(changed);
+      if (el.isUpdatePending) scheduled.push([...changed.keys()]);
+    };
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await tick();
+    await el.updateComplete;
+    return { el, scheduled };
+  }
+
+  for (const host of hosts) {
+    it(`${host.tag} renders once on first connect`, async () => {
+      const { scheduled } = await watched(host);
+      expect(scheduled, `update requested from updated() after ${JSON.stringify(scheduled)}`)
+        .to.deep.equal([]);
+    });
+
+    it(`${host.tag} opens and closes without a second render`, async () => {
+      const { el, scheduled } = await watched(host);
+      el[host.open] = true;
+      await el.updateComplete;
+      el[host.open] = false;
+      await el.updateComplete;
+      expect(scheduled, `update requested from updated() after ${JSON.stringify(scheduled)}`)
+        .to.deep.equal([]);
+    });
+  }
+
+  it('arc-select still opens onto the selected option', async () => {
+    const { el } = await watched(hosts[0]);
+    el.open = true;
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(1);
+    el.open = false;
+    await el.updateComplete;
+    expect(el._listbox.activeIndex).to.equal(-1);
+  });
 });

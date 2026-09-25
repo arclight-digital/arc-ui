@@ -888,6 +888,7 @@ declare module 'solid-js/jsx-runtime' {
       };
       'arc-resizable': ArcBaseAttributes & {
         direction?: 'horizontal' | 'vertical';
+        handle?: 'end' | 'start';
         'min-size'?: number | string;
         minSize?: number | string;
         'max-size'?: number | string;

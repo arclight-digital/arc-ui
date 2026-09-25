@@ -11,7 +11,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * @requires arc-timeline-item
  * @prop {number} headingLevel - ARIA heading level for each event title. Clamped to 1 or
  *   greater: `aria-level` below 1 is invalid and is dropped by assistive technology.
- * @slot - Default content.
+ * @slot - `arc-timeline-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart timeline
  * @csspart item

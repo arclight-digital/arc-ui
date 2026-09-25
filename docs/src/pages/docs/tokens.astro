@@ -30,6 +30,20 @@ const chartTokens = ([1, 2, 3, 4, 5, 6] as const).map((n) => ({
   value: tokens.color[`chart${n}`],
 }));
 
+/* Same rule for the type table, which had drifted the same way: it listed
+   --body-size as a clamp the tree replaced, and --code-size at 13px. */
+const typeTokens = [
+  ['--body-size', `${tokens.fontSize.body} (${tokens.fontSize.md})`],
+  ['--body-lh', tokens.lineHeight.body],
+  ['--body-weight', '500'],
+  ['--heading-size', `${tokens.fontSize.heading} (${tokens.fontSize.xl})`],
+  ['--heading-weight', '500'],
+  ['--ui-size', tokens.fontSize.ui],
+  ['--ui-lh', tokens.lineHeight.ui],
+  ['--code-size', tokens.fontSize.code],
+  ['--code-lh', tokens.lineHeight.code],
+];
+
 const colorTokens = [
   { name: 'bg-deep', key: 'bgDeep' },
   { name: 'bg-surface', key: 'bgSurface' },
@@ -106,6 +120,12 @@ const spacingTokens = [
         themes (series 1, 4, and 6 shift automatically in light mode). Status colors are reserved
         for state and are not part of this palette.
       </p>
+      <p class="docs-text">
+        Each series also ships its channels, <code>--chart-1-rgb</code> through
+        <code>--chart-6-rgb</code>, for tints of the same series (a band, an area fill, a
+        highlighted range): <code>rgba(var(--chart-2-rgb), 0.35)</code>. They follow the light-mode
+        shifts with their solids, so a tint never falls out of step with its line.
+      </p>
       <div class="tokens-grid">
         {chartTokens.map((t) => (
           <div class="token-swatch token-swatch--accent" style={`--swatch: ${t.value}`} data-var={`var(--${t.name})`}>
@@ -163,16 +183,17 @@ const spacingTokens = [
             <tr><th>Token</th><th>Value</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--body-size</code></td><td>clamp(15px, 1.2vw, 16px)</td></tr>
-            <tr><td><code>--body-lh</code></td><td>1.7</td></tr>
-            <tr><td><code>--body-weight</code></td><td>500</td></tr>
-            <tr><td><code>--heading-size</code></td><td>clamp(22px, 2.5vw, 26px)</td></tr>
-            <tr><td><code>--heading-weight</code></td><td>500</td></tr>
-            <tr><td><code>--code-size</code></td><td>13px</td></tr>
-            <tr><td><code>--code-lh</code></td><td>1.8</td></tr>
+            {typeTokens.map(([name, value]) => (
+              <tr><td><code>{name}</code></td><td>{value}</td></tr>
+            ))}
           </tbody>
         </table>
       </div>
+      <p class="docs-text docs-text--footnote">
+        <code>--ui-size</code> is for dense interface text such as a chip, a toolbar button or a
+        meta line, where 16px body text is too loud and the 12px label step too small. It is a
+        role rather than a scale step, so there is no <code>.arc-text-ui</code> utility.
+      </p>
     </section>
 
     <!-- Borders & Radius -->

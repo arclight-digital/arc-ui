@@ -29,13 +29,16 @@ describe('the no-library warning on a hand-registered page', () => {
       expect(await iconRegistry.get('x'), 'a registered glyph resolves').to.not.equal(null);
       expect(warnings, 'and says nothing').to.deep.equal([]);
 
-      expect(await iconRegistry.get('pencil'), 'an unregistered one does not').to.equal(null);
+      // Not `pencil`, the glyph from the report: it is built in now (#102), so
+      // it resolves on this page too. Any name outside the built-in set is
+      // still the case this pins.
+      expect(await iconRegistry.get('star'), 'an unregistered one does not').to.equal(null);
     } finally {
       console.warn = realWarn;
     }
 
     expect(warnings.length, 'one line, not one per icon').to.equal(1);
-    expect(warnings[0], 'names the glyph that missed').to.contain('pencil');
+    expect(warnings[0], 'names the glyph that missed').to.contain('star');
     expect(warnings[0], 'says where it was looked for').to.contain('custom icon map');
     expect(warnings[0], 'and counts what is working').to.contain('registered by hand');
     // The old wording, and the reason this file exists: it condemned the whole

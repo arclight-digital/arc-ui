@@ -127,8 +127,12 @@ for (const { decls } of blocks) {
  * between adjacent pairs, 3:1 against bg-card in both themes — and pointing one
  * of them at a consumer's brand would break every one of those properties for
  * whatever color they picked. A series color is data, not chrome.
+ *
+ * Its channels, `--chart-N-rgb`, are the same series spelled for alpha, derived
+ * from the solid by syncChannels. Exempt for the same reason: a tint of series
+ * 1 that followed the brand would stop matching series 1's line.
  */
-const EXEMPT = /^--chart-\d$/;
+const EXEMPT = /^--chart-\d(-rgb)?$/;
 
 const failures = [];
 

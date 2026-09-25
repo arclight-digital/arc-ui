@@ -9,7 +9,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {string} label - Item label text
  * @prop {string} icon - Icon or emoji
  * @prop {boolean} expanded - Expand child items
- * @slot - Default content.
+ * @slot - Nested `arc-tree-item` elements, the children of this branch.
  */
 export class ArcTreeItem extends DeclaredPropsMixin(LitElement) {
   static properties = {

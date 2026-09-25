@@ -15,6 +15,8 @@ const headings = [
   { id: 'theming', label: 'Theming' },
   { id: 'design-tokens', label: 'Design Tokens' },
   { id: 'typescript', label: 'TypeScript' },
+  { id: 'own-components', label: 'Your Own Components' },
+  { id: 'testing', label: 'Testing' },
   { id: 'production', label: 'Going to Production' },
   { id: 'next-steps', label: 'Next Steps' },
 ];
@@ -25,6 +27,36 @@ const cdnSnippet = `<link rel="stylesheet"
   src="https://unpkg.com/@arclux/arc-ui@${version}/register"><\/script>
 
 <arc-button variant="primary">Click Me</arc-button>`;
+
+/* The three reference faces base.css names, at the weights the roles ask for.
+   A face that is not loaded falls back to system-ui silently, so this is a
+   step, not a footnote. */
+const fontsSnippet = `<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@300..800&family=JetBrains+Mono:wght@400..700&family=Tomorrow:wght@400;500;600&display=swap">`;
+
+const ownComponentSnippet = `import { LitElement, html, css } from 'lit';
+import { tokenStyles } from '@arclux/arc-ui/shared-styles';
+
+class AppPanel extends LitElement {
+  static styles = [
+    tokenStyles,
+    css\`
+      :host { display: block; padding: var(--space-md); }
+    \`,
+  ];
+  render() {
+    return html\`<slot></slot>\`;
+  }
+}
+customElements.define('app-panel', AppPanel);`;
+
+const testingSnippet = `// Playwright: the rendered copy, found by its role and text
+await page.getByRole('menuitem', { name: 'Rename' }).click();
+await page.getByRole('radio', { name: 'Weekly' }).click();
+
+// Not the element you authored: it is display: none, and never receives the click
+// await page.locator('arc-menu-item[value="rename"]').click();`;
 ---
 
 <DocsLayout
@@ -82,6 +114,23 @@ const cdnSnippet = `<link rel="stylesheet"
             </p>
             <arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';
 import '@arclux/arc-ui/register';`}></arc-code-block>
+          </div>
+        </li>
+
+        <li class="step">
+          <div class="step__content">
+            <strong class="step__title">Load the fonts</strong>
+            <p class="docs-text">
+              ARC UI ships no font files. <code>base.css</code> names three reference faces
+              (Host Grotesk for text, Tomorrow for labels, JetBrains Mono for code) and loads none
+              of them, so without this step everything quietly renders in <code>system-ui</code>.
+              A font CDN is the quickest way in:
+            </p>
+            <arc-code-block language="html" code={fontsSnippet}></arc-code-block>
+            <p class="docs-text">
+              To self-host, or to use your own typefaces instead, see
+              <a href="/docs/typography#loading">Loading the Font Files</a>.
+            </p>
           </div>
         </li>
 
@@ -256,6 +305,51 @@ import { Button, Card } from '@arclux/arc-ui-preact';  // Preact`}></arc-code-bl
     </section>
 
     <!-- Going to Production -->
+    <section id="own-components">
+      <h2 class="docs-heading">Your Own Components</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        A component you write with Lit has its own shadow root, and a shadow root does not see
+        document styles. The <code>*, *::before, *::after {'{'} box-sizing: border-box {'}'}</code>
+        reset in your global stylesheet stops at its boundary, so padded boxes inside it overflow
+        in a way nothing on the page explains.
+      </p>
+      <p class="docs-text">
+        Adopt the styles ARC UI's own components start from.
+        <code>tokenStyles</code> carries the box-sizing and margin reset, the static token
+        defaults, and the reduced-motion rule:
+      </p>
+      <arc-code-block language="js" code={ownComponentSnippet}></arc-code-block>
+      <p class="docs-text">
+        Themed tokens (colors, shadows, gradients) are not in it and do not need to be. Custom
+        properties inherit through the shadow boundary, so they arrive from <code>base.css</code>
+        on the document as they do for every ARC component.
+      </p>
+    </section>
+
+    <section id="testing">
+      <h2 class="docs-heading">Testing</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+
+      <p class="docs-text">
+        Some components read the children you write as data and render their own copies. The
+        <code>arc-menu-item</code>s inside <code>arc-dropdown-menu</code> and the
+        <code>arc-option</code>s inside <code>arc-segmented-control</code> and
+        <code>arc-select</code> are <code>display: none</code>. The visible, clickable item is
+        the copy in the parent's shadow root. A test that clicks the element you authored fails
+        with "element is not visible", however correct the markup is. Each component that works
+        this way says so on its default slot ("read as data") in the API reference and in
+        <code>custom-elements.json</code>.
+      </p>
+      <p class="docs-text">
+        Find the rendered item the way a user does, by its role and its text. The rendered copies
+        carry the roles (<code>menuitem</code>, <code>radio</code>, <code>option</code>), and
+        Playwright's role locators pierce shadow roots:
+      </p>
+      <arc-code-block language="js" code={testingSnippet}></arc-code-block>
+    </section>
+
     <section id="production">
       <h2 class="docs-heading">Going to Production</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>

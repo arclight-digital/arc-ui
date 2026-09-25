@@ -24,7 +24,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} error - Error message displayed below the select. When set, the trigger border turns red.
  * @prop {boolean} open - Controls whether the dropdown is visible. Set programmatically to open or close the dropdown. Automatically set to `false` when an option is selected or the user clicks outside. Held at `false` while `disabled`.
  * @fires arc-change - Fired when the selected option changes
- * @slot - Default content.
+ * @slot - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart select
  * @csspart label
@@ -264,28 +264,38 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
     });
   }
 
+  willUpdate(changed) {
+    super.willUpdate(changed);
+    // Virtual focus is render-time state, so it is settled here, before the
+    // pass, rather than in updated(): moved afterwards, it paints one frame
+    // stale and schedules a second update to correct it (Lit's change-in-update).
+    if (changed.has('open')) {
+      if (this.open) {
+        // Open onto the selected option, so arrowing starts from where the user
+        // already is rather than from the top of the list.
+        const selected = this._options.findIndex((o) => o.value === this.value);
+        if (selected >= 0) this._listbox.setActive(selected);
+      } else {
+        this._listbox.reset();
+      }
+    }
+    if (changed.has('_options')) this._listbox.clampToCount();
+  }
+
   updated(changed) {
     super.updated(changed);
     if (changed.has('open')) {
       if (this.open) {
         this._dismiss.activate();
         this._position.show();
-        // Open onto the selected option, so arrowing starts from where the user
-        // already is rather than from the top of the list.
-        const selected = this._options.findIndex((o) => o.value === this.value);
-        if (selected >= 0) this._listbox.setActive(selected);
       } else {
         this._dismiss.deactivate();
         this._position.hide();
-        this._listbox.reset();
       }
     }
     // Options arriving or filtering out changes the panel's height, which can
     // change whether it still fits below the trigger.
-    if (changed.has('_options')) {
-      this._listbox.clampToCount();
-      if (this.open) this._position.show();
-    }
+    if (changed.has('_options') && this.open) this._position.show();
   }
 
   _onSlotChange(e) {

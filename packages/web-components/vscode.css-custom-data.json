@@ -423,7 +423,7 @@
     { "name": "::part(close)" },
     {
       "name": "::part(panel)",
-      "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties."
+      "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part."
     },
     { "name": "::part(handle)" },
     { "name": "::part(header)" },

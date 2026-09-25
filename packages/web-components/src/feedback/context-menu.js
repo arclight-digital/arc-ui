@@ -21,7 +21,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-open - Fired when the context menu opens
  * @fires {CustomEvent<void>} arc-close - Fired when the context menu closes
  * @fires arc-select - Fired when a menu item is selected
- * @slot - Default content.
+ * @slot - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @slot content
  * @csspart base - The root element.
  * @csspart menu

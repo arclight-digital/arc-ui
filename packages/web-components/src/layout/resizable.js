@@ -7,7 +7,8 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  *
  * @tag arc-resizable
  * @status stable
- * @prop {'horizontal' | 'vertical'} direction - Controls which edge the drag handle appears on. Horizontal places the handle on the right edge and resizes width; vertical places it on the bottom edge and resizes height.
+ * @prop {'horizontal' | 'vertical'} direction - Which dimension the handle resizes. Horizontal resizes width, with the handle on an inline edge; vertical resizes height, with the handle on the top or bottom edge.
+ * @prop {'end' | 'start'} handle - Which edge the handle sits on. `end` (the default) is the inline end — the right edge in a left-to-right page — or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way.
  * @prop {number} size - Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property.
  * @prop {number} minSize - Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.
  * @prop {number} maxSize - Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.
@@ -20,6 +21,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
 export class ArcResizable extends DeclaredPropsMixin(LitElement) {
   static properties = {
     direction: oneOf(['horizontal', 'vertical']),
+    handle: oneOf(['end', 'start']),
     minSize: num({ default: 100, min: 0, clamp: 'toRange', attribute: 'min-size' }),
     maxSize: num({ default: Infinity, attribute: 'max-size' }),
     size: { type: Number },
@@ -58,7 +60,7 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
         touch-action: none;
       }
 
-      /* Horizontal: handle on right edge */
+      /* Horizontal: handle on the inline end, or the inline start */
       :host([direction="horizontal"]) .handle {
         top: 0;
         inset-inline-end: 0;
@@ -67,13 +69,23 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
         cursor: col-resize;
       }
 
-      /* Vertical: handle on bottom edge */
+      :host([direction="horizontal"][handle="start"]) .handle {
+        inset-inline-end: auto;
+        inset-inline-start: 0;
+      }
+
+      /* Vertical: handle on the bottom edge, or the top */
       :host([direction="vertical"]) .handle {
         bottom: 0;
         inset-inline-start: 0;
         height: 4px;
         width: 100%;
         cursor: row-resize;
+      }
+
+      :host([direction="vertical"][handle="start"]) .handle {
+        bottom: auto;
+        top: 0;
       }
 
       .handle:hover,
@@ -131,18 +143,32 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
     return Math.min(this.maxSize, Math.max(this.minSize, val));
   }
 
+  /**
+   * +1 when the handle sits on the physical right or bottom edge, -1 on the
+   * left or top. Pointer and arrow-key movement are physical; which way that
+   * resizes depends on the edge, and a horizontal handle's edge is logical, so
+   * a right-to-left page flips it.
+   */
+  _sign() {
+    const atEnd = this.handle !== 'start';
+    if (this.direction !== 'horizontal') return atEnd ? 1 : -1;
+    const rtl = getComputedStyle(this).direction === 'rtl';
+    return atEnd !== rtl ? 1 : -1;
+  }
+
   _onPointerDown(e) {
     e.preventDefault();
     this._dragging = true;
     this._startPos = this.direction === 'horizontal' ? e.clientX : e.clientY;
     this._startSize = this.size;
+    const sign = this._sign();
 
     const handle = e.currentTarget;
     handle.setPointerCapture(e.pointerId);
 
     const onMove = (ev) => {
       const current = this.direction === 'horizontal' ? ev.clientX : ev.clientY;
-      const delta = current - this._startPos;
+      const delta = (current - this._startPos) * sign;
       const newSize = this._clamp(this._startSize + delta);
 
       if (newSize !== this.size) {
@@ -173,7 +199,8 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
   }
 
   _onKeydown(e) {
-    const step = e.shiftKey ? 20 : 5;
+    // An arrow moves the handle the way it points, as a drag would.
+    const step = (e.shiftKey ? 20 : 5) * this._sign();
     let newSize = this.size;
 
     if (this.direction === 'horizontal') {

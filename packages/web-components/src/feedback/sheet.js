@@ -11,7 +11,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @status stable
  * @requires arc-icon-button
  * @prop {boolean} open - Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.
- * @prop {'bottom' | 'right'} side - Which edge the panel slides in from. Bottom sheets have a max-height of 80vh; right sheets are 400px wide.
+ * @prop {'bottom' | 'right'} side - Which edge the panel slides in from. Bottom sheets are at most `--sheet-max-height` tall (default 80dvh); right sheets are `--sheet-width` wide (default 400px).
  * @prop {string} heading - Text displayed in the header row. Also used as the `aria-label` for the dialog panel.
  * @fires {CustomEvent<void>} arc-open - Fired when the sheet opens
  * @fires {CustomEvent<void>} arc-close - Fired when the sheet closes
@@ -22,7 +22,9 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @csspart close
  * @csspart panel - The sliding panel. The scrim is `::backdrop`, which is not an
  *   element and so cannot be a part — style it with the `--sheet-backdrop` and
- *   `--sheet-backdrop-filter` custom properties.
+ *   `--sheet-backdrop-filter` custom properties. Size the panel with
+ *   `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than
+ *   through this part.
  * @csspart handle
  * @csspart header
  * @csspart body
@@ -99,7 +101,10 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
         bottom: 0;
         inset-inline-start: 0;
         inset-inline-end: 0;
-        max-height: 80vh;
+        /* dvh, not vh: on a phone, vh is the viewport with the browser chrome
+           retracted, so an 80vh sheet opened with the address bar showing had
+           its footer pushed under it. */
+        max-height: var(--sheet-max-height, 80dvh);
         border-radius: var(--radius-xl) var(--radius-xl) 0 0;
       }
 
@@ -120,7 +125,7 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
         top: 0;
         inset-inline-end: 0;
         bottom: 0;
-        width: 400px;
+        width: var(--sheet-width, 400px);
         max-width: 90vw;
         border-radius: var(--radius-xl) 0 0 var(--radius-xl);
       }

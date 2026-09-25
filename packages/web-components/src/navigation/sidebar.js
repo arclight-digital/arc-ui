@@ -19,7 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} width - Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.
  * @prop {boolean} glow - Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.
  * @fires arc-navigate - Fired when a sidebar link is clicked
- * @slot - Default content.
+ * @slot - `arc-sidebar-section` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
  * @csspart sidebar
  * @csspart section

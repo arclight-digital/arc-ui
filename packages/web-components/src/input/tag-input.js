@@ -352,6 +352,12 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
       if (this._open || this._focused) this._dismiss.activate();
       else this._dismiss.deactivate();
     }
+    // Stays here, unlike the other listbox hosts, which settle virtual focus in
+    // willUpdate(): the item count reads the declared `value` and `suggestions`,
+    // which DeclaredPropsMixin normalises *after* the host's willUpdate, so a
+    // non-array assignment would throw there. clampToCount only requests an
+    // update when the index actually moves, so this costs a second render only
+    // when the list shrinks under the active option.
     if (changed.has('_query') || changed.has('suggestions') || changed.has('value')) {
       this._listbox.clampToCount();
     }
