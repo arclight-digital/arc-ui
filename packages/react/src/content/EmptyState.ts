@@ -7,6 +7,7 @@ import { ArcEmptyState } from '@arclux/arc-ui/empty-state';
 export interface EmptyStateProps {
   heading?: string;
   description?: string;
+  announce?: boolean;
   className?: string;
   children?: React.ReactNode;
 }

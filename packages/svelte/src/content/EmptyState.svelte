@@ -6,6 +6,7 @@
   interface Props {
     heading?: string;
     description?: string;
+    announce?: boolean;
     /** <slot name="icon"> — put slot="icon" on the element inside. */
     icon?: Snippet;
     /** <slot name="actions"> — put slot="actions" on the element inside. */
@@ -37,10 +38,10 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', description = '', icon, actions, ...rest }: Props = $props();
+  let { heading = '', description = '', announce, icon, actions, ...rest }: Props = $props();
 </script>
 
-<arc-empty-state {heading} {description} {...rest}>
+<arc-empty-state {heading} {description} {announce} {...rest}>
   {@render icon?.()}
   {@render actions?.()}
 </arc-empty-state>

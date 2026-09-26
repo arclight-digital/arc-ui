@@ -9,6 +9,8 @@ const props = withDefaults(defineProps<{
   label?: string;
   trend?: '' | 'up' | 'down' | 'neutral';
   change?: string;
+  size?: 'sm' | 'md' | 'lg';
+  plain?: boolean;
 }>(), {
   value: '',
   label: '',
@@ -23,6 +25,8 @@ const props = withDefaults(defineProps<{
     :label="props.label"
     :trend="props.trend"
     :change="props.change"
+    :size="props.size"
+    :plain="props.plain"
   >
   </arc-stat>
 </template>

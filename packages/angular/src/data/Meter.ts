@@ -60,4 +60,18 @@ export class Meter {
   get label(): string {
     return this._el.label;
   }
+
+  @Input() set mode(value: 'zones' | 'plain' | 'diverging') {
+    this._el.mode = value;
+  }
+  get mode(): 'zones' | 'plain' | 'diverging' {
+    return this._el.mode;
+  }
+
+  @Input() set center(value: number) {
+    this._el.center = value;
+  }
+  get center(): number {
+    return this._el.center;
+  }
 }

@@ -12,6 +12,8 @@ const props = withDefaults(defineProps<{
   high?: number;
   optimum?: number;
   label?: string;
+  mode?: 'zones' | 'plain' | 'diverging';
+  center?: number;
 }>(), {
   label: '',
 });
@@ -26,6 +28,8 @@ const props = withDefaults(defineProps<{
     :high="props.high"
     :optimum="props.optimum"
     :label="props.label"
+    :mode="props.mode"
+    :center="props.center"
   >
   </arc-meter>
 </template>

@@ -18,6 +18,8 @@ export interface WaveformProps {
   interactive?: boolean;
   variant?: 'bars' | 'mirror';
   label?: string;
+  steps?: number;
+  valueText?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   class?: string;
@@ -48,9 +50,9 @@ export interface WaveformProps {
 }
 
 export const Waveform: Component<WaveformProps> = (props) => {
-  const [local, rest] = splitProps(props, ['peaks', 'position', 'duration', 'interactive', 'variant', 'label', 'onArcInput', 'onArcChange']);
+  const [local, rest] = splitProps(props, ['peaks', 'position', 'duration', 'interactive', 'variant', 'label', 'steps', 'valueText', 'onArcInput', 'onArcChange']);
   return (
-    <arc-waveform peaks={local.peaks} position={local.position} duration={local.duration} interactive={local.interactive} variant={local.variant} label={local.label} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
+    <arc-waveform peaks={local.peaks} position={local.position} duration={local.duration} interactive={local.interactive} variant={local.variant} label={local.label} steps={local.steps} prop:valueText={local.valueText} on:arc-input={local.onArcInput} on:arc-change={local.onArcChange} {...rest}>
     </arc-waveform>
   );
 };

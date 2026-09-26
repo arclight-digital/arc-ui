@@ -39,4 +39,18 @@ export class Stat {
   get change(): string {
     return this._el.change;
   }
+
+  @Input() set size(value: 'sm' | 'md' | 'lg') {
+    this._el.size = value;
+  }
+  get size(): 'sm' | 'md' | 'lg' {
+    return this._el.size;
+  }
+
+  @Input() set plain(value: boolean) {
+    this._el.plain = value;
+  }
+  get plain(): boolean {
+    return this._el.plain;
+  }
 }

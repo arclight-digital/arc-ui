@@ -11,6 +11,8 @@ const props = withDefaults(defineProps<{
   interactive?: boolean;
   variant?: 'bars' | 'mirror';
   label?: string;
+  steps?: number;
+  valueText?: string;
 }>(), {
   label: '',
 });
@@ -45,6 +47,8 @@ function onArcChange(payload: CustomEvent) {
     :interactive="props.interactive"
     :variant="props.variant"
     :label="props.label"
+    :steps="props.steps"
+    :valueText="props.valueText"
     @arc-input="onArcInput"
     @arc-change="onArcChange"
   >

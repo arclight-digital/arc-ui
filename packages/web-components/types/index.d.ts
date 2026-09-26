@@ -950,6 +950,8 @@ export declare class ArcEmptyState extends LitElement {
   heading: string;
   /** Supporting text displayed below the heading, max-width 360px @default '' */
   description: string;
+  /** Makes the empty state a polite live region (`role="status"`), so a screen reader reads it when it appears, as for "No results" after a search the user just ran. Off by default: an empty list on page load is not news, and a live region reads out everything that changes inside it. @default false */
+  announce: boolean;
 }
 
 /**
@@ -1069,6 +1071,10 @@ export declare class ArcGauge extends LitElement {
   optimum: number;
   /** Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle. @default 'full' */
   variant: 'full' | 'half';
+  /** How the arc is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--gauge-fill` (default the accent), for a quantity that is not good or bad. `diverging` draws from `center` toward the value, `--gauge-below` on one side and `--gauge-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1. A custom colour's glow reads the matching `-rgb` property (`--gauge-fill-rgb` and so on). @default 'zones' */
+  mode: 'zones' | 'plain' | 'diverging';
+  /** The midpoint of a diverging gauge. Defaults to halfway between `min` and `max`. Ignored by the other modes. @default 0 */
+  center: number;
   /** Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property. @default true */
   showValue: boolean;
 }
@@ -1739,6 +1745,10 @@ export declare class ArcMeter extends LitElement {
   high: number;
   /** The optimal value. Determines which end of the range is "good" for color zone logic. @default 0 */
   optimum: number;
+  /** How the fill is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--meter-fill` (default the accent), for a quantity that is not good or bad. `diverging` fills from `center` toward the value, `--meter-below` on one side and `--meter-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1. @default 'zones' */
+  mode: 'zones' | 'plain' | 'diverging';
+  /** The midpoint of a diverging meter. Defaults to halfway between `min` and `max`. Ignored by the other modes. @default 0 */
+  center: number;
 }
 
 /**
@@ -2679,6 +2689,10 @@ export declare class ArcStat extends LitElement {
   trend: '' | 'up' | 'down' | 'neutral';
   /** Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'. @default '' */
   change: string;
+  /** Scale of the whole stat. `md` is the display size; `sm` is compact, for a strip of vitals beside other content; `lg` is for a hero figure. @default 'md' */
+  size: 'sm' | 'md' | 'lg';
+  /** Draws the value in the text colour, without the accent gradient, glow and rule, so a stat can sit in a dense layout without competing with it. @default false */
+  plain: boolean;
 }
 
 /**
@@ -3354,6 +3368,10 @@ export declare class ArcWaveform extends LitElement {
   interactive: boolean;
   /** Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope. @default 'bars' */
   variant: 'bars' | 'mirror';
+  /** Divides the track into this many equal steps, for a timeline of discrete frames rather than continuous audio. The playhead snaps to a step from pointer and keyboard alike, arrow keys move one step, Page Up/Down a tenth of the track (at least one step), and the slider reports the step number rather than a percentage. Unset, the track is continuous. @default 0 */
+  steps: number;
+  /** What the slider announces for the current position, replacing the built-in percentage or time. Set it from your `arc-input` handler, which runs before the position renders, so the text and the value always arrive together (e.g. "85 of 200 ms"). */
+  valueText: string;
 }
 
 declare global {

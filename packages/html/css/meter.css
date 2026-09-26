@@ -47,3 +47,32 @@
       .arc-meter .meter__fill--success { background: var(--color-success); }
       .arc-meter .meter__fill--warning { background: var(--color-warning); }
       .arc-meter .meter__fill--error   { background: var(--color-error); }
+
+      /* Not status colours: a usage count is not a warning, and a lean either
+         way is not good or bad (finding #121). Chart 1 and 2 are a validated
+         adjacent pair, so the two sides stay apart under colour-vision
+         deficiency. */
+      .arc-meter .meter__fill--plain { background: var(--meter-fill, var(--accent-primary)); }
+      .arc-meter .meter__fill--below { background: var(--meter-below, var(--chart-1)); }
+      .arc-meter .meter__fill--above { background: var(--meter-above, var(--chart-2)); }
+
+      .arc-meter .meter__fill--below,
+      .arc-meter .meter__fill--above {
+        position: absolute;
+        top: 0;
+        border-radius: 0;
+        transition: width var(--transition-base), inset-inline-start var(--transition-base);
+      }
+      .arc-meter .meter__fill--below { border-start-start-radius: var(--radius-full); border-end-start-radius: var(--radius-full); }
+      .arc-meter .meter__fill--above { border-start-end-radius: var(--radius-full); border-end-end-radius: var(--radius-full); }
+
+      .arc-meter .meter__center {
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        width: 2px;
+        margin-inline-start: -1px;
+        background: var(--text-muted);
+      }
+
+      .arc-meter[data-mode="diverging"] .meter__track { overflow: visible; }

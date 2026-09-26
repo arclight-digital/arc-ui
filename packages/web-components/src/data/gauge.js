@@ -18,6 +18,8 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @prop {string} label - Label text displayed beneath the value and used as the accessible name.
  * @prop {string} unit - Unit suffix rendered after the value (e.g. "%", "ms", "GB").
  * @prop {'full' | 'half'} variant - Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle.
+ * @prop {'zones' | 'plain' | 'diverging'} mode - How the arc is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--gauge-fill` (default the accent), for a quantity that is not good or bad. `diverging` draws from `center` toward the value, `--gauge-below` on one side and `--gauge-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1. A custom colour's glow reads the matching `-rgb` property (`--gauge-fill-rgb` and so on).
+ * @prop {number} center - The midpoint of a diverging gauge. Defaults to halfway between `min` and `max`. Ignored by the other modes.
  * @prop {boolean} showValue - Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property.
  * @slot none
  * @csspart base - The root element.
@@ -29,6 +31,7 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @csspart value
  * @csspart unit
  * @csspart label
+ * @csspart center - The centre tick of a diverging gauge.
  */
 export class ArcGauge extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -44,6 +47,8 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
     unit: { type: String },
     variant: oneOf(['full', 'half']),
     showValue: flag(true, { attribute: 'show-value', negative: 'no-value' }),
+    mode: oneOf(['zones', 'plain', 'diverging']),
+    center: num({ nullable: true }),
   };
 
   static styles = [
@@ -91,10 +96,30 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
       .gauge__arc--warning { stroke: var(--color-warning); --_zone-rgb: var(--color-warning-rgb); }
       .gauge__arc--error   { stroke: var(--color-error);   --_zone-rgb: var(--color-error-rgb); }
 
+      /* Not status colours: see arc-meter (finding #121). */
+      .gauge__arc--plain {
+        stroke: var(--gauge-fill, var(--accent-primary));
+        --_zone-rgb: var(--gauge-fill-rgb, var(--accent-primary-rgb));
+      }
+      .gauge__arc--below {
+        stroke: var(--gauge-below, var(--chart-1));
+        --_zone-rgb: var(--gauge-below-rgb, var(--chart-1-rgb));
+      }
+      .gauge__arc--above {
+        stroke: var(--gauge-above, var(--chart-2));
+        --_zone-rgb: var(--gauge-above-rgb, var(--chart-2-rgb));
+      }
+
+      .gauge__center {
+        stroke: var(--text-muted);
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
       /* Entrance: draw in from empty to the rendered offset. The reduced-motion
          guard in the shared styles zeroes this out. */
       @keyframes gauge-sweep {
-        from { stroke-dashoffset: var(--_arc-total); }
+        from { stroke-dashoffset: var(--_arc-from, var(--_arc-total)); }
       }
 
       .gauge__readout {
@@ -231,13 +256,62 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
       viewBox: half ? '0 0 100 58' : '0 0 100 100',
       d: this._arcPath(50, 50, r, startDeg, endDeg),
       length: this._round((r * (endDeg - startDeg) * Math.PI) / 180),
+      startDeg,
+      endDeg,
+      r,
     };
   }
 
-  render() {
-    const zone = this._zone;
+  /** The diverging midpoint, inside the range. */
+  get _center() {
+    const c = this.center ?? (this.min + this.max) / 2;
+    return Math.max(this.min, Math.min(this.max, c));
+  }
+
+  /** The readout's number: signed on a diverging gauge, two places at most. */
+  get _display() {
     const clamped = this._clamped;
-    const { viewBox, d, length } = this._geometry;
+    if (this.mode !== 'diverging') return String(clamped);
+    const n = Math.round(clamped * 100) / 100;
+    return `${clamped > this._center ? '+' : ''}${String(n).replace('-', '−')}`;
+  }
+
+  /**
+   * The diverging arc, from the centre to the value, and the centre tick.
+   *
+   * `_arcPath` only runs clockwise, so a value below the centre is drawn from
+   * the value to the centre. The entrance sweep would then start at the value,
+   * so it runs the other way (`--_arc-from` negative) to start from the centre
+   * as the arc above it does.
+   */
+  _renderDiverging({ startDeg, endDeg, r }) {
+    const range = this.max - this.min;
+    const at = (v) => startDeg + (range <= 0 ? 0 : ((v - this.min) / range) * (endDeg - startDeg));
+    const c = at(this._center);
+    const v = at(this._clamped);
+    const [x1, y1] = this._point(50, 50, r - 6, c);
+    const [x2, y2] = this._point(50, 50, r + 6, c);
+    const tick = svg`<line class="gauge__center" part="center" x1=${x1} y1=${y1} x2=${x2} y2=${y2} />`;
+    if (v === c) return tick;
+    const below = v < c;
+    const from = Math.min(v, c);
+    const to = Math.max(v, c);
+    const len = this._round((r * (to - from) * Math.PI) / 180);
+    return svg`
+      <path
+        class="gauge__arc gauge__arc--${below ? 'below' : 'above'}"
+        part="arc"
+        d=${this._arcPath(50, 50, r, from, to)}
+        style="stroke-dasharray: ${len} ${len}; stroke-dashoffset: 0; --_arc-total: ${len}; --_arc-from: ${below ? -len : len};"
+      />
+      ${tick}
+    `;
+  }
+
+  render() {
+    const tone = this.mode === 'plain' ? 'plain' : this._zone;
+    const geometry = this._geometry;
+    const { viewBox, d, length } = geometry;
     const offset = this._round(length * (1 - this._percent / 100));
 
     return html`
@@ -248,17 +322,21 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
         aria-valuemin=${this.min}
         aria-valuemax=${this.max}
         aria-valuenow=${this.value}
-        aria-valuetext=${this.unit ? `${clamped}${this.unit}` : nothing}
+        aria-valuetext=${this.unit || this.mode === 'diverging' ? `${this._display}${this.unit}` : nothing}
         aria-label=${this.label || 'Gauge'}
       >
         <svg class="gauge__svg" part="svg" viewBox=${viewBox} aria-hidden="true">
           ${svg`<path class="gauge__track" part="track" d=${d} />`}
-          ${svg`<path
-            class="gauge__arc gauge__arc--${zone}"
+          ${
+            this.mode === 'diverging'
+              ? this._renderDiverging(geometry)
+              : svg`<path
+            class="gauge__arc gauge__arc--${tone}"
             part="arc"
             d=${d}
             style="stroke-dasharray: ${length} ${length}; stroke-dashoffset: ${offset}; --_arc-total: ${length};"
-          />`}
+          />`
+          }
         </svg>
         ${
           this.showValue || this.label
@@ -267,7 +345,7 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
             ${
               this.showValue
                 ? html`
-              <span class="gauge__value" part="value">${clamped}${
+              <span class="gauge__value" part="value">${this._display}${
                 this.unit ? html`<span class="gauge__unit" part="unit">${this.unit}</span>` : ''
               }</span>
             `

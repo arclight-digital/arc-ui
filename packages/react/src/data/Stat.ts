@@ -9,6 +9,8 @@ export interface StatProps {
   label?: string;
   trend?: '' | 'up' | 'down' | 'neutral';
   change?: string;
+  size?: 'sm' | 'md' | 'lg';
+  plain?: boolean;
   className?: string;
 }
 

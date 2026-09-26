@@ -25,4 +25,11 @@ export class EmptyState {
   get description(): string {
     return this._el.description;
   }
+
+  @Input() set announce(value: boolean) {
+    this._el.announce = value;
+  }
+  get announce(): boolean {
+    return this._el.announce;
+  }
 }

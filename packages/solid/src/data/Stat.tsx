@@ -16,6 +16,8 @@ export interface StatProps {
   label?: string;
   trend?: '' | 'up' | 'down' | 'neutral';
   change?: string;
+  size?: 'sm' | 'md' | 'lg';
+  plain?: boolean;
   class?: string;
   id?: string;
   style?: string;
@@ -44,9 +46,9 @@ export interface StatProps {
 }
 
 export const Stat: Component<StatProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'label', 'trend', 'change']);
+  const [local, rest] = splitProps(props, ['value', 'label', 'trend', 'change', 'size', 'plain']);
   return (
-    <arc-stat value={local.value} label={local.label} trend={local.trend} change={local.change} {...rest}>
+    <arc-stat value={local.value} label={local.label} trend={local.trend} change={local.change} size={local.size} plain={local.plain} {...rest}>
     </arc-stat>
   );
 };

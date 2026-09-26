@@ -31,5 +31,6 @@ const emit = defineEmits<{
     <slot name="prefix" />
     <slot name="description" />
     <slot name="suffix" />
+    <slot name="actions" />
   </arc-list-item>
 </template>

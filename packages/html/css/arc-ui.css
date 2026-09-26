@@ -1884,10 +1884,30 @@
       .arc-gauge .gauge__arc--warning { stroke: var(--color-warning); --_zone-rgb: var(--color-warning-rgb); }
       .arc-gauge .gauge__arc--error   { stroke: var(--color-error);   --_zone-rgb: var(--color-error-rgb); }
 
+      /* Not status colours: see arc-meter (finding #121). */
+      .arc-gauge .gauge__arc--plain {
+        stroke: var(--gauge-fill, var(--accent-primary));
+        --_zone-rgb: var(--gauge-fill-rgb, var(--accent-primary-rgb));
+      }
+      .arc-gauge .gauge__arc--below {
+        stroke: var(--gauge-below, var(--chart-1));
+        --_zone-rgb: var(--gauge-below-rgb, var(--chart-1-rgb));
+      }
+      .arc-gauge .gauge__arc--above {
+        stroke: var(--gauge-above, var(--chart-2));
+        --_zone-rgb: var(--gauge-above-rgb, var(--chart-2-rgb));
+      }
+
+      .arc-gauge .gauge__center {
+        stroke: var(--text-muted);
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
       /* Entrance: draw in from empty to the rendered offset. The reduced-motion
          guard in the shared styles zeroes this out. */
       @keyframes gauge-sweep {
-        from { stroke-dashoffset: var(--_arc-total); }
+        from { stroke-dashoffset: var(--_arc-from, var(--_arc-total)); }
       }
 
       .arc-gauge .gauge__readout {
@@ -2077,6 +2097,35 @@
       .arc-meter .meter__fill--warning { background: var(--color-warning); }
       .arc-meter .meter__fill--error   { background: var(--color-error); }
 
+      /* Not status colours: a usage count is not a warning, and a lean either
+         way is not good or bad (finding #121). Chart 1 and 2 are a validated
+         adjacent pair, so the two sides stay apart under colour-vision
+         deficiency. */
+      .arc-meter .meter__fill--plain { background: var(--meter-fill, var(--accent-primary)); }
+      .arc-meter .meter__fill--below { background: var(--meter-below, var(--chart-1)); }
+      .arc-meter .meter__fill--above { background: var(--meter-above, var(--chart-2)); }
+
+      .arc-meter .meter__fill--below,
+      .arc-meter .meter__fill--above {
+        position: absolute;
+        top: 0;
+        border-radius: 0;
+        transition: width var(--transition-base), inset-inline-start var(--transition-base);
+      }
+      .arc-meter .meter__fill--below { border-start-start-radius: var(--radius-full); border-end-start-radius: var(--radius-full); }
+      .arc-meter .meter__fill--above { border-start-end-radius: var(--radius-full); border-end-end-radius: var(--radius-full); }
+
+      .arc-meter .meter__center {
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        width: 2px;
+        margin-inline-start: -1px;
+        background: var(--text-muted);
+      }
+
+      .arc-meter[data-mode="diverging"] .meter__track { overflow: visible; }
+
 /* arc-sparkline */
 .arc-sparkline {
         display: inline-block;
@@ -2198,6 +2247,27 @@
         width: 12px;
         height: 12px;
       }
+
+      /* A compact stat for a strip of vitals (finding #122). The display
+         clamp runs 32 to 48px, which is a headline, not a reading in a 96px
+         strip. */
+      .arc-stat[data-size="sm"] .stat {
+        gap: var(--space-xs);
+        padding: var(--space-sm);
+      }
+      .arc-stat[data-size="sm"] .stat__value { font-size: var(--_text-xl); }
+      .arc-stat[data-size="sm"] .stat__trend { font-size: var(--ui-size); margin-top: 0; }
+
+      .arc-stat[data-size="lg"] .stat { padding: var(--space-xl); }
+      .arc-stat[data-size="lg"] .stat__value { font-size: var(--display-xl-size); }
+
+      .arc-stat[plain] .stat__value {
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        color: var(--text-primary);
+        filter: none;
+      }
+      .arc-stat[plain] .stat__rule { display: none; }
 
 /* arc-stepper */
 .arc-stepper { display: block; }

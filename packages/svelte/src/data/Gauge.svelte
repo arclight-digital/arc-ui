@@ -13,6 +13,8 @@
     unit?: string;
     variant?: 'full' | 'half';
     showValue?: boolean;
+    mode?: 'zones' | 'plain' | 'diverging';
+    center?: number;
     class?: string;
     id?: string;
     style?: string;
@@ -40,7 +42,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value, min, max, low, high, optimum, label = '', unit = '', variant, showValue, ...rest }: Props = $props();
+  let { value, min, max, low, high, optimum, label = '', unit = '', variant, showValue, mode, center, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -50,5 +52,5 @@
   });
 </script>
 
-<arc-gauge {value} {min} {max} {low} {high} {optimum} {label} {unit} {variant} bind:this={__el} {...rest}>
+<arc-gauge {value} {min} {max} {low} {high} {optimum} {label} {unit} {variant} {mode} {center} bind:this={__el} {...rest}>
 </arc-gauge>

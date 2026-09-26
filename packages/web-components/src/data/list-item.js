@@ -18,10 +18,12 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @slot - Default content.
  * @slot description
  * @slot suffix
+ * @slot actions - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row.
  * @csspart base - The root element.
  * @csspart label
  * @csspart description
  * @csspart item
+ * @csspart actions - The container of the `actions` slot.
  */
 export class ArcListItem extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -39,6 +41,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     href: { type: String },
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
+    _hasActions: { state: true },
     _hasDescription: { state: true },
   };
 
@@ -124,6 +127,30 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
 
       .item__description--empty { display: none; }
 
+      /* Revealed by hover or by focus anywhere in the row, never by hover
+         alone: opacity rather than visibility, because a hidden action cannot
+         take focus, and focus is what reveals it for a keyboard user. No hover
+         at all, as on a phone, and they simply stay shown (finding #113). */
+      .item__actions {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        flex-shrink: 0;
+        opacity: 0;
+        transition: opacity var(--transition-fast);
+      }
+
+      .item:hover .item__actions,
+      :host(:focus-within) .item__actions {
+        opacity: 1;
+      }
+
+      @media (hover: none) {
+        .item__actions { opacity: 1; }
+      }
+
+      .item__actions--empty { display: none; }
+
       ::slotted([slot="prefix"]),
       ::slotted([slot="suffix"]) { display: flex; }
 
@@ -143,6 +170,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     this.href = '';
     this._hasPrefix = false;
     this._hasSuffix = false;
+    this._hasActions = false;
     this._hasDescription = false;
   }
 
@@ -154,12 +182,23 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
+  _onActionsSlotChange(e) {
+    this._hasActions = e.target.assignedNodes({ flatten: true }).length > 0;
+  }
+
   _onDescriptionSlotChange(e) {
     this._hasDescription = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
+  /** Whether an event started inside the `actions` slot. */
+  _fromActions(e) {
+    return e.composedPath().some((n) => n.getAttribute?.('slot') === 'actions');
+  }
+
   _onClick(e) {
     if (this.disabled) return;
+    // An action acts on the row; it does not choose it.
+    if (this._fromActions(e)) return;
     this.dispatchEvent(
       new CustomEvent('arc-select', {
         bubbles: true,
@@ -182,6 +221,9 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
       </span>
       <span class="item__suffix ${this._hasSuffix ? '' : 'item__suffix--empty'}">
         <slot name="suffix" @slotchange=${this._onSuffixSlotChange}></slot>
+      </span>
+      <span class="item__actions ${this._hasActions ? '' : 'item__actions--empty'}" part="actions">
+        <slot name="actions" @slotchange=${this._onActionsSlotChange}></slot>
       </span>
     `;
   }

@@ -17,6 +17,7 @@ Stat also supports an optional trend indicator via the \`trend\` and \`change\` 
 Stat is designed for landing-page metrics, dashboard KPI rows, and pricing comparison grids. Place multiple Stats side by side in a flex or grid container to create a metrics row. The exposed CSS parts — "stat", "value", "label", and "trend" — allow per-instance styling when you need to customize colors or sizes beyond the defaults.`,
 
   features: [
+    '`size` (sm, md, lg) and `plain` for a quiet stat in a dense strip of vitals',
     'Gradient-clipped value text with blue-to-violet fill and dual drop-shadow glow',
     'Responsive font-size using clamp() that scales from 32px to 48px',
     'Decorative gradient rule separator between value and label',
@@ -47,6 +48,7 @@ Stat is designed for landing-page metrics, dashboard KPI rows, and pricing compa
   <arc-stat value="99.9%" label="Uptime" trend="up" change="+12%"></arc-stat>
   <arc-stat value="<50ms" label="Latency" trend="down" change="-8%"></arc-stat>
   <arc-stat value="24/7" label="Support"></arc-stat>
+  <arc-stat value="1,204" label="Sessions" size="sm" plain></arc-stat>
 </div>`,
 
   tabs: [

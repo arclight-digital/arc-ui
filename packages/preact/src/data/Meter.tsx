@@ -11,6 +11,8 @@ export interface MeterProps {
   high?: number;
   optimum?: number;
   label?: string;
+  mode?: 'zones' | 'plain' | 'diverging';
+  center?: number;
   class?: string;
   id?: string;
   style?: string;
@@ -38,5 +40,5 @@ export interface MeterProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Meter: FunctionComponent<MeterProps> = ({ value, min, max, low, high, optimum, label, ...rest }) =>
-  h('arc-meter', { value, min, max, low, high, optimum, label, ...rest });
+export const Meter: FunctionComponent<MeterProps> = ({ value, min, max, low, high, optimum, label, mode, center, ...rest }) =>
+  h('arc-meter', { value, min, max, low, high, optimum, label, mode, center, ...rest });

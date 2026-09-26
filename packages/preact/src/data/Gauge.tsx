@@ -14,6 +14,8 @@ export interface GaugeProps {
   unit?: string;
   variant?: 'full' | 'half';
   showValue?: boolean;
+  mode?: 'zones' | 'plain' | 'diverging';
+  center?: number;
   class?: string;
   id?: string;
   style?: string;
@@ -41,5 +43,5 @@ export interface GaugeProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Gauge: FunctionComponent<GaugeProps> = ({ value, min, max, low, high, optimum, label, unit, variant, showValue, ...rest }) =>
-  h('arc-gauge', { value, min, max, low, high, optimum, label, unit, variant, showValue, ...rest });
+export const Gauge: FunctionComponent<GaugeProps> = ({ value, min, max, low, high, optimum, label, unit, variant, showValue, mode, center, ...rest }) =>
+  h('arc-gauge', { value, min, max, low, high, optimum, label, unit, variant, showValue, mode, center, ...rest });

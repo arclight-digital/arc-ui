@@ -165,7 +165,8 @@ export default {
  "arc-empty-state": {
   "attrs": [
    "heading",
-   "description"
+   "description",
+   "announce"
   ],
   "slug": "empty-state"
  },
@@ -712,16 +713,24 @@ export default {
    "label",
    "unit",
    "variant",
-   "showValue"
+   "showValue",
+   "mode",
+   "center"
   ],
   "enums": {
    "variant": [
     "full",
     "half"
+   ],
+   "mode": [
+    "zones",
+    "plain",
+    "diverging"
    ]
   },
   "fallbacks": {
-   "variant": "full"
+   "variant": "full",
+   "mode": "zones"
   },
   "slug": "gauge"
  },
@@ -807,8 +816,20 @@ export default {
    "low",
    "high",
    "optimum",
-   "label"
+   "label",
+   "mode",
+   "center"
   ],
+  "enums": {
+   "mode": [
+    "zones",
+    "plain",
+    "diverging"
+   ]
+  },
+  "fallbacks": {
+   "mode": "zones"
+  },
   "slug": "meter"
  },
  "arc-sparkline": {
@@ -836,7 +857,9 @@ export default {
    "value",
    "label",
    "trend",
-   "change"
+   "change",
+   "size",
+   "plain"
   ],
   "enums": {
    "trend": [
@@ -844,10 +867,16 @@ export default {
     "up",
     "down",
     "neutral"
+   ],
+   "size": [
+    "sm",
+    "md",
+    "lg"
    ]
   },
   "fallbacks": {
-   "trend": ""
+   "trend": "",
+   "size": "md"
   },
   "slug": "stat"
  },
@@ -930,7 +959,9 @@ export default {
    "duration",
    "interactive",
    "variant",
-   "label"
+   "label",
+   "steps",
+   "value-text"
   ],
   "enums": {
    "variant": [

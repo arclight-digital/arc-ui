@@ -1374,6 +1374,18 @@
               "default": "''",
               "description": "Supporting text displayed below the heading, max-width 360px",
               "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "announce",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Makes the empty state a polite live region (`role=\"status\"`), so a screen reader reads it when it appears, as for \"No results\" after a search the user just ran. Off by default: an empty list on page load is not news, and a live region reads out everything that changes inside it.",
+              "attribute": "announce",
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -1394,6 +1406,21 @@
               "default": "''",
               "description": "Supporting text displayed below the heading, max-width 360px",
               "fieldName": "description"
+            },
+            {
+              "name": "announce",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Makes the empty state a polite live region (`role=\"status\"`), so a screen reader reads it when it appears, as for \"No results\" after a search the user just ran. Off by default: an empty list on page load is not news, and a live region reads out everything that changes inside it.",
+              "fieldName": "announce",
+              "default": "false"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
             }
           ],
           "superclass": {
@@ -6117,6 +6144,10 @@
             },
             {
               "name": "label"
+            },
+            {
+              "description": "The centre tick of a diverging gauge.",
+              "name": "center"
             }
           ],
           "slots": [],
@@ -6224,6 +6255,29 @@
             },
             {
               "kind": "field",
+              "name": "mode",
+              "privacy": "public",
+              "type": {
+                "text": "'zones' | 'plain' | 'diverging'"
+              },
+              "description": "How the arc is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--gauge-fill` (default the accent), for a quantity that is not good or bad. `diverging` draws from `center` toward the value, `--gauge-below` on one side and `--gauge-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1. A custom colour's glow reads the matching `-rgb` property (`--gauge-fill-rgb` and so on).",
+              "attribute": "mode",
+              "default": "'zones'",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "center",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "The midpoint of a diverging gauge. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
+              "attribute": "center",
+              "default": "0"
+            },
+            {
+              "kind": "field",
               "name": "showValue",
               "privacy": "public",
               "type": {
@@ -6325,6 +6379,24 @@
               "description": "Whether to render the numeric value in the center of the arc. Defaults to true; disable via the `showValue` property.",
               "fieldName": "showValue",
               "default": "true"
+            },
+            {
+              "name": "mode",
+              "type": {
+                "text": "'zones' | 'plain' | 'diverging'"
+              },
+              "description": "How the arc is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--gauge-fill` (default the accent), for a quantity that is not good or bad. `diverging` draws from `center` toward the value, `--gauge-below` on one side and `--gauge-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1. A custom colour's glow reads the matching `-rgb` property (`--gauge-fill-rgb` and so on).",
+              "fieldName": "mode",
+              "default": "'zones'"
+            },
+            {
+              "name": "center",
+              "type": {
+                "text": "number"
+              },
+              "description": "The midpoint of a diverging gauge. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
+              "fieldName": "center",
+              "default": "0"
             }
           ],
           "mixins": [
@@ -6901,6 +6973,10 @@
             },
             {
               "name": "item"
+            },
+            {
+              "description": "The container of the `actions` slot.",
+              "name": "actions"
             }
           ],
           "slots": [
@@ -6916,6 +6992,10 @@
             },
             {
               "name": "suffix"
+            },
+            {
+              "description": "Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row.",
+              "name": "actions"
             }
           ],
           "members": [
@@ -7264,6 +7344,10 @@
             },
             {
               "name": "fill"
+            },
+            {
+              "description": "The centre tick of a diverging meter.",
+              "name": "center"
             }
           ],
           "slots": [],
@@ -7345,6 +7429,29 @@
               "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
               "attribute": "optimum",
               "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "mode",
+              "privacy": "public",
+              "type": {
+                "text": "'zones' | 'plain' | 'diverging'"
+              },
+              "description": "How the fill is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--meter-fill` (default the accent), for a quantity that is not good or bad. `diverging` fills from `center` toward the value, `--meter-below` on one side and `--meter-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1.",
+              "attribute": "mode",
+              "default": "'zones'",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "center",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "The midpoint of a diverging meter. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
+              "attribute": "center",
+              "default": "0"
             }
           ],
           "attributes": [
@@ -7410,6 +7517,24 @@
               "default": "''",
               "description": "Label text displayed in the header row alongside the current percentage.",
               "fieldName": "label"
+            },
+            {
+              "name": "mode",
+              "type": {
+                "text": "'zones' | 'plain' | 'diverging'"
+              },
+              "description": "How the fill is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--meter-fill` (default the accent), for a quantity that is not good or bad. `diverging` fills from `center` toward the value, `--meter-below` on one side and `--meter-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1.",
+              "fieldName": "mode",
+              "default": "'zones'"
+            },
+            {
+              "name": "center",
+              "type": {
+                "text": "number"
+              },
+              "description": "The midpoint of a diverging meter. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
+              "fieldName": "center",
+              "default": "0"
             }
           ],
           "mixins": [
@@ -7690,6 +7815,30 @@
               "default": "''",
               "description": "Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.",
               "attribute": "change"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "privacy": "public",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "description": "Scale of the whole stat. `md` is the display size; `sm` is compact, for a strip of vitals beside other content; `lg` is for a hero figure.",
+              "attribute": "size",
+              "default": "'md'",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "plain",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Draws the value in the text colour, without the accent gradient, glow and rule, so a stat can sit in a dense layout without competing with it.",
+              "attribute": "plain",
+              "default": "false",
+              "reflects": true
             }
           ],
           "attributes": [
@@ -7728,6 +7877,24 @@
               "default": "''",
               "description": "Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.",
               "fieldName": "change"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "'sm' | 'md' | 'lg'"
+              },
+              "description": "Scale of the whole stat. `md` is the display size; `sm` is compact, for a strip of vitals beside other content; `lg` is for a hero figure.",
+              "fieldName": "size",
+              "default": "'md'"
+            },
+            {
+              "name": "plain",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Draws the value in the text colour, without the accent gradient, glow and rule, so a stat can sit in a dense layout without competing with it.",
+              "fieldName": "plain",
+              "default": "false"
             }
           ],
           "mixins": [
@@ -8669,6 +8836,27 @@
               "attribute": "variant",
               "default": "'bars'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "steps",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Divides the track into this many equal steps, for a timeline of discrete frames rather than continuous audio. The playhead snaps to a step from pointer and keyboard alike, arrow keys move one step, Page Up/Down a tenth of the track (at least one step), and the slider reports the step number rather than a percentage. Unset, the track is continuous.",
+              "attribute": "steps",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "valueText",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the slider announces for the current position, replacing the built-in percentage or time. Set it from your `arc-input` handler, which runs before the position renders, so the text and the value always arrive together (e.g. \"85 of 200 ms\").",
+              "attribute": "value-text"
             }
           ],
           "events": [
@@ -8741,6 +8929,23 @@
               "default": "''",
               "description": "Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.",
               "fieldName": "label"
+            },
+            {
+              "name": "steps",
+              "type": {
+                "text": "number"
+              },
+              "description": "Divides the track into this many equal steps, for a timeline of discrete frames rather than continuous audio. The playhead snaps to a step from pointer and keyboard alike, arrow keys move one step, Page Up/Down a tenth of the track (at least one step), and the slider reports the step number rather than a percentage. Unset, the track is continuous.",
+              "fieldName": "steps",
+              "default": "0"
+            },
+            {
+              "name": "value-text",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the slider announces for the current position, replacing the built-in percentage or time. Set it from your `arc-input` handler, which runs before the position renders, so the text and the value always arrive together (e.g. \"85 of 200 ms\").",
+              "fieldName": "valueText"
             }
           ],
           "mixins": [

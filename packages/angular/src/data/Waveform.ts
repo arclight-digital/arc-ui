@@ -58,6 +58,20 @@ export class Waveform {
     return this._el.label;
   }
 
+  @Input() set steps(value: number) {
+    this._el.steps = value;
+  }
+  get steps(): number {
+    return this._el.steps;
+  }
+
+  @Input() set valueText(value: string) {
+    this._el.valueText = value;
+  }
+  get valueText(): string {
+    return this._el.valueText;
+  }
+
   @Output() positionChange = new EventEmitter<number>();
 
   _onArcInput(event: CustomEvent) {

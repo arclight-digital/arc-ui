@@ -9,6 +9,8 @@
     interactive?: boolean;
     variant?: 'bars' | 'mirror';
     label?: string;
+    steps?: number;
+    valueText?: string;
     class?: string;
     id?: string;
     style?: string;
@@ -36,7 +38,14 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { peaks, position = $bindable(), duration, interactive, variant, label = '', ...rest }: Props = $props();
+  let { peaks, position = $bindable(), duration, interactive, variant, label = '', steps, valueText, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (valueText !== undefined) el.valueText = valueText;
+  });
 
   // Two-way binding — mirror the event detail back onto the prop, then
   // forward to the consumer's own handler, which {...rest} would otherwise
@@ -57,7 +66,7 @@
   }
 </script>
 
-<arc-waveform {peaks} {position} {duration} {interactive} {variant} {label} {...rest}
+<arc-waveform {peaks} {position} {duration} {interactive} {variant} {label} {steps} bind:this={__el} {...rest}
   onarc-input={__onArcInput}
   onarc-change={__onArcChange}
 >

@@ -16,6 +16,7 @@ The color logic mirrors the HTML meter algorithm using three thresholds: \`low\`
 Meter uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\` for full accessibility. The fill width and color transitions are animated using the theme's base transition timing, creating smooth visual updates when the value changes programmatically.`,
 
   features: [
+    '`mode="plain"` for a quantity that is not good or bad, and `mode="diverging"` for a lean either way around `center` (−1 to +1), each side its own colour',
     'Color-coded fill bar: green (success) when the value is in the optimal zone, yellow (warning) for intermediate, red (error) for critical',
     'Configurable `low`, `high`, and `optimum` thresholds mirroring the HTML `<meter>` algorithm',
     'Header row showing label text and current percentage in monospace font when `label` is set',
@@ -46,6 +47,7 @@ Meter uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`ari
   previewHtml: `<div style="display:flex; flex-direction:column; gap:var(--space-md); width:100%; max-width:400px;">
   <arc-meter label="Battery Level" value="82" min="0" max="100" low="20" high="60" optimum="100"></arc-meter>
   <arc-meter label="Error Rate" value="45" min="0" max="100" low="10" high="50" optimum="0"></arc-meter>
+  <arc-meter label="Lean" mode="diverging" value="0.4" min="-1" max="1"></arc-meter>
 </div>`,
 
   tabs: [

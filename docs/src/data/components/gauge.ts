@@ -17,6 +17,7 @@ The color logic mirrors the HTML meter algorithm using the same three thresholds
 The value arc sweeps into place on first paint and animates smoothly whenever the value changes, honoring the reduced-motion preference. Gauge uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\`; when a \`unit\` is set, \`aria-valuetext\` reports the reading with its unit so screen readers announce "72%" rather than a bare number.`,
 
   features: [
+    '`mode="plain"` for a quantity that is not good or bad, and `mode="diverging"` for a lean either way around `center`, each side its own colour',
     'Color-coded value arc: green (success) in the optimal zone, yellow (warning) for intermediate, red (error) for critical',
     'Configurable `low`, `high`, and `optimum` thresholds identical to Meter, mirroring the HTML `<meter>` algorithm',
     'Soft glow on the value arc in the zone color, following the status glow scale',
@@ -48,6 +49,7 @@ The value arc sweeps into place on first paint and animates smoothly whenever th
   <arc-gauge label="Battery" value="82" unit="%" min="0" max="100" low="20" high="60" optimum="100"></arc-gauge>
   <arc-gauge label="Error Rate" value="45" unit="%" min="0" max="100" low="10" high="50" optimum="0"></arc-gauge>
   <arc-gauge variant="half" label="Load" value="0.64" unit="" min="0" max="1" low="0.5" high="0.8" optimum="0"></arc-gauge>
+  <arc-gauge variant="half" label="Lean" mode="diverging" value="-0.3" min="-1" max="1"></arc-gauge>
 </div>`,
   replayable: true,
 

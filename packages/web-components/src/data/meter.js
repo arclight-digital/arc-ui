@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, num } from '../shared/props.js';
+import { DeclaredPropsMixin, num, oneOf } from '../shared/props.js';
 
 /**
  * Semantic gauge display with color-coded fill zones (success, warning, error) based on
@@ -15,6 +15,8 @@ import { DeclaredPropsMixin, num } from '../shared/props.js';
  * @prop {number} high - Threshold above which the value is considered high. Used for color zone calculation.
  * @prop {number} optimum - The optimal value. Determines which end of the range is "good" for color zone logic.
  * @prop {string} label - Label text displayed in the header row alongside the current percentage.
+ * @prop {'zones' | 'plain' | 'diverging'} mode - How the fill is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--meter-fill` (default the accent), for a quantity that is not good or bad. `diverging` fills from `center` toward the value, `--meter-below` on one side and `--meter-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1.
+ * @prop {number} center - The midpoint of a diverging meter. Defaults to halfway between `min` and `max`. Ignored by the other modes.
  * @slot none
  * @csspart base - The root element.
  * @csspart meter
@@ -23,6 +25,7 @@ import { DeclaredPropsMixin, num } from '../shared/props.js';
  * @csspart value
  * @csspart track
  * @csspart fill
+ * @csspart center - The centre tick of a diverging meter.
  */
 export class ArcMeter extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -38,6 +41,8 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
     high: num({ nullable: true }),
     optimum: num({ nullable: true }),
     label: { type: String },
+    mode: oneOf(['zones', 'plain', 'diverging']),
+    center: num({ nullable: true }),
   };
 
   static styles = [
@@ -89,6 +94,35 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
       .meter__fill--success { background: var(--color-success); }
       .meter__fill--warning { background: var(--color-warning); }
       .meter__fill--error   { background: var(--color-error); }
+
+      /* Not status colours: a usage count is not a warning, and a lean either
+         way is not good or bad (finding #121). Chart 1 and 2 are a validated
+         adjacent pair, so the two sides stay apart under colour-vision
+         deficiency. */
+      .meter__fill--plain { background: var(--meter-fill, var(--accent-primary)); }
+      .meter__fill--below { background: var(--meter-below, var(--chart-1)); }
+      .meter__fill--above { background: var(--meter-above, var(--chart-2)); }
+
+      .meter__fill--below,
+      .meter__fill--above {
+        position: absolute;
+        top: 0;
+        border-radius: 0;
+        transition: width var(--transition-base), inset-inline-start var(--transition-base);
+      }
+      .meter__fill--below { border-start-start-radius: var(--radius-full); border-end-start-radius: var(--radius-full); }
+      .meter__fill--above { border-start-end-radius: var(--radius-full); border-end-end-radius: var(--radius-full); }
+
+      .meter__center {
+        position: absolute;
+        top: -2px;
+        bottom: -2px;
+        width: 2px;
+        margin-inline-start: -1px;
+        background: var(--text-muted);
+      }
+
+      :host([mode="diverging"]) .meter__track { overflow: visible; }
     `,
   ];
 
@@ -104,6 +138,25 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
     if (range <= 0) return 0;
     const clamped = Math.max(this.min, Math.min(this.max, this.value));
     return ((clamped - this.min) / range) * 100;
+  }
+
+  /** The diverging midpoint, inside the range. */
+  get _center() {
+    const c = this.center ?? (this.min + this.max) / 2;
+    return Math.max(this.min, Math.min(this.max, c));
+  }
+
+  /** A position in the range as a percentage of the track. */
+  _at(v) {
+    const range = this.max - this.min;
+    return range <= 0 ? 0 : ((v - this.min) / range) * 100;
+  }
+
+  /** The value as the header shows it on a diverging meter: signed, two places at most. */
+  get _signed() {
+    const clamped = Math.max(this.min, Math.min(this.max, this.value));
+    const n = Math.round(clamped * 100) / 100;
+    return `${clamped > this._center ? '+' : ''}${String(n).replace('-', '−')}`;
   }
 
   /**
@@ -145,9 +198,32 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
     return 'warning';
   }
 
+  _renderFill(percent) {
+    if (this.mode === 'diverging') {
+      const c = this._at(this._center);
+      const below = percent < c;
+      const start = below ? percent : c;
+      const width = Math.abs(percent - c);
+      return html`
+        ${
+          width > 0
+            ? html`<div
+              class="meter__fill meter__fill--${below ? 'below' : 'above'}"
+              style="inset-inline-start: ${start}%; width: ${width}%"
+              part="fill"
+            ></div>`
+            : ''
+        }
+        <div class="meter__center" style="inset-inline-start: ${c}%" part="center"></div>
+      `;
+    }
+    const tone = this.mode === 'plain' ? 'plain' : this._zone;
+    return html`<div class="meter__fill meter__fill--${tone}" style="width: ${percent}%" part="fill"></div>`;
+  }
+
   render() {
     const percent = this._percent;
-    const zone = this._zone;
+    const diverging = this.mode === 'diverging';
 
     return html`
       <div
@@ -157,6 +233,7 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
         aria-valuemin=${this.min}
         aria-valuemax=${this.max}
         aria-valuenow=${this.value}
+        aria-valuetext=${diverging ? this._signed : nothing}
         aria-label=${this.label || 'Meter'}
       >
         ${
@@ -164,18 +241,12 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
             ? html`
           <div class="meter__header" part="header">
             <span class="meter__label" part="label">${this.label}</span>
-            <span class="meter__value" part="value">${Math.round(percent)}%</span>
+            <span class="meter__value" part="value">${diverging ? this._signed : `${Math.round(percent)}%`}</span>
           </div>
         `
             : ''
         }
-        <div class="meter__track" part="track">
-          <div
-            class="meter__fill meter__fill--${zone}"
-            style="width: ${percent}%"
-            part="fill"
-          ></div>
-        </div>
+        <div class="meter__track" part="track">${this._renderFill(percent)}</div>
       </div>
     `;
   }

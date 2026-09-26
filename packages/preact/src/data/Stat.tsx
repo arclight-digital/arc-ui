@@ -8,6 +8,8 @@ export interface StatProps {
   label?: string;
   trend?: '' | 'up' | 'down' | 'neutral';
   change?: string;
+  size?: 'sm' | 'md' | 'lg';
+  plain?: boolean;
   class?: string;
   id?: string;
   style?: string;
@@ -35,5 +37,5 @@ export interface StatProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Stat: FunctionComponent<StatProps> = ({ value, label, trend, change, ...rest }) =>
-  h('arc-stat', { value, label, trend, change, ...rest });
+export const Stat: FunctionComponent<StatProps> = ({ value, label, trend, change, size, plain, ...rest }) =>
+  h('arc-stat', { value, label, trend, change, size, plain, ...rest });

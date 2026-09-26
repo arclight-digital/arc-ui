@@ -15,6 +15,7 @@ The component uses a dashed border and \`--bg-card\` background to visually dist
 The action slot (named \`action\`) provides a flex container for one or more buttons, enabling patterns like "Create your first item" or "Try a different search". The description text is capped at 360px max-width for comfortable reading. The outer container uses \`role="status"\` so assistive technology announces the empty state to screen reader users.`,
 
   features: [
+    'Quiet by default; `announce` makes it a polite live region, for an empty result the user just asked for',
     'Centered layout with icon, heading, description, and action button area',
     'Dashed border container with `--bg-card` background for visual distinction',
     'Named icon slot for custom SVG or emoji icons displayed at 40px',

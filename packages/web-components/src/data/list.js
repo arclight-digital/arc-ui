@@ -161,11 +161,17 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
     const items = this._items.filter((i) => !i.disabled);
     if (!items.length) return;
 
+    // An arc-list-item's `actions` are its own light-DOM children, so a focused
+    // action is inside the item but not its shadow root. It counts as its row
+    // for the arrow keys, and keeps Enter and Space for itself.
+    const inActions = e.composedPath().some((n) => n.getAttribute?.('slot') === 'actions');
+
     const current = items.findIndex(
       (i) =>
         i.shadowRoot?.querySelector('.item') === i.shadowRoot?.activeElement ||
         i === document.activeElement ||
-        i.shadowRoot?.querySelector(':focus') !== null,
+        i.shadowRoot?.querySelector(':focus') !== null ||
+        (inActions && i.contains(document.activeElement)),
     );
 
     let next = -1;
@@ -189,6 +195,7 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
         break;
       case 'Enter':
       case ' ':
+        if (inActions) return; // the button's own activation, not the row's
         if (this.selectable && current >= 0) {
           e.preventDefault();
           items[current].dispatchEvent(

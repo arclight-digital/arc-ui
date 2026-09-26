@@ -187,3 +187,91 @@ describe('arc-waveform scrubbing', () => {
     expect(el.position).to.equal(0.3);
   });
 });
+
+/**
+ * `steps` and `value-text` — a waveform as a replay scrubber over discrete
+ * frames (test-findings #119). The fixed 1% arrow step landed a 40-step replay
+ * on the same frame for several presses, and the built-in announcement could
+ * only say a percentage or seconds.
+ */
+describe('arc-waveform steps and value text', () => {
+  const key = (el, k) =>
+    el.shadowRoot.querySelector('.waveform').dispatchEvent(
+      new KeyboardEvent('keydown', { key: k, bubbles: true, composed: true, cancelable: true }),
+    );
+  const slider = (el) => el.shadowRoot.querySelector('[role="slider"]');
+
+  it('moves one step per arrow press', async () => {
+    const el = await mountWaveform('interactive steps="40"');
+    const seen = record(el);
+    for (let i = 0; i < 3; i++) key(el, 'ArrowRight');
+    await el.updateComplete;
+    expect(el.position).to.equal(3 / 40);
+    expect(only(seen, 'change').map(([, v]) => v)).to.deep.equal([1 / 40, 2 / 40, 3 / 40]);
+  });
+
+  it('moves a tenth of the track, at least one step, on Page Up', async () => {
+    const el = await mountWaveform('interactive steps="40"');
+    key(el, 'PageUp');
+    expect(el.position).to.equal(4 / 40);
+    el.steps = 5;
+    el.position = 0;
+    await el.updateComplete;
+    key(el, 'PageUp');
+    expect(el.position, 'never less than one step').to.equal(1 / 5);
+  });
+
+  it('snaps a position set from outside before stepping from it', async () => {
+    // The consumer's failure: snapping `position` itself froze the keyboard,
+    // because a 1% nudge rounded straight back to the same step.
+    const el = await mountWaveform('interactive steps="40"');
+    el.position = 0.301;
+    await el.updateComplete;
+    key(el, 'ArrowRight');
+    expect(el.position).to.equal(13 / 40);
+  });
+
+  it('snaps pointer scrubbing, and reports each new step once', async () => {
+    const el = await mountWaveform('interactive steps="4"');
+    const seen = record(el);
+    scrub(el, 0.1, [0.12, 0.2, 0.3, 0.55]);
+    await el.updateComplete;
+    expect(el.position).to.equal(0.5);
+    // The press lands on step 0, where the playhead already was: not news.
+    expect(only(seen, 'input').map(([, v]) => v)).to.deep.equal([0.25, 0.5]);
+  });
+
+  it('reports step numbers to assistive tech', async () => {
+    const el = await mountWaveform('interactive steps="40"');
+    el.position = 12 / 40;
+    await el.updateComplete;
+    expect(slider(el).getAttribute('aria-valuemax')).to.equal('40');
+    expect(slider(el).getAttribute('aria-valuenow')).to.equal('12');
+    expect(slider(el).getAttribute('aria-valuetext')).to.equal('12 of 40');
+  });
+
+  it('announces value-text instead of the built-in text', async () => {
+    const el = await mountWaveform('interactive steps="40" duration="10" value-text="85 of 200 ms"');
+    expect(slider(el).getAttribute('aria-valuetext')).to.equal('85 of 200 ms');
+  });
+
+  it('renders value-text set in the arc-input handler with the new position', async () => {
+    const el = await mountWaveform('interactive steps="40"');
+    el.addEventListener('arc-input', (e) => {
+      el.valueText = `${Math.round(e.detail.value * 200)} of 200 ms`;
+    });
+    key(el, 'ArrowRight');
+    await el.updateComplete;
+    expect(slider(el).getAttribute('aria-valuenow')).to.equal('1');
+    expect(slider(el).getAttribute('aria-valuetext')).to.equal('5 of 200 ms');
+  });
+
+  it('leaves a continuous track at 1% and a percentage', async () => {
+    const el = await mountWaveform('interactive');
+    key(el, 'ArrowRight');
+    await el.updateComplete;
+    expect(el.position).to.be.closeTo(0.01, 1e-9);
+    expect(slider(el).getAttribute('aria-valuemax')).to.equal('100');
+    expect(slider(el).getAttribute('aria-valuetext')).to.equal('1%');
+  });
+});

@@ -12,6 +12,8 @@ export interface MeterProps {
   high?: number;
   optimum?: number;
   label?: string;
+  mode?: 'zones' | 'plain' | 'diverging';
+  center?: number;
   className?: string;
 }
 

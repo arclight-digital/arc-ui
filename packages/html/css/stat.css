@@ -62,3 +62,24 @@
         width: 12px;
         height: 12px;
       }
+
+      /* A compact stat for a strip of vitals (finding #122). The display
+         clamp runs 32 to 48px, which is a headline, not a reading in a 96px
+         strip. */
+      .arc-stat[data-size="sm"] .stat {
+        gap: var(--space-xs);
+        padding: var(--space-sm);
+      }
+      .arc-stat[data-size="sm"] .stat__value { font-size: var(--_text-xl); }
+      .arc-stat[data-size="sm"] .stat__trend { font-size: var(--ui-size); margin-top: 0; }
+
+      .arc-stat[data-size="lg"] .stat { padding: var(--space-xl); }
+      .arc-stat[data-size="lg"] .stat__value { font-size: var(--display-xl-size); }
+
+      .arc-stat[plain] .stat__value {
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        color: var(--text-primary);
+        filter: none;
+      }
+      .arc-stat[plain] .stat__rule { display: none; }

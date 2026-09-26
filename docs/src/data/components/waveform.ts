@@ -19,6 +19,7 @@ The component never touches audio. There is no AudioContext, no decoding, no fet
 While scrubbing, \`arc-input\` fires on every pointer move with the live position, and \`arc-change\` fires once on release with the committed one — the standard ARC edit/commit contract. Wire the actual seek of your audio source to \`arc-change\`, and use \`arc-input\` for live feedback such as a time display or audible scrubbing. Two variants cover the common looks: \`bars\` draws discrete bar pairs mirrored around the center line, and \`mirror\` draws a filled min/max envelope.`,
 
   features: [
+    '`steps` for a timeline of discrete frames (arrow keys move one step), and `value-text` for your own screen-reader wording',
     'Renders from a consumer-computed peaks array — no AudioContext, no decoding, no audio dependencies',
     'Two variants: `bars` (mirrored bar pairs) and `mirror` (filled min/max envelope)',
     'Played region in accent with a soft glow; unplayed region muted; thin glowing playhead line',

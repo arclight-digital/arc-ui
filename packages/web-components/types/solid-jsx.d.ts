@@ -423,6 +423,7 @@ declare module 'solid-js/jsx-runtime' {
       'arc-empty-state': ArcBaseAttributes & {
         heading?: string;
         description?: string;
+        announce?: boolean;
       };
       'arc-feature-card': ArcBaseAttributes & {
         icon?: string;
@@ -476,6 +477,8 @@ declare module 'solid-js/jsx-runtime' {
         variant?: 'full' | 'half';
         'show-value'?: boolean;
         showValue?: boolean;
+        mode?: 'zones' | 'plain' | 'diverging';
+        center?: number | string;
       };
       'arc-gradient-text': ArcBaseAttributes & {
         variant?: 'accent' | 'display' | 'sunset' | 'ocean' | 'custom';
@@ -720,6 +723,8 @@ declare module 'solid-js/jsx-runtime' {
         high?: number | string;
         optimum?: number | string;
         label?: string;
+        mode?: 'zones' | 'plain' | 'diverging';
+        center?: number | string;
       };
       'arc-multi-select': ArcBaseAttributes & {
         required?: boolean;
@@ -1057,6 +1062,8 @@ declare module 'solid-js/jsx-runtime' {
         label?: string;
         trend?: '' | 'up' | 'down' | 'neutral';
         change?: string;
+        size?: 'sm' | 'md' | 'lg';
+        plain?: boolean;
       };
       'arc-status-bar': ArcBaseAttributes & {
         position?: 'static' | 'fixed';
@@ -1314,6 +1321,9 @@ declare module 'solid-js/jsx-runtime' {
         interactive?: boolean;
         variant?: 'bars' | 'mirror';
         label?: string;
+        steps?: number | string;
+        'value-text'?: string;
+        valueText?: string;
       };
     }
   }

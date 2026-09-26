@@ -15,6 +15,8 @@ export interface GaugeProps {
   unit?: string;
   variant?: 'full' | 'half';
   showValue?: boolean;
+  mode?: 'zones' | 'plain' | 'diverging';
+  center?: number;
   className?: string;
 }
 

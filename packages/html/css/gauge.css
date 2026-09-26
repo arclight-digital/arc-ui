@@ -43,10 +43,30 @@
       .arc-gauge .gauge__arc--warning { stroke: var(--color-warning); --_zone-rgb: var(--color-warning-rgb); }
       .arc-gauge .gauge__arc--error   { stroke: var(--color-error);   --_zone-rgb: var(--color-error-rgb); }
 
+      /* Not status colours: see arc-meter (finding #121). */
+      .arc-gauge .gauge__arc--plain {
+        stroke: var(--gauge-fill, var(--accent-primary));
+        --_zone-rgb: var(--gauge-fill-rgb, var(--accent-primary-rgb));
+      }
+      .arc-gauge .gauge__arc--below {
+        stroke: var(--gauge-below, var(--chart-1));
+        --_zone-rgb: var(--gauge-below-rgb, var(--chart-1-rgb));
+      }
+      .arc-gauge .gauge__arc--above {
+        stroke: var(--gauge-above, var(--chart-2));
+        --_zone-rgb: var(--gauge-above-rgb, var(--chart-2-rgb));
+      }
+
+      .arc-gauge .gauge__center {
+        stroke: var(--text-muted);
+        stroke-width: 2;
+        stroke-linecap: round;
+      }
+
       /* Entrance: draw in from empty to the rendered offset. The reduced-motion
          guard in the shared styles zeroes this out. */
       @keyframes gauge-sweep {
-        from { stroke-dashoffset: var(--_arc-total); }
+        from { stroke-dashoffset: var(--_arc-from, var(--_arc-total)); }
       }
 
       .arc-gauge .gauge__readout {

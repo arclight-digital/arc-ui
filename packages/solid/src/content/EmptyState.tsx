@@ -14,6 +14,7 @@ declare module 'solid-js/jsx-runtime' {
 export interface EmptyStateProps {
   heading?: string;
   description?: string;
+  announce?: boolean;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -43,9 +44,9 @@ export interface EmptyStateProps {
 }
 
 export const EmptyState: Component<EmptyStateProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'description', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'description', 'announce', 'children']);
   return (
-    <arc-empty-state heading={local.heading} description={local.description} {...rest}>
+    <arc-empty-state heading={local.heading} description={local.description} announce={local.announce} {...rest}>
       {local.children}
     </arc-empty-state>
   );

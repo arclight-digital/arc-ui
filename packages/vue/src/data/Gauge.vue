@@ -15,6 +15,8 @@ const props = withDefaults(defineProps<{
   unit?: string;
   variant?: 'full' | 'half';
   showValue?: boolean;
+  mode?: 'zones' | 'plain' | 'diverging';
+  center?: number;
 }>(), {
   label: '',
   unit: '',
@@ -33,6 +35,8 @@ const props = withDefaults(defineProps<{
     :unit="props.unit"
     :variant="props.variant"
     :showValue="props.showValue"
+    :mode="props.mode"
+    :center="props.center"
   >
   </arc-gauge>
 </template>

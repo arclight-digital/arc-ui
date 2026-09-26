@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Placeholder for empty lists or search results.
@@ -8,6 +9,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @status stable
  * @prop {string} heading - Main heading text displayed below the icon
  * @prop {string} description - Supporting text displayed below the heading, max-width 360px
+ * @prop {boolean} announce - Makes the empty state a polite live region (`role="status"`), so a screen reader reads it when it appears, as for "No results" after a search the user just ran. Off by default: an empty list on page load is not news, and a live region reads out everything that changes inside it.
  * @slot icon
  * @slot actions
  * @csspart base - The root element.
@@ -17,10 +19,11 @@ import { tokenStyles } from '../shared-styles.js';
  * @csspart description
  * @csspart actions
  */
-export class ArcEmptyState extends LitElement {
+export class ArcEmptyState extends DeclaredPropsMixin(LitElement) {
   static properties = {
     heading: { type: String },
     description: { type: String },
+    announce: flag(false),
   };
 
   static styles = [
@@ -75,9 +78,13 @@ export class ArcEmptyState extends LitElement {
     this.description = '';
   }
 
+  /**
+   * A live region only on request. It used to be unconditional, so a countdown
+   * inside the empty state was read out on every tick (finding #123).
+   */
   render() {
     return html`
-      <div class="empty" part="base container" role="status">
+      <div class="empty" part="base container" role=${this.announce ? 'status' : nothing}>
         <div class="empty__icon" part="icon" aria-hidden="true">
           <slot name="icon"></slot>
         </div>

@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "@arclux/arc-ui",
-  "version": "4.4.0",
+  "version": "4.5.0",
   "description-markup": "markdown",
   "contributions": {
     "html": {
@@ -650,6 +650,14 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "announce",
+              "description": "Makes the empty state a polite live region (`role=\"status\"`), so a screen reader reads it when it appears, as for \"No results\" after a search the user just ran. Off by default: an empty list on page load is not news, and a live region reads out everything that changes inside it.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
@@ -672,6 +680,11 @@
                 "name": "description",
                 "description": "Supporting text displayed below the heading, max-width 360px",
                 "type": "string"
+              },
+              {
+                "name": "announce",
+                "description": "Makes the empty state a polite live region (`role=\"status\"`), so a screen reader reads it when it appears, as for \"No results\" after a search the user just ran. Off by default: an empty list on page load is not news, and a live region reads out everything that changes inside it.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -3012,7 +3025,7 @@
         },
         {
           "name": "arc-gauge",
-          "description": "Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning,\nerror) and an animated sweep. The radial companion to arc-meter: same threshold semantics,\nwith the reading rendered center-stage.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **gauge**\n- **svg**\n- **track**\n- **arc**\n- **readout**\n- **value**\n- **unit**\n- **label**",
+          "description": "Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning,\nerror) and an animated sweep. The radial companion to arc-meter: same threshold semantics,\nwith the reading rendered center-stage.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **gauge**\n- **svg**\n- **track**\n- **arc**\n- **readout**\n- **value**\n- **unit**\n- **label**\n- **center** - The centre tick of a diverging gauge.",
           "doc-url": "",
           "attributes": [
             {
@@ -3094,6 +3107,22 @@
                 "type": "boolean",
                 "default": "true"
               }
+            },
+            {
+              "name": "mode",
+              "description": "How the arc is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--gauge-fill` (default the accent), for a quantity that is not good or bad. `diverging` draws from `center` toward the value, `--gauge-below` on one side and `--gauge-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1. A custom colour's glow reads the matching `-rgb` property (`--gauge-fill-rgb` and so on).",
+              "value": {
+                "type": "'zones' | 'plain' | 'diverging'",
+                "default": "'zones'"
+              }
+            },
+            {
+              "name": "center",
+              "description": "The midpoint of a diverging gauge. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
             }
           ],
           "slots": [],
@@ -3144,6 +3173,16 @@
                 "name": "variant",
                 "description": "Arc shape: `full` is a 270-degree horseshoe, `half` a 180-degree semicircle.",
                 "type": "'full' | 'half'"
+              },
+              {
+                "name": "mode",
+                "description": "How the arc is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--gauge-fill` (default the accent), for a quantity that is not good or bad. `diverging` draws from `center` toward the value, `--gauge-below` on one side and `--gauge-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1. A custom colour's glow reads the matching `-rgb` property (`--gauge-fill-rgb` and so on).",
+                "type": "'zones' | 'plain' | 'diverging'"
+              },
+              {
+                "name": "center",
+                "description": "The midpoint of a diverging gauge. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
+                "type": "number"
               },
               {
                 "name": "showValue",
@@ -3419,7 +3458,7 @@
         },
         {
           "name": "arc-list-item",
-          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **description**\n- **item**",
+          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n- **actions** - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **description**\n- **item**\n- **actions** - The container of the `actions` slot.",
           "doc-url": "",
           "attributes": [
             {
@@ -3468,6 +3507,10 @@
             },
             {
               "name": "suffix"
+            },
+            {
+              "name": "actions",
+              "description": "Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row."
             }
           ],
           "events": [
@@ -3630,7 +3673,7 @@
         },
         {
           "name": "arc-meter",
-          "description": "Semantic gauge display with color-coded fill zones (success, warning, error) based on\nconfigurable low/high/optimum thresholds.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **meter**\n- **header**\n- **label**\n- **value**\n- **track**\n- **fill**",
+          "description": "Semantic gauge display with color-coded fill zones (success, warning, error) based on\nconfigurable low/high/optimum thresholds.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **meter**\n- **header**\n- **label**\n- **value**\n- **track**\n- **fill**\n- **center** - The centre tick of a diverging meter.",
           "doc-url": "",
           "attributes": [
             {
@@ -3688,6 +3731,22 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "mode",
+              "description": "How the fill is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--meter-fill` (default the accent), for a quantity that is not good or bad. `diverging` fills from `center` toward the value, `--meter-below` on one side and `--meter-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1.",
+              "value": {
+                "type": "'zones' | 'plain' | 'diverging'",
+                "default": "'zones'"
+              }
+            },
+            {
+              "name": "center",
+              "description": "The midpoint of a diverging meter. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
             }
           ],
           "slots": [],
@@ -3727,6 +3786,16 @@
               {
                 "name": "optimum",
                 "description": "The optimal value. Determines which end of the range is \"good\" for color zone logic.",
+                "type": "number"
+              },
+              {
+                "name": "mode",
+                "description": "How the fill is coloured. `zones` (the default) colours by the low/high/optimum thresholds in status colours. `plain` is one colour, `--meter-fill` (default the accent), for a quantity that is not good or bad. `diverging` fills from `center` toward the value, `--meter-below` on one side and `--meter-above` on the other (default chart series 1 and 2), for a lean either way, such as −1 to +1.",
+                "type": "'zones' | 'plain' | 'diverging'"
+              },
+              {
+                "name": "center",
+                "description": "The midpoint of a diverging meter. Defaults to halfway between `min` and `max`. Ignored by the other modes.",
                 "type": "number"
               }
             ],
@@ -3861,6 +3930,22 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "size",
+              "description": "Scale of the whole stat. `md` is the display size; `sm` is compact, for a strip of vitals beside other content; `lg` is for a hero figure.",
+              "value": {
+                "type": "'sm' | 'md' | 'lg'",
+                "default": "'md'"
+              }
+            },
+            {
+              "name": "plain",
+              "description": "Draws the value in the text colour, without the accent gradient, glow and rule, so a stat can sit in a dense layout without competing with it.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [],
@@ -3886,6 +3971,16 @@
                 "name": "change",
                 "description": "Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.",
                 "type": "string"
+              },
+              {
+                "name": "size",
+                "description": "Scale of the whole stat. `md` is the display size; `sm` is compact, for a strip of vitals beside other content; `lg` is for a hero figure.",
+                "type": "'sm' | 'md' | 'lg'"
+              },
+              {
+                "name": "plain",
+                "description": "Draws the value in the text colour, without the accent gradient, glow and rule, so a stat can sit in a dense layout without competing with it.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -4307,6 +4402,21 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "steps",
+              "description": "Divides the track into this many equal steps, for a timeline of discrete frames rather than continuous audio. The playhead snaps to a step from pointer and keyboard alike, arrow keys move one step, Page Up/Down a tenth of the track (at least one step), and the slider reports the step number rather than a percentage. Unset, the track is continuous.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
+              "name": "value-text",
+              "description": "What the slider announces for the current position, replacing the built-in percentage or time. Set it from your `arc-input` handler, which runs before the position renders, so the text and the value always arrive together (e.g. \"85 of 200 ms\").",
+              "value": {
+                "type": "string"
+              }
             }
           ],
           "slots": [],
@@ -4353,6 +4463,16 @@
                 "name": "variant",
                 "description": "Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope.",
                 "type": "'bars' | 'mirror'"
+              },
+              {
+                "name": "steps",
+                "description": "Divides the track into this many equal steps, for a timeline of discrete frames rather than continuous audio. The playhead snaps to a step from pointer and keyboard alike, arrow keys move one step, Page Up/Down a tenth of the track (at least one step), and the slider reports the step number rather than a percentage. Unset, the track is continuous.",
+                "type": "number"
+              },
+              {
+                "name": "valueText",
+                "description": "What the slider announces for the current position, replacing the built-in percentage or time. Set it from your `arc-input` handler, which runs before the position renders, so the text and the value always arrive together (e.g. \"85 of 200 ms\").",
+                "type": "string"
               }
             ],
             "events": [
@@ -16811,6 +16931,10 @@
           "name": "part(label)"
         },
         {
+          "name": "part(center)",
+          "description": "The centre tick of a diverging gauge."
+        },
+        {
           "name": "part(base)",
           "description": "The root element."
         },
@@ -16907,6 +17031,10 @@
           "name": "part(item)"
         },
         {
+          "name": "part(actions)",
+          "description": "The container of the `actions` slot."
+        },
+        {
           "name": "part(base)",
           "description": "The root element."
         },
@@ -16934,6 +17062,10 @@
         },
         {
           "name": "part(fill)"
+        },
+        {
+          "name": "part(center)",
+          "description": "The centre tick of a diverging meter."
         },
         {
           "name": "part(base)",

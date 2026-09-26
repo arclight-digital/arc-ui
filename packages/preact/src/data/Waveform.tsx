@@ -11,6 +11,8 @@ export interface WaveformProps {
   interactive?: boolean;
   variant?: 'bars' | 'mirror';
   label?: string;
+  steps?: number;
+  valueText?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;
   class?: string;
@@ -40,7 +42,7 @@ export interface WaveformProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Waveform: FunctionComponent<WaveformProps> = ({ peaks, position, duration, interactive, variant, label, onArcInput, onArcChange, ...rest }) => {
+export const Waveform: FunctionComponent<WaveformProps> = ({ peaks, position, duration, interactive, variant, label, steps, valueText, onArcInput, onArcChange, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -58,5 +60,5 @@ export const Waveform: FunctionComponent<WaveformProps> = ({ peaks, position, du
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcInput, onArcChange]);
-  return h('arc-waveform', { ref, peaks, position, duration, interactive, variant, label, ...rest });
+  return h('arc-waveform', { ref, peaks, position, duration, interactive, variant, label, steps, valueText, ...rest });
 };

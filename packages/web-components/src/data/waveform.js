@@ -27,6 +27,8 @@ import { DeclaredPropsMixin, flag, num, oneOf, list } from '../shared/props.js';
  * @prop {boolean} interactive - Enables scrubbing. The waveform becomes a focusable slider: click or drag to seek, arrow keys to nudge, Home/End to jump. Without it the waveform is a static image.
  * @prop {'bars' | 'mirror'} variant - Rendering style. `bars` draws discrete bar pairs mirrored around the center line; `mirror` draws a filled min/max envelope.
  * @prop {string} label - Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.
+ * @prop {number} steps - Divides the track into this many equal steps, for a timeline of discrete frames rather than continuous audio. The playhead snaps to a step from pointer and keyboard alike, arrow keys move one step, Page Up/Down a tenth of the track (at least one step), and the slider reports the step number rather than a percentage. Unset, the track is continuous.
+ * @prop {string} valueText - What the slider announces for the current position, replacing the built-in percentage or time. Set it from your `arc-input` handler, which runs before the position renders, so the text and the value always arrive together (e.g. "85 of 200 ms").
  * @fires {CustomEvent<{ value: number, time: number | null }>} arc-input - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview — updating a time display or audibly scrubbing.
  * @fires {CustomEvent<{ value: number, time: number | null }>} arc-change - Fired once when the seek commits: on pointer release, or with each keyboard nudge. Use for the actual seek on your audio source.
  * @slot none
@@ -51,6 +53,8 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
     interactive: flag(false),
     variant: oneOf(['bars', 'mirror']),
     label: { type: String },
+    steps: num({ nullable: true, min: 1, int: true }),
+    valueText: { type: String, attribute: 'value-text' },
   };
 
   static styles = [
@@ -225,10 +229,25 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
     return h > 0 ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
   }
 
+  /** The step count, or 0 for a continuous track. */
+  get _stepCount() {
+    const n = Number(this.steps);
+    return Number.isInteger(n) && n >= 1 ? n : 0;
+  }
+
+  /** A position on the nearest step, or unchanged on a continuous track. */
+  _snap(pos) {
+    const n = this._stepCount;
+    return n ? Math.round(pos * n) / n : pos;
+  }
+
   _valueText(pos) {
+    if (this.valueText) return this.valueText;
     if (this.duration != null && this.duration > 0) {
       return `${this._formatTime(pos * this.duration)} of ${this._formatTime(this.duration)}`;
     }
+    const steps = this._stepCount;
+    if (steps) return `${Math.round(pos * steps)} of ${steps}`;
     return `${Math.round(pos * 100)}%`;
   }
 
@@ -291,29 +310,39 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
     const rect = track.getBoundingClientRect();
     if (!rect.width) return;
     // Direction-fixed axis: left edge is always 0.
-    this.position = this._clamp01((e.clientX - rect.left) / rect.width);
+    const next = this._snap(this._clamp01((e.clientX - rect.left) / rect.width));
+    // On a stepped track most moves land on the step already shown; only a
+    // new step is news.
+    if (this._stepCount && next === this.position) return;
+    this.position = next;
     this._emitInput();
   }
 
   /* ---- Keyboard seeking ---- */
 
   _onKeyDown(e) {
+    // One step on a stepped track, 1% otherwise. The fixed 1% landed a 40-step
+    // replay on the same frame for two or three presses in a row, and snapping
+    // `position` from outside froze the keyboard outright (finding #119).
+    const n = this._stepCount;
+    const small = n ? 1 / n : 0.01;
+    const large = n ? Math.max(1, Math.round(n / 10)) / n : 0.1;
     let delta = null;
     let absolute = null;
     switch (e.key) {
       case 'ArrowRight':
       case 'ArrowUp':
-        delta = 0.01;
+        delta = small;
         break;
       case 'ArrowLeft':
       case 'ArrowDown':
-        delta = -0.01;
+        delta = -small;
         break;
       case 'PageUp':
-        delta = 0.1;
+        delta = large;
         break;
       case 'PageDown':
-        delta = -0.1;
+        delta = -large;
         break;
       case 'Home':
         absolute = 0;
@@ -325,7 +354,9 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
         return;
     }
     e.preventDefault();
-    const next = this._clamp01(absolute != null ? absolute : this._clamp01(this.position) + delta);
+    const next = this._snap(
+      this._clamp01(absolute != null ? absolute : this._snap(this._clamp01(this.position)) + delta),
+    );
     if (next === this.position) return;
     this.position = next;
     // A key press is edit and commit at once, as a native range input's is.
@@ -382,6 +413,10 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
     const W = peaks.length > 0 ? peaks.length * 4 : 100;
     const hasTime = this.duration != null && this.duration > 0;
     const interactive = this.interactive;
+    // A stepped slider reports steps: "step 12 of 40", not 30%.
+    const steps = this._stepCount;
+    const valueMax = steps || 100;
+    const valueNow = Math.round(pos * valueMax);
 
     return html`
       <div
@@ -392,8 +427,8 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
         aria-label=${this.label || (interactive ? 'Audio position' : 'Audio waveform')}
         aria-orientation=${ifDefined(interactive ? 'horizontal' : undefined)}
         aria-valuemin=${ifDefined(interactive ? '0' : undefined)}
-        aria-valuemax=${ifDefined(interactive ? '100' : undefined)}
-        aria-valuenow=${ifDefined(interactive ? String(Math.round(pos * 100)) : undefined)}
+        aria-valuemax=${ifDefined(interactive ? String(valueMax) : undefined)}
+        aria-valuenow=${ifDefined(interactive ? String(valueNow) : undefined)}
         aria-valuetext=${ifDefined(interactive ? this._valueText(pos) : undefined)}
         style="--_pos: ${pos}"
         @pointerdown=${interactive ? this._onPointerDown : nothing}

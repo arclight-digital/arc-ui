@@ -5556,3 +5556,108 @@ same item. A click gave the child's position among all children (dividers
 included), as `arc-context-menu` does, and the keyboard gave its position among
 items. The keyboard path now reports the child position, so a consumer
 dispatching on `index` sees one value however the item was chosen.
+
+---
+
+### 113, resolved. `arc-list-item` gains an `actions` slot — **FIXED**
+
+The deferral above named the design questions, and the maintainer settled
+them. The slot sits inside the row, after the suffix. It is revealed on hover
+and by focus anywhere in the row (`:focus-within`), and is always shown under
+`(hover: none)`. The touch answer was the maintainer's call; the other options
+were a long-press or an overflow menu.
+
+It fades with opacity, not `visibility`, because a `visibility: hidden` action
+drops out of the tab order, and focus is what reveals it for a keyboard user.
+A click that starts inside the slot never fires the row's `arc-select`. In
+`arc-list`, Enter and Space on a focused action are left to the button, and the
+arrow keys treat the action as part of its row.
+
+`list-actions.test.js`. A proof note worth keeping: against the unfixed source
+the click and key tests *pass*, because the old component has no `actions` slot
+and so never renders the buttons inside the row. There, a click cannot reach the
+row at all. The real check is to remove each guard (`_fromActions` in the item,
+`inActions` in the list) from the fixed source. Each removal fails its test.
+Running a test against pre-fix code only proves anything when the pre-fix
+code puts the test in the same situation.
+
+### 118. No repeating field list — **OPEN, needs a decision**
+
+Reported by the same application: add, remove and reorder rows of inputs, like
+the composer's options and levels. `arc-sortable-list` reorders but has no idea
+of a form row, a template, or a form value. This is a new component rather than
+a gap in an existing one, which is why it waits on a decision instead of being
+built.
+
+## The Halteres readouts — #119–#124, for 4.5
+
+Halteres entries #19–#23, ranked by the reporter by how much custom code each
+would retire. All five were verified against the source, and four were fixed.
+The settings layout (#120) and the bar list (#124) need decisions. The tests
+that pin the fixes were run against the unfixed source and failed there.
+
+### 119. `arc-waveform` could not step a discrete timeline — **FIXED**
+
+The arrows moved a fixed 1%, so a 40-step replay landed on the same frame for
+two or three presses. Snapping `position` to steps from outside froze the
+keyboard outright, because each 1% nudge rounded back to the same step.
+**`steps`** divides the track. Arrows move one step, Page Up/Down a tenth
+(at least one step), and pointer scrubbing snaps, reporting each new step once
+rather than every move. The slider reports steps: `aria-valuemax` is `steps`,
+and the default text is "12 of 40". **`value-text`** replaces the built-in
+announcement. It is a string, not a callback, so it works through every wrapper
+and on the server. Set from the `arc-input` handler, which runs before the
+position renders, it arrives with the value.
+
+### 120. `arc-settings-layout` is only a grid — **OPEN, needs a decision**
+
+No nav item styling, active state or hash routing, and below 768px the nav
+stacks instead of becoming tabs. A real fix is a settings-nav component, which
+is new API, so it waits with the other new components (#118, #124).
+
+### 121. `arc-meter` and `arc-gauge` coloured only by status — **FIXED**
+
+**`mode`**: `zones` (the default, unchanged), `plain` or `diverging`. The name
+is `mode` because `arc-gauge` already uses `variant` for its shape. `plain` is
+one colour (`--meter-fill` / `--gauge-fill`, default the accent), because a
+usage count is not a warning. `diverging` fills from **`center`** (default the
+midpoint) toward the value, `--*-below` on one side and `--*-above` on the other.
+The defaults are chart series 1 and 2, the validated adjacent pair, so the sides
+stay distinguishable under colour-vision deficiency. Both show and announce the
+signed value ("+0.4", "−0.4") and draw a centre tick. The gauge's arc below the
+centre is drawn clockwise from the value, so its entrance sweep runs in reverse
+(`--_arc-from`) to grow out of the centre like the arc above it.
+
+### 122. `arc-stat` had one size and was always gradient text — **FIXED**
+
+**`size`** (`sm | md | lg`, the canon, `md` unchanged) and **`plain`**, which
+draws the value in the text colour, without the gradient, glow or rule. `lg`
+uses `--display-xl-size`: type-roles rejected a literal clamp, correctly.
+
+### 123. Every `arc-empty-state` was a live region — **FIXED (behaviour change)**
+
+`role="status"` was unconditional, so a countdown inside one was read out on
+every tick. The maintainer chose quiet by default: **`announce`** opts in, for
+an empty result the user just asked for. Nothing in ARC or the docs rendered
+one, so no internal caller depended on the old default. The release note tells
+consumers.
+
+### 124. No bar list — **OPEN, needs a decision**
+
+Labelled horizontal bars with values, ranked. `arc-chart` is dashboard-sized and
+`arc-sparkline` has no labels. The reporter draws one by hand in every choose
+tile. This is a new component.
+
+---
+
+### A harness note from this batch: never assert equality on a DOM node
+
+Twice in this batch a test hung for 120 seconds against the unfixed source
+instead of failing (`list-actions`, `readouts`). The cause both times was
+`expect(node).to.equal(other)` failing: chai builds the failure message by
+printing the node, and printing a live DOM node does not finish. The same
+assertion passes silently on the fixed source, which is why it never showed up
+there. Both files now compare booleans (`expect(a === b).to.equal(true)`), and
+their unfixed runs fail in under a second. The rest of the suite was not
+swept for the pattern. It only bites when such an assertion fails, which is
+the moment it matters most.

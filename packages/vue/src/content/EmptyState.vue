@@ -7,6 +7,7 @@ defineOptions({ name: 'EmptyState' });
 const props = withDefaults(defineProps<{
   heading?: string;
   description?: string;
+  announce?: boolean;
 }>(), {
   heading: '',
   description: '',
@@ -17,6 +18,7 @@ const props = withDefaults(defineProps<{
   <arc-empty-state
     :heading="props.heading"
     :description="props.description"
+    :announce="props.announce"
   >
     <slot name="icon" />
     <slot name="actions" />

@@ -226,6 +226,10 @@
     { "name": "::part(value)" },
     { "name": "::part(unit)" },
     { "name": "::part(label)" },
+    {
+      "name": "::part(center)",
+      "description": "The centre tick of a diverging gauge."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(container)" },
     { "name": "::part(item)" },
@@ -267,6 +271,10 @@
     { "name": "::part(label)" },
     { "name": "::part(description)" },
     { "name": "::part(item)" },
+    {
+      "name": "::part(actions)",
+      "description": "The container of the `actions` slot."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(list)" },
     { "name": "::part(base)", "description": "The root element." },
@@ -276,6 +284,10 @@
     { "name": "::part(value)" },
     { "name": "::part(track)" },
     { "name": "::part(fill)" },
+    {
+      "name": "::part(center)",
+      "description": "The centre tick of a diverging meter."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(area)" },
     { "name": "::part(line)" },

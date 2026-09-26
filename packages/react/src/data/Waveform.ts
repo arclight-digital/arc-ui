@@ -11,6 +11,8 @@ export interface WaveformProps {
   interactive?: boolean;
   variant?: 'bars' | 'mirror';
   label?: string;
+  steps?: number;
+  valueText?: string;
   className?: string;
   onArcInput?: (e: CustomEvent) => void;
   onArcChange?: (e: CustomEvent) => void;

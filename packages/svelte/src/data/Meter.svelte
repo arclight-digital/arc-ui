@@ -10,6 +10,8 @@
     high?: number;
     optimum?: number;
     label?: string;
+    mode?: 'zones' | 'plain' | 'diverging';
+    center?: number;
     class?: string;
     id?: string;
     style?: string;
@@ -37,8 +39,8 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value, min, max, low, high, optimum, label = '', ...rest }: Props = $props();
+  let { value, min, max, low, high, optimum, label = '', mode, center, ...rest }: Props = $props();
 </script>
 
-<arc-meter {value} {min} {max} {low} {high} {optimum} {label} {...rest}>
+<arc-meter {value} {min} {max} {low} {high} {optimum} {label} {mode} {center} {...rest}>
 </arc-meter>

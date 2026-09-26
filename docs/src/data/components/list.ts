@@ -22,12 +22,14 @@ Three visual variants — default (plain), bordered (outlined container), and se
     'Three size presets: sm, md, lg — cascades to child items',
     'Semantic `role="listbox"` when selectable, `role="list"` otherwise',
     'Automatic `aria-multiselectable` when `multiple` is set',
+    'Row actions: an `actions` slot on arc-list-item, revealed on hover or focus and always shown without hover, that never selects the row',
     'Exposed CSS part: list',
   ],
 
   guidelines: {
     do: [
       'Use arc-list-item as direct children for consistent styling and keyboard navigation',
+      'Put per-row buttons (rename, delete) in the `actions` slot, and give each one a label naming its row: "Rename Weekly review", not "Rename"',
       'Set `selectable` when items represent choices the user needs to pick from',
       'Use the bordered variant inside cards or panels that need visual containment',
       'Use the separated variant for long lists where row boundaries improve scannability',
@@ -41,7 +43,11 @@ Three visual variants — default (plain), bordered (outlined container), and se
 
   previewHtml: `<arc-list variant="bordered" selectable label="Mailboxes" style="max-width: 320px;">
   <arc-list-item value="inbox">Inbox</arc-list-item>
-  <arc-list-item value="drafts">Drafts</arc-list-item>
+  <arc-list-item value="drafts">
+    Drafts
+    <arc-icon-button slot="actions" name="pencil" label="Rename Drafts" variant="ghost" size="sm"></arc-icon-button>
+    <arc-icon-button slot="actions" name="x" label="Delete Drafts" variant="ghost" size="sm"></arc-icon-button>
+  </arc-list-item>
   <arc-list-item value="sent">Sent</arc-list-item>
   <arc-list-item value="trash" disabled>Trash</arc-list-item>
 </arc-list>`,
@@ -51,7 +57,7 @@ Three visual variants — default (plain), bordered (outlined container), and se
       name: 'List Item',
       tag: 'arc-list-item',
       description:
-        'Individual row within an arc-list. Supports prefix/suffix slots, a description slot for secondary text, links, and selection state.',
+        'Individual row within an arc-list. Supports prefix/suffix slots, a description slot for secondary text, an actions slot for per-row buttons, links, and selection state.',
     },
   ],
 

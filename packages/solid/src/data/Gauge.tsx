@@ -22,6 +22,8 @@ export interface GaugeProps {
   unit?: string;
   variant?: 'full' | 'half';
   showValue?: boolean;
+  mode?: 'zones' | 'plain' | 'diverging';
+  center?: number;
   class?: string;
   id?: string;
   style?: string;
@@ -50,9 +52,9 @@ export interface GaugeProps {
 }
 
 export const Gauge: Component<GaugeProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'low', 'high', 'optimum', 'label', 'unit', 'variant', 'showValue']);
+  const [local, rest] = splitProps(props, ['value', 'min', 'max', 'low', 'high', 'optimum', 'label', 'unit', 'variant', 'showValue', 'mode', 'center']);
   return (
-    <arc-gauge value={local.value} min={local.min} max={local.max} low={local.low} high={local.high} optimum={local.optimum} label={local.label} unit={local.unit} variant={local.variant} prop:showValue={local.showValue} {...rest}>
+    <arc-gauge value={local.value} min={local.min} max={local.max} low={local.low} high={local.high} optimum={local.optimum} label={local.label} unit={local.unit} variant={local.variant} prop:showValue={local.showValue} mode={local.mode} center={local.center} {...rest}>
     </arc-gauge>
   );
 };

@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Numeric statistic display with gradient value and label.
@@ -13,6 +13,8 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  *   Empty (the default) shows none; an unrecognised value falls back to empty rather than
  *   rendering an uncoloured dash that no `:host([trend=...])` rule matches.
  * @prop {string} change - Text displayed next to the trend arrow, typically a percentage like '+12%' or '-3.5%'.
+ * @prop {'sm' | 'md' | 'lg'} size - Scale of the whole stat. `md` is the display size; `sm` is compact, for a strip of vitals beside other content; `lg` is for a hero figure.
+ * @prop {boolean} plain - Draws the value in the text colour, without the accent gradient, glow and rule, so a stat can sit in a dense layout without competing with it.
  * @slot none
  * @csspart base - The root element.
  * @csspart stat
@@ -26,6 +28,8 @@ export class ArcStat extends DeclaredPropsMixin(LitElement) {
     label: { type: String },
     trend: oneOf(['', 'up', 'down', 'neutral']),
     change: { type: String },
+    size: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    plain: flag(false),
   };
 
   static styles = [
@@ -92,6 +96,27 @@ export class ArcStat extends DeclaredPropsMixin(LitElement) {
         width: 12px;
         height: 12px;
       }
+
+      /* A compact stat for a strip of vitals (finding #122). The display
+         clamp runs 32 to 48px, which is a headline, not a reading in a 96px
+         strip. */
+      :host([size="sm"]) .stat {
+        gap: var(--space-xs);
+        padding: var(--space-sm);
+      }
+      :host([size="sm"]) .stat__value { font-size: var(--_text-xl); }
+      :host([size="sm"]) .stat__trend { font-size: var(--ui-size); margin-top: 0; }
+
+      :host([size="lg"]) .stat { padding: var(--space-xl); }
+      :host([size="lg"]) .stat__value { font-size: var(--display-xl-size); }
+
+      :host([plain]) .stat__value {
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        color: var(--text-primary);
+        filter: none;
+      }
+      :host([plain]) .stat__rule { display: none; }
     `,
   ];
 
