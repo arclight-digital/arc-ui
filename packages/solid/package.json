@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-solid",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "Solid wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -987,6 +987,11 @@
       "types": "./dist/shared/MenuItem.d.ts",
       "solid": "./src/shared/MenuItem.tsx",
       "default": "./dist/shared/MenuItem.js"
+    },
+    "./MenuLabel": {
+      "types": "./dist/shared/MenuLabel.d.ts",
+      "solid": "./src/shared/MenuLabel.tsx",
+      "default": "./dist/shared/MenuLabel.js"
     },
     "./Option": {
       "types": "./dist/shared/Option.d.ts",

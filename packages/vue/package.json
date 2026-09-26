@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-vue",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "Vue 3 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -791,6 +791,10 @@
     "./MenuItem": {
       "types": "./dist/shared/MenuItem.vue.d.ts",
       "default": "./dist/shared/MenuItem.vue.js"
+    },
+    "./MenuLabel": {
+      "types": "./dist/shared/MenuLabel.vue.d.ts",
+      "default": "./dist/shared/MenuLabel.vue.js"
     },
     "./Option": {
       "types": "./dist/shared/Option.vue.d.ts",

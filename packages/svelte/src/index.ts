@@ -171,3 +171,4 @@ export { default as SignaturePad } from './input/SignaturePad.svelte';
 export { default as TreeSelect } from './input/TreeSelect.svelte';
 export { default as Conversation } from './feedback/Conversation.svelte';
 export { default as Message } from './feedback/Message.svelte';
+export { default as MenuLabel } from './shared/MenuLabel.svelte';

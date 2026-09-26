@@ -1898,7 +1898,7 @@
     },
     {
       "name": "arc-context-menu",
-      "description": "Right-click context menu with keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the context menu opens\n- **arc-close** - Fired when the context menu closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n- **content**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **menu**\n- **divider**",
+      "description": "Right-click context menu with keyboard shortcuts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the context menu opens\n- **arc-close** - Fired when the context menu closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - `arc-menu-item`, `arc-menu-divider` and `arc-menu-label` elements. A label heads the items after it as one named group. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n- **content**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **menu**\n- **divider**\n- **group** - The items under one `arc-menu-label`.\n- **label** - A group heading, drawn from `arc-menu-label`.",
       "attributes": [
         {
           "name": "open",
@@ -1954,7 +1954,7 @@
     },
     {
       "name": "arc-dropdown-menu",
-      "description": "Menu dropdown triggered by a button with keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dropdown closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n- **trigger**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **divider**\n- **item**\n- **shortcut**\n- **trigger**\n- **panel**",
+      "description": "Menu dropdown triggered by a button with keyboard navigation.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dropdown closes\n- **arc-select** - Fired when a menu item is selected\n\n### **Slots:**\n - _default_ - `arc-menu-item`, `arc-menu-divider` and `arc-menu-label` elements. A label heads the items after it as one named group. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n- **trigger** - The element that opens the menu. It is shrink-to-fit by default; give the host a width, or `display: block`, and the trigger fills it.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **divider**\n- **group** - The items under one `arc-menu-label`.\n- **label** - A group heading, drawn from `arc-menu-label`.\n- **item**\n- **shortcut**\n- **trigger**\n- **panel**",
       "attributes": [
         {
           "name": "open",
@@ -5168,6 +5168,18 @@
         {
           "name": "value",
           "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-menu-label",
+      "description": "A heading over a group of menu items.\n\nThe items after it, up to the next label, become one group, announced by\nthis text: the parent menu wraps them in `role=\"group\"` labelled by it. It is\nnever focusable and never selected. It was reported missing (finding #115)\nby a consumer titling each specialist's items in one menu, whose workaround\nwas a disabled `arc-menu-item`, which reads as a dead option rather than a\nheading.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
+      "attributes": [
+        {
+          "name": "label",
+          "description": "The heading text. Falls back to the element's text content when unset, as on arc-menu-item.",
           "values": []
         }
       ],

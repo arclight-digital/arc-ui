@@ -2860,6 +2860,12 @@ export default {
   ],
   "slug": "context-menu"
  },
+ "arc-menu-label": {
+  "attrs": [
+   "label"
+  ],
+  "slug": "context-menu"
+ },
  "arc-option": {
   "attrs": [
    "value",

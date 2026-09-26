@@ -171,3 +171,4 @@ export { SignaturePad } from './input/SignaturePad';
 export { TreeSelect } from './input/TreeSelect';
 export { Conversation } from './feedback/Conversation';
 export { Message } from './feedback/Message';
+export { MenuLabel } from './shared/MenuLabel';

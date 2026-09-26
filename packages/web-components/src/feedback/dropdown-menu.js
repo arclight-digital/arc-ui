@@ -7,6 +7,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
 import { setTriggerAria, deepActiveElement } from '../shared/trigger-aria.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
+import { MENU_CHILD_TAGS, menuSections } from '../shared/menu-label.js';
 import '../content/divider.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
@@ -20,10 +21,12 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} open - Controls whether the menu panel is visible. Toggled by clicking the trigger. Set to false when the user selects an item, clicks outside, or presses Escape.
  * @fires {CustomEvent<void>} arc-close - Fired when the dropdown closes
  * @fires arc-select - Fired when a menu item is selected
- * @slot - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
- * @slot trigger
+ * @slot - `arc-menu-item`, `arc-menu-divider` and `arc-menu-label` elements. A label heads the items after it as one named group. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
+ * @slot trigger - The element that opens the menu. It is shrink-to-fit by default; give the host a width, or `display: block`, and the trigger fills it.
  * @csspart base - The root element.
  * @csspart divider
+ * @csspart group - The items under one `arc-menu-label`.
+ * @csspart label - A group heading, drawn from `arc-menu-label`.
  * @csspart item
  * @csspart shortcut
  * @csspart trigger
@@ -43,8 +46,13 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         position: relative;
       }
 
+      /* Block inside an inline-block host, so it shrinks to its content by
+         default and fills the host when the host is given a width. As
+         inline-block it stayed shrink-to-fit inside a full-width host, and a
+         trigger meant to span a sidebar needed ::part(trigger) to get there
+         (finding #114). */
       .dropdown__trigger {
-        display: inline-block;
+        display: block;
         cursor: pointer;
       }
 
@@ -135,6 +143,30 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         box-shadow: inset var(--interactive-focus);
       }
 
+      /* Disabled items looked and behaved exactly like enabled ones, so people
+         clicked them, and the click selected (finding #117). Same treatment as
+         arc-context-menu. */
+      .dropdown__item[disabled] {
+        color: var(--text-muted);
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      .dropdown__item[disabled]:hover {
+        background: none;
+        color: var(--text-muted);
+      }
+
+      .dropdown__label {
+        padding: var(--space-sm) var(--space-md) var(--space-xs);
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: var(--label-weight);
+        letter-spacing: var(--label-spacing);
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
       .dropdown__item-label {
         flex: 1;
       }
@@ -168,7 +200,11 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
     });
     this._menuKb = new MenuKeyboardController(this, {
       getItemCount: () => this._menuItems.length,
-      onSelect: (i) => this._selectItem(this._menuItems[i], i),
+      // The child's position, as the click path and arc-context-menu report
+      // it. This path used to pass the keyboard index, so the same item carried
+      // two different `index` values depending on how it was chosen.
+      onSelect: (i) =>
+        this._selectItem(this._menuItems[i], this._children.indexOf(this._menuItems[i])),
       onClose: () => this._close(),
     });
     this._position = new PositionController(this, {
@@ -183,11 +219,12 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
   _onSlotChange(e) {
     this._children = e.target
       .assignedElements({ flatten: true })
-      .filter((el) => el.tagName === 'ARC-MENU-ITEM' || el.tagName === 'ARC-MENU-DIVIDER');
+      .filter((el) => MENU_CHILD_TAGS.has(el.tagName));
   }
 
+  /** What the keyboard reaches: enabled items only, as in arc-context-menu. */
   get _menuItems() {
-    return this._children.filter((el) => el.tagName === 'ARC-MENU-ITEM');
+    return this._children.filter((el) => el.tagName === 'ARC-MENU-ITEM' && !el.disabled);
   }
 
   updated(changed) {
@@ -253,6 +290,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
   }
 
   _selectItem(item, index) {
+    if (!item || item.disabled) return;
     this.dispatchEvent(
       new CustomEvent('arc-select', {
         detail: {
@@ -270,6 +308,15 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
   _renderChild(child, globalIndex) {
     if (child.tagName === 'ARC-MENU-DIVIDER') {
       return html`<arc-divider variant="line" part="divider"></arc-divider>`;
+    }
+
+    if (child.disabled) {
+      return html`
+        <button class="dropdown__item" role="menuitem" disabled aria-disabled="true" tabindex="-1" part="item">
+          <span class="dropdown__item-label">${child.displayLabel || ''}</span>
+          ${child.shortcut ? html`<span class="dropdown__item-shortcut" part="shortcut">${child.shortcut}</span>` : ''}
+        </button>
+      `;
     }
 
     const selectableIndex = this._menuItems.indexOf(child);
@@ -316,7 +363,19 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         aria-hidden=${this.open ? 'false' : 'true'}
         part="panel"
       >
-        ${this._children.map((child, i) => this._renderChild(child, i))}
+        ${menuSections(this._children).map(({ label, entries }) => {
+          const items = entries.map(({ child, index }) => this._renderChild(child, index));
+          if (!label) return items;
+          // The heading is visual; the group carries the same text as its
+          // accessible name, so it is announced on entering the group without
+          // putting a non-item element inside the menu's list of items.
+          return html`
+            <div role="group" aria-label=${label.displayLabel} part="group">
+              <div class="dropdown__label" aria-hidden="true" part="label">${label.displayLabel}</div>
+              ${items}
+            </div>
+          `;
+        })}
       </div>
     `;
   }

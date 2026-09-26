@@ -11,7 +11,6 @@ export interface ContextMenuProps {
   onArcOpen?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcSelect?: (e: CustomEvent) => void;
-  onClick?: (e: Event) => void;
 }
 
 export const ContextMenu = createComponent({
@@ -22,6 +21,5 @@ export const ContextMenu = createComponent({
     onArcOpen: 'arc-open' as EventName<CustomEvent>,
     onArcClose: 'arc-close' as EventName<CustomEvent>,
     onArcSelect: 'arc-select' as EventName<CustomEvent>,
-    onClick: 'click' as EventName<Event>,
   },
 });

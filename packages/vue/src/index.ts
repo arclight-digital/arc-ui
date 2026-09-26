@@ -171,3 +171,4 @@ export { default as SignaturePad } from './input/SignaturePad.vue';
 export { default as TreeSelect } from './input/TreeSelect.vue';
 export { default as Conversation } from './feedback/Conversation.vue';
 export { default as Message } from './feedback/Message.vue';
+export { default as MenuLabel } from './shared/MenuLabel.vue';

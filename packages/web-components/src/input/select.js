@@ -106,7 +106,22 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
 
       .select__placeholder { color: var(--text-ghost); }
 
+      /* One line, whatever the width. A narrow select wrapped its value, so
+         "2026-09-10" split as "2026-09-" / "10" and the trigger grew a line
+         taller (finding #116). The same rule arc-tree-select already had. */
+      .select__value,
+      .select__placeholder {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: start;
+      }
+
       .select__chevron {
+        flex-shrink: 0;
+        margin-inline-start: var(--space-xs);
         font-size: var(--_text-xs);
         color: var(--text-muted);
         transition: transform var(--transition-fast) var(--ease-out-expo);
@@ -380,7 +395,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         >
           ${
             display
-              ? html`<span>${display}</span>`
+              ? html`<span class="select__value">${display}</span>`
               : html`<span class="select__placeholder">${this.placeholder}</span>`
           }
           <span class="select__chevron" aria-hidden="true">&#9662;</span>

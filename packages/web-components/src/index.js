@@ -208,4 +208,4 @@ export {
   ArcConversation,
   ArcMessage,
 } from './feedback/index.js';
-export { ArcMenuDivider, ArcMenuItem, ArcOption } from './shared/index.js';
+export { ArcMenuDivider, ArcMenuItem, ArcOption, ArcMenuLabel } from './shared/index.js';

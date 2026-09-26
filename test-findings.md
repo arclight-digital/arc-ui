@@ -5501,3 +5501,58 @@ appears on hover is invisible to touch users and a trap for keyboard users unles
 `:focus-within` reveals it too. Worth doing as an `actions` slot on
 `arc-list-item`, designed against the chat-sessions use case the report
 describes.
+
+## The Halteres follow-up — four items against 4.3.0, #114–#117
+
+Same application as #100–#113, entries #15–#18 in its notes. Two were seen in
+screenshots and logged afterwards, and two are new. All four are arc-ui's. The
+disabled-item report (#117) turned out to understate the defect.
+
+Each test in `dropdown-menu.test.js` and `select.test.js` that pins a fix was
+run against the unfixed source and failed there, then the source was restored.
+
+---
+
+### 114. `arc-dropdown-menu`'s trigger could not fill a full-width host — **FIXED**
+
+The trigger wrapper was `inline-block`, so it stayed shrink-to-fit even inside a
+host set to `display: block`, and a trigger meant to span a sidebar needed
+`::part(trigger) { display: block }`. The wrapper is `block` now. Inside the
+host's default `inline-block` it still shrinks to its content, and a host given
+a width is filled. The reporter suggested a `block` attribute. No new prop was
+needed, because the host's own `display` already says it. The `trigger` slot doc
+now says how.
+
+### 115. The menu family had no group heading — **FIXED**
+
+New element **`arc-menu-label`**, a data element like `arc-menu-divider`. In both
+`arc-dropdown-menu` and `arc-context-menu`, the items after a label, up to the
+next one, render as `role="group"` named by the label's text. The drawn heading
+is `aria-hidden`, so it is announced once, as the group's name, and no
+non-item element sits among the menu's items. `menuSections()` in
+`shared/menu-label.js` is the one grouping rule both menus share. The reporter's
+workaround was a disabled `arc-menu-item`, which reads as a dead option. It is
+now called out in the docs guidelines. `part-base` exempts the element, as it
+does the divider, and V4-SCOPE §4 has its row.
+
+### 116. `arc-select` wrapped its value in a narrow trigger — **FIXED**
+
+At about 100px, "2026-09-10" split across two lines and the trigger grew. The
+value and placeholder are `flex: 1; min-width: 0` with `nowrap` and an
+ellipsis, the rule `arc-tree-select` already had, and the chevron no longer
+shrinks. `select.test.js` is new; arc-select had no test file of its own.
+
+### 117. `arc-dropdown-menu` ignored `disabled` entirely — **FIXED**
+
+Reported as "disabled items look enabled". Reading the component showed that
+`disabled` was read nowhere in it, so a disabled item was clickable, reachable
+from the keyboard, and fired `arc-select`. `arc-context-menu` had handled all
+three correctly all along, and the dropdown now matches it. Disabled items
+render muted with a default cursor, carry `disabled` and `aria-disabled`, are
+excluded from keyboard navigation, and `_selectItem` refuses them.
+
+Found alongside: the dropdown reported two different `index` values for the
+same item. A click gave the child's position among all children (dividers
+included), as `arc-context-menu` does, and the keyboard gave its position among
+items. The keyboard path now reports the child position, so a consumer
+dispatching on `index` sees one value however the item was chosen.

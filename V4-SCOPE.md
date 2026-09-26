@@ -388,6 +388,7 @@ array rather than as slotted children, so it has no element to migrate to and go
 | tag | verdict |
 |---|---|
 | `arc-menu-divider`, `arc-menu-item`, `arc-option` | keep — app. Sub-components of the menu and select families; on the keep-and-freeze list. `arc-option` must stay explicitly registerable — its parent's `.register.js` pulls in the class, not the registration. |
+| `arc-menu-label` | keep — app. Added in 4.4 (test-findings #115): the group heading the menu family lacked, so consumers stopped faking one with a disabled `arc-menu-item`. Same shape as `arc-menu-divider`, a data element the parent menu draws. |
 
 ### typography (14)
 

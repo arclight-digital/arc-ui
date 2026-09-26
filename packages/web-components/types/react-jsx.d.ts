@@ -695,6 +695,9 @@ declare module 'react' {
         icon?: string;
         value?: string;
       };
+      'arc-menu-label': ArcBaseAttributes & {
+        label?: string;
+      };
       'arc-menubar': ArcBaseAttributes & {
         items?: Array<{label:string,disabled?:boolean,items:Array<{label?:string,shortcut?:string,disabled?:boolean,divider?:boolean,items?:Array<{label:string,shortcut?:string,disabled?:boolean}>}>}>;
       };

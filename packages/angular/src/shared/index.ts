@@ -2,3 +2,4 @@
 export { MenuDivider } from './MenuDivider';
 export { MenuItem } from './MenuItem';
 export { Option } from './Option';
+export { MenuLabel } from './MenuLabel';

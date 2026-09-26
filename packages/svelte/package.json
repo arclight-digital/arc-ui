@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-svelte",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "Svelte 5 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -987,6 +987,11 @@
       "types": "./dist/shared/MenuItem.svelte.d.ts",
       "svelte": "./dist/shared/MenuItem.svelte",
       "default": "./dist/shared/MenuItem.svelte"
+    },
+    "./MenuLabel": {
+      "types": "./dist/shared/MenuLabel.svelte.d.ts",
+      "svelte": "./dist/shared/MenuLabel.svelte",
+      "default": "./dist/shared/MenuLabel.svelte"
     },
     "./Option": {
       "types": "./dist/shared/Option.svelte.d.ts",

@@ -549,3 +549,6 @@ export type { ConversationProps } from './feedback/Conversation.js';
 
 export { Message } from './feedback/Message.js';
 export type { MessageProps } from './feedback/Message.js';
+
+export { MenuLabel } from './shared/MenuLabel.js';
+export type { MenuLabelProps } from './shared/MenuLabel.js';

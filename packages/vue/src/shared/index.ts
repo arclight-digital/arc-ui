@@ -2,3 +2,4 @@
 export { default as MenuDivider } from './MenuDivider.vue';
 export { default as MenuItem } from './MenuItem.vue';
 export { default as Option } from './Option.vue';
+export { default as MenuLabel } from './MenuLabel.vue';

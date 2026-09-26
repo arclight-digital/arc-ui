@@ -186,4 +186,5 @@ import './feedback/toast.register.js';
 import './feedback/tooltip.register.js';
 import './shared/menu-divider.register.js';
 import './shared/menu-item.register.js';
+import './shared/menu-label.register.js';
 import './shared/option.register.js';

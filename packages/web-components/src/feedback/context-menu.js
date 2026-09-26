@@ -5,6 +5,7 @@ import { PositionController } from '../shared/position-controller.js';
 import { DismissController } from '../shared/dismiss-controller.js';
 import '../shared/menu-item.js';
 import '../shared/menu-divider.js';
+import { MENU_CHILD_TAGS, menuSections } from '../shared/menu-label.js';
 import '../content/icon.js';
 import '../content/divider.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
@@ -21,11 +22,13 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-open - Fired when the context menu opens
  * @fires {CustomEvent<void>} arc-close - Fired when the context menu closes
  * @fires arc-select - Fired when a menu item is selected
- * @slot - `arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
+ * @slot - `arc-menu-item`, `arc-menu-divider` and `arc-menu-label` elements. A label heads the items after it as one named group. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @slot content
  * @csspart base - The root element.
  * @csspart menu
  * @csspart divider
+ * @csspart group - The items under one `arc-menu-label`.
+ * @csspart label - A group heading, drawn from `arc-menu-label`.
  */
 export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
   static properties = {
@@ -126,6 +129,16 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
         margin: var(--space-xs) 0;
       }
 
+      .menu-label {
+        padding: var(--space-sm) var(--space-md) var(--space-xs);
+        font-family: var(--font-label);
+        font-size: var(--label-size);
+        font-weight: var(--label-weight);
+        letter-spacing: var(--label-spacing);
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
       .slot-host { display: none; }
 
       @media (prefers-reduced-motion: reduce) {
@@ -198,7 +211,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
   _onSlotChange(e) {
     this._children = e.target
       .assignedElements({ flatten: true })
-      .filter((el) => el.tagName === 'ARC-MENU-ITEM' || el.tagName === 'ARC-MENU-DIVIDER');
+      .filter((el) => MENU_CHILD_TAGS.has(el.tagName));
   }
 
   get _menuItems() {
@@ -337,6 +350,31 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
     }
   }
 
+  _renderChild(child, i) {
+    if (child.tagName === 'ARC-MENU-DIVIDER') {
+      return html`<arc-divider variant="line" part="divider"></arc-divider>`;
+    }
+
+    return html`
+      <button
+        id="ctx-item-${i}"
+        class="menu-item ${child.disabled ? 'disabled' : ''} ${i === this._activeIndex ? 'active' : ''}"
+        role="menuitem"
+        ?disabled=${child.disabled}
+        aria-disabled=${child.disabled ? 'true' : 'false'}
+        tabindex="-1"
+        @click=${() => this._selectItem(child, i)}
+        @pointerenter=${() => {
+          this._activeIndex = i;
+        }}
+      >
+        ${child.icon ? html`<arc-icon name=${child.icon} size="16" class="item-icon" aria-hidden="true"></arc-icon>` : ''}
+        <span class="item-label">${child.displayLabel}</span>
+        ${child.shortcut ? html`<span class="item-shortcut">${child.shortcut}</span>` : ''}
+      </button>
+    `;
+  }
+
   /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
@@ -361,28 +399,16 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
         aria-activedescendant=${this._activeIndex >= 0 ? `ctx-item-${this._activeIndex}` : nothing}
         @keydown=${this._handleKeydown}
       >
-        ${this._children.map((child, i) => {
-          if (child.tagName === 'ARC-MENU-DIVIDER') {
-            return html`<arc-divider variant="line" part="divider"></arc-divider>`;
-          }
-
+        ${menuSections(this._children).map(({ label, entries }) => {
+          const items = entries.map(({ child, index: i }) => this._renderChild(child, i));
+          if (!label) return items;
+          // Visual heading; the group carries the same text as its name. See
+          // arc-dropdown-menu, which draws labels the same way.
           return html`
-            <button
-              id="ctx-item-${i}"
-              class="menu-item ${child.disabled ? 'disabled' : ''} ${i === this._activeIndex ? 'active' : ''}"
-              role="menuitem"
-              ?disabled=${child.disabled}
-              aria-disabled=${child.disabled ? 'true' : 'false'}
-              tabindex="-1"
-              @click=${() => this._selectItem(child, i)}
-              @pointerenter=${() => {
-                this._activeIndex = i;
-              }}
-            >
-              ${child.icon ? html`<arc-icon name=${child.icon} size="16" class="item-icon" aria-hidden="true"></arc-icon>` : ''}
-              <span class="item-label">${child.displayLabel}</span>
-              ${child.shortcut ? html`<span class="item-shortcut">${child.shortcut}</span>` : ''}
-            </button>
+            <div role="group" aria-label=${label.displayLabel} part="group">
+              <div class="menu-label" aria-hidden="true" part="label">${label.displayLabel}</div>
+              ${items}
+            </div>
           `;
         })}
       </div>

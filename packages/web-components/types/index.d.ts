@@ -1688,6 +1688,15 @@ export declare class ArcMenuItem extends LitElement {
 }
 
 /**
+ * `<arc-menu-label>`
+ */
+export declare class ArcMenuLabel extends LitElement {
+  displayLabel: unknown;
+  /** The heading text. Falls back to the element's text content when unset, as on arc-menu-item. @default '' */
+  label: string;
+}
+
+/**
  * `<arc-menubar>`
  * Events: arc-select
  */
@@ -3452,6 +3461,7 @@ declare global {
     'arc-masonry': ArcMasonry;
     'arc-menu-divider': ArcMenuDivider;
     'arc-menu-item': ArcMenuItem;
+    'arc-menu-label': ArcMenuLabel;
     'arc-menubar': ArcMenubar;
     'arc-message': ArcMessage;
     'arc-meter': ArcMeter;

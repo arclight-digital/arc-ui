@@ -375,6 +375,14 @@
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(menu)" },
     { "name": "::part(divider)" },
+    {
+      "name": "::part(group)",
+      "description": "The items under one `arc-menu-label`."
+    },
+    {
+      "name": "::part(label)",
+      "description": "A group heading, drawn from `arc-menu-label`."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(conversation)" },
     { "name": "::part(base)", "description": "The root element." },
@@ -388,6 +396,14 @@
     { "name": "::part(footer)" },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(divider)" },
+    {
+      "name": "::part(group)",
+      "description": "The items under one `arc-menu-label`."
+    },
+    {
+      "name": "::part(label)",
+      "description": "A group heading, drawn from `arc-menu-label`."
+    },
     { "name": "::part(item)" },
     { "name": "::part(shortcut)" },
     { "name": "::part(trigger)" },

@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "4.3.0",
+  "version": "4.4.0",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
@@ -480,6 +480,10 @@
     "./menu-item": {
       "types": "./types/index.d.ts",
       "default": "./src/shared/menu-item.register.js"
+    },
+    "./menu-label": {
+      "types": "./types/index.d.ts",
+      "default": "./src/shared/menu-label.register.js"
     },
     "./menubar": {
       "types": "./types/index.d.ts",

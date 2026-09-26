@@ -9865,11 +9865,19 @@
             },
             {
               "name": "divider"
+            },
+            {
+              "description": "The items under one `arc-menu-label`.",
+              "name": "group"
+            },
+            {
+              "description": "A group heading, drawn from `arc-menu-label`.",
+              "name": "label"
             }
           ],
           "slots": [
             {
-              "description": "`arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.",
+              "description": "`arc-menu-item`, `arc-menu-divider` and `arc-menu-label` elements. A label heads the items after it as one named group. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.",
               "name": ""
             },
             {
@@ -10272,6 +10280,14 @@
               "name": "divider"
             },
             {
+              "description": "The items under one `arc-menu-label`.",
+              "name": "group"
+            },
+            {
+              "description": "A group heading, drawn from `arc-menu-label`.",
+              "name": "label"
+            },
+            {
               "name": "item"
             },
             {
@@ -10286,10 +10302,11 @@
           ],
           "slots": [
             {
-              "description": "`arc-menu-item` and `arc-menu-divider` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.",
+              "description": "`arc-menu-item`, `arc-menu-divider` and `arc-menu-label` elements. A label heads the items after it as one named group. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.",
               "name": ""
             },
             {
+              "description": "The element that opens the menu. It is shrink-to-fit by default; give the host a width, or `display: block`, and the trigger fills it.",
               "name": "trigger"
             }
           ],
@@ -33272,6 +33289,102 @@
           "declaration": {
             "name": "ArcMenuItem",
             "module": "src/shared/menu-item.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/shared/menu-label.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A heading over a group of menu items.\n\nThe items after it, up to the next label, become one group, announced by\nthis text: the parent menu wraps them in `role=\"group\"` labelled by it. It is\nnever focusable and never selected. It was reported missing (finding #115)\nby a consumer titling each specialist's items in one menu, whose workaround\nwas a disabled `arc-menu-item`, which reads as a dead option rather than a\nheading.",
+          "name": "ArcMenuLabel",
+          "slots": [
+            {
+              "description": "Default content.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "displayLabel",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The heading text. Falls back to the element's text content when unset, as on arc-menu-item.",
+              "attribute": "label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The heading text. Falls back to the element's text content when unset, as on arc-menu-item.",
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-menu-label",
+          "customElement": true,
+          "group": null,
+          "status": "stable"
+        },
+        {
+          "kind": "variable",
+          "name": "MENU_CHILD_TAGS",
+          "default": "new Set(['ARC-MENU-ITEM', 'ARC-MENU-DIVIDER', 'ARC-MENU-LABEL'])",
+          "description": "The authored children a menu draws: items, dividers and labels."
+        },
+        {
+          "kind": "function",
+          "name": "menuSections",
+          "parameters": [
+            {
+              "name": "children"
+            }
+          ],
+          "description": "Split a menu's children into sections at each label.\n\nReturns `[{ label, entries }]`, where `label` is the arc-menu-label that heads\nthe section (null for anything before the first one) and `entries` are\n`{ child, index }` pairs, `index` being the child's position in `children`,\nwhich is what each menu's ids and event details are keyed on."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcMenuLabel",
+          "declaration": {
+            "name": "ArcMenuLabel",
+            "module": "src/shared/menu-label.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MENU_CHILD_TAGS",
+          "declaration": {
+            "name": "MENU_CHILD_TAGS",
+            "module": "src/shared/menu-label.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "menuSections",
+          "declaration": {
+            "name": "menuSections",
+            "module": "src/shared/menu-label.js"
           }
         }
       ]

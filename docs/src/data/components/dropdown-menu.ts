@@ -18,7 +18,9 @@ DropdownMenu is designed for action menus attached to buttons — file menus, "m
     'Click-triggered panel anchored below a customizable trigger slot',
     'Smooth CSS transition with opacity, visibility, and translateY animation',
     'Full keyboard navigation: ArrowUp/Down cycle items, Enter selects, Escape closes',
-    'Support for `<arc-menu-item>` with label and shortcut hint, and `<arc-menu-divider>` for grouping',
+    'Support for `<arc-menu-item>` with label and shortcut hint, `<arc-menu-divider>` for separating groups, and `<arc-menu-label>` for naming them',
+    'Disabled items are drawn muted, skipped by the keyboard, and never selected',
+    'A trigger that fills a full-width host: give `arc-dropdown-menu` a width or `display: block`',
     '`arc-select` event on item activation with label and shortcut in the detail',
     '`arc-close` event when the panel is dismissed by any means',
     'Automatic close on outside click via a document-level event listener',
@@ -28,7 +30,7 @@ DropdownMenu is designed for action menus attached to buttons — file menus, "m
   guidelines: {
     do: [
       'Provide a clear, descriptive trigger element — a button with text like "Actions" or a recognizable icon',
-      'Group related items with <arc-menu-divider> to create visual sections within the menu',
+      'Group related items with <arc-menu-divider>, and name a group with <arc-menu-label> rather than a disabled item',
       'Include shortcut hints on items that have associated keyboard bindings for user education',
       'Listen to arc-select to execute the chosen action; the event contains the item label and shortcut',
       'Keep the item count under 10; for larger command sets, use CommandPalette instead',
@@ -46,7 +48,8 @@ DropdownMenu is designed for action menus attached to buttons — file menus, "m
   <arc-button slot="trigger" variant="secondary">Actions</arc-button>
   <arc-menu-item label="Edit" shortcut="Ctrl+E"></arc-menu-item>
   <arc-menu-item label="Duplicate"></arc-menu-item>
-  <arc-menu-divider></arc-menu-divider>
+  <arc-menu-item label="Move to…" disabled></arc-menu-item>
+  <arc-menu-label>Danger zone</arc-menu-label>
   <arc-menu-item label="Archive"></arc-menu-item>
   <arc-menu-item label="Delete"></arc-menu-item>
 </arc-dropdown-menu>`,
@@ -171,6 +174,12 @@ export default function Example() {
       name: 'MenuDivider',
       tag: 'arc-menu-divider',
       description: 'A visual separator between groups of menu items.',
+    },
+    {
+      name: 'MenuLabel',
+      tag: 'arc-menu-label',
+      description:
+        'A heading over a group of menu items. The items after it, up to the next label, form one named group.',
     },
   ],
 

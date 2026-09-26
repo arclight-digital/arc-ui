@@ -169,6 +169,12 @@ export default function Example() {
       tag: 'arc-menu-divider',
       description: 'A visual separator between groups of menu items.',
     },
+    {
+      name: 'MenuLabel',
+      tag: 'arc-menu-label',
+      description:
+        'A heading over a group of menu items. The items after it, up to the next label, form one named group.',
+    },
   ],
 
   seeAlso: ['dropdown-menu', 'popover'],

@@ -79,6 +79,7 @@ const EXEMPT = {
   'arc-comparison-column': 'renders nothing — it configures its arc-comparison parent',
   'arc-hotkey': 'renders nothing — it binds a shortcut',
   'arc-menu-divider': 'renders nothing — the parent menu draws the rule',
+  'arc-menu-label': 'renders nothing — the parent menu draws the heading',
 };
 
 const declaresBase = {

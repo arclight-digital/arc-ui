@@ -8,3 +8,6 @@ export type { MenuItemProps } from './MenuItem.js';
 
 export { Option } from './Option.js';
 export type { OptionProps } from './Option.js';
+
+export { MenuLabel } from './MenuLabel.js';
+export type { MenuLabelProps } from './MenuLabel.js';
