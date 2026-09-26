@@ -81,3 +81,6 @@ export type { ActivityHeatmapProps } from './ActivityHeatmap.js';
 
 export { JsonTree } from './JsonTree.js';
 export type { JsonTreeProps } from './JsonTree.js';
+
+export { BarList } from './BarList.js';
+export type { BarListProps } from './BarList.js';

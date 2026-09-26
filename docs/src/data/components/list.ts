@@ -29,7 +29,8 @@ Three visual variants — default (plain), bordered (outlined container), and se
   guidelines: {
     do: [
       'Use arc-list-item as direct children for consistent styling and keyboard navigation',
-      'Put per-row buttons (rename, delete) in the `actions` slot, and give each one a label naming its row: "Rename Weekly review", not "Rename"',
+      'Put per-row buttons (rename, delete) in the `actions` slot of a plain list, and give each one a label naming its row: "Rename Weekly review", not "Rename"',
+      'Mark the current row of an actionable list with `href` and `selected`, which sets aria-current; a selectable list is a listbox and cannot hold row actions',
       'Set `selectable` when items represent choices the user needs to pick from',
       'Use the bordered variant inside cards or panels that need visual containment',
       'Use the separated variant for long lists where row boundaries improve scannability',
@@ -41,16 +42,26 @@ Three visual variants — default (plain), bordered (outlined container), and se
     ],
   },
 
-  previewHtml: `<arc-list variant="bordered" selectable label="Mailboxes" style="max-width: 320px;">
-  <arc-list-item value="inbox">Inbox</arc-list-item>
-  <arc-list-item value="drafts">
-    Drafts
-    <arc-icon-button slot="actions" name="pencil" label="Rename Drafts" variant="ghost" size="sm"></arc-icon-button>
-    <arc-icon-button slot="actions" name="x" label="Delete Drafts" variant="ghost" size="sm"></arc-icon-button>
-  </arc-list-item>
-  <arc-list-item value="sent">Sent</arc-list-item>
-  <arc-list-item value="trash" disabled>Trash</arc-list-item>
-</arc-list>`,
+  previewHtml: `<div style="display: flex; gap: var(--space-xl); flex-wrap: wrap;">
+  <arc-list variant="bordered" selectable label="Mailboxes" style="width: 260px;">
+    <arc-list-item value="inbox">Inbox</arc-list-item>
+    <arc-list-item value="drafts">Drafts</arc-list-item>
+    <arc-list-item value="sent">Sent</arc-list-item>
+    <arc-list-item value="trash" disabled>Trash</arc-list-item>
+  </arc-list>
+  <arc-list variant="bordered" label="Documents" style="width: 260px;">
+    <arc-list-item href="#weekly" selected>
+      Weekly review
+      <arc-icon-button slot="actions" name="pencil" label="Rename Weekly review" variant="ghost" size="sm"></arc-icon-button>
+      <arc-icon-button slot="actions" name="x" label="Delete Weekly review" variant="ghost" size="sm"></arc-icon-button>
+    </arc-list-item>
+    <arc-list-item href="#roadmap">
+      Roadmap
+      <arc-icon-button slot="actions" name="pencil" label="Rename Roadmap" variant="ghost" size="sm"></arc-icon-button>
+      <arc-icon-button slot="actions" name="x" label="Delete Roadmap" variant="ghost" size="sm"></arc-icon-button>
+    </arc-list-item>
+  </arc-list>
+</div>`,
 
   subComponents: [
     {

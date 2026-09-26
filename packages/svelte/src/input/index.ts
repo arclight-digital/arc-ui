@@ -43,3 +43,5 @@ export { default as InlineEdit } from './InlineEdit.svelte';
 export { default as MaskedInput } from './MaskedInput.svelte';
 export { default as SignaturePad } from './SignaturePad.svelte';
 export { default as TreeSelect } from './TreeSelect.svelte';
+export { default as FieldList } from './FieldList.svelte';
+export { default as FieldRow } from './FieldRow.svelte';

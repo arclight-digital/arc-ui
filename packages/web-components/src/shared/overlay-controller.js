@@ -1,4 +1,5 @@
 import { lockScroll, unlockScroll } from './scroll-lock.js';
+import { deepActiveElement } from './focus-trap.js';
 
 /**
  * OverlayController — a modal overlay on the platform's `<dialog>`.
@@ -70,6 +71,27 @@ import { lockScroll, unlockScroll } from './scroll-lock.js';
  * The host renders a `<dialog>` and nothing else about opening: no `open`
  * attribute in the template, no `showModal` call. The controller reconciles
  * after every render, which is also what makes it correct across a reparent.
+ *
+ * ## Non-modal
+ *
+ * With `modal: () => false` the host renders a `<div popover="manual"
+ * role="dialog">` instead of a `<dialog>`, and the controller opens it with
+ * `showPopover()`. That keeps it in the top layer, above everything with no
+ * z-index, while the page behind stays live: nothing is inert, nothing is
+ * scroll-locked, and there is no backdrop (test-findings #112).
+ *
+ * A popover `<dialog>` was tried first and does not work. `showPopover()` on a
+ * dialog runs the dialog focusing steps and pulls focus into it, and so does
+ * `show()`. The agreed behaviour is the opposite: opening a non-modal sheet
+ * leaves focus where it was, so a peek strip never interrupts someone reading
+ * or typing on the page. A `<div>` popover does that. It moves focus only for
+ * an `autofocus` descendant, which is the consumer asking for it.
+ *
+ * What the platform then no longer does is ours: Escape, only while focus is
+ * inside the panel (a key press on the page is the page's), and returning
+ * focus on close when it was inside, since a hidden popover drops it on the
+ * document. Light dismiss does not apply: a click on the page is a click on
+ * the page.
  */
 export class OverlayController {
   /**
@@ -87,11 +109,18 @@ export class OverlayController {
     this.host = host;
     this.opts = opts;
     this._locked = false;
+    this._opener = null;
     this._onCancel = this._onCancel.bind(this);
     this._onClose = this._onClose.bind(this);
     this._onClick = this._onClick.bind(this);
+    this._onKeydown = this._onKeydown.bind(this);
     this._bound = null;
     host.addController(this);
+  }
+
+  /** Whether the host is modal. Hosts that never pass `modal` always are. */
+  get _modal() {
+    return this.opts.modal ? this.opts.modal() !== false : true;
   }
 
   /**
@@ -106,6 +135,10 @@ export class OverlayController {
   hostUpdated() {
     const dialog = this.opts.dialog();
     if (!dialog) return;
+    // A host that changed modality re-rendered its panel as the other element,
+    // and the one it replaced left the DOM, and the top layer, with it. Nothing
+    // else reconciles its lock or its listeners.
+    if (this._bound && this._bound !== dialog && !this._bound.isConnected) this._unlock();
     this._bind(dialog);
     this.opts.isOpen() ? this._show(dialog) : this._hide(dialog);
   }
@@ -137,30 +170,33 @@ export class OverlayController {
   }
 
   hostDisconnected() {
-    const dialog = this._bound;
-    if (dialog) {
-      dialog.removeEventListener('cancel', this._onCancel);
-      dialog.removeEventListener('close', this._onClose);
-      dialog.removeEventListener('click', this._onClick);
-      this._bound = null;
-    }
+    if (this._bound) this._unbind(this._bound);
+    this._bound = null;
     this._unlock();
+  }
+
+  _unbind(panel) {
+    panel.removeEventListener('cancel', this._onCancel);
+    panel.removeEventListener('close', this._onClose);
+    panel.removeEventListener('click', this._onClick);
+    panel.removeEventListener('keydown', this._onKeydown);
   }
 
   _bind(dialog) {
     if (this._bound === dialog) return;
-    if (this._bound) {
-      this._bound.removeEventListener('cancel', this._onCancel);
-      this._bound.removeEventListener('close', this._onClose);
-      this._bound.removeEventListener('click', this._onClick);
-    }
+    if (this._bound) this._unbind(this._bound);
     dialog.addEventListener('cancel', this._onCancel);
     dialog.addEventListener('close', this._onClose);
     dialog.addEventListener('click', this._onClick);
+    dialog.addEventListener('keydown', this._onKeydown);
     this._bound = dialog;
   }
 
   _show(dialog) {
+    if (dialog.localName !== 'dialog') {
+      this._showNonModal(dialog);
+      return;
+    }
     if (!dialog.open) {
       // Throws when the element is disconnected or already in the top layer;
       // both are races with a host closing mid-frame, and the next render
@@ -175,10 +211,61 @@ export class OverlayController {
   }
 
   _hide(dialog) {
+    if (dialog.localName !== 'dialog') {
+      this._hideNonModal(dialog);
+      return;
+    }
     // `close()` on an already-closed dialog fires a second `close` event in
     // some engines, so the guard is behavioural rather than cosmetic.
     if (dialog.open) dialog.close();
     this._unlock();
+  }
+
+  /** Top layer, page left live, focus left where it is. See the class notes. */
+  _showNonModal(panel) {
+    // A host switched from modal while open: a modal's lock must not outlive it.
+    this._unlock();
+    if (panel.matches(':popover-open')) return;
+    this._opener = deepActiveElement();
+    try {
+      panel.showPopover();
+    } catch {
+      // Disconnected mid-frame; the next render reconciles.
+    }
+  }
+
+  _hideNonModal(panel) {
+    if (!panel.matches(':popover-open')) return;
+    // Closing with focus inside would leave it on the document. Hand it back to
+    // wherever it was before the panel had it, if that is still on the page.
+    const active = deepActiveElement();
+    const inside = active && (panel === active || panel.contains(active) || this._inHost(active));
+    try {
+      panel.hidePopover();
+    } catch {
+      // Already gone; nothing to hide.
+    }
+    if (inside && this._opener?.isConnected && !this._inHost(this._opener)) {
+      this._opener.focus({ preventScroll: true });
+    }
+    this._opener = null;
+  }
+
+  /** Whether a node is the host or inside it, including its light DOM. */
+  _inHost(node) {
+    return node === this.host || this.host.contains(node) || this.host.shadowRoot?.contains(node);
+  }
+
+  /**
+   * Escape, for a non-modal panel only: a modal one gets the dialog's `cancel`.
+   * Only while focus is inside, which is what a keydown reaching the panel
+   * means; a key press on the page never gets here.
+   */
+  _onKeydown(e) {
+    if (this._bound?.localName === 'dialog') return;
+    if (e.key !== 'Escape' || e.defaultPrevented) return;
+    e.preventDefault();
+    this.opts.onRequestClose();
   }
 
   _lock() {

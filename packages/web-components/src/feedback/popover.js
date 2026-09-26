@@ -15,7 +15,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @status stable
  * @prop {boolean} open - Whether the popover panel is currently visible. Reflected as an attribute.
  * @prop {'top' | 'bottom' | 'left' | 'right'} position - Placement of the panel relative to the trigger element.
- * @prop {string} trigger - Reserved for future trigger-mode configuration (click, hover, manual).
+ * @prop {string} trigger - Deprecated, and has no effect: it was reserved for trigger modes that were never built, and v5 removes it. For a panel that opens on hover, use `arc-hover-card`.
  * @fires arc-open - Fired when the popover opens.
  * @fires {CustomEvent<void>} arc-close - Fired when the popover closes.
  * @slot trigger

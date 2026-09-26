@@ -15,6 +15,7 @@ export interface DrawerProps {
   open?: boolean;
   position?: 'left' | 'right';
   heading?: string;
+  modal?: boolean;
   onArcClose?: (e: CustomEvent) => void;
   children?: JSX.Element;
   class?: string;
@@ -45,9 +46,9 @@ export interface DrawerProps {
 }
 
 export const Drawer: Component<DrawerProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'position', 'heading', 'onArcClose', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'position', 'heading', 'modal', 'onArcClose', 'children']);
   return (
-    <arc-drawer open={local.open} position={local.position} heading={local.heading} on:arc-close={local.onArcClose} {...rest}>
+    <arc-drawer open={local.open} position={local.position} heading={local.heading} modal={local.modal} on:arc-close={local.onArcClose} {...rest}>
       {local.children}
     </arc-drawer>
   );

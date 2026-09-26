@@ -5,6 +5,7 @@
 
   interface Props {
     navPosition?: 'left' | 'top';
+    sections?: boolean;
     /** <slot name="nav"> — put slot="nav" on the element inside. */
     nav?: Snippet;
     children?: Snippet;
@@ -35,7 +36,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { navPosition, nav, children, ...rest }: Props = $props();
+  let { navPosition, sections, nav, children, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -45,7 +46,7 @@
   });
 </script>
 
-<arc-settings-layout bind:this={__el} {...rest}>
+<arc-settings-layout {sections} bind:this={__el} {...rest}>
   {@render nav?.()}
   {@render children?.()}
 </arc-settings-layout>

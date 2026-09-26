@@ -18,3 +18,4 @@ export { SplitPane } from './SplitPane';
 export { StatusBar } from './StatusBar';
 export { Sticky } from './Sticky';
 export { Toolbar } from './Toolbar';
+export { SettingsNavItem } from './SettingsNavItem';

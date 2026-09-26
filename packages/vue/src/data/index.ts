@@ -23,3 +23,4 @@ export { default as Gauge } from './Gauge.vue';
 export { default as Uptime } from './Uptime.vue';
 export { default as ActivityHeatmap } from './ActivityHeatmap.vue';
 export { default as JsonTree } from './JsonTree.vue';
+export { default as BarList } from './BarList.vue';

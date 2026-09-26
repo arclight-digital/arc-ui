@@ -43,3 +43,5 @@ export { default as InlineEdit } from './InlineEdit.vue';
 export { default as MaskedInput } from './MaskedInput.vue';
 export { default as SignaturePad } from './SignaturePad.vue';
 export { default as TreeSelect } from './TreeSelect.vue';
+export { default as FieldList } from './FieldList.vue';
+export { default as FieldRow } from './FieldRow.vue';

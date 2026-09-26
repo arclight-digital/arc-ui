@@ -8,14 +8,28 @@ const props = withDefaults(defineProps<{
   open?: boolean;
   side?: 'bottom' | 'right';
   heading?: string;
+  modal?: boolean;
+  snapPoints?: string;
+  snap?: number;
 }>(), {
   heading: '',
+  snapPoints: '',
 });
 
 const emit = defineEmits<{
+  'arc-change': [event: CustomEvent];
   'arc-close': [event: CustomEvent];
   'arc-open': [event: CustomEvent];
+  'update:snap': [value: number];
 }>();
+
+function onArcChange(payload: CustomEvent) {
+  emit('arc-change', payload);
+  const detail = payload.detail as Record<string, unknown> | null;
+  if (detail) {
+    if ('value' in detail) emit('update:snap', detail.value as number);
+  }
+}
 </script>
 
 <template>
@@ -23,6 +37,10 @@ const emit = defineEmits<{
     :open="props.open"
     :side="props.side"
     :heading="props.heading"
+    :modal="props.modal"
+    :snapPoints="props.snapPoints"
+    :snap="props.snap"
+    @arc-change="onArcChange"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
   >

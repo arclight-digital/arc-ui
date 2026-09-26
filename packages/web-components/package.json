@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
@@ -76,6 +76,10 @@
     "./banner": {
       "types": "./types/index.d.ts",
       "default": "./src/feedback/banner.register.js"
+    },
+    "./bar-list": {
+      "types": "./types/index.d.ts",
+      "default": "./src/data/bar-list.register.js"
     },
     "./blockquote": {
       "types": "./types/index.d.ts",
@@ -296,6 +300,14 @@
     "./feature-card": {
       "types": "./types/index.d.ts",
       "default": "./src/content/feature-card.register.js"
+    },
+    "./field-list": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/field-list.register.js"
+    },
+    "./field-row": {
+      "types": "./types/index.d.ts",
+      "default": "./src/input/field-row.register.js"
     },
     "./fieldset": {
       "types": "./types/index.d.ts",
@@ -634,6 +646,10 @@
     "./settings-layout": {
       "types": "./types/index.d.ts",
       "default": "./src/layout/settings-layout.register.js"
+    },
+    "./settings-nav-item": {
+      "types": "./types/index.d.ts",
+      "default": "./src/layout/settings-nav-item.register.js"
     },
     "./shared-styles": {
       "types": "./types/shared-styles.d.ts",

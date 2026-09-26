@@ -43,3 +43,5 @@ export { InlineEdit } from './InlineEdit';
 export { MaskedInput } from './MaskedInput';
 export { SignaturePad } from './SignaturePad';
 export { TreeSelect } from './TreeSelect';
+export { FieldList } from './FieldList';
+export { FieldRow } from './FieldRow';

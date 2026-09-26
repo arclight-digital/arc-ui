@@ -15,6 +15,9 @@ In \`left\` mode, the navigation renders as a 220px sidebar with a card-colored 
 On screens narrower than 768px, the left sidebar layout automatically collapses to a stacked column — the nav moves above the content with a bottom border instead of a right border. This responsive behavior is built in and requires no additional configuration. The component exposes CSS parts for the layout container, nav region, and content region, allowing targeted style overrides when needed.`,
 
   features: [
+    '`arc-settings-nav-item` links with an active state that follows the URL hash, so a shared link or the back button lands on the right section',
+    '`sections` shows only the section whose `id` matches the active item, for a tabbed settings page',
+    'On a phone the nav becomes a scrolling row of tabs above the content, instead of a stack that pushes it down',
     'Two layout modes: left sidebar (220px) and top navigation bar',
     'Card-colored nav background with subtle border separation',
     'Automatic responsive collapse from sidebar to stacked layout at 768px',
@@ -42,24 +45,25 @@ On screens narrower than 768px, the left sidebar layout automatically collapses 
     ],
   },
 
-  previewHtml: `<div style="width:100%;height:280px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
-  <arc-settings-layout nav-position="left" style="height:100%">
-    <div slot="nav" style="display:flex;flex-direction:column;gap:var(--space-xs)">
-      <span style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:var(--space-xs);font-family:var(--font-accent)">Settings</span>
-      <a href="#" style="color:var(--accent-primary);text-decoration:none;font-size:14px;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm);background:rgba(77,126,247,0.1);font-family:var(--font-body)">Profile</a>
-      <a href="#" style="color:var(--text-secondary);text-decoration:none;font-size:14px;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm);font-family:var(--font-body)">Security</a>
-      <a href="#" style="color:var(--text-secondary);text-decoration:none;font-size:14px;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm);font-family:var(--font-body)">Notifications</a>
-      <a href="#" style="color:var(--text-secondary);text-decoration:none;font-size:14px;padding:var(--space-xs) var(--space-sm);border-radius:var(--radius-sm);font-family:var(--font-body)">Billing</a>
-    </div>
-    <div>
-      <h2 style="margin:0 0 var(--space-sm);font-family:var(--font-body);font-size:20px;font-weight:700;color:var(--text-primary)">Profile</h2>
-      <p style="margin:0 0 var(--space-md);color:var(--text-secondary);font-size:14px;font-family:var(--font-body)">Manage your display name, avatar, and contact information.</p>
-      <div style="display:flex;flex-direction:column;gap:var(--space-sm)">
-        <label style="font-size:13px;color:var(--text-secondary);font-family:var(--font-body)">Display Name
-          <input type="text" value="Alice" style="display:block;margin-top:4px;padding:6px 10px;background:var(--bg-input);border:1px solid var(--border-default);border-radius:var(--radius-sm);color:var(--text-primary);font-size:14px;width:240px;box-sizing:border-box" />
-        </label>
-      </div>
-    </div>
+  previewHtml: `<div style="width:100%;height:300px;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
+  <arc-settings-layout nav-position="left" sections style="height:100%">
+    <nav slot="nav" aria-label="Settings">
+      <arc-settings-nav-item href="#sl-demo-profile">Profile</arc-settings-nav-item>
+      <arc-settings-nav-item href="#sl-demo-security">Security</arc-settings-nav-item>
+      <arc-settings-nav-item href="#sl-demo-billing">Billing</arc-settings-nav-item>
+    </nav>
+    <section id="sl-demo-profile">
+      <h2 style="margin:0 0 var(--space-sm);font-size:20px;color:var(--text-primary)">Profile</h2>
+      <arc-input label="Display name" value="Alice" style="max-width:260px"></arc-input>
+    </section>
+    <section id="sl-demo-security">
+      <h2 style="margin:0 0 var(--space-sm);font-size:20px;color:var(--text-primary)">Security</h2>
+      <arc-toggle label="Two-factor authentication"></arc-toggle>
+    </section>
+    <section id="sl-demo-billing">
+      <h2 style="margin:0 0 var(--space-sm);font-size:20px;color:var(--text-primary)">Billing</h2>
+      <p style="margin:0;color:var(--text-secondary)">Pro plan, renews monthly.</p>
+    </section>
   </arc-settings-layout>
 </div>`,
 
@@ -219,6 +223,15 @@ export default function Example() {
    </div>
    </div>
 </div>`,
+    },
+  ],
+
+  subComponents: [
+    {
+      name: 'SettingsNavItem',
+      tag: 'arc-settings-nav-item',
+      description:
+        'A link to one section of the settings page, marked active by the layout from the URL hash.',
     },
   ],
 

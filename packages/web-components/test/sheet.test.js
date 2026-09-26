@@ -36,3 +36,39 @@ describe('arc-sheet sizing', () => {
     expect(getComputedStyle(panel(el)).width).to.equal('320px');
   });
 });
+
+/**
+ * Where the sheet actually is (test-findings #126). The UA stylesheet gives a
+ * modal dialog inset-block: 0 and every dialog inset-inline: 0, and the sheet
+ * overrode only half of each, so from the move to <dialog> until 4.6 a bottom
+ * sheet rendered at the top of the screen and a right sheet on the left, at its
+ * content height. Nothing measured position; these do, modal and not.
+ */
+describe('arc-sheet position', () => {
+  const box = async (markup) => {
+    const el = mount(markup);
+    await settle(el);
+    await new Promise((r) => setTimeout(r, 650)); // past the entry transition
+    return panel(el).getBoundingClientRect();
+  };
+
+  for (const modality of ['', 'no-modal']) {
+    const name = modality ? 'non-modal' : 'modal';
+
+    it(`puts a ${name} bottom sheet on the bottom edge, full width`, async () => {
+      const r = await box(`<arc-sheet open heading="S" ${modality}>Short</arc-sheet>`);
+      expect(Math.round(r.bottom)).to.equal(window.innerHeight);
+      expect(Math.round(r.left)).to.equal(0);
+      expect(Math.round(r.right)).to.equal(window.innerWidth);
+      expect(r.top, 'not at the top').to.be.greaterThan(0);
+    });
+
+    it(`puts a ${name} right sheet on the right edge, full height`, async () => {
+      const r = await box(`<arc-sheet open side="right" heading="S" style="--sheet-width: 320px" ${modality}>Short</arc-sheet>`);
+      expect(Math.round(r.right)).to.equal(window.innerWidth);
+      expect(Math.round(r.width)).to.equal(320);
+      expect(Math.round(r.top)).to.equal(0);
+      expect(Math.round(r.bottom)).to.equal(window.innerHeight);
+    });
+  }
+});

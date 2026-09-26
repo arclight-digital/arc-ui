@@ -18,4 +18,11 @@ export class SettingsLayout {
   get navPosition(): 'left' | 'top' {
     return this._el.navPosition;
   }
+
+  @Input() set sections(value: boolean) {
+    this._el.sections = value;
+  }
+  get sections(): boolean {
+    return this._el.sections;
+  }
 }

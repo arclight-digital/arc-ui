@@ -74,6 +74,7 @@ export {
   ArcUptime,
   ArcActivityHeatmap,
   ArcJsonTree,
+  ArcBarList,
 } from './data/index.js';
 export {
   ArcBlockquote,
@@ -133,6 +134,8 @@ export {
   ArcMaskedInput,
   ArcSignaturePad,
   ArcTreeSelect,
+  ArcFieldList,
+  ArcFieldRow,
 } from './input/index.js';
 export {
   ArcAnchorNav,
@@ -184,6 +187,7 @@ export {
   ArcStatusBar,
   ArcSticky,
   ArcToolbar,
+  ArcSettingsNavItem,
 } from './layout/index.js';
 export {
   ArcAlert,

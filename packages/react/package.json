@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-react",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "React wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -147,6 +147,10 @@
     "./Badge": {
       "types": "./dist/data/Badge.d.ts",
       "default": "./dist/data/Badge.js"
+    },
+    "./BarList": {
+      "types": "./dist/data/BarList.d.ts",
+      "default": "./dist/data/BarList.js"
     },
     "./Chart": {
       "types": "./dist/data/Chart.d.ts",
@@ -355,6 +359,14 @@
     "./DateRangePicker": {
       "types": "./dist/input/DateRangePicker.d.ts",
       "default": "./dist/input/DateRangePicker.js"
+    },
+    "./FieldList": {
+      "types": "./dist/input/FieldList.d.ts",
+      "default": "./dist/input/FieldList.js"
+    },
+    "./FieldRow": {
+      "types": "./dist/input/FieldRow.d.ts",
+      "default": "./dist/input/FieldRow.js"
     },
     "./Fieldset": {
       "types": "./dist/input/Fieldset.d.ts",
@@ -675,6 +687,10 @@
     "./SettingsLayout": {
       "types": "./dist/layout/SettingsLayout.d.ts",
       "default": "./dist/layout/SettingsLayout.js"
+    },
+    "./SettingsNavItem": {
+      "types": "./dist/layout/SettingsNavItem.d.ts",
+      "default": "./dist/layout/SettingsNavItem.js"
     },
     "./SplitPane": {
       "types": "./dist/layout/SplitPane.d.ts",

@@ -84,6 +84,8 @@ import { infiniteScroll } from './infinite-scroll';
 import { pinInput } from './pin-input';
 import { scrollArea } from './scroll-area';
 import { meter } from './meter';
+import { barList } from './bar-list';
+import { fieldList } from './field-list';
 import { aspectRatio } from './aspect-ratio';
 import { marquee } from './marquee';
 import { stack } from './stack';
@@ -255,6 +257,8 @@ export const components: ComponentDef[] = [
   pinInput,
   scrollArea,
   meter,
+  barList,
+  fieldList,
   aspectRatio,
   marquee,
   stack,

@@ -172,3 +172,7 @@ export { default as TreeSelect } from './input/TreeSelect.svelte';
 export { default as Conversation } from './feedback/Conversation.svelte';
 export { default as Message } from './feedback/Message.svelte';
 export { default as MenuLabel } from './shared/MenuLabel.svelte';
+export { default as BarList } from './data/BarList.svelte';
+export { default as FieldList } from './input/FieldList.svelte';
+export { default as FieldRow } from './input/FieldRow.svelte';
+export { default as SettingsNavItem } from './layout/SettingsNavItem.svelte';

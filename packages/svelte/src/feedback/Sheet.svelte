@@ -7,6 +7,9 @@
     open?: boolean;
     side?: 'bottom' | 'right';
     heading?: string;
+    modal?: boolean;
+    snapPoints?: string;
+    snap?: number;
     /** <slot name="header"> — put slot="header" on the element inside. */
     header?: Snippet;
     /** <slot name="footer"> — put slot="footer" on the element inside. */
@@ -39,10 +42,30 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open, side, heading = '', header, footer, children, ...rest }: Props = $props();
+  let { open, side, heading = '', modal, snapPoints = '', snap = $bindable(), header, footer, children, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (snapPoints !== undefined) el.snapPoints = snapPoints;
+  });
+
+  // Two-way binding — mirror the event detail back onto the prop, then
+  // forward to the consumer's own handler, which {...rest} would otherwise
+  // have attached. These are declared after {...rest} below so they win.
+  function __onArcChange(e: Event) {
+    const detail = (e as CustomEvent).detail as Record<string, unknown> | null;
+    if (detail) {
+      if ('value' in detail) snap = detail.value as number;
+    }
+    (rest['onarc-change'] as ((e: Event) => void) | undefined)?.(e);
+  }
 </script>
 
-<arc-sheet {open} {side} {heading} {...rest}>
+<arc-sheet {open} {side} {heading} {modal} {snap} bind:this={__el} {...rest}
+  onarc-change={__onArcChange}
+>
   {@render header?.()}
   {@render footer?.()}
   {@render children?.()}

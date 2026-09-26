@@ -194,6 +194,24 @@ export declare class ArcBanner extends LitElement {
 }
 
 /**
+ * `<arc-bar-list>`
+ */
+export declare class ArcBarList extends LitElement {
+  /** Text appended to each value, such as "%" or " ms". @default '' */
+  unit: string;
+  /** Accessible name for the list, announced before its rows. @default '' */
+  label: string;
+  /** The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. "1.2k"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link. @default [] */
+  items: Array;
+  /** The value a full bar stands for. Defaults to the largest value, so the top row always fills the track. Set it to compare several lists on one scale. @default 0 */
+  max: number;
+  /** Show at most this many rows, after sorting. Unset shows all. @default 0 */
+  limit: number;
+  /** Keep the order the items were given in. By default rows are ranked, largest first. @default false */
+  unsorted: boolean;
+}
+
+/**
  * `<arc-blockquote>`
  */
 export declare class ArcBlockquote extends LitElement {
@@ -931,6 +949,8 @@ export declare class ArcDrawer extends LitElement {
   open: boolean;
   /** Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays. @default 'left' */
   position: 'left' | 'right';
+  /** Whether the drawer blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the drawer closes. Off (`no-modal`), the drawer floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it. @default true */
+  modal: boolean;
 }
 
 /**
@@ -968,6 +988,33 @@ export declare class ArcFeatureCard extends LitElement {
   href: string;
   /** Action label (e.g. "Learn more") shown at the bottom of the card when href is set. Hidden when empty or when no href is provided. @default '' */
   action: string;
+}
+
+/**
+ * `<arc-field-list>`
+ * Events: arc-add, arc-remove, arc-move
+ */
+export declare class ArcFieldList extends LitElement {
+  /** Accessible name for the group of rows, such as "Options". @default '' */
+  label: string;
+  /** Text of the Add button. @default 'Add' */
+  addLabel: string;
+  /** The fewest rows allowed. Remove is disabled at this count. @default 0 */
+  min: number;
+  /** The most rows allowed. Add is disabled at this count. Unset is unlimited. @default 0 */
+  max: number;
+}
+
+/**
+ * `<arc-field-row>`
+ */
+export declare class ArcFieldRow extends LitElement {
+  /** What this row is called in its controls' names, such as "Option 2". Defaults to "Row" and its position. @default '' */
+  label: string;
+  /** Focus the first field in the row, as after it was just added. */
+  focusFirstField(): void;
+  /** Focus the handle, as after the row was moved. */
+  focusHandle(): void;
 }
 
 /**
@@ -1573,7 +1620,7 @@ export declare class ArcListItem extends LitElement {
   value: string;
   /** When set, renders the item as an anchor tag for navigation. @default '' */
   href: string;
-  /** Whether this item is currently selected. Managed automatically by the parent list. @default false */
+  /** Whether this item is currently selected. Managed automatically by a selectable parent list. On an `href` item in a plain list it marks the current page instead (`aria-current="page"`), which is the accessible way to show the current row in a list whose rows carry actions. @default false */
   selected: boolean;
   /** Prevents interaction and dims the item. @default false */
   disabled: boolean;
@@ -2042,7 +2089,7 @@ export declare class ArcPinInput extends LitElement {
  * Events: arc-open, arc-close
  */
 export declare class ArcPopover extends LitElement {
-  /** Reserved for future trigger-mode configuration (click, hover, manual). @default '' */
+  /** Deprecated, and has no effect: it was reserved for trigger modes that were never built, and v5 removes it. For a panel that opens on hover, use `arc-hover-card`. @default '' */
   trigger: string;
   /** Whether the popover panel is currently visible. Reflected as an attribute. @default false */
   open: boolean;
@@ -2413,21 +2460,39 @@ export declare class ArcSelect extends LitElement {
  * `<arc-settings-layout>`
  */
 export declare class ArcSettingsLayout extends LitElement {
-  /** Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px. @default 'left' */
+  /** Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). Below 768px either becomes a scrolling row of tabs. @default 'left' */
   navPosition: 'left' | 'top';
+  /** Show only the content section whose `id` matches the active nav item (`href="#profile"` shows `id="profile"`), and hide the others with `hidden`. Off, every section stays on the page, as for one long page the nav scrolls through. @default false */
+  sections: boolean;
+}
+
+/**
+ * `<arc-settings-nav-item>`
+ */
+export declare class ArcSettingsNavItem extends LitElement {
+  /** Where the item links to, usually a section's hash such as `#profile`. @default '' */
+  href: string;
+  /** Whether this is the current section. Managed by the parent layout from the URL hash; set it yourself when the layout is not in charge of routing. @default false */
+  active: boolean;
 }
 
 /**
  * `<arc-sheet>`
- * Events: arc-close, arc-open
+ * Events: arc-change, arc-close, arc-open
  */
 export declare class ArcSheet extends LitElement {
   /** Text displayed in the header row. Also used as the `aria-label` for the dialog panel. @default '' */
   heading: string;
+  /** Heights a bottom sheet rests at, smallest first, as a comma-separated list of CSS lengths (`snap-points="120px, 50dvh, 88dvh"`). From script, a string or an array. The handle then drags between them, snapping to the nearest on release or to the next on a flick, and dragging well below the smallest requests a close. The handle is also a slider: arrow keys move between heights. Ignored by a right sheet. @default '' */
+  snapPoints: string;
   /** Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically. @default false */
   open: boolean;
   /** Which edge the panel slides in from. Bottom sheets are at most `--sheet-max-height` tall (default 80dvh); right sheets are `--sheet-width` wide (default 400px). @default 'bottom' */
   side: 'bottom' | 'right';
+  /** Whether the sheet blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the sheet closes. Off (`no-modal`), the sheet floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it. @default true */
+  modal: boolean;
+  /** Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle. @default 0 */
+  snap: number;
 }
 
 /**
@@ -3391,6 +3456,7 @@ declare global {
     'arc-avatar-group': ArcAvatarGroup;
     'arc-badge': ArcBadge;
     'arc-banner': ArcBanner;
+    'arc-bar-list': ArcBarList;
     'arc-blockquote': ArcBlockquote;
     'arc-bottom-nav': ArcBottomNav;
     'arc-breadcrumb': ArcBreadcrumb;
@@ -3438,6 +3504,8 @@ declare global {
     'arc-dropdown-menu': ArcDropdownMenu;
     'arc-empty-state': ArcEmptyState;
     'arc-feature-card': ArcFeatureCard;
+    'arc-field-list': ArcFieldList;
+    'arc-field-row': ArcFieldRow;
     'arc-fieldset': ArcFieldset;
     'arc-file-upload': ArcFileUpload;
     'arc-float-bar': ArcFloatBar;
@@ -3516,6 +3584,7 @@ declare global {
     'arc-segmented-control': ArcSegmentedControl;
     'arc-select': ArcSelect;
     'arc-settings-layout': ArcSettingsLayout;
+    'arc-settings-nav-item': ArcSettingsNavItem;
     'arc-sheet': ArcSheet;
     'arc-sidebar': ArcSidebar;
     'arc-sidebar-link': ArcSidebarLink;
@@ -3569,6 +3638,7 @@ declare global {
   }
   interface GlobalEventHandlersEventMap {
     'arc-action': CustomEvent;
+    'arc-add': CustomEvent<void>;
     'arc-cancel': CustomEvent;
     'arc-card-click': CustomEvent;
     'arc-card-move': CustomEvent;
@@ -3591,6 +3661,7 @@ declare global {
     'arc-mark-click': CustomEvent;
     'arc-mobile-menu-toggle': CustomEvent;
     'arc-month-change': CustomEvent<{ month: number, year: number }>;
+    'arc-move': CustomEvent<{ value: number, from: number, to: number }>;
     'arc-navigate': CustomEvent;
     'arc-offline': CustomEvent<void>;
     'arc-online': CustomEvent<void>;

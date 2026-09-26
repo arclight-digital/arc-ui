@@ -43,6 +43,9 @@ const phases = [
       check('dismiss-prop'),
       check('array-dialect'),
       check('part-base'),
+      // Source-only, like its neighbours: a declared prop nothing reads
+      // (finding #92, built in 4.6).
+      check('dead-props'),
       check('side-slots'),
       check('boolean-defaults'),
       check('empty-attributes'),

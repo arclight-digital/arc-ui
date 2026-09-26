@@ -552,3 +552,15 @@ export type { MessageProps } from './feedback/Message.js';
 
 export { MenuLabel } from './shared/MenuLabel.js';
 export type { MenuLabelProps } from './shared/MenuLabel.js';
+
+export { BarList } from './data/BarList.js';
+export type { BarListProps } from './data/BarList.js';
+
+export { FieldList } from './input/FieldList.js';
+export type { FieldListProps } from './input/FieldList.js';
+
+export { FieldRow } from './input/FieldRow.js';
+export type { FieldRowProps } from './input/FieldRow.js';
+
+export { SettingsNavItem } from './layout/SettingsNavItem.js';
+export type { SettingsNavItemProps } from './layout/SettingsNavItem.js';

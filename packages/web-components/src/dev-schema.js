@@ -564,6 +564,17 @@ export default {
   },
   "slug": "badge"
  },
+ "arc-bar-list": {
+  "attrs": [
+   "items",
+   "max",
+   "limit",
+   "unsorted",
+   "unit",
+   "label"
+  ],
+  "slug": "bar-list"
+ },
  "arc-chart": {
   "attrs": [
    "type",
@@ -1244,7 +1255,10 @@ export default {
   "attrs": [
    "open",
    "side",
-   "heading"
+   "heading",
+   "modal",
+   "snap-points",
+   "snap"
   ],
   "enums": {
    "side": [
@@ -1510,6 +1524,21 @@ export default {
    "size": "md"
   },
   "slug": "date-range-picker"
+ },
+ "arc-field-list": {
+  "attrs": [
+   "label",
+   "add-label",
+   "min",
+   "max"
+  ],
+  "slug": "field-list"
+ },
+ "arc-field-row": {
+  "attrs": [
+   "label"
+  ],
+  "slug": "field-list"
  },
  "arc-fieldset": {
   "attrs": [
@@ -2459,7 +2488,8 @@ export default {
  },
  "arc-settings-layout": {
   "attrs": [
-   "navPosition"
+   "navPosition",
+   "sections"
   ],
   "enums": {
    "navPosition": [
@@ -2470,6 +2500,13 @@ export default {
   "fallbacks": {
    "navPosition": "left"
   },
+  "slug": "settings-layout"
+ },
+ "arc-settings-nav-item": {
+  "attrs": [
+   "href",
+   "active"
+  ],
   "slug": "settings-layout"
  },
  "arc-split-pane": {
@@ -2589,7 +2626,8 @@ export default {
   "attrs": [
    "open",
    "position",
-   "heading"
+   "heading",
+   "modal"
   ],
   "enums": {
    "position": [

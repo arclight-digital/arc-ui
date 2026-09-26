@@ -7,6 +7,7 @@
     open?: boolean;
     position?: 'left' | 'right';
     heading?: string;
+    modal?: boolean;
     children?: Snippet;
     class?: string;
     id?: string;
@@ -35,9 +36,9 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { open, position, heading = '', children, ...rest }: Props = $props();
+  let { open, position, heading = '', modal, children, ...rest }: Props = $props();
 </script>
 
-<arc-drawer {open} {position} {heading} {...rest}>
+<arc-drawer {open} {position} {heading} {modal} {...rest}>
   {@render children?.()}
 </arc-drawer>

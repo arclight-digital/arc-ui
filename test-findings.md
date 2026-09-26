@@ -5650,14 +5650,184 @@ tile. This is a new component.
 
 ---
 
-### A harness note from this batch: never assert equality on a DOM node
+### A harness note from this batch: a failing assertion about a DOM node hung the run — **FIXED (harness)**
 
 Twice in this batch a test hung for 120 seconds against the unfixed source
-instead of failing (`list-actions`, `readouts`). The cause both times was
-`expect(node).to.equal(other)` failing: chai builds the failure message by
-printing the node, and printing a live DOM node does not finish. The same
-assertion passes silently on the fixed source, which is why it never showed up
-there. Both files now compare booleans (`expect(a === b).to.equal(true)`), and
-their unfixed runs fail in under a second. The rest of the suite was not
-swept for the pattern. It only bites when such an assertion fails, which is
-the moment it matters most.
+instead of failing (`list-actions`, `readouts`). Both involved
+`expect(node).to.equal(other)` failing. **The first diagnosis here was wrong.**
+It blamed chai for printing the node, but chai inspects a DOM node in under a
+millisecond. The hang is web-test-runner serializing the failed assertion's
+`actual` and `expected` to send them from the browser to the runner for its
+diff. A live node doesn't serialize in any useful time, and the run ends in
+"Browser tests did not finish", naming no test. It only happens when the
+assertion fails, which is exactly when it matters.
+
+Fixed once, for the whole suite, rather than by sweeping files for the
+pattern (a grep found 17 candidates and could not find the rest).
+`test/setup/node-safe-assertions.js` is loaded before every test file through
+`testRunnerHtml` in `web-test-runner.config.mjs`. It catches chai's
+`AssertionError` and replaces any node in `actual` or `expected` with a short
+description (`<path.foo[part="arc"]>`). Chai's message is untouched. A probe
+with two failing node equalities, which hung for the full timeout before, now
+reports both in 0.1 seconds. The boolean rewrites in the two files stay:
+they are harmless and read fine.
+
+---
+
+### 125. The 4.5.0 row actions were nested-interactive — **FIXED in 4.6.0**
+
+CI's axe audit failed on 4.5.0, on the list page: `nested-interactive`,
+serious. #113 put the `actions` slot inside the row element, and the row is an
+`option` in a selectable list and an `<a>` when it has `href`. An interactive
+control inside either is invalid, and assistive tech either cannot reach it
+or flattens it into the row's name. The docs preview put actions in a
+selectable list, so the audit hit it.
+
+Moving the actions beside the row was only half the fix. In a plain list the
+row carried `role="listitem"`, so buttons beside it would sit in the list
+outside any list item, which breaks the list's own content rule. Now:
+
+- In a plain list, `role="listitem"` is on a wrapper holding the row and its
+  actions. The row has no list role: it is a focusable element, or a real link
+  with `href`. With actions, the wrapper also carries the hover and selected
+  fill so the highlight runs under the buttons.
+- In a selectable list the row stays the `option` and the slot is **not
+  rendered**. A listbox can hold only options, so there is nowhere valid for
+  a button. `@arclux/arc-ui/dev` warns when a selectable list's item has
+  actions, so they do not vanish silently.
+- `selected` on an `href` row in a plain list sets `aria-current="page"`. That
+  is the accessible way to show the current row in a list whose rows have
+  actions, which is the reporter's case (a session list).
+
+The click guard `_fromActions` is gone. With the actions outside the row, a
+click on one cannot reach the row's handler. `arc-list`'s key guard stays,
+because the list's keydown listener still sees keys from an action.
+
+**How it shipped.** The tests passed, and I had removed each guard to prove
+it load-bearing. But I never ran the axe audit before cutting the release,
+and it is the only check that knows ARIA's containment rules. The six pages
+this batch touched now pass it, and the full audit is part of pre-release
+verification from here on.
+
+---
+
+### 111 and 112, resolved. Snap points, and non-modal sheets and drawers — **FIXED**
+
+Designed with the maintainer. They are built together because a peek height is
+only useful if the page behind stays usable. The sheet and the drawer get
+`modal` in the same release, and a non-modal one leaves focus where it was.
+
+**`modal`** (default on; `no-modal` turns it off). Off, the panel renders as
+`<div popover="manual" role="dialog">` and `OverlayController` opens it with
+`showPopover()`: the top layer, nothing inert, no scroll lock, no backdrop. Two
+alternatives were probed in Chromium and rejected. A popover `<dialog>` and
+`dialog.show()` both run the dialog focusing steps and pull focus inside,
+which is the opposite of the agreed behaviour. A `<div>` popover left focus on
+the page, and the page input did not even blur. What the platform stops doing
+is the controller's job:
+
+- Escape closes the panel only while focus is inside it, so a key press on the
+  page is the page's.
+- Closing with focus inside returns it to where it was, since a hidden popover
+  drops focus on the document.
+- A host switched between modes while open re-renders its panel as the other
+  element, and the controller releases the modal's scroll lock.
+
+**`snap-points` and `snap`** (bottom sheets). The panel sits at a CSS length,
+so `dvh` works and nothing is measured at rest. The handle drags between
+heights: the nearest one on release, the next one on a flick (0.5px/ms), and a
+close if pulled below 60% of the smallest. It is also a vertical slider for the
+keyboard. `arc-change` carries the new index. Heights are resolved at release
+by the browser, through a probe element, not by parsing units.
+
+`overlay-nonmodal.test.js`: both components × ten behaviours, plus eleven snap
+cases. The drag tests pace their pointer moves 80ms apart, because
+back-to-back synthetic moves are microseconds apart and every release reads as
+a flick. The flick test says so, and holds unless the runner stalls for 90ms.
+
+### 126. Bottom sheets rendered at the top of the screen, right sheets on the left — **FIXED**
+
+Found while testing snap points, when the handle measured at y=100 in a 600px
+viewport. The UA stylesheet gives a modal dialog `inset-block: 0`, every dialog
+`inset-inline: 0`, and every dialog `width` and `height: fit-content`.
+arc-sheet overrode half of each. A bottom sheet set `bottom: 0` and kept
+`top: 0`, and when both are set, `top` wins, so the sheet sat at the top of the
+viewport at 0–217px. A right sheet kept `left: 0`, so it opened on the left,
+at its content height (205px, not 600). The width fix came from the new test,
+not the first pass: a modal bottom sheet with short content was 90px wide.
+
+This has been true since the sheet moved onto `<dialog>` (V4-PLAN 4.4), and no
+test measured where the sheet is. `sheet.test.js` now pins both edges, modal
+and non-modal. `arc-drawer` was checked in the same probe and was correct: it
+states every inset.
+
+### 118, 120 and 124, resolved. Three components, in 4.6 — **FIXED**
+
+The maintainer decided to build all three, and in this release rather than the
+next.
+
+- **`arc-bar-list`** (#124). Ranked, labelled bars: `items`
+  (`{ label, value, display?, href? }`), `max`, `limit`, `unsorted`, `unit`.
+  It is an `<ol>`, each row reads as its label and value, and the bar is
+  `aria-hidden`. Values render as given or as the row's `display` text, not
+  through `toLocaleString()`, which would render differently on a server than
+  in the browser and break hydration.
+- **`arc-field-list` and `arc-field-row`** (#118). The application owns the
+  rows, as agreed. The list fires `arc-add`, `arc-remove` `{ index }` and
+  `arc-move` `{ from, to }` and never changes the DOM itself. After the
+  application re-renders, it puts focus in the new row, on the moved row's
+  handle, or on the row that took a removed one's place. It enforces `min` and
+  `max`, reorders by keyboard (arrow keys, Home, End on the handle) and by
+  dragging, and announces each change in a polite live region. The handle's
+  grip is inline SVG, not a registry icon, so it adds nothing to the built-in
+  glyph set.
+- **`arc-settings-nav-item`**, with `arc-settings-layout` picking it up (#120).
+  The active item follows `location.hash` and carries `aria-current="page"`.
+  `sections` shows only the content child whose `id` matches, so the URL is the
+  state: a shared link or the back button lands on the right section. Below
+  768px the nav becomes a scrolling row of tabs. They stay links, because they
+  navigate.
+
+`bar-list.test.js`, `field-list.test.js` (the test plays the application
+answering each request, and one test confirms nothing changes when it does not)
+and `settings-layout.test.js`. The phone tab row is asserted on the stylesheet,
+because the runner's viewport is wide and the viewport command is not
+installed.
+
+### 127. `tokenStyles` could not be adopted by an existing app component — **FIXED**
+
+Halteres tried the `tokenStyles` recommendation from #108 and declined it: it
+zeroes every margin and padding, which would restyle their components, so they
+kept a hand-written box-sizing reset. What they asked for in the first place
+was only that. `resetStyles` in `@arclux/arc-ui/shared-styles` is just
+`*, *::before, *::after { box-sizing: border-box }`, and getting-started says
+when to use which. `reset-styles.test.js`.
+
+### 92, follow-through. The `dead-props` check is built — **FIXED**
+
+`scripts/checks/dead-props.js`, in the source-assertion phase of `generate`.
+A public prop passes when its component or base class reads `this.<name>` (or
+destructures it from `this`), when a CSS rule selects on its attribute, when
+a shared mixin reads it, or when another file reads `.<name>`, which is how a
+parent reads a data-child's props. The last test is deliberately loose, so the
+check errs toward missing a dead prop rather than flagging a live one.
+
+It was proven against a planted prop before it was trusted. On the whole
+library it found one real case:
+
+### 128. `arc-popover.trigger` was documented and read by nothing — **DEPRECATED**
+
+"Reserved for future trigger-mode configuration (click, hover, manual)." It was
+never built, and hover panels are `arc-hover-card`'s job. Removing a public
+prop breaks TypeScript users who pass it, which makes it a major change. So
+`trigger` is deprecated: the docs say it has no effect and that v5 removes it,
+`@arclux/arc-ui/dev` warns when it is set, and the check carries it as its one
+waiver. The check also fails on a stale waiver, whether its prop gains a read
+or stops being declared.
+
+### Dawn's enum-coercion item — **CLOSED**
+
+Dawn asked for a warning when an unknown enum value (`variant="danger"`) falls
+back to the default outside dev mode. The maintainer decided to keep it in
+`@arclux/arc-ui/dev`: a production console warning costs every page, dev mode
+catches it, and the manifest records each attribute's default for codemods.

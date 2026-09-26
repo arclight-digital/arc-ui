@@ -23,3 +23,4 @@ export { default as Gauge } from './Gauge.svelte';
 export { default as Uptime } from './Uptime.svelte';
 export { default as ActivityHeatmap } from './ActivityHeatmap.svelte';
 export { default as JsonTree } from './JsonTree.svelte';
+export { default as BarList } from './BarList.svelte';

@@ -172,3 +172,7 @@ export { default as TreeSelect } from './input/TreeSelect.vue';
 export { default as Conversation } from './feedback/Conversation.vue';
 export { default as Message } from './feedback/Message.vue';
 export { default as MenuLabel } from './shared/MenuLabel.vue';
+export { default as BarList } from './data/BarList.vue';
+export { default as FieldList } from './input/FieldList.vue';
+export { default as FieldRow } from './input/FieldRow.vue';
+export { default as SettingsNavItem } from './layout/SettingsNavItem.vue';

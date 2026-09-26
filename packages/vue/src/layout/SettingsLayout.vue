@@ -6,12 +6,14 @@ defineOptions({ name: 'SettingsLayout' });
 
 const props = defineProps<{
   navPosition?: 'left' | 'top';
+  sections?: boolean;
 }>();
 </script>
 
 <template>
   <arc-settings-layout
     :navPosition="props.navPosition"
+    :sections="props.sections"
   >
     <slot />
     <slot name="nav" />

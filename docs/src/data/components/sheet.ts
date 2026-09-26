@@ -16,6 +16,8 @@ The panel is structured into three zones: a header row with a heading and close 
 Sheet manages focus trapping and scroll locking automatically. When opened, it locks \`document.body\` overflow to prevent background scrolling, moves focus to the close button, and listens for the Escape key to dismiss. The \`arc-open\` event fires when the sheet becomes visible and \`arc-close\` fires on dismissal, allowing parent components to synchronize state or perform cleanup.`,
 
   features: [
+    '`snap-points` for a bottom sheet that rests at several heights (a peek strip and a full view): drag the handle between them, or step with the arrow keys',
+    '`no-modal` for a sheet that floats over a page that stays usable: no backdrop, no scroll lock, and focus stays where it was',
     'Two placement modes: `bottom` (default) and `right`, controlled by the `side` prop',
     'Backdrop overlay with `backdrop-filter: blur(4px)` that dismisses the sheet on click',
     'Bottom variant includes a rounded drag-handle bar for mobile touch affordance',
@@ -46,6 +48,7 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
   previewHtml: `<div style="display:flex;gap:var(--space-sm);">
   <arc-button id="open-bottom-sheet" variant="secondary">Filters</arc-button>
   <arc-button id="open-right-sheet" variant="secondary">Details</arc-button>
+  <arc-button id="open-peek-sheet" variant="secondary">Peek</arc-button>
 </div>
 <arc-sheet id="demo-bottom-sheet" heading="Filter Results" side="bottom">
   <div style="display:flex;flex-direction:column;gap:var(--space-md);">
@@ -108,9 +111,12 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
     <arc-button variant="ghost">Settings</arc-button>
     <arc-button variant="primary">Open Project</arc-button>
   </div>
+</arc-sheet>
+<arc-sheet id="demo-peek-sheet" heading="Now playing" no-modal snap-points="140px, 70dvh">
+  <p style="margin:0;">Drag the handle, or focus it and use the arrow keys. The page behind stays usable.</p>
 </arc-sheet>`,
 
-  previewSetup: `const bottomBtn = el.querySelector('#open-bottom-sheet'); const rightBtn = el.querySelector('#open-right-sheet'); const bottomSheet = el.querySelector('#demo-bottom-sheet'); const rightSheet = el.querySelector('#demo-right-sheet'); bottomBtn?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = true; }); rightBtn?.addEventListener('click', () => { if (rightSheet) rightSheet.open = true; }); el.querySelector('#reset-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; }); el.querySelector('#apply-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; });`,
+  previewSetup: `const bottomBtn = el.querySelector('#open-bottom-sheet'); const rightBtn = el.querySelector('#open-right-sheet'); const bottomSheet = el.querySelector('#demo-bottom-sheet'); const rightSheet = el.querySelector('#demo-right-sheet'); const peekSheet = el.querySelector('#demo-peek-sheet'); bottomBtn?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = true; }); rightBtn?.addEventListener('click', () => { if (rightSheet) rightSheet.open = true; }); el.querySelector('#open-peek-sheet')?.addEventListener('click', () => { if (peekSheet) peekSheet.open = !peekSheet.open; }); el.querySelector('#reset-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; }); el.querySelector('#apply-filters')?.addEventListener('click', () => { if (bottomSheet) bottomSheet.open = false; });`,
 
   tabs: [
     {

@@ -25,3 +25,4 @@ export { ArcClock } from './clock.js';
 export { ArcUptime } from './uptime.js';
 export { ArcJsonTree } from './json-tree.js';
 export { ArcActivityHeatmap } from './activity-heatmap.js';
+export { ArcBarList } from './bar-list.js';

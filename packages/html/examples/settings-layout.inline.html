@@ -9,6 +9,17 @@
     .arc-settings-layout .settings-layout--left .nav { border-inline-end: none;
           border-bottom: 1px solid color-mix(in srgb, oklch(from oklch(from var(--_brand-primary) 0.4444 c h) 0.5050 c h) 34%, rgb(255, 255, 255)); }
   }
+  @media (max-width: 768px) {
+    .arc-settings-layout .nav,
+        .arc-settings-layout .nav [slot='nav']:not(arc-settings-nav-item) { flex-direction: row;
+          gap: 0; }
+  }
+  @media (max-width: 768px) {
+    .arc-settings-layout .nav { overflow-x: auto;
+          scrollbar-width: none;
+          padding-block: 0;
+          padding-inline: inherit; }
+  }
 </style>
 <div class="arc-settings-layout" style="display: block; box-sizing: border-box">
   <div>

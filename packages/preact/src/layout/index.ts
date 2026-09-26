@@ -58,3 +58,6 @@ export type { StickyProps } from './Sticky.js';
 
 export { Toolbar } from './Toolbar.js';
 export type { ToolbarProps } from './Toolbar.js';
+
+export { SettingsNavItem } from './SettingsNavItem.js';
+export type { SettingsNavItemProps } from './SettingsNavItem.js';

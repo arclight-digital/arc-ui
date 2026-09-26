@@ -170,6 +170,18 @@
     { "name": "::part(value)" },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(badge)" },
+    {
+      "name": "::part(base)",
+      "description": "The root element: the ordered list."
+    },
+    { "name": "::part(item)", "description": "One row." },
+    { "name": "::part(label)", "description": "A row's label, or its link." },
+    { "name": "::part(value)", "description": "A row's value." },
+    { "name": "::part(track)", "description": "The bar's full-length track." },
+    {
+      "name": "::part(bar)",
+      "description": "The bar itself. Coloured by `--bar-list-fill`."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(axis)" },
     { "name": "::part(tooltip)" },
@@ -453,7 +465,10 @@
       "name": "::part(panel)",
       "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part."
     },
-    { "name": "::part(handle)" },
+    {
+      "name": "::part(handle)",
+      "description": "The drag handle. With `snapPoints` it is a focusable vertical slider."
+    },
     { "name": "::part(header)" },
     { "name": "::part(body)" },
     { "name": "::part(footer)" },
@@ -524,6 +539,19 @@
     { "name": "::part(presets)" },
     { "name": "::part(preset)" },
     { "name": "::part(header)" },
+    {
+      "name": "::part(base)",
+      "description": "The root element: the group of rows."
+    },
+    { "name": "::part(rows)", "description": "The container of the rows." },
+    { "name": "::part(add)", "description": "The Add button." },
+    { "name": "::part(base)", "description": "The root element." },
+    { "name": "::part(handle)", "description": "The reorder handle." },
+    {
+      "name": "::part(fields)",
+      "description": "The container of your inputs."
+    },
+    { "name": "::part(remove)", "description": "The Remove button." },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(fieldset)" },
     { "name": "::part(legend)" },
@@ -766,6 +794,7 @@
     { "name": "::part(layout)" },
     { "name": "::part(nav)" },
     { "name": "::part(content)" },
+    { "name": "::part(base)", "description": "The link." },
     { "name": "::part(base)" },
     { "name": "::part(primary)" },
     { "name": "::part(handle)" },

@@ -20,3 +20,4 @@ export { ArcInset } from './inset.register.js';
 export { ArcMasonry } from './masonry.register.js';
 export { ArcResponsiveSwitcher } from './responsive-switcher.register.js';
 export { ArcSticky } from './sticky.register.js';
+export { ArcSettingsNavItem } from './settings-nav-item.js';

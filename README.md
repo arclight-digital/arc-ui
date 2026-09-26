@@ -5,7 +5,7 @@
   <a href="https://www.npmjs.com/package/@arclux/arc-ui"><img src="https://img.shields.io/npm/v/@arclux/arc-ui?style=flat-square&color=4d7ef7" alt="npm version"></a>
   <a href="https://github.com/arclight-digital/arc-ui/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-8b5cf6?style=flat-square" alt="license"></a>
   <img src="https://img.shields.io/badge/frameworks-7-8b5cf6?style=flat-square" alt="frameworks">
-  <img src="https://img.shields.io/badge/components-166-4d7ef7?style=flat-square" alt="components">
+  <img src="https://img.shields.io/badge/components-168-4d7ef7?style=flat-square" alt="components">
   <img src="https://img.shields.io/badge/Lit_powered-3.3-14b8a6?style=flat-square" alt="Lit 3.3">
 </p>
 
@@ -83,15 +83,15 @@ All framework packages are generated from the same Lit source and stay in sync a
 
 ## Components
 
-The catalog is wide because the point is not having to leave it. 166 components across seven tiers — and the count is a consequence, not the pitch: v4 cut five that existed to make it bigger.
+The catalog is wide because the point is not having to leave it. 168 components across seven tiers — and the count is a consequence, not the pitch: v4 cut five that existed to make it bigger.
 
 | Tier | Count | Highlights |
 |------|-------|------------|
 | **Layout** | 19 | App Shell, Auth Shell, Dashboard Grid, Page Layout, Split Pane, Resizable, Masonry |
 | **Navigation** | 22 | Top Bar, Sidebar, Tabs, Menubar, Breadcrumb, Command Bar, Drawer, Tree View |
 | **Content** | 26 | Card, Accordion, Avatar, Lightbox, QR Code, Divider, Infinite Scroll, Virtual List |
-| **Data** | 24 | Chart, Data Grid, Kanban, Calendar, Timeline, Stat, Gauge, Sparkline |
-| **Input** | 43 | Input, Select, Combobox, Date Range Picker, Tag Input, Transfer List, Image Cropper |
+| **Data** | 25 | Chart, Data Grid, Kanban, Calendar, Timeline, Stat, Gauge, Sparkline |
+| **Input** | 44 | Input, Select, Combobox, Date Range Picker, Tag Input, Transfer List, Image Cropper |
 | **Feedback** | 18 | Dialog, Confirm, Toast, Command Palette, Tooltip, Sheet, Popover, Alert |
 | **Typography** | 14 | Code Block, Markdown, Terminal, Kbd, Keyboard Map, Prose, Blockquote |
 

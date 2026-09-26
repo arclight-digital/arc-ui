@@ -8,6 +8,7 @@ const props = withDefaults(defineProps<{
   open?: boolean;
   position?: 'left' | 'right';
   heading?: string;
+  modal?: boolean;
 }>(), {
   heading: '',
 });
@@ -22,6 +23,7 @@ const emit = defineEmits<{
     :open="props.open"
     :position="props.position"
     :heading="props.heading"
+    :modal="props.modal"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
   >
     <slot />

@@ -8,6 +8,7 @@ export interface DrawerProps {
   open?: boolean;
   position?: 'left' | 'right';
   heading?: string;
+  modal?: boolean;
   onArcClose?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
   class?: string;
@@ -37,7 +38,7 @@ export interface DrawerProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Drawer: FunctionComponent<DrawerProps> = ({ open, position, heading, onArcClose, children, ...rest }) => {
+export const Drawer: FunctionComponent<DrawerProps> = ({ open, position, heading, modal, onArcClose, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -50,5 +51,5 @@ export const Drawer: FunctionComponent<DrawerProps> = ({ open, position, heading
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcClose]);
-  return h('arc-drawer', { ref, open, position, heading, ...rest }, children);
+  return h('arc-drawer', { ref, open, position, heading, modal, ...rest }, children);
 };

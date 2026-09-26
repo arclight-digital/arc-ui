@@ -10,7 +10,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @tag arc-list-item
  * @status stable
  * @prop {string} value - Unique identifier used for selection tracking.
- * @prop {boolean} selected - Whether this item is currently selected. Managed automatically by the parent list.
+ * @prop {boolean} selected - Whether this item is currently selected. Managed automatically by a selectable parent list. On an `href` item in a plain list it marks the current page instead (`aria-current="page"`), which is the accessible way to show the current row in a list whose rows carry actions.
  * @prop {boolean} disabled - Prevents interaction and dims the item.
  * @prop {string} href - When set, renders the item as an anchor tag for navigation.
  * @fires {CustomEvent<{ value: string }>} arc-select - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.
@@ -18,7 +18,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @slot - Default content.
  * @slot description
  * @slot suffix
- * @slot actions - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row.
+ * @slot actions - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. They sit beside the row rather than inside it, so a click on one never activates the row. Plain lists only: in a `selectable` list the row is an option, and a listbox can hold nothing but options, so the slot is not rendered there. For rows that are both current and actionable, use a plain list with `href` and `selected`.
  * @csspart base - The root element.
  * @csspart label
  * @csspart description
@@ -57,7 +57,37 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
         opacity: 0.5;
       }
 
+      /* The row and its actions, side by side. The actions are never inside
+         .item: that element is an option in a selectable list and an <a> with
+         href, and an interactive control inside either is invalid, which axe
+         reported against 4.5.0 as nested-interactive (finding #125). */
+      .row {
+        display: flex;
+        align-items: center;
+        border-radius: var(--radius-sm);
+        transition: background var(--transition-fast), box-shadow var(--transition-fast);
+      }
+
+      /* With actions, the wrapper carries the row's hover and selected fill, so
+         the highlight still runs under the buttons. */
+      .row--actions:hover {
+        background: var(--surface-overlay);
+        box-shadow: var(--interactive-hover);
+      }
+      :host([selected]) .row--actions {
+        background: rgba(var(--interactive-rgb), 0.08);
+        box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.06);
+      }
+      .row--actions .item:hover,
+      :host([selected]) .row--actions .item {
+        background: none;
+        box-shadow: none;
+      }
+      .row--actions .item:focus-visible { box-shadow: var(--interactive-focus); }
+
       .item {
+        flex: 1 1 auto;
+        min-width: 0;
         display: flex;
         align-items: center;
         gap: var(--space-sm);
@@ -136,11 +166,12 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
         align-items: center;
         gap: var(--space-xs);
         flex-shrink: 0;
+        padding-inline-end: var(--space-sm);
         opacity: 0;
         transition: opacity var(--transition-fast);
       }
 
-      .item:hover .item__actions,
+      .row:hover .item__actions,
       :host(:focus-within) .item__actions {
         opacity: 1;
       }
@@ -190,15 +221,8 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     this._hasDescription = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
-  /** Whether an event started inside the `actions` slot. */
-  _fromActions(e) {
-    return e.composedPath().some((n) => n.getAttribute?.('slot') === 'actions');
-  }
-
   _onClick(e) {
     if (this.disabled) return;
-    // An action acts on the row; it does not choose it.
-    if (this._fromActions(e)) return;
     this.dispatchEvent(
       new CustomEvent('arc-select', {
         bubbles: true,
@@ -222,6 +246,13 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
       <span class="item__suffix ${this._hasSuffix ? '' : 'item__suffix--empty'}">
         <slot name="suffix" @slotchange=${this._onSuffixSlotChange}></slot>
       </span>
+    `;
+  }
+
+  /** Beside the row, never inside it, and not at all in a listbox. */
+  _renderActions() {
+    if (this._role === 'option') return nothing;
+    return html`
       <span class="item__actions ${this._hasActions ? '' : 'item__actions--empty'}" part="actions">
         <slot name="actions" @slotchange=${this._onActionsSlotChange}></slot>
       </span>
@@ -256,32 +287,37 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     return this.closest('[role="listbox"], [role="group"]') ? 'option' : 'listitem';
   }
 
+  /**
+   * Where the list role goes. In a listbox the row itself is the option and
+   * carries no actions. In a plain list the `listitem` role is on the wrapper,
+   * so the row and its actions are both inside the item: a list may contain
+   * only list items, and buttons beside a `listitem` row would break that as
+   * surely as buttons inside it broke the option. The row is then a plain
+   * focusable element, or a real link when it has `href`.
+   */
   render() {
     const asOption = this._role === 'option';
-    if (this.href) {
-      return html`
-        <a
+    const rowClass = `row ${!asOption && this._hasActions ? 'row--actions' : ''}`;
+    const item = this.href
+      ? html`<a
           class="item"
           href=${this.href}
-          role=${this._role}
+          role=${asOption ? 'option' : nothing}
           aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
+          aria-current=${!asOption && this.selected ? 'page' : nothing}
           aria-disabled=${this.disabled ? 'true' : 'false'}
           @click=${this._onClick}
           part="base item"
-        >${this._renderContent()}</a>
-      `;
-    }
-
-    return html`
-      <div
-        class="item"
-        role=${this._role}
-        aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
-        aria-disabled=${this.disabled ? 'true' : 'false'}
-        tabindex=${this.disabled ? '-1' : '0'}
-        @click=${this._onClick}
-        part="base item"
-      >${this._renderContent()}</div>
-    `;
+        >${this._renderContent()}</a>`
+      : html`<div
+          class="item"
+          role=${asOption ? 'option' : nothing}
+          aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
+          aria-disabled=${this.disabled ? 'true' : 'false'}
+          tabindex=${this.disabled ? '-1' : '0'}
+          @click=${this._onClick}
+          part="base item"
+        >${this._renderContent()}</div>`;
+    return html`<div class=${rowClass} role=${asOption ? nothing : 'listitem'}>${item}${this._renderActions()}</div>`;
   }
 }

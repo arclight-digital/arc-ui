@@ -8,6 +8,10 @@ export interface SheetProps {
   open?: boolean;
   side?: 'bottom' | 'right';
   heading?: string;
+  modal?: boolean;
+  snapPoints?: string;
+  snap?: number;
+  onArcChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
   children?: preact.ComponentChildren;
@@ -38,12 +42,17 @@ export interface SheetProps {
   [key: `on${string}`]: unknown;
 }
 
-export const Sheet: FunctionComponent<SheetProps> = ({ open, side, heading, onArcClose, onArcOpen, children, ...rest }) => {
+export const Sheet: FunctionComponent<SheetProps> = ({ open, side, heading, modal, snapPoints, snap, onArcChange, onArcClose, onArcOpen, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
     if (!el) return;
     const listeners: Array<[string, EventListener]> = [];
+    if (onArcChange) {
+      const fn: EventListener = (e) => onArcChange(e as CustomEvent);
+      el.addEventListener('arc-change', fn);
+      listeners.push(['arc-change', fn]);
+    }
     if (onArcClose) {
       const fn: EventListener = (e) => onArcClose(e as CustomEvent);
       el.addEventListener('arc-close', fn);
@@ -55,6 +64,6 @@ export const Sheet: FunctionComponent<SheetProps> = ({ open, side, heading, onAr
       listeners.push(['arc-open', fn]);
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
-  }, [onArcClose, onArcOpen]);
-  return h('arc-sheet', { ref, open, side, heading, ...rest }, children);
+  }, [onArcChange, onArcClose, onArcOpen]);
+  return h('arc-sheet', { ref, open, side, heading, modal, snapPoints, snap, ...rest }, children);
 };

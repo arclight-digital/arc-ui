@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "@arclux/arc-ui",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description-markup": "markdown",
   "contributions": {
     "html": {
@@ -2307,6 +2307,98 @@
           }
         },
         {
+          "name": "arc-bar-list",
+          "description": "Labelled horizontal bars with their values, ranked: \"which of these, and by how\nmuch\", in less room than a chart. For a top-N breakdown in a tile or a sidebar,\nwhere `arc-chart` is dashboard-sized and `arc-sparkline` has no labels.\n\nIt renders a real ordered list. Each row reads as its label and value; the bar is\ndecoration and hidden from assistive tech, so nothing is carried by length alone.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element: the ordered list.\n- **item** - One row.\n- **label** - A row's label, or its link.\n- **value** - A row's value.\n- **track** - The bar's full-length track.\n- **bar** - The bar itself. Coloured by `--bar-list-fill`.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "items",
+              "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+              "value": {
+                "type": "Array",
+                "default": "[]"
+              }
+            },
+            {
+              "name": "max",
+              "description": "The value a full bar stands for. Defaults to the largest value, so the top row always fills the track. Set it to compare several lists on one scale.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
+              "name": "limit",
+              "description": "Show at most this many rows, after sorting. Unset shows all.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
+              "name": "unsorted",
+              "description": "Keep the order the items were given in. By default rows are ranked, largest first.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            },
+            {
+              "name": "unit",
+              "description": "Text appended to each value, such as \"%\" or \" ms\".",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "label",
+              "description": "Accessible name for the list, announced before its rows.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            }
+          ],
+          "slots": [],
+          "events": [],
+          "js": {
+            "properties": [
+              {
+                "name": "unit",
+                "description": "Text appended to each value, such as \"%\" or \" ms\".",
+                "type": "string"
+              },
+              {
+                "name": "label",
+                "description": "Accessible name for the list, announced before its rows.",
+                "type": "string"
+              },
+              {
+                "name": "items",
+                "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+                "type": "Array"
+              },
+              {
+                "name": "max",
+                "description": "The value a full bar stands for. Defaults to the largest value, so the top row always fills the track. Set it to compare several lists on one scale.",
+                "type": "number"
+              },
+              {
+                "name": "limit",
+                "description": "Show at most this many rows, after sorting. Unset shows all.",
+                "type": "number"
+              },
+              {
+                "name": "unsorted",
+                "description": "Keep the order the items were given in. By default rows are ranked, largest first.",
+                "type": "boolean"
+              }
+            ],
+            "events": []
+          }
+        },
+        {
           "name": "arc-chart",
           "description": "An SVG chart component for dashboards with line, area, bar, and donut types. Data-driven from a\nseries array, with automatic nice-tick scales, a legend, hover crosshair and tooltips, and a\nvisually-hidden data table for assistive technology.\n---\n\n\n### **Events:**\n - **arc-mark-click** - Fired when a mark (bar, stacked segment, line point column, or donut segment) is clicked. detail: { seriesIndex, index, value }. Indices refer to displayed series after any \"Other\" folding; a folded donut segment reports seriesIndex -1.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **axis**\n- **tooltip**\n- **chart**\n- **legend**",
           "doc-url": "",
@@ -3458,7 +3550,7 @@
         },
         {
           "name": "arc-list-item",
-          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n- **actions** - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **description**\n- **item**\n- **actions** - The container of the `actions` slot.",
+          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n- **actions** - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. They sit beside the row rather than inside it, so a click on one never activates the row. Plain lists only: in a `selectable` list the row is an option, and a listbox can hold nothing but options, so the slot is not rendered there. For rows that are both current and actionable, use a plain list with `href` and `selected`.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **description**\n- **item**\n- **actions** - The container of the `actions` slot.",
           "doc-url": "",
           "attributes": [
             {
@@ -3471,7 +3563,7 @@
             },
             {
               "name": "selected",
-              "description": "Whether this item is currently selected. Managed automatically by the parent list.",
+              "description": "Whether this item is currently selected. Managed automatically by a selectable parent list. On an `href` item in a plain list it marks the current page instead (`aria-current=\"page\"`), which is the accessible way to show the current row in a list whose rows carry actions.",
               "value": {
                 "type": "boolean",
                 "default": "false"
@@ -3510,7 +3602,7 @@
             },
             {
               "name": "actions",
-              "description": "Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row."
+              "description": "Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. They sit beside the row rather than inside it, so a click on one never activates the row. Plain lists only: in a `selectable` list the row is an option, and a listbox can hold nothing but options, so the slot is not rendered there. For rows that are both current and actionable, use a plain list with `href` and `selected`."
             }
           ],
           "events": [
@@ -3534,7 +3626,7 @@
               },
               {
                 "name": "selected",
-                "description": "Whether this item is currently selected. Managed automatically by the parent list.",
+                "description": "Whether this item is currently selected. Managed automatically by a selectable parent list. On an `href` item in a plain list it marks the current page instead (`aria-current=\"page\"`), which is the accessible way to show the current row in a list whose rows carry actions.",
                 "type": "boolean"
               },
               {
@@ -5690,7 +5782,7 @@
             },
             {
               "name": "trigger",
-              "description": "Reserved for future trigger-mode configuration (click, hover, manual).",
+              "description": "Deprecated, and has no effect: it was reserved for trigger modes that were never built, and v5 removes it. For a panel that opens on hover, use `arc-hover-card`.",
               "value": {
                 "type": "string",
                 "default": "''"
@@ -5722,7 +5814,7 @@
             "properties": [
               {
                 "name": "trigger",
-                "description": "Reserved for future trigger-mode configuration (click, hover, manual).",
+                "description": "Deprecated, and has no effect: it was reserved for trigger modes that were never built, and v5 removes it. For a panel that opens on hover, use `arc-hover-card`.",
                 "type": "string"
               },
               {
@@ -5844,7 +5936,7 @@
         },
         {
           "name": "arc-sheet",
-          "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part.\n- **handle**\n- **header**\n- **body**\n- **footer**",
+          "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the user moves the sheet to another snap point. `value` is the new `snap` index.\n- **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part.\n- **handle** - The drag handle. With `snapPoints` it is a focusable vertical slider.\n- **header**\n- **body**\n- **footer**",
           "doc-url": "",
           "attributes": [
             {
@@ -5870,6 +5962,30 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "modal",
+              "description": "Whether the sheet blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the sheet closes. Off (`no-modal`), the sheet floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+              "value": {
+                "type": "boolean",
+                "default": "true"
+              }
+            },
+            {
+              "name": "snap-points",
+              "description": "Heights a bottom sheet rests at, smallest first, as a comma-separated list of CSS lengths (`snap-points=\"120px, 50dvh, 88dvh\"`). From script, a string or an array. The handle then drags between them, snapping to the nearest on release or to the next on a flick, and dragging well below the smallest requests a close. The handle is also a slider: arrow keys move between heights. Ignored by a right sheet.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "snap",
+              "description": "Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
             }
           ],
           "slots": [
@@ -5885,6 +6001,11 @@
             }
           ],
           "events": [
+            {
+              "name": "arc-change",
+              "type": "CustomEvent<{ value: number }>",
+              "description": "Fired when the user moves the sheet to another snap point. `value` is the new `snap` index."
+            },
             {
               "name": "arc-close",
               "type": "CustomEvent<void>",
@@ -5904,6 +6025,11 @@
                 "type": "string"
               },
               {
+                "name": "snapPoints",
+                "description": "Heights a bottom sheet rests at, smallest first, as a comma-separated list of CSS lengths (`snap-points=\"120px, 50dvh, 88dvh\"`). From script, a string or an array. The handle then drags between them, snapping to the nearest on release or to the next on a flick, and dragging well below the smallest requests a close. The handle is also a slider: arrow keys move between heights. Ignored by a right sheet.",
+                "type": "string"
+              },
+              {
                 "name": "open",
                 "description": "Controls whether the sheet is visible. Reflected as an attribute and toggleable programmatically.",
                 "type": "boolean"
@@ -5912,9 +6038,24 @@
                 "name": "side",
                 "description": "Which edge the panel slides in from. Bottom sheets are at most `--sheet-max-height` tall (default 80dvh); right sheets are `--sheet-width` wide (default 400px).",
                 "type": "'bottom' | 'right'"
+              },
+              {
+                "name": "modal",
+                "description": "Whether the sheet blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the sheet closes. Off (`no-modal`), the sheet floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+                "type": "boolean"
+              },
+              {
+                "name": "snap",
+                "description": "Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.",
+                "type": "number"
               }
             ],
             "events": [
+              {
+                "name": "arc-change",
+                "type": "CustomEvent<{ value: number }>",
+                "description": "Fired when the user moves the sheet to another snap point. `value` is the new `snap` index."
+              },
               {
                 "name": "arc-close",
                 "type": "CustomEvent<void>",
@@ -7418,6 +7559,141 @@
                 "description": "Fired when a complete range is committed (second day clicked or preset applied). `detail.value` is the ISO 8601 interval string, the same shape as the `value` property; `start` and `end` carry the two ends separately."
               }
             ]
+          }
+        },
+        {
+          "name": "arc-field-list",
+          "description": "A repeating set of form rows the user can add to, remove from and reorder, such\nas the options of a poll or the levels of a scale.\n\n**Your application owns the rows.** Each row is an `arc-field-row` you render\nfrom your own array, with whatever inputs it needs. The list never adds, removes\nor moves an element itself: it tells you what the user asked for, with\n`arc-add`, `arc-remove` and `arc-move`, and you update your array. That keeps\none copy of the data, yours, and leaves nothing to drift out of step. The list\nhandles everything around it: the Add button, remove and move controls on each\nrow, keyboard and pointer reordering, focus after each change, the `min` and\n`max` limits, and a spoken confirmation of every change.\n\nName your inputs as your form expects (`option-0`, `option-1`, or a repeated\n`option`); the rows are plain light DOM, so they submit like any other field.\n---\n\n\n### **Events:**\n - **arc-add** - The user asked for a new row. Append one to your array; focus moves into it when it renders.\n- **arc-remove** - The user asked to remove the row at `index`. Remove it from your array.\n- **arc-move** - The user moved the row at `from` to `to` (also `value`). Move it in your array; focus follows it.\n\n### **Slots:**\n - _default_ - `arc-field-row` elements, one per row, in order.\n\n### **CSS Parts:**\n - **base** - The root element: the group of rows.\n- **rows** - The container of the rows.\n- **add** - The Add button.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "label",
+              "description": "Accessible name for the group of rows, such as \"Options\".",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "add-label",
+              "description": "Text of the Add button.",
+              "value": {
+                "type": "string",
+                "default": "'Add'"
+              }
+            },
+            {
+              "name": "min",
+              "description": "The fewest rows allowed. Remove is disabled at this count.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
+              "name": "max",
+              "description": "The most rows allowed. Add is disabled at this count. Unset is unlimited.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "`arc-field-row` elements, one per row, in order."
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-add",
+              "type": "CustomEvent<void>",
+              "description": "The user asked for a new row. Append one to your array; focus moves into it when it renders."
+            },
+            {
+              "name": "arc-remove",
+              "type": "CustomEvent<{ value: number, index: number }>",
+              "description": "The user asked to remove the row at `index`. Remove it from your array."
+            },
+            {
+              "name": "arc-move",
+              "type": "CustomEvent<{ value: number, from: number, to: number }>",
+              "description": "The user moved the row at `from` to `to` (also `value`). Move it in your array; focus follows it."
+            }
+          ],
+          "js": {
+            "properties": [
+              {
+                "name": "label",
+                "description": "Accessible name for the group of rows, such as \"Options\".",
+                "type": "string"
+              },
+              {
+                "name": "addLabel",
+                "description": "Text of the Add button.",
+                "type": "string"
+              },
+              {
+                "name": "min",
+                "description": "The fewest rows allowed. Remove is disabled at this count.",
+                "type": "number"
+              },
+              {
+                "name": "max",
+                "description": "The most rows allowed. Add is disabled at this count. Unset is unlimited.",
+                "type": "number"
+              }
+            ],
+            "events": [
+              {
+                "name": "arc-add",
+                "type": "CustomEvent<void>",
+                "description": "The user asked for a new row. Append one to your array; focus moves into it when it renders."
+              },
+              {
+                "name": "arc-remove",
+                "type": "CustomEvent<{ value: number, index: number }>",
+                "description": "The user asked to remove the row at `index`. Remove it from your array."
+              },
+              {
+                "name": "arc-move",
+                "type": "CustomEvent<{ value: number, from: number, to: number }>",
+                "description": "The user moved the row at `from` to `to` (also `value`). Move it in your array; focus follows it."
+              }
+            ]
+          }
+        },
+        {
+          "name": "arc-field-row",
+          "description": "One row of an `arc-field-list`: your inputs, with a handle to reorder the row\nand a button to remove it.\n\nThe handle moves the row with the arrow keys (Up and Down) or by dragging.\nNeither moves anything by itself: the parent list tells your application,\nwhich owns the rows. See `arc-field-list`.\n---\n\n\n### **Methods:**\n - **focusFirstField(): _void_** - Focus the first field in the row, as after it was just added.\n- **focusHandle(): _void_** - Focus the handle, as after the row was moved.\n\n### **Slots:**\n - _default_ - The row's inputs.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **handle** - The reorder handle.\n- **fields** - The container of your inputs.\n- **remove** - The Remove button.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "label",
+              "description": "What this row is called in its controls' names, such as \"Option 2\". Defaults to \"Row\" and its position.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "The row's inputs."
+            }
+          ],
+          "events": [],
+          "js": {
+            "properties": [
+              {
+                "name": "label",
+                "description": "What this row is called in its controls' names, such as \"Option 2\". Defaults to \"Row\" and its position.",
+                "type": "string"
+              }
+            ],
+            "events": []
           }
         },
         {
@@ -12940,25 +13216,34 @@
         },
         {
           "name": "arc-settings-layout",
-          "description": "Settings page with side navigation and content area.\n---\n\n\n### **Slots:**\n - **nav**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **layout**\n- **nav**\n- **content**",
+          "description": "Settings page with side navigation and content area.\n\nPut `arc-settings-nav-item` links in the `nav` slot, one per section, each\npointing at a section's hash. The layout marks the item for the current URL hash\nas active, and follows the hash as it changes. On a phone the nav becomes a\nscrolling row of tabs above the content. With `sections`, it also shows only the\ncontent section whose `id` matches the active item, so the page behaves like\ntabs, with the URL to share and the back button to return.\n---\n\n\n### **Slots:**\n - **nav** - `arc-settings-nav-item` links, directly or inside a wrapper such as `<nav>`.\n- _default_ - The settings content: with `sections`, one child per section, each with the `id` its nav item points to.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **layout**\n- **nav**\n- **content**",
           "doc-url": "",
           "attributes": [
             {
               "name": "navPosition",
-              "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.",
+              "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). Below 768px either becomes a scrolling row of tabs.",
               "value": {
                 "type": "'left' | 'top'",
                 "default": "'left'"
+              }
+            },
+            {
+              "name": "sections",
+              "description": "Show only the content section whose `id` matches the active nav item (`href=\"#profile\"` shows `id=\"profile\"`), and hide the others with `hidden`. Off, every section stays on the page, as for one long page the nav scrolls through.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
           "slots": [
             {
-              "name": "nav"
+              "name": "nav",
+              "description": "`arc-settings-nav-item` links, directly or inside a wrapper such as `<nav>`."
             },
             {
               "name": "",
-              "description": "Default content."
+              "description": "The settings content: with `sections`, one child per section, each with the `id` its nav item points to."
             }
           ],
           "events": [],
@@ -12966,8 +13251,58 @@
             "properties": [
               {
                 "name": "navPosition",
-                "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.",
+                "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). Below 768px either becomes a scrolling row of tabs.",
                 "type": "'left' | 'top'"
+              },
+              {
+                "name": "sections",
+                "description": "Show only the content section whose `id` matches the active nav item (`href=\"#profile\"` shows `id=\"profile\"`), and hide the others with `hidden`. Off, every section stays on the page, as for one long page the nav scrolls through.",
+                "type": "boolean"
+              }
+            ],
+            "events": []
+          }
+        },
+        {
+          "name": "arc-settings-nav-item",
+          "description": "A link in an `arc-settings-layout`'s navigation: one section of a settings page.\n\nPoint `href` at the section's hash (`#profile`). The layout marks the item for\nthe current hash `active`, and it is drawn as the selected entry of a vertical\nlist, or as the selected tab of the row the nav becomes on a phone.\n---\n\n\n### **Slots:**\n - _default_ - The item's text, and an optional icon.\n\n### **CSS Parts:**\n - **base** - The link.",
+          "doc-url": "",
+          "attributes": [
+            {
+              "name": "href",
+              "description": "Where the item links to, usually a section's hash such as `#profile`.",
+              "value": {
+                "type": "string",
+                "default": "''"
+              }
+            },
+            {
+              "name": "active",
+              "description": "Whether this is the current section. Managed by the parent layout from the URL hash; set it yourself when the layout is not in charge of routing.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "The item's text, and an optional icon."
+            }
+          ],
+          "events": [],
+          "js": {
+            "properties": [
+              {
+                "name": "href",
+                "description": "Where the item links to, usually a section's hash such as `#profile`.",
+                "type": "string"
+              },
+              {
+                "name": "active",
+                "description": "Whether this is the current section. Managed by the parent layout from the URL hash; set it yourself when the layout is not in charge of routing.",
+                "type": "boolean"
               }
             ],
             "events": []
@@ -13646,6 +13981,14 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "modal",
+              "description": "Whether the drawer blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the drawer closes. Off (`no-modal`), the drawer floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+              "value": {
+                "type": "boolean",
+                "default": "true"
+              }
             }
           ],
           "slots": [
@@ -13677,6 +14020,11 @@
                 "name": "position",
                 "description": "Which edge of the viewport the drawer slides in from. Use `left` for primary navigation menus and `right` for contextual detail panels, filter sidebars, or settings trays.",
                 "type": "'left' | 'right'"
+              },
+              {
+                "name": "modal",
+                "description": "Whether the drawer blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the drawer closes. Off (`no-modal`), the drawer floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -16755,6 +17103,30 @@
         },
         {
           "name": "part(base)",
+          "description": "The root element: the ordered list."
+        },
+        {
+          "name": "part(item)",
+          "description": "One row."
+        },
+        {
+          "name": "part(label)",
+          "description": "A row's label, or its link."
+        },
+        {
+          "name": "part(value)",
+          "description": "A row's value."
+        },
+        {
+          "name": "part(track)",
+          "description": "The bar's full-length track."
+        },
+        {
+          "name": "part(bar)",
+          "description": "The bar itself. Coloured by `--bar-list-fill`."
+        },
+        {
+          "name": "part(base)",
           "description": "The root element."
         },
         {
@@ -17502,7 +17874,8 @@
           "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part."
         },
         {
-          "name": "part(handle)"
+          "name": "part(handle)",
+          "description": "The drag handle. With `snapPoints` it is a focusable vertical slider."
         },
         {
           "name": "part(header)"
@@ -17725,6 +18098,34 @@
         },
         {
           "name": "part(header)"
+        },
+        {
+          "name": "part(base)",
+          "description": "The root element: the group of rows."
+        },
+        {
+          "name": "part(rows)",
+          "description": "The container of the rows."
+        },
+        {
+          "name": "part(add)",
+          "description": "The Add button."
+        },
+        {
+          "name": "part(base)",
+          "description": "The root element."
+        },
+        {
+          "name": "part(handle)",
+          "description": "The reorder handle."
+        },
+        {
+          "name": "part(fields)",
+          "description": "The container of your inputs."
+        },
+        {
+          "name": "part(remove)",
+          "description": "The Remove button."
         },
         {
           "name": "part(base)",
@@ -18480,6 +18881,10 @@
         },
         {
           "name": "part(content)"
+        },
+        {
+          "name": "part(base)",
+          "description": "The link."
         },
         {
           "name": "part(base)"

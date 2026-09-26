@@ -326,6 +326,11 @@ import { Button, Card } from '@arclux/arc-ui-preact';  // Preact`}></arc-code-bl
         properties inherit through the shadow boundary, so they arrive from <code>base.css</code>
         on the document as they do for every ARC component.
       </p>
+      <p class="docs-text">
+        <code>tokenStyles</code> also zeroes every margin and padding, as ARC's components expect.
+        To add only the box-sizing reset to components you already have, adopt
+        <code>resetStyles</code> from the same module instead.
+      </p>
     </section>
 
     <section id="testing">

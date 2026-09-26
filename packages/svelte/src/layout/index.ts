@@ -18,3 +18,4 @@ export { default as SplitPane } from './SplitPane.svelte';
 export { default as StatusBar } from './StatusBar.svelte';
 export { default as Sticky } from './Sticky.svelte';
 export { default as Toolbar } from './Toolbar.svelte';
+export { default as SettingsNavItem } from './SettingsNavItem.svelte';

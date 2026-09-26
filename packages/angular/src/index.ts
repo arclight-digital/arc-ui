@@ -172,3 +172,7 @@ export { TreeSelect } from './input/TreeSelect';
 export { Conversation } from './feedback/Conversation';
 export { Message } from './feedback/Message';
 export { MenuLabel } from './shared/MenuLabel';
+export { BarList } from './data/BarList';
+export { FieldList } from './input/FieldList';
+export { FieldRow } from './input/FieldRow';
+export { SettingsNavItem } from './layout/SettingsNavItem';

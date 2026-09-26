@@ -32,4 +32,11 @@ export class Drawer {
   get heading(): string {
     return this._el.heading;
   }
+
+  @Input() set modal(value: boolean) {
+    this._el.modal = value;
+  }
+  get modal(): boolean {
+    return this._el.modal;
+  }
 }

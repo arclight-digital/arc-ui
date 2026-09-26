@@ -13,6 +13,13 @@
         min-height: 100%;
       }
 
+      .arc-settings-layout .nav,
+      .arc-settings-layout .nav [slot='nav']:not(arc-settings-nav-item) {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
       .arc-settings-layout .settings-layout--left .nav {
         padding: var(--space-lg);
         background: var(--surface-raised);
@@ -51,5 +58,19 @@
         .arc-settings-layout .settings-layout--left .nav {
           border-inline-end: none;
           border-bottom: 1px solid var(--divider);
+        }
+
+        /* A row of tabs rather than a stack above the content, which pushed
+           the content a screen down on a phone (finding #120). */
+        .arc-settings-layout .nav,
+        .arc-settings-layout .nav [slot='nav']:not(arc-settings-nav-item) {
+          flex-direction: row;
+          gap: 0;
+        }
+        .arc-settings-layout .nav {
+          overflow-x: auto;
+          scrollbar-width: none;
+          padding-block: 0;
+          padding-inline: var(--space-sm);
         }
       }

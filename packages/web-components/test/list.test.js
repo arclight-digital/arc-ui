@@ -39,6 +39,10 @@ async function list(attrs = '', items = ITEMS) {
 const container = (el) => el.shadowRoot.querySelector('[part~="list"]');
 const items = (el) => [...el.querySelectorAll('arc-list-item')];
 const rowOf = (item) => item.shadowRoot.querySelector('[part~="item"]');
+// The element carrying the list role. Since 4.6.0 a plain list puts `listitem`
+// on the wrapper around the row and its actions, not on the row: buttons
+// beside a listitem row would break "a list holds only list items" (#125).
+const listRoleOf = (i) => i.shadowRoot.querySelector('[role="listitem"], [role="option"]');
 const selected = (el) => items(el).filter((i) => i.selected).map((i) => i.value);
 
 /** Activate an item the way arc-list listens for it. */
@@ -354,7 +358,7 @@ describe('arc-list ARIA structure', () => {
     const el = await list();
     expect(container(el).getAttribute('role')).to.equal('list');
 
-    const roles = items(el).map((i) => rowOf(i).getAttribute('role'));
+    const roles = items(el).map((i) => listRoleOf(i).getAttribute('role'));
     expect(roles).to.deep.equal(['listitem', 'listitem', 'listitem']);
     expect(rowOf(items(el)[0]).hasAttribute('aria-selected'), 'and carry no selection state')
       .to.equal(false);
@@ -371,7 +375,7 @@ describe('arc-list ARIA structure', () => {
     // The role comes from the parent list, which can change its mind — and the
     // items are light-DOM siblings, not reactive inputs of the list.
     const el = await list();
-    expect(rowOf(items(el)[0]).getAttribute('role')).to.equal('listitem');
+    expect(listRoleOf(items(el)[0]).getAttribute('role')).to.equal('listitem');
 
     el.selectable = true;
     el.label = 'L';

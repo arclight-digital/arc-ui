@@ -17,6 +17,7 @@ When the Drawer opens it locks body scroll, preventing the user from accidentall
 Choose Drawer over Dialog when the supplementary content is navigation-oriented, when users need to glance back at the main page while interacting with the panel, or when the content is tall and benefits from full-height scrolling. For blocking decisions that require explicit user action, use Dialog instead.`,
 
   features: [
+    '`no-modal` for a drawer that floats over a page that stays usable: no backdrop, no scroll lock, and focus stays where it was',
     'Slides in from the left or right edge via CSS transforms with configurable `position` prop',
     'Semi-transparent backdrop overlay dims the page and captures click-to-close',
     'Escape key dismissal with automatic keyboard listener management',

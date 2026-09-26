@@ -8,8 +8,12 @@ export interface SheetProps {
   open?: boolean;
   side?: 'bottom' | 'right';
   heading?: string;
+  modal?: boolean;
+  snapPoints?: string;
+  snap?: number;
   className?: string;
   children?: React.ReactNode;
+  onArcChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
 }
@@ -19,6 +23,7 @@ export const Sheet = createComponent({
   elementClass: ArcSheet,
   react: React,
   events: {
+    onArcChange: 'arc-change' as EventName<CustomEvent>,
     onArcClose: 'arc-close' as EventName<CustomEvent>,
     onArcOpen: 'arc-open' as EventName<CustomEvent>,
   },

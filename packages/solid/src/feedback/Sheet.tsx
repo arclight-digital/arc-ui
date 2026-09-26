@@ -15,6 +15,10 @@ export interface SheetProps {
   open?: boolean;
   side?: 'bottom' | 'right';
   heading?: string;
+  modal?: boolean;
+  snapPoints?: string;
+  snap?: number;
+  onArcChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
   children?: JSX.Element;
@@ -46,9 +50,9 @@ export interface SheetProps {
 }
 
 export const Sheet: Component<SheetProps> = (props) => {
-  const [local, rest] = splitProps(props, ['open', 'side', 'heading', 'onArcClose', 'onArcOpen', 'children']);
+  const [local, rest] = splitProps(props, ['open', 'side', 'heading', 'modal', 'snapPoints', 'snap', 'onArcChange', 'onArcClose', 'onArcOpen', 'children']);
   return (
-    <arc-sheet open={local.open} side={local.side} heading={local.heading} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} {...rest}>
+    <arc-sheet open={local.open} side={local.side} heading={local.heading} modal={local.modal} prop:snapPoints={local.snapPoints} snap={local.snap} on:arc-change={local.onArcChange} on:arc-close={local.onArcClose} on:arc-open={local.onArcOpen} {...rest}>
       {local.children}
     </arc-sheet>
   );

@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-svelte",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "Svelte 5 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -182,6 +182,11 @@
       "types": "./dist/data/Badge.svelte.d.ts",
       "svelte": "./dist/data/Badge.svelte",
       "default": "./dist/data/Badge.svelte"
+    },
+    "./BarList": {
+      "types": "./dist/data/BarList.svelte.d.ts",
+      "svelte": "./dist/data/BarList.svelte",
+      "default": "./dist/data/BarList.svelte"
     },
     "./Chart": {
       "types": "./dist/data/Chart.svelte.d.ts",
@@ -442,6 +447,16 @@
       "types": "./dist/input/DateRangePicker.svelte.d.ts",
       "svelte": "./dist/input/DateRangePicker.svelte",
       "default": "./dist/input/DateRangePicker.svelte"
+    },
+    "./FieldList": {
+      "types": "./dist/input/FieldList.svelte.d.ts",
+      "svelte": "./dist/input/FieldList.svelte",
+      "default": "./dist/input/FieldList.svelte"
+    },
+    "./FieldRow": {
+      "types": "./dist/input/FieldRow.svelte.d.ts",
+      "svelte": "./dist/input/FieldRow.svelte",
+      "default": "./dist/input/FieldRow.svelte"
     },
     "./Fieldset": {
       "types": "./dist/input/Fieldset.svelte.d.ts",
@@ -842,6 +857,11 @@
       "types": "./dist/layout/SettingsLayout.svelte.d.ts",
       "svelte": "./dist/layout/SettingsLayout.svelte",
       "default": "./dist/layout/SettingsLayout.svelte"
+    },
+    "./SettingsNavItem": {
+      "types": "./dist/layout/SettingsNavItem.svelte.d.ts",
+      "svelte": "./dist/layout/SettingsNavItem.svelte",
+      "default": "./dist/layout/SettingsNavItem.svelte"
     },
     "./SplitPane": {
       "types": "./dist/layout/SplitPane.svelte.d.ts",

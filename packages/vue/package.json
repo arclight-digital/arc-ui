@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-vue",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "Vue 3 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -147,6 +147,10 @@
     "./Badge": {
       "types": "./dist/data/Badge.vue.d.ts",
       "default": "./dist/data/Badge.vue.js"
+    },
+    "./BarList": {
+      "types": "./dist/data/BarList.vue.d.ts",
+      "default": "./dist/data/BarList.vue.js"
     },
     "./Chart": {
       "types": "./dist/data/Chart.vue.d.ts",
@@ -355,6 +359,14 @@
     "./DateRangePicker": {
       "types": "./dist/input/DateRangePicker.vue.d.ts",
       "default": "./dist/input/DateRangePicker.vue.js"
+    },
+    "./FieldList": {
+      "types": "./dist/input/FieldList.vue.d.ts",
+      "default": "./dist/input/FieldList.vue.js"
+    },
+    "./FieldRow": {
+      "types": "./dist/input/FieldRow.vue.d.ts",
+      "default": "./dist/input/FieldRow.vue.js"
     },
     "./Fieldset": {
       "types": "./dist/input/Fieldset.vue.d.ts",
@@ -675,6 +687,10 @@
     "./SettingsLayout": {
       "types": "./dist/layout/SettingsLayout.vue.d.ts",
       "default": "./dist/layout/SettingsLayout.vue.js"
+    },
+    "./SettingsNavItem": {
+      "types": "./dist/layout/SettingsNavItem.vue.d.ts",
+      "default": "./dist/layout/SettingsNavItem.vue.js"
     },
     "./SplitPane": {
       "types": "./dist/layout/SplitPane.vue.d.ts",

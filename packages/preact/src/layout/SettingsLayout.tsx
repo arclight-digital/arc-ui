@@ -5,6 +5,7 @@ import '@arclux/arc-ui/settings-layout';
 
 export interface SettingsLayoutProps {
   navPosition?: 'left' | 'top';
+  sections?: boolean;
   children?: preact.ComponentChildren;
   class?: string;
   id?: string;
@@ -33,5 +34,5 @@ export interface SettingsLayoutProps {
   [key: `on${string}`]: unknown;
 }
 
-export const SettingsLayout: FunctionComponent<SettingsLayoutProps> = ({ navPosition, children, ...rest }) =>
-  h('arc-settings-layout', { navPosition, ...rest }, children);
+export const SettingsLayout: FunctionComponent<SettingsLayoutProps> = ({ navPosition, sections, children, ...rest }) =>
+  h('arc-settings-layout', { navPosition, sections, ...rest }, children);

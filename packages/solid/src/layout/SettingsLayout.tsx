@@ -13,6 +13,7 @@ declare module 'solid-js/jsx-runtime' {
 
 export interface SettingsLayoutProps {
   navPosition?: 'left' | 'top';
+  sections?: boolean;
   children?: JSX.Element;
   class?: string;
   id?: string;
@@ -42,9 +43,9 @@ export interface SettingsLayoutProps {
 }
 
 export const SettingsLayout: Component<SettingsLayoutProps> = (props) => {
-  const [local, rest] = splitProps(props, ['navPosition', 'children']);
+  const [local, rest] = splitProps(props, ['navPosition', 'sections', 'children']);
   return (
-    <arc-settings-layout prop:navPosition={local.navPosition} {...rest}>
+    <arc-settings-layout prop:navPosition={local.navPosition} sections={local.sections} {...rest}>
       {local.children}
     </arc-settings-layout>
   );

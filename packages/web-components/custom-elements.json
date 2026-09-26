@@ -4700,6 +4700,193 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/data/bar-list.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Labelled horizontal bars with their values, ranked: \"which of these, and by how\nmuch\", in less room than a chart. For a top-N breakdown in a tile or a sidebar,\nwhere `arc-chart` is dashboard-sized and `arc-sparkline` has no labels.\n\nIt renders a real ordered list. Each row reads as its label and value; the bar is\ndecoration and hidden from assistive tech, so nothing is carried by length alone.",
+          "name": "ArcBarList",
+          "cssParts": [
+            {
+              "description": "The root element: the ordered list.",
+              "name": "base"
+            },
+            {
+              "description": "One row.",
+              "name": "item"
+            },
+            {
+              "description": "A row's label, or its link.",
+              "name": "label"
+            },
+            {
+              "description": "A row's value.",
+              "name": "value"
+            },
+            {
+              "description": "The bar's full-length track.",
+              "name": "track"
+            },
+            {
+              "description": "The bar itself. Coloured by `--bar-list-fill`.",
+              "name": "bar"
+            }
+          ],
+          "slots": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "unit",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Text appended to each value, such as \"%\" or \" ms\".",
+              "attribute": "unit"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the list, announced before its rows.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "items",
+              "privacy": "public",
+              "type": {
+                "text": "Array"
+              },
+              "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+              "attribute": "items",
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "The value a full bar stands for. Defaults to the largest value, so the top row always fills the track. Set it to compare several lists on one scale.",
+              "attribute": "max",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "limit",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Show at most this many rows, after sorting. Unset shows all.",
+              "attribute": "limit",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "unsorted",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Keep the order the items were given in. By default rows are ranked, largest first.",
+              "attribute": "unsorted",
+              "default": "false",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "items",
+              "type": {
+                "text": "Array"
+              },
+              "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+              "fieldName": "items",
+              "default": "[]"
+            },
+            {
+              "name": "max",
+              "type": {
+                "text": "number"
+              },
+              "description": "The value a full bar stands for. Defaults to the largest value, so the top row always fills the track. Set it to compare several lists on one scale.",
+              "fieldName": "max",
+              "default": "0"
+            },
+            {
+              "name": "limit",
+              "type": {
+                "text": "number"
+              },
+              "description": "Show at most this many rows, after sorting. Unset shows all.",
+              "fieldName": "limit",
+              "default": "0"
+            },
+            {
+              "name": "unsorted",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Keep the order the items were given in. By default rows are ranked, largest first.",
+              "fieldName": "unsorted",
+              "default": "false"
+            },
+            {
+              "name": "unit",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Text appended to each value, such as \"%\" or \" ms\".",
+              "fieldName": "unit"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the list, announced before its rows.",
+              "fieldName": "label"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-bar-list",
+          "customElement": true,
+          "group": null,
+          "status": "stable"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcBarList",
+          "declaration": {
+            "name": "ArcBarList",
+            "module": "src/data/bar-list.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/data/chart.js",
       "declarations": [
         {
@@ -6994,7 +7181,7 @@
               "name": "suffix"
             },
             {
-              "description": "Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. A click or key press on an action never selects the row.",
+              "description": "Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. They sit beside the row rather than inside it, so a click on one never activates the row. Plain lists only: in a `selectable` list the row is an option, and a listbox can hold nothing but options, so the slot is not rendered there. For rows that are both current and actionable, use a plain list with `href` and `selected`.",
               "name": "actions"
             }
           ],
@@ -7029,7 +7216,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Whether this item is currently selected. Managed automatically by the parent list.",
+              "description": "Whether this item is currently selected. Managed automatically by a selectable parent list. On an `href` item in a plain list it marks the current page instead (`aria-current=\"page\"`), which is the accessible way to show the current row in a list whose rows carry actions.",
               "attribute": "selected",
               "default": "false",
               "reflects": true
@@ -7071,7 +7258,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Whether this item is currently selected. Managed automatically by the parent list.",
+              "description": "Whether this item is currently selected. Managed automatically by a selectable parent list. On an `href` item in a plain list it marks the current page instead (`aria-current=\"page\"`), which is the accessible way to show the current row in a list whose rows carry actions.",
               "fieldName": "selected",
               "default": "false"
             },
@@ -11194,7 +11381,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Reserved for future trigger-mode configuration (click, hover, manual).",
+              "description": "Deprecated, and has no effect: it was reserved for trigger modes that were never built, and v5 removes it. For a panel that opens on hover, use `arc-hover-card`.",
               "attribute": "trigger"
             },
             {
@@ -11263,7 +11450,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Reserved for future trigger-mode configuration (click, hover, manual).",
+              "description": "Deprecated, and has no effect: it was reserved for trigger modes that were never built, and v5 removes it. For a panel that opens on hover, use `arc-hover-card`.",
               "fieldName": "trigger"
             }
           ],
@@ -11503,6 +11690,7 @@
               "name": "panel"
             },
             {
+              "description": "The drag handle. With `snapPoints` it is a focusable vertical slider.",
               "name": "handle"
             },
             {
@@ -11541,6 +11729,17 @@
             },
             {
               "kind": "field",
+              "name": "snapPoints",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Heights a bottom sheet rests at, smallest first, as a comma-separated list of CSS lengths (`snap-points=\"120px, 50dvh, 88dvh\"`). From script, a string or an array. The handle then drags between them, snapping to the nearest on release or to the next on a flick, and dragging well below the smallest requests a close. The handle is also a slider: arrow keys move between heights. Ignored by a right sheet.",
+              "attribute": "snap-points"
+            },
+            {
+              "kind": "field",
               "name": "open",
               "privacy": "public",
               "type": {
@@ -11562,9 +11761,40 @@
               "attribute": "side",
               "default": "'bottom'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "modal",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the sheet blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the sheet closes. Off (`no-modal`), the sheet floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+              "attribute": "modal",
+              "default": "true",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "snap",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.",
+              "attribute": "snap",
+              "default": "0",
+              "reflects": true
             }
           ],
           "events": [
+            {
+              "name": "arc-change",
+              "type": {
+                "text": "CustomEvent<{ value: number }>"
+              },
+              "description": "Fired when the user moves the sheet to another snap point. `value` is the new `snap` index."
+            },
             {
               "name": "arc-close",
               "type": {
@@ -11607,6 +11837,33 @@
               "default": "''",
               "description": "Text displayed in the header row. Also used as the `aria-label` for the dialog panel.",
               "fieldName": "heading"
+            },
+            {
+              "name": "modal",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the sheet blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the sheet closes. Off (`no-modal`), the sheet floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+              "fieldName": "modal",
+              "default": "true"
+            },
+            {
+              "name": "snap-points",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Heights a bottom sheet rests at, smallest first, as a comma-separated list of CSS lengths (`snap-points=\"120px, 50dvh, 88dvh\"`). From script, a string or an array. The handle then drags between them, snapping to the nearest on release or to the next on a flick, and dragging well below the smallest requests a close. The handle is also a slider: arrow keys move between heights. Ignored by a right sheet.",
+              "fieldName": "snapPoints"
+            },
+            {
+              "name": "snap",
+              "type": {
+                "text": "number"
+              },
+              "description": "Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.",
+              "fieldName": "snap",
+              "default": "0"
             }
           ],
           "mixins": [
@@ -15112,6 +15369,265 @@
           "declaration": {
             "name": "ArcDateRangePicker",
             "module": "src/input/date-range-picker.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/input/field-list.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A repeating set of form rows the user can add to, remove from and reorder, such\nas the options of a poll or the levels of a scale.\n\n**Your application owns the rows.** Each row is an `arc-field-row` you render\nfrom your own array, with whatever inputs it needs. The list never adds, removes\nor moves an element itself: it tells you what the user asked for, with\n`arc-add`, `arc-remove` and `arc-move`, and you update your array. That keeps\none copy of the data, yours, and leaves nothing to drift out of step. The list\nhandles everything around it: the Add button, remove and move controls on each\nrow, keyboard and pointer reordering, focus after each change, the `min` and\n`max` limits, and a spoken confirmation of every change.\n\nName your inputs as your form expects (`option-0`, `option-1`, or a repeated\n`option`); the rows are plain light DOM, so they submit like any other field.",
+          "name": "ArcFieldList",
+          "cssParts": [
+            {
+              "description": "The root element: the group of rows.",
+              "name": "base"
+            },
+            {
+              "description": "The container of the rows.",
+              "name": "rows"
+            },
+            {
+              "description": "The Add button.",
+              "name": "add"
+            }
+          ],
+          "slots": [
+            {
+              "description": "`arc-field-row` elements, one per row, in order.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the group of rows, such as \"Options\".",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "addLabel",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Add'",
+              "description": "Text of the Add button.",
+              "attribute": "add-label"
+            },
+            {
+              "kind": "field",
+              "name": "min",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "The fewest rows allowed. Remove is disabled at this count.",
+              "attribute": "min",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "max",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "The most rows allowed. Add is disabled at this count. Unset is unlimited.",
+              "attribute": "max",
+              "default": "0"
+            }
+          ],
+          "events": [
+            {
+              "name": "arc-add",
+              "type": {
+                "text": "CustomEvent<void>"
+              },
+              "description": "The user asked for a new row. Append one to your array; focus moves into it when it renders."
+            },
+            {
+              "name": "arc-remove",
+              "type": {
+                "text": "CustomEvent<{ value: number, index: number }>"
+              },
+              "description": "The user asked to remove the row at `index`. Remove it from your array."
+            },
+            {
+              "name": "arc-move",
+              "type": {
+                "text": "CustomEvent<{ value: number, from: number, to: number }>"
+              },
+              "description": "The user moved the row at `from` to `to` (also `value`). Move it in your array; focus follows it."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Accessible name for the group of rows, such as \"Options\".",
+              "fieldName": "label"
+            },
+            {
+              "name": "add-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Add'",
+              "description": "Text of the Add button.",
+              "fieldName": "addLabel"
+            },
+            {
+              "name": "min",
+              "type": {
+                "text": "number"
+              },
+              "description": "The fewest rows allowed. Remove is disabled at this count.",
+              "fieldName": "min",
+              "default": "0"
+            },
+            {
+              "name": "max",
+              "type": {
+                "text": "number"
+              },
+              "description": "The most rows allowed. Add is disabled at this count. Unset is unlimited.",
+              "fieldName": "max",
+              "default": "0"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-field-list",
+          "customElement": true,
+          "group": null,
+          "status": "stable"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcFieldList",
+          "declaration": {
+            "name": "ArcFieldList",
+            "module": "src/input/field-list.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/input/field-row.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "One row of an `arc-field-list`: your inputs, with a handle to reorder the row\nand a button to remove it.\n\nThe handle moves the row with the arrow keys (Up and Down) or by dragging.\nNeither moves anything by itself: the parent list tells your application,\nwhich owns the rows. See `arc-field-list`.",
+          "name": "ArcFieldRow",
+          "cssParts": [
+            {
+              "description": "The root element.",
+              "name": "base"
+            },
+            {
+              "description": "The reorder handle.",
+              "name": "handle"
+            },
+            {
+              "description": "The container of your inputs.",
+              "name": "fields"
+            },
+            {
+              "description": "The Remove button.",
+              "name": "remove"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The row's inputs.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "focusFirstField",
+              "description": "Focus the first field in the row, as after it was just added.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "focusHandle",
+              "description": "Focus the handle, as after the row was moved.",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "What this row is called in its controls' names, such as \"Option 2\". Defaults to \"Row\" and its position.",
+              "attribute": "label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "What this row is called in its controls' names, such as \"Option 2\". Defaults to \"Row\" and its position.",
+              "fieldName": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-field-row",
+          "customElement": true,
+          "group": null,
+          "status": "stable"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcFieldRow",
+          "declaration": {
+            "name": "ArcFieldRow",
+            "module": "src/input/field-row.js"
           }
         }
       ]
@@ -28029,7 +28545,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Settings page with side navigation and content area.",
+          "description": "Settings page with side navigation and content area.\n\nPut `arc-settings-nav-item` links in the `nav` slot, one per section, each\npointing at a section's hash. The layout marks the item for the current URL hash\nas active, and follows the hash as it changes. On a phone the nav becomes a\nscrolling row of tabs above the content. With `sections`, it also shows only the\ncontent section whose `id` matches the active item, so the page behaves like\ntabs, with the URL to share and the back button to return.",
           "name": "ArcSettingsLayout",
           "cssParts": [
             {
@@ -28048,10 +28564,11 @@
           ],
           "slots": [
             {
+              "description": "`arc-settings-nav-item` links, directly or inside a wrapper such as `<nav>`.",
               "name": "nav"
             },
             {
-              "description": "Default content.",
+              "description": "The settings content: with `sections`, one child per section, each with the `id` its nav item points to.",
               "name": ""
             }
           ],
@@ -28063,9 +28580,21 @@
               "type": {
                 "text": "'left' | 'top'"
               },
-              "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.",
+              "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). Below 768px either becomes a scrolling row of tabs.",
               "attribute": "navPosition",
               "default": "'left'",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "sections",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Show only the content section whose `id` matches the active nav item (`href=\"#profile\"` shows `id=\"profile\"`), and hide the others with `hidden`. Off, every section stays on the page, as for one long page the nav scrolls through.",
+              "attribute": "sections",
+              "default": "false",
               "reflects": true
             }
           ],
@@ -28075,9 +28604,18 @@
               "type": {
                 "text": "'left' | 'top'"
               },
-              "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). The left layout collapses to stacked on screens narrower than 768px.",
+              "description": "Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). Below 768px either becomes a scrolling row of tabs.",
               "fieldName": "navPosition",
               "default": "'left'"
+            },
+            {
+              "name": "sections",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Show only the content section whose `id` matches the active nav item (`href=\"#profile\"` shows `id=\"profile\"`), and hide the others with `hidden`. Off, every section stays on the page, as for one long page the nav scrolls through.",
+              "fieldName": "sections",
+              "default": "false"
             }
           ],
           "mixins": [
@@ -28103,6 +28641,98 @@
           "declaration": {
             "name": "ArcSettingsLayout",
             "module": "src/layout/settings-layout.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/layout/settings-nav-item.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "A link in an `arc-settings-layout`'s navigation: one section of a settings page.\n\nPoint `href` at the section's hash (`#profile`). The layout marks the item for\nthe current hash `active`, and it is drawn as the selected entry of a vertical\nlist, or as the selected tab of the row the nav becomes on a phone.",
+          "name": "ArcSettingsNavItem",
+          "cssParts": [
+            {
+              "description": "The link.",
+              "name": "base"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The item's text, and an optional icon.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "href",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Where the item links to, usually a section's hash such as `#profile`.",
+              "attribute": "href"
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether this is the current section. Managed by the parent layout from the URL hash; set it yourself when the layout is not in charge of routing.",
+              "attribute": "active",
+              "default": "false",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "href",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Where the item links to, usually a section's hash such as `#profile`.",
+              "fieldName": "href"
+            },
+            {
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether this is the current section. Managed by the parent layout from the URL hash; set it yourself when the layout is not in charge of routing.",
+              "fieldName": "active",
+              "default": "false"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "DeclaredPropsMixin",
+              "module": "/src/shared/props.js"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "arc-settings-nav-item",
+          "customElement": true,
+          "group": null,
+          "status": "stable"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArcSettingsNavItem",
+          "declaration": {
+            "name": "ArcSettingsNavItem",
+            "module": "src/layout/settings-nav-item.js"
           }
         }
       ]
@@ -29387,6 +30017,18 @@
               "attribute": "position",
               "default": "'left'",
               "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "modal",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the drawer blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the drawer closes. Off (`no-modal`), the drawer floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+              "attribute": "modal",
+              "default": "true",
+              "reflects": true
             }
           ],
           "events": [
@@ -29425,6 +30067,15 @@
               "default": "''",
               "description": "Text displayed in the drawer header bar. Also used as the `aria-label` for the dialog panel, ensuring screen readers announce the panel purpose when it opens.",
               "fieldName": "heading"
+            },
+            {
+              "name": "modal",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the drawer blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the drawer closes. Off (`no-modal`), the drawer floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.",
+              "fieldName": "modal",
+              "default": "true"
             }
           ],
           "mixins": [
@@ -33738,7 +34389,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "OverlayController — a modal overlay on the platform's `<dialog>`.\n\nReplaces `OverlayMixin`, and V4-PLAN 4.4 makes the change for two separate\nreasons that happen to have the same fix.\n\n## The mechanism reason\n\nThe mixin did its work in an `updated()` override — the exact pattern\n`props.js`'s docstring rejects, and for the reason recorded there: a hook\nonly runs if every component overriding the same method remembers to call\n`super`. It also could not see a reparent, because moving an element changes\nno property and schedules no update, so `connectedCallback` had to re-arm by\nhand (finding #73, and #55/#64/#72 before it). A controller's hooks run\nregardless of what the host overrides, and `hostConnected` is not a special\ncase bolted on afterwards.\n\n## The platform reason, which is the larger one\n\nFive components hand-rolled what a modal `<dialog>` does natively, and every\none of those hand-rolled pieces has a failure mode the platform does not:\n\n| hand-rolled                        | what `showModal()` gives                |\n| ---------------------------------- | --------------------------------------- |\n| `trapTabKey` on a keydown listener | the background is genuinely inert — not |\n|                                    | just untabbable, but unclickable and    |\n|                                    | unreachable by a screen reader's own    |\n|                                    | navigation, which a Tab trap never was  |\n| `focusFirst(panel)`                | focus placed per spec, honouring        |\n|                                    | `autofocus`, delegatesFocus and slotted |\n|                                    | content                                 |\n| `__previousFocus` + restore        | restored by the browser, and correctly  |\n|                                    | when the previous element has since     |\n|                                    | moved or been re-rendered               |\n| `Escape` on a document listener    | the `cancel` event, which cannot be     |\n|                                    | missed by a stopped-propagation keydown |\n| `z-index: var(--z-modal)`          | the top layer: no stacking context, no  |\n|                                    | `overflow: hidden` ancestor, no ladder  |\n\nThe Tab-trap row is the one worth reading twice. `trapTabKey` moved focus\nback into the panel when Tab would have left it, which is a *keyboard*\nbehaviour; it did nothing about a screen reader user browsing the background\nwith virtual-cursor keys, or about a click landing on a button behind the\nscrim. `inert` is what makes those true, and modal `<dialog>` applies it to\neverything else in the document without the library maintaining a list.\n\n## What is still ours\n\n**Scroll lock.** A modal dialog blocks interaction with the page behind it\nbut does not stop it scrolling, so `scroll-lock.js` stays, per-owner as\nbefore.\n\n**The dismissal decision.** `cancel` is preventDefault-ed and routed to the\nhost's `onRequestClose` rather than allowed to close the dialog, because\nwhether Escape closes an overlay is the component's policy: `arc-modal`\nrefuses when `dismissible` is false, and every consumer can veto through the\ncancelable `arc-close` event. Letting the browser close it and reopening\nafterwards would flash.\n\n## Usage\n\n    this._overlay = new OverlayController(this, {\n      dialog: () => this.shadowRoot?.querySelector('dialog'),\n      isOpen: () => this.open,\n      onRequestClose: () => this._close(),\n    });\n\nThe host renders a `<dialog>` and nothing else about opening: no `open`\nattribute in the template, no `showModal` call. The controller reconciles\nafter every render, which is also what makes it correct across a reparent.",
+          "description": "OverlayController — a modal overlay on the platform's `<dialog>`.\n\nReplaces `OverlayMixin`, and V4-PLAN 4.4 makes the change for two separate\nreasons that happen to have the same fix.\n\n## The mechanism reason\n\nThe mixin did its work in an `updated()` override — the exact pattern\n`props.js`'s docstring rejects, and for the reason recorded there: a hook\nonly runs if every component overriding the same method remembers to call\n`super`. It also could not see a reparent, because moving an element changes\nno property and schedules no update, so `connectedCallback` had to re-arm by\nhand (finding #73, and #55/#64/#72 before it). A controller's hooks run\nregardless of what the host overrides, and `hostConnected` is not a special\ncase bolted on afterwards.\n\n## The platform reason, which is the larger one\n\nFive components hand-rolled what a modal `<dialog>` does natively, and every\none of those hand-rolled pieces has a failure mode the platform does not:\n\n| hand-rolled                        | what `showModal()` gives                |\n| ---------------------------------- | --------------------------------------- |\n| `trapTabKey` on a keydown listener | the background is genuinely inert — not |\n|                                    | just untabbable, but unclickable and    |\n|                                    | unreachable by a screen reader's own    |\n|                                    | navigation, which a Tab trap never was  |\n| `focusFirst(panel)`                | focus placed per spec, honouring        |\n|                                    | `autofocus`, delegatesFocus and slotted |\n|                                    | content                                 |\n| `__previousFocus` + restore        | restored by the browser, and correctly  |\n|                                    | when the previous element has since     |\n|                                    | moved or been re-rendered               |\n| `Escape` on a document listener    | the `cancel` event, which cannot be     |\n|                                    | missed by a stopped-propagation keydown |\n| `z-index: var(--z-modal)`          | the top layer: no stacking context, no  |\n|                                    | `overflow: hidden` ancestor, no ladder  |\n\nThe Tab-trap row is the one worth reading twice. `trapTabKey` moved focus\nback into the panel when Tab would have left it, which is a *keyboard*\nbehaviour; it did nothing about a screen reader user browsing the background\nwith virtual-cursor keys, or about a click landing on a button behind the\nscrim. `inert` is what makes those true, and modal `<dialog>` applies it to\neverything else in the document without the library maintaining a list.\n\n## What is still ours\n\n**Scroll lock.** A modal dialog blocks interaction with the page behind it\nbut does not stop it scrolling, so `scroll-lock.js` stays, per-owner as\nbefore.\n\n**The dismissal decision.** `cancel` is preventDefault-ed and routed to the\nhost's `onRequestClose` rather than allowed to close the dialog, because\nwhether Escape closes an overlay is the component's policy: `arc-modal`\nrefuses when `dismissible` is false, and every consumer can veto through the\ncancelable `arc-close` event. Letting the browser close it and reopening\nafterwards would flash.\n\n## Usage\n\n    this._overlay = new OverlayController(this, {\n      dialog: () => this.shadowRoot?.querySelector('dialog'),\n      isOpen: () => this.open,\n      onRequestClose: () => this._close(),\n    });\n\nThe host renders a `<dialog>` and nothing else about opening: no `open`\nattribute in the template, no `showModal` call. The controller reconciles\nafter every render, which is also what makes it correct across a reparent.\n\n## Non-modal\n\nWith `modal: () => false` the host renders a `<div popover=\"manual\"\nrole=\"dialog\">` instead of a `<dialog>`, and the controller opens it with\n`showPopover()`. That keeps it in the top layer, above everything with no\nz-index, while the page behind stays live: nothing is inert, nothing is\nscroll-locked, and there is no backdrop (test-findings #112).\n\nA popover `<dialog>` was tried first and does not work. `showPopover()` on a\ndialog runs the dialog focusing steps and pulls focus into it, and so does\n`show()`. The agreed behaviour is the opposite: opening a non-modal sheet\nleaves focus where it was, so a peek strip never interrupts someone reading\nor typing on the page. A `<div>` popover does that. It moves focus only for\nan `autofocus` descendant, which is the consumer asking for it.\n\nWhat the platform then no longer does is ours: Escape, only while focus is\ninside the panel (a key press on the page is the page's), and returning\nfocus on close when it was inside, since a hidden popover drops it on the\ndocument. Light dismiss does not apply: a click on the page is a click on\nthe page.",
           "name": "OverlayController",
           "members": [
             {

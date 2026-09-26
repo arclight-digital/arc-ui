@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-solid",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "Solid wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -182,6 +182,11 @@
       "types": "./dist/data/Badge.d.ts",
       "solid": "./src/data/Badge.tsx",
       "default": "./dist/data/Badge.js"
+    },
+    "./BarList": {
+      "types": "./dist/data/BarList.d.ts",
+      "solid": "./src/data/BarList.tsx",
+      "default": "./dist/data/BarList.js"
     },
     "./Chart": {
       "types": "./dist/data/Chart.d.ts",
@@ -442,6 +447,16 @@
       "types": "./dist/input/DateRangePicker.d.ts",
       "solid": "./src/input/DateRangePicker.tsx",
       "default": "./dist/input/DateRangePicker.js"
+    },
+    "./FieldList": {
+      "types": "./dist/input/FieldList.d.ts",
+      "solid": "./src/input/FieldList.tsx",
+      "default": "./dist/input/FieldList.js"
+    },
+    "./FieldRow": {
+      "types": "./dist/input/FieldRow.d.ts",
+      "solid": "./src/input/FieldRow.tsx",
+      "default": "./dist/input/FieldRow.js"
     },
     "./Fieldset": {
       "types": "./dist/input/Fieldset.d.ts",
@@ -842,6 +857,11 @@
       "types": "./dist/layout/SettingsLayout.d.ts",
       "solid": "./src/layout/SettingsLayout.tsx",
       "default": "./dist/layout/SettingsLayout.js"
+    },
+    "./SettingsNavItem": {
+      "types": "./dist/layout/SettingsNavItem.d.ts",
+      "solid": "./src/layout/SettingsNavItem.tsx",
+      "default": "./dist/layout/SettingsNavItem.js"
     },
     "./SplitPane": {
       "types": "./dist/layout/SplitPane.d.ts",

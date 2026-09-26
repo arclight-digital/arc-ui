@@ -80,6 +80,7 @@ export default {
     'arc-avatar-group':     'hybrid',       // stacking and overlap are pure layout; only the overflow count needs JS
     'arc-app-shell':        'hybrid',       // full page grid renders from CSS; only the mobile drawer backdrop needs JS
     'arc-top-bar':          'hybrid',       // bar, slots and sticky behaviour are CSS; only the mobile menu toggle needs JS
+    'arc-settings-layout':  'hybrid',       // the grid and nav render from CSS; only the active item and `sections` switching (hash routing, 4.6) need JS
     'arc-toolbar':          'hybrid',       // lays out in CSS; only overflow measurement and collapse need JS
     'arc-tooltip':          'hybrid',       // reveal works via CSS :hover/:focus-within; JS only adds the configurable delay
     'arc-markdown':         'static',       // renders Markdown content as styled HTML

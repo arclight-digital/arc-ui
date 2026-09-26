@@ -147,6 +147,29 @@ function checkElement(el) {
     );
   }
   for (const { name } of el.attributes) checkAttr(el, entry, name);
+  // Declared and documented, read by nothing (dead-props, 4.6). Kept until v5
+  // because removing a public prop is a major change.
+  if (el.localName === 'arc-popover' && el.hasAttribute('trigger')) {
+    warn(
+      el,
+      'trigger',
+      '`trigger` has no effect and is removed in v5. For a panel that opens on hover, use <arc-hover-card>.',
+    );
+  }
+  // A selectable list is a listbox, and a listbox can hold only options, so
+  // arc-list-item does not render its actions there. Say so rather than let
+  // the buttons vanish (finding #125).
+  if (
+    el.localName === 'arc-list-item' &&
+    el.closest('arc-list[selectable]') &&
+    el.querySelector(':scope > [slot="actions"]')
+  ) {
+    warn(
+      el,
+      'actions-in-listbox',
+      'the `actions` slot is not rendered in a selectable arc-list, because a listbox can only contain options. Use a plain list, with `href` and `selected` to mark the current row.',
+    );
+  }
 }
 
 function scan(root) {

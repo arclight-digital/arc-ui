@@ -24,7 +24,7 @@ const ROW = (v) => `
     <button slot="actions" class="delete">Delete ${v}</button>
   </arc-list-item>`;
 
-async function list(attrs = 'selectable') {
+async function list(attrs = '') {
   const el = mount(`<arc-list ${attrs}>${ROW('a')}${ROW('b')}</arc-list>`);
   await settle(el);
   for (const i of el.querySelectorAll('arc-list-item')) await settle(i);
@@ -36,13 +36,49 @@ const actions = (i) => i.shadowRoot.querySelector('[part~="actions"]');
 const row = (i) => i.shadowRoot.querySelector('.item');
 
 describe('arc-list-item actions', () => {
-  it('renders the slot inside the row, after the suffix', async () => {
+  it('renders the actions beside the row, never inside it', async () => {
+    // Inside the row was 4.5.0, and axe failed it as nested-interactive: the
+    // row is an option in a listbox and a link with href (finding #125).
     const el = await list();
     const a = item(el, 'a');
     // Booleans, not elements: see readouts.test.js on chai printing DOM nodes.
     expect(actions(a) !== null, 'an actions container').to.equal(true);
-    expect(row(a).lastElementChild === actions(a), 'last in the row').to.equal(true);
+    expect(row(a).contains(actions(a)), 'not inside the row').to.equal(false);
+    expect(row(a).nextElementSibling === actions(a), 'right after it').to.equal(true);
     expect(actions(a).className).to.not.contain('--empty');
+  });
+
+  it('puts the list item role around the row and its actions', async () => {
+    const el = await list();
+    const a = item(el, 'a');
+    const wrapper = actions(a).parentElement;
+    expect(wrapper.getAttribute('role')).to.equal('listitem');
+    expect(wrapper.contains(row(a))).to.equal(true);
+    expect(row(a).hasAttribute('role'), 'the row itself carries no list role').to.equal(false);
+  });
+
+  it('does not render actions in a selectable list, where the row is an option', async () => {
+    const el = await list('selectable');
+    const a = item(el, 'a');
+    expect(row(a).getAttribute('role')).to.equal('option');
+    expect(actions(a) === null, 'no actions in a listbox').to.equal(true);
+    expect(a.querySelector('.rename').assignedSlot === null, 'the buttons stay unslotted').to.equal(
+      true,
+    );
+  });
+
+  it('marks a selected link row as the current page', async () => {
+    const el = mount(`<arc-list>
+      <arc-list-item href="#a" selected>A<button slot="actions">Rename A</button></arc-list-item>
+      <arc-list-item href="#b">B</arc-list-item></arc-list>`);
+    await settle(el);
+    const [a, b] = el.querySelectorAll('arc-list-item');
+    await settle(a);
+    await settle(b);
+    expect(row(a).localName).to.equal('a');
+    expect(row(a).getAttribute('aria-current')).to.equal('page');
+    expect(row(b).hasAttribute('aria-current')).to.equal(false);
+    expect(row(a).contains(actions(a)), 'never inside the link').to.equal(false);
   });
 
   it('takes no space when empty', async () => {
@@ -79,17 +115,16 @@ describe('arc-list-item actions', () => {
       .shadowRoot.adoptedStyleSheets.flatMap((sheet) => [...sheet.cssRules])
       .map((r) => r.cssText)
       .join('\n');
-    expect(css).to.match(/\.item:hover \.item__actions[^{]*\{[^}]*opacity: 1/);
+    expect(css).to.match(/\.row:hover \.item__actions[^{]*\{[^}]*opacity: 1/);
     expect(css).to.match(/@media \(hover: none\)\s*\{\s*\.item__actions\s*\{\s*opacity: 1/);
   });
 
-  it('never selects the row on click', async () => {
+  it('never activates the row on click', async () => {
     const el = await list();
     const events = record(el, ['arc-select', 'arc-change']);
     item(el, 'a').querySelector('.delete').click();
     await settle(el);
     expect(events).to.deep.equal([]);
-    expect(el.value).to.not.equal('a');
   });
 
   it('still selects the row on a click beside the actions', async () => {

@@ -122,6 +122,14 @@ declare module 'preact' {
         dismissible?: boolean;
         sticky?: boolean;
       };
+      'arc-bar-list': ArcBaseAttributes & {
+        items?: unknown[];
+        max?: number | string;
+        limit?: number | string;
+        unsorted?: boolean;
+        unit?: string;
+        label?: string;
+      };
       'arc-blockquote': ArcBaseAttributes & {
         cite?: string;
         variant?: 'default' | 'accent';
@@ -414,6 +422,7 @@ declare module 'preact' {
         open?: boolean;
         position?: 'left' | 'right';
         heading?: string;
+        modal?: boolean;
       };
       'arc-dropdown-menu': ArcBaseAttributes & {
         open?: boolean;
@@ -429,6 +438,16 @@ declare module 'preact' {
         description?: string;
         href?: string;
         action?: string;
+      };
+      'arc-field-list': ArcBaseAttributes & {
+        label?: string;
+        'add-label'?: string;
+        addLabel?: string;
+        min?: number | string;
+        max?: number | string;
+      };
+      'arc-field-row': ArcBaseAttributes & {
+        label?: string;
       };
       'arc-fieldset': ArcBaseAttributes & {
         legend?: string;
@@ -960,11 +979,20 @@ declare module 'preact' {
       'arc-settings-layout': ArcBaseAttributes & {
         'nav-position'?: 'left' | 'top';
         navPosition?: 'left' | 'top';
+        sections?: boolean;
+      };
+      'arc-settings-nav-item': ArcBaseAttributes & {
+        href?: string;
+        active?: boolean;
       };
       'arc-sheet': ArcBaseAttributes & {
         open?: boolean;
         side?: 'bottom' | 'right';
         heading?: string;
+        modal?: boolean;
+        'snap-points'?: string;
+        snapPoints?: string;
+        snap?: number | string;
       };
       'arc-sidebar': ArcBaseAttributes & {
         active?: string;

@@ -18,3 +18,4 @@ export { default as SplitPane } from './SplitPane.vue';
 export { default as StatusBar } from './StatusBar.vue';
 export { default as Sticky } from './Sticky.vue';
 export { default as Toolbar } from './Toolbar.vue';
+export { default as SettingsNavItem } from './SettingsNavItem.vue';

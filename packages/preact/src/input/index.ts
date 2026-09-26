@@ -133,3 +133,9 @@ export type { SignaturePadProps } from './SignaturePad.js';
 
 export { TreeSelect } from './TreeSelect.js';
 export type { TreeSelectProps } from './TreeSelect.js';
+
+export { FieldList } from './FieldList.js';
+export type { FieldListProps } from './FieldList.js';
+
+export { FieldRow } from './FieldRow.js';
+export type { FieldRowProps } from './FieldRow.js';

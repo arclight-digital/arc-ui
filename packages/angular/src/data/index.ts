@@ -23,3 +23,4 @@ export { Gauge } from './Gauge';
 export { Uptime } from './Uptime';
 export { ActivityHeatmap } from './ActivityHeatmap';
 export { JsonTree } from './JsonTree';
+export { BarList } from './BarList';

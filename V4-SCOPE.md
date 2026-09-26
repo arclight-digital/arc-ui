@@ -389,6 +389,9 @@ array rather than as slotted children, so it has no element to migrate to and go
 |---|---|
 | `arc-menu-divider`, `arc-menu-item`, `arc-option` | keep — app. Sub-components of the menu and select families; on the keep-and-freeze list. `arc-option` must stay explicitly registerable — its parent's `.register.js` pulls in the class, not the registration. |
 | `arc-menu-label` | keep — app. Added in 4.4 (test-findings #115): the group heading the menu family lacked, so consumers stopped faking one with a disabled `arc-menu-item`. Same shape as `arc-menu-divider`, a data element the parent menu draws. |
+| `arc-bar-list` | keep — app. Added in 4.6 (test-findings #124): ranked, labelled bars for a top-N breakdown, where `arc-chart` is dashboard-sized and `arc-sparkline` has no labels. Asked for by an application drawing one by hand in every tile. |
+| `arc-field-list`, `arc-field-row` | keep — app. Added in 4.6 (test-findings #118): a repeating form field. The application owns the rows; the list asks for changes and handles focus, limits, reordering and announcements. `arc-sortable-list` reorders but has no idea of a form row. |
+| `arc-settings-nav-item` | keep — app. Added in 4.6 (test-findings #120): the nav item `arc-settings-layout` lacked, with an active state from the URL hash and a tab row on phones. |
 
 ### typography (14)
 

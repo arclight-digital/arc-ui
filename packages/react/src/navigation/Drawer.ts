@@ -8,6 +8,7 @@ export interface DrawerProps {
   open?: boolean;
   position?: 'left' | 'right';
   heading?: string;
+  modal?: boolean;
   className?: string;
   children?: React.ReactNode;
   onArcClose?: (e: CustomEvent) => void;
