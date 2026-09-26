@@ -1,7 +1,7 @@
 // Renders the DOM described by contract.js. Assertions live there, not here.
 import { createSignal } from 'solid-js';
 import { render } from 'solid-js/web';
-import { Card, TopBar, ActivityHeatmap, TimePicker } from '@arclux/arc-ui-solid';
+import { Card, TopBar, ActivityHeatmap, TimePicker, Checkbox } from '@arclux/arc-ui-solid';
 import { FIXTURE, ROWS } from './contract.js';
 
 function App() {
@@ -37,6 +37,9 @@ function App() {
           setCount((c) => c + 1);
         }}
       />
+
+      {/* Unset, as a two-way binding starts out: see the bindable-unset probe. */}
+      <Checkbox id="unset-bind" checked={undefined} />
 
       <output id="echo">{value()}</output>
       <output id="events">{count()}</output>

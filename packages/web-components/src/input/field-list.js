@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, svg, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
-import { DeclaredPropsMixin, num } from '../shared/props.js';
+import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import './field-row.js';
 import '../input/button.js';
@@ -23,10 +23,12 @@ import '../input/button.js';
  *
  * @tag arc-field-list
  * @status stable
+ * @child arc-field-row
  * @requires arc-button
  * @requires arc-field-row
  * @prop {string} label - Accessible name for the group of rows, such as "Options".
- * @prop {string} addLabel - Text of the Add button.
+ * @prop {string} addLabel - Text of the Add button, exactly as given. The plus sign before it is an icon, not part of the text, so `add-label="Option"` reads "Option" with a + beside it.
+ * @prop {boolean} readonly - Show the rows without their controls: no Add button, no handles, no Remove buttons. For a fixed set that should look like the editable one, such as a taught question's options.
  * @prop {number} min - The fewest rows allowed. Remove is disabled at this count.
  * @prop {number} max - The most rows allowed. Add is disabled at this count. Unset is unlimited.
  * @fires {CustomEvent<void>} arc-add - The user asked for a new row. Append one to your array; focus moves into it when it renders.
@@ -43,6 +45,7 @@ export class ArcFieldList extends DeclaredPropsMixin(LitElement) {
     addLabel: { type: String, attribute: 'add-label' },
     min: num({ default: 0, min: 0, int: true }),
     max: num({ nullable: true, min: 0, int: true }),
+    readonly: flag(false),
     _rows: { state: true },
     _announcement: { state: true },
   };
@@ -115,11 +118,12 @@ export class ArcFieldList extends DeclaredPropsMixin(LitElement) {
       row._index = i;
       row._count = count;
       row._removable = count > this.min;
+      row._readonly = this.readonly;
     });
   }
 
   updated(changed) {
-    if (changed.has('min') || changed.has('max')) this._syncRows();
+    if (changed.has('min') || changed.has('max') || changed.has('readonly')) this._syncRows();
   }
 
   /**
@@ -203,20 +207,31 @@ export class ArcFieldList extends DeclaredPropsMixin(LitElement) {
     return to;
   }
 
+  /**
+   * The Add button's plus is an icon, not text: prefixed as a character, it
+   * made add-label="+ option" read "+ + option" (finding #142).
+   */
   render() {
     return html`
       <div class="list" part="base" role="group" aria-label=${this.label || 'Rows'}>
         <div class="rows" part="rows">
           <slot @slotchange=${this._onSlotChange}></slot>
         </div>
-        <arc-button
-          class="add"
-          part="add"
-          variant="secondary"
-          size="sm"
-          ?disabled=${this._atMax}
-          @click=${this._add}
-        >+ ${this.addLabel}</arc-button>
+        ${
+          this.readonly
+            ? nothing
+            : html`<arc-button
+              class="add"
+              part="add"
+              variant="secondary"
+              size="sm"
+              ?disabled=${this._atMax}
+              @click=${this._add}
+            >
+              ${svg`<svg slot="prefix" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg>`}
+              ${this.addLabel}
+            </arc-button>`
+        }
         <div class="live" aria-live="polite">${this._announcement}</div>
       </div>
     `;

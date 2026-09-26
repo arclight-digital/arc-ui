@@ -32,6 +32,8 @@ export interface VirtualListProps {
   overscan?: number;
   /** Called when the visible range changes. `end` is exclusive. */
   onRangeChange?: (range: { start: number; end: number }) => void;
+  /** The element, for scrollToIndex(), as on every generated wrapper. */
+  ref?: HTMLElement | ((el: HTMLElement) => void);
   class?: string;
   style?: string | JSX.CSSProperties;
   id?: string;
@@ -44,7 +46,7 @@ type ListElement = HTMLElement & {
 
 export const VirtualList: Component<VirtualListProps> = (props) => {
   const [local, rest] = splitProps(props, [
-    'items', 'renderItem', 'itemHeight', 'overscan', 'onRangeChange',
+    'items', 'renderItem', 'itemHeight', 'overscan', 'onRangeChange', 'ref',
   ]);
   const [range, setRange] = createSignal({ start: 0, end: 0 });
   let el!: ListElement;
@@ -73,7 +75,10 @@ export const VirtualList: Component<VirtualListProps> = (props) => {
     // `items` and `itemHeight` go through prop: — an array would stringify as
     // an attribute, and `itemHeight` lowercases to a name Lit ignores.
     <arc-virtual-list
-      ref={el}
+      ref={(node: ListElement) => {
+        el = node;
+        if (typeof local.ref === 'function') local.ref(node);
+      }}
       prop:items={local.items}
       prop:itemHeight={local.itemHeight ?? 40}
       overscan={local.overscan ?? 5}

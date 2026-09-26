@@ -16,7 +16,10 @@
 // Stays a .ts file (no JSX) deliberately: prism writes `VirtualList.ts` for
 // this component, and a `.tsx` here would leave a generated `.ts` beside it
 // exporting the same name. Nothing is lost — this package has no JSX anywhere.
-import { createElement, useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import {
+  createElement, forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState,
+  type CSSProperties, type ReactElement, type ReactNode, type Ref,
+} from 'react';
 import '@arclux/arc-ui/virtual-list';
 
 export interface VirtualListProps<T = unknown> {
@@ -35,20 +38,23 @@ export interface VirtualListProps<T = unknown> {
   id?: string;
 }
 
-type ListElement = HTMLElement & {
+/** The element a ref on VirtualList holds, for scrollToIndex(). */
+export type VirtualListElement = HTMLElement & {
   items?: unknown[];
   visibleRange?: { start: number; end: number };
+  scrollToIndex(index: number): void;
 };
+type ListElement = VirtualListElement;
 
-export function VirtualList<T = unknown>({
-  items,
-  renderItem,
-  itemHeight = 40,
-  overscan = 5,
-  onRangeChange,
-  ...rest
-}: VirtualListProps<T>) {
+function VirtualListImpl<T>(
+  { items, renderItem, itemHeight = 40, overscan = 5, onRangeChange, ...rest }: VirtualListProps<T>,
+  forwarded: Ref<VirtualListElement>,
+) {
   const ref = useRef<ListElement>(null);
+  // A ref on the wrapper holds the element, as on every generated wrapper, so
+  // scrollToIndex() is reachable (test-frame §4.2; hand-authored, so prism
+  // could not add it).
+  useImperativeHandle(forwarded, () => ref.current as VirtualListElement, []);
   const [range, setRange] = useState({ start: 0, end: 0 });
 
   // `items` is an array, so it has to be set as a property — as an attribute it
@@ -81,3 +87,8 @@ export function VirtualList<T = unknown>({
 
   return createElement('arc-virtual-list', { ref, 'item-height': itemHeight, overscan, ...rest }, rows);
 }
+
+/** Generic over the row type; a ref holds the element, for scrollToIndex(). */
+export const VirtualList = forwardRef(VirtualListImpl) as <T = unknown>(
+  props: VirtualListProps<T> & { ref?: Ref<VirtualListElement> },
+) => ReactElement | null;

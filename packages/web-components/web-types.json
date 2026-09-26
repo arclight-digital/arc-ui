@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/JetBrains/web-types/master/schema/web-types.json",
   "name": "@arclux/arc-ui",
-  "version": "4.6.0",
+  "version": "4.7.0",
   "description-markup": "markdown",
   "contributions": {
     "html": {
@@ -2308,12 +2308,12 @@
         },
         {
           "name": "arc-bar-list",
-          "description": "Labelled horizontal bars with their values, ranked: \"which of these, and by how\nmuch\", in less room than a chart. For a top-N breakdown in a tile or a sidebar,\nwhere `arc-chart` is dashboard-sized and `arc-sparkline` has no labels.\n\nIt renders a real ordered list. Each row reads as its label and value; the bar is\ndecoration and hidden from assistive tech, so nothing is carried by length alone.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element: the ordered list.\n- **item** - One row.\n- **label** - A row's label, or its link.\n- **value** - A row's value.\n- **track** - The bar's full-length track.\n- **bar** - The bar itself. Coloured by `--bar-list-fill`.",
+          "description": "Labelled horizontal bars with their values, ranked: \"which of these, and by how\nmuch\", in less room than a chart. For a top-N breakdown in a tile or a sidebar,\nwhere `arc-chart` is dashboard-sized and `arc-sparkline` has no labels.\n\nIt renders a real ordered list. Each row reads as its label and value; the bar is\ndecoration and hidden from assistive tech, so nothing is carried by length alone.\n---\n\n\n### **Slots:**\n - **more** - Replaces the \"N more\" line when `limit` leaves rows out, for example with a link to the full list.\n\n### **CSS Parts:**\n - **base** - The root element: the ordered list.\n- **item** - One row.\n- **label** - A row's label, or its link.\n- **value** - A row's value.\n- **track** - The bar's full-length track.\n- **bar** - The bar itself. Coloured by `--bar-list-fill`; a highlighted row's bar also has the part `highlight` and takes `--bar-list-highlight`.\n- **highlight** - A highlighted row's bar.\n- **more** - The \"N more\" line.\n- **reference** - The dashed reference line.\n- **reference-label** - The reference's caption.",
           "doc-url": "",
           "attributes": [
             {
               "name": "items",
-              "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+              "description": "The rows, as `{ label, value, display?, href?, highlight? }` objects. `highlight: true` emphasises a row: its bar takes `--bar-list-highlight` and its label is set in bold, so the emphasis is not carried by colour alone. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
               "value": {
                 "type": "Array",
                 "default": "[]"
@@ -2329,7 +2329,7 @@
             },
             {
               "name": "limit",
-              "description": "Show at most this many rows, after sorting. Unset shows all.",
+              "description": "Show at most this many rows, after sorting. Unset shows all. The rows left out are counted in a closing \"N more\" line, which the `more` slot replaces.",
               "value": {
                 "type": "number",
                 "default": "0"
@@ -2358,9 +2358,36 @@
                 "type": "string",
                 "default": "''"
               }
+            },
+            {
+              "name": "reference",
+              "description": "A value to mark on every track with a dashed line, such as chance level, a target or a baseline. On the same scale as the bars.",
+              "value": {
+                "type": "number",
+                "default": "0"
+              }
+            },
+            {
+              "name": "reference-label",
+              "description": "What the reference line is. Shown with its value beneath the list, so the marker reads as text as well as a position.",
+              "value": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "reference-display",
+              "description": "The text shown for the reference's value in that caption (e.g. \"6%\"), as `display` is for a row. Without it the number is shown as is, with `unit`.",
+              "value": {
+                "type": "string"
+              }
             }
           ],
-          "slots": [],
+          "slots": [
+            {
+              "name": "more",
+              "description": "Replaces the \"N more\" line when `limit` leaves rows out, for example with a link to the full list."
+            }
+          ],
           "events": [],
           "js": {
             "properties": [
@@ -2376,7 +2403,7 @@
               },
               {
                 "name": "items",
-                "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+                "description": "The rows, as `{ label, value, display?, href?, highlight? }` objects. `highlight: true` emphasises a row: its bar takes `--bar-list-highlight` and its label is set in bold, so the emphasis is not carried by colour alone. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
                 "type": "Array"
               },
               {
@@ -2386,8 +2413,23 @@
               },
               {
                 "name": "limit",
-                "description": "Show at most this many rows, after sorting. Unset shows all.",
+                "description": "Show at most this many rows, after sorting. Unset shows all. The rows left out are counted in a closing \"N more\" line, which the `more` slot replaces.",
                 "type": "number"
+              },
+              {
+                "name": "reference",
+                "description": "A value to mark on every track with a dashed line, such as chance level, a target or a baseline. On the same scale as the bars.",
+                "type": "number"
+              },
+              {
+                "name": "referenceLabel",
+                "description": "What the reference line is. Shown with its value beneath the list, so the marker reads as text as well as a position.",
+                "type": "string"
+              },
+              {
+                "name": "referenceDisplay",
+                "description": "The text shown for the reference's value in that caption (e.g. \"6%\"), as `display` is for a row. Without it the number is shown as is, with `unit`.",
+                "type": "string"
               },
               {
                 "name": "unsorted",
@@ -3550,7 +3592,7 @@
         },
         {
           "name": "arc-list-item",
-          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n- **actions** - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. They sit beside the row rather than inside it, so a click on one never activates the row. Plain lists only: in a `selectable` list the row is an option, and a listbox can hold nothing but options, so the slot is not rendered there. For rows that are both current and actionable, use a plain list with `href` and `selected`.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **description**\n- **item**\n- **actions** - The container of the `actions` slot.",
+          "description": "Individual row within an arc-list. Supports prefix/suffix slots, a description slot for\nsecondary text, links, and selection state.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when the item is activated: by click, or by Enter or Space on a focused row (in a selectable list the parent dispatches it from this element). Cancelable: on an `href` row, cancelling it stops the link navigating, which is how a single-page app routes the click itself. A modified click (Ctrl, Cmd, Shift, a middle click) is left to the browser and does not fire it.\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content.\n- **description**\n- **suffix**\n- **actions** - Buttons that act on this row, such as rename or delete. Hidden until the row is hovered or something in it has focus, so they stay reachable from the keyboard; always shown on a device without hover. They sit beside the row rather than inside it, so a click on one never activates the row. Plain lists only: in a `selectable` list the row is an option, and a listbox can hold nothing but options, so the slot is not rendered there. For rows that are both current and actionable, use a plain list with `href` and `selected`.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **label**\n- **description**\n- **item**\n- **actions** - The container of the `actions` slot.",
           "doc-url": "",
           "attributes": [
             {
@@ -3609,7 +3651,7 @@
             {
               "name": "arc-select",
               "type": "CustomEvent<{ value: string }>",
-              "description": "Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space."
+              "description": "Fired when the item is activated: by click, or by Enter or Space on a focused row (in a selectable list the parent dispatches it from this element). Cancelable: on an `href` row, cancelling it stops the link navigating, which is how a single-page app routes the click itself. A modified click (Ctrl, Cmd, Shift, a middle click) is left to the browser and does not fire it."
             }
           ],
           "js": {
@@ -3639,7 +3681,7 @@
               {
                 "name": "arc-select",
                 "type": "CustomEvent<{ value: string }>",
-                "description": "Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space."
+                "description": "Fired when the item is activated: by click, or by Enter or Space on a focused row (in a selectable list the parent dispatches it from this element). Cancelable: on an `href` row, cancelling it stops the link navigating, which is how a single-page app routes the click itself. A modified click (Ctrl, Cmd, Shift, a middle click) is left to the browser and does not fire it."
               }
             ]
           }
@@ -3659,7 +3701,7 @@
             },
             {
               "name": "size",
-              "description": "Controls the base font size for the list and its children.",
+              "description": "Scale of the list's rows: their text, padding and height. `sm` is a dense list such as a sidebar; its rows keep the touch-target minimum (larger on touch screens).",
               "value": {
                 "type": "'sm' | 'md' | 'lg'",
                 "default": "'md'"
@@ -3735,7 +3777,7 @@
               },
               {
                 "name": "size",
-                "description": "Controls the base font size for the list and its children.",
+                "description": "Scale of the list's rows: their text, padding and height. `sm` is a dense list such as a sidebar; its rows keep the touch-target minimum (larger on touch screens).",
                 "type": "'sm' | 'md' | 'lg'"
               },
               {
@@ -5936,7 +5978,7 @@
         },
         {
           "name": "arc-sheet",
-          "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the user moves the sheet to another snap point. `value` is the new `snap` index.\n- **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part.\n- **handle** - The drag handle. With `snapPoints` it is a focusable vertical slider.\n- **header**\n- **body**\n- **footer**",
+          "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the user moves the sheet to another snap point. `value` is the new `snap` index.\n- **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header** - Replaces the heading. The header row is left out when there is no heading, nothing here, and no close button (a `persistent` sheet), so a short snap point is all content.\n- _default_ - Default content.\n- **footer** - Actions under the body. The footer row renders only when something is slotted here.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part.\n- **handle** - The drag handle. With `snapPoints` it is a focusable vertical slider.\n- **header**\n- **body**\n- **footer**",
           "doc-url": "",
           "attributes": [
             {
@@ -5986,18 +6028,28 @@
                 "type": "number",
                 "default": "0"
               }
+            },
+            {
+              "name": "persistent",
+              "description": "The user cannot dismiss the sheet: Escape, a backdrop click and the drag-down close are ignored, dragging below the smallest snap point settles back on it, and there is no close button. For a permanent peek strip. Setting `open` from script still closes it.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
+              }
             }
           ],
           "slots": [
             {
-              "name": "header"
+              "name": "header",
+              "description": "Replaces the heading. The header row is left out when there is no heading, nothing here, and no close button (a `persistent` sheet), so a short snap point is all content."
             },
             {
               "name": "",
               "description": "Default content."
             },
             {
-              "name": "footer"
+              "name": "footer",
+              "description": "Actions under the body. The footer row renders only when something is slotted here."
             }
           ],
           "events": [
@@ -6048,6 +6100,11 @@
                 "name": "snap",
                 "description": "Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.",
                 "type": "number"
+              },
+              {
+                "name": "persistent",
+                "description": "The user cannot dismiss the sheet: Escape, a backdrop click and the drag-down close are ignored, dragging below the smallest snap point settles back on it, and there is no close button. For a permanent peek strip. Setting `open` from script still closes it.",
+                "type": "boolean"
               }
             ],
             "events": [
@@ -7576,7 +7633,7 @@
             },
             {
               "name": "add-label",
-              "description": "Text of the Add button.",
+              "description": "Text of the Add button, exactly as given. The plus sign before it is an icon, not part of the text, so `add-label=\"Option\"` reads \"Option\" with a + beside it.",
               "value": {
                 "type": "string",
                 "default": "'Add'"
@@ -7596,6 +7653,14 @@
               "value": {
                 "type": "number",
                 "default": "0"
+              }
+            },
+            {
+              "name": "readonly",
+              "description": "Show the rows without their controls: no Add button, no handles, no Remove buttons. For a fixed set that should look like the editable one, such as a taught question's options.",
+              "value": {
+                "type": "boolean",
+                "default": "false"
               }
             }
           ],
@@ -7631,8 +7696,13 @@
               },
               {
                 "name": "addLabel",
-                "description": "Text of the Add button.",
+                "description": "Text of the Add button, exactly as given. The plus sign before it is an icon, not part of the text, so `add-label=\"Option\"` reads \"Option\" with a + beside it.",
                 "type": "string"
+              },
+              {
+                "name": "readonly",
+                "description": "Show the rows without their controls: no Add button, no handles, no Remove buttons. For a fixed set that should look like the editable one, such as a taught question's options.",
+                "type": "boolean"
               },
               {
                 "name": "min",
@@ -8465,7 +8535,7 @@
         },
         {
           "name": "arc-input",
-          "description": "Versatile form control supporting single-line text, email, password, and multiline textarea\nmodes with built-in label, placeholder, and validation states. Pairs with Form for complete\ndata-entry workflows.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - **prefix**\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **field**\n- **label**\n- **wrapper**\n- **prefix**\n- **suffix**\n- **error**",
+          "description": "Versatile form control supporting single-line text, email, password, and multiline textarea\nmodes with built-in label, placeholder, and validation states. Pairs with Form for complete\ndata-entry workflows.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - **prefix**\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **field**\n- **label**\n- **wrapper** - The box around the field. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself.\n- **prefix**\n- **suffix**\n- **error**",
           "doc-url": "",
           "attributes": [
             {
@@ -10588,7 +10658,7 @@
         },
         {
           "name": "arc-select",
-          "description": "Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics\nfor accessible form inputs.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected option changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **select**\n- **label**\n- **trigger**\n- **dropdown**\n- **error**",
+          "description": "Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics\nfor accessible form inputs.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the selected option changes\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - _default_ - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **select**\n- **label**\n- **trigger** - The button that opens the list, showing the chosen value. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself.\n- **dropdown**\n- **error**",
           "doc-url": "",
           "attributes": [
             {
@@ -17123,7 +17193,23 @@
         },
         {
           "name": "part(bar)",
-          "description": "The bar itself. Coloured by `--bar-list-fill`."
+          "description": "The bar itself. Coloured by `--bar-list-fill`; a highlighted row's bar also has the part `highlight` and takes `--bar-list-highlight`."
+        },
+        {
+          "name": "part(highlight)",
+          "description": "A highlighted row's bar."
+        },
+        {
+          "name": "part(more)",
+          "description": "The \"N more\" line."
+        },
+        {
+          "name": "part(reference)",
+          "description": "The dashed reference line."
+        },
+        {
+          "name": "part(reference-label)",
+          "description": "The reference's caption."
         },
         {
           "name": "part(base)",
@@ -18253,7 +18339,8 @@
           "name": "part(label)"
         },
         {
-          "name": "part(wrapper)"
+          "name": "part(wrapper)",
+          "description": "The box around the field. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself."
         },
         {
           "name": "part(prefix)"
@@ -18509,7 +18596,8 @@
           "name": "part(label)"
         },
         {
-          "name": "part(trigger)"
+          "name": "part(trigger)",
+          "description": "The button that opens the list, showing the chosen value. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself."
         },
         {
           "name": "part(dropdown)"

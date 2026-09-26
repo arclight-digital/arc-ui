@@ -10,6 +10,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-sidebar
  * @status stable
+ * @child arc-sidebar-section
  * @requires arc-sidebar-section
  * @requires arc-sidebar-link
  * @requires arc-icon

@@ -39,6 +39,28 @@
 /** Marker for the metadata key, so the conformance sweep can find declarations. */
 export const ARC = 'arc';
 
+/** Set between connecting a server-rendered element and its first update. */
+const HYDRATING = Symbol('arc-hydrating');
+
+/**
+ * The value a server rendered a `list()` prop from: its attribute, parsed by
+ * the prop's own converter, or its declared default when there is none.
+ */
+function serverValue(el, name, meta) {
+  const options = el.constructor.elementProperties?.get(name);
+  const attr =
+    options?.attribute === false
+      ? null
+      : typeof options?.attribute === 'string'
+        ? options.attribute
+        : name.toLowerCase();
+  if (attr && el.hasAttribute(attr)) {
+    const from = options?.converter?.fromAttribute ?? options?.converter;
+    if (typeof from === 'function') return from(el.getAttribute(attr), options.type);
+  }
+  return defaultOf(el, meta);
+}
+
 const FALSEY = new Set(['false', '0', 'off']);
 
 /**
@@ -601,13 +623,60 @@ export const DeclaredPropsMixin = (superClass) =>
       });
     }
 
-    /** Read the negative attribute on the way in, so `<x no-dots>` parses. */
+    /**
+     * Read the negative attribute on the way in, so `<x no-dots>` parses; and
+     * note whether this is a server-rendered element about to hydrate.
+     */
     connectedCallback() {
+      // Before super: ReactiveElement attaches the render root there, so a
+      // shadow root that already exists is the server's declarative one.
+      if (!this.hasUpdated && this.shadowRoot !== null) this[HYDRATING] = true;
       super.connectedCallback();
       for (const [name, meta] of declaredProps(this.constructor)) {
         if (meta.kind === 'flag' && meta.negative && this.hasAttribute(meta.negative)) {
           this[name] = !meta.default;
         }
       }
+    }
+
+    /**
+     * The first update of a server-rendered element renders what the server
+     * rendered: each `list()` prop at the value its attribute gives, or its
+     * declared default. Whatever the page assigned instead is held back and
+     * handed over once the server's markup is adopted (test-findings #144).
+     *
+     * A `list()` prop is script-set data, and a page commonly assigns it before
+     * the element's first update, parked before upgrade or set just after it.
+     * Either way Lit applies it at the top of that update, the one that must
+     * adopt the server's markup, while the server rendered from attributes
+     * alone. Rendering the page's array then is a hydration mismatch, and
+     * hydration abandons the tree. Ten components carried a hand-copied hold
+     * for this under four different names, snapshotting the property rather
+     * than the attribute and so missing data set after upgrade; fifteen had
+     * none. This is the one place for it.
+     *
+     * `shouldUpdate` because it is the only per-update hook that runs after
+     * Lit applies pre-upgrade values and before the host's own `willUpdate`,
+     * which is where several components derive state from these props. No
+     * component overrides it. Values set here join this update.
+     */
+    shouldUpdate(changed) {
+      if (this[HYDRATING]) {
+        this[HYDRATING] = false;
+        const held = {};
+        for (const [name, meta] of declaredProps(this.constructor)) {
+          if (meta.kind !== 'list') continue;
+          const server = serverValue(this, name, meta);
+          if (JSON.stringify(this[name]) === JSON.stringify(server)) continue;
+          held[name] = this[name];
+          this[name] = server;
+        }
+        if (Object.keys(held).length) {
+          // After this update completes, and outside it, so the hand-over is
+          // an ordinary second update rather than Lit's change-in-update.
+          this.updateComplete.then(() => queueMicrotask(() => Object.assign(this, held)));
+        }
+      }
+      return super.shouldUpdate(changed);
     }
   };

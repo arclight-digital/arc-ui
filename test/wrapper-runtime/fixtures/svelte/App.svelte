@@ -1,10 +1,12 @@
 <!-- Renders the DOM described by contract.js. Assertions live there, not here. -->
 <script>
-  import { Card, TopBar, ActivityHeatmap, TimePicker } from '@arclux/arc-ui-svelte';
+  import { Card, TopBar, ActivityHeatmap, TimePicker, Checkbox } from '@arclux/arc-ui-svelte';
   import { FIXTURE, ROWS } from './contract.js';
 
   let value = $state(FIXTURE.pickerInitial);
   let count = $state(0);
+  // Deliberately undefined: see the bindable-unset probe.
+  let unsetChecked = $state();
 </script>
 
 <Card id="card" padding={FIXTURE.cardPadding}>
@@ -29,6 +31,8 @@
 <!-- `bind:value` is the write-back the wrapper's `$bindable` exists to serve;
      the separate handler counts the raw event. -->
 <TimePicker id="picker" bind:value onarc-change={() => count++} />
+
+<Checkbox id="unset-bind" bind:checked={unsetChecked} />
 
 <output id="echo">{value}</output>
 <output id="events">{count}</output>

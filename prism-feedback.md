@@ -244,7 +244,17 @@ state the resolution check is designed to be correct about.
 
 ---
 
-## Still open (unchanged, and already on your roadmap)
+## ~~Still open~~ Resolved in prism 3.0.0 (verified 2026-09-25)
+
+Both entries below shipped in 3.0.0 and arc-ui uses them. `prism.config.js`
+sets `runtime: true`, the `propsFrom` hook is gone, and mixin props such as
+`readonly` reach every wrapper (27 Svelte wrappers). The one remaining gap is
+**wrapper defaults**: under `runtime`, prism still read defaults from source,
+so `flag()`/`oneOf()`/`num()`/`list()` props lost theirs. prism 3.2.0 takes each
+default from a constructed instance, dropping and reporting anything that
+differs between two constructions. The entries are kept below as history.
+
+### (history) Resolve properties at runtime
 
 **Resolve properties at runtime from `Ctor.elementProperties`.** It is the fix
 for the `doc-prop-undeclared` population rather than a rule change: mixin props
@@ -294,7 +304,7 @@ an ordinary initial value.
 No action requested — recording it so the roadmap item has one more concrete
 consumer behind it.
 
-## The Solid wrappers' `IntrinsicElements` block is inert (found in 4.6)
+## The Solid wrappers' `IntrinsicElements` block is inert (found in 4.6) — **fixed in 3.0.0-beta.1 (db5f420), verified**
 
 Every generated Solid wrapper carries:
 

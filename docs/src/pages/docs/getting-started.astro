@@ -345,7 +345,8 @@ import { Button, Card } from '@arclux/arc-ui-preact';  // Preact`}></arc-code-bl
         the copy in the parent's shadow root. A test that clicks the element you authored fails
         with "element is not visible", however correct the markup is. Each component that works
         this way says so on its default slot ("read as data") in the API reference and in
-        <code>custom-elements.json</code>.
+        <code>custom-elements.json</code>, where each parent also lists the elements it expects
+        under <code>children</code>, with their slot.
       </p>
       <p class="docs-text">
         Find the rendered item the way a user does, by its role and its text. The rendered copies

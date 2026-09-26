@@ -30,6 +30,7 @@ export class ArcFieldRow extends LitElement {
     // Set by the parent list. Reactive, because the controls render only once
     // a row knows its list, and index and count alone may not change on adoption.
     _list: { state: true },
+    _readonly: { state: true },
   };
 
   static styles = [
@@ -82,6 +83,7 @@ export class ArcFieldRow extends LitElement {
     this._removable = true;
     this._dragging = false;
     this._list = null;
+    this._readonly = false;
     this._drag = null;
   }
 
@@ -151,7 +153,7 @@ export class ArcFieldRow extends LitElement {
     return html`
       <div class="row" part="base">
         ${
-          this._list
+          this._list && !this._readonly
             ? html`<button
               class="handle"
               part="handle"
@@ -169,7 +171,7 @@ export class ArcFieldRow extends LitElement {
         <span id="hint" hidden>Use the up and down arrow keys to move</span>
         <div class="fields" part="fields"><slot></slot></div>
         ${
-          this._list
+          this._list && !this._readonly
             ? html`<arc-icon-button
               part="remove"
               name="x"

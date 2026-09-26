@@ -1,12 +1,12 @@
 // Renders the DOM described by contract.js. Assertions live there, not here.
 import { Component } from '@angular/core';
-import { Card, TopBar, ActivityHeatmap, TimePicker } from '@arclux/arc-ui-angular';
+import { Card, TopBar, ActivityHeatmap, TimePicker, Checkbox } from '@arclux/arc-ui-angular';
 import { FIXTURE, ROWS } from './contract.js';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [Card, TopBar, ActivityHeatmap, TimePicker],
+  imports: [Card, TopBar, ActivityHeatmap, TimePicker, Checkbox],
   template: `
     <arc-card id="card" [padding]="fixture.cardPadding">
       <span id="card-default">DEFAULT</span>
@@ -35,6 +35,9 @@ import { FIXTURE, ROWS } from './contract.js';
       (arc-change)="count = count + 1"
     ></arc-time-picker>
 
+    <!-- Unset, as a two-way binding starts out: see the bindable-unset probe. -->
+    <arc-checkbox id="unset-bind" [(checked)]="unsetChecked"></arc-checkbox>
+
     <output id="echo">{{ value }}</output>
     <output id="events">{{ count }}</output>
   `,
@@ -44,4 +47,5 @@ export class AppComponent {
   readonly rows = ROWS;
   value = FIXTURE.pickerInitial;
   count = 0;
+  unsetChecked: boolean | undefined = undefined;
 }

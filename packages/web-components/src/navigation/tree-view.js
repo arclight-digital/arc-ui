@@ -8,6 +8,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  *
  * @tag arc-tree-view
  * @status stable
+ * @child arc-tree-item
  * @requires arc-tree-item
  * @fires {CustomEvent<{ item: { label: string, icon: string }, path: string[], expanded: boolean }>} arc-toggle - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.
  * @fires {CustomEvent<{ value: string, item: { label: string, icon: string }, path: string[] }>} arc-select - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.

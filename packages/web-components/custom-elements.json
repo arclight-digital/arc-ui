@@ -129,7 +129,12 @@
           "tagName": "arc-accordion",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-accordion-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -2241,7 +2246,12 @@
           "tagName": "arc-image-hotspots",
           "customElement": true,
           "group": "marketing",
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-hotspot"
+            }
+          ]
         }
       ],
       "exports": [
@@ -4728,11 +4738,32 @@
               "name": "track"
             },
             {
-              "description": "The bar itself. Coloured by `--bar-list-fill`.",
+              "description": "The bar itself. Coloured by `--bar-list-fill`; a highlighted row's bar also has the part `highlight` and takes `--bar-list-highlight`.",
               "name": "bar"
+            },
+            {
+              "description": "A highlighted row's bar.",
+              "name": "highlight"
+            },
+            {
+              "description": "The \"N more\" line.",
+              "name": "more"
+            },
+            {
+              "description": "The dashed reference line.",
+              "name": "reference"
+            },
+            {
+              "description": "The reference's caption.",
+              "name": "reference-label"
             }
           ],
-          "slots": [],
+          "slots": [
+            {
+              "description": "Replaces the \"N more\" line when `limit` leaves rows out, for example with a link to the full list.",
+              "name": "more"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -4763,7 +4794,7 @@
               "type": {
                 "text": "Array"
               },
-              "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+              "description": "The rows, as `{ label, value, display?, href?, highlight? }` objects. `highlight: true` emphasises a row: its bar takes `--bar-list-highlight` and its label is set in bold, so the emphasis is not carried by colour alone. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
               "attribute": "items",
               "default": "[]"
             },
@@ -4785,9 +4816,40 @@
               "type": {
                 "text": "number"
               },
-              "description": "Show at most this many rows, after sorting. Unset shows all.",
+              "description": "Show at most this many rows, after sorting. Unset shows all. The rows left out are counted in a closing \"N more\" line, which the `more` slot replaces.",
               "attribute": "limit",
               "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "reference",
+              "privacy": "public",
+              "type": {
+                "text": "number"
+              },
+              "description": "A value to mark on every track with a dashed line, such as chance level, a target or a baseline. On the same scale as the bars.",
+              "attribute": "reference",
+              "default": "0"
+            },
+            {
+              "kind": "field",
+              "name": "referenceLabel",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the reference line is. Shown with its value beneath the list, so the marker reads as text as well as a position.",
+              "attribute": "reference-label"
+            },
+            {
+              "kind": "field",
+              "name": "referenceDisplay",
+              "privacy": "public",
+              "type": {
+                "text": "string"
+              },
+              "description": "The text shown for the reference's value in that caption (e.g. \"6%\"), as `display` is for a row. Without it the number is shown as is, with `unit`.",
+              "attribute": "reference-display"
             },
             {
               "kind": "field",
@@ -4808,7 +4870,7 @@
               "type": {
                 "text": "Array"
               },
-              "description": "The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
+              "description": "The rows, as `{ label, value, display?, href?, highlight? }` objects. `highlight: true` emphasises a row: its bar takes `--bar-list-highlight` and its label is set in bold, so the emphasis is not carried by colour alone. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. \"1.2k\"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link.",
               "fieldName": "items",
               "default": "[]"
             },
@@ -4826,7 +4888,7 @@
               "type": {
                 "text": "number"
               },
-              "description": "Show at most this many rows, after sorting. Unset shows all.",
+              "description": "Show at most this many rows, after sorting. Unset shows all. The rows left out are counted in a closing \"N more\" line, which the `more` slot replaces.",
               "fieldName": "limit",
               "default": "0"
             },
@@ -4856,6 +4918,31 @@
               "default": "''",
               "description": "Accessible name for the list, announced before its rows.",
               "fieldName": "label"
+            },
+            {
+              "name": "reference",
+              "type": {
+                "text": "number"
+              },
+              "description": "A value to mark on every track with a dashed line, such as chance level, a target or a baseline. On the same scale as the bars.",
+              "fieldName": "reference",
+              "default": "0"
+            },
+            {
+              "name": "reference-label",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the reference line is. Shown with its value beneath the list, so the marker reads as text as well as a position.",
+              "fieldName": "referenceLabel"
+            },
+            {
+              "name": "reference-display",
+              "type": {
+                "text": "string"
+              },
+              "description": "The text shown for the reference's value in that caption (e.g. \"6%\"), as `display` is for a row. Without it the number is shown as is, with `unit`.",
+              "fieldName": "referenceDisplay"
             }
           ],
           "mixins": [
@@ -5523,7 +5610,12 @@
           "tagName": "arc-comparison",
           "customElement": true,
           "group": "marketing",
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-comparison-column"
+            }
+          ]
         }
       ],
       "exports": [
@@ -7240,7 +7332,7 @@
               "type": {
                 "text": "CustomEvent<{ value: string }>"
               },
-              "description": "Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space."
+              "description": "Fired when the item is activated: by click, or by Enter or Space on a focused row (in a selectable list the parent dispatches it from this element). Cancelable: on an `href` row, cancelling it stops the link navigating, which is how a single-page app routes the click itself. A modified click (Ctrl, Cmd, Shift, a middle click) is left to the browser and does not fire it."
             }
           ],
           "attributes": [
@@ -7373,7 +7465,7 @@
               "type": {
                 "text": "'sm' | 'md' | 'lg'"
               },
-              "description": "Controls the base font size for the list and its children.",
+              "description": "Scale of the list's rows: their text, padding and height. `sm` is a dense list such as a sidebar; its rows keep the touch-target minimum (larger on touch screens).",
               "attribute": "size",
               "default": "'md'",
               "reflects": true
@@ -7433,7 +7525,7 @@
               "type": {
                 "text": "'sm' | 'md' | 'lg'"
               },
-              "description": "Controls the base font size for the list and its children.",
+              "description": "Scale of the list's rows: their text, padding and height. `sm` is a dense list such as a sidebar; its rows keep the touch-target minimum (larger on touch screens).",
               "fieldName": "size",
               "default": "'md'"
             },
@@ -7487,7 +7579,12 @@
           "tagName": "arc-list",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-list-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -8244,7 +8341,12 @@
           "tagName": "arc-stepper",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-step"
+            }
+          ]
         }
       ],
       "exports": [
@@ -8602,7 +8704,12 @@
           "tagName": "arc-timeline",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-timeline-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -9936,7 +10043,12 @@
           "tagName": "arc-command-palette",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-command-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -10337,7 +10449,18 @@
           "tagName": "arc-context-menu",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-menu-item"
+            },
+            {
+              "tagName": "arc-menu-divider"
+            },
+            {
+              "tagName": "arc-menu-label"
+            }
+          ]
         }
       ],
       "exports": [
@@ -10756,7 +10879,18 @@
           "tagName": "arc-dropdown-menu",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-menu-item"
+            },
+            {
+              "tagName": "arc-menu-divider"
+            },
+            {
+              "tagName": "arc-menu-label"
+            }
+          ]
         }
       ],
       "exports": [
@@ -11705,6 +11839,7 @@
           ],
           "slots": [
             {
+              "description": "Replaces the heading. The header row is left out when there is no heading, nothing here, and no close button (a `persistent` sheet), so a short snap point is all content.",
               "name": "header"
             },
             {
@@ -11712,6 +11847,7 @@
               "name": ""
             },
             {
+              "description": "Actions under the body. The footer row renders only when something is slotted here.",
               "name": "footer"
             }
           ],
@@ -11784,6 +11920,18 @@
               "description": "Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.",
               "attribute": "snap",
               "default": "0",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "persistent",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "The user cannot dismiss the sheet: Escape, a backdrop click and the drag-down close are ignored, dragging below the smallest snap point settles back on it, and there is no close button. For a permanent peek strip. Setting `open` from script still closes it.",
+              "attribute": "persistent",
+              "default": "false",
               "reflects": true
             }
           ],
@@ -11864,6 +12012,15 @@
               "description": "Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.",
               "fieldName": "snap",
               "default": "0"
+            },
+            {
+              "name": "persistent",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "The user cannot dismiss the sheet: Escape, a backdrop click and the drag-down close are ignored, dragging below the smallest snap point settles back on it, and there is no close button. For a permanent peek strip. Setting `open` from script still closes it.",
+              "fieldName": "persistent",
+              "default": "false"
             }
           ],
           "mixins": [
@@ -14203,7 +14360,12 @@
           "tagName": "arc-combobox",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-option"
+            }
+          ]
         }
       ],
       "exports": [
@@ -15421,8 +15583,20 @@
                 "text": "string"
               },
               "default": "'Add'",
-              "description": "Text of the Add button.",
+              "description": "Text of the Add button, exactly as given. The plus sign before it is an icon, not part of the text, so `add-label=\"Option\"` reads \"Option\" with a + beside it.",
               "attribute": "add-label"
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "privacy": "public",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Show the rows without their controls: no Add button, no handles, no Remove buttons. For a fixed set that should look like the editable one, such as a taught question's options.",
+              "attribute": "readonly",
+              "default": "false",
+              "reflects": true
             },
             {
               "kind": "field",
@@ -15486,7 +15660,7 @@
                 "text": "string"
               },
               "default": "'Add'",
-              "description": "Text of the Add button.",
+              "description": "Text of the Add button, exactly as given. The plus sign before it is an icon, not part of the text, so `add-label=\"Option\"` reads \"Option\" with a + beside it.",
               "fieldName": "addLabel"
             },
             {
@@ -15506,6 +15680,15 @@
               "description": "The most rows allowed. Add is disabled at this count. Unset is unlimited.",
               "fieldName": "max",
               "default": "0"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Show the rows without their controls: no Add button, no handles, no Remove buttons. For a fixed set that should look like the editable one, such as a taught question's options.",
+              "fieldName": "readonly",
+              "default": "false"
             }
           ],
           "mixins": [
@@ -15521,7 +15704,12 @@
           "tagName": "arc-field-list",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-field-row"
+            }
+          ]
         }
       ],
       "exports": [
@@ -17300,6 +17488,7 @@
               "name": "label"
             },
             {
+              "description": "The box around the field. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself.",
               "name": "wrapper"
             },
             {
@@ -19254,7 +19443,12 @@
           "tagName": "arc-multi-select",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-option"
+            }
+          ]
         }
       ],
       "exports": [
@@ -20962,7 +21156,12 @@
           "tagName": "arc-radio-group",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-radio"
+            }
+          ]
         }
       ],
       "exports": [
@@ -22137,7 +22336,12 @@
           "tagName": "arc-search",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-suggestion"
+            }
+          ]
         }
       ],
       "exports": [
@@ -22454,7 +22658,12 @@
           "tagName": "arc-segmented-control",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-option"
+            }
+          ]
         }
       ],
       "exports": [
@@ -22488,6 +22697,7 @@
               "name": "label"
             },
             {
+              "description": "The button that opens the list, showing the chosen value. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself.",
               "name": "trigger"
             },
             {
@@ -22882,7 +23092,12 @@
           "tagName": "arc-select",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-option"
+            }
+          ]
         }
       ],
       "exports": [
@@ -24052,7 +24267,12 @@
           "tagName": "arc-switch-group",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-toggle"
+            }
+          ]
         }
       ],
       "exports": [
@@ -28631,7 +28851,13 @@
           "tagName": "arc-settings-layout",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-settings-nav-item",
+              "slot": "nav"
+            }
+          ]
         }
       ],
       "exports": [
@@ -29783,7 +30009,12 @@
           "tagName": "arc-breadcrumb",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-breadcrumb-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -30647,7 +30878,12 @@
           "tagName": "arc-nav-item",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-nav-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -30738,7 +30974,12 @@
           "tagName": "arc-navigation-menu",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-nav-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -31283,7 +31524,12 @@
           "tagName": "arc-scroll-spy",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-spy-link"
+            }
+          ]
         }
       ],
       "exports": [
@@ -31730,7 +31976,12 @@
           "tagName": "arc-sidebar-section",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-sidebar-link"
+            }
+          ]
         }
       ],
       "exports": [
@@ -31933,7 +32184,12 @@
           "tagName": "arc-sidebar",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-sidebar-section"
+            }
+          ]
         }
       ],
       "exports": [
@@ -32474,7 +32730,12 @@
           "tagName": "arc-tabs",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-tab"
+            }
+          ]
         }
       ],
       "exports": [
@@ -32890,7 +33151,12 @@
           "tagName": "arc-tree-item",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-tree-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -32963,7 +33229,12 @@
           "tagName": "arc-tree-view",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-tree-item"
+            }
+          ]
         }
       ],
       "exports": [
@@ -34622,6 +34893,7 @@
           "kind": "mixin",
           "description": "Applies the declared contract on every update, for both the attribute path\nand the property path.\n\nThe work runs through a **reactive controller**, not through `willUpdate`\nand `updated` overrides. That is deliberate, and it is what makes rolling\nthis out across 200+ components safe: a mixin hook only runs if every\ncomponent that overrides the same method remembers `super.updated(changed)`,\nand a component that forgets loses its normalisation *silently* — the\ndeclaration still reads correctly and simply stops being enforced. There is\nno such failure mode here. A controller's hooks run regardless of what the\nhost overrides; the only requirement is the `super()` call every class makes\nanyway.",
           "name": "DeclaredPropsMixin",
+          "members": [],
           "parameters": [
             {
               "name": "superClass"

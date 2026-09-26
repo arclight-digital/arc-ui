@@ -37,6 +37,9 @@ const PAIRS = [
   {
     name: 'props',
     source: 'packages/web-components/src/shared/props.js',
+    // DeclaredPropsMixin's hydration hold (4.7, finding #144) has unit tests
+    // here too; the 51-case hydration-determinism file would make this pair
+    // too slow to gate on (110 mutants each).
     tests: 'packages/web-components/test/props.test.js',
     // Deliberately higher than everything else: 166 components sit on this
     // file, so a surviving mutant here is a hole under all of them at once.
@@ -62,7 +65,11 @@ const PAIRS = [
   {
     name: 'overlay-controller',
     source: 'packages/web-components/src/shared/overlay-controller.js',
-    tests: 'packages/web-components/test/overlay-controller.test.js',
+    // Both files: the non-modal path (4.6, findings #111/#112) is exercised
+    // through arc-sheet and arc-drawer in overlay-nonmodal, and measuring the
+    // controller against the modal tests alone read its new branches as
+    // untested (38.89%, CI on v4.6.0).
+    tests: 'packages/web-components/test/overlay-{controller,nonmodal}.test.js',
     // remeasured after V4-PLAN 4.4 moved the five overlays onto <dialog>
     gate: 80,
     why: 'modal behaviour — 5 consumers, finding #73',
@@ -81,7 +88,7 @@ const PAIRS = [
     tests: 'packages/web-components/test/focus-trap.test.js',
     // measured 87.50% (14/16) 2026-08-13
     gate: 85,
-    why: 'composed-tree focus — arc-app-shell, and trigger-aria\'s deepActiveElement',
+    why: "composed-tree focus — arc-app-shell, and trigger-aria's deepActiveElement",
   },
   {
     name: 'scroll-lock',
@@ -173,7 +180,7 @@ for (const pair of selected) {
   const run = spawnSync(
     'node',
     ['scripts/mutate.js', '--source', pair.source, '--tests', pair.tests],
-    { encoding: 'utf8' }
+    { encoding: 'utf8' },
   );
 
   // mutate.js exits non-zero only for a gate it was given, and it is never
@@ -206,7 +213,7 @@ for (const r of results) {
   if (under) failures.push(r);
   console.log(
     `  ${under ? 'FAIL' : 'ok  '}  ${r.name.padEnd(20)} ${String(r.score.toFixed(2)).padStart(6)}%  ` +
-      `(${r.killed}/${r.total})  gate ${gate}`
+      `(${r.killed}/${r.total})  gate ${gate}`,
   );
 }
 
@@ -214,7 +221,7 @@ const ungated = results.filter((r) => r.gate === null);
 if (ungated.length) {
   console.log(
     `\n  ${ungated.length} pair(s) measured but not yet ratcheted — set \`gate\` once a` +
-      `\n  reading has been seen twice, so a flaky first run cannot become the floor.`
+      `\n  reading has been seen twice, so a flaky first run cannot become the floor.`,
   );
 }
 

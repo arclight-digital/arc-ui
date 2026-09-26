@@ -81,3 +81,32 @@ describe('arc-settings-layout nav', () => {
     expect(css).to.match(/@media \(max-width: 768px\)[\s\S]*flex-direction: row[\s\S]*overflow-x: auto/);
   });
 });
+
+/** Halteres adoption batch against 4.6.0 (test-findings #131, #132). */
+describe('arc-settings-layout containment (4.7.0)', () => {
+  it('stays inside a narrow grid parent, whatever its content (#131)', async () => {
+    const wrap = mount(`<div style="display:grid;width:390px">
+      <arc-settings-layout>
+        <nav slot="nav" aria-label="S"><arc-settings-nav-item href="#a">A</arc-settings-nav-item></nav>
+        <div style="white-space:nowrap">${'unbreakable '.repeat(60)}</div>
+      </arc-settings-layout></div>`);
+    const el = wrap.querySelector('arc-settings-layout');
+    await settle(el);
+    // The layout itself stays in its 390px track. (The unbreakable text still
+    // overflows its own column visibly, as any nowrap content would.)
+    expect(Math.round(el.getBoundingClientRect().width)).to.be.at.most(390);
+  });
+
+  it('keeps hidden sections hidden against a page display rule (#132)', async () => {
+    const style = document.createElement('style');
+    style.textContent = 'section { display: grid; }';
+    document.head.appendChild(style);
+    try {
+      const el = await layout();
+      const visible = [...el.querySelectorAll('section')].filter((s) => getComputedStyle(s).display !== 'none').map((s) => s.id);
+      expect(visible).to.deep.equal(['t-profile']);
+    } finally {
+      style.remove();
+    }
+  });
+});

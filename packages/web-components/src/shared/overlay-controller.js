@@ -118,11 +118,6 @@ export class OverlayController {
     host.addController(this);
   }
 
-  /** Whether the host is modal. Hosts that never pass `modal` always are. */
-  get _modal() {
-    return this.opts.modal ? this.opts.modal() !== false : true;
-  }
-
   /**
    * Reconcile after every render.
    *
@@ -135,10 +130,8 @@ export class OverlayController {
   hostUpdated() {
     const dialog = this.opts.dialog();
     if (!dialog) return;
-    // A host that changed modality re-rendered its panel as the other element,
-    // and the one it replaced left the DOM, and the top layer, with it. Nothing
-    // else reconciles its lock or its listeners.
-    if (this._bound && this._bound !== dialog && !this._bound.isConnected) this._unlock();
+    // A host that changed modality re-rendered its panel as the other element.
+    // Rebinding moves the listeners, and _showNonModal releases a modal's lock.
     this._bind(dialog);
     this.opts.isOpen() ? this._show(dialog) : this._hide(dialog);
   }
@@ -239,7 +232,7 @@ export class OverlayController {
     // Closing with focus inside would leave it on the document. Hand it back to
     // wherever it was before the panel had it, if that is still on the page.
     const active = deepActiveElement();
-    const inside = active && (panel === active || panel.contains(active) || this._inHost(active));
+    const inside = !!active && this._inHost(active);
     try {
       panel.hidePopover();
     } catch {
@@ -251,9 +244,18 @@ export class OverlayController {
     this._opener = null;
   }
 
-  /** Whether a node is the host or inside it, including its light DOM. */
+  /**
+   * Whether a node is the host or anywhere inside it: its light DOM, its shadow
+   * root, and shadow roots nested inside those. `contains()` stops at a shadow
+   * boundary, so focus on the panel's own close button (inside arc-icon-button's
+   * shadow root) read as outside, and closing from it dropped focus on the
+   * document. The mutation gate found it.
+   */
   _inHost(node) {
-    return node === this.host || this.host.contains(node) || this.host.shadowRoot?.contains(node);
+    for (let n = node; n; n = n.parentNode ?? n.host) {
+      if (n === this.host) return true;
+    }
+    return false;
   }
 
   /**

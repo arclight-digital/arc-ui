@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  *
  * @tag arc-timeline
  * @status stable
+ * @child arc-timeline-item
  * @requires arc-timeline-item
  * @prop {number} headingLevel - ARIA heading level for each event title. Clamped to 1 or
  *   greater: `aria-level` below 1 is invalid and is dropped by assistive technology.

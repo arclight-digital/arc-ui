@@ -11,6 +11,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  *
  * @tag arc-navigation-menu
  * @status stable
+ * @child arc-nav-item
  * @requires arc-nav-item
  * @fires arc-navigate - Fired when a navigation item is selected
  * @fires {CustomEvent<{ value: boolean }>} arc-mobile-menu-toggle - Fired when the mobile hamburger button is clicked. Bubbles composed from the host, so listening on the element or on document both work.

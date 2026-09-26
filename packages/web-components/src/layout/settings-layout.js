@@ -16,6 +16,7 @@ import './settings-nav-item.js';
  *
  * @tag arc-settings-layout
  * @status stable
+ * @child arc-settings-nav-item nav
  * @requires arc-settings-nav-item
  * @prop {'left' | 'top'} navPosition - Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). Below 768px either becomes a scrolling row of tabs.
  * @prop {boolean} sections - Show only the content section whose `id` matches the active nav item (`href="#profile"` shows `id="profile"`), and hide the others with `hidden`. Off, every section stays on the page, as for one long page the nav scrolls through.
@@ -35,17 +36,32 @@ export class ArcSettingsLayout extends DeclaredPropsMixin(LitElement) {
   static styles = [
     tokenStyles,
     css`
+      /* min-width: 0 on everything that could otherwise carry the tab row's
+         unwrapped width upward. Without it, on a phone, the row set the
+         layout's min-content width, and inside a grid or flex parent the whole
+         page grew to it (827px on a 390px screen) and scrolled sideways
+         (finding #131). */
       :host {
         display: block;
         box-sizing: border-box;
+        min-width: 0;
       }
 
       /* Left nav layout */
       .settings-layout--left {
         display: grid;
-        grid-template-columns: 220px 1fr;
+        grid-template-columns: 220px minmax(0, 1fr);
         min-height: 100%;
       }
+
+      .nav,
+      .content { min-width: 0; }
+
+      /* Sections are hidden with the hidden attribute, and a page rule that
+         sets display on a section used to beat it and show every section at
+         once (finding #132). An important declaration from inside a shadow
+         root outranks the page's, important or not. */
+      ::slotted([hidden]) { display: none !important; }
 
       .nav,
       .nav ::slotted([slot='nav']:not(arc-settings-nav-item)) {
@@ -163,15 +179,27 @@ export class ArcSettingsLayout extends DeclaredPropsMixin(LitElement) {
     const hash = typeof location === 'undefined' ? '' : location.hash;
     const current = items.find((i) => i.href && i.href === hash) ?? items[0];
     for (const item of items) item.active = item === current;
-    if (current.isConnected && typeof current.scrollIntoView === 'function' && hash) {
-      current.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-    }
+    if (hash) this._revealInNav(current);
     if (!this.sections) return;
     const id = current.href?.startsWith('#') ? current.href.slice(1) : null;
     const slot = this.shadowRoot.querySelector('slot:not([name])');
     for (const el of slot?.assignedElements({ flatten: true }) ?? []) {
       if (el.id) el.hidden = el.id !== id;
     }
+  }
+
+  /**
+   * Scroll the phone tab row, and only the tab row, to show the active item.
+   * `scrollIntoView` scrolled every scrollable ancestor, which is to say the
+   * page as well (finding #131).
+   */
+  _revealInNav(item) {
+    const nav = this.shadowRoot?.querySelector('.nav');
+    if (!nav || nav.scrollWidth <= nav.clientWidth) return;
+    const r = item.getBoundingClientRect();
+    const n = nav.getBoundingClientRect();
+    if (r.left < n.left) nav.scrollLeft -= n.left - r.left;
+    else if (r.right > n.right) nav.scrollLeft += r.right - n.right;
   }
 
   render() {

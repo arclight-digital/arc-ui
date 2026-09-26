@@ -6,6 +6,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-tree-item
  * @status stable
+ * @child arc-tree-item
  * @prop {string} label - Item label text
  * @prop {string} icon - Icon or emoji
  * @prop {boolean} expanded - Expand child items

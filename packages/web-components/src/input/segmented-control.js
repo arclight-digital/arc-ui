@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-segmented-control
  * @status stable
+ * @child arc-option
  * @prop {string} value - The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.
  * @prop {string} name - The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.
  * @prop {boolean} disabled - Disables the entire control, reducing opacity to 40% and blocking pointer events.

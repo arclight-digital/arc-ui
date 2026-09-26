@@ -204,31 +204,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     );
   }
 
-  /**
-   * The hydrating render has to be the *server's* render, not the page's.
-   *
-   * Two things pull it away from that. `lines` is documented property-only, and
-   * @lit-labs/ssr renders a host from its attributes alone — so the server
-   * emits whatever the markup said, usually an empty transcript. A page that
-   * fills `lines` before the register barrel upgrades this element parks the
-   * array in Lit's pre-upgrade instance properties, which are applied at the
-   * top of the very first update: the one that has to adopt the server's
-   * markup. Six lines against the server's none is "unexpected longer than
-   * expected iterable", and hydration abandons the whole tree at that point.
-   * And arming autoplay blanks the transcript, which is the opposite of the
-   * completed one the server wrote.
-   *
-   * So the first render is the attribute-only, un-blanked one — the same render
-   * the server did — and the page's transcript and the blanking both land in
-   * `firstUpdated`, once the server's DOM has been adopted. Nothing is held
-   * back without a server-rendered shadow root, so a client-only terminal still
-   * has its transcript on the first frame; and `firstUpdated` runs before the
-   * frame is painted either way, so a full transcript never flashes.
-   */
   connectedCallback() {
-    // Before super: ReactiveElement attaches the render root here, so a shadow
-    // root that already exists is the server's `<template shadowrootmode>`.
-    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
     super.connectedCallback();
     this._mqListener = (e) => {
       this._reducedMotion = e.matches;
@@ -237,28 +213,12 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     this._reducedMotion = this._mq.matches;
     this._mq.addEventListener('change', this._mqListener);
 
-    if (hydrating) this._ssrState = { lines: this.lines };
     // No reconnect handling here: the observeIntersect controller re-attaches
     // an armed watch on hostConnected by itself. On the *first* connect
     // autoplay is armed by firstUpdated() instead: see _armAutoplay().
   }
 
-  willUpdate() {
-    // See connectedCallback.
-    if (this._ssrState) {
-      this._heldState = { lines: this.lines };
-      Object.assign(this, this._ssrState);
-      this._ssrState = null;
-    }
-  }
-
   firstUpdated() {
-    // See connectedCallback: the server's markup is adopted, so the page's
-    // transcript can land now, as an ordinary second update.
-    if (this._heldState) {
-      Object.assign(this, this._heldState);
-      this._heldState = null;
-    }
     this._armAutoplay();
   }
 

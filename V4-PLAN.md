@@ -1237,10 +1237,13 @@ open — see below.
       a wrapper rather than `:host`, because containment is public: it lands
       `contain: layout style inline-size` on whatever carries it, and on the
       host that is the custom element a consumer wrote.
-- [ ] **Deferred, on purpose:** the `static arc = {…}` declared-behavior
-      axis. `subscriptions.js` already implements the controller the
-      review's architect wanted to invent; revisit as v4.x once the overlay
-      adoption has soaked. (Re-vibing guard.)
+- [x] ~~**Deferred, on purpose:** the `static arc = {…}` declared-behavior
+      axis.~~ **Dropped (2026-09-25), not deferred.** Everything it would have
+      declared now lives in controllers: `subscriptions.js`, and since this
+      was written OverlayController, DismissController, ListboxController,
+      PositionController and DeclaredPropsMixin's normalising controller. A
+      static config beside them would be a second mechanism for one job.
+      Stays on the do-NOT list below.
 
 **Exit:** overlay adoption at 100% of `open`-declaring survivors; the 2.4d
 central dismissal contract green across all of them; a11y-audit green.
@@ -1398,7 +1401,7 @@ recording as *not* attempted rather than as done:
 
 (Don't build the wrapper matrix over a catalog about to shrink.)
 
-- [ ] ~~Drop Preact + Solid packages.~~ **Refuted (2026-08-16) — all six
+- [x] ~~Drop Preact + Solid packages.~~ **Refuted (2026-08-16) — all six
       packages stay.** Six framework bindings generated from one set of Lit
       components is the product claim; the packages are what makes it a fact
       rather than an assertion, and prism is Arclight's own tool with arc-ui
@@ -1604,6 +1607,9 @@ map.
 
 ### 4.8 Additions (XL) — *after 4.3 + 4.4; visual language from 4.5; ratified in 1.5*
 
+> **Status 2026-09-25:** still planned for a later v4.x release, confirmed by the
+> maintainer. `arc-field-list` shipped early (4.6.0) because an application needed it.
+
 Born on the final conventions; all ship `status: experimental` (already
 barrel-gated by 4.1); each passed the intake bar in Phase 1. Targets v4.0 but
 does not block the tag — additions may trail into 4.x minors. These are the
@@ -1631,7 +1637,7 @@ else.
       enumerates `arc-hotkey[description]` elements from the document (the
       registry is the DOM — derived, not speculative). Makes the
       keyboard-first identity visible.
-- [ ] **`arc-field-list`** (tier 2) — repeating form rows: add/remove/
+- [x] **`arc-field-list`** (tier 2) — **shipped in 4.6.0** as `arc-field-list` + `arc-field-row`, the application owning the rows (test-findings #118) — repeating form rows: add/remove/
       reorder, indexed FormData names (`items[0].email`), focus to the new
       row on add and to a survivor on remove, live-region announcements.
       Design the naming contract before committing.
@@ -1640,6 +1646,8 @@ else.
       form-associated. Completes conversation/message as a family.
 
 ### 4.9 Conformance & AI surface (L) — *trails 4.5; non-blocking for the tag*
+
+> **Status 2026-09-25:** still planned for a later v4.x release, confirmed by the maintainer.
 
 - [ ] Per-component accessibility & conformance statement on each docs page,
       generated from artifacts that already exist: the ARIA pattern
@@ -1678,23 +1686,23 @@ suite). `pnpm verify` = generate → checks → tests → ssr-fuzz → typecheck
 a staleness report; `pnpm typecheck` now owns the tsc line CI used to inline.
 The two hunting configs live in `scripts/debug/` with a README.
 
-- [ ] Migrate the 5 token-discipline linters (`breakpoint-drift`,
+- [x] Migrate the 5 token-discipline linters (`breakpoint-drift`,
       `gradient-stops`, `motion-tokens`, `focus-ring`, `pinned-schemes`)
       onto 4.3's shared walker as 5 rule functions. **Non-negotiable: every
       incident comment survives verbatim as its rule's docstring.**
-- [ ] Migrate the 4 brace-balancing source parsers (`boolean-defaults`,
+- [x] Migrate the 4 brace-balancing source parsers (`boolean-defaults`,
       `empty-attributes`, `inert-declarations`, `lifecycle-pairing`) onto
       the same scanner utility.
-- [ ] Split `scripts/checks/ssr.js` (402 LOC): CLIENT_ONLY/UPSTREAM_BLOCKED
+- [x] Split `scripts/checks/ssr.js` (402 LOC): CLIENT_ONLY/UPSTREAM_BLOCKED
       bookkeeping stays a check (keep the deliberately-empty
       UPSTREAM_BLOCKED postmortem map); the enum-variant fuzzer +
       PROPERTY_SAMPLES move to a new `test/ssr-fuzz.test.js` (leaving
       `helpers.js` untouched per the do-NOT list's additive-only rule).
-- [ ] `pnpm verify` alias = generate → checks → tests → typecheck, with a
+- [x] `pnpm verify` alias = generate → checks → tests → typecheck, with a
       staleness guard (local DX only — CI already runs everything; today
       `pnpm generate` exercises 13 of the 19 check files, and 4 checks
       silently assert against stale wrapper output on an ungenerated tree).
-- [ ] Move `web-test-runner.jitter.mjs` / `.startprobe.mjs` to
+- [x] Move `web-test-runner.jitter.mjs` / `.startprobe.mjs` to
       `scripts/debug/` with a README pointer.
 
 ### 4.11 Docs & release posture (M) — *last before the tag* — **DONE**
@@ -1776,12 +1784,12 @@ commit on the branch traced to a MIGRATION section.
 
 ## Phase 5 — Ship
 
-- [ ] ~~`v4.0.0-beta.1` with MIGRATION.md~~ — **skipped by decision
+- [x] ~~`v4.0.0-beta.1` with MIGRATION.md~~ — **skipped by decision
       (2026-08-17):** the maintainer chose to tag v4.0.0 directly. The soak
       the beta existed to buy had effectively happened — the docs site ran on
       the release tree throughout the cycle — and the release workflow gates
       the tag on the full suite regardless.
-- [ ] ~~Soak~~ — absorbed into the above.
+- [x] ~~Soak~~ — absorbed into the above.
 - [x] **`v4.0.0` — tagged 2026-08-17.** Release notes in
       `docs/src/content/releases/4-0-0.md` (they also drive the homepage's
       what-changed chapter). v3 branch receives patches for one quarter.

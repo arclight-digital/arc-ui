@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { OverlayController } from '../shared/overlay-controller.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
 
 /**
@@ -16,12 +17,13 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  * @prop {boolean} modal - Whether the sheet blocks the page. On (the default), the page behind is inert, scroll-locked and dimmed until the sheet closes. Off (`no-modal`), the sheet floats above a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside it.
  * @prop {string} snapPoints - Heights a bottom sheet rests at, smallest first, as a comma-separated list of CSS lengths (`snap-points="120px, 50dvh, 88dvh"`). From script, a string or an array. The handle then drags between them, snapping to the nearest on release or to the next on a flick, and dragging well below the smallest requests a close. The handle is also a slider: arrow keys move between heights. Ignored by a right sheet.
  * @prop {number} snap - Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle.
+ * @prop {boolean} persistent - The user cannot dismiss the sheet: Escape, a backdrop click and the drag-down close are ignored, dragging below the smallest snap point settles back on it, and there is no close button. For a permanent peek strip. Setting `open` from script still closes it.
  * @fires {CustomEvent<void>} arc-open - Fired when the sheet opens
  * @fires {CustomEvent<void>} arc-close - Fired when the sheet closes
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired when the user moves the sheet to another snap point. `value` is the new `snap` index.
- * @slot header
+ * @slot header - Replaces the heading. The header row is left out when there is no heading, nothing here, and no close button (a `persistent` sheet), so a short snap point is all content.
  * @slot - Default content.
- * @slot footer
+ * @slot footer - Actions under the body. The footer row renders only when something is slotted here.
  * @csspart base - The root element.
  * @csspart close
  * @csspart panel - The sliding panel. The scrim is `::backdrop`, which is not an
@@ -43,6 +45,9 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
     modal: flag(true, { negative: 'no-modal' }),
     snapPoints: { type: String, attribute: 'snap-points' },
     snap: num({ default: 0, min: 0, int: true, reflect: true }),
+    persistent: flag(false),
+    _hasHeader: { state: true },
+    _hasFooter: { state: true },
   };
 
   static styles = [
@@ -200,6 +205,9 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
         pointer-events: none;
       }
 
+      .sheet__header.is-empty,
+      .sheet__footer.is-empty { display: none; }
+
       .sheet__header {
         display: flex;
         align-items: center;
@@ -264,12 +272,17 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
     super();
     this.heading = '';
     this.snapPoints = '';
+    this._hasHeader = false;
+    this._hasFooter = false;
     this._drag = null;
     this._overlay = new OverlayController(this, {
       dialog: () => this.shadowRoot?.querySelector('.sheet__panel'),
       isOpen: () => this.open,
       modal: () => this.modal,
-      onRequestClose: () => this._close(),
+      // Escape and a backdrop click. A persistent sheet ignores both.
+      onRequestClose: () => {
+        if (!this.persistent) this._close();
+      },
     });
   }
 
@@ -359,8 +372,15 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
     d.panel.classList.remove('is-dragging');
 
     const FLICK = 0.5; // px per ms
-    if (current < heights[0] * 0.6 || (d.v > FLICK && current <= heights[0])) {
+    const pulledDown = current < heights[0] * 0.6 || (d.v > FLICK && current <= heights[0]);
+    // A persistent sheet settles back on its smallest height instead (#136).
+    if (pulledDown && !this.persistent) {
       this._close();
+      return;
+    }
+    if (pulledDown) {
+      this._moveTo(0);
+      this.requestUpdate();
       return;
     }
     let target = 0;
@@ -429,20 +449,52 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
+  firstUpdated() {
+    hydrateSlots(this);
+  }
+
+  /**
+   * Whether anything was really slotted: assigned nodes only, since
+   * `flatten: true` returns a slot's fallback content when nothing is assigned,
+   * and whitespace between tags does not count.
+   */
+  _filled(slot) {
+    return slot.assignedNodes().some((n) => n.nodeType !== Node.TEXT_NODE || n.textContent.trim());
+  }
+
+  _onHeaderSlotChange(e) {
+    this._hasHeader = this._filled(e.target);
+  }
+
+  _onFooterSlotChange(e) {
+    this._hasFooter = this._filled(e.target);
+  }
+
+  /**
+   * The header and footer rows only when they carry something. Empty, they took
+   * most of a 120px snap point: a padded header with nothing in it and a
+   * bordered footer with nothing in it (finding #137). The slots stay rendered
+   * either way, because a slot removed from the tree can never be filled.
+   */
   _renderContent() {
+    const header = !!this.heading || this._hasHeader || !this.persistent;
     return html`
         ${this._renderHandle()}
-        <div class="sheet__header" part="header">
-          <slot name="header">
-            <h2 class="sheet__heading">${this.heading}</h2>
+        <div class="sheet__header ${header ? '' : 'is-empty'}" part="header">
+          <slot name="header" @slotchange=${this._onHeaderSlotChange}>
+            ${this.heading ? html`<h2 class="sheet__heading">${this.heading}</h2>` : ''}
           </slot>
-          <arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>
+          ${
+            this.persistent
+              ? ''
+              : html`<arc-icon-button name="x" label="Close" variant="ghost" size="sm" @click=${this._close} part="close"></arc-icon-button>`
+          }
         </div>
         <div class="sheet__body" part="body">
           <slot></slot>
         </div>
-        <div class="sheet__footer" part="footer">
-          <slot name="footer"></slot>
+        <div class="sheet__footer ${this._hasFooter ? '' : 'is-empty'}" part="footer">
+          <slot name="footer" @slotchange=${this._onFooterSlotChange}></slot>
         </div>
     `;
   }

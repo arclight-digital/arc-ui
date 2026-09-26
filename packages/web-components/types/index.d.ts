@@ -201,12 +201,18 @@ export declare class ArcBarList extends LitElement {
   unit: string;
   /** Accessible name for the list, announced before its rows. @default '' */
   label: string;
-  /** The rows, as `{ label, value, display?, href? }` objects. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. "1.2k"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link. @default [] */
+  /** The rows, as `{ label, value, display?, href?, highlight? }` objects. `highlight: true` emphasises a row: its bar takes `--bar-list-highlight` and its label is set in bold, so the emphasis is not carried by colour alone. Set from script, a framework binding, or a JSON attribute. Rows whose value is not a finite number are dropped. `display` is the text shown for the value (e.g. "1.2k"); without it the number is shown as is, so server and client render the same text in any locale. With `href`, a row's label is a link. @default [] */
   items: Array;
   /** The value a full bar stands for. Defaults to the largest value, so the top row always fills the track. Set it to compare several lists on one scale. @default 0 */
   max: number;
-  /** Show at most this many rows, after sorting. Unset shows all. @default 0 */
+  /** Show at most this many rows, after sorting. Unset shows all. The rows left out are counted in a closing "N more" line, which the `more` slot replaces. @default 0 */
   limit: number;
+  /** A value to mark on every track with a dashed line, such as chance level, a target or a baseline. On the same scale as the bars. @default 0 */
+  reference: number;
+  /** What the reference line is. Shown with its value beneath the list, so the marker reads as text as well as a position. */
+  referenceLabel: string;
+  /** The text shown for the reference's value in that caption (e.g. "6%"), as `display` is for a row. Without it the number is shown as is, with `unit`. */
+  referenceDisplay: string;
   /** Keep the order the items were given in. By default rows are ranked, largest first. @default false */
   unsorted: boolean;
 }
@@ -997,8 +1003,10 @@ export declare class ArcFeatureCard extends LitElement {
 export declare class ArcFieldList extends LitElement {
   /** Accessible name for the group of rows, such as "Options". @default '' */
   label: string;
-  /** Text of the Add button. @default 'Add' */
+  /** Text of the Add button, exactly as given. The plus sign before it is an icon, not part of the text, so `add-label="Option"` reads "Option" with a + beside it. @default 'Add' */
   addLabel: string;
+  /** Show the rows without their controls: no Add button, no handles, no Remove buttons. For a fixed set that should look like the editable one, such as a taught question's options. @default false */
+  readonly: boolean;
   /** The fewest rows allowed. Remove is disabled at this count. @default 0 */
   min: number;
   /** The most rows allowed. Add is disabled at this count. Unset is unlimited. @default 0 */
@@ -1603,7 +1611,7 @@ export declare class ArcList extends LitElement {
   label: string;
   /** Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items. @default 'default' */
   variant: 'default' | 'bordered' | 'separated';
-  /** Controls the base font size for the list and its children. @default 'md' */
+  /** Scale of the list's rows: their text, padding and height. `sm` is a dense list such as a sidebar; its rows keep the touch-target minimum (larger on touch screens). @default 'md' */
   size: 'sm' | 'md' | 'lg';
   /** Enables selection mode. Sets `role="listbox"` and manages `aria-selected` on child items. @default false */
   selectable: boolean;
@@ -2493,6 +2501,8 @@ export declare class ArcSheet extends LitElement {
   modal: boolean;
   /** Index into `snapPoints` of the height the sheet rests at. Updated as the user drags or steps the handle. @default 0 */
   snap: number;
+  /** The user cannot dismiss the sheet: Escape, a backdrop click and the drag-down close are ignored, dragging below the smallest snap point settles back on it, and there is no close button. For a permanent peek strip. Setting `open` from script still closes it. @default false */
+  persistent: boolean;
 }
 
 /**

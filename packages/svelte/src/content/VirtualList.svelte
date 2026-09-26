@@ -41,6 +41,11 @@
   };
 
   let el: ListElement | undefined = $state();
+
+  /** The element, for scrollToIndex(), as on every generated wrapper. */
+  export function element(): ListElement | undefined {
+    return el;
+  }
   let range = $state({ start: 0, end: 0 });
 
   // Both are set as properties: an array would stringify as an attribute, and

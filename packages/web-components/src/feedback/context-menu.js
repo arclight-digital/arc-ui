@@ -16,6 +16,9 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-context-menu
  * @status stable
+ * @child arc-menu-item
+ * @child arc-menu-divider
+ * @child arc-menu-label
  * @requires arc-divider
  * @requires arc-icon
  * @prop {boolean} open - Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape.

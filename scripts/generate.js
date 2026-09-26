@@ -34,6 +34,8 @@ const phases = [
       // not parse fails four steps later with an error naming the wrong thing.
       check('css-backticks'),
       check('child-registrations'),
+      // The @child tags the manifest publishes as `children` (4.7.0).
+      check('child-declarations'),
       check('event-conventions'),
       check('doc-claims'),
       // The 4.3 dialect checks. Source assertions, so they run here — before
@@ -46,6 +48,9 @@ const phases = [
       // Source-only, like its neighbours: a declared prop nothing reads
       // (finding #92, built in 4.6).
       check('dead-props'),
+      // !important inside ::slotted(arc-*): named, argued for, and aimed at
+      // something the other component really sets (test-frame §4.4, 4.7).
+      check('slotted-overrides'),
       check('side-slots'),
       check('boolean-defaults'),
       check('empty-attributes'),
@@ -128,7 +133,16 @@ const phases = [
     // derived facts — the component count, and the order and index of the v4
     // sections. Neither reads generated output, but both belong after the
     // catalog is settled rather than before it.
-    steps: [gen('editor-data'), gen('dev-schema'), gen('readme-stats'), gen('migration-toc')],
+    // ssr-fixtures renders every component with a list() prop through the real
+    // server renderer, for test/hydration-determinism.test.js (4.7). After
+    // `registrations`, whose modules it imports; with the other derived data.
+    steps: [
+      gen('editor-data'),
+      gen('dev-schema'),
+      gen('readme-stats'),
+      gen('migration-toc'),
+      gen('ssr-fixtures'),
+    ],
   },
   {
     // These assert against the generated wrappers, so they can only run
@@ -138,6 +152,9 @@ const phases = [
       check('prop-unions'),
       check('enum-fallbacks'),
       check('wrapper-slots'),
+      // Wrappers prism did not write: registered, and exposing their element
+      // where the component has methods (test-frame §4.2, 4.7).
+      check('hand-authored-wrappers'),
       check('wrapper-types'),
       check('motion-tokens'),
       check('focus-ring'),

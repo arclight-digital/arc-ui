@@ -32,7 +32,9 @@ let inputIdCounter = 0;
  * @csspart base - The root element.
  * @csspart field
  * @csspart label
- * @csspart wrapper
+ * @csspart wrapper - The box around the field.
+ *   Its border, radius and shadow read `--input-border`, `--input-radius` and
+ *   `--input-shadow`, so a container such as arc-input-group can draw the box itself.
  * @csspart prefix
  * @csspart suffix
  * @csspart error
@@ -90,24 +92,24 @@ export class ArcInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
         align-items: center;
         min-height: var(--touch-min);
         background: var(--surface-primary);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-md);
+        border: var(--input-border, 1px solid var(--border-default));
+        border-radius: var(--input-radius, var(--radius-md));
         transition:
           border-color var(--transition-fast),
           box-shadow var(--transition-fast),
           background var(--transition-fast);
         box-sizing: border-box;
         width: 100%;
-        box-shadow: var(--shadow-inset);
+        box-shadow: var(--input-shadow, var(--shadow-inset));
       }
 
       .input-group__wrapper:hover:not(:focus-within) {
         border-color: var(--border-bright);
-        box-shadow: var(--shadow-inset), var(--interactive-hover);
+        box-shadow: var(--input-shadow, var(--shadow-inset), var(--interactive-hover));
       }
       .input-group__wrapper:focus-within {
         border-color: rgba(var(--interactive-rgb), 0.4);
-        box-shadow: var(--shadow-inset), var(--interactive-focus);
+        box-shadow: var(--input-shadow, var(--shadow-inset), var(--interactive-focus));
         background: var(--surface-raised);
       }
 
@@ -120,7 +122,7 @@ export class ArcInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
 
       .input-group--error .input-group__wrapper:focus-within {
         border-color: var(--color-error);
-        box-shadow: var(--interactive-focus-error);
+        box-shadow: var(--input-shadow, var(--interactive-focus-error));
       }
 
       .input-group__error {

@@ -162,3 +162,75 @@ describe('arc-list-item actions', () => {
     expect(item(el, 'b').shadowRoot.activeElement === row(item(el, 'b'))).to.equal(true);
   });
 });
+
+/** Halteres adoption batch against 4.6.0 (test-findings #133–#135). */
+describe('arc-list-item activation (4.7.0)', () => {
+  const clickAndHold = (target, init = {}) => {
+    let prevented = null;
+    const hold = (e) => {
+      prevented = e.defaultPrevented;
+      e.preventDefault();
+    };
+    window.addEventListener('click', hold, { once: true });
+    target.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true, cancelable: true, ...init }));
+    window.removeEventListener('click', hold);
+    return prevented;
+  };
+
+  const plain = async (markup) => {
+    const el = mount(`<arc-list>${markup}</arc-list>`);
+    await settle(el);
+    for (const i of el.querySelectorAll('arc-list-item')) await settle(i);
+    return el;
+  };
+
+  it('fires arc-select on Enter and Space in a plain list (#133)', async () => {
+    const el = await plain('<arc-list-item value="a">A</arc-list-item>');
+    const events = record(el, ['arc-select']);
+    const r = row(el.querySelector('arc-list-item'));
+    for (const k of ['Enter', ' ']) {
+      const ev = new KeyboardEvent('keydown', { key: k, bubbles: true, composed: true, cancelable: true });
+      r.dispatchEvent(ev);
+      expect(ev.defaultPrevented, `${k} claimed`).to.equal(true);
+    }
+    expect(events.map(([, v]) => v)).to.deep.equal(['a', 'a']);
+  });
+
+  it('lets a cancelled arc-select stop a link row navigating (#134)', async () => {
+    const el = await plain('<arc-list-item value="a" href="#nowhere">A</arc-list-item>');
+    el.addEventListener('arc-select', (e) => e.preventDefault());
+    expect(clickAndHold(row(el.querySelector('arc-list-item')))).to.equal(true);
+  });
+
+  // A real click on a real link navigates the test page, which ends the run
+  // ("page was reloaded"); clickAndHold reads the row's decision at the window,
+  // after the component has had its turn, then cancels the navigation there.
+  it('lets an uncancelled one navigate', async () => {
+    const el = await plain('<arc-list-item value="a" href="#nowhere">A</arc-list-item>');
+    const seen = record(el, ['arc-select']);
+    expect(clickAndHold(row(el.querySelector('arc-list-item'))), 'not cancelled by the row').to.equal(false);
+    expect(seen).to.have.length(1);
+  });
+
+  it('leaves a modified click on a link row to the browser (#134)', async () => {
+    const el = await plain('<arc-list-item value="a" href="#nowhere">A</arc-list-item>');
+    const seen = record(el, ['arc-select']);
+    for (const init of [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }, { button: 1 }]) {
+      expect(clickAndHold(row(el.querySelector('arc-list-item')), init), 'left to the browser').to.equal(false);
+    }
+    expect(seen).to.deep.equal([]);
+  });
+
+  it('makes sm rows shorter, not just their text (#135)', async () => {
+    const md = await plain('<arc-list-item value="a">A</arc-list-item>');
+    const mdH = row(md.querySelector('arc-list-item')).getBoundingClientRect().height;
+    const mdF = getComputedStyle(row(md.querySelector('arc-list-item'))).fontSize;
+    cleanup();
+    const sm = mount('<arc-list size="sm"><arc-list-item value="a">A</arc-list-item></arc-list>');
+    await settle(sm);
+    await settle(sm.querySelector('arc-list-item'));
+    const r = row(sm.querySelector('arc-list-item'));
+    expect(r.getBoundingClientRect().height).to.be.lessThan(mdH);
+    expect(parseFloat(getComputedStyle(r).fontSize)).to.be.lessThan(parseFloat(mdF));
+  });
+});

@@ -8,6 +8,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  *
  * @tag arc-stepper
  * @status stable
+ * @child arc-step
  * @requires arc-step
  * @prop {number} active - Zero-indexed active step — steps before this index show as completed.
  *   Clamped to the range of rendered steps.

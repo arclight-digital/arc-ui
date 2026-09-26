@@ -162,6 +162,19 @@ export async function collect(fixture) {
   // ── Events, and the write-back round trip ─────────────────────────────────
   // Dispatched rather than clicked: the subject here is the wrapper's event
   // wiring, not the time picker's interaction model, which its own suite owns.
+  // A two-way binding whose value starts out undefined: `let checked =
+  // $state(); <Checkbox bind:checked />` in Svelte, and the same unset value in
+  // every other framework. The element must mount and keep its own default.
+  // Under a wrapper fallback inside `$bindable(false)`, Svelte 5 throws
+  // props_invalid_value at mount and the whole app never renders (prism 3.2.0
+  // stopped emitting those fallbacks; arc-ui 4.7).
+  await record('bindable-unset', async () => {
+    const chk = document.querySelector('#unset-bind');
+    if (!chk) return 'NO ELEMENT';
+    if (chk.updateComplete) await chk.updateComplete;
+    return String(chk.checked);
+  });
+
   await record('event-and-writeback', async () => {
     if (!picker) return 'NO ELEMENT';
     const before = document.querySelector('#events');
@@ -216,6 +229,7 @@ export function expectations(fixture) {
     'slot-named-logo': 'logo:LOGO',
     'slot-named-actions': 'actions:ACTIONS',
     'event-and-writeback': `count:0->1 echo:${fixture.pickerNext} el:${fixture.pickerNext}`,
+    'bindable-unset': 'false',
   };
 }
 
@@ -258,4 +272,5 @@ export const CAPABILITY = {
   'slot-named-logo': 'slot',
   'slot-named-actions': 'slot',
   'event-and-writeback': 'event',
+  'bindable-unset': 'event',
 };

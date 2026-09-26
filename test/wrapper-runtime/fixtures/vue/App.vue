@@ -1,11 +1,13 @@
 <!-- Renders the DOM described by contract.js. Assertions live there, not here. -->
 <script setup>
 import { ref } from 'vue';
-import { Card, TopBar, ActivityHeatmap, TimePicker } from '@arclux/arc-ui-vue';
+import { Card, TopBar, ActivityHeatmap, TimePicker, Checkbox } from '@arclux/arc-ui-vue';
 import { FIXTURE, ROWS } from './contract.js';
 
 const value = ref(FIXTURE.pickerInitial);
 const count = ref(0);
+// Deliberately undefined: see the bindable-unset probe.
+const unsetChecked = ref();
 </script>
 
 <template>
@@ -31,6 +33,8 @@ const count = ref(0);
   <!-- `v-model:value` is the write-back the wrapper's `update:value` emit
        exists to serve; the separate handler counts the raw event. -->
   <TimePicker id="picker" v-model:value="value" @arc-change="count++" />
+
+  <Checkbox id="unset-bind" v-model:checked="unsetChecked" />
 
   <output id="echo">{{ value }}</output>
   <output id="events">{{ count }}</output>

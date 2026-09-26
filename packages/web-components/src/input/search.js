@@ -12,6 +12,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-search
  * @status stable
+ * @child arc-suggestion
  * @requires arc-suggestion
  * @prop {string} value - Current text content of the search input.
  * @prop {string} placeholder - Hint text displayed when the input is empty.

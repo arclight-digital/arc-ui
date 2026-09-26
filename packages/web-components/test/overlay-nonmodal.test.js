@@ -126,6 +126,31 @@ for (const { tag } of SUBJECTS) {
       expect(document.activeElement === reading).to.equal(true);
     });
 
+    it('returns focus when it closes from its own close button', async () => {
+      // The close button's inner <button> is inside arc-icon-button's shadow
+      // root, which `contains()` cannot see into (found by the mutation gate).
+      const { el, reading } = await page(tag);
+      reading.focus();
+      await open(el);
+      const close = el.shadowRoot.querySelector('[part~="close"]');
+      await close.updateComplete;
+      close.shadowRoot.querySelector('button').focus();
+      el.open = false;
+      await settle(el);
+      expect(document.activeElement === reading).to.equal(true);
+    });
+
+    it('ignores an Escape something inside already handled, and other keys', async () => {
+      const { el, inside } = await page(tag);
+      await open(el);
+      inside.focus();
+      inside.addEventListener('keydown', (e) => e.preventDefault(), { once: true });
+      escapeOn(inside);
+      inside.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, composed: true, cancelable: true }));
+      await settle(el);
+      expect(el.open).to.equal(true);
+    });
+
     it('leaves focus alone when it closes with focus outside', async () => {
       const { el, reading, behind } = await page(tag);
       reading.focus();
@@ -305,5 +330,72 @@ describe('arc-sheet snap points', () => {
     const el = await sheet('no-modal snap-points="100px, 300px"');
     expect(panel(el).matches(':popover-open')).to.equal(true);
     expect(await settledAt(el, 100)).to.equal(true);
+  });
+});
+
+/** Halteres adoption batch against 4.6.0 (test-findings #136, #137). */
+describe('arc-sheet persistent and empty chrome (4.7.0)', () => {
+  const open = async (attrs, content = '<p>Body</p>') => {
+    const el = mount(`<arc-sheet open ${attrs}>${content}</arc-sheet>`);
+    await settle(el);
+    return el;
+  };
+  const header = (el) => el.shadowRoot.querySelector('[part~="header"]');
+  const footer = (el) => el.shadowRoot.querySelector('[part~="footer"]');
+
+  it('ignores Escape and has no close button when persistent (#136)', async () => {
+    const el = await open('persistent no-modal snap-points="100px, 300px"', '<button id="b">In</button>');
+    expect(el.shadowRoot.querySelector('[part~="close"]') === null).to.equal(true);
+    const b = el.querySelector('#b');
+    b.focus();
+    b.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, composed: true, cancelable: true }));
+    await settle(el);
+    expect(el.open).to.equal(true);
+  });
+
+  it('ignores Escape on a persistent modal sheet too', async () => {
+    const el = await open('persistent heading="S"');
+    panel(el).dispatchEvent(new Event('cancel', { cancelable: true }));
+    await settle(el);
+    expect(el.open).to.equal(true);
+  });
+
+  it('settles back on the smallest height instead of closing when dragged down (#136)', async () => {
+    const el = await open('persistent snap-points="100px, 300px" snap="1"');
+    await until(() => Math.abs(panel(el).getBoundingClientRect().height - 300) <= 1, { timeout: 1500 });
+    let closes = 0;
+    el.addEventListener('arc-close', () => closes++);
+    const h = el.shadowRoot.querySelector('[part~="handle"]');
+    const box = h.getBoundingClientRect();
+    const p = (y) => ({ bubbles: true, composed: true, pointerId: 1, isPrimary: true, pointerType: 'mouse', clientX: box.left + 5, clientY: y });
+    h.dispatchEvent(new PointerEvent('pointerdown', p(box.top + 4)));
+    await new Promise((r) => setTimeout(r, 80));
+    h.dispatchEvent(new PointerEvent('pointermove', p(box.top + 290)));
+    await new Promise((r) => setTimeout(r, 80));
+    h.dispatchEvent(new PointerEvent('pointermove', p(box.top + 290)));
+    h.dispatchEvent(new PointerEvent('pointerup', p(box.top + 290)));
+    await settle(el);
+    expect(closes).to.equal(0);
+    expect(el.open).to.equal(true);
+    expect(el.snap).to.equal(0);
+  });
+
+  it('still closes from script when persistent', async () => {
+    const el = await open('persistent heading="S"');
+    el.open = false;
+    await settle(el);
+    expect(panel(el).open).to.equal(false);
+  });
+
+  it('leaves out an empty header and footer on a persistent headless sheet (#137)', async () => {
+    const el = await open('persistent no-modal');
+    expect(getComputedStyle(header(el)).display).to.equal('none');
+    expect(getComputedStyle(footer(el)).display).to.equal('none');
+  });
+
+  it('keeps the header for its close button, and the footer when filled', async () => {
+    const el = await open('', '<p>Body</p><button slot="footer">Done</button>');
+    expect(getComputedStyle(header(el)).display).to.not.equal('none');
+    expect(getComputedStyle(footer(el)).display).to.not.equal('none');
   });
 });

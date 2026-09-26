@@ -10,6 +10,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @tag arc-comparison
  * @arc-group marketing
  * @status stable
+ * @child arc-comparison-column
  * @requires arc-comparison-column
  * @prop {string[]} features - Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='["Storage","Bandwidth"]'`. A malformed value falls back to an empty list rather than throwing.
  * @slot - `arc-comparison-column` elements.

@@ -78,9 +78,23 @@ export class ArcInputGroup extends DeclaredPropsMixin(LitElement) {
         display: flex;
       }
 
-      /* Remove borders/radii from slotted inputs */
+      /* The group draws the field's box; the controls inside it do not.
+         arc-input and arc-select draw theirs on an element in their own shadow
+         root, which a ::slotted() rule cannot reach: the !important overrides
+         that used to be here landed on the host, which sets none of these, so
+         a grouped arc-input kept its border, radius and inset shadow inside
+         the group's (finding #143, found by check-slotted-overrides). Custom
+         properties inherit through the boundary, so they reach the element
+         that draws the chrome. A native control draws its own, directly. */
       ::slotted(arc-input),
-      ::slotted(arc-select),
+      ::slotted(arc-select) {
+        --input-border: none;
+        --input-radius: 0;
+        --input-shadow: none;
+        flex: 1;
+        min-width: 0;
+      }
+
       ::slotted(input),
       ::slotted(select) {
         border: none !important;

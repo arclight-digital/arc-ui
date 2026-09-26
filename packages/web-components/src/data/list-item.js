@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {boolean} selected - Whether this item is currently selected. Managed automatically by a selectable parent list. On an `href` item in a plain list it marks the current page instead (`aria-current="page"`), which is the accessible way to show the current row in a list whose rows carry actions.
  * @prop {boolean} disabled - Prevents interaction and dims the item.
  * @prop {string} href - When set, renders the item as an anchor tag for navigation.
- * @fires {CustomEvent<{ value: string }>} arc-select - Fired when the item is activated by click. The parent arc-list dispatches the same event from this element for Enter and Space.
+ * @fires {CustomEvent<{ value: string }>} arc-select - Fired when the item is activated: by click, or by Enter or Space on a focused row (in a selectable list the parent dispatches it from this element). Cancelable: on an `href` row, cancelling it stops the link navigating, which is how a single-page app routes the click itself. A modified click (Ctrl, Cmd, Shift, a middle click) is left to the browser and does not fire it.
  * @slot prefix
  * @slot - Default content.
  * @slot description
@@ -42,6 +42,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     _hasPrefix: { state: true },
     _hasSuffix: { state: true },
     _hasActions: { state: true },
+    _size: { state: true },
     _hasDescription: { state: true },
   };
 
@@ -125,6 +126,18 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
         background: rgba(var(--interactive-rgb), 0.08);
         color: var(--text-primary);
         box-shadow: inset 0 0 8px rgba(var(--interactive-rgb), 0.06);
+      }
+
+      /* The parent list's size, pushed as _size (finding #135). The touch
+         minimum stays on sm: it is 24px with a mouse and 36px on touch. */
+      .item--sm {
+        padding: var(--space-xs) var(--space-sm);
+        font-size: var(--_text-sm);
+        line-height: var(--ui-lh);
+      }
+      .item--lg {
+        padding: var(--space-md);
+        font-size: var(--_text-lg);
       }
 
       .item__prefix,
@@ -221,15 +234,43 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     this._hasDescription = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
-  _onClick(e) {
-    if (this.disabled) return;
-    this.dispatchEvent(
+  /**
+   * Activation, from a click or a key. Cancelable, and on a link row the
+   * cancel is honoured as "do not navigate": a single-page app handled a
+   * composed click and filtered modified clicks by hand before this
+   * (finding #134).
+   * @returns {boolean} whether the event was not cancelled
+   */
+  _activate() {
+    return this.dispatchEvent(
       new CustomEvent('arc-select', {
         bubbles: true,
         composed: true,
+        cancelable: true,
         detail: { value: this.value },
       }),
     );
+  }
+
+  _onClick(e) {
+    if (this.disabled) return;
+    // Opening in a new tab or window is the browser's, and not a selection.
+    if (this.href && (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey || e.button > 0)) return;
+    if (!this._activate() && this.href) e.preventDefault();
+  }
+
+  /**
+   * Enter and Space on a focused row in a plain list. The row is in the tab
+   * order, and a focusable control the keyboard cannot activate fails WCAG
+   * 2.1.1 (finding #133). A selectable list handles these keys itself, and a
+   * link row already has Enter; Space on a link scrolls the page, as it should.
+   */
+  _onKeydown(e) {
+    if (this.disabled || this._role === 'option' || this.href) return;
+    if (e.target !== e.currentTarget) return;
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();
+    this._activate();
   }
 
   _renderContent() {
@@ -300,7 +341,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     const rowClass = `row ${!asOption && this._hasActions ? 'row--actions' : ''}`;
     const item = this.href
       ? html`<a
-          class="item"
+          class="item item--${this._size || 'md'}"
           href=${this.href}
           role=${asOption ? 'option' : nothing}
           aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
@@ -310,12 +351,13 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
           part="base item"
         >${this._renderContent()}</a>`
       : html`<div
-          class="item"
+          class="item item--${this._size || 'md'}"
           role=${asOption ? 'option' : nothing}
           aria-selected=${asOption ? (this.selected ? 'true' : 'false') : nothing}
           aria-disabled=${this.disabled ? 'true' : 'false'}
           tabindex=${this.disabled ? '-1' : '0'}
           @click=${this._onClick}
+          @keydown=${this._onKeydown}
           part="base item"
         >${this._renderContent()}</div>`;
     return html`<div class=${rowClass} role=${asOption ? nothing : 'listitem'}>${item}${this._renderActions()}</div>`;

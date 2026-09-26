@@ -138,3 +138,22 @@ describe('arc-field-list', () => {
     expect(values(el)).to.deep.equal(['a', 'b']);
   });
 });
+
+/** Halteres adoption batch against 4.6.0 (test-findings #141, #142). */
+describe('arc-field-list readonly and add label (4.7.0)', () => {
+  it('shows rows without controls when readonly (#141)', async () => {
+    const { el } = await app('readonly');
+    expect(addButton(el) === null, 'no add button').to.equal(true);
+    expect(rows(el).every((r) => handle(r) === null && remove(r) === null), 'no row controls').to.equal(true);
+    el.readonly = false;
+    await settle(el);
+    for (const r of rows(el)) await settle(r);
+    expect(handle(rows(el)[0]) !== null, 'controls return').to.equal(true);
+  });
+
+  it('uses add-label as the whole text, with the plus as an icon (#142)', async () => {
+    const { el } = await app('add-label="Option"');
+    expect(addButton(el).textContent.trim()).to.equal('Option');
+    expect(addButton(el).querySelector('svg') !== null).to.equal(true);
+  });
+});

@@ -11,6 +11,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-radio-group
  * @status stable
+ * @child arc-radio
  * @requires arc-radio
  * @prop {string} value - The currently selected value. Must match one of the child arc-radio value attributes. Setting this property programmatically updates the visual selection and the internal aria-checked state.
  * @prop {string} name - The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.

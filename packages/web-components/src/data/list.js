@@ -9,9 +9,10 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-list
  * @status stable
+ * @child arc-list-item
  * @requires arc-list-item
  * @prop {'default' | 'bordered' | 'separated'} variant - Visual style. Bordered wraps the list in an outlined container. Separated adds bottom borders between items.
- * @prop {'sm' | 'md' | 'lg'} size - Controls the base font size for the list and its children.
+ * @prop {'sm' | 'md' | 'lg'} size - Scale of the list's rows: their text, padding and height. `sm` is a dense list such as a sidebar; its rows keep the touch-target minimum (larger on touch screens).
  * @prop {boolean} selectable - Enables selection mode. Sets `role="listbox"` and manages `aria-selected` on child items.
  * @prop {boolean} multiple - Allows multiple items to be selected simultaneously. Only applies when `selectable` is true.
  * @prop {string} value - The currently selected value(s). Comma-separated when `multiple` is true. The selection itself is held as a list of values, so a value containing a comma is selected and rendered correctly; only the *serialised* multi-select string cannot represent one, since the comma is its separator. Single-select is exact for any value.
@@ -61,6 +62,7 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
       /* Sizes */
       :host([size="sm"]) { font-size: var(--_text-sm); }
       :host([size="lg"]) { font-size: var(--_text-lg); }
+
     `,
   ];
 
@@ -223,12 +225,20 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
     }
     // The role each item renders depends on this list (finding #28), and
     // `selectable` can be flipped after mount.
-    if (changed.has('selectable')) this._applySelectable();
+    if (changed.has('selectable') || changed.has('size')) this._applySelectable();
   }
 
-  /** Tell each item whether it is inside a listbox or a plain list. */
+  /**
+   * Tell each item whether it is inside a listbox or a plain list, and how big
+   * its row is. The size used to reach the items only as the host's
+   * font-size, which each row overrides, so sm rows kept their full size
+   * (finding #135).
+   */
   _applySelectable() {
-    for (const item of this._items) item._selectable = this.selectable === true;
+    for (const item of this._items) {
+      item._selectable = this.selectable === true;
+      item._size = this.size;
+    }
   }
 
   /** The slotchange DSD swallows — see shared/hydrate-slots.js. */

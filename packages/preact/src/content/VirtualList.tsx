@@ -2,8 +2,9 @@
 // (it only replaces files carrying its header). See the React wrapper for the
 // reasoning: virtualization is the one case where the wrapper has to own the
 // rows, because only Preact can create a Preact row.
-import { h, type ComponentChildren, type FunctionComponent } from 'preact';
-import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
+import { h, type ComponentChildren } from 'preact';
+import { forwardRef } from 'preact/compat';
+import { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'preact/hooks';
 import '@arclux/arc-ui/virtual-list';
 
 export interface VirtualListProps {
@@ -27,15 +28,17 @@ type ListElement = HTMLElement & {
   visibleRange?: { start: number; end: number };
 };
 
-export const VirtualList: FunctionComponent<VirtualListProps> = ({
+/** A ref on VirtualList holds the element, for scrollToIndex(), as on every generated wrapper. */
+export const VirtualList = forwardRef<ListElement, VirtualListProps>(({
   items,
   renderItem,
   itemHeight = 40,
   overscan = 5,
   onRangeChange,
   ...rest
-}) => {
+}, forwarded) => {
   const ref = useRef<ListElement>(null);
+  useImperativeHandle(forwarded, () => ref.current as ListElement, []);
   const [range, setRange] = useState({ start: 0, end: 0 });
 
   // An array has to be set as a property; as an attribute it would stringify.
@@ -66,4 +69,4 @@ export const VirtualList: FunctionComponent<VirtualListProps> = ({
   }
 
   return h('arc-virtual-list', { ref, 'item-height': itemHeight, overscan, ...rest }, rows);
-};
+});

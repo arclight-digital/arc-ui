@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-combobox
  * @status stable
+ * @child arc-option
  * @prop {string} value - The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option.
  * @prop {string} placeholder - Placeholder text shown in the input when no value is entered.
  * @prop {string} label - Visible label rendered above the input. Also used as the accessible label for the combobox.

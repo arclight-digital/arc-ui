@@ -69,3 +69,52 @@ describe('arc-bar-list', () => {
     expect(labels(el)).to.deep.equal(['Y', 'X']);
   });
 });
+
+/** Halteres adoption batch against 4.6.0 (test-findings #138–#140). */
+describe('arc-bar-list highlight, reference and more (4.7.0)', () => {
+  it('emphasises a highlighted row in colour and weight (#138)', async () => {
+    const el = await bars('', [{ label: 'A', value: 3 }, { label: 'B', value: 2, highlight: true }]);
+    const [a, b] = rows(el);
+    expect(b.querySelector('.bar').getAttribute('part')).to.equal('bar highlight');
+    expect(a.querySelector('.bar').getAttribute('part')).to.equal('bar');
+    const bw = parseInt(getComputedStyle(b.querySelector('[part~="label"]')).fontWeight, 10);
+    const aw = parseInt(getComputedStyle(a.querySelector('[part~="label"]')).fontWeight, 10);
+    expect(bw).to.be.greaterThan(aw);
+  });
+
+  it('draws a reference line at its value, with a caption (#139)', async () => {
+    const el = await bars('reference="30" reference-label="Chance" unit="%"', [{ label: 'A', value: 60 }]);
+    const line = el.shadowRoot.querySelector('[part~="reference"]');
+    expect(line.style.insetInlineStart).to.equal('50%');
+    expect(el.shadowRoot.querySelector('[part~="reference-label"]').textContent.trim()).to.equal('Chance: 30%');
+  });
+
+  it('shows reference-display in the caption, in the list\'s own format', async () => {
+    const el = await bars('reference="0.0556" reference-label="Random pick" reference-display="6%"', [{ label: 'A', value: 0.4, display: '40%' }]);
+    expect(el.shadowRoot.querySelector('[part~="reference-label"]').textContent.trim()).to.equal('Random pick: 6%');
+  });
+
+  it('extends the scale to a reference beyond the largest bar', async () => {
+    const el = await bars('reference="200"', [{ label: 'A', value: 100 }]);
+    expect(widths(el)).to.deep.equal(['50%']);
+    expect(el.shadowRoot.querySelector('[part~="reference"]').style.insetInlineStart).to.equal('100%');
+  });
+
+  it('counts the rows limit leaves out, and lets the more slot replace it (#140)', async () => {
+    const el = await bars('limit="1"');
+    const more = el.shadowRoot.querySelector('[part~="more"]');
+    expect(more.textContent.trim()).to.equal('2 more');
+    cleanup();
+    const el2 = mount('<arc-bar-list limit="1"><a slot="more" href="#all">See all</a></arc-bar-list>');
+    el2.items = ITEMS;
+    await settle(el2);
+    const slot = el2.shadowRoot.querySelector('slot[name="more"]');
+    expect(slot.assignedElements().length).to.equal(1);
+  });
+
+  it('hides the more line when nothing is left out', async () => {
+    // Rendered and hidden, not absent, so the slot stays fillable.
+    const el = await bars();
+    expect(el.shadowRoot.querySelector('[part~="more"]').hidden).to.equal(true);
+  });
+});

@@ -260,7 +260,12 @@ Closed since this was written, all of it on 2026-08-22:
   document route, now complete — which is a better contract on its own terms and
   explicitly not the general answer.
 
-Still open, and now the whole of what this file is asking for:
+**Update 2026-09-26: all four guards from §4 are built** (`dead-props` in 4.6.0;
+`hand-authored-wrappers` and `slotted-overrides` in 4.7.0; `bindable-mutations` by
+prism 3.1.0), and the hydration hold is generic with a determinism test
+(test-findings #143, #144). The habits below are still the lesson.
+
+Previously still open:
 
 - **The four unbuilt guards from §4**, in value order: `dead-props`,
   `wrapper-methods` (now only its hand-authored-wrapper sliver — prism 3.1.0

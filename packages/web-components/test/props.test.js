@@ -831,3 +831,73 @@ describe('computed defaults', () => {
     expect(document.createElement('arc-props-computed').n).to.equal(42);
   });
 });
+
+/**
+ * The hydration hold (test-findings #144): on a server-rendered element's first
+ * update, each `list()` prop renders at the value the server rendered from (its
+ * attribute through its converter, else its declared default), and the page's
+ * value is handed over afterwards. Unit-level, beside the mixin; the real
+ * server-rendered cases are in hydration-determinism.test.js.
+ *
+ * A shadow root attached before connecting is the mixin's signal that the
+ * server rendered this element, as a declarative one is on a real page.
+ */
+describe('DeclaredPropsMixin hydration hold', () => {
+  class HoldProbe extends DeclaredPropsMixin(LitElement) {
+    static properties = { items: list(), other: list({ attribute: false }) };
+    constructor() {
+      super();
+      this.seen = [];
+    }
+    render() {
+      this.seen.push(JSON.stringify(this.items));
+      return html`${this.items.length}`;
+    }
+  }
+  customElements.define('hold-probe', HoldProbe);
+
+  afterEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  async function probe({ serverRendered, attr, items }) {
+    const el = document.createElement('hold-probe');
+    if (attr !== undefined) el.setAttribute('items', attr);
+    if (serverRendered) el.attachShadow({ mode: 'open' });
+    if (items !== undefined) el.items = items;
+    document.body.appendChild(el);
+    await el.updateComplete;
+    await new Promise((r) => setTimeout(r, 0));
+    await el.updateComplete;
+    return el;
+  }
+
+  it('renders the declared default first, then the page value', async () => {
+    const el = await probe({ serverRendered: true, items: [1, 2] });
+    expect(el.seen).to.deep.equal(['[]', '[1,2]']);
+    expect(el.items).to.deep.equal([1, 2]);
+  });
+
+  it('renders the attribute value first when there is one', async () => {
+    const el = await probe({ serverRendered: true, attr: '[5]', items: [1, 2] });
+    expect(el.seen).to.deep.equal(['[5]', '[1,2]']);
+  });
+
+  it('holds nothing when the page value is what the server rendered', async () => {
+    const el = await probe({ serverRendered: true, attr: '[5]', items: [5] });
+    expect(el.seen).to.deep.equal(['[5]']);
+  });
+
+  it('holds nothing without a server-rendered root', async () => {
+    const el = await probe({ serverRendered: false, items: [1, 2] });
+    expect(el.seen).to.deep.equal(['[1,2]']);
+  });
+
+  it('holds only on the first update', async () => {
+    const el = await probe({ serverRendered: true, items: [1] });
+    el.items = [9];
+    await el.updateComplete;
+    expect(el.seen.at(-1)).to.equal('[9]');
+    expect(el.seen).to.deep.equal(['[]', '[1]', '[9]']);
+  });
+});

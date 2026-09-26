@@ -15,6 +15,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-select
  * @status stable
+ * @child arc-option
  * @prop {string} value - The currently selected value. Must match one of the child `arc-option` value attributes. Setting this programmatically updates the displayed label and internal selection state.
  * @prop {string} placeholder - Hint text displayed inside the trigger button when no option is selected. Use it to communicate what kind of choice the user should make, such as "Choose a team member..." or "Pick a status". The placeholder disappears once a value is chosen.
  * @prop {string} label - Visible label rendered above the select trigger. Also serves as the accessible name for assistive technologies. Always provide a label for accessibility compliance.
@@ -28,7 +29,9 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @csspart base - The root element.
  * @csspart select
  * @csspart label
- * @csspart trigger
+ * @csspart trigger - The button that opens the list, showing the chosen value.
+ *   Its border, radius and shadow read `--input-border`, `--input-radius` and
+ *   `--input-shadow`, so a container such as arc-input-group can draw the box itself.
  * @csspart dropdown
  * @csspart error
  */
@@ -81,27 +84,27 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         font-weight: var(--field-weight, 400);
         color: var(--text-primary);
         background: var(--surface-primary);
-        border: 1px solid var(--border-default);
-        border-radius: var(--radius-md);
+        border: var(--input-border, 1px solid var(--border-default));
+        border-radius: var(--input-radius, var(--radius-md));
         cursor: pointer;
         transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         box-sizing: border-box;
-        box-shadow: var(--shadow-inset);
+        box-shadow: var(--input-shadow, var(--shadow-inset));
       }
 
       .select__trigger:hover:not(:focus-visible) {
         border-color: var(--border-bright);
-        box-shadow: var(--shadow-inset), var(--interactive-hover);
+        box-shadow: var(--input-shadow, var(--shadow-inset), var(--interactive-hover));
       }
       .select__trigger:focus-visible {
         outline: none;
         border-color: rgba(var(--interactive-rgb), 0.4);
-        box-shadow: var(--shadow-inset), var(--interactive-focus);
+        box-shadow: var(--input-shadow, var(--shadow-inset), var(--interactive-focus));
       }
 
       :host([open]) .select__trigger {
         border-color: rgba(var(--interactive-rgb), 0.4);
-        box-shadow: var(--shadow-inset), var(--interactive-focus);
+        box-shadow: var(--input-shadow, var(--shadow-inset), var(--interactive-focus));
       }
 
       .select__placeholder { color: var(--text-ghost); }
@@ -213,7 +216,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       .select--error .select__trigger:focus-visible,
       :host([open]) .select--error .select__trigger {
         border-color: var(--color-error);
-        box-shadow: var(--interactive-focus-error);
+        box-shadow: var(--input-shadow, var(--interactive-focus-error));
       }
 
       .select__error {

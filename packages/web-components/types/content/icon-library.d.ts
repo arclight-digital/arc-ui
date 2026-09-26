@@ -2,8 +2,10 @@ declare const ArcIconLibrary_base: {
     new (...args: any[]): {
         [x: string]: any;
         connectedCallback(): void;
+        shouldUpdate(changed: any): any;
     };
     [x: string]: any;
+    [HYDRATING]: boolean;
 };
 /**
  * Switches the icon set every arc-icon on the page resolves against. Renders nothing itself —

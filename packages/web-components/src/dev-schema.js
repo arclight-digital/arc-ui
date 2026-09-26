@@ -571,7 +571,10 @@ export default {
    "limit",
    "unsorted",
    "unit",
-   "label"
+   "label",
+   "reference",
+   "reference-label",
+   "reference-display"
   ],
   "slug": "bar-list"
  },
@@ -1258,7 +1261,8 @@ export default {
    "heading",
    "modal",
    "snap-points",
-   "snap"
+   "snap",
+   "persistent"
   ],
   "enums": {
    "side": [
@@ -1530,7 +1534,8 @@ export default {
    "label",
    "add-label",
    "min",
-   "max"
+   "max",
+   "readonly"
   ],
   "slug": "field-list"
  },

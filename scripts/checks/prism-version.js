@@ -61,7 +61,11 @@ import { fileURLToPath } from 'node:url';
  * failure from the other side. This one still fails first, at the top of the
  * pipeline, with a message about *this repo's* dependency on the emitter.
  */
-const FLOOR = '3.0.0';
+// 3.2.0 (arc-ui 4.7): wrapper defaults from constructed instances, and no
+// fallback inside $bindable(). An older prism strips the Svelte/Vue defaults and
+// puts the fallbacks back, which throws props_invalid_value on an undefined
+// two-way binding (the wrapper harness's bindable-unset probe).
+const FLOOR = '3.2.0';
 const REASON =
   "3.0.0's emitted output, which the committed wrappers are: the Angular " +
   'ControlValueAccessor on 27 form controls (an older prism regenerates them ' +

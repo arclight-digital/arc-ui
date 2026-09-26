@@ -1,7 +1,7 @@
 // Renders the DOM described by contract.js. Assertions live there, not here.
 import { render } from 'preact';
 import { useState } from 'preact/hooks';
-import { Card, TopBar, ActivityHeatmap, TimePicker } from '@arclux/arc-ui-preact';
+import { Card, TopBar, ActivityHeatmap, TimePicker, Checkbox } from '@arclux/arc-ui-preact';
 import { FIXTURE, ROWS } from './contract.js';
 
 function App() {
@@ -40,6 +40,9 @@ function App() {
           setCount((c) => c + 1);
         }}
       />
+
+      {/* Unset, as a two-way binding starts out: see the bindable-unset probe. */}
+      <Checkbox id="unset-bind" checked={undefined} />
 
       <output id="echo">{value}</output>
       <output id="events">{count}</output>

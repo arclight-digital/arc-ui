@@ -5484,8 +5484,8 @@ styles and let keyframes move away from it, with the sprite as the worked exampl
 
 ---
 
-### 111. `arc-sheet` has no snap points — **DEFERRED (feature)**
-### 112. `arc-sheet` / `arc-drawer` have no non-modal mode — **DEFERRED (feature)**
+### 111. `arc-sheet` has no snap points — ~~DEFERRED~~ **FIXED in 4.6.0** (see "111 and 112, resolved" below)
+### 112. `arc-sheet` / `arc-drawer` have no non-modal mode — ~~DEFERRED~~ **FIXED in 4.6.0** (see "111 and 112, resolved" below)
 
 The two belong together, since a peek height is only useful if the page behind
 it stays interactive. The sheet is a `<dialog>` opened with `showModal()`, so
@@ -5493,7 +5493,7 @@ non-modal means `show()`, and that is a different contract for focus, Escape,
 `inert`, scroll lock and the dismissal sweep (`dismissal-contract.test.js`).
 This needs a design pass, not a flag.
 
-### 113. No document-list pattern with a hover-revealed trailing action — **DEFERRED (feature)**
+### 113. No document-list pattern with a hover-revealed trailing action — ~~DEFERRED~~ **FIXED in 4.5.0, reshaped in 4.6.0** (see "113, resolved" and #125 below)
 
 `arc-list-item` is the nearest fit and has no trailing-action slot. The
 hover-or-focus reveal is the part that needs care, because an action that only
@@ -5581,7 +5581,7 @@ row at all. The real check is to remove each guard (`_fromActions` in the item,
 Running a test against pre-fix code only proves anything when the pre-fix
 code puts the test in the same situation.
 
-### 118. No repeating field list — **OPEN, needs a decision**
+### 118. No repeating field list — ~~OPEN~~ **FIXED in 4.6.0** (see "118, 120 and 124, resolved" below)
 
 Reported by the same application: add, remove and reorder rows of inputs, like
 the composer's options and levels. `arc-sortable-list` reorders but has no idea
@@ -5609,7 +5609,7 @@ announcement. It is a string, not a callback, so it works through every wrapper
 and on the server. Set from the `arc-input` handler, which runs before the
 position renders, it arrives with the value.
 
-### 120. `arc-settings-layout` is only a grid — **OPEN, needs a decision**
+### 120. `arc-settings-layout` is only a grid — ~~OPEN~~ **FIXED in 4.6.0** (see "118, 120 and 124, resolved" below)
 
 No nav item styling, active state or hash routing, and below 768px the nav
 stacks instead of becoming tabs. A real fix is a settings-nav component, which
@@ -5642,7 +5642,7 @@ an empty result the user just asked for. Nothing in ARC or the docs rendered
 one, so no internal caller depended on the old default. The release note tells
 consumers.
 
-### 124. No bar list — **OPEN, needs a decision**
+### 124. No bar list — ~~OPEN~~ **FIXED in 4.6.0** (see "118, 120 and 124, resolved" below)
 
 Labelled horizontal bars with values, ranked. `arc-chart` is dashboard-sized and
 `arc-sparkline` has no labels. The reporter draws one by hand in every choose
@@ -5831,3 +5831,190 @@ Dawn asked for a warning when an unknown enum value (`variant="danger"`) falls
 back to the default outside dev mode. The maintainer decided to keep it in
 `@arclux/arc-ui/dev`: a production console warning costs every page, dev mode
 catches it, and the manifest records each attribute's default for codemods.
+
+### 129. The manifest had no structured list of a parent's children — **FIXED in 4.7.0**
+
+Halteres #4, half done in 4.3: the default-slot descriptions named each
+parent's children (#107), but only as prose, and the structured field the
+reporter asked for was noted as "a prism manifest-shape question" and never
+raised. There is no prism session to raise it with, and it did not need one:
+arc-ui generates the manifest itself (`scripts/generate/manifest.js`
+post-processes the analyzer's output).
+
+A new JSDoc tag, `@child <tag> [slot]`, is published as
+`"children": [{ "tagName", "slot"? }]` on the parent's declaration. It appears
+only on parents, so the key's presence is the signal. Twenty-seven parents
+carry it, including `arc-settings-layout` with `slot: "nav"`.
+
+`check-child-declarations` holds the tags equal to what each parent reads, in
+both directions. A child the parent reads by tag must be declared, and a
+declared child the parent never reads is an error. It expands the menus' shared
+`MENU_CHILD_TAGS` set, which a grep cannot see through, and waives
+`menu-label.js`, which defines that set without being a parent. It was proven
+against a removed tag and a bogus one before it was trusted.
+
+### 130. Closing a non-modal sheet from its own close button dropped focus — **FIXED in 4.7.0**
+
+CI on v4.6.0 failed the sampled mutation gate on `overlay-controller`: 38.89%
+against 80. Most of the gap was measurement. The non-modal path is exercised
+through arc-sheet and arc-drawer in `overlay-nonmodal.test.js`, and the pair
+measured the controller against `overlay-controller.test.js` alone. The pair
+now runs both files. That left ten survivors, and they were worth reading:
+
+- The "was focus inside the panel?" check used `contains()`, which stops at a
+  shadow boundary. Focus on the sheet's own close button sits inside
+  `arc-icon-button`'s shadow root, so it read as outside, and closing from there
+  dropped focus on the document instead of handing it back. `_inHost` now
+  walks up through shadow hosts. This is a real bug, found only by the gate.
+- A `_modal` getter was dead code, and a mode-switch unlock was redundant with
+  `_showNonModal`'s own. Both are removed.
+- No test covered an Escape that something inside had already handled, or a
+  different key pressed inside the panel. Both are covered now.
+
+88.89% (24/27). The three survivors are equivalent: `_locked = false` is reset
+by the first render anyway, and neither `preventScroll` nor `lightDismiss ===
+false` is observable from these tests.
+
+### 131–142. The Halteres adoption batch against 4.6.0 — **FIXED in 4.7.0**
+
+Ask Bosco adopted 4.6.0: the snap sheet, row actions, `resetStyles`, the
+settings nav, the bar list and the field list. Rows #24–#35 of its notes are
+what adoption surfaced:
+
+- **131, settings layout on a phone (#26, verified).** The unwrapped tab row
+  set the layout's min-content width, so inside a grid or flex parent the page
+  grew to 827px on a 390px screen, and `scrollIntoView` then scrolled the page
+  too. The fix is `min-width: 0` on the host, the nav and the content, and a
+  `minmax(0, 1fr)` column. The active tab is now revealed by scrolling the nav
+  alone.
+- **132, hidden sections (#27).** A page rule setting `display` on a section
+  beat `[hidden]` and showed every section at once. The layout now enforces it
+  with `::slotted([hidden]) { display: none !important }`: an important rule
+  from inside a shadow root outranks the page's.
+- **133, keyboard (#33, verified, WCAG 2.1.1).** A plain-list row without
+  `href` was focusable but ignored Enter and Space. It now fires `arc-select`
+  for both, as a click does.
+- **134, links (#34, verified).** A click on an `href` row fired `arc-select`
+  and followed the link. `arc-select` is cancelable now, and cancelling it
+  stops the navigation. A modified click (Ctrl, Cmd, Shift, middle button) is
+  left to the browser and fires nothing.
+- **135, dense rows (#35).** `size="sm"` never reached the rows, which set
+  their own font. The list now passes private custom properties that the rows
+  read (font, padding, line height). The touch-target minimum stays, larger on
+  touch screens.
+- **136, persistent sheet (#28, verified).** `persistent`: Escape, a backdrop
+  click and the drag-down close are ignored, a drag below the smallest height
+  settles back on it, and there is no close button. `open = false` from script
+  still closes it.
+- **137, empty chrome (#29, verified).** The footer row renders only with
+  something slotted. The header is left out when there is no heading, nothing
+  slotted and no close button to hold, which is a persistent sheet. A
+  dismissible sheet keeps its close button, so dismissal stays discoverable.
+- **138, highlight (#30).** A per-item `highlight` colours the bar with
+  `--bar-list-highlight` (part `bar highlight`) and sets the label in bold, so
+  the emphasis is not colour alone.
+- **139, reference (#31).** `reference` and `reference-label`, not the
+  `{ value, label }` object the report suggested: the props vocabulary has no
+  safe object parser, and two flat props read better in markup. One dashed line
+  crosses every track, and a caption states it as text. The scale extends to
+  the reference when it is beyond the largest bar.
+- **140, N more (#32).** When `limit` leaves rows out, a closing line counts
+  them, and the `more` slot replaces it.
+- **141, read-only field list (#24, verified).** `readonly` shows the rows
+  without the Add button, the handles or the Remove buttons.
+- **142, add label (#25, verified).** The list prefixed "+ " to `add-label`, so
+  "+ option" read "+ + option". The plus is now an icon and the label is the
+  whole text.
+
+Halteres' notes also listed #15, #17–#19 and #21–#23 as still open. All of
+them shipped in 4.4.0 and 4.5.0; the notes table had not been updated.
+
+### 143. `arc-input-group` never stripped a grouped `arc-input`'s box — **FIXED in 4.7.0**
+
+Found by the new `slotted-overrides` check on its first run. The group's
+`::slotted(arc-input), ::slotted(arc-select) { border: none !important;
+border-radius: 0 !important; box-shadow: none !important }` targeted the
+controls' hosts, and neither control draws its chrome on its host: arc-input
+draws it on `.input-group__wrapper`, and arc-select on `.select__trigger`, both
+inside their shadow roots, where a `::slotted()` rule cannot reach. Measured: a
+grouped arc-input kept `1px solid`, `10px` radius and its inset shadow, a
+bordered box inside the group's bordered box. It only ever worked for native
+`<input>` and `<select>`, which draw their own.
+
+arc-input and arc-select now read `--input-border`, `--input-radius` and
+`--input-shadow` in every state (rest, hover, focus, error, open), and the
+group sets them. Custom properties inherit through the boundary. The native
+overrides stay. `input-group.test.js` fails against the old group.
+
+### 144. Script-set data broke hydration in fifteen components, and ten had hand-copied holds — **FIXED in 4.7.0**
+
+The follow-up recorded after the docs-site pass ("generalize the hold into
+DeclaredPropsMixin; no check pins hydration determinism") turned out to hide a
+much larger gap. Every component with a `list()` prop renders script-set data,
+and a page commonly assigns it before the element's first update, which is the
+update that must adopt the server's markup. Ten components had a hand-copied
+hold for this under four names. Fifteen had none: arc-bar-list (4.6),
+multi-select, tag-input, lightbox, virtual-list, comparison and nine more. The
+empty `CLIENT_ONLY` list means all of them are server-rendered.
+
+The hand-copied holds were also narrower than they looked. They snapshotted the
+*property* in `connectedCallback`, so data set after upgrade but before the
+first update (the page's script running in the same task) was indistinguishable
+from the attribute and went straight into the mismatched render.
+
+`DeclaredPropsMixin` now does it once. On a server-rendered element's first
+update, in `shouldUpdate` (the only hook after Lit applies pre-upgrade values and
+before the host's `willUpdate`, and one no component overrides), each `list()`
+prop renders at the value the server rendered from: its attribute through its
+own converter, or its declared default. Anything else is held, and handed over
+in a microtask after the update, outside the cycle. The ten copies, about 420
+lines, are deleted.
+
+`hydration-determinism.test.js` renders every component with a `list()` prop
+through the real server renderer (`scripts/generate/ssr-fixtures.js`, a
+`pnpm generate` step, since the browser runner cannot run @lit-labs/ssr). It
+plants the markup, hands over sample data both before upgrade and after it, and
+asserts no hydration error and the page's data in place. 51 cases. With the hold
+disabled, 40 fail. A new component with a `list()` prop is covered
+automatically, and the test fails until it has a sample.
+
+Two lessons from building it. The first run failed even for held components,
+because a failing component's asynchronous error landed in the next test's
+listener, so verdicts must be read per test and proven against a disabled fix.
+And the register barrel cannot load in this runner (arc-qr-code's CommonJS
+dependency), so the test imports only the modules the fixtures name.
+
+The hold also has unit tests in `props.test.js` (default first, then the
+attribute's value first, no hold when equal, none without a server root, first
+update only). They are what the sampled mutation gate pairs with `props.js`.
+Pairing the gate with the 51-case determinism file instead ran past fifteen
+minutes, and the run killed by that timeout left two mutants in `props.js`,
+found by diffing it against a saved copy and restored before anything else ran.
+Gate: 91.82%.
+
+**Server-emitted `defer-hydration` was the other follow-up, and it is not
+done, by decision.** It is an alternative to the hold, not a complement: a
+deferred element hydrates only when the page removes the attribute, which is a
+protocol every consumer would have to adopt, and emitting it by default would
+leave every server-rendered element un-hydrated until they did. The hold gives
+the same guarantee with no protocol.
+
+### 92, 93, 94, 91: test-frame §4's guards are all built — **DONE in 4.7.0**
+
+- `dead-props` (#92) shipped in 4.6.0.
+- `bindable-mutations` (#93) is prism's (3.1.0).
+- `hand-authored-wrappers` (#94's remainder): every wrapper without prism's
+  header is registered with its reason, and exposes its element when its
+  component has public methods. There were seven such files: VirtualList in
+  all six packages, plus a React helper. arc-virtual-list has
+  `scrollToIndex()`, and React, Vue and Preact consumers could not reach it
+  (Svelte's `bind:this` and Angular's host could). All six now expose the
+  element the way their framework's generated wrappers do. Note that the first
+  survey by grep missed them all, because their header says "NOT generated by
+  prism", which contains the word the grep looked for.
+- `slotted-overrides` (#91): every `!important` inside `::slotted(arc-*)` is
+  registered with its reason, and must target a property the slotted component
+  sets on its `:host`. Its first run found #143. arc-app-shell's four
+  overrides on arc-sidebar are registered.
+
+All three checks are proven against planted defects, and fail on stale entries.

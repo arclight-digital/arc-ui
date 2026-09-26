@@ -64,7 +64,6 @@ for (const mod of manifest.modules) {
   }
 }
 
-
 /**
  * Fill in defaults the analyzer cannot see.
  *
@@ -154,7 +153,10 @@ function declaredContracts(source) {
     } else if (helper === 'oneOf') {
       const list = args.match(/^\[([\s\S]*?)\]/);
       if (!list) continue;
-      const members = list[1].split(',').map((x) => x.trim()).filter(Boolean);
+      const members = list[1]
+        .split(',')
+        .map((x) => x.trim())
+        .filter(Boolean);
       // `oneOf` is String-typed unless every member is a number — props.js:150,
       // where a closed numeric set (time-picker's `step`) is a real contract and
       // not a range.
@@ -165,7 +167,7 @@ function declaredContracts(source) {
 
       if (!computed) {
         const explicit = args.match(/default:\s*([^,}\n]+)/);
-        const raw = (explicit ? explicit[1] : members[0] ?? '').trim();
+        const raw = (explicit ? explicit[1] : (members[0] ?? '')).trim();
         if (!raw) continue;
         const unquoted = raw.replace(/^['"]|['"]$/g, '');
         entry.default = /^-?[\d.]+$/.test(unquoted) ? Number(unquoted) : unquoted;
@@ -291,6 +293,14 @@ for (const mod of manifest.modules) {
   const group = source.match(/@arc-group\s+([a-z][\w-]*)/)?.[1] ?? null;
   const status = source.match(/@status\s+([a-z][\w-]*)/)?.[1] ?? null;
   const mergedInto = source.match(/@arc-merged-into\s+([a-z][\w-]*)/)?.[1] ?? null;
+  // `@child arc-option` or `@child arc-settings-nav-item nav`: the elements a
+  // parent reads from its children, and the slot they go in. The analyzer drops
+  // the tag, so without this a tool or agent found the pairing only in the docs
+  // site's preview strings (test-findings #129). check-child-declarations keeps
+  // the tags equal to what each parent actually reads.
+  const children = [...source.matchAll(/^\s*\*\s*@child\s+(arc-[\w-]+)(?:[ \t]+([\w-]+))?/gm)].map(
+    ([, tagName, slot]) => (slot ? { tagName, slot } : { tagName }),
+  );
   for (const decl of mod.declarations ?? []) {
     if (!decl.customElement || !decl.tagName) continue;
     decl.group = group;
@@ -298,6 +308,8 @@ for (const mod of manifest.modules) {
     // Only on the components that have one, so the key's presence *is* the
     // "this is going away" flag for every downstream reader.
     if (mergedInto) decl.mergedInto = mergedInto;
+    // Only on parents, so the key's presence is the signal, as with mergedInto.
+    if (children.length) decl.children = children;
     if (group) grouped += 1;
     statuses[status] = (statuses[status] ?? 0) + 1;
   }
@@ -364,5 +376,8 @@ const count = manifest.modules
 console.log(
   `✓ custom-elements.json — ${count} custom elements, ${filled} facts recovered from declarations, ` +
     `${grouped} in a domain group, ${collapsed} multi-line type(s) collapsed, ` +
-    Object.entries(statuses).sort().map(([k, n]) => `${n} ${k}`).join('/')
+    Object.entries(statuses)
+      .sort()
+      .map(([k, n]) => `${n} ${k}`)
+      .join('/'),
 );

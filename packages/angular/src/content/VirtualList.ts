@@ -47,6 +47,11 @@ export class VirtualList {
     visibleRange?: { start: number; end: number };
   } = inject(ElementRef).nativeElement;
 
+  /** The element, for scrollToIndex(), as on every generated wrapper. */
+  get element(): ArcVirtualList {
+    return this._el;
+  }
+
   /** Renders one row. Instantiated only for rows currently on screen. */
   @Input({ required: true }) rowTemplate!: TemplateRef<unknown>;
 

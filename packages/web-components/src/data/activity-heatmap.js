@@ -296,56 +296,13 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
     });
   }
 
-  /**
-   * The hydrating render has to be the *server's* render, not the page's.
-   *
-   * @lit-labs/ssr renders a host from its attributes alone, so a calendar whose
-   * `data` arrives as a property — the common half of the documented contract,
-   * since a year of days is not something anyone writes into markup — is
-   * rendered on the server from the attributes only. The page assigns the array
-   * before the register barrel upgrades this element, which parks it in Lit's
-   * pre-upgrade instance properties and applies it at the top of the very first
-   * update: the one that has to adopt the server's markup. With no `end-date`
-   * pinned, that array is also what anchors the grid, so the client sizes a
-   * year of cells where the server sized none — "unexpected longer than
-   * expected iterable", and hydration abandons the tree there.
-   *
-   * So the first render uses what the attributes said, which is exactly what
-   * the server rendered from, and the script-set data is handed over in
-   * `firstUpdated`, once the server's DOM has been adopted. Nothing is held
-   * back without a server-rendered shadow root, so a client-only calendar still
-   * paints its year on the first frame.
-   */
-  connectedCallback() {
-    // Before super: ReactiveElement attaches the render root here, so a shadow
-    // root that already exists is the server's `<template shadowrootmode>`.
-    const hydrating = !this.hasUpdated && this.shadowRoot !== null;
-    super.connectedCallback();
-    if (hydrating) this._ssrData = this.data;
-  }
-
-  willUpdate(changed) {
-    super.willUpdate?.(changed);
-    // See connectedCallback. In willUpdate rather than in `render()` so the
-    // declared-props normalisation that follows it sees the same array the
-    // render will.
-    if (this._ssrData !== undefined) {
-      this._heldData = this.data;
-      this.data = this._ssrData;
-      this._ssrData = undefined;
-    }
-  }
-
   firstUpdated() {
-    // The two inputs the server could not have had, both taken at the first
-    // moment it is safe to take them: the viewer's date (see _resolveEndEpoch)
-    // and the page's data (see connectedCallback).
+    // The input the server could not have had, taken at the first moment it
+    // is safe to take it: the viewer's date (see _resolveEndEpoch). The page's
+    // `data`, the other one, is held back until after this render by
+    // DeclaredPropsMixin's hydration hold (test-findings #144).
     const now = new Date();
     this._today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / DAY;
-    if (this._heldData !== undefined) {
-      this.data = this._heldData;
-      this._heldData = undefined;
-    }
   }
 
   updated(changed) {

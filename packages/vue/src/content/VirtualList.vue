@@ -36,6 +36,8 @@ type ListElement = HTMLElement & {
 };
 
 const el = shallowRef<ListElement>();
+/** The element, for scrollToIndex(), as on every generated wrapper. */
+defineExpose({ element: el });
 const range = ref({ start: 0, end: 0 });
 
 function onRangeChange(e: Event) {

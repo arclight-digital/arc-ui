@@ -180,7 +180,17 @@
     { "name": "::part(track)", "description": "The bar's full-length track." },
     {
       "name": "::part(bar)",
-      "description": "The bar itself. Coloured by `--bar-list-fill`."
+      "description": "The bar itself. Coloured by `--bar-list-fill`; a highlighted row's bar also has the part `highlight` and takes `--bar-list-highlight`."
+    },
+    { "name": "::part(highlight)", "description": "A highlighted row's bar." },
+    { "name": "::part(more)", "description": "The \"N more\" line." },
+    {
+      "name": "::part(reference)",
+      "description": "The dashed reference line."
+    },
+    {
+      "name": "::part(reference-label)",
+      "description": "The reference's caption."
     },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(axis)" },
@@ -596,7 +606,10 @@
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(field)" },
     { "name": "::part(label)" },
-    { "name": "::part(wrapper)" },
+    {
+      "name": "::part(wrapper)",
+      "description": "The box around the field. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself."
+    },
     { "name": "::part(prefix)" },
     { "name": "::part(suffix)" },
     { "name": "::part(error)" },
@@ -677,7 +690,10 @@
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(select)" },
     { "name": "::part(label)" },
-    { "name": "::part(trigger)" },
+    {
+      "name": "::part(trigger)",
+      "description": "The button that opens the list, showing the chosen value. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself."
+    },
     { "name": "::part(dropdown)" },
     { "name": "::part(error)" },
     { "name": "::part(base)", "description": "The root element." },
