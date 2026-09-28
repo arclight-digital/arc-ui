@@ -61,6 +61,16 @@ export const tokenStyles = css`
     ${hostTokens}
   }
 
+  /* The hidden attribute hides, on every component. A component's own
+     :host display (block, flex, inline-flex…) outranked the UA's
+     [hidden] { display: none }, so hiding an element the platform way did
+     nothing: a filtered arc-list-item stayed on screen. :host([hidden]) is
+     more specific than any bare :host, so it wins wherever it is declared,
+     and it lives here once rather than in every file. */
+  :host([hidden]) {
+    display: none;
+  }
+
   ${hostTouchTokens}
 
   /* Reduced motion, once, for every component that adopts these styles.

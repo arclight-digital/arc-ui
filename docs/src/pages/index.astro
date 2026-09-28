@@ -2303,14 +2303,6 @@ const jsonLd = {
     .app__desc-status { display: inline; }
   }
 
-  /* A list item's own :host display outranks the [hidden] attribute, so
-     the filter's hidden rows have to be put away from out here */
-  .app__list[hidden],
-  .app__board[hidden],
-  .app__list arc-list-item[hidden] {
-    display: none;
-  }
-
   .app__empty {
     padding: var(--space-xl) 0;
     text-align: center;
