@@ -142,3 +142,33 @@ describe('arc-code-block copy affordance', () => {
     expect(copyButton(el).classList.contains('code-block__copy--centered')).to.equal(false);
   });
 });
+
+describe('arc-code-block copy placement', () => {
+  const inBody = (el) => !!el.shadowRoot.querySelector('.code-block__body-wrap > .code-block__copy');
+  const inBar = (el) =>
+    !!el.shadowRoot.querySelector('.code-block__titlebar .code-block__copy, .code-block__header .code-block__copy');
+
+  it('sits in the title bar of a window block, never over the code', async () => {
+    const box = mount('<div style="width:200px"><arc-code-block variant="window" filename="a.js"></arc-code-block></div>');
+    const el = box.querySelector('arc-code-block');
+    el.code = LONG;
+    await settle(el);
+    expect(inBar(el)).to.equal(true);
+    expect(inBody(el)).to.equal(false);
+  });
+
+  it('sits in the header of a default block that has one', async () => {
+    const box = mount('<div style="width:200px"><arc-code-block language="js"></arc-code-block></div>');
+    const el = box.querySelector('arc-code-block');
+    el.code = LONG;
+    await settle(el);
+    expect(inBar(el)).to.equal(true);
+    expect(inBody(el)).to.equal(false);
+  });
+
+  it('floats over the body only when there is no bar to hold it', async () => {
+    const { el } = await block('200px', LONG);
+    expect(inBody(el)).to.equal(true);
+    expect(inBar(el)).to.equal(false);
+  });
+});

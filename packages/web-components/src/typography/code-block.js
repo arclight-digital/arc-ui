@@ -183,6 +183,10 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
         color: var(--text-muted);
       }
 
+      .code-block__header .code-block__lang {
+        margin-inline-start: auto;
+      }
+
       .code-block__lang {
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
@@ -358,6 +362,22 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
         padding-inline-end: var(--space-xs);
       }
 
+      /* In a bar the button is an ordinary flex item at the end of the row;
+         the body no longer reserves a column for it */
+      .code-block__copy.code-block__copy--bar {
+        position: static;
+        flex-shrink: 0;
+        margin-inline-start: var(--space-sm);
+      }
+
+      .code-block__titlebar .code-block__copy--bar {
+        margin-inline-start: auto;
+      }
+
+      .code-block__body--clear {
+        padding-inline-end: var(--space-md);
+      }
+
       :host([variant="basic"]) .code-block__copy {
         position: static;
         flex-shrink: 0;
@@ -450,6 +470,29 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
     return this.code ? this.code.split('\n').length : 0;
   }
 
+  /**
+   * Whether the block has a bar to put the copy button in.
+   *
+   * Where there is one, the button goes in it, and nothing can ever be
+   * underneath it. Floating over the top-right of the code was fine for code
+   * that fits, but an overflowing line ran under it, and the quiet state only
+   * dimmed the problem: the button came back to full strength on hover —
+   * exactly while the line under it was being read — and on touch it never
+   * dimmed at all. The floating button now remains only where there is no bar:
+   * a headerless default block. `basic` lays it out beside the code instead.
+   */
+  _copyInHeader() {
+    if (this.variant === 'window') return true;
+    if (this.variant === 'basic') return false;
+    return Boolean(this.filename || this.language);
+  }
+
+  _renderCopy(extra = '') {
+    return html`<div class="code-block__copy ${extra}">
+      <arc-copy-button .value=${this.code} part="copy"></arc-copy-button>
+    </div>`;
+  }
+
   _renderHeader() {
     if (this.variant === 'basic') return '';
     if (this.variant === 'window') {
@@ -467,6 +510,7 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
           `
               : ''
           }
+          ${this._renderCopy('code-block__copy--bar')}
         </div>
       `;
     }
@@ -482,6 +526,7 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
         `
             : ''
         }
+        ${this._renderCopy('code-block__copy--bar')}
       </div>
     `;
   }
@@ -506,10 +551,14 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
       <div class="code-block" part="base code-block">
         ${this._renderHeader()}
         <div class="code-block__body-wrap">
-          <div class="code-block__copy ${this._lineCount() === 1 ? 'code-block__copy--centered' : ''} ${this._overflows ? 'code-block__copy--quiet' : ''}">
-            <arc-copy-button .value=${this.code} part="copy"></arc-copy-button>
-          </div>
-          <div class="code-block__body" part="body">
+          ${
+            this._copyInHeader()
+              ? ''
+              : this._renderCopy(
+                  `${this._lineCount() === 1 ? 'code-block__copy--centered' : ''} ${this._overflows ? 'code-block__copy--quiet' : ''}`,
+                )
+          }
+          <div class="code-block__body ${this._copyInHeader() ? 'code-block__body--clear' : ''}" part="body">
             ${
               this._highlightedHtml
                 ? unsafeHTML(this._highlightedHtml)

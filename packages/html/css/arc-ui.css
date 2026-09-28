@@ -2857,6 +2857,10 @@
         color: var(--text-muted);
       }
 
+      .arc-code-block .code-block__header .code-block__lang {
+        margin-inline-start: auto;
+      }
+
       .arc-code-block .code-block__lang {
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
@@ -3030,6 +3034,22 @@
         min-width: 0;
         padding: var(--space-sm);
         padding-inline-end: var(--space-xs);
+      }
+
+      /* In a bar the button is an ordinary flex item at the end of the row;
+         the body no longer reserves a column for it */
+      .arc-code-block .code-block__copy.code-block__copy--bar {
+        position: static;
+        flex-shrink: 0;
+        margin-inline-start: var(--space-sm);
+      }
+
+      .arc-code-block .code-block__titlebar .code-block__copy--bar {
+        margin-inline-start: auto;
+      }
+
+      .arc-code-block .code-block__body--clear {
+        padding-inline-end: var(--space-md);
       }
 
       .arc-code-block[data-variant="basic"] .code-block__copy {
