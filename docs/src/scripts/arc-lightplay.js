@@ -1,34 +1,34 @@
 /**
  * arc-lightplay.js — ARC UI hero background
  *
- * Caustic lightplay: blue->teal caustic fields over nebula lobes, two parallel
- * light shafts, cursor-as-lens, click refraction ripples, two drifting light
- * motes with trails, and a faint dot grid lit by the shared energize field.
+ * Plasma and caustics as one material. Slow ridged-noise filaments are the
+ * structure; the gas between them carries a fine caustic shimmer; both read
+ * one domain warp, so they drift and turn over together. The red and blue
+ * channels read everything a hair apart (chromatic aberration), which
+ * fringes every filament like a hologram. Behind the copy the field goes
+ * out of focus rather than dark: filaments open into broad dim glows and
+ * the shimmer fades, so the light stays alive around the text with nothing
+ * sharp to fight the letters. Film grain, one screen pixel per grain,
+ * re-seeded 24 times a second. The light comes up once on load; nothing
+ * follows the pointer.
  *
  * Drop-in for arcui.dev:
  *   - Colors are read LIVE from var(--accent-primary) / var(--accent-secondary)
  *     on :root, and re-read whenever html[data-theme] (or class/style) mutates —
  *     so it follows your existing theme system, including the light-theme teal
- *     deepening, with zero configuration.
+ *     deepening, with zero configuration. No other colour appears.
  *   - Theme detection: html[data-theme="light"|"dark"], falling back to
  *     prefers-color-scheme.
- *   - Performance: single cheap fragment pass (no raymarch), dpr-capped,
- *     pauses when offscreen or tab-hidden, static frame under
- *     prefers-reduced-motion (click ripples still animate one burst).
- *   - Ripples only fire for pointerdowns inside the canvas bounds.
+ *   - Performance: the light renders at 0.75x into a texture (about twenty
+ *     2D value-noise lookups per pixel, no raymarching); a second trivial
+ *     pass draws it at native device pixels and adds the grain there, so the
+ *     grain is crisp and the expensive pass costs about half. Paused when
+ *     offscreen or tab-hidden; a static frame under prefers-reduced-motion.
+ *   - `quiet`: up to two elements (the copy, the top bar); the field
+ *     defocuses behind their boxes, re-measured on resize and scroll.
  *
  * Usage (Astro):
- *   ---
- *   // Hero.astro
- *   ---
- *   <section class="hero">
- *     <canvas class="lightplay" data-lightplay></canvas>
- *     <!-- hero content -->
- *   </section>
- *   <style>
- *     .lightplay{ position:absolute; inset:0; width:100%; height:100%;
- *                 display:block; pointer-events:none; }
- *   </style>
+ *   <canvas class="lightplay" data-lightplay></canvas>
  *   <script>
  *     import { initLightplay } from '../scripts/arc-lightplay.js';
  *     const dispose = initLightplay(document.querySelector('[data-lightplay]'));
@@ -37,15 +37,10 @@
  */
 
 const DEFAULTS = {
-  lensRadius: 220,     // higher = tighter cursor lens (gaussian falloff constant)
-  rippleSpeed: 0.28,   // click wavefront speed, screen-heights/sec (max radius ~0.5)
-  rippleAmp: 0.035,    // refraction displacement amplitude
-  rippleLife: 2.6,     // seconds; smooth fade over the final 0.6s
-  maxRipples: 14,      // simultaneous ripples (expired slots reused first)
-  moteCount: 4,        // drifting light bits (0 disables them entirely)
-  moteSpeed: 0.055,    // mote drift speed, screen-heights/sec
-  dprCap: 1.5,         // devicePixelRatio ceiling
-  dotGrid: true,       // faint dot grid, lit by the energize field
+  quiet: [],           // up to two elements the field defocuses behind
+  igniteDur: 2.6,      // seconds for the light to come up on load
+  dprCap: 2,           // devicePixelRatio ceiling for the grain pass
+  lightScale: 0.75,    // light pass resolution relative to the grain pass
 };
 
 export function initLightplay(canvas, options = {}) {
@@ -53,80 +48,83 @@ export function initLightplay(canvas, options = {}) {
   const gl = canvas.getContext('webgl', { alpha: true, antialias: false, premultipliedAlpha: true });
   if (!gl) return () => {};
 
-  const MAX_CLICKS = o.maxRipples;
-  const N_MOTE = Math.max(0, o.moteCount | 0);
-  const TRAIL = 16;
-  const f = n => Number(n).toFixed(4); // GLSL float literal
-
   const VERT = `
     attribute vec2 a;
     void main(){ gl_Position = vec4(a, 0.0, 1.0); }
   `;
 
-  const MOTE_UNIFORMS = N_MOTE > 0 ? `
-    uniform vec2  u_mote[${N_MOTE}];
-    uniform float u_moteB[${N_MOTE}];
-    uniform vec2  u_trail[${N_MOTE * TRAIL}];
-  ` : '';
+  // The field itself. Reads q (aspect-corrected position), uv, aspect, t,
+  // igE (0 -> 1 load-in) and blur (0 -> 1 behind the copy); writes em.
+  const BODY = `
+      vec2 P = q * 1.25 + vec2(-t * 0.018, t * 0.011 - u_scroll * 0.4);
+      vec2 w = (vec2(n2(P * 0.7 + t * 0.028), n2(P * 0.7 + vec2(5.2, 1.3) - t * 0.023)) - 0.5) * 2.2;
+      // Chromatic aberration: R and B read everything a hair apart,
+      // wider toward the edges
+      vec2 ca = normalize(vec2(1.0, 0.6)) * (0.008 + length(uv - 0.5) * 0.012) * (1.0 + blur * 1.5);
 
-  const MOTE_ENERGIZE = N_MOTE > 0 ? `
-      for (int i = 0; i < ${N_MOTE}; i++){
-        vec2 dw = q - u_mote[i];
-        E += exp(-dot(dw, dw) * 500.0) * 0.8 * u_moteB[i];
+      // ---- filaments: out of focus behind the copy, a sharp vein opens
+      // into a broad, dim glow ----
+      float vx = mix(16.0, 2.2, blur), va = mix(1.1, 0.16, blur);
+      vec3 vein;
+      for (int k = 0; k < 3; k++){
+        vec2 pp = P * 1.6 + w + ca * (float(k) - 1.0) * 1.6;
+        float n = n2(pp) * 0.6 + n2(pp * 2.2 + 7.1) * 0.4;
+        float r = 1.0 - abs(n * 2.0 - 1.0);
+        float v = pow(r, vx) * va + pow(r, 5.0) * 0.18 * (1.0 - blur * 0.5);
+        if (k == 0) vein.r = v; else if (k == 1) vein.g = v; else vein.b = v;
       }
-  ` : '';
 
-  const MOTE_DRAW = N_MOTE > 0 ? `
-      vec3 moteCol = mix(lcol, vec3(1.0), 0.45);
-      for (int i = 0; i < ${N_MOTE}; i++){
-        float B = u_moteB[i];
-        vec2 dw = q - u_mote[i];
-        float d2w = dot(dw, dw);
-        em += moteCol * (exp(-d2w * 26000.0) * 1.2 + exp(-d2w * 2800.0) * 0.35) * B;
-      }
-      for (int i = 0; i < ${N_MOTE * TRAIL}; i++){
-        float B = u_moteB[i / ${TRAIL}];
-        float fade = float(i - (i / ${TRAIL}) * ${TRAIL}) / float(${TRAIL});
-        vec2 dt2 = q - u_trail[i];
-        em += moteCol * exp(-dot(dt2, dt2) * 11000.0) * fade * fade * 0.4 * B;
-      }
-  ` : '';
+      // ---- gas, and the caustic shimmer that lives in it ----
+      float gas = smoothstep(0.22, 0.9, n2(P * 0.9 + w * 0.5 + 3.0));
+      vec2 pc = q * 2.4 + w * 0.45;
+      float m2 = fbm(pc * 1.31 + vec2(-t * 0.041, t * 0.057) + 3.7);
+      vec2 tc = vec2(t * 0.050, t * 0.033);
+      vec3 cs = vec3(fbm(pc + ca * 1.4 + tc), fbm(pc + tc), fbm(pc - ca * 1.4 + tc));
+      vec3 caus = pow(clamp(cs * m2 * 2.9, 0.0, 1.0), vec3(3.0));
+      caus = caus / (1.0 + caus * 0.6);
 
-  const DOT_GRID = o.dotGrid ? `
-      vec2 df = fract(frag / (u_res.y * 0.03)) - 0.5;
-      float dotm = smoothstep(0.055, 0.03, length(df));
-      em += vec3(1.0) * dotm * (0.03 + clamp(E, 0.0, 1.5) * 0.05);
-  ` : '';
+      float region = mix(0.55, 1.0, smoothstep(0.15, 1.0, uv.x * 0.9 + uv.y * 0.3));
+      vec3 cg = mix(u_c1, u_c2, gas);
+      vec3 cv = mix(u_c2, u_c1, gas);
+      vec3 pale = vec3(dot(cv, vec3(0.333)));
+      em = cg * gas * 0.16;
+      em += cg * caus * (0.4 + gas * 0.8) * (1.0 - blur * 0.9);
+      em += (cv * 0.8 + pale * 0.45) * vein * (0.3 + gas * 1.1);
+      em *= region * igE * 1.5;
+      // Soft shoulder: highlights roll off instead of clipping to white
+      em = em / (1.0 + em * 0.55);
+      em += mix(u_c1, u_c2, uv.x) * (0.03 + blur * 0.02) * igE;
+  `;
 
   const FRAG = `
+    #ifdef GL_FRAGMENT_PRECISION_HIGH
     precision highp float;
+    #else
+    precision mediump float;
+    #endif
     uniform vec2  u_res;
     uniform float u_time;
-    uniform vec2  u_mouse;
     uniform vec3  u_c1;
     uniform vec3  u_c2;
     uniform float u_light;
-    uniform vec3  u_clicks[${MAX_CLICKS}];
-    ${MOTE_UNIFORMS}
+    uniform float u_ignite;
+    uniform float u_scroll;
+    uniform vec4  u_quiet[2]; // uv boxes the field defocuses behind (x0, y0, x1, y1)
 
-    float hash(vec2 p){
+    float h2(vec2 p){
       p = fract(p * vec2(123.34, 456.21));
       p += dot(p, p + 45.32);
       return fract(p.x * p.y);
     }
-    float noise(vec2 p){
-      vec2 i = floor(p), fr = fract(p);
-      vec2 u = fr * fr * (3.0 - 2.0 * fr);
-      return mix(mix(hash(i),             hash(i + vec2(1,0)), u.x),
-                 mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), u.x), u.y);
+    float n2(vec2 p){
+      vec2 i = floor(p), f = fract(p);
+      vec2 u = f * f * (3.0 - 2.0 * f);
+      return mix(mix(h2(i),             h2(i + vec2(1,0)), u.x),
+                 mix(h2(i + vec2(0,1)), h2(i + vec2(1,1)), u.x), u.y);
     }
     float fbm(vec2 p){
       float v = 0.0, a = 0.5;
-      for (int i = 0; i < 3; i++){
-        v += a * noise(p);
-        p = p * 2.07 + vec2(13.7, 5.1);
-        a *= 0.5;
-      }
+      for (int i = 0; i < 3; i++){ v += a * n2(p); p = p * 2.07 + vec2(13.7, 5.1); a *= 0.5; }
       return v;
     }
 
@@ -136,211 +134,118 @@ export function initLightplay(canvas, options = {}) {
       float aspect = u_res.x / u_res.y;
       vec2 q = vec2(uv.x * aspect, uv.y);
       float t = u_time;
-
-      // ---- energize field: cursor lens + click ripples (+ motes) ----
-      vec2 mq = vec2(u_mouse.x * aspect, u_mouse.y);
-      vec2 dmq = q - mq;
-      float d2m = dot(dmq, dmq);
-      float lens = exp(-d2m * ${f(o.lensRadius)});
-      float E = lens * 1.2;
-
-      vec2 disp = vec2(0.0);
-      float ringE = 0.0;
-      for (int i = 0; i < ${MAX_CLICKS}; i++){
-        vec3 c = u_clicks[i];
-        if (c.z < 0.0) continue;                     // empty slot: skip (uniform branch)
-        float age = t - c.z;
-        float valid = step(0.0, c.z) * step(0.0, age)
-                    * (1.0 - smoothstep(${f(o.rippleLife - 0.6)}, ${f(o.rippleLife)}, age));
-        vec2 cq = vec2(c.x * aspect, c.y);
-        vec2 dv = q - cq;
-        float rd = length(dv);
-        float R = age * ${f(o.rippleSpeed)};
-        float band = exp(-pow((rd - R) * 12.0, 2.0)) * exp(-age * 1.6) * valid;
-        disp += (dv / max(rd, 1e-3)) * sin((rd - R) * 55.0) * band * ${f(o.rippleAmp)};
-        ringE += band;
-        E += band * 1.0 + exp(-dot(dv, dv) * 300.0) * exp(-age * 4.5) * 1.6 * valid;
+      float igE = u_ignite * u_ignite * (3.0 - 2.0 * u_ignite);
+      // ---- depth of field: behind the copy the field is out of focus.
+      // The body reads this to soften its sharp detail rather than darken,
+      // so the light stays alive around the text with nothing hard to
+      // fight the letters. Soft-edged, so it reads as depth, not a mask.
+      float blur = 0.0;
+      for (int i = 0; i < 2; i++){
+        vec4 b = u_quiet[i];
+        vec2 qc = (b.xy + b.zw) * 0.5;
+        vec2 qh = abs(b.zw - b.xy) * 0.5;
+        vec2 qd = max(abs(uv - qc) - qh, 0.0) * vec2(aspect, 1.0);
+        blur = max(blur, (1.0 - smoothstep(0.0, 0.2, length(qd))) * step(0.0001, qh.x));
       }
-      ${MOTE_ENERGIZE}
-      vec2 pull = -dmq * lens * 0.10;
 
-      // ---- nebula lobes ----
-      float driftT = sin(t * 0.10) * 0.03;
-      float neb = 0.70 + 0.6 * fbm(q * 1.4 + vec2(t * 0.012, -t * 0.007));
-      vec2 lc1 = vec2(0.22 * aspect, 0.72 + driftT);
-      vec2 lc2 = vec2(0.86 * aspect, 0.42 - driftT);
-      vec2 lc3 = vec2(0.55 * aspect, -0.05);
-      vec3 em = (u_c1 * exp(-dot(q-lc1,q-lc1) / 0.60) * 0.115
-               + u_c2 * exp(-dot(q-lc2,q-lc2) / 0.75) * 0.135
-               + u_c1 * exp(-dot(q-lc3,q-lc3) / 0.50) * 0.07) * neb;
+      vec3 em = vec3(0.0);
+      ${BODY}
 
-      // ---- caustic light: domain-warped (liquid), chromatic (holographic) ----
-      vec2 pc = q * 2.6 + disp + pull;
-      // fluid swirl: warp the sampling domain with a second, slower field
-      vec2 wp = vec2(fbm(pc * 0.85 + vec2(t * 0.020, -t * 0.016)),
-                     fbm(pc * 0.85 + vec2(4.7, 9.1) + vec2(-t * 0.014, t * 0.019)));
-      pc += (wp - 0.5) * 0.55;
-      float n2 = fbm(pc * 1.31 + vec2(-t * 0.041, t * 0.057) + 3.7);
-      // thin-film fringe: R/B sample the field at tiny opposed offsets
-      vec2 chOff = vec2(0.013, -0.009);
-      float n1g = fbm(pc + vec2(t * 0.050, t * 0.033));
-      float n1r = fbm(pc + chOff + vec2(t * 0.050, t * 0.033));
-      float n1b = fbm(pc - chOff + vec2(t * 0.050, t * 0.033));
-      float focus = 3.4 - lens * 1.1 - clamp(ringE, 0.0, 1.0) * 0.8;
-      vec3 ca3 = vec3(pow(clamp(n1r * n2 * 2.9, 0.0, 1.0), focus),
-                      pow(clamp(n1g * n2 * 2.9, 0.0, 1.0), focus),
-                      pow(clamp(n1b * n2 * 2.9, 0.0, 1.0), focus));
-      // Soft knee on the filament peaks: dims a full-brightness caustic by
-      // about a third while leaving the dim and mid filaments nearly alone,
-      // so the field keeps its detail without the hot spots.
-      ca3 = ca3 / (1.0 + ca3 * 0.85);
-      float ca = ca3.g;
+      float vig = pow(16.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y), 0.28);
+      em *= mix(0.7, 1.0, vig) * (1.0 - u_scroll * 0.4);
+      // Edge fades. The bottom one is long and gentle, but must still reach
+      // zero at the edge or the hero shows a seam against the page. The top
+      // one is shorter and only dims, since nothing sits above the hero.
+      float feather = pow(smoothstep(0.0, 0.36, uv.y), 0.7)
+                    * mix(0.4, 1.0, pow(smoothstep(0.0, 0.22, 1.0 - uv.y), 0.7));
 
-      vec2 p2 = q * 1.15 + disp * 0.6 + (wp - 0.5) * 0.35 + vec2(-t * 0.014, t * 0.010);
-      float n3 = fbm(p2);
-      float n4 = fbm(p2 * 1.27 + 7.9);
-      float ca2 = pow(clamp(n3 * n4 * 2.6, 0.0, 1.0), 3.2);
-      ca2 = ca2 / (1.0 + ca2 * 0.85);
-
-      // holographic sheen: hue slides along the filaments over time
-      float cm = clamp(0.5 + (n1g - 0.5) * 1.5
-                       + 0.18 * sin(t * 0.12 + q.x * 2.3 + wp.x * 3.0), 0.0, 1.0);
-      vec3 lcol = mix(u_c1, u_c2, cm);
-      em += lcol * ca3 * (0.24 + E * 0.45);   // per-channel -> chromatic fringing
-      em += lcol * ca2 * 0.11;
-
-      // ---- parallel light shafts (one implied source; cannot converge) ----
-      float ba = 0.62 + sin(t * 0.021) * 0.035;
-      vec2 bn = vec2(-sin(ba), cos(ba));
-      float b1 = exp(-pow(dot(q - vec2(0.10 * aspect, 1.02), bn), 2.0) / 0.012);
-      float b2 = exp(-pow(dot(q - vec2(0.38 * aspect, 1.06), bn), 2.0) / 0.030);
-      float b3 = exp(-pow(dot(q - vec2(0.66 * aspect, 1.10), bn), 2.0) / 0.018);
-      float b4 = exp(-pow(dot(q - vec2(0.92 * aspect, 1.14), bn), 2.0) / 0.040);
-      em += u_c1 * b1 * 0.040 * (0.85 + 0.15 * sin(t * 0.31));
-      em += u_c2 * b2 * 0.036 * (0.85 + 0.15 * sin(t * 0.26 + 1.4));
-      em += u_c1 * b3 * 0.034 * (0.85 + 0.15 * sin(t * 0.29 + 3.1));
-      em += u_c2 * b4 * 0.038 * (0.85 + 0.15 * sin(t * 0.23 + 4.5));
-      em += lcol * ca * (b1 + b2 + b3 + b4) * 0.16;
-
-      ${MOTE_DRAW}
-      ${DOT_GRID}
-
-      // ---- vignette ----
-      float vig = pow(16.0 * uv.x * uv.y * (1.0 - uv.x) * (1.0 - uv.y), 0.35);
-      em *= mix(0.50, 1.0, vig);
-
-      // ---- theme compositing (premultiplied alpha) ----
       float luma = dot(em, vec3(0.299, 0.587, 0.114));
       float a; vec3 rgb;
       if (u_light > 0.5){
         vec3 pig = em / max(luma * 2.4, 1e-3);
-        // Washes of tint, not dark smudges — but with enough of the squared
-        // (deepened) pigment that the lobes and caustic filaments still read
-        // as structure against the white rather than as fog.
         pig = mix(pig, pig * pig, 0.34);
-        a = clamp(luma * 2.4, 0.0, 1.0) * 0.68;
+        a = clamp(luma * 2.4, 0.0, 1.0) * 0.72;
         rgb = pig * a;
-        float edge = 1.0 - vig;
-        rgb += vec3(0.030, 0.034, 0.048) * edge;
-        a = min(a + edge * 0.20, 1.0);
       } else {
-        // Dark mode runs well under unity gain — the field is a backdrop for
-        // the copy and the cluster, not the subject.
-        rgb = em * 0.8;
-        a = clamp(luma * 1.6, 0.0, 1.0) * 0.8;
+        rgb = em;
+        a = clamp(luma * 1.9, 0.0, 1.0) * 0.94;
       }
-      float gr = hash(frag + fract(t * 0.617) * vec2(173.1, 91.7)) - 0.5;
-      rgb = max(rgb + gr * (0.020 + luma * 0.060), 0.0);
-      a = min(a + abs(gr) * 0.012, 1.0);
-      gl_FragColor = vec4(rgb, a);
+      gl_FragColor = vec4(rgb, a) * feather;
+    }
+  `;
+
+  // Pass 2, at native device pixels: put the reduced-resolution light on the
+  // screen and add the grain one real pixel at a time. The grain also
+  // dithers away the 8-bit banding the smooth gradients would otherwise show.
+  const GRAIN = `
+    #ifdef GL_FRAGMENT_PRECISION_HIGH
+    precision highp float;
+    #else
+    precision mediump float;
+    #endif
+    uniform sampler2D u_tex;
+    uniform vec2  u_res;
+    uniform vec2  u_seed;     // new every 1/24 s, always small
+    uniform float u_light;
+
+    // Hash without sine (Dave Hoskins): stable over the whole screen, no
+    // lattice or banding at large coordinates
+    float hash(vec2 p){
+      vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+      p3 += dot(p3, p3.yzx + 33.33);
+      return fract((p3.x + p3.y) * p3.z);
+    }
+
+    void main(){
+      vec4 c = texture2D(u_tex, gl_FragCoord.xy / u_res);
+      float luma = dot(c.rgb, vec3(0.299, 0.587, 0.114));
+      float gr = hash(gl_FragCoord.xy + u_seed) - 0.5;
+      float amt = (0.010 + luma * 0.07) * (u_light > 0.5 ? 0.5 : 1.0);
+      gl_FragColor = vec4(max(c.rgb + gr * amt * c.a, 0.0), c.a);
     }
   `;
 
   // ---------------- GL setup ----------------
   function compile(type, src){
-    const s = gl.createShader(type);
-    gl.shaderSource(s, src); gl.compileShader(s);
-    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS))
-      throw new Error(gl.getShaderInfoLog(s));
-    return s;
+    const sh = gl.createShader(type);
+    gl.shaderSource(sh, src); gl.compileShader(sh);
+    if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS))
+      throw new Error(gl.getShaderInfoLog(sh));
+    return sh;
   }
-  const prog = gl.createProgram();
-  gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
-  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
-  gl.linkProgram(prog);
-  gl.useProgram(prog);
+  const vs = compile(gl.VERTEX_SHADER, VERT);
+  function program(src){
+    const p = gl.createProgram();
+    gl.attachShader(p, vs);
+    gl.attachShader(p, compile(gl.FRAGMENT_SHADER, src));
+    gl.bindAttribLocation(p, 0, 'a');
+    gl.linkProgram(p);
+    const U = n => gl.getUniformLocation(p, n);
+    return { p, U };
+  }
+  const L = program(FRAG), G = program(GRAIN);
 
   const buf = gl.createBuffer();
   gl.bindBuffer(gl.ARRAY_BUFFER, buf);
   gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
-  const aloc = gl.getAttribLocation(prog, 'a');
-  gl.enableVertexAttribArray(aloc);
-  gl.vertexAttribPointer(aloc, 2, gl.FLOAT, false, 0, 0);
-
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+  gl.enableVertexAttribArray(0);
+  gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
   gl.clearColor(0, 0, 0, 0);
 
-  const U = n => gl.getUniformLocation(prog, n);
-  const u_res = U('u_res'), u_time = U('u_time'), u_mouse = U('u_mouse'),
-        u_c1 = U('u_c1'), u_c2 = U('u_c2'), u_light = U('u_light'),
-        u_clicks = U('u_clicks[0]'),
-        u_mote = N_MOTE > 0 ? U('u_mote[0]') : null,
-        u_moteB = N_MOTE > 0 ? U('u_moteB[0]') : null,
-        u_trail = N_MOTE > 0 ? U('u_trail[0]') : null;
+  const u_res = L.U('u_res'), u_time = L.U('u_time'),
+        u_c1 = L.U('u_c1'), u_c2 = L.U('u_c2'), u_light = L.U('u_light'),
+        u_ignite = L.U('u_ignite'), u_scroll = L.U('u_scroll'), u_quiet = L.U('u_quiet[0]');
+  const g_tex = G.U('u_tex'), g_res = G.U('u_res'), g_seed = G.U('u_seed'), g_light = G.U('u_light');
 
-  const clicks = new Float32Array(MAX_CLICKS * 3).fill(-1);
-
-  // ---------------- motes ----------------
-  const motePos  = new Float32Array(Math.max(N_MOTE, 1) * 2);
-  const moteB    = new Float32Array(Math.max(N_MOTE, 1));
-  const trailPos = new Float32Array(Math.max(N_MOTE, 1) * TRAIL * 2).fill(-10);
-  const motes = [];
-
-  function spawnMote(w, aspect){
-    w.x = (0.25 + Math.random() * 0.6) * aspect;
-    w.y = 0.15 + Math.random() * 0.7;
-    w.h = Math.random() * Math.PI * 2;
-    w.p1 = Math.random() * 10; w.p2 = Math.random() * 10;
-    w.aphase = Math.random() * Math.PI * 2;
-    w.age = 0;
-    w.life = 8 + Math.random() * 6;
-    for (let j = 0; j < TRAIL; j++){
-      trailPos[(w.idx * TRAIL + j) * 2]     = -10;
-      trailPos[(w.idx * TRAIL + j) * 2 + 1] = -10;
-    }
-  }
-  for (let i = 0; i < N_MOTE; i++){
-    const w = { idx: i };
-    spawnMote(w, 1.8);
-    w.age = Math.random() * 5;
-    motes.push(w);
-  }
-  function stepMote(w, dt, t, aspect){
-    w.age += dt;
-    if (w.age > w.life) spawnMote(w, aspect);
-    const fadeIn  = Math.min(w.age / 0.7, 1);
-    const fadeOut = Math.min((w.life - w.age) / 0.7, 1);
-    moteB[w.idx] = Math.max(0, Math.min(fadeIn, fadeOut));
-    w.h += (Math.sin(t * 0.31 + w.p1) + Math.sin(t * 0.53 + w.p2)) * 0.55 * dt;
-    const ax = aspect * (0.55 + 0.30 * Math.sin(t * 0.061 + w.aphase));
-    const ay = 0.5 + 0.28 * Math.sin(t * 0.047 + w.aphase * 1.7);
-    w.x += (Math.cos(w.h) * o.moteSpeed + (ax - w.x) * 0.12) * dt;
-    w.y += (Math.sin(w.h) * o.moteSpeed + (ay - w.y) * 0.12) * dt;
-    motePos[w.idx * 2]     = w.x;
-    motePos[w.idx * 2 + 1] = w.y;
-  }
-  let lastTrail = 0;
-  function sampleTrails(tNow){
-    if (tNow - lastTrail < 0.05) return;
-    lastTrail = tNow;
-    for (let i = 0; i < N_MOTE; i++){
-      const base = i * TRAIL * 2;
-      trailPos.copyWithin(base, base + 2, base + TRAIL * 2);
-      trailPos[base + (TRAIL - 1) * 2]     = motePos[i * 2];
-      trailPos[base + (TRAIL - 1) * 2 + 1] = motePos[i * 2 + 1];
-    }
-  }
+  // The reduced-resolution target the light pass draws into
+  const tex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  const fbo = gl.createFramebuffer();
+  let lw = 1, lh = 1;
 
   // ---------------- theme ----------------
   function parseColor(str){
@@ -361,18 +266,22 @@ export function initLightplay(canvas, options = {}) {
   }
   function syncTheme(){
     const cs = getComputedStyle(document.documentElement);
+    const attr = document.documentElement.dataset.theme;
+    const light = attr === 'light' || attr === 'dark' ? attr === 'light'
+                : !matchMedia('(prefers-color-scheme: dark)').matches;
+    gl.useProgram(L.p);
     gl.uniform3fv(u_c1, parseColor(cs.getPropertyValue('--accent-primary')));
     gl.uniform3fv(u_c2, parseColor(cs.getPropertyValue('--accent-secondary')));
-    const attr = document.documentElement.dataset.theme;
-    const light = attr ? attr === 'light'
-                       : !matchMedia('(prefers-color-scheme: dark)').matches;
     gl.uniform1f(u_light, light ? 1 : 0);
+    gl.useProgram(G.p);
+    gl.uniform1f(g_light, light ? 1 : 0);
   }
   const themeObs = new MutationObserver(() => { syncTheme(); if (staticMode) drawOnce(); });
   themeObs.observe(document.documentElement,
     { attributes: true, attributeFilter: ['data-theme', 'class', 'style'] });
   const schemeMQ = matchMedia('(prefers-color-scheme: dark)');
-  schemeMQ.addEventListener('change', syncTheme);
+  const onScheme = () => { syncTheme(); if (staticMode) drawOnce(); };
+  schemeMQ.addEventListener('change', onScheme);
 
   // ---------------- sizing / input / loop ----------------
   function resize(){
@@ -381,54 +290,57 @@ export function initLightplay(canvas, options = {}) {
     const h = Math.max(1, Math.round(canvas.clientHeight * dpr));
     if (canvas.width !== w || canvas.height !== h){
       canvas.width = w; canvas.height = h;
-      gl.viewport(0, 0, w, h);
-      gl.uniform2f(u_res, w, h);
+      lw = Math.max(1, Math.round(w * o.lightScale));
+      lh = Math.max(1, Math.round(h * o.lightScale));
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, lw, lh, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+      gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, tex, 0);
+      gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+      gl.useProgram(L.p);
+      gl.uniform2f(u_res, lw, lh);
+      gl.useProgram(G.p);
+      gl.uniform2f(g_res, w, h);
+      gl.uniform1i(g_tex, 0);
     }
   }
-  const onResize = () => { resize(); if (staticMode) drawOnce(); };
+  // The focus boxes, in the canvas's uv space (y up). A missing or hidden
+  // element sends a zero-size box, which the shader reads as "nothing here".
+  const quietEls = [].concat(o.quiet ?? []).filter(Boolean).slice(0, 2);
+  const quietBoxes = new Float32Array(8);
+  function measureQuiet(){
+    const cr = canvas.getBoundingClientRect();
+    quietBoxes.fill(0);
+    if (cr.width >= 1) quietEls.forEach((el, i) => {
+      const r = el.getBoundingClientRect();
+      if (r.width < 1) return;
+      quietBoxes.set([(r.left - cr.left) / cr.width, 1 - (r.bottom - cr.top) / cr.height,
+                      (r.right - cr.left) / cr.width, 1 - (r.top - cr.top) / cr.height], i * 4);
+    });
+    gl.useProgram(L.p);
+    gl.uniform4fv(u_quiet, quietBoxes);
+  }
+  const onResize = () => { resize(); measureQuiet(); if (staticMode) drawOnce(); };
   addEventListener('resize', onResize);
-  // The canvas's own box, not the window's. The hero changes size after init
+  // The canvas's own box, not the window's: the hero changes size after init
   // — custom elements upgrade, the code window hydrates, fonts land — and a
-  // window listener hears none of it, so the backing store kept its first
-  // (short) measurement and the whole field rendered stretched. Observing the
-  // canvas re-measures on the real trigger; resize() already no-ops when
-  // nothing actually moved.
+  // window listener hears none of it.
   const ro = new ResizeObserver(onResize);
   ro.observe(canvas);
+  quietEls.forEach((el) => ro.observe(el));
 
-  const mouse = { x: -10, y: -10, tx: -10, ty: -10 };
-  function toUV(e){
+  let scroll = 0;
+  const onScroll = () => {
     const r = canvas.getBoundingClientRect();
-    return [(e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height, r];
-  }
-  const onMove = e => {
-    const [x, y] = toUV(e);
-    mouse.tx = x; mouse.ty = y;
-    if (mouse.x < -5){ mouse.x = x; mouse.y = y; }
+    scroll = Math.min(Math.max(-r.top / Math.max(r.height, 1), 0), 1);
+    // A fixed top bar moves against the hero as the page scrolls
+    if (quietEls.length) measureQuiet();
   };
-  addEventListener('pointermove', onMove, { passive: true });
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
   const t0 = performance.now();
   const now = () => (performance.now() - t0) / 1000;
-
-  const onDown = e => {
-    const [x, y, r] = toUV(e);
-    if (e.clientX < r.left || e.clientX > r.right ||
-        e.clientY < r.top  || e.clientY > r.bottom) return; // only inside the hero
-    const tNow = now();
-    let slot = -1, oldest = 0, oldestT = Infinity;
-    for (let i = 0; i < MAX_CLICKS; i++){
-      const ts = clicks[i * 3 + 2];
-      if (ts < 0 || tNow - ts > o.rippleLife){ slot = i; break; }
-      if (ts < oldestT){ oldestT = ts; oldest = i; }
-    }
-    if (slot < 0) slot = oldest;
-    clicks[slot * 3]     = x;
-    clicks[slot * 3 + 1] = y;
-    clicks[slot * 3 + 2] = tNow;
-    if (staticMode) staticBurst();
-  };
-  addEventListener('pointerdown', onDown);
 
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let staticMode = reduced.matches;
@@ -441,52 +353,47 @@ export function initLightplay(canvas, options = {}) {
   const onVis = () => kick();
   document.addEventListener('visibilitychange', onVis);
 
+  // The load-in runs on the animation clock, so a hero that loads offscreen
+  // or in a background tab still gets it the first time it is seen.
+  let ignite = 0;
   let lastT = 0;
-  function setFrameUniforms(t){
-    gl.uniform2f(u_mouse, mouse.x, mouse.y);
+  function draw(t){
+    // Pass 1: the light, at reduced resolution, into the texture
+    gl.bindFramebuffer(gl.FRAMEBUFFER, fbo);
+    gl.viewport(0, 0, lw, lh);
+    gl.disable(gl.BLEND);
+    gl.useProgram(L.p);
     gl.uniform1f(u_time, t);
-    gl.uniform3fv(u_clicks, clicks);
-    if (N_MOTE > 0){
-      gl.uniform2fv(u_mote, motePos);
-      gl.uniform1fv(u_moteB, moteB);
-      gl.uniform2fv(u_trail, trailPos);
-    }
-  }
-  function draw(){
+    gl.uniform1f(u_ignite, staticMode ? 1 : ignite);
+    gl.uniform1f(u_scroll, scroll);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    // Pass 2: onto the screen at native pixels, with the grain
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+    gl.useProgram(G.p);
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    const k = Math.floor(t * 24);
+    gl.uniform2f(g_seed, (k * 37) % 997, (k * 61) % 991);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }
   function frame(){
     raf = 0;
     if (disposed || !visible || document.hidden || staticMode) return;
     const t = now();
-    const dt = Math.min(t - lastT, 0.05);
+    // A looser step cap than a physics loop would use: at a low frame rate a
+    // 50ms cap would stretch the load-in into a crawl
+    ignite = Math.min(ignite + Math.min(t - lastT, 0.25) / o.igniteDur, 1);
     lastT = t;
-    mouse.x += (mouse.tx - mouse.x) * 0.10;
-    mouse.y += (mouse.ty - mouse.y) * 0.10;
-    const aspect = canvas.width / canvas.height;
-    for (const w of motes) stepMote(w, dt, t, aspect);
-    sampleTrails(t);
-    setFrameUniforms(t);
-    draw();
+    draw(t);
     raf = requestAnimationFrame(frame);
   }
   function drawOnce(){
     if (disposed) return;
-    const aspect = canvas.width / canvas.height;
-    for (const w of motes) stepMote(w, 0, now(), aspect);
-    setFrameUniforms(now());
-    draw();
-  }
-  let burstUntil = 0, burstRaf = 0;
-  function staticBurst(){
-    burstUntil = performance.now() + (o.rippleLife * 1000 + 200);
-    if (!burstRaf) burstRaf = requestAnimationFrame(function loop(){
-      burstRaf = 0;
-      drawOnce();
-      if (!disposed && performance.now() < burstUntil)
-        burstRaf = requestAnimationFrame(loop);
-    });
+    draw(now());
   }
   function kick(){
     if (disposed) return;
@@ -495,18 +402,17 @@ export function initLightplay(canvas, options = {}) {
   }
 
   resize();
+  measureQuiet();
   syncTheme();
   kick();
 
   return function dispose(){
     disposed = true;
     if (raf) cancelAnimationFrame(raf);
-    if (burstRaf) cancelAnimationFrame(burstRaf);
     removeEventListener('resize', onResize);
-    removeEventListener('pointermove', onMove);
-    removeEventListener('pointerdown', onDown);
+    removeEventListener('scroll', onScroll);
     reduced.removeEventListener('change', onReduced);
-    schemeMQ.removeEventListener('change', syncTheme);
+    schemeMQ.removeEventListener('change', onScheme);
     document.removeEventListener('visibilitychange', onVis);
     themeObs.disconnect();
     io.disconnect();

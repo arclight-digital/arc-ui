@@ -207,25 +207,29 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
 
   <!-- Hero -->
   <header class="hero">
-    <!-- The whole light system is one WebGL pass: nebula lobes, caustic
-         fields, light shafts, drifting motes, the dot grid, grain — all in
+    <!-- The whole light system is one WebGL canvas: plasma filaments and
+         caustic shimmer, chromatic fringes, per-pixel film grain — all in
          arc-lightplay.js. It reads the two accent tokens live and re-reads
          them whenever <html>'s data-theme/class/style mutate, so the swatch
          demo and the theme toggle recolor it with zero wiring here. -->
     <canvas class="hero__lightplay" data-lightplay aria-hidden="true"></canvas>
+    <!-- A soft wash of the page's own ground behind the copy and the
+         showcase: the beam stays loud at the edges and quiet where people
+         read. -->
+    <div class="hero__wash" aria-hidden="true"></div>
     <div class="hero__content">
       <div class="hero__copy">
         <h1 class="hero__headline">
-          <span class="hero__headline-top">Components that</span>
+          <span class="hero__headline-top">One design system.</span>
           <span class="hero__headline-glow-wrap">
-            <span class="hero__headline-glow">glow.</span>
-            <span class="hero__headline-glow-shadow" aria-hidden="true">glow.</span>
+            <span class="hero__headline-glow">Every framework.</span>
+            <span class="hero__headline-glow-shadow" aria-hidden="true">Every framework.</span>
           </span>
         </h1>
         <p class="hero__body">
-          <span class="hero__body-line">{components.length} dark-first components, written once as standard Web&nbsp;Components</span>
-          <span class="hero__body-line">and generated into native packages for seven&nbsp;frameworks.</span>
-          <span class="hero__body-line hero__body-line--kicker">Change framework without changing your design&nbsp;system.</span>
+          {components.length} accessible, server-renderable components, written once as Web&nbsp;Components
+          and generated into native packages for React, Vue, Svelte, Angular, Solid and Preact.
+          Theme every one of them with two&nbsp;colors.
         </p>
         <arc-code-block variant="basic" language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block>
         <div class="hero__actions">
@@ -233,45 +237,60 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
             Get Started
             <svg slot="suffix" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </arc-button>
-          <arc-button href="/docs/components" variant="secondary" size="md">Explore Components</arc-button>
+          <arc-button href="/docs/components" variant="secondary" size="md">Browse all {components.length}</arc-button>
         </div>
       </div>
 
-      <!-- The proof of the headline: real components, live and glowing in
-           the shader's light. Interactive for real — the toggle toggles, the
-           slider slides. Reveals only once its elements have upgraded (see
-           initHero): fading in unstyled boxes was the old stream's
-           documented failure, and the same rule holds here. -->
-      <div class="hero__cluster">
-        <div class="cluster-item" style="--x:38%; --y:0%;  --dur:12.5s; --delay:-4s;   --tint:var(--accent-primary-rgb)">
-          <arc-badge variant="success">Stable</arc-badge>
+      <!-- The showcase: one small, working app screen built only from ARC
+           components. Everything in it is live — the tabs switch, the toggle
+           toggles, the rows take focus. It reveals once its elements have
+           upgraded (see initHero), never as unstyled boxes. -->
+      <figure class="hero__showcase" aria-label="An example deploy dashboard built with ARC UI">
+        <div class="showcase__chrome">
+          <span class="showcase__orbs" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="showcase__title">edge-cache</span>
+          <arc-badge variant="success" size="sm">Live</arc-badge>
         </div>
-        <div class="cluster-item" style="--x:60%; --y:8%;  --dur:9s;    --delay:-2s;   --tint:var(--accent-primary-rgb)">
-          <arc-stat value={String(components.length)} label="Components" trend="up" change="+7"></arc-stat>
+        <div class="showcase__body">
+          <div class="showcase__bar">
+            <arc-segmented-control value="overview" aria-label="Dashboard view">
+              <arc-option value="overview">Overview</arc-option>
+              <arc-option value="deploys">Deploys</arc-option>
+              <arc-option value="logs">Logs</arc-option>
+            </arc-segmented-control>
+            <arc-avatar-group max="3" overlap="sm">
+              <arc-avatar name="Nina Park" size="sm"></arc-avatar>
+              <arc-avatar name="Rio Kim" size="sm"></arc-avatar>
+              <arc-avatar name="Ava Lane" size="sm"></arc-avatar>
+              <arc-avatar name="Sam Ortiz" size="sm"></arc-avatar>
+            </arc-avatar-group>
+          </div>
+          <div class="showcase__stats">
+            <arc-stat size="sm" value="99.98%" label="Uptime"></arc-stat>
+            <arc-stat size="sm" value="142ms" label="p95 latency"></arc-stat>
+            <arc-stat size="sm" value="2.4k" label="Requests / s" trend="up" change="+12%"></arc-stat>
+          </div>
+          <arc-sparkline class="showcase__spark" data="18,22,19,26,24,31,28,35,33,41,38,46,44,52" fill height="56"></arc-sparkline>
+          <arc-list class="showcase__list" size="sm" variant="separated">
+            <arc-list-item value="d1">
+              <arc-avatar slot="prefix" name="Nina Park" size="sm"></arc-avatar>
+              Promote to production
+              <span slot="description">Nina · 2 min ago</span>
+              <arc-tag slot="suffix" variant="success" size="sm">Live</arc-tag>
+            </arc-list-item>
+            <arc-list-item value="d2">
+              <arc-avatar slot="prefix" name="Rio Kim" size="sm"></arc-avatar>
+              Canary: new cache keys
+              <span slot="description">Rio · 18 min ago</span>
+              <arc-tag slot="suffix" variant="warning" size="sm">20%</arc-tag>
+            </arc-list-item>
+          </arc-list>
+          <div class="showcase__foot">
+            <arc-toggle checked size="sm" label="Auto-promote canaries"></arc-toggle>
+            <arc-button variant="primary" size="sm">Deploy</arc-button>
+          </div>
         </div>
-        <div class="cluster-item" style="--x:4%;  --y:14%; --dur:10.5s; --delay:-7s;   --tint:var(--accent-secondary-rgb)">
-          <arc-toggle checked label="Dark mode"></arc-toggle>
-        </div>
-        <div class="cluster-item" style="--x:26%; --y:36%; --dur:11s;   --delay:-9s;   --z:1; --w:200px; --tint:var(--accent-primary-rgb)">
-          <arc-slider value="64" label="Glow"></arc-slider>
-        </div>
-        <div class="cluster-item" style="--x:83%; --y:48%; --dur:7.5s;  --delay:-1s;   --tint:var(--accent-secondary-rgb)">
-          <arc-avatar name="Arc Light" status="online"></arc-avatar>
-        </div>
-        <div class="cluster-item" style="--x:2%;  --y:48%; --dur:8s;    --delay:-4.5s; --tint:var(--accent-primary-rgb)">
-          <arc-rating value="5" readonly></arc-rating>
-        </div>
-        <div class="cluster-item" style="--x:10%; --y:70%; --dur:13s;   --delay:-6s;   --tint:var(--accent-secondary-rgb)">
-          <arc-chip selected>Web Components</arc-chip>
-        </div>
-        <div class="cluster-item" style="--x:58%; --y:60%; --dur:9.5s;  --delay:-5.5s; --w:150px; --tint:var(--accent-primary-rgb)">
-          <arc-sparkline data="4,9,6,12,9,16,13,20" fill></arc-sparkline>
-        </div>
-        <div class="cluster-item" style="--x:34%; --y:84%; --dur:11.5s; --delay:-8s;   --w:200px; --tint:var(--accent-secondary-rgb)">
-          <arc-progress value="72" label="Deploying"></arc-progress>
-        </div>
-      </div>
-      </div>
+      </figure>
     </div>
   </header>
 
@@ -282,14 +301,13 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     <section class="native">
       <div class="native__inner">
         <div class="native__header" data-reveal="blur-in">
-          <span class="section-label">Not a wrapper</span>
           <h2 class="statement">
             <span class="statement__quiet">One component.</span>
             <span class="statement__lit">Seven dialects.</span>
           </h2>
           <p class="section-desc">
-            <span class="section-desc__line">Prism generates a real, typed package per framework from one Lit source.</span>
-            <span class="section-desc__line">Hand-written wrappers: zero.</span>
+            <span class="section-desc__line">Prism generates a typed package for each framework from one Lit source, bindings and events included.</span>
+            <span class="section-desc__line">Nothing is wrapped by hand.</span>
           </p>
         </div>
 
@@ -319,14 +337,13 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     <section class="changed">
       <div class="changed__inner">
         <div class="changed__main" data-reveal="blur-in">
-          <span class="section-label">Changelog</span>
           <h2 class="statement">
             <span class="statement__quiet">What changed</span>
             <span class="statement__lit">in v{latestRelease.data.version}.</span>
           </h2>
           <p class="section-desc">
             <span class="section-desc__line">{latestRelease.data.title}.</span>
-            <span class="section-desc__line changed__date">Published {releaseDate}. All packages version together.</span>
+            <span class="section-desc__line changed__date">Released {releaseDate}. Every package ships at the same version.</span>
           </p>
           <p class="changed__lead">{releaseLead}</p>
         </div>
@@ -350,14 +367,13 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     <section class="yours">
       <div class="yours__inner">
         <div class="yours__header" data-reveal="blur-in">
-          <span class="section-label">Yours, not ours</span>
           <h2 class="statement">
             <span class="statement__quiet">Yours,</span>
             <span class="statement__lit">all the way down.</span>
           </h2>
           <p class="section-desc">
-            <span class="section-desc__line">Override four tokens and every gradient, glow and focus ring follows.</span>
-            <span class="section-desc__line">The utility classes read the same tokens, so your layout moves with them.</span>
+            <span class="section-desc__line">Set two colors, four tokens, and every gradient, glow and focus ring follows.</span>
+            <span class="section-desc__line">The utility classes read the same tokens, so your layout follows too.</span>
           </p>
         </div>
         <div class="yours__console" data-reveal="fade-up">
@@ -390,9 +406,9 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
               </figcaption>
               <pre class="theme-file__code"><code><span class="theme-file__line"><span class="tk-t">:root</span> <span class="tk-p">&#123;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-primary</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="p">{defaultAccent.p}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-primary-rgb</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="prgb">{defaultAccent.prgb}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-secondary</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="s">{defaultAccent.s}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-secondary-rgb</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="srgb">{defaultAccent.srgb}</span><span class="tk-p">;</span></span><span class="theme-file__line"><span class="tk-p">&#125;</span></span></code></pre>
               <p class="theme-file__caption">
-                That file is the entire theme, applied to this page for real — compound tokens
-                reference these four, so every gradient, glow and focus ring follows.
-                <a class="chapter-link" href="/synth">Build yours →</a>
+                That file is the whole theme, and it is live: pick a swatch and this page
+                repaints, the light behind the hero included.
+                <a class="chapter-link" href="/synth">Build a theme in the Synthesizer →</a>
               </p>
             </figure>
             <div class="tokens-demo">
@@ -411,9 +427,9 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
                 </div>
               </div>
               <p class="tokens-demo__caption">
-                {utilityClassCount} utility classes and every component read the same tokens —
-                spacing and radius here move only this card, exactly the way a scoped override
-                would in your app. <a class="chapter-link" href="/docs/utilities">Utilities →</a>
+                {utilityClassCount} utility classes read the same tokens as the components. These
+                sliders scope their change to this card, the way an override on a container
+                works in your app. <a class="chapter-link" href="/docs/utilities">Utility classes →</a>
               </p>
             </div>
           </div>
@@ -425,13 +441,12 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     <section class="gauntlet">
       <div class="gauntlet__inner">
         <div class="gauntlet__header" data-reveal="blur-in">
-          <span class="section-label">Rigor</span>
           <h2 class="statement">
             <span class="statement__quiet">Every push</span>
             <span class="statement__lit">runs the gauntlet.</span>
           </h2>
           <p class="section-desc">
-            The real CI gates on this repository, under their real names.
+            Straight from this repository's CI, under the names it uses.
           </p>
         </div>
         <div class="gauntlet__stats" data-reveal-stagger="80">
@@ -489,7 +504,8 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
           </li>
         </ul>
         <p class="gauntlet__note" data-reveal="fade-up">
-          APG patterns, focus management and reduced motion are built per component.
+          Keyboard patterns follow the ARIA Authoring Practices, and every component
+          manages its own focus and honors reduced motion.
           <a class="chapter-link" href="/docs/accessibility">Accessibility →</a>
         </p>
       </div>
@@ -502,9 +518,9 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
          guard when the animation ended: visible, invisible, visible. A plain
          div has no guard to fight. -->
     <div data-reveal="fade-up">
-    <arc-cta-banner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
+    <arc-cta-banner headline="Build something that glows.">
       <p>
-        Install in seconds. Build in minutes. Production-ready out of the box.
+        One package for plain HTML, a native one for each of seven frameworks. MIT licensed.
       </p>
       <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">
         Get Started
@@ -547,23 +563,34 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     // astro:page-load fire, and a second context on one canvas is a leak
     if ((canvas as any).__arcLightplay) return;
     (canvas as any).__arcLightplay = true;
-    const dispose = initLightplay(canvas);
     const hero = canvas.closest('.hero');
+    // The field defocuses behind the copy and the top bar so their text
+    // keeps its contrast
+    const dispose = initLightplay(canvas, {
+      quiet: [hero?.querySelector('.hero__copy'), document.querySelector('arc-top-bar')],
+    });
     // Reveal on the frame after the shader's first draw, so load-time jank
     // happens behind the fade instead of in front of the visitor
     requestAnimationFrame(() => hero?.classList.add('hero--live'));
     document.addEventListener('astro:before-swap', () => dispose(), { once: true });
 
-    /* The cluster reveals on its own signal: not when the shader is ready,
+    /* The showcase reveals on its own signal: not when the shader is ready,
        but when the components it is showing have actually upgraded — fading
        in unstyled boxes that then pop into components was the old stream's
        documented failure. The timeout is not a nicety: a component that never
-       registers must leave the cluster revealed slightly early, never
+       registers must leave the showcase revealed slightly early, never
        invisible. */
-    const cluster = hero?.querySelector('.hero__cluster');
-    if (cluster) {
+    const showcase = hero?.querySelector('.hero__showcase');
+    // arc-sparkline draws at a fixed pixel width; hand it its column's
+    const spark = showcase?.querySelector<HTMLElement & { width: number }>('.showcase__spark');
+    if (spark?.parentElement) {
+      const fit = new ResizeObserver(([e]) => { spark.width = Math.round(e.contentRect.width); });
+      fit.observe(spark.parentElement);
+      document.addEventListener('astro:before-swap', () => fit.disconnect(), { once: true });
+    }
+    if (showcase) {
       const tags = [...new Set(
-        [...cluster.querySelectorAll('*')]
+        [...showcase.querySelectorAll('*')]
           .map((el) => el.tagName.toLowerCase())
           .filter((t) => t.includes('-')),
       )];
@@ -571,7 +598,7 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
       const show = () => {
         if (done) return;
         done = true;
-        requestAnimationFrame(() => hero?.classList.add('hero--cluster-live'));
+        requestAnimationFrame(() => hero?.classList.add('hero--showcase-live'));
       };
       Promise.all(tags.map((t) => customElements.whenDefined(t))).then(show);
       setTimeout(show, 2500);
@@ -793,30 +820,25 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     min-height: 85vh;
     display: flex;
     align-items: center;
-    /* Two theme knobs survive the tunnel's departure: the copy's own glow
-       follows --glow-a, and the cluster's components melt into the light via
-       --stream-blend on dark (screen lifts their dark surfaces away) while
-       light mode composites them normally. The shader handles its own
-       light/dark internally. */
+    /* The headline's bloom follows --glow-a, calmer on light. The shader
+       handles its own light/dark internally. */
     --glow-a: 1;
-    --stream-blend: screen;
   }
 
   :global([data-theme='light']) .hero {
     --glow-a: 0.4;
-    --stream-blend: normal;
   }
 
   @media (prefers-color-scheme: light) {
     :global([data-theme='auto']) .hero {
       --glow-a: 0.4;
-      --stream-blend: normal;
     }
   }
 
   /* ── Lightplay canvas ──
      The whole hero light system is one WebGL pass (scripts/arc-lightplay.js):
-     nebula lobes, caustic fields, light shafts, motes, dot grid, grain. It
+     plasma filaments and caustic shimmer, chromatic fringes, per-pixel
+     film grain. It
      composites premultiplied alpha over the page, so the body's own
      --bg-deep is the darkness the light plays in — there is no second
      background to keep in sync. */
@@ -843,6 +865,23 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     }
   }
 
+  /* ── Wash ──
+     The page's own ground, laid softly over the beam where people read: a
+     broad pool behind the copy and a tighter one behind the showcase. Built
+     from --bg-deep at partial strength via color-mix, so it is dark on dark
+     and light on light with no second definition. */
+  .hero__wash {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    --wash: color-mix(in oklab, var(--bg-deep) 35%, rgb(0 0 0 / 0));
+    --wash-0: color-mix(in oklab, var(--bg-deep) 0%, rgb(0 0 0 / 0));
+    background:
+      radial-gradient(ellipse 42% 58% at 24% 54%, var(--wash), var(--wash-0) 100%),
+      radial-gradient(ellipse 34% 52% at 72% 54%, color-mix(in oklab, var(--bg-deep) 15%, rgb(0 0 0 / 0)), var(--wash-0) 100%);
+  }
+
   .hero__content {
     position: relative;
     z-index: 2;
@@ -850,7 +889,7 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     margin-inline: auto;
     width: 100%;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
     align-items: center;
     gap: var(--space-2xl) var(--space-3xl);
   }
@@ -873,7 +912,7 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
   }
 
   .hero__headline-top {
-    font-size: clamp(32px, 4.2vw, 52px);
+    font-size: clamp(30px, 3.6vw, 50px);
     font-weight: 200;
     letter-spacing: -1px;
     color: var(--text-primary);
@@ -887,9 +926,9 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
 
   .hero__headline-glow {
     position: relative;
-    font-size: clamp(52px, 7.5vw, 104px);
+    font-size: clamp(40px, 4.6vw, 64px);
     font-weight: 600;
-    letter-spacing: -3px;
+    letter-spacing: -0.035em;
     background: var(--gradient-accent-text);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -903,9 +942,9 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
   .hero__headline-glow-shadow {
     position: absolute;
     inset: 0;
-    font-size: clamp(52px, 7.5vw, 104px);
+    font-size: clamp(40px, 4.6vw, 64px);
     font-weight: 600;
-    letter-spacing: -3px;
+    letter-spacing: -0.035em;
     color: transparent;
     /* Dialled back now that the tunnel behind it blooms: the word was
        competing with its own backdrop and the two glows summed into haze.
@@ -935,24 +974,10 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
 
   .hero__body {
     color: var(--text-secondary);
-    max-width: 46ch;
+    max-width: 48ch;
     text-wrap: pretty;
     font-size: var(--text-md);
     line-height: 1.7;
-  }
-
-  /* The hand-broken lines were written for a centered full-width hero; in a
-     half column they re-wrap naturally, and only the kicker keeps its own
-     line. */
-  .hero__body-line {
-    display: inline;
-  }
-
-  .hero__body-line--kicker {
-    display: block;
-    margin-top: var(--space-md);
-    font-size: var(--text-sm);
-    color: var(--text-muted);
   }
 
   .hero__actions {
@@ -966,18 +991,6 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
      Every chapter opens the same way: eyebrow, a two-line statement with one
      lit line, one sentence. The statement is the section header now — there
      are no card grids to carry the argument, the artifact below it does. */
-  .section-label {
-    font-family: var(--font-accent);
-    font-weight: var(--font-label-weight, 600);
-    font-size: var(--text-xs);
-    letter-spacing: var(--section-title-spacing, 4px);
-    text-transform: uppercase;
-    background: var(--gradient-accent-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
   .statement {
     display: flex;
     flex-direction: column;
@@ -1047,47 +1060,109 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     text-decoration: underline;
   }
 
-  /* ── Hero cluster: the headline, demonstrated ──
-     Real components floating in the shader's light. Positions are percentages
-     of the cluster box, so the constellation compresses with its column.
-     screen blend (dark) melts their dark surfaces away — forms made of
-     light — and the tinted double drop-shadow is each item's own glow. */
-  .hero__cluster {
-    position: relative;
-    min-height: 440px;
+  /* ── Showcase: one working app screen ──
+     A real window made of real components, set on a frosted pane of the
+     page's own surface so it reads cleanly over the beam. The frost is the
+     point, not decoration: without it the rays run straight through the
+     numbers. It fades up once every element inside has upgraded. */
+  .hero__showcase {
+    margin: 0;
     min-width: 0;
+    max-width: 520px;
+    justify-self: end;
+    width: 100%;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-subtle);
+    background: color-mix(in oklab, var(--bg-card) 76%, rgb(0 0 0 / 0));
+    backdrop-filter: blur(18px) saturate(1.2);
+    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    box-shadow:
+      0 24px 60px -20px rgb(0 0 0 / 0.55),
+      0 0 60px -10px rgba(var(--accent-primary-rgb), calc(0.22 * var(--glow-a)));
+    overflow: clip;
     opacity: 0;
-    transition: opacity 1.1s ease;
+    transform: translateY(12px);
+    transition: opacity 0.8s var(--ease-out, ease-out), transform 0.8s var(--ease-out, ease-out);
+    position: relative;
   }
 
-  .hero--cluster-live .hero__cluster {
-    opacity: 1;
-  }
-
-  .cluster-item {
+  /* The top edge catches the beam: a lit line, brightest in the middle */
+  .hero__showcase::before {
+    content: '';
     position: absolute;
-    left: var(--x);
-    top: var(--y);
-    width: var(--w, auto);
-    mix-blend-mode: var(--stream-blend);
-    filter:
-      saturate(1.3) brightness(1.1)
-      drop-shadow(0 0 10px rgba(var(--tint), calc(0.55 * var(--glow-a))))
-      drop-shadow(0 0 34px rgba(var(--tint), calc(0.3 * var(--glow-a))));
-    animation: cluster-float var(--dur) ease-in-out infinite alternate;
-    animation-delay: var(--delay);
+    inset: 0 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg,
+      rgba(var(--accent-secondary-rgb), 0),
+      rgba(var(--accent-secondary-rgb), 0.7) 55%,
+      rgba(var(--accent-primary-rgb), 0));
   }
 
-  /* Durations share no common factor, so the nine never sync into a pulse */
-  @keyframes cluster-float {
-    from { transform: translateY(-5px); }
-    to   { transform: translateY(6px); }
+  .hero--showcase-live .hero__showcase {
+    opacity: 1;
+    transform: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .cluster-item { animation: none; }
+    .hero__showcase { transform: none; transition: opacity 0.4s ease; }
   }
 
+  .showcase__chrome {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .showcase__orbs {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .showcase__orbs i {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--orb-close);
+  }
+
+  .showcase__orbs i:nth-child(2) { background: var(--orb-minimize); }
+  .showcase__orbs i:nth-child(3) { background: var(--orb-maximize); }
+
+  .showcase__title {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: var(--code-size, var(--text-sm));
+    color: var(--text-secondary);
+  }
+
+  .showcase__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+
+  .showcase__bar,
+  .showcase__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .showcase__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    gap: var(--space-md);
+  }
+
+  .showcase__spark {
+    display: block;
+    width: 100%;
+  }
 
   /* ── Native: the framework switcher ──
      Restored as its own full-width chapter — prism is a headline feature, but
@@ -1715,11 +1790,12 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     .hero__content {
       grid-template-columns: 1fr;
     }
-    /* Same judgment the old stream made: when the hero stacks, a
-       constellation under the copy is filler, and it is also the most
-       expensive thing on the page — nine blended, glowing, animated items. */
-    .hero__cluster {
-      display: none;
+    /* Stacked, the showcase sits under the copy at the copy's own width */
+    .hero__showcase {
+      justify-self: start;
+    }
+    .hero__wash {
+      background: color-mix(in oklab, var(--bg-deep) 55%, rgb(0 0 0 / 0));
     }
   }
 
@@ -1787,6 +1863,6 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
   @media (max-width: 480px) {
     .hero__headline-top { font-size: 28px; }
     .hero__headline-glow,
-    .hero__headline-glow-shadow { font-size: 52px; }
+    .hero__headline-glow-shadow { font-size: 36px; }
   }
 </style>

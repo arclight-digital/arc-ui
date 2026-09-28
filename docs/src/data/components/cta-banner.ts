@@ -1,7 +1,7 @@
 import type { ComponentDef } from './_types';
 
-const previewMarkup = `<arc-cta-banner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
-  <p>Install in seconds. Build in minutes. Ship production-ready interfaces that look incredible out of the box.</p>
+const previewMarkup = `<arc-cta-banner eyebrow="Ready when you are" headline="Build something that glows.">
+  <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
   <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</arc-button>
   <arc-button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</arc-button>
 </arc-cta-banner>`;
@@ -64,8 +64,8 @@ ${previewMarkup}`,
 
 export function PageCTA() {
   return (
-    <CtaBanner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
-      <p>Install in seconds. Build in minutes. Ship production-ready interfaces.</p>
+    <CtaBanner eyebrow="Ready when you are" headline="Build something that glows.">
+      <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
       <Button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</Button>
       <Button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</Button>
     </CtaBanner>
@@ -80,8 +80,8 @@ import { Button, CtaBanner } from '@arclux/arc-ui-vue';
 </script>
 
 <template>
-  <CtaBanner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
-    <p>Install in seconds. Build in minutes. Ship production-ready interfaces.</p>
+  <CtaBanner eyebrow="Ready when you are" headline="Build something that glows.">
+    <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
     <Button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</Button>
     <Button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</Button>
   </CtaBanner>
@@ -94,8 +94,8 @@ import { Button, CtaBanner } from '@arclux/arc-ui-vue';
   import { Button, CtaBanner } from '@arclux/arc-ui-svelte';
 </script>
 
-<CtaBanner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
-  <p>Install in seconds. Build in minutes. Ship production-ready interfaces.</p>
+<CtaBanner eyebrow="Ready when you are" headline="Build something that glows.">
+  <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
   <Button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</Button>
   <Button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</Button>
 </CtaBanner>`,
@@ -109,8 +109,8 @@ import { Button, CtaBanner } from '@arclux/arc-ui-angular';
 @Component({
   imports: [Button, CtaBanner],
   template: \`
-    <arc-cta-banner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
-      <p>Install in seconds. Build in minutes. Ship production-ready interfaces.</p>
+    <arc-cta-banner eyebrow="Ready when you are" headline="Build something that glows.">
+      <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
       <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</arc-button>
       <arc-button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</arc-button>
     </arc-cta-banner>
@@ -125,8 +125,8 @@ export class PageCTAComponent {}`,
 
 export function PageCTA() {
   return (
-    <CtaBanner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
-      <p>Install in seconds. Build in minutes. Ship production-ready interfaces.</p>
+    <CtaBanner eyebrow="Ready when you are" headline="Build something that glows.">
+      <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
       <Button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</Button>
       <Button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</Button>
     </CtaBanner>
@@ -140,8 +140,8 @@ export function PageCTA() {
 
 export function PageCTA() {
   return (
-    <CtaBanner eyebrow="Ready to build?" headline="Start shipping with ARC UI.">
-      <p>Install in seconds. Build in minutes. Ship production-ready interfaces.</p>
+    <CtaBanner eyebrow="Ready when you are" headline="Build something that glows.">
+      <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
       <Button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</Button>
       <Button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</Button>
     </CtaBanner>
