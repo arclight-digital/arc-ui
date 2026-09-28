@@ -24,8 +24,8 @@
  *     pass draws it at native device pixels and adds the grain there, so the
  *     grain is crisp and the expensive pass costs about half. Paused when
  *     offscreen or tab-hidden; a static frame under prefers-reduced-motion.
- *   - `quiet`: up to two elements (the copy, the top bar); the field
- *     defocuses behind their boxes, re-measured on resize and scroll.
+ *   - `quiet`: up to four elements (the copy, the top bar, a panel); the
+ *     field defocuses behind them, re-measured on resize and scroll.
  *
  * Usage (Astro):
  *   <canvas class="lightplay" data-lightplay></canvas>
@@ -37,7 +37,7 @@
  */
 
 const DEFAULTS = {
-  quiet: [],           // up to two elements the field defocuses behind
+  quiet: [],           // up to four elements the field defocuses behind
   igniteDur: 2.6,      // seconds for the light to come up on load
   dprCap: 2,           // devicePixelRatio ceiling for the grain pass
   lightScale: 0.75,    // light pass resolution relative to the grain pass
@@ -109,7 +109,7 @@ export function initLightplay(canvas, options = {}) {
     uniform float u_light;
     uniform float u_ignite;
     uniform float u_scroll;
-    uniform vec4  u_quiet[2]; // uv boxes the field defocuses behind (x0, y0, x1, y1)
+    uniform vec4  u_quiet[4]; // uv boxes the field defocuses behind (x0, y0, x1, y1)
 
     float h2(vec2 p){
       p = fract(p * vec2(123.34, 456.21));
@@ -138,14 +138,20 @@ export function initLightplay(canvas, options = {}) {
       // ---- depth of field: behind the copy the field is out of focus.
       // The body reads this to soften its sharp detail rather than darken,
       // so the light stays alive around the text with nothing hard to
-      // fight the letters. Soft-edged, so it reads as depth, not a mask.
+      // fight the letters.
+      // The zone is a superellipse around each box, not the box: a flat
+      // rectangle with a feathered rim showed its straight edges wherever
+      // the copy was wide. Distance is normalized to the box plus a fixed
+      // pad, so a big box gets a long falloff and a thin one (the top bar)
+      // still fades out over a real distance instead of a hard line.
       float blur = 0.0;
-      for (int i = 0; i < 2; i++){
+      for (int i = 0; i < 4; i++){
         vec4 b = u_quiet[i];
         vec2 qc = (b.xy + b.zw) * 0.5;
-        vec2 qh = abs(b.zw - b.xy) * 0.5;
-        vec2 qd = max(abs(uv - qc) - qh, 0.0) * vec2(aspect, 1.0);
-        blur = max(blur, (1.0 - smoothstep(0.0, 0.2, length(qd))) * step(0.0001, qh.x));
+        vec2 hs = abs(b.zw - b.xy) * 0.5 * vec2(aspect, 1.0);
+        vec2 n = abs(uv - qc) * vec2(aspect, 1.0) / (hs + 0.12);
+        float d = pow(pow(n.x, 3.0) + pow(n.y, 3.0), 1.0 / 3.0);
+        blur = max(blur, (1.0 - smoothstep(0.6, 1.3, d)) * step(0.0001, hs.x));
       }
 
       vec3 em = vec3(0.0);
@@ -264,17 +270,52 @@ export function initLightplay(canvas, options = {}) {
     }
     return [0.3, 0.5, 0.97];
   }
+  // Theme changes are eased, not cut. The page's own CSS transitions its
+  // colors, and a shader that snapped to the new accents or scheme on the
+  // next frame read as a flicker against it: most of all while the hue
+  // dial streams values, and on a light/dark switch, where the whole field
+  // inverted in one frame. syncTheme sets targets; the frame loop chases
+  // them. The first read, and reduced motion, snap.
+  const cur = { c1: [0, 0, 0], c2: [0, 0, 0], light: 0 };
+  const tgt = { c1: [0, 0, 0], c2: [0, 0, 0], light: 0 };
+  let themeSeeded = false;
   function syncTheme(){
     const cs = getComputedStyle(document.documentElement);
     const attr = document.documentElement.dataset.theme;
     const light = attr === 'light' || attr === 'dark' ? attr === 'light'
                 : !matchMedia('(prefers-color-scheme: dark)').matches;
+    tgt.c1 = parseColor(cs.getPropertyValue('--accent-primary'));
+    tgt.c2 = parseColor(cs.getPropertyValue('--accent-secondary'));
+    tgt.light = light ? 1 : 0;
+    if (!themeSeeded || staticMode){
+      themeSeeded = true;
+      cur.c1 = tgt.c1.slice(); cur.c2 = tgt.c2.slice(); cur.light = tgt.light;
+    }
+    uploadTheme();
+    kick();
+  }
+  function uploadTheme(){
     gl.useProgram(L.p);
-    gl.uniform3fv(u_c1, parseColor(cs.getPropertyValue('--accent-primary')));
-    gl.uniform3fv(u_c2, parseColor(cs.getPropertyValue('--accent-secondary')));
-    gl.uniform1f(u_light, light ? 1 : 0);
+    gl.uniform3fv(u_c1, cur.c1);
+    gl.uniform3fv(u_c2, cur.c2);
+    gl.uniform1f(u_light, cur.light);
     gl.useProgram(G.p);
-    gl.uniform1f(g_light, light ? 1 : 0);
+    gl.uniform1f(g_light, cur.light);
+  }
+  // One step toward the targets; dt in seconds, ~200ms to settle
+  function stepTheme(dt){
+    const k = 1 - Math.exp(-dt / 0.07);
+    let moving = false;
+    const mix = (a, b) => {
+      const v = a + (b - a) * k;
+      if (Math.abs(b - v) > 1e-3) { moving = true; return v; }
+      return b;
+    };
+    cur.c1 = cur.c1.map((v, i) => mix(v, tgt.c1[i]));
+    cur.c2 = cur.c2.map((v, i) => mix(v, tgt.c2[i]));
+    cur.light = mix(cur.light, tgt.light);
+    uploadTheme();
+    return moving;
   }
   const themeObs = new MutationObserver(() => { syncTheme(); if (staticMode) drawOnce(); });
   themeObs.observe(document.documentElement,
@@ -284,6 +325,9 @@ export function initLightplay(canvas, options = {}) {
   schemeMQ.addEventListener('change', onScheme);
 
   // ---------------- sizing / input / loop ----------------
+  // Returns whether the drawing buffer was reallocated. Reallocating clears
+  // it, so the caller redraws at once: waiting for the next animation frame
+  // put one empty frame on screen, a flash on every layout change.
   function resize(){
     const dpr = Math.min(devicePixelRatio || 1, o.dprCap);
     const w = Math.max(1, Math.round(canvas.clientWidth  * dpr));
@@ -302,12 +346,14 @@ export function initLightplay(canvas, options = {}) {
       gl.useProgram(G.p);
       gl.uniform2f(g_res, w, h);
       gl.uniform1i(g_tex, 0);
+      return true;
     }
+    return false;
   }
   // The focus boxes, in the canvas's uv space (y up). A missing or hidden
   // element sends a zero-size box, which the shader reads as "nothing here".
-  const quietEls = [].concat(o.quiet ?? []).filter(Boolean).slice(0, 2);
-  const quietBoxes = new Float32Array(8);
+  const quietEls = [].concat(o.quiet ?? []).filter(Boolean).slice(0, 4);
+  const quietBoxes = new Float32Array(16);
   function measureQuiet(){
     const cr = canvas.getBoundingClientRect();
     quietBoxes.fill(0);
@@ -320,7 +366,11 @@ export function initLightplay(canvas, options = {}) {
     gl.useProgram(L.p);
     gl.uniform4fv(u_quiet, quietBoxes);
   }
-  const onResize = () => { resize(); measureQuiet(); if (staticMode) drawOnce(); };
+  const onResize = () => {
+    const realloc = resize();
+    measureQuiet();
+    if (staticMode || realloc) drawOnce();
+  };
   addEventListener('resize', onResize);
   // The canvas's own box, not the window's: the hero changes size after init
   // — custom elements upgrade, the code window hydrates, fonts land — and a
@@ -386,7 +436,9 @@ export function initLightplay(canvas, options = {}) {
     const t = now();
     // A looser step cap than a physics loop would use: at a low frame rate a
     // 50ms cap would stretch the load-in into a crawl
-    ignite = Math.min(ignite + Math.min(t - lastT, 0.25) / o.igniteDur, 1);
+    const dt = Math.min(t - lastT, 0.25);
+    ignite = Math.min(ignite + dt / o.igniteDur, 1);
+    stepTheme(dt);
     lastT = t;
     draw(t);
     raf = requestAnimationFrame(frame);

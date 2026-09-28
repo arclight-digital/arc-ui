@@ -4,7 +4,11 @@ import SiteTopBar from '../components/SiteTopBar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import { getCollection } from 'astro:content';
 import { components } from '../data/components/index';
-import { buildSteps, tokenCount, testCount, utilityClassCount, elementCount, version } from '../data/site-stats';
+import {
+  buildSteps, tokenCount, testCount, utilityClassCount, elementCount, version,
+  generatedFileCount, generatedLineCount, prismVersion,
+} from '../data/site-stats';
+import fs from 'node:fs';
 import { anchorFor, compareVersionsDesc } from '../lib/releases';
 import { armSnippet } from '@arclux/glint/full';
 import { tokens } from '../../../shared/tokens.js';
@@ -55,6 +59,101 @@ const defaultAccent = {
   srgb: tokens.rgb.accentSecondary,
 };
 
+// ── Prism chapter ──
+// One real component in, its real generated files out, all read at build
+// time. The excerpt is toggle.js's own declaration with the comments
+// dropped; each output's highlighted line is found by pattern in the file
+// Prism actually wrote, and the build fails if one stops matching, so the
+// chapter can never show a line the packages don't contain.
+const pkgFile = (p: string) =>
+  fs.readFileSync(new URL(`../../../packages/${p}`, import.meta.url), 'utf-8');
+const toggleSrc = pkgFile('web-components/src/input/toggle.js');
+const toggleFires = toggleSrc.match(/ \* @fires \{.+?\}> ?\} arc-change/)?.[0];
+const toggleProps = toggleSrc.match(/  static properties = \{[\s\S]*?\n  \};/)?.[0];
+if (!toggleFires || !toggleProps) throw new Error('index.astro: toggle.js excerpt no longer matches');
+const prismSource = [
+  `/**`,
+  ` * @tag arc-toggle`,
+  toggleFires,
+  ` */`,
+  `export class ArcToggle extends`,
+  `  DeclaredPropsMixin(FormControlMixin(LitElement)) {`,
+  toggleProps
+    .split('\n')
+    .filter((l) => l.trim() && !l.trim().startsWith('//'))
+    .join('\n'),
+  `}`,
+].join('\n');
+
+const prismOutputs = [
+  { id: 'react', name: 'React', path: 'react/src/input/Toggle.ts', lang: 'ts',
+    gets: 'Typed props and an onArcChange handler', key: /onArcChange: 'arc-change'[^,\n]*/ },
+  { id: 'vue', name: 'Vue', path: 'vue/src/input/Toggle.vue', lang: 'html',
+    gets: 'v-model:checked, read from the event’s detail', key: /'update:checked': \[value: boolean\]/ },
+  { id: 'svelte', name: 'Svelte', path: 'svelte/src/input/Toggle.svelte', lang: 'html',
+    gets: 'bind:checked, as a Svelte 5 rune', key: /checked = \$bindable\(\)/ },
+  { id: 'angular', name: 'Angular', path: 'angular/src/input/Toggle.ts', lang: 'ts',
+    gets: 'A ControlValueAccessor, so reactive forms just work', key: /class Toggle implements ControlValueAccessor/ },
+  { id: 'solid', name: 'Solid', path: 'solid/src/input/Toggle.tsx', lang: 'tsx',
+    gets: 'Events bound straight to the element', key: /on:arc-change=\{local\.onArcChange\}/ },
+  { id: 'preact', name: 'Preact', path: 'preact/src/input/Toggle.tsx', lang: 'tsx',
+    gets: 'A forwardRef that wires the events for you', key: /el\.addEventListener\('arc-change', fn\)/ },
+  { id: 'html', name: 'HTML', path: 'web-components/src/input/toggle.register.js', lang: 'js',
+    gets: 'No wrapper at all: the element registers itself', key: /customElements\.define\('arc-toggle', ArcToggle\)/ },
+].map((o) => {
+  const code = pkgFile(o.path).trimEnd();
+  const line = code.match(o.key)?.[0];
+  if (!line) throw new Error(`index.astro: no ${o.key} in ${o.path}`);
+  return { ...o, code, line, lines: code.split('\n').length, file: o.path.split('/').pop()! };
+});
+const prismDefault = 1; // Vue: the output that shows the most derivation
+
+// ── App chapter ──
+// The issue tracker's data. The list is rendered here, on the server; the
+// board, the sheet and every change after load are driven from the same
+// array in the page script (serialized into #app-data).
+const appStatuses = [
+  { id: 'todo', label: 'To do', variant: 'default' },
+  { id: 'doing', label: 'In progress', variant: 'primary' },
+  { id: 'review', label: 'In review', variant: 'secondary' },
+  { id: 'done', label: 'Done', variant: 'success' },
+];
+const appIssues = [
+  { id: 'ARC-198', title: 'Sheet snap points jitter on iOS Safari', who: 'Nina Park', status: 'review', priority: 'Urgent', points: 2,
+    body: 'Dragging past the middle snap point overshoots by a few pixels and settles back. Only in Safari, only with the toolbar collapsed.' },
+  { id: 'ARC-201', title: 'Cache keys drop the locale segment', who: 'Rio Kim', status: 'doing', priority: 'High', points: 3,
+    body: 'Two locales of the same page share a cache entry at the edge, so the second visitor gets the first one’s language.' },
+  { id: 'ARC-209', title: 'Empty state for the audit log', who: 'Ava Lane', status: 'doing', priority: 'Low', points: 1,
+    body: 'A new workspace opens the audit log to a blank table. It should say what will appear there and when.' },
+  { id: 'ARC-204', title: 'Contrast of disabled selects in dark mode', who: 'Ava Lane', status: 'todo', priority: 'Medium', points: 1,
+    body: 'The disabled trigger falls to 2.9:1 against the card surface. Lift it to the same step the disabled input uses.' },
+  { id: 'ARC-207', title: 'Keyboard reordering for pinned tabs', who: 'Nina Park', status: 'todo', priority: 'Low', points: 2,
+    body: 'Pinned tabs can be dragged but not moved from the keyboard. Alt and the arrow keys should move the focused tab.' },
+  { id: 'ARC-190', title: 'Promote canary builds automatically', who: 'Sam Ortiz', status: 'done', priority: 'High', points: 5,
+    body: 'A canary that holds its error budget for thirty minutes is promoted to production without a manual step.' },
+  { id: 'ARC-195', title: 'Retry budget for edge deploys', who: 'Rio Kim', status: 'done', priority: 'Medium', points: 3,
+    body: 'Failed edge pushes retry with backoff up to a per-deploy budget instead of retrying forever.' },
+  { id: 'ARC-188', title: 'Move billing to the v2 API', who: 'Sam Ortiz', status: 'done', priority: 'High', points: 8,
+    body: 'Invoices, usage and payment methods all read from v2. The v1 endpoints stay up, read-only, until the cycle ends.' },
+];
+const statusOf = (id: string) => appStatuses.find((s) => s.id === id)!;
+const appPeople = [...new Set(appIssues.map((i) => i.who))];
+// Open work per person, for the rail's bar list
+const appLoad = appPeople
+  .map((who) => ({
+    label: who.split(' ')[0],
+    value: appIssues.filter((i) => i.who === who && i.status !== 'done').reduce((n, i) => n + i.points, 0),
+  }))
+  .sort((a, b) => b.value - a.value);
+const appDone = appIssues.filter((i) => i.status === 'done').length;
+// Each tag links to its component's page, so "built from" is a list of
+// places to go, not a boast
+const appParts = [
+  'sidebar', 'page-header', 'breadcrumb', 'search', 'segmented-control', 'list', 'avatar', 'tag',
+  'kanban', 'chart', 'bar-list', 'progress', 'sheet', 'description-list', 'timeline', 'dialog',
+  'input', 'select', 'textarea', 'button', 'toast',
+];
+
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -68,129 +167,6 @@ const jsonLd = {
   offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
 };
 
-// Every line stays under ~56 characters so the window never scrolls or clips
-// in its hero column — a cut-off import line reads as a broken site, not as
-// "there is more code". The multi-line import is what makes that hold.
-const codeExamples = {
-  react: `import {
-  Button, Card, Input, Toggle,
-} from '@arclux/arc-ui-react';
-
-function Settings() {
-  return (
-    <Card>
-      <h3>Preferences</h3>
-      <Input label="Display name" />
-      <Toggle label="Dark mode" checked />
-      <Button variant="primary">Save</Button>
-    </Card>
-  );
-}`,
-  vue: `<template>
-  <Card>
-    <h3>Preferences</h3>
-    <Input label="Display name" />
-    <Toggle label="Dark mode" :checked="true" />
-    <Button variant="primary">Save</Button>
-  </Card>
-</template>
-
-<script setup>
-import {
-  Button, Card, Input, Toggle,
-} from '@arclux/arc-ui-vue';
-</script>`,
-  svelte: `<script>
-  import {
-    Button, Card, Input, Toggle,
-  } from '@arclux/arc-ui-svelte';
-</script>
-
-<Card>
-  <h3>Preferences</h3>
-  <Input label="Display name" />
-  <Toggle label="Dark mode" checked />
-  <Button variant="primary">Save</Button>
-</Card>`,
-  angular: `import { Component } from '@angular/core';
-import {
-  Button, Card, Input, Toggle,
-} from '@arclux/arc-ui-angular';
-
-@Component({
-  selector: 'app-settings',
-  imports: [Button, Card, Input, Toggle],
-  template: \`
-    <arc-card>
-      <h3>Preferences</h3>
-      <arc-input label="Display name"></arc-input>
-      <arc-toggle label="Dark mode" checked></arc-toggle>
-      <arc-button variant="primary">Save</arc-button>
-    </arc-card>
-  \`,
-})
-export class SettingsComponent {}`,
-  solid: `import {
-  Button, Card, Input, Toggle,
-} from '@arclux/arc-ui-solid';
-
-function Settings() {
-  return (
-    <Card>
-      <h3>Preferences</h3>
-      <Input label="Display name" />
-      <Toggle label="Dark mode" checked />
-      <Button variant="primary">Save</Button>
-    </Card>
-  );
-}`,
-  preact: `import {
-  Button, Card, Input, Toggle,
-} from '@arclux/arc-ui-preact';
-
-function Settings() {
-  return (
-    <Card>
-      <h3>Preferences</h3>
-      <Input label="Display name" />
-      <Toggle label="Dark mode" checked />
-      <Button variant="primary">Save</Button>
-    </Card>
-  );
-}`,
-  html: `<arc-card>
-  <h3>Preferences</h3>
-  <arc-input label="Display name"></arc-input>
-  <arc-toggle label="Dark mode" checked></arc-toggle>
-  <arc-button variant="primary">Save</arc-button>
-</arc-card>
-
-<script type="module">
-  import '@arclux/arc-ui/register';
-</script>`
-};
-
-// The active framework's one-line proof, shown under its lit name in the
-// switcher. Raw HTML: the <em> marks the binding syntax itself.
-const idioms = {
-  react: '<em>onArcInput</em>={e => setV(e.detail.value)}',
-  vue: '<em>v-model:value</em>="volume"',
-  svelte: '<em>bind:value</em>={volume}',
-  angular: '<em>[(value)]</em>="volume"',
-  solid: '<em>on:arc-input</em>={handle}',
-  preact: '<em>onArcInput</em>={handle}',
-  html: 'no build step at all',
-} as Record<string, string>;
-
-const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
-  ['react', 'React', 'App.jsx', 'jsx'],
-  ['vue', 'Vue', 'App.vue', 'html'],
-  ['svelte', 'Svelte', 'App.svelte', 'html'],
-  ['angular', 'Angular', 'settings.component.ts', 'ts'],
-  ['solid', 'Solid', 'Settings.jsx', 'jsx'],
-  ['preact', 'Preact', 'Settings.jsx', 'jsx'],
-  ['html', 'HTML', 'index.html', 'html'],
-];
 ---
 
 <BaseLayout description={jsonLd.description}>
@@ -213,23 +189,23 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
          them whenever <html>'s data-theme/class/style mutate, so the swatch
          demo and the theme toggle recolor it with zero wiring here. -->
     <canvas class="hero__lightplay" data-lightplay aria-hidden="true"></canvas>
-    <!-- A soft wash of the page's own ground behind the copy and the
-         showcase: the beam stays loud at the edges and quiet where people
-         read. -->
+    <!-- A soft wash of the page's own ground behind the copy: the light
+         stays loud at the edges and quiet where people read. -->
     <div class="hero__wash" aria-hidden="true"></div>
+    <!-- The claim, centered, and a mixer whose three controls are the real
+         theming inputs, applied to the whole page -->
     <div class="hero__content">
-      <div class="hero__copy">
-        <h1 class="hero__headline">
-          <span class="hero__headline-top">One design system.</span>
+      <div class="hero__copy hero__copy--center">
+        <h1 class="hero__headline hero__headline--xl">
+          <span class="hero__headline-top">Light work</span>
           <span class="hero__headline-glow-wrap">
-            <span class="hero__headline-glow">Every framework.</span>
-            <span class="hero__headline-glow-shadow" aria-hidden="true">Every framework.</span>
+            <span class="hero__headline-glow">for heavy apps.</span>
+            <span class="hero__headline-glow-shadow" aria-hidden="true">for heavy apps.</span>
           </span>
         </h1>
         <p class="hero__body">
-          {components.length} accessible, server-renderable components, written once as Web&nbsp;Components
-          and generated into native packages for React, Vue, Svelte, Angular, Solid and Preact.
-          Theme every one of them with two&nbsp;colors.
+          {components.length} components for the screens people actually use: tables, forms, settings,
+          the fourth modal. Seven frameworks, two colors, glow included.
         </p>
         <arc-code-block variant="basic" language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block>
         <div class="hero__actions">
@@ -240,126 +216,362 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
           <arc-button href="/docs/components" variant="secondary" size="md">Browse all {components.length}</arc-button>
         </div>
       </div>
-
-      <!-- The showcase: one small, working app screen built only from ARC
-           components. Everything in it is live — the tabs switch, the toggle
-           toggles, the rows take focus. It reveals once its elements have
-           upgraded (see initHero), never as unstyled boxes. -->
-      <figure class="hero__showcase" aria-label="An example deploy dashboard built with ARC UI">
-        <div class="showcase__chrome">
-          <span class="showcase__orbs" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="showcase__title">edge-cache</span>
-          <arc-badge variant="success" size="sm">Live</arc-badge>
+      <!-- The mixer: the theme's real inputs, applied to the whole page, the
+           light included. Reset (or Esc inside it) puts everything back. -->
+      <div class="mixer" id="hero-mixer" role="group" aria-labelledby="mixer-title">
+        <div class="mixer__head">
+          <span class="mixer__title" id="mixer-title">Take it for a spin</span>
+          <arc-button id="mixer-reset" class="mixer__reset" variant="ghost" size="sm" disabled>
+            <svg slot="prefix" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2.5 8a5.5 5.5 0 1 0 1.6-3.9M2.5 2.5v3h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Reset <arc-kbd class="mixer__kbd">Esc</arc-kbd>
+          </arc-button>
         </div>
-        <div class="showcase__body">
-          <div class="showcase__bar">
-            <arc-segmented-control value="overview" aria-label="Dashboard view">
-              <arc-option value="overview">Overview</arc-option>
-              <arc-option value="deploys">Deploys</arc-option>
-              <arc-option value="logs">Logs</arc-option>
+        <div class="mixer__row">
+          <div class="mixer__ctl mixer__ctl--hue">
+            <arc-knob id="hero-hue" size="sm" min="0" max="359" step="1" value="0" aria-label="Accent hue"></arc-knob>
+            <div class="mixer__readout">
+              <span class="mixer__label">Accents</span>
+              <span class="mixer__pair" aria-hidden="true"><i class="mixer__dot mixer__dot--a"></i><i class="mixer__dot mixer__dot--b"></i></span>
+              <code class="mixer__hex" id="mixer-hex" aria-live="polite"></code>
+            </div>
+          </div>
+          <div class="mixer__ctl">
+            <span class="mixer__label">Density</span>
+            <arc-segmented-control id="hero-density" value="default" aria-label="Density">
+              <arc-option value="compact">Compact</arc-option>
+              <arc-option value="default">Default</arc-option>
+              <arc-option value="comfortable">Roomy</arc-option>
             </arc-segmented-control>
-            <arc-avatar-group max="3" overlap="sm">
-              <arc-avatar name="Nina Park" size="sm"></arc-avatar>
-              <arc-avatar name="Rio Kim" size="sm"></arc-avatar>
-              <arc-avatar name="Ava Lane" size="sm"></arc-avatar>
-              <arc-avatar name="Sam Ortiz" size="sm"></arc-avatar>
-            </arc-avatar-group>
           </div>
-          <div class="showcase__stats">
-            <arc-stat size="sm" value="99.98%" label="Uptime"></arc-stat>
-            <arc-stat size="sm" value="142ms" label="p95 latency"></arc-stat>
-            <arc-stat size="sm" value="2.4k" label="Requests / s" trend="up" change="+12%"></arc-stat>
+          <div class="mixer__ctl">
+            <span class="mixer__label">Scheme</span>
+            <arc-theme-toggle id="hero-scheme"></arc-theme-toggle>
           </div>
-          <arc-sparkline class="showcase__spark" data="18,22,19,26,24,31,28,35,33,41,38,46,44,52" fill height="56"></arc-sparkline>
-          <arc-list class="showcase__list" size="sm" variant="separated">
-            <arc-list-item value="d1">
-              <arc-avatar slot="prefix" name="Nina Park" size="sm"></arc-avatar>
-              Promote to production
-              <span slot="description">Nina · 2 min ago</span>
-              <arc-tag slot="suffix" variant="success" size="sm">Live</arc-tag>
-            </arc-list-item>
-            <arc-list-item value="d2">
-              <arc-avatar slot="prefix" name="Rio Kim" size="sm"></arc-avatar>
-              Canary: new cache keys
-              <span slot="description">Rio · 18 min ago</span>
-              <arc-tag slot="suffix" variant="warning" size="sm">20%</arc-tag>
-            </arc-list-item>
-          </arc-list>
-          <div class="showcase__foot">
-            <arc-toggle checked size="sm" label="Auto-promote canaries"></arc-toggle>
+        </div>
+        <div class="mixer__follow">
+          <span class="mixer__label">Everything follows</span>
+          <div class="mixer__demo">
+            <arc-toggle checked size="sm" label="Alerts"></arc-toggle>
+            <arc-checkbox checked size="sm" label="Auto-deploy"></arc-checkbox>
+            <arc-slider class="mixer__slider" aria-label="Rollout" min="0" max="100" value="64"></arc-slider>
+            <arc-tag variant="primary" size="sm">Canary</arc-tag>
             <arc-button variant="primary" size="sm">Deploy</arc-button>
           </div>
         </div>
-      </figure>
+      </div>
     </div>
+
   </header>
 
   <main>
     <arc-divider></arc-divider>
 
-    <!-- One component, seven dialects: idioms, code and Prism in a single chapter -->
-    <section class="native">
-      <div class="native__inner">
-        <div class="native__header" data-reveal="blur-in">
-          <h2 class="statement">
-            <span class="statement__quiet">One component.</span>
-            <span class="statement__lit">Seven dialects.</span>
-          </h2>
-          <p class="section-desc">
-            <span class="section-desc__line">Prism generates a typed package for each framework from one Lit source, bindings and events included.</span>
-            <span class="section-desc__line">Nothing is wrapped by hand.</span>
-          </p>
-        </div>
-
-        <div class="native__grid" id="fw-switcher" data-reveal="fade-up">
-          <div class="fw-list" aria-label="Pick a framework">
-            {fwTabs.map(([id, name], i) => (
-              <button class:list={['fw-btn', { 'is-active': i === 0 }]} aria-pressed={i === 0 ? 'true' : 'false'} data-fw={id}>
-                <span class="fw-btn__name">{name}</span>
-                <code class="fw-btn__idiom" set:html={idioms[id]} />
-              </button>
-            ))}
-          </div>
-          <div class="fw-panels">
-            {fwTabs.map(([id, , filename, language], i) => (
-              <div class="fw-panel" data-fw={id} hidden={i !== 0}>
-                <arc-code-block variant="window" filename={filename} language={language} code={codeExamples[id]}></arc-code-block>
+    <!-- Intro: the pitch, then the library drifting past as two rivers of
+         live components. Each river is its set twice, the second copy inert,
+         so the loop is seamless and nothing is focusable twice. Hover or focus
+         stops the drift so a control can be used; reduced motion stills it. -->
+    <section class="intro">
+      <div class="intro__inner" data-reveal="blur-in">
+        <h2 class="statement statement--center">
+          <span class="statement__quiet">Easy on the eyes.</span>
+          <span class="statement__lit">Hard to break.</span>
+        </h2>
+        <p class="intro__blurb">
+          Every component works from the keyboard, renders on the server and follows the same two
+          color tokens. There are {testCount.toLocaleString('en-US')} tests, so you don't find out the hard way.
+        </p>
+      </div>
+      <div class="rivers" data-reveal="fade-up">
+          <div class="river river--a">
+            <div class="river__track">
+              <div class="river__set">
+<span class="spec"><arc-toggle checked label="Glow"></arc-toggle></span>
+<span class="spec spec--wide"><arc-slider aria-label="Intensity" min="0" max="100" value="64"></arc-slider></span>
+<span class="spec"><arc-rating value="4" label="Rating"></arc-rating></span>
+<span class="spec"><arc-segmented-control value="week" aria-label="Range"><arc-option value="day">Day</arc-option><arc-option value="week">Week</arc-option><arc-option value="month">Month</arc-option></arc-segmented-control></span>
+<span class="spec"><arc-avatar-group max="3"><arc-avatar name="Nina Park" size="sm"></arc-avatar><arc-avatar name="Rio Kim" size="sm"></arc-avatar><arc-avatar name="Ava Lane" size="sm"></arc-avatar><arc-avatar name="Sam Ortiz" size="sm"></arc-avatar></arc-avatar-group></span>
+<span class="spec"><arc-button variant="primary" size="sm">Deploy</arc-button></span>
+<span class="spec spec--wide"><arc-progress value="72" label="Build" show-value></arc-progress></span>
+<span class="spec"><arc-badge variant="success">Live</arc-badge><arc-badge variant="primary">Pro</arc-badge><arc-badge variant="warning">Beta</arc-badge></span>
+<span class="spec"><arc-knob size="sm" value="40" aria-label="Gain"></arc-knob></span>
               </div>
-            ))}
+              <div class="river__set" inert aria-hidden="true">
+<span class="spec"><arc-toggle checked label="Glow"></arc-toggle></span>
+<span class="spec spec--wide"><arc-slider aria-label="Intensity" min="0" max="100" value="64"></arc-slider></span>
+<span class="spec"><arc-rating value="4" label="Rating"></arc-rating></span>
+<span class="spec"><arc-segmented-control value="week" aria-label="Range"><arc-option value="day">Day</arc-option><arc-option value="week">Week</arc-option><arc-option value="month">Month</arc-option></arc-segmented-control></span>
+<span class="spec"><arc-avatar-group max="3"><arc-avatar name="Nina Park" size="sm"></arc-avatar><arc-avatar name="Rio Kim" size="sm"></arc-avatar><arc-avatar name="Ava Lane" size="sm"></arc-avatar><arc-avatar name="Sam Ortiz" size="sm"></arc-avatar></arc-avatar-group></span>
+<span class="spec"><arc-button variant="primary" size="sm">Deploy</arc-button></span>
+<span class="spec spec--wide"><arc-progress value="72" label="Build" show-value></arc-progress></span>
+<span class="spec"><arc-badge variant="success">Live</arc-badge><arc-badge variant="primary">Pro</arc-badge><arc-badge variant="warning">Beta</arc-badge></span>
+<span class="spec"><arc-knob size="sm" value="40" aria-label="Gain"></arc-knob></span>
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="river river--b">
+            <div class="river__track">
+              <div class="river__set">
+<span class="spec"><arc-stat size="sm" value="99.98%" label="Uptime"></arc-stat></span>
+<span class="spec"><arc-checkbox checked label="Notify the team"></arc-checkbox></span>
+<span class="spec spec--wide"><arc-sparkline data="4,6,5,8,7,11,9,13,12,16,15,19" fill height="40" width="180"></arc-sparkline></span>
+<span class="spec"><arc-kbd>⌘</arc-kbd><arc-kbd>K</arc-kbd></span>
+<span class="spec"><arc-chip selected>Design</arc-chip><arc-chip>Backend</arc-chip></span>
+<span class="spec"><arc-gauge value="72" unit="%" variant="half" label="CPU" low="30" high="85" optimum="50"></arc-gauge></span>
+<span class="spec"><arc-tag variant="secondary">v4.8</arc-tag><arc-tag variant="default">MIT</arc-tag></span>
+<span class="spec"><arc-spinner size="md"></arc-spinner></span>
+<span class="spec"><arc-pagination total="9" current="3" compact></arc-pagination></span>
+              </div>
+              <div class="river__set" inert aria-hidden="true">
+<span class="spec"><arc-stat size="sm" value="99.98%" label="Uptime"></arc-stat></span>
+<span class="spec"><arc-checkbox checked label="Notify the team"></arc-checkbox></span>
+<span class="spec spec--wide"><arc-sparkline data="4,6,5,8,7,11,9,13,12,16,15,19" fill height="40" width="180"></arc-sparkline></span>
+<span class="spec"><arc-kbd>⌘</arc-kbd><arc-kbd>K</arc-kbd></span>
+<span class="spec"><arc-chip selected>Design</arc-chip><arc-chip>Backend</arc-chip></span>
+<span class="spec"><arc-gauge value="72" unit="%" variant="half" label="CPU" low="30" high="85" optimum="50"></arc-gauge></span>
+<span class="spec"><arc-tag variant="secondary">v4.8</arc-tag><arc-tag variant="default">MIT</arc-tag></span>
+<span class="spec"><arc-spinner size="md"></arc-spinner></span>
+<span class="spec"><arc-pagination total="9" current="3" compact></arc-pagination></span>
+              </div>
+            </div>
+          </div>
       </div>
     </section>
 
-    <!-- What changed: the newest release note, derived at build time from the
-         same collection /docs/changelog renders — when the next release note
-         lands this chapter rewrites itself. -->
-    <section class="changed">
-      <div class="changed__inner">
-        <div class="changed__main" data-reveal="blur-in">
+    <!-- Prism: one real source in, its seven real outputs out. Every line of
+         code in this chapter is read from the repository at build time. -->
+    <section class="prism">
+      <div class="prism__inner">
+        <div class="prism__header" data-reveal="blur-in">
           <h2 class="statement">
-            <span class="statement__quiet">What changed</span>
-            <span class="statement__lit">in v{latestRelease.data.version}.</span>
+            <span class="statement__quiet">You write the component.</span>
+            <span class="statement__lit">Prism writes the rest.</span>
           </h2>
           <p class="section-desc">
-            <span class="section-desc__line">{latestRelease.data.title}.</span>
-            <span class="section-desc__line changed__date">Released {releaseDate}. Every package ships at the same version.</span>
+            <span class="section-desc__line">Prism imports each Lit class, reads the properties Lit resolved, and writes an idiomatic package for every framework.</span>
+            <span class="section-desc__line">Here is one component, and what came out.</span>
           </p>
-          <p class="changed__lead">{releaseLead}</p>
         </div>
-        <div class="changed__topics" data-reveal="fade-up">
-          {releaseTopics.length > 0 && (
-            <ul class="changed__topic-list">
-              {releaseTopics.map((topic) => (
-                <li class="changed__topic">
-                  <span class="changed__topic-mark" aria-hidden="true"></span>
-                  <span class="changed__topic-name">{topic}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <a class="chapter-link" href={releaseHref}>Read the full release notes →</a>
+
+        <div class="prism__rig" id="prism-rig" data-reveal="fade-up">
+          <figure class="prism__source">
+            <arc-code-block variant="window" filename="toggle.js" language="js" code={prismSource}></arc-code-block>
+            <figcaption class="prism__caption">The declaration, as written. Nothing else is.</figcaption>
+          </figure>
+
+          <!-- The fan: one beam in, a ray to every output row. The rows share
+               the rig's height in equal tracks, so ray i always lands on row
+               i's center with no measuring. -->
+          <div class="prism__fanwrap">
+          <svg class="prism__fan" viewBox="0 0 100 700" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="prism-ray" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" class="prism__stop-a" />
+                <stop offset="1" class="prism__stop-b" />
+              </linearGradient>
+            </defs>
+            <path class="prism__in" d="M0 350 H34" pathLength="1" />
+            {prismOutputs.map((_, i) => (
+              <path
+                class:list={['prism__ray', { 'is-on': i === prismDefault }]}
+                data-ray={i}
+                style={`--i:${i}`}
+                d={`M34 350 C 62 350, 64 ${(i + 0.5) * 100}, 100 ${(i + 0.5) * 100}`}
+                pathLength="1"
+              />
+            ))}
+          </svg>
+          <span class="prism__node" aria-hidden="true"></span>
+          </div>
+
+          <div class="prism__outs" role="group" aria-label="Generated output">
+            {prismOutputs.map((o, i) => (
+              <button
+                class:list={['out', { 'is-on': i === prismDefault }]}
+                aria-pressed={i === prismDefault ? 'true' : 'false'}
+                aria-controls={`prism-file-${o.id}`}
+                data-out={i}
+              >
+                <span class="out__head">
+                  <span class="out__name">{o.name}</span>
+                  <span class="out__meta">{o.file} · {o.lines} lines</span>
+                </span>
+                <span class="out__gets">{o.gets}</span>
+                <code class="out__line">{o.line}</code>
+              </button>
+            ))}
+          </div>
         </div>
+
+        <div class="prism__files" data-reveal="fade-up">
+          {prismOutputs.map((o, i) => (
+            <div class="prism__file" id={`prism-file-${o.id}`} data-file={i} hidden={i !== prismDefault}>
+              <arc-code-block variant="window" filename={`packages/${o.path}`} language={o.lang} code={o.code}></arc-code-block>
+            </div>
+          ))}
+        </div>
+
+        <p class="prism__note" data-reveal="fade-up">
+          Across all {components.length} components that comes to {generatedFileCount.toLocaleString('en-US')} files
+          and {generatedLineCount.toLocaleString('en-US')} lines of framework code, written by Prism {prismVersion}.
+          CI regenerates every one on each push and fails on a single changed character.
+          <a class="chapter-link" href="/docs/frameworks">Framework guides →</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- The app: one full screen of a working product, every part an ARC
+         component. The list is server-rendered; the script drives the board,
+         the sheet, the dialog and the toast from #app-data. -->
+    <section class="app">
+      <div class="app__inner">
+        <div class="app__header" data-reveal="blur-in">
+          <h2 class="statement">
+            <span class="statement__quiet">Not a mockup.</span>
+            <span class="statement__lit">A working app.</span>
+          </h2>
+          <p class="section-desc">
+            <span class="section-desc__line">An issue tracker made of ARC parts and some layout. Click things, drag things, file a bug.</span>
+            <span class="section-desc__line">It goes nowhere, which makes this the most honest tracker you'll use today.</span>
+          </p>
+        </div>
+
+        <div class="app__window" data-reveal="fade-up">
+          <div class="app__chrome">
+            <span class="window-orbs" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="app__title">tracker / platform</span>
+          </div>
+          <div class="app__frame">
+            <aside class="app__side">
+              <!-- Every link is a working filter: the tracker takes over the
+                   sidebar's arc-navigate instead of letting the page follow it -->
+              <arc-sidebar id="app-side" active="#all">
+                <arc-sidebar-section heading="Views">
+                  <arc-sidebar-link href="#all">All issues</arc-sidebar-link>
+                  <arc-sidebar-link href="#mine">Assigned to me</arc-sidebar-link>
+                  <arc-sidebar-link href="#review">In review</arc-sidebar-link>
+                  <arc-sidebar-link href="#done">Done</arc-sidebar-link>
+                </arc-sidebar-section>
+                <arc-sidebar-section heading="People">
+                  {appPeople.map((who) => (
+                    <arc-sidebar-link href={`#who-${who.split(' ')[0].toLowerCase()}`}>{who}</arc-sidebar-link>
+                  ))}
+                </arc-sidebar-section>
+              </arc-sidebar>
+              <div class="app__cycle">
+                <span class="app__cycle-label"><span>Cycle 42</span><span id="app-cycle-count">{appDone} of {appIssues.length} done</span></span>
+                <arc-progress id="app-cycle-bar" size="sm" label="Cycle progress" value={Math.round((appDone / appIssues.length) * 100)}></arc-progress>
+              </div>
+            </aside>
+
+            <div class="app__main">
+              <arc-page-header id="app-heading" heading="All issues" description="Cycle 42, Sep 22 to Oct 5. You are signed in as Nina.">
+                <arc-breadcrumb slot="above">
+                  <arc-breadcrumb-item>Platform</arc-breadcrumb-item>
+                  <arc-breadcrumb-item>Cycle 42</arc-breadcrumb-item>
+                </arc-breadcrumb>
+                <arc-button slot="aside" id="app-new-open" variant="primary" size="sm">
+                  <svg slot="prefix" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  New issue
+                </arc-button>
+              </arc-page-header>
+
+              <div class="app__tools">
+                <arc-search id="app-search" class="app__search" placeholder="Filter issues" aria-label="Filter issues"></arc-search>
+                <arc-segmented-control id="app-view" value="list" aria-label="View">
+                  <arc-option value="list">List</arc-option>
+                  <arc-option value="board">Board</arc-option>
+                </arc-segmented-control>
+              </div>
+
+              <div class="app__body" id="app-body">
+                <div class="app__views">
+                  <arc-list id="app-list" class="app__list" variant="separated" label="Issues">
+                    {appIssues.map((issue) => (
+                      <arc-list-item value={issue.id}>
+                        <arc-avatar slot="prefix" name={issue.who} size="sm"></arc-avatar>
+                        {issue.title}
+                        <span slot="description">{issue.id} · {issue.who.split(' ')[0]} · {issue.priority}<span class="app__desc-status"> · <span data-status-text>{statusOf(issue.status).label}</span></span></span>
+                        <arc-tag slot="suffix" size="sm" variant={statusOf(issue.status).variant}>{statusOf(issue.status).label}</arc-tag>
+                        <arc-icon-button slot="actions" size="xs" label={`Mark ${issue.id} as done`} data-done={issue.id} disabled={issue.status === 'done'}>
+                          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </arc-icon-button>
+                      </arc-list-item>
+                    ))}
+                  </arc-list>
+                  <p class="app__empty" id="app-empty" hidden>No issues match that filter.</p>
+                  <arc-kanban id="app-board" class="app__board" hidden></arc-kanban>
+                </div>
+
+                <aside class="app__rail" aria-label="Cycle summary">
+                  <div class="app__panel">
+                    <span class="app__panel-title">Points remaining</span>
+                    <arc-chart
+                      type="area"
+                      height="120"
+                      hide-legend
+                      labels='["22","23","24","25","26","29","30"]'
+                      series='[{"label":"Remaining","data":[25,25,22,19,19,14,11]},{"label":"Ideal","data":[25,21.4,17.9,14.3,10.7,7.1,3.6]}]'
+                    ></arc-chart>
+                  </div>
+                  <div class="app__panel">
+                    <span class="app__panel-title">Open points by person</span>
+                    <arc-bar-list id="app-load" label="Open points by person" items={JSON.stringify(appLoad)}></arc-bar-list>
+                  </div>
+                </aside>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="app__parts" data-reveal="fade-up">
+          <span class="app__parts-label">Built from</span>
+          {appParts.map((p) => (
+            <a class="app__part" href={`/docs/components/${p}`}>&lt;arc-{p}&gt;</a>
+          ))}
+        </p>
+
+        <!-- Overlays live outside the window: they are the page's, not the
+             frame's, exactly as they would be in a real app. -->
+        <arc-sheet id="app-sheet" side="right" no-modal heading="Issue">
+          <div class="app-sheet">
+            <p class="app-sheet__id" id="app-sheet-id"></p>
+            <arc-description-list columns="2" layout="stacked">
+              <arc-description-item term="Status"><span id="app-sheet-status"></span></arc-description-item>
+              <arc-description-item term="Assignee"><span id="app-sheet-who"></span></arc-description-item>
+              <arc-description-item term="Priority"><span id="app-sheet-priority"></span></arc-description-item>
+              <arc-description-item term="Estimate"><span id="app-sheet-points"></span></arc-description-item>
+            </arc-description-list>
+            <p class="app-sheet__body" id="app-sheet-body"></p>
+            <arc-timeline id="app-sheet-timeline"></arc-timeline>
+          </div>
+          <div slot="footer" class="app-sheet__foot">
+            <arc-button id="app-sheet-close" variant="ghost" size="sm">Close</arc-button>
+            <arc-button id="app-sheet-done" variant="primary" size="sm">Mark as done</arc-button>
+          </div>
+        </arc-sheet>
+
+        <arc-dialog id="app-new" heading="New issue" size="md">
+          <form class="app-new" id="app-new-form" novalidate>
+            <arc-input id="app-new-title" label="Title" placeholder="What needs doing?" required></arc-input>
+            <arc-select id="app-new-who" label="Assignee" value={appPeople[0]}>
+              {appPeople.map((p) => <arc-option value={p}>{p}</arc-option>)}
+            </arc-select>
+            <arc-select id="app-new-priority" label="Priority" value="Medium">
+              <arc-option value="Urgent">Urgent</arc-option>
+              <arc-option value="High">High</arc-option>
+              <arc-option value="Medium">Medium</arc-option>
+              <arc-option value="Low">Low</arc-option>
+            </arc-select>
+            <arc-textarea id="app-new-body" label="Description" rows="3" placeholder="Optional"></arc-textarea>
+          </form>
+          <div slot="footer" class="app-new__foot">
+            <arc-button id="app-new-cancel" variant="ghost" size="sm">Cancel</arc-button>
+            <arc-button id="app-new-create" variant="primary" size="sm">Create issue</arc-button>
+          </div>
+        </arc-dialog>
+
+        <arc-toast id="app-toast" position="bottom-right" duration="3200"></arc-toast>
+        <script is:inline type="application/json" id="app-data" set:html={JSON.stringify({ statuses: appStatuses, issues: appIssues })} />
       </div>
     </section>
 
@@ -511,6 +723,38 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
       </div>
     </section>
 
+    <!-- What changed: the newest release note, derived at build time from the
+         same collection /docs/changelog renders — when the next release note
+         lands this chapter rewrites itself. -->
+    <section class="changed">
+      <div class="changed__inner">
+        <div class="changed__main" data-reveal="blur-in">
+          <h2 class="statement">
+            <span class="statement__quiet">What changed</span>
+            <span class="statement__lit">in v{latestRelease.data.version}.</span>
+          </h2>
+          <p class="section-desc">
+            <span class="section-desc__line">{latestRelease.data.title}.</span>
+            <span class="section-desc__line changed__date">Released {releaseDate}. Every package ships at the same version.</span>
+          </p>
+          <p class="changed__lead">{releaseLead}</p>
+        </div>
+        <div class="changed__topics" data-reveal="fade-up">
+          {releaseTopics.length > 0 && (
+            <ul class="changed__topic-list">
+              {releaseTopics.map((topic) => (
+                <li class="changed__topic">
+                  <span class="changed__topic-mark" aria-hidden="true"></span>
+                  <span class="changed__topic-name">{topic}</span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <a class="chapter-link" href={releaseHref}>Read the full release notes →</a>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA. data-reveal sits on a wrapper, not the element: glint's reveal
          is a WAAPI animation, which composites over author CSS — so on the
          element itself it briefly defeated base.css's :not(:defined) opacity
@@ -567,42 +811,104 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     // The field defocuses behind the copy and the top bar so their text
     // keeps its contrast
     const dispose = initLightplay(canvas, {
-      quiet: [hero?.querySelector('.hero__copy'), document.querySelector('arc-top-bar')],
+      quiet: [hero?.querySelector('.hero__copy'), hero?.querySelector('.mixer'), document.querySelector('arc-top-bar')].filter(Boolean),
     });
+    initMixer();
     // Reveal on the frame after the shader's first draw, so load-time jank
     // happens behind the fade instead of in front of the visitor
     requestAnimationFrame(() => hero?.classList.add('hero--live'));
     document.addEventListener('astro:before-swap', () => dispose(), { once: true });
+  }
 
-    /* The showcase reveals on its own signal: not when the shader is ready,
-       but when the components it is showing have actually upgraded — fading
-       in unstyled boxes that then pop into components was the old stream's
-       documented failure. The timeout is not a nicety: a component that never
-       registers must leave the showcase revealed slightly early, never
-       invisible. */
-    const showcase = hero?.querySelector('.hero__showcase');
-    // arc-sparkline draws at a fixed pixel width; hand it its column's
-    const spark = showcase?.querySelector<HTMLElement & { width: number }>('.showcase__spark');
-    if (spark?.parentElement) {
-      const fit = new ResizeObserver(([e]) => { spark.width = Math.round(e.contentRect.width); });
-      fit.observe(spark.parentElement);
-      document.addEventListener('astro:before-swap', () => fit.disconnect(), { once: true });
-    }
-    if (showcase) {
-      const tags = [...new Set(
-        [...showcase.querySelectorAll('*')]
-          .map((el) => el.tagName.toLowerCase())
-          .filter((t) => t.includes('-')),
-      )];
-      let done = false;
-      const show = () => {
-        if (done) return;
-        done = true;
-        requestAnimationFrame(() => hero?.classList.add('hero--showcase-live'));
-      };
-      Promise.all(tags.map((t) => customElements.whenDefined(t))).then(show);
-      setTimeout(show, 2500);
-    }
+  /* ── The hero's mixer: the three real theming inputs, applied to the page.
+     Hue writes the two accent tokens at :root (secondary 70° round the
+     wheel), exactly as a consumer's theme.css would; density sets
+     [data-density] on <html>; the scheme control is arc-theme-toggle. ── */
+  function initMixer() {
+    const mixer = document.getElementById('hero-mixer');
+    const hue = document.getElementById('hero-hue') as any;
+    const density = document.getElementById('hero-density') as any;
+    const scheme = document.getElementById('hero-scheme') as any;
+    const reset = document.getElementById('mixer-reset') as any;
+    const hexOut = document.getElementById('mixer-hex');
+    if (!mixer || !hue || (mixer as any).dataset.init) return;
+    (mixer as any).dataset.init = '1';
+    const root = document.documentElement;
+    const PROPS = ['--accent-primary', '--accent-primary-rgb', '--accent-secondary', '--accent-secondary-rgb'];
+    const hsl = (h: number, s: number, l: number) => {
+      const k = (n: number) => (n + h / 30) % 12;
+      const a = s * Math.min(l, 1 - l);
+      const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1));
+      return [f(0), f(8), f(4)].map((v) => Math.round(v * 255));
+    };
+    const hex = (c: number[]) => '#' + c.map((v) => v.toString(16).padStart(2, '0')).join('');
+    const hueOf = (rgb: string) => {
+      const [r, g, b] = rgb.split(',').map((n) => +n / 255);
+      const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+      if (!d) return 0;
+      const h = max === r ? ((g - b) / d) % 6 : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+      return Math.round((h * 60 + 360) % 360);
+    };
+    // Read through the -rgb channels: the color tokens can compute to any
+    // CSS color syntax, and the readout should always say what a theme.css
+    // would contain
+    const readout = () => {
+      const cs = getComputedStyle(root);
+      const asHex = (name: string) => hex(cs.getPropertyValue(name).split(',').map((n) => Math.round(+n)));
+      if (hexOut) hexOut.textContent = `${asHex('--accent-primary-rgb')}  ${asHex('--accent-secondary-rgb')}`;
+    };
+    // What the visitor arrived with, so reset is a real undo: the shipped
+    // accents (the override removed), default density, and their own scheme,
+    // which is a saved preference, not ours to overwrite
+    const homeHue = hueOf(getComputedStyle(root).getPropertyValue('--accent-primary-rgb'));
+    const homeScheme = scheme?.theme ?? 'auto';
+    hue.value = homeHue;
+    readout();
+
+    let dirty = false;
+    const touch = () => { dirty = true; reset.disabled = false; };
+
+    hue.addEventListener('arc-input', (e: any) => {
+      const h = +(e.detail?.value ?? hue.value);
+      const p = hsl(h, 0.85, 0.6), q = hsl((h + 70) % 360, 0.85, 0.62);
+      root.style.setProperty('--accent-primary', hex(p));
+      root.style.setProperty('--accent-primary-rgb', p.join(', '));
+      root.style.setProperty('--accent-secondary', hex(q));
+      root.style.setProperty('--accent-secondary-rgb', q.join(', '));
+      readout();
+      touch();
+    });
+    density?.addEventListener('arc-change', (e: any) => {
+      const v = e.detail?.value;
+      if (v === 'default') root.removeAttribute('data-density');
+      else root.setAttribute('data-density', v);
+      touch();
+    });
+    scheme?.addEventListener('arc-change', () => { touch(); requestAnimationFrame(readout); });
+
+    const undo = () => {
+      if (!dirty) return;
+      PROPS.forEach((prop) => root.style.removeProperty(prop));
+      root.removeAttribute('data-density');
+      if (density) density.value = 'default';
+      if (scheme && scheme.theme !== homeScheme) scheme.theme = homeScheme;
+      hue.value = homeHue;
+      // The accent swatches further down wrote to the same tokens; their
+      // console goes back to the shipped theme too
+      document.querySelector<HTMLElement>('#accent-swatches [data-default]')?.click();
+      requestAnimationFrame(readout);
+      dirty = false;
+      reset.disabled = true;
+    };
+    reset?.addEventListener('click', undo);
+    mixer.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && dirty) { e.preventDefault(); undo(); }
+    });
+
+    document.addEventListener('astro:before-swap', () => {
+      PROPS.forEach((prop) => root.style.removeProperty(prop));
+      root.removeAttribute('data-density');
+    }, { once: true });
   }
 
   /* ── Reveal on scroll (glint) ──
@@ -676,61 +982,6 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     nums.forEach(el => observer.observe(el));
   }
 
-  /* ── Framework switcher: auto-advances until the visitor takes over ── */
-  function initFwSwitcher() {
-    const root = document.getElementById('fw-switcher');
-    if (!root || (root as any).dataset.init) return;
-    (root as any).dataset.init = '1';
-
-    const btns = Array.from(root.querySelectorAll<HTMLElement>('.fw-btn'));
-    const panels = Array.from(root.querySelectorAll<HTMLElement>('.fw-panel'));
-    let idx = 0;
-    let timer = 0;
-    let userTouched = false;
-
-    const show = (i: number) => {
-      idx = i;
-      btns.forEach((b, j) => {
-        b.classList.toggle('is-active', i === j);
-        b.setAttribute('aria-pressed', String(i === j));
-      });
-      panels.forEach((p, j) => p.toggleAttribute('hidden', i !== j));
-    };
-
-    const stop = () => {
-      clearInterval(timer);
-      timer = 0;
-      root!.classList.remove('is-auto');
-    };
-    const start = () => {
-      if (timer || userTouched) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      // The class drives the timer bar under the active name, so the
-      // auto-advance is visible instead of a surprise. The interval comes
-      // from --fw-interval so the bar and the rotation stay one value.
-      root!.classList.add('is-auto');
-      const interval = (parseFloat(getComputedStyle(root!).getPropertyValue('--fw-interval')) || 6.5) * 1000;
-      timer = window.setInterval(() => show((idx + 1) % btns.length), interval);
-    };
-
-    btns.forEach((b, i) => b.addEventListener('click', () => {
-      userTouched = true;
-      stop();
-      show(i);
-    }));
-
-    const io = new IntersectionObserver(
-      ([entry]) => (entry.isIntersecting ? start() : stop()),
-      { threshold: 0.3 },
-    );
-    io.observe(root);
-
-    document.addEventListener('astro:before-swap', () => {
-      stop();
-      io.disconnect();
-    }, { once: true });
-  }
-
   /* ── Accent swatches: the theme.css panel rewrites itself, and the
      override applies at :root — the real consumer recipe, applied for real.
      Compound tokens compose on :root, so a scoped override would recolor
@@ -778,6 +1029,305 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     });
   }
 
+  /* ── Prism: pick an output, its ray lights and its file opens ── */
+  function initPrism() {
+    const rig = document.getElementById('prism-rig');
+    if (!rig || (rig as any).dataset.init) return;
+    (rig as any).dataset.init = '1';
+    const outs = Array.from(rig.querySelectorAll<HTMLElement>('.out'));
+    const rays = Array.from(rig.querySelectorAll<SVGPathElement>('.prism__ray'));
+    const files = Array.from(document.querySelectorAll<HTMLElement>('.prism__file'));
+    const select = (i: number) => {
+      outs.forEach((o, j) => {
+        o.classList.toggle('is-on', i === j);
+        o.setAttribute('aria-pressed', String(i === j));
+      });
+      rays.forEach((r, j) => r.classList.toggle('is-on', i === j));
+      files.forEach((f, j) => f.toggleAttribute('hidden', i !== j));
+    };
+    outs.forEach((o, i) => o.addEventListener('click', () => select(i)));
+    // Hovering previews the ray without committing the selection
+    outs.forEach((o, i) => {
+      o.addEventListener('pointerenter', () => rays[i]?.classList.add('is-hover'));
+      o.addEventListener('pointerleave', () => rays[i]?.classList.remove('is-hover'));
+    });
+    // The light travels through once, when the rig first comes into view.
+    // Armed from script, so without it the rays simply stand lit.
+    rig.classList.add('is-armed');
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      rig.classList.add('is-lit');
+      io.disconnect();
+    }, { threshold: 0.35 });
+    io.observe(rig);
+    document.addEventListener('astro:before-swap', () => io.disconnect(), { once: true });
+  }
+
+  /* ── App: the issue tracker ──
+     One array is the source of truth. The list was rendered by the server;
+     everything after load — the board, the sheet, a moved card, a new issue,
+     the cycle's progress and the rail's load chart — is written from it. */
+  type Issue = { id: string; title: string; who: string; status: string; priority: string; points: number; body: string };
+  type Status = { id: string; label: string; variant: string };
+  function initApp() {
+    const dataEl = document.getElementById('app-data');
+    const list = document.getElementById('app-list') as any;
+    if (!dataEl || !list || list.dataset.init) return;
+    list.dataset.init = '1';
+    const { statuses, issues } = JSON.parse(dataEl.textContent!) as { statuses: Status[]; issues: Issue[] };
+    const $ = <T extends HTMLElement = any>(id: string) => document.getElementById(id) as T & any;
+    const board = $('app-board');
+    const sheet = $('app-sheet');
+    const dialog = $('app-new');
+    const toast = $('app-toast');
+    const statusOf = (id: string) => statuses.find((s) => s.id === id)!;
+    let query = '';
+    let view = 'all';
+    let openId = '';
+    const ME = 'Nina Park';
+
+    const inView = (i: Issue) =>
+      view === 'all' ? true
+      : view === 'mine' ? i.who === ME
+      : view === 'review' || view === 'done' ? i.status === view
+      : view.startsWith('who-') ? i.who.split(' ')[0].toLowerCase() === view.slice(4)
+      : true;
+    const matches = (i: Issue) =>
+      inView(i) && (!query || `${i.id} ${i.title} ${i.who}`.toLowerCase().includes(query));
+
+    const renderBoard = () => {
+      board.columns = statuses.map((s) => ({
+        id: s.id,
+        title: s.label,
+        ...(s.id === 'doing' ? { limit: 3 } : {}),
+        items: issues
+          .filter((i) => i.status === s.id && matches(i))
+          .map((i) => ({ id: i.id, label: i.title, description: `${i.id} · ${i.who.split(' ')[0]}`, tag: i.priority, variant: i.priority === 'Urgent' ? 'error' : i.priority === 'High' ? 'warning' : 'default' })),
+      }));
+    };
+
+    const itemFor = (id: string) =>
+      Array.from(list.querySelectorAll('arc-list-item')).find((el: any) => el.value === id) as HTMLElement | undefined;
+
+    const makeItem = (i: Issue) => {
+      const item = document.createElement('arc-list-item') as any;
+      item.value = i.id;
+      const avatar = document.createElement('arc-avatar') as any;
+      avatar.slot = 'prefix';
+      avatar.setAttribute('name', i.who);
+      avatar.setAttribute('size', 'sm');
+      const desc = document.createElement('span');
+      desc.slot = 'description';
+      desc.textContent = `${i.id} · ${i.who.split(' ')[0]} · ${i.priority}`;
+      const st = document.createElement('span');
+      st.className = 'app__desc-status';
+      st.innerHTML = ' · <span data-status-text></span>';
+      desc.append(st);
+      const tag = document.createElement('arc-tag');
+      tag.slot = 'suffix';
+      tag.setAttribute('size', 'sm');
+      const done = document.createElement('arc-icon-button') as any;
+      done.slot = 'actions';
+      done.setAttribute('size', 'xs');
+      done.setAttribute('label', `Mark ${i.id} as done`);
+      done.dataset.done = i.id;
+      done.innerHTML = '<svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      item.append(avatar, document.createTextNode(i.title), desc, tag, done);
+      return item;
+    };
+
+    const syncItem = (i: Issue) => {
+      const el = itemFor(i.id);
+      const tag = el?.querySelector('arc-tag');
+      if (!el || !tag) return;
+      tag.setAttribute('variant', statusOf(i.status).variant);
+      tag.textContent = statusOf(i.status).label;
+      const txt = el.querySelector('[data-status-text]');
+      if (txt) txt.textContent = statusOf(i.status).label;
+      (el.querySelector('[data-done]') as any).disabled = i.status === 'done';
+    };
+
+    const syncSummary = () => {
+      const done = issues.filter((i) => i.status === 'done').length;
+      $('app-cycle-count').textContent = `${done} of ${issues.length} done`;
+      $('app-cycle-bar').value = Math.round((done / issues.length) * 100);
+      const people = [...new Set(issues.map((i) => i.who))];
+      $('app-load').items = people
+        .map((who) => ({
+          label: who.split(' ')[0],
+          value: issues.filter((i) => i.who === who && i.status !== 'done').reduce((n, i) => n + i.points, 0),
+        }))
+        .sort((a, b) => b.value - a.value);
+    };
+
+    const filter = () => {
+      let shown = 0;
+      issues.forEach((i) => {
+        const el = itemFor(i.id);
+        const on = matches(i);
+        el?.toggleAttribute('hidden', !on);
+        if (on) shown++;
+      });
+      $('app-empty').hidden = shown > 0 || !board.hidden;
+      renderBoard();
+    };
+
+    const fillSheet = (i: Issue) => {
+      openId = i.id;
+      sheet.heading = i.title;
+      $('app-sheet-id').textContent = i.id;
+      $('app-sheet-status').textContent = statusOf(i.status).label;
+      $('app-sheet-who').textContent = i.who;
+      $('app-sheet-priority').textContent = i.priority;
+      $('app-sheet-points').textContent = `${i.points} ${i.points === 1 ? 'point' : 'points'}`;
+      $('app-sheet-body').textContent = i.body;
+      const tl = $('app-sheet-timeline');
+      tl.replaceChildren();
+      const add = (heading: string, date: string) => {
+        const t = document.createElement('arc-timeline-item');
+        t.setAttribute('heading', heading);
+        t.setAttribute('date', date);
+        tl.append(t);
+      };
+      add(`Opened by ${i.who.split(' ')[0]}`, 'Sep 22');
+      if (i.status !== 'todo') add(`Moved to ${statusOf(i.status).label}`, 'Sep 26');
+      $('app-sheet-done').disabled = i.status === 'done';
+    };
+
+    const openIssue = (id: string) => {
+      const i = issues.find((x) => x.id === id);
+      if (!i) return;
+      fillSheet(i);
+      markOpen(id);
+      sheet.open = true;
+    };
+    // The open issue's row stays lit while its sheet is up
+    const markOpen = (id: string) =>
+      list.querySelectorAll('arc-list-item').forEach((el: any) => { el.selected = el.value === id; });
+    sheet.addEventListener('arc-close', () => { markOpen(''); openId = ''; });
+
+    const setStatus = (id: string, status: string, undoable = true) => {
+      const i = issues.find((x) => x.id === id);
+      if (!i || i.status === status) return;
+      const was = i.status;
+      i.status = status;
+      syncItem(i);
+      syncSummary();
+      renderBoard();
+      if (openId === id && sheet.open) fillSheet(i);
+      if (!undoable) return;
+      toast.show({
+        message: `${i.id} moved to ${statusOf(status).label}`,
+        variant: status === 'done' ? 'success' : 'info',
+        actionLabel: 'Undo',
+        action: () => setStatus(id, was, false),
+      });
+    };
+
+    // The sidebar's links are this app's views. Cancelling arc-navigate
+    // keeps the anchor from firing; stopping it keeps the page's own
+    // soft-navigation listener from following the href.
+    const side = $('app-side');
+    const titles: Record<string, string> = { all: 'All issues', mine: 'Assigned to me', review: 'In review', done: 'Done' };
+    side.addEventListener('arc-navigate', (e: any) => {
+      e.preventDefault();
+      e.stopPropagation();
+      view = String(e.detail?.href ?? '#all').slice(1);
+      const who = issues.find((i) => `who-${i.who.split(' ')[0].toLowerCase()}` === view)?.who;
+      $('app-heading').heading = titles[view] ?? who ?? 'Issues';
+      filter();
+    });
+
+    list.addEventListener('arc-select', (e: any) => {
+      const id = e.detail?.value ?? (e.target as any)?.value;
+      if (id) openIssue(id);
+    });
+    board.addEventListener('arc-card-click', (e: any) => openIssue(e.detail.cardId));
+    board.addEventListener('arc-card-move', (e: any) => {
+      setStatus(e.detail.cardId, e.detail.toColumn);
+    });
+    // Row actions: the check on a hovered or focused row. Stopping the click
+    // keeps it from also opening the issue.
+    list.addEventListener('click', (e: Event) => {
+      const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-done]');
+      if (!btn) return;
+      e.stopPropagation();
+      setStatus(btn.dataset.done!, 'done');
+    }, true);
+
+    $('app-view').addEventListener('arc-change', (e: any) => {
+      const board_ = e.detail.value === 'board';
+      board.hidden = !board_;
+      list.hidden = board_;
+      $('app-body').classList.toggle('is-board', board_);
+      filter();
+    });
+    $('app-search').addEventListener('arc-input', (e: any) => {
+      query = (e.detail?.value ?? '').trim().toLowerCase();
+      filter();
+    });
+    $('app-search').addEventListener('arc-clear', () => {
+      query = '';
+      filter();
+    });
+
+    $('app-sheet-close').addEventListener('click', () => { sheet.open = false; });
+    $('app-sheet-done').addEventListener('click', () => {
+      setStatus(openId, 'done');
+      sheet.open = false;
+    });
+
+    const title = $('app-new-title');
+    const resetForm = () => {
+      title.value = '';
+      title.error = '';
+      $('app-new-body').value = '';
+    };
+    $('app-new-open').addEventListener('click', () => {
+      resetForm();
+      dialog.open = true;
+    });
+    $('app-new-cancel').addEventListener('click', () => { dialog.open = false; });
+    title.addEventListener('arc-input', () => { if (title.error) title.error = ''; });
+    const create = () => {
+      const text = (title.value ?? '').trim();
+      if (!text) {
+        title.error = 'Give the issue a title.';
+        title.focus();
+        return;
+      }
+      const next = Math.max(...issues.map((i) => +i.id.split('-')[1])) + 1;
+      const issue: Issue = {
+        id: `ARC-${next}`,
+        title: text,
+        who: $('app-new-who').value,
+        status: 'todo',
+        priority: $('app-new-priority').value,
+        points: 1,
+        body: ($('app-new-body').value ?? '').trim() || 'No description yet.',
+      };
+      issues.unshift(issue);
+      const item = makeItem(issue);
+      list.prepend(item);
+      syncItem(issue);
+      syncSummary();
+      filter();
+      dialog.open = false;
+      toast.show({ message: `${issue.id} created`, variant: 'success' });
+    };
+    $('app-new-create').addEventListener('click', create);
+    $('app-new-form').addEventListener('submit', (e: Event) => { e.preventDefault(); create(); });
+
+    renderBoard();
+
+    // The sheet, dialog and toast belong to this page; a soft navigation
+    // must not carry an open one into the docs
+    document.addEventListener('astro:before-swap', () => {
+      sheet.open = false;
+      dialog.open = false;
+    }, { once: true });
+  }
+
   async function initNavigation() {
     // Document-level listener survives soft navigations; without the guard,
     // every astro:page-load stacked another copy and one click navigated N times.
@@ -796,7 +1346,8 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
   initHero();
   initReveal();
   initStatCountUp();
-  initFwSwitcher();
+  initPrism();
+  initApp();
   initTokensDemo();
   initAccentSwatches();
   initNavigation();
@@ -804,7 +1355,8 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     initHero();
     initReveal();
     initStatCountUp();
-    initFwSwitcher();
+      initPrism();
+    initApp();
     initTokensDemo();
     initAccentSwatches();
     initNavigation();
@@ -866,8 +1418,8 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
   }
 
   /* ── Wash ──
-     The page's own ground, laid softly over the beam where people read: a
-     broad pool behind the copy and a tighter one behind the showcase. Built
+     The page's own ground, laid softly over the light where people read:
+     one broad pool behind the copy. Built
      from --bg-deep at partial strength via color-mix, so it is dark on dark
      and light on light with no second definition. */
   .hero__wash {
@@ -878,8 +1430,7 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     --wash: color-mix(in oklab, var(--bg-deep) 35%, rgb(0 0 0 / 0));
     --wash-0: color-mix(in oklab, var(--bg-deep) 0%, rgb(0 0 0 / 0));
     background:
-      radial-gradient(ellipse 42% 58% at 24% 54%, var(--wash), var(--wash-0) 100%),
-      radial-gradient(ellipse 34% 52% at 72% 54%, color-mix(in oklab, var(--bg-deep) 15%, rgb(0 0 0 / 0)), var(--wash-0) 100%);
+      radial-gradient(ellipse 46% 44% at 50% 42%, var(--wash), var(--wash-0) 100%);
   }
 
   .hero__content {
@@ -889,9 +1440,9 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     margin-inline: auto;
     width: 100%;
     display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
-    align-items: center;
-    gap: var(--space-2xl) var(--space-3xl);
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    gap: var(--space-2xl);
   }
 
   /* The claim, left-aligned; the proof sits beside it */
@@ -980,6 +1531,20 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     line-height: 1.7;
   }
 
+  /* Over the light a transparent secondary let the plasma run through it,
+     its colour fringes tracing the dark outline. Frosted, it sits on the
+     page's own ground and takes a faint accent edge instead. */
+  .hero__actions arc-button[variant='secondary']::part(button) {
+    background: color-mix(in oklab, var(--bg-card) 70%, rgb(0 0 0 / 0));
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border-color: rgba(var(--accent-primary-rgb), 0.3);
+  }
+
+  .hero__actions arc-button[variant='secondary']:hover::part(button) {
+    border-color: var(--interactive);
+  }
+
   .hero__actions {
     display: flex;
     flex-wrap: wrap;
@@ -1021,7 +1586,6 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
      the type) and pulled back with margin so layout doesn't move. */
   .statement__lit,
   .statement__quiet,
-  .fw-btn__name,
   .stat-custom__number,
   .hero__headline-glow {
     padding-block: 0.1em 0.2em;
@@ -1049,65 +1613,599 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     }
   }
 
+  /* These sit inside running text, so color alone can't mark them as links:
+     a quiet underline does, and firms up on hover */
   .chapter-link {
     color: var(--interactive);
     font-weight: 500;
-    text-decoration: none;
     white-space: nowrap;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(var(--interactive-rgb), 0.45);
+    transition: text-decoration-color var(--transition-fast);
   }
 
   .chapter-link:hover {
-    text-decoration: underline;
+    text-decoration-color: var(--interactive);
   }
 
-  /* ── Showcase: one working app screen ──
-     A real window made of real components, set on a frosted pane of the
-     page's own surface so it reads cleanly over the beam. The frost is the
-     point, not decoration: without it the rays run straight through the
-     numbers. It fades up once every element inside has upgraded. */
-  .hero__showcase {
-    margin: 0;
-    min-width: 0;
-    max-width: 520px;
-    justify-self: end;
-    width: 100%;
+  /* Mock window lights, for the tracker's chrome */
+  .window-orbs {
+    display: inline-flex;
+    gap: 6px;
+  }
+
+  .window-orbs i {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    background: var(--orb-close);
+  }
+
+  .window-orbs i:nth-child(2) { background: var(--orb-minimize); }
+  .window-orbs i:nth-child(3) { background: var(--orb-maximize); }
+
+  .hero__headline--xl .hero__headline-top {
+    font-size: clamp(34px, 5vw, 72px);
+    font-weight: 200;
+    letter-spacing: -0.03em;
+  }
+
+  .hero__headline--xl .hero__headline-glow,
+  .hero__headline--xl .hero__headline-glow-shadow {
+    font-size: clamp(52px, 8.4vw, 128px);
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+  }
+
+  /* The hero stacks: the claim, then the mixer under it */
+  .hero__copy--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero__copy--center .hero__headline {
+    align-items: center;
+  }
+
+  .hero__copy--center .hero__body {
+    max-width: 58ch;
+  }
+
+  .hero__copy--center .hero__actions {
+    justify-content: center;
+  }
+
+  .mixer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    width: min(100%, 980px);
+    padding: var(--space-md) var(--space-xl) var(--space-lg);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-subtle);
-    background: color-mix(in oklab, var(--bg-card) 76%, rgb(0 0 0 / 0));
-    backdrop-filter: blur(18px) saturate(1.2);
-    -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    background:
+      radial-gradient(ellipse 60% 120% at 0% 0%, rgba(var(--accent-primary-rgb), 0.1), rgba(var(--accent-primary-rgb), 0) 70%),
+      radial-gradient(ellipse 60% 120% at 100% 100%, rgba(var(--accent-secondary-rgb), 0.08), rgba(var(--accent-secondary-rgb), 0) 70%),
+      color-mix(in oklab, var(--bg-card) 72%, rgb(0 0 0 / 0));
+    backdrop-filter: blur(18px) saturate(1.25);
+    -webkit-backdrop-filter: blur(18px) saturate(1.25);
     box-shadow:
-      0 24px 60px -20px rgb(0 0 0 / 0.55),
-      0 0 60px -10px rgba(var(--accent-primary-rgb), calc(0.22 * var(--glow-a)));
+      0 30px 70px -30px rgb(0 0 0 / 0.6),
+      0 0 70px -20px rgba(var(--accent-primary-rgb), calc(0.3 * var(--glow-a)));
+    transition: background var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  /* The top edge catches the light, in the accents the panel is setting */
+  .mixer::before {
+    content: '';
+    position: absolute;
+    inset: -1px 12% auto;
+    height: 1px;
+    background: linear-gradient(90deg,
+      rgba(var(--accent-primary-rgb), 0),
+      rgba(var(--accent-primary-rgb), 0.9) 35%,
+      rgba(var(--accent-secondary-rgb), 0.9) 65%,
+      rgba(var(--accent-secondary-rgb), 0));
+    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.7));
+  }
+
+  .mixer__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 1px solid var(--divider);
+  }
+
+  .mixer__title {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  .mixer__kbd {
+    margin-inline-start: var(--space-xs);
+  }
+
+  .mixer__row {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 1100px) {
+    .mixer__row {
+      grid-template-columns: repeat(auto-fit, minmax(200px, auto));
+    }
+  }
+
+  .mixer__ctl {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+
+  .mixer__ctl--hue {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-md);
+  }
+
+  .mixer__readout {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: var(--space-2xs, 4px) var(--space-sm);
+    text-align: start;
+  }
+
+  .mixer__readout .mixer__label {
+    grid-column: 1 / -1;
+  }
+
+  .mixer__pair {
+    display: inline-flex;
+  }
+
+  .mixer__dot {
+    width: 16px;
+    height: 16px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--bg-card);
+    background: var(--accent-primary);
+    box-shadow: 0 0 10px rgba(var(--accent-primary-rgb), 0.7);
+  }
+
+  .mixer__dot--b {
+    margin-inline-start: -6px;
+    background: var(--accent-secondary);
+    box-shadow: 0 0 10px rgba(var(--accent-secondary-rgb), 0.7);
+  }
+
+  .mixer__hex {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+    min-width: 16ch;
+    white-space: pre;
+  }
+
+  /* The proof band: parts that take their color from the accents, so the
+     dial visibly moves them */
+  .mixer__follow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm) var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--divider);
+  }
+
+  .mixer__demo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md) var(--space-xl);
+  }
+
+  .mixer__slider {
+    width: 160px;
+  }
+
+  .mixer__label {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  /* ── Intro: the pitch and the rivers ── */
+  .intro {
+    position: relative;
+    padding: var(--space-4xl) 0 var(--space-3xl);
     overflow: clip;
-    opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.8s var(--ease-out, ease-out), transform 0.8s var(--ease-out, ease-out);
+  }
+
+  .intro__inner {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding: 0 var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .statement--center {
+    align-items: center;
+  }
+
+  .intro__blurb {
+    margin-top: var(--space-xl);
+    max-width: 60ch;
+    color: var(--text-secondary);
+    font-size: var(--text-lg);
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  .rivers {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-top: var(--space-3xl);
+    mask-image: linear-gradient(90deg, rgb(0 0 0 / 0), rgb(0 0 0) 14%, rgb(0 0 0) 86%, rgb(0 0 0 / 0));
+    -webkit-mask-image: linear-gradient(90deg, rgb(0 0 0 / 0), rgb(0 0 0) 14%, rgb(0 0 0) 86%, rgb(0 0 0 / 0));
+  }
+
+  .river {
+    overflow: hidden;
+    padding-block: var(--space-md);
+  }
+
+  .river__track {
+    display: flex;
+    width: max-content;
+    animation: river-drift 70s linear infinite;
+  }
+
+  .river--b .river__track {
+    animation-duration: 84s;
+    animation-direction: reverse;
+  }
+
+  .river:hover .river__track,
+  .river:focus-within .river__track {
+    animation-play-state: paused;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .river__track { animation: none; }
+  }
+
+  /* Each track holds its set twice; moving it by exactly one set's width
+     lands the second copy where the first began */
+  @keyframes river-drift {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .river__set {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding-inline-end: var(--space-lg);
+  }
+
+  .spec {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    min-height: 72px;
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.5), 0 0 40px -18px rgba(var(--accent-primary-rgb), calc(0.35 * var(--glow-a, 1)));
+    flex-shrink: 0;
+  }
+
+  .spec--wide {
+    min-width: 240px;
+  }
+
+  .spec--wide > * {
+    flex: 1;
+  }
+
+  /* ── Prism: source → fan → outputs ──
+     The rig is three columns sharing one height: the source window, the
+     fan of light, and seven output rows in equal tracks. Equal tracks are
+     what let ray i end on row i's center without measuring anything. */
+  .prism {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    overflow: clip;
+    background:
+      radial-gradient(ellipse 50% 40% at 50% 46%, rgba(var(--accent-secondary-rgb), 0.07), rgba(var(--accent-secondary-rgb), 0) 70%);
+  }
+
+  .prism::before,
+  .app::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--glow-line-gradient);
+    opacity: 0.4;
+  }
+
+  .prism__inner,
+  .app__inner {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding: 0 var(--space-lg);
+  }
+
+  .prism__header,
+  .app__header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .prism__rig {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(64px, 0.26fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .prism__source {
+    margin: 0;
+    min-width: 0;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .prism__caption {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    padding-inline: var(--space-xs);
+  }
+
+  .prism__fanwrap {
     position: relative;
   }
 
-  /* The top edge catches the beam: a lit line, brightest in the middle */
-  .hero__showcase::before {
+  .prism__fan {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    fill: none;
+  }
+
+  .prism__stop-a { stop-color: var(--accent-primary); }
+  .prism__stop-b { stop-color: var(--accent-secondary); }
+
+  .prism__in,
+  .prism__ray {
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .prism__in {
+    stroke: var(--accent-primary);
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.8));
+  }
+
+  .prism__ray {
+    stroke: url(#prism-ray);
+    stroke-width: 1.25;
+    opacity: 0.32;
+    transition: opacity var(--transition-base), stroke-width var(--transition-base);
+  }
+
+  .prism__ray.is-hover { opacity: 0.7; }
+
+  .prism__ray.is-on {
+    opacity: 1;
+    stroke-width: 2.5;
+    filter: drop-shadow(0 0 5px rgba(var(--accent-secondary-rgb), 0.9));
+  }
+
+  /* One authored moment: the beam arrives, then the rays fan out in order.
+     Hidden only once script has confirmed it will play (the rig gets
+     .is-lit from an observer), so no-script and reduced motion see it lit. */
+  @media (prefers-reduced-motion: no-preference) {
+    .prism__rig.is-armed:not(.is-lit) .prism__in,
+    .prism__rig.is-armed:not(.is-lit) .prism__ray {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+    }
+    .prism__rig.is-lit .prism__in {
+      stroke-dasharray: 1;
+      animation: prism-draw 0.5s var(--ease-out, ease-out) both;
+    }
+    .prism__rig.is-lit .prism__ray {
+      stroke-dasharray: 1;
+      animation: prism-draw 0.9s var(--ease-out, ease-out) both;
+      animation-delay: calc(0.4s + var(--i) * 70ms);
+    }
+  }
+
+  @keyframes prism-draw {
+    from { stroke-dashoffset: 1; }
+    to   { stroke-dashoffset: 0; }
+  }
+
+  /* The prism itself: a lit point where the beam splits, sized in pixels
+     so the stretched SVG can't distort it */
+  .prism__node {
+    position: absolute;
+    top: 50%;
+    left: 34%;
+    width: 12px;
+    height: 12px;
+    translate: -50% -50%;
+    rotate: 45deg;
+    border-radius: 2px;
+    background: var(--text-primary);
+    box-shadow:
+      0 0 10px rgba(var(--accent-primary-rgb), 0.9),
+      0 0 28px rgba(var(--accent-secondary-rgb), 0.6);
+    pointer-events: none;
+  }
+
+  .prism__outs {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    min-width: 0;
+  }
+
+  .out {
+    display: grid;
+    align-content: center;
+    gap: 2px;
+    min-width: 0;
+    padding: var(--space-sm) var(--space-md);
+    margin: 0;
+    text-align: start;
+    background: none;
+    border: 1px solid rgba(var(--accent-secondary-rgb), 0);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: inherit;
+    transition: background var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .out:hover {
+    background: var(--surface-hover, rgba(var(--accent-primary-rgb), 0.04));
+  }
+
+  .out.is-on {
+    background: rgba(var(--accent-secondary-rgb), 0.07);
+    border-color: rgba(var(--accent-secondary-rgb), 0.28);
+    box-shadow: 0 0 24px -6px rgba(var(--accent-secondary-rgb), 0.35);
+  }
+
+  .out:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
+  }
+
+  .out__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .out__name {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .out__meta {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .out__gets {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+  }
+
+  .out__line {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color var(--transition-fast);
+  }
+
+  .out.is-on .out__line {
+    color: var(--interactive);
+  }
+
+  /* The chosen file, whole. Capped and scrolled inside so a 130-line
+     Angular wrapper doesn't push the page a screen further. */
+  .prism__files {
+    display: grid;
+    margin-top: var(--space-xl);
+  }
+
+  .prism__file {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+
+  /* The cap sits on the code itself, so the title bar and the status bar
+     stay put and only the lines scroll */
+  .prism__file arc-code-block::part(body) {
+    max-height: 420px;
+    overflow-y: auto;
+    scrollbar-color: var(--border-bright) rgba(0, 0, 0, 0);
+  }
+
+  .prism__file[hidden] {
+    display: none;
+  }
+
+  .prism__note {
+    max-width: 72ch;
+    margin-top: var(--space-xl);
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ── App: the issue tracker ── */
+  .app {
+    position: relative;
+    padding: var(--space-4xl) 0;
+    overflow: clip;
+    background:
+      radial-gradient(ellipse 60% 40% at 70% 58%, rgba(var(--accent-primary-rgb), 0.07), rgba(var(--accent-primary-rgb), 0) 70%);
+  }
+
+  .app__window {
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-card);
+    overflow: clip;
+    position: relative;
+    box-shadow:
+      0 40px 80px -40px rgb(0 0 0 / 0.6),
+      0 0 80px -30px rgba(var(--accent-primary-rgb), calc(0.3 * var(--glow-a, 1)));
+  }
+
+  .app__window::before {
     content: '';
     position: absolute;
     inset: 0 0 auto;
     height: 1px;
-    background: linear-gradient(90deg,
-      rgba(var(--accent-secondary-rgb), 0),
-      rgba(var(--accent-secondary-rgb), 0.7) 55%,
-      rgba(var(--accent-primary-rgb), 0));
+    background: var(--lobe-line, linear-gradient(90deg, rgba(var(--accent-primary-rgb), 0), rgba(var(--accent-primary-rgb), 0.7), rgba(var(--accent-primary-rgb), 0)));
+    z-index: 1;
   }
 
-  .hero--showcase-live .hero__showcase {
-    opacity: 1;
-    transform: none;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero__showcase { transform: none; transition: opacity 0.4s ease; }
-  }
-
-  .showcase__chrome {
+  .app__chrome {
     display: flex;
     align-items: center;
     gap: var(--space-sm);
@@ -1115,229 +2213,196 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
     border-bottom: 1px solid var(--border-subtle);
   }
 
-  .showcase__orbs {
-    display: inline-flex;
-    gap: 6px;
-  }
-
-  .showcase__orbs i {
-    width: 10px;
-    height: 10px;
-    border-radius: var(--radius-full);
-    background: var(--orb-close);
-  }
-
-  .showcase__orbs i:nth-child(2) { background: var(--orb-minimize); }
-  .showcase__orbs i:nth-child(3) { background: var(--orb-maximize); }
-
-  .showcase__title {
-    flex: 1;
+  .app__title {
     font-family: var(--font-mono);
-    font-size: var(--code-size, var(--text-sm));
-    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
   }
 
-  .showcase__body {
+  .app__frame {
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    min-height: 600px;
+  }
+
+  .app__side {
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    justify-content: space-between;
+    border-inline-end: 1px solid var(--border-subtle);
+    background: var(--bg-deep);
+    padding-block: var(--space-sm);
+    min-width: 0;
+  }
+
+  .app__cycle {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
     padding: var(--space-md);
   }
 
-  .showcase__bar,
-  .showcase__foot {
+  .app__cycle-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+  }
+
+  .app__cycle-label span:first-child {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .app__main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    min-width: 0;
+  }
+
+  .app__tools {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: var(--space-md);
     flex-wrap: wrap;
   }
 
-  .showcase__stats {
+  .app__search {
+    flex: 1 1 220px;
+    max-width: 360px;
+  }
+
+  .app__body {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    grid-template-columns: minmax(0, 1fr) 248px;
+    gap: var(--space-lg);
+    align-items: start;
+  }
+
+  .app__views {
+    min-width: 0;
+  }
+
+  /* The board needs the width: the rail steps aside while it's up */
+  .app__body.is-board {
+    grid-template-columns: 1fr;
+  }
+
+  .app__body.is-board .app__rail {
+    display: none;
+  }
+
+  .app__desc-status {
+    display: none;
+  }
+
+  @media (max-width: 640px) {
+    .app__list arc-tag[slot='suffix'] { display: none; }
+    .app__desc-status { display: inline; }
+  }
+
+  /* A list item's own :host display outranks the [hidden] attribute, so
+     the filter's hidden rows have to be put away from out here */
+  .app__list[hidden],
+  .app__board[hidden],
+  .app__list arc-list-item[hidden] {
+    display: none;
+  }
+
+  .app__empty {
+    padding: var(--space-xl) 0;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+  }
+
+  .app__rail {
+    display: flex;
+    flex-direction: column;
     gap: var(--space-md);
   }
 
-  .showcase__spark {
-    display: block;
-    width: 100%;
-  }
-
-  /* ── Native: the framework switcher ──
-     Restored as its own full-width chapter — prism is a headline feature, but
-     the hero's headline is the components. Ambient accent field, the
-     framework names as a display-scale type stack, the code window in its own
-     bloom of light. */
-  .native {
-    position: relative;
-    padding: var(--space-4xl) 0;
-    overflow: clip;
-    /* Lobe centers sit far enough inside the box that the 70% fade completes
-       before every edge — a radial clipped by the section boundary paints a
-       hard seam straight across the page. */
-    background:
-      radial-gradient(ellipse 55% 45% at 12% 34%, rgba(var(--accent-primary-rgb), 0.08), transparent 70%),
-      radial-gradient(ellipse 45% 48% at 92% 58%, rgba(var(--accent-secondary-rgb), 0.07), transparent 70%);
-  }
-
-  .native__inner {
-    max-width: var(--max-width);
-    margin-inline: auto;
-    padding: 0 var(--space-lg);
-  }
-
-  .native__header {
-    margin-bottom: var(--space-2xl);
-  }
-
-  .native__grid {
-    /* One value drives both the rotation interval (read by the switcher
-       script) and the timer-bar animation. Seconds only. */
-    --fw-interval: 6.5s;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-    gap: var(--space-2xl);
-    align-items: center;
-  }
-
-  .fw-list {
+  .app__panel {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-deep);
   }
 
-  .fw-btn {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    align-items: flex-start;
-    text-align: start;
-    padding: 7px 12px;
-    margin: 0;
-    background: none;
-    border: 0;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-  }
-
-  .fw-btn:focus-visible {
-    outline: 2px solid var(--accent-primary);
-    outline-offset: 2px;
-  }
-
-  .fw-btn__name {
-    font-size: clamp(28px, 3.6vw, 52px);
-    font-weight: 200;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
-    color: var(--text-ghost);
-    transition: color var(--transition-fast);
-  }
-
-  .fw-btn:hover .fw-btn__name {
+  .app__panel-title {
+    font-size: var(--text-xs);
+    font-weight: 500;
     color: var(--text-secondary);
   }
 
-  .fw-btn.is-active .fw-btn__name {
-    font-weight: 600;
-    color: transparent;
-    background: var(--gradient-accent-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 18px rgba(var(--accent-primary-rgb), 0.4));
+  .app__parts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-xs) var(--space-sm);
+    margin-top: var(--space-lg);
   }
 
-  .fw-btn__idiom {
-    display: none;
+  .app__parts-label {
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    margin-inline-end: var(--space-xs);
+  }
+
+  .app__part {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     color: var(--text-secondary);
+    text-decoration: none;
+    padding: 2px var(--space-xs);
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background var(--transition-fast);
   }
 
-  .fw-btn.is-active .fw-btn__idiom {
-    display: block;
-  }
-
-  .fw-btn__idiom em {
-    font-style: normal;
+  .app__part:hover {
     color: var(--interactive);
+    background: rgba(var(--accent-primary-rgb), 0.08);
   }
 
-  /* The auto-advance made visible: a timer bar fills under the active name,
-     so the rotation reads as a countdown instead of a surprise */
-  .fw-btn.is-active::after {
-    content: '';
-    display: block;
-    width: 100%;
-    height: 2px;
-    margin-top: 4px;
-    border-radius: 1px;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    filter: drop-shadow(0 0 6px rgba(var(--accent-primary-rgb), 0.5));
-    transform-origin: left center;
+  .app-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
   }
 
-  .native__grid.is-auto .fw-btn.is-active::after {
-    animation: fw-timer var(--fw-interval) linear;
+  .app-sheet__id {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
   }
 
-  @keyframes fw-timer {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
+  .app-sheet__body {
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.7;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .native__grid.is-auto .fw-btn.is-active::after {
-      animation: none;
-    }
+  .app-sheet__foot,
+  .app-new__foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-sm);
   }
 
-  /* The code window floats in its own light. All seven panels occupy one grid
-     cell, so the block is always as tall as the longest example rather than
-     as tall as whichever is showing — the examples differ by several lines,
-     and on a phone switching framework moved everything below it up or down
-     the page under the reader's thumb. */
-  .fw-panels {
-    position: relative;
+  .app-new {
     display: grid;
-    min-width: 0;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
   }
 
-  .fw-panel {
-    position: relative;
-    grid-area: 1 / 1;
-    /* A grid item's min-width is auto, so without this the panel refuses to
-       shrink below the longest line in its example and the code block hangs
-       past its column. Same trap the API tables hit: wrapping declared and
-       unreachable. */
-    min-width: 0;
-    /* Centered in the shared cell rather than stretched to it. The cell is as
-       tall as the longest example by design; stretching every panel to that
-       height left the shorter ones top-aligned inside it, which read as the
-       section losing its vertical centering. */
-    align-self: center;
-  }
-
-  .fw-panels::before {
-    content: '';
-    position: absolute;
-    inset: -10% -8%;
-    background:
-      radial-gradient(ellipse 60% 55% at 30% 40%, rgba(var(--accent-primary-rgb), 0.18), transparent 70%),
-      radial-gradient(ellipse 50% 60% at 75% 65%, rgba(var(--accent-secondary-rgb), 0.14), transparent 70%);
-    filter: blur(28px);
-    pointer-events: none;
-  }
-
-  /* Deliberately not display:none: the panel has to keep its cell for the
-     height to hold. visibility takes it out of the a11y tree and the tab order
-     the same way, and the switcher keeps toggling [hidden] as before. */
-  .fw-panel[hidden] {
-    display: block;
-    visibility: hidden;
+  .app-new > #app-new-title,
+  .app-new > #app-new-body {
+    grid-column: 1 / -1;
   }
 
   /* ── Changed: the newest release note, as a chapter ── */
@@ -1778,21 +2843,11 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
   }
 
   /* ── Responsive ── */
-  /* The hero's two columns stack once the code window would squeeze the
-     copy below a readable measure: claim first, proof directly under it.
-     min-height goes with the split — a stacked hero is as tall as its
-     content, and 85vh would strand the showcase below the fold line the
-     visitor thinks is the whole hero. */
+  /* Below desktop the hero is as tall as its content: 85vh would strand
+     the mixer under a fold the visitor reads as the end of the hero. */
   @media (max-width: 1024px) {
     .hero {
       min-height: auto;
-    }
-    .hero__content {
-      grid-template-columns: 1fr;
-    }
-    /* Stacked, the showcase sits under the copy at the copy's own width */
-    .hero__showcase {
-      justify-self: start;
     }
     .hero__wash {
       background: color-mix(in oklab, var(--bg-deep) 55%, rgb(0 0 0 / 0));
@@ -1800,7 +2855,54 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
   }
 
   @media (max-width: 900px) {
-    .native__grid,
+    .mixer { padding: var(--space-md); }
+    .mixer__row { justify-content: flex-start; }
+    .hero__copy--center { max-width: 100%; }
+    .hero__copy--center .hero__actions { align-self: center; }
+  }
+
+  /* The tracker's rail drops under the work first, as a pair of panels */
+  @media (max-width: 1180px) {
+    .app__body {
+      grid-template-columns: 1fr;
+    }
+    .app__rail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 900px) {
+    /* The rig stacks: source, then the outputs. The fan only means
+       something side by side, so it goes. */
+    .prism__rig {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+    .prism__fanwrap {
+      display: none;
+    }
+    .prism__outs {
+      grid-template-rows: none;
+      gap: var(--space-2xs, 4px);
+    }
+    /* A phone gets the app's own narrow layout: no sidebar, full-width work */
+    .app__frame {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .app__side {
+      display: none;
+    }
+    .app__main {
+      padding: var(--space-md);
+    }
+    .app__rail {
+      grid-template-columns: 1fr;
+    }
+    .app-new {
+      grid-template-columns: 1fr;
+    }
     .console__outputs,
     .changed__inner {
       grid-template-columns: 1fr;
@@ -1826,20 +2928,6 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
       grid-column: 1 / -1;
       grid-row: 2;
     }
-    .fw-list {
-      flex-direction: row;
-      flex-wrap: wrap;
-      gap: var(--space-xs) var(--space-md);
-    }
-    .fw-btn {
-      padding: 4px 2px;
-    }
-    .fw-btn__name {
-      font-size: clamp(20px, 4.5vw, 28px);
-    }
-    .fw-btn.is-active .fw-btn__idiom {
-      display: none;
-    }
     .gauntlet__stats {
       grid-template-columns: repeat(2, 1fr);
       gap: var(--space-lg);
@@ -1851,7 +2939,7 @@ const fwTabs: Array<[keyof typeof codeExamples, string, string, string]> = [
       padding: calc(var(--space-2xl) + var(--nav-height, 64px)) var(--space-md) var(--space-xl);
     }
     .hero__actions { flex-direction: column; align-items: stretch; align-self: stretch; }
-    .native, .changed, .yours, .gauntlet { padding: var(--space-2xl) 0; }
+    .intro, .prism, .app, .changed, .yours, .gauntlet { padding: var(--space-2xl) 0; }
     .gate {
       grid-template-columns: auto minmax(0, 1fr);
     }
