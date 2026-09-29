@@ -78,7 +78,7 @@
 
       /* The typing indicator. The keyword curve is deliberate: loops are
          exempt from the entrance and exit curves in the token tree, and
-         ease-in-out is the symmetric shape a pulse wants — see the loop note
+         ease-in-out is the symmetric shape a pulse wants; see the loop note
          in scripts/checks/motion-tokens.js and the arc-hotspot halo this
          follows. Opacity and transform only, so it stays off the layout path.
          The shared reduced-motion guard shortens it to nothing; the explicit

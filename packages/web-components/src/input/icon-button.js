@@ -21,7 +21,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} href - When set, renders the button as an anchor tag for navigation links.
  * @prop {boolean} disabled - Disables the button, reducing opacity to 40% and blocking pointer events.
  * @prop {string} type - HTML button type attribute. Only applies when `href` is not set.
- * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.
+ * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control: the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.
  * @csspart base - The root element.
  * @csspart button
  */
@@ -31,7 +31,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
     text: { type: String },
     variant: oneOf(['ghost', 'secondary', 'primary']),
     // Canon first, extension after (V4-PLAN 4.3). `xs` moved behind `lg` rather
-    // than being dropped — arc-signature-pad renders an icon button at that
+    // than being dropped: arc-signature-pad renders an icon button at that
     // size, so it is load-bearing. The explicit `default` means the reorder
     // changes nothing at runtime; it is the declaration that now reads the way
     // every other size does.
@@ -52,7 +52,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
       :host([disabled]) { pointer-events: none; }
 
       /* Anchor-adoption form: a lone slotted <a> becomes the control and takes
-         the same box styling as .btn — see shared/anchor-adoption.js. The
+         the same box styling as .btn; see shared/anchor-adoption.js. The
          adopted anchor is always treated as icon-only, since any text the
          consumer wants lives inside their own anchor. */
       .btn,
@@ -88,7 +88,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
       .btn__text {
         line-height: var(--glyph-lh);
         /* letter-spacing also lands after the final letter, and that trailing
-           space is inside the box being centered — so the word rendered half of
+           space is inside the box being centered, so the word rendered half of
            it, 0.75px, to the left of centre. Pulled back off the end here, at
            the cause: the box then matches the ink and every size centres
            correctly, where compensating with padding would have meant patching
@@ -99,10 +99,10 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
         margin-inline-end: calc(var(--_ls) * -1);
       }
 
-      /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
+      /* Sizes, icon-only: see iconBoxStyles in ../button-styles.js, shared with
          arc-theme-toggle so the two cannot drift apart in a top bar. */
 
-      /* Sizes — with text */
+      /* Sizes: with text */
       .btn--has-text { min-height: var(--touch-min); }
       :host([size="xs"]) .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-xs); }
       :host([size="sm"]) .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--_text-xs); }
@@ -168,7 +168,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    // aria-label is prohibited on a role-less custom element — adopt it as the
+    // aria-label is prohibited on a role-less custom element; adopt it as the
     // internal button's label (explicit `label` wins) and remove it from the host.
     const hostLabel = this.getAttribute('aria-label');
     if (hostLabel) {
@@ -187,7 +187,7 @@ export class ArcIconButton extends DeclaredPropsMixin(LitElement) {
     this._slottedAnchor = isLoneSlottedAnchor(e.target);
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

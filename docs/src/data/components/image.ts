@@ -11,7 +11,7 @@ export const image: ComponentDef = {
 
   overview: `Image wraps the native \`<img>\` element with loading states and error handling that would otherwise require custom boilerplate in every project. While the image loads, a shimmer skeleton animation fills the container, giving users immediate visual feedback. Once loaded, the image fades in smoothly via a CSS opacity transition.
 
-If the image fails to load, the component switches to an error state that displays either a custom fallback image (via the \`fallback\` prop) or a default placeholder icon. This three-state lifecycle — loading, loaded, error — is fully automatic and requires no imperative code.
+If the image fails to load, the component switches to an error state that displays either a custom fallback image (via the \`fallback\` prop) or a default placeholder icon. This three-state lifecycle (loading, loaded, error) is automatic and requires no imperative code.
 
 Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\`) constrain the container dimensions before the image loads, preventing layout shift. The \`fit\` property maps directly to CSS \`object-fit\`, defaulting to \`cover\` for full-bleed cropping. Native lazy loading is enabled by default via the \`loading="lazy"\` attribute.`,
 
@@ -22,7 +22,7 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
     'Six aspect ratio presets to prevent layout shift: 1/1, 4/3, 16/9, 21/9, 3/4, 9/16',
     'Five object-fit modes: cover (default), contain, fill, none, scale-down',
     'Native lazy loading enabled by default',
-    'Respects `prefers-reduced-motion` — disables shimmer and fade when set',
+    'Respects `prefers-reduced-motion`: disables shimmer and fade when set',
     'Exposed CSS parts: wrapper, image, fallback',
   ],
 
@@ -34,9 +34,9 @@ Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\
       'Provide a `fallback` image URL for critical images that must always display something',
     ],
     dont: [
-      'Do not use arc-image for decorative background images — use CSS `background-image` instead',
-      'Do not set `loading="eager"` on below-the-fold images — lazy is the default for a reason',
-      'Do not omit `alt` text — the image is semantically meaningful content',
+      'Do not use arc-image for decorative background images. Use CSS `background-image` instead',
+      'Do not set `loading="eager"` on below-the-fold images. Lazy is the default for a reason',
+      'Do not omit `alt` text. The image is semantically meaningful content',
       'Do not use extremely large source images without server-side resizing',
     ],
   },

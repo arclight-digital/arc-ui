@@ -9,20 +9,20 @@ export const spinner: ComponentDef = {
   searchKeywords: ['loader', 'loading'],
   description: 'Animated loading spinner in three sizes.',
 
-  overview: `Spinner is a simple rotating loading indicator for actions where content shape is unknown or a skeleton layout is impractical. It renders a circular border element with one transparent edge that spins continuously at 0.75-second intervals, creating the classic "loading ring" pattern. Use it for button loading states, inline status indicators, and overlay loading screens.
+  overview: `Spinner is a rotating loading indicator for actions where content shape is unknown or a skeleton layout is impractical. It renders a circular border element with one transparent edge that spins continuously at 0.75-second intervals, the classic loading ring. Use it for button loading states, inline status indicators, and overlay loading screens.
 
 Three size presets control the spinner dimensions: \`sm\` (16px, 2px border) is compact enough for inline use next to text or inside buttons, \`md\` (24px, 2.5px border) is the default for general loading states, and \`lg\` (40px, 3px border) suits page-level or overlay loading indicators. The border width scales proportionally with size to maintain visual balance.
 
-Three color variants — \`primary\`, \`secondary\`, and \`white\` — let you match the spinner to its context. Primary uses the accent-primary color, secondary aligns with accent-secondary areas, and white works on dark backgrounds or inside filled buttons. The component includes \`role="status"\` and \`aria-label="Loading"\` for screen reader users.`,
+Three color variants (\`primary\`, \`secondary\`, and \`white\`) let you match the spinner to its context. Primary uses the accent-primary color, secondary aligns with accent-secondary areas, and white works on dark backgrounds or inside filled buttons. The component includes \`role="status"\` and \`aria-label="Loading"\` for screen reader users.`,
 
   features: [
     'Three size presets: sm (16px), md (24px), lg (40px) with proportional border widths',
     'Three color variants: primary (`--accent-primary`), secondary (`--accent-secondary`), white (`--text-primary`)',
-    'Continuous 0.75s linear rotation animation for smooth spinning',
-    'Inline-flex display for easy placement beside text or inside buttons',
-    'Built-in `role="status"` and aria-label="Loading" for accessibility',
+    'Continuous 0.75s linear rotation',
+    'Inline-flex display for placing beside text or inside buttons',
+    '`role="status"` and aria-label="Loading" for accessibility',
     'CSS part (spinner) for custom animation or color overrides',
-    'Lightweight implementation — single div element with border animation',
+    'Lightweight implementation: single div element with border animation',
   ],
 
   guidelines: {
@@ -31,14 +31,14 @@ Three color variants — \`primary\`, \`secondary\`, and \`white\` — let you m
       'Use lg size for full-page or overlay loading states',
       'Choose the white variant when placing a spinner on a filled or dark background',
       'Pair with a text label ("Loading...") for screen readers and sighted users alike',
-      'Remove the spinner immediately when loading completes — avoid artificial delays',
+      'Remove the spinner immediately when loading completes; avoid artificial delays',
     ],
     dont: [
-      'Do not use a spinner when the content shape is predictable — prefer skeleton placeholders',
+      'Do not use a spinner when the content shape is predictable; prefer skeleton placeholders',
       'Do not place multiple spinners on the same screen simultaneously',
-      'Do not use the lg spinner inline with text — it overwhelms surrounding content',
-      'Do not rely solely on the spinner for status — combine with aria-live regions when appropriate',
-      'Do not use the primary variant on a primary-colored background — it becomes invisible',
+      'Do not use the lg spinner inline with text: it overwhelms surrounding content',
+      'Do not rely solely on the spinner for status; combine with aria-live regions when appropriate',
+      'Do not use the primary variant on a primary-colored background: it becomes invisible',
     ],
   },
 

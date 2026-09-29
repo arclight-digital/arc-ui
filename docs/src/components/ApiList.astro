@@ -7,14 +7,14 @@
  * the other three for width and always won: identifiers broke mid-word
  * (`paddi`/`ng`, `inter`/`active`) and a union type wrapped across three lines.
  * `overflow-wrap: anywhere` was on every cell to stop the panel scrolling
- * sideways — correct in itself, since a scroll region with nothing focusable in
+ * sideways. That was correct in itself, since a scroll region with nothing focusable in
  * it is an axe failure, but applied to the prop name it broke the one string
  * that must stay whole.
  *
  * Dropping the description out of the column grid fixes the cause: name and
  * type keep a single meaning per column and now have the width to sit on one
  * line, and the prose gets the full measure. The default rides at the type's
- * shoulder rather than holding a column of its own — it is an annotation on the
+ * shoulder rather than holding a column of its own: it is an annotation on the
  * type, and a column made it a peer while leaving most rows to pad themselves
  * with a placeholder dash. One `tbody` per member, so a member and its
  * description are one unit to the document outline rather than two adjacent
@@ -25,14 +25,14 @@
  * The first pass gave every datum its own treatment: the type in a bordered
  * chip, the default behind an uppercase eyebrow, the header filled and tracked
  * out to 2px, a hover tint on rows that aren't interactive. Decorating each
- * field to the same degree ranks none of them — the reader gets four things
+ * field to the same degree ranks none of them. The reader gets four things
  * shouting at one volume and has to sort out the hierarchy themselves. It is
  * also the most reproduced docs-table styling there is, which is its own
  * argument against it.
  *
  * So the rank is carried by the type itself, in the one order that survives
  * this palette: the name is lifted to --text-primary and bolded, the type sits
- * at --text-secondary in mono, and the default reads as source — `= "md"` —
+ * at --text-secondary in mono, and the default reads as source (`= "md"`)
  * rather than as a labeled field. Stepping down the muted/ghost ramp instead
  * would have bought almost nothing; those two are a handful of rgb points
  * apart, so weight, size and family do the work color can't.
@@ -74,8 +74,8 @@ const codeSplit = (text: string) =>
  * parameters for a method.
  *
  * A method reuses this row wholesale rather than getting a layout of its own,
- * because the three slots already spell a signature — `name`, its type, and a
- * trailing annotation — and that is exactly what a method is. Read across, the
+ * because the three slots already spell a signature (`name`, its type, and a
+ * trailing annotation), and that is exactly what a method is. Read across, the
  * row is the d.ts line: `show(options?)` · `options?: { … }` · `→ number`.
  */
 const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ? r.params : r.type);
@@ -102,10 +102,10 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ?
           <dd class="api__desc">
         {/* Descriptions are authored as markdown in the component JSDoc and were
             rendered as plain text, so 519 of the manifest's 2 461 descriptions
-            published their backticks literally — `ring` draws a progress arc,
+            published their backticks literally: `ring` draws a progress arc,
             with the ticks. Splitting on paired backticks is the whole fix: odd
-            indices of the split are the code spans. Deliberately not a markdown
-            renderer and deliberately not set:html — the text comes from source
+            indices of the split are the code spans. This is not a markdown
+            renderer and does not use set:html. The text comes from source
             JSDoc, but nothing about being generated makes a string safe to
             inject, and inline code is the only markdown these descriptions use. */}
         {codeSplit(r.description).map((part) =>
@@ -121,7 +121,7 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ?
     margin: 0;
   }
 
-  /* The panel itself has no padding — the table this replaced was inset by its
+  /* The panel itself has no padding: the table this replaced was inset by its
      own cell padding, so the inset has to be reinstated here or every line sits
      flush against the card border. It rides on the member rather than the list
      so each rule still spans the full width of the panel, edge to edge. */
@@ -136,8 +136,8 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ?
 
   /* The signature, read the way it is written in a d.ts: name, type, default,
      on one baseline. As a two-column table the type sat a dead 300px away from
-     the name it belonged to — a colspan description row inflates the first
-     column no matter what width it is given — and the pair had to be read
+     the name it belonged to (a colspan description row inflates the first
+     column no matter what width it is given), and the pair had to be read
      across a gap rather than as one line. */
   .api .api__sig {
     display: flex;
@@ -156,12 +156,12 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ?
     white-space: nowrap;
   }
 
-  /* A documented object type — `Array<{key:string,label:string}>` — has no
+  /* A documented object type, `Array<{key:string,label:string}>`, has no
      spaces to break at, so it alone may break anywhere rather than push the
      panel sideways. min-width:0 is what makes that reachable: a flex item's
      base size is its max-content width, so without it the type refuses to
-     shrink below its longest line and widens the panel instead of breaking —
-     the wrapping was declared but could never happen, which is how a capped
+     shrink below its longest line and widens the panel instead of breaking.
+     The wrapping was declared but could never happen, which is how a capped
      panel became a scroll region axe fails on. */
   .api .api__type {
     min-width: 0;
@@ -189,8 +189,8 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ?
     margin-inline-end: 0.4ch;
   }
 
-  /* A method's parameters carry their names inline — `id: number, changes:
-     { … }` — so unlike a prop's type they are prose-shaped and may break at the
+  /* A method's parameters carry their names inline (`id: number, changes:
+     { … }`), so unlike a prop's type they are prose-shaped and may break at the
      commas rather than only `anywhere`. Nothing extra is needed for that: the
      inherited `overflow-wrap: anywhere` breaks a long object literal, and real
      spaces break first wherever they exist. */
@@ -206,7 +206,7 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ?
 
   /* An inline code span inside a description. Marked by family and a faint
      ground rather than a border or a chip: it sits mid-sentence in support
-     text, so anything heavier would out-rank the signature above it — which is
+     text, so anything heavier would out-rank the signature above it, which is
      the one thing on the row that should be read first. */
   .api .api__code {
     font-family: var(--font-mono);
@@ -219,7 +219,7 @@ const secondary = (r: Row) => (kind === 'event' ? r.detail : kind === 'method' ?
   }
 
   /* Support text, and sized like it. At body size and full card width this ran
-     past 120 characters a line — `max-width` on a `td` is ignored by table
+     past 120 characters a line. `max-width` on a `td` is ignored by table
      layout, so the measure cap the old markup declared never applied and the
      prose swamped the row it belonged to. */
   .api .api__desc {

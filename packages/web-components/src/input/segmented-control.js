@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @status stable
  * @child arc-option
  * @prop {string} value - The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty.
- * @prop {string} name - The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.
+ * @prop {string} name - The form field name submitted with the selected value. Required for native form integration: without it, the selection will not appear in FormData.
  * @prop {boolean} disabled - Disables the entire control, reducing opacity to 40% and blocking pointer events.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the selected segment changes
  * @slot - `arc-option` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
@@ -40,7 +40,7 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
         align-items: center;
         background: var(--surface-primary);
         border: 1px solid var(--border-default);
-        /* Pill track, pill thumb — the thumb slides along it, and a capsule is
+        /* Pill track, pill thumb: the thumb slides along it, and a capsule is
            the shape that reads as a track rather than as a row of boxes. */
         border-radius: var(--radius-full);
         padding: 3px; /* cosmetic inset for pill container */
@@ -126,7 +126,7 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
    * `slotchange` alone is not enough under declarative shadow DOM: the parser
    * attaches the shadow root and assigns the slot before Lit adopts the tree,
    * so the assignment has already happened by the time this component's
-   * listener exists and the event never arrives. `hydrateSlots` delivers it —
+   * listener exists and the event never arrives. `hydrateSlots` delivers it,
    * that is the whole of its job, and the reader below runs from the same
    * handler a real slotchange reaches.
    *
@@ -149,19 +149,19 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
       .filter((el) => el.tagName === 'ARC-OPTION');
     if (!options.length && !this._options.length) return;
     this._options = options;
-    // Auto-select the first *selectable* option if no value set — landing the
+    // Auto-select the first *selectable* option if no value set, landing the
     // initial selection on a disabled segment would defeat the whole guard.
     if (!this.value && this._options.length > 0) {
       const first = this._options.find((opt) => !this._isDisabled(opt));
       this.value = first?.getAttribute('value') || '';
       // That auto-selection *is* this control's initial state, but it happens
-      // after connectedCallback captured the reset baseline — so without this,
+      // after connectedCallback captured the reset baseline, so without this,
       // form.reset() would clear the bar rather than return it here.
       this._recaptureFormResetState();
     }
   }
 
-  /** Whether this option refuses selection — see shared/option.js, finding #6. */
+  /** Whether this option refuses selection; see shared/option.js, finding #6. */
   _isDisabled(option) {
     return isOptionDisabled(option);
   }

@@ -88,7 +88,7 @@ export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

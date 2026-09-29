@@ -19,7 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {boolean} loading - Shows a spinner and disables the button. Use for async operations like form submission or API calls.
  * @prop {'button' | 'submit' | 'reset'} type - Sets the HTML button type attribute. Use `submit` inside forms to trigger native form submission, or `reset` to clear form fields. Only applies when no `href` is set (link buttons ignore this).
  * @slot prefix
- * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript, since the anchor is real HTML in the initial markup. Put any icons inside that anchor; the `prefix`/`suffix` slots and `::part(button)` do not apply in this form.
+ * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the button's control: the recommended form for links that must work before hydration or without JavaScript, since the anchor is real HTML in the initial markup. Put any icons inside that anchor; the `prefix`/`suffix` slots and `::part(button)` do not apply in this form.
  * @slot suffix
  * @csspart base - The root element.
  * @csspart button
@@ -51,7 +51,7 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
          same box styling as .btn. The slot itself is display:contents (UA
          default), so the anchor becomes the host's flex item directly. Rules
          below pair .btn with .btn-slot::slotted(a) rather than duplicating
-         declarations — keep the two in step when editing either. */
+         declarations; keep the two in step when editing either. */
 
       .btn__spinner {
         display: none;
@@ -81,7 +81,7 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
         text-transform: uppercase;
         letter-spacing: var(--label-spacing);
         border: 1px solid transparent;
-        /* Pill. Circles are the house shape — the library is called ARC — and
+        /* Pill. Circles are the house shape (the library is called ARC) and
            the round icon-only controls, the tags, the badges and the toggles
            already read that way; a rounded rectangle here was the odd one out
            on a row that contains all of them. Breaking, and deliberately so:
@@ -164,7 +164,7 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
 
   /**
    * The inner <button> lives in this component's shadow root, so it is never
-   * form-associated with an ancestor form — clicking type="submit" would
+   * form-associated with an ancestor form; clicking type="submit" would
    * silently do nothing. Bridge the gap by finding the nearest arc-form or
    * native <form> and submitting/resetting it explicitly.
    */
@@ -195,7 +195,7 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
    * Authoring `<arc-button><a href="/x">Go</a></arc-button>` puts a real link in
    * the initial HTML, so it works with JS disabled and before the element
    * upgrades. On upgrade we let that anchor *be* the control rather than
-   * rendering a second one — nesting `<a>` inside `<a>` is invalid and would
+   * rendering a second one; nesting `<a>` inside `<a>` is invalid and would
    * produce nested links in the accessibility tree.
    *
    * Requiring the anchor to be the sole element keeps incidental inline links
@@ -218,13 +218,13 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
 
   render() {
-    // An explicit href always wins — it is the established API and stays
+    // An explicit href always wins. It is the established API and stays
     // byte-identical, so nothing that already works changes behavior.
     if (this.href) {
       // `<a>` has no `disabled` attribute and CSS pointer-events does not reach

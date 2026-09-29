@@ -10,11 +10,11 @@ export const descriptionList: ComponentDef = {
   description:
     'Structured term/detail pair list in a responsive grid layout with optional dividers.',
 
-  overview: `DescriptionList renders term/detail pairs in a grid layout, ideal for metadata displays, specification tables, and detail panels. Each child \`arc-description-item\` contains a term label and a detail slot, with the term displayed as an uppercase accent label and the detail rendered below it.
+  overview: `DescriptionList renders term/detail pairs in a grid layout for metadata displays, specification tables, and detail panels. Each child \`arc-description-item\` contains a term label and a detail slot, with the term displayed as an uppercase accent label and the detail rendered below it.
 
-**Two props control arrangement and they are about different axes.** \`columns\` is how many *items* sit across — set it to 2, 3, or 4 to arrange pairs side by side. \`layout\` is how each item arranges its own term and detail: \`stacked\` (the default) puts the term above the detail, and \`horizontal\` puts them side by side on a shared two-column grid so terms align down the list. They compose — one item can be horizontal inside a three-column list. Vertical dividers appear automatically between columns when \`dividers\` is enabled, and on screens narrower than 640px the grid collapses to a single column for readability.
+**Two props control arrangement and they are about different axes.** \`columns\` is how many *items* sit across; set it to 2, 3, or 4 to arrange pairs side by side. \`layout\` is how each item arranges its own term and detail: \`stacked\` (the default) puts the term above the detail, and \`horizontal\` puts them side by side on a shared two-column grid so terms align down the list. They compose: one item can be horizontal inside a three-column list. Vertical dividers appear automatically between columns when \`dividers\` is enabled, and on screens narrower than 640px the grid collapses to a single column for readability.
 
-**\`layout\` arrived with \`arc-key-value\`, which merged in here in v4.** A term beside its detail was that component's whole reason to exist as a separate element, so absorbing it meant absorbing the arrangement. One thing to watch when migrating: Key Value defaulted to the horizontal arrangement and this component defaults to \`stacked\`, so add \`layout="horizontal"\` to keep what you had. The survivor's default is unchanged deliberately — a merge is not the place to restyle the component that survived. See [the tombstone](/docs/components/key-value) for the full translation.
+**\`layout\` arrived with \`arc-key-value\`, which merged in here in v4.** A term beside its detail was that component's whole reason to exist as a separate element, so absorbing it meant absorbing the arrangement. One thing to watch when migrating: Key Value defaulted to the horizontal arrangement and this component defaults to \`stacked\`, so add \`layout="horizontal"\` to keep what you had. The survivor's default stays unchanged, because a merge is not the place to restyle the component that survived. See [the tombstone](/docs/components/key-value) for the full translation.
 
 Dividers (bottom borders between items, and right borders between columns) are enabled by default and can be toggled off with the \`dividers\` attribute. The container uses \`role="list"\` and each item uses \`role="listitem"\` for assistive technology support.`,
 
@@ -35,13 +35,13 @@ Dividers (bottom borders between items, and right borders between columns) are e
       'Set `columns` to 2 or 3 for wider layouts where items are short and scannable',
       'Use `layout="horizontal"` when terms are short and you want them to align down a single column of pairs',
       'Pair with cards or panels for contained metadata displays',
-      'Keep term labels concise — one to three words is ideal',
+      'Keep term labels concise. One to three words is ideal',
     ],
     dont: [
-      'Do not use for tabular data with many rows — use `arc-data-grid` instead',
+      'Do not use for tabular data with many rows. Use `arc-data-grid` instead',
       'Do not nest description lists inside each other',
-      'Do not combine `layout="horizontal"` with a high `columns` count — each item then needs room for two columns of its own, and both collapse to nothing',
-      'Do not use long paragraph-length terms — move verbose content to the detail slot',
+      'Do not combine `layout="horizontal"` with a high `columns` count. Each item then needs room for two columns of its own, and both collapse to nothing',
+      'Do not use long paragraph-length terms. Move verbose content to the detail slot',
       'Do not mix description items with non-`arc-description-item` children',
     ],
   },

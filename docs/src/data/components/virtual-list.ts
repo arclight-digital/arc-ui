@@ -13,27 +13,27 @@ export const virtualList: ComponentDef = {
 
 **Rows come from one of two places**, because "render a row" means something different inside a framework than outside one.
 
-In plain JS, HTML or Lit, give it a \`renderItem\` callback. It is called only for rows currently on screen, and can return anything Lit can render — a template, a DOM node, a string:
+In plain JS, HTML or Lit, give it a \`renderItem\` callback. It is called only for rows currently on screen, and can return anything Lit can render: a template, a DOM node, a string:
 
 \`\`\`js
 list.items = data;
 list.renderItem = (item, index) => \`\${index + 1}. \${item.name}\`;
 \`\`\`
 
-In a framework, use the wrapper's own idiom — a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, a \`rowTemplate\` in Angular. These wrappers are not thin pass-throughs like the rest of the library: each listens for \`arc-range-change\`, tracks the visible range itself, and renders exactly those rows. The element owns the scroll geometry; your framework owns the rows, so a React row is a real React element.
+In a framework, use the wrapper's own idiom: a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, a \`rowTemplate\` in Angular. These wrappers are not thin pass-throughs like the rest of the library: each listens for \`arc-range-change\`, tracks the visible range itself, and renders exactly those rows. The element owns the scroll geometry; your framework owns the rows, so a React row is a real React element.
 
-Working directly with the element, you can also drive it yourself: it renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` (with \`{ start, end }\`, \`end\` exclusive) whenever that range moves — once per row crossed, not once per frame. \`visibleRange\` reads the same values on demand, and \`scrollToIndex(n)\` jumps to a row — clamped to the list rather than ignored, so an index past the end scrolls to the last row instead of doing nothing.`,
+Working directly with the element, you can also drive it yourself: it renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` (with \`{ start, end }\`, \`end\` exclusive) whenever that range moves (once per row crossed, not once per frame). \`visibleRange\` reads the same values on demand, and \`scrollToIndex(n)\` jumps to a row. The index is clamped to the list rather than ignored, so an index past the end scrolls to the last row instead of doing nothing.`,
 
   features: [
-    'Windowed rendering — a row does not exist until it is on screen',
+    'Windowed rendering: a row does not exist until it is on screen',
     'Handles hundreds of thousands of items with constant DOM node count',
     '`renderItem` callback for plain JS, HTML and Lit',
-    'Framework wrappers render rows natively — real React elements, real Svelte markup',
+    'Framework wrappers render rows natively: real React elements, real Svelte markup',
     '`arc-range-change` fires once per row crossed, not once per frame',
-    'rAF-throttled scroll handler for smooth 60fps performance',
+    'rAF-throttled scroll handler for 60fps performance',
     'Configurable overscan buffer to prevent flicker during fast scrolling',
     'Fixed item height for predictable layout calculations',
-    '`visibleRange` getter and `scrollToIndex(index)` for driving it yourself — the index is clamped, never ignored',
+    '`visibleRange` getter and `scrollToIndex(index)` for driving it yourself; the index is clamped, never ignored',
     'Exposed CSS parts: spacer, item',
   ],
 
@@ -41,16 +41,16 @@ Working directly with the element, you can also drive it yourself: it renders an
     do: [
       'Use for lists with 100+ items where full DOM rendering would cause jank',
       'Set `item-height` to match the actual rendered height of each item',
-      'Use overscan of 3-10 items — higher values reduce flicker but increase DOM nodes',
+      'Use overscan of 3-10 items. Higher values reduce flicker but increase DOM nodes',
       'Combine with arc-list-item for consistent styling within the virtual container',
-      'Set `items` as a property, not an attribute — an array stringifies as an attribute',
+      'Set `items` as a property, not an attribute. An array stringifies as an attribute',
     ],
     dont: [
-      'Do not use for short lists under 50 items — the overhead is not worth it',
-      'Do not mix different item heights — virtual-list requires fixed row height',
+      'Do not use for short lists under 50 items. The overhead is not worth it',
+      'Do not mix different item heights. virtual-list requires fixed row height',
       'Do not nest scrollable containers inside virtual-list items',
       'Do not forget to set a fixed height on the virtual-list host element',
-      'Do not put all N items in the light DOM and let the component hide them — that is what this component exists to avoid',
+      'Do not put all N items in the light DOM and let the component hide them. That is what this component exists to avoid',
     ],
   },
 

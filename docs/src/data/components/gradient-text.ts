@@ -8,18 +8,18 @@ export const gradientText: ComponentDef = {
   interactivity: 'static',
   description: 'Inline text wrapper that applies gradient fills to text declaratively.',
 
-  overview: `GradientText wraps any inline text in a gradient fill using \`background-clip: text\`, giving headings, labels, and hero copy vivid color transitions without manual CSS. Choose from built-in variants — accent (the standard blue-to-violet), display (the display heading gradient), sunset, and ocean — or supply a fully custom CSS gradient string via the \`gradient\` prop.
+  overview: `GradientText wraps any inline text in a gradient fill using \`background-clip: text\`, giving headings, labels, and hero copy color transitions without manual CSS. Choose from the built-in variants (accent, the standard blue-to-violet; display, the display heading gradient; sunset; and ocean) or supply a fully custom CSS gradient string via the \`gradient\` prop.
 
-The component is fully inline and inherits the parent's font size, weight, and line height, so it can be dropped into any typographic context — a heading, a paragraph, a button label — without breaking layout. A subtle drop-shadow glow is applied by default using \`var(--accent-primary-rgb)\` for a polished look.
+The component is fully inline and inherits the parent's font size, weight, and line height, so it can be dropped into any typographic context (a heading, a paragraph, a button label) without breaking layout. A subtle drop-shadow glow is applied by default using \`var(--accent-primary-rgb)\`.
 
 Set \`animated\` to enable a smooth background-position cycle that shifts the gradient back and forth. The animation respects \`prefers-reduced-motion\` and disables itself automatically for users who prefer no motion. The \`text\` CSS part allows external overrides for filters, opacity, or additional styling.`,
 
   features: [
     'Five built-in gradient variants: accent, display, sunset, ocean, and custom',
-    'Custom gradient support — pass any CSS gradient string via the gradient prop',
+    'Custom gradient support. Pass any CSS gradient string via the gradient prop',
     'Optional gradient animation with automatic `prefers-reduced-motion` handling',
-    'Fully inline — inherits parent font-size, weight, and line-height',
-    'Subtle accent glow via drop-shadow filter for polished presentation',
+    'Fully inline: inherits parent font-size, weight, and line-height',
+    'Subtle accent glow via drop-shadow filter',
     'CSS ::part(text) exposed for external styling overrides',
     'Token-driven accent and display gradients cascade with theme overrides',
   ],
@@ -33,10 +33,10 @@ Set \`animated\` to enable a smooth background-position cycle that shifts the gr
       'Prefer the display variant for page headings and section titles',
     ],
     dont: [
-      'Do not use GradientText for body copy or long paragraphs — gradients lose impact at small sizes',
-      'Do not animate every gradient on the page — reserve animation for a single focal element',
+      'Do not use GradientText for body copy or long paragraphs. Gradients lose impact at small sizes',
+      'Do not animate every gradient on the page. Reserve animation for a single focal element',
       'Do not use the sunset or ocean variants in contexts that need to match the brand accent tokens',
-      'Do not nest GradientText inside another GradientText — only the innermost gradient will be visible',
+      'Do not nest GradientText inside another GradientText. Only the innermost gradient will be visible',
     ],
   },
 

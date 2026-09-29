@@ -12,7 +12,7 @@ export const splitPane: ComponentDef = {
 
 The divider position is expressed as a \`ratio\` between 0 and 1, where 0.5 means an even 50/50 split. As the user drags the handle, the component clamps the ratio between \`min-ratio\` and \`max-ratio\` to prevent either pane from collapsing to an unusable size. When the drag ends, an \`arc-resize\` custom event fires with the final ratio so you can persist the user's layout preference.
 
-Content is distributed through two named slots: \`primary\` (the region whose size is controlled by the ratio) and \`secondary\` (which flexes to fill the remaining space). Both panes have \`overflow: auto\` by default so independently scrollable content works out of the box. The handle renders as a 4px bar that brightens on hover to \`--border-bright\`, and user-select is disabled during drag to prevent text selection artifacts.`,
+Content is distributed through two named slots: \`primary\` (the region whose size is controlled by the ratio) and \`secondary\` (which flexes to fill the remaining space). Both panes have \`overflow: auto\` by default so independently scrollable content works without extra CSS. The handle renders as a 4px bar that brightens on hover to \`--border-bright\`, and user-select is disabled during drag to prevent text selection artifacts.`,
 
   features: [
     'Horizontal and vertical split orientations via the orientation prop',
@@ -36,7 +36,7 @@ Content is distributed through two named slots: \`primary\` (the region whose si
     dont: [
       'Do not use SplitPane for static two-column layouts; use PageLayout with sidebar-left or sidebar-right instead',
       'Do not set min-ratio and max-ratio so close that the drag range is negligible',
-      'Do not nest multiple SplitPanes more than two levels deep — the interaction becomes confusing',
+      'Do not nest multiple SplitPanes more than two levels deep: the interaction becomes confusing',
       'Do not forget to set a height on the SplitPane container; without it the panes collapse to content height',
       'Do not place critical controls in the secondary pane if min-ratio could hide it on narrow viewports',
     ],

@@ -160,7 +160,7 @@ export class ArcComparison extends DeclaredPropsMixin(LitElement) {
     return val;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

@@ -104,7 +104,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
       }
 
       /* Sizes. The field wraps its tags, so height is a floor rather than a
-         fixed value — md is the base rule above, which uses --touch-min. */
+         fixed value, md is the base rule above, which uses --touch-min. */
       :host([size="sm"]) .ti__field { min-height: 32px; padding: 2px var(--space-xs); }
       :host([size="sm"]) .ti__input { font-size: var(--_text-sm); }
       :host([size="lg"]) .ti__input { font-size: var(--_text-md); }
@@ -266,7 +266,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
         line-height: var(--ui-lh);
       }
     `,
-    // animate: false — this panel has its own keyframe entrance.
+    // animate: false; this panel has its own keyframe entrance.
     managedPanelStyles('ti__dropdown', { animate: false }),
   ];
 
@@ -301,7 +301,7 @@ export class ArcTagInput extends DeclaredPropsMixin(FormControlMixin(LitElement)
     this._listbox = new ListboxController(this, {
       getItemCount: () => this._filteredSuggestions.length,
       isOpen: () => this._open,
-      // Only open on a direction key when there is something to show — an empty
+      // Only open on a direction key when there is something to show: an empty
       // suggestion list would otherwise open a blank panel.
       onOpen: () => {
         if ((this.suggestions || []).length > 0) this._open = true;

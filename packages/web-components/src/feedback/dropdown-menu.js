@@ -59,7 +59,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         cursor: pointer;
       }
 
-      /* Resting position for a panel PositionController hasn't adopted — the
+      /* Resting position for a panel PositionController hasn't adopted: the
          static HTML export and anything pre-upgrade. Once managed the panel is
          in the top layer at fixed viewport coordinates, and flips above the
          trigger when there's no room below. */
@@ -68,7 +68,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
         z-index: 100;
         top: calc(100% + var(--space-xs));
         inset-inline-start: 0;
-        /* max-content rather than shrink-to-fit — an abspos panel otherwise sizes
+        /* max-content rather than shrink-to-fit: an abspos panel otherwise sizes
            against the width available from its positioned ancestor, so a narrow
            container squeezes it to min-width and the items truncate. See the
            longer note in navigation/menubar.js. */
@@ -84,7 +84,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
            part in layout and still contributes scrollable overflow, so a closed
            panel anchored to the inline-start edge of a trigger at the inline-end
            edge of a full-width row hangs its min-width past the document and the
-           page gains a permanent horizontal scrollbar — with nothing visibly
+           page gains a permanent horizontal scrollbar, with nothing visibly
            off-screen to explain it. Finding #95; see test/closed-overflow.js.
 
            display is a discrete property, so animating out of it needs the same
@@ -343,7 +343,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

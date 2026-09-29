@@ -19,8 +19,9 @@ export interface TopBarProps {
   fixed?: boolean;
   contained?: string;
   menuOpen?: boolean;
-  mobileMenu?: string;
+  mobileMenu?: 'sidebar' | 'nav' | 'none';
   menuPosition?: string;
+  mobileCenter?: 'center' | 'end' | 'hidden';
   navAlign?: 'left' | 'center' | 'right';
   onArcSidebarToggle?: (e: CustomEvent) => void;
   onArcMobileMenuToggle?: (e: CustomEvent) => void;
@@ -53,9 +54,9 @@ export interface TopBarProps {
 }
 
 export const TopBar: Component<TopBarProps> = (props) => {
-  const [local, rest] = splitProps(props, ['heading', 'homeHref', 'scrolled', 'immersive', 'fixed', 'contained', 'menuOpen', 'mobileMenu', 'menuPosition', 'navAlign', 'onArcSidebarToggle', 'onArcMobileMenuToggle', 'children']);
+  const [local, rest] = splitProps(props, ['heading', 'homeHref', 'scrolled', 'immersive', 'fixed', 'contained', 'menuOpen', 'mobileMenu', 'menuPosition', 'mobileCenter', 'navAlign', 'onArcSidebarToggle', 'onArcMobileMenuToggle', 'children']);
   return (
-    <arc-top-bar heading={local.heading} prop:homeHref={local.homeHref} scrolled={local.scrolled} immersive={local.immersive} fixed={local.fixed} contained={local.contained} prop:menuOpen={local.menuOpen} prop:mobileMenu={local.mobileMenu} prop:menuPosition={local.menuPosition} prop:navAlign={local.navAlign} on:arc-sidebar-toggle={local.onArcSidebarToggle} on:arc-mobile-menu-toggle={local.onArcMobileMenuToggle} {...rest}>
+    <arc-top-bar heading={local.heading} prop:homeHref={local.homeHref} scrolled={local.scrolled} immersive={local.immersive} fixed={local.fixed} contained={local.contained} prop:menuOpen={local.menuOpen} prop:mobileMenu={local.mobileMenu} prop:menuPosition={local.menuPosition} prop:mobileCenter={local.mobileCenter} prop:navAlign={local.navAlign} on:arc-sidebar-toggle={local.onArcSidebarToggle} on:arc-mobile-menu-toggle={local.onArcMobileMenuToggle} {...rest}>
       {local.children}
     </arc-top-bar>
   );

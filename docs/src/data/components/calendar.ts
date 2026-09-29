@@ -7,13 +7,13 @@ export const calendar: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Interactive month-view calendar grid for date selection with min/max constraints, keyboard navigation, and today highlighting.',
+    'Month-view calendar grid for date selection, with min/max constraints, keyboard navigation, and today highlighting.',
 
-  overview: `Calendar renders a full month grid with day-of-week headers, previous/next month navigation, and selectable date cells. It is the core building block for date pickers and scheduling interfaces. The selected date is stored as an ISO string (YYYY-MM-DD) in the \`value\` prop, and the visible month is controlled independently via \`month\` (0-based) and \`year\`, allowing programmatic navigation without changing the selection.
+  overview: `Calendar renders a full month grid with day-of-week headers, previous/next month navigation, and selectable date cells. It is the building block for date pickers and scheduling interfaces. The selected date is stored as an ISO string (YYYY-MM-DD) in the \`value\` prop, and the visible month is controlled independently via \`month\` (0-based) and \`year\`, so you can navigate programmatically without changing the selection.
 
-Days from the previous and next months fill the grid to maintain a consistent 6-row layout, but these "outside" days are displayed at reduced opacity. The current date receives an inset ring highlight (\`--border-bright\`), while the selected date gets a solid accent-primary background. Optional \`min\` and \`max\` ISO date strings constrain the selectable range — disabled dates are dimmed and non-interactive.
+Days from the previous and next months fill the grid to maintain a consistent 6-row layout, but these "outside" days are displayed at reduced opacity. The current date receives an inset ring highlight (\`--border-bright\`), while the selected date gets a solid accent-primary background. Optional \`min\` and \`max\` ISO date strings constrain the selectable range; disabled dates are dimmed and non-interactive.
 
-Full keyboard navigation is supported: arrow keys move a focus ring through the grid (including automatic month transitions at boundaries), and Enter or Space confirms the selection. The component fires \`arc-change\` when a date is selected and \`arc-month-change\` when the visible month changes, enabling lazy-loading of events or availability data for the newly visible period.`,
+Arrow keys move a focus ring through the grid (including automatic month transitions at boundaries), and Enter or Space confirms the selection. The component fires \`arc-change\` when a date is selected and \`arc-month-change\` when the visible month changes, so you can lazy-load events or availability data for the new period.`,
 
   features: [
     'Standard 7-column month grid with Sun-Sat headers in monospace uppercase',
@@ -32,14 +32,14 @@ Full keyboard navigation is supported: arrow keys move a focus ring through the 
       'Use `arc-month-change` to lazy-load events or availability data when the user changes months',
       'Pair Calendar with a text input or DatePicker wrapper for combined typed and visual date entry',
       'Pre-set `month` and `year` to the month containing the initial `value` so the selection is visible on load',
-      'Provide sufficient container width (280px minimum) so the grid cells are comfortably clickable',
+      'Provide sufficient container width (280px minimum) so the grid cells are easy to click',
     ],
     dont: [
-      'Do not use Calendar for time selection — it handles dates only',
-      'Do not set `min` greater than `max` — the component will disable all days',
-      'Do not use Calendar for date range selection (two dates) — it supports single date selection only',
-      'Do not override the monospace font on day cells — it ensures uniform column alignment',
-      'Avoid placing Calendar in extremely narrow containers below 280px — the grid cells become too small for touch targets',
+      'Do not use Calendar for time selection; it handles dates only',
+      'Do not set `min` greater than `max`; the component will disable all days',
+      'Do not use Calendar for date range selection (two dates); it supports single date selection only',
+      'Do not override the monospace font on day cells; it keeps the columns aligned',
+      'Avoid placing Calendar in extremely narrow containers below 280px; the grid cells become too small for touch targets',
     ],
   },
 

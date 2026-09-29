@@ -1,5 +1,5 @@
 /**
- * /rss.xml — RSS 2.0 feed of ARC UI releases, one item per version.
+ * /rss.xml: RSS 2.0 feed of ARC UI releases, one item per version.
  * Hand-rolled (no @astrojs/rss dependency) from the `releases` content
  * collection (src/content/releases/). Dates are npm publish dates.
  */
@@ -31,7 +31,7 @@ export const GET: APIRoute = async ({ site }) => {
       const minutesFromNoon = releases.length - i;
       const pubDate = new Date(new Date(`${r.date}T12:00:00Z`).getTime() + minutesFromNoon * 60_000);
       return `    <item>
-      <title>${escapeXml(`ARC UI v${r.version} — ${r.title}`)}</title>
+      <title>${escapeXml(`ARC UI v${r.version}: ${r.title}`)}</title>
       <link>${url}</link>
       <guid isPermaLink="false">arc-ui-v${r.version}</guid>
       <pubDate>${pubDate.toUTCString()}</pubDate>
@@ -46,7 +46,7 @@ export const GET: APIRoute = async ({ site }) => {
     <title>ARC UI Changelog</title>
     <link>${base}/docs/changelog</link>
     <atom:link href="${base}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Release notes for ARC UI — Lit Web Components generated natively for seven framework targets.</description>
+    <description>Release notes for ARC UI. Lit Web Components generated natively for seven framework targets.</description>
     <language>en</language>
     <lastBuildDate>${new Date(`${releases[0].date}T12:00:00Z`).toUTCString()}</lastBuildDate>
 ${items}

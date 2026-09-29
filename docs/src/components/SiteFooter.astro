@@ -71,9 +71,9 @@
   </arc-footer>
 
   {/* The afterglow: the wordmark sinking below the page's bottom edge, the
-      site's light going under the horizon — built with the hero headline's
+      site's light going under the horizon, built with the hero headline's
       own mechanics: a blurred bloom twin behind, a white-hot top edge, and
-      the page terminating in the site's glow hairline. Decorative — the
+      the page terminating in the site's glow hairline. Decorative: the
       brand name is already in the footer proper. */}
   <div class="afterglow" aria-hidden="true">
     <span class="afterglow__stack">
@@ -88,8 +88,8 @@
   /* ── Glow horizon along the top ──
      Safe to use the semantic token: the pinned-scheme classes re-declare the
      surface aliases in their own scope (shared/tokens.js), so --surface-base
-     resolves against the pinned --bg-deep here — including the softened one on
-     a light page — and matches the bar exactly. */
+     resolves against the pinned --bg-deep here, including the softened one on
+     a light page, and matches the bar exactly. */
   .site-footer {
     position: relative;
     background: var(--surface-base);
@@ -113,7 +113,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    /* Fading to `transparent` fades to transparent *black* — the keyword is
+    /* Fading to `transparent` fades to transparent *black*: the keyword is
        rgba(0,0,0,0), so the wash darkens on its way out and leaves a visible
        step where it meets this box's edge. Zero-alpha in the wash's own color
        fades to nothing instead. */
@@ -123,7 +123,7 @@
     z-index: 0;
   }
 
-  /* ── Scroll reveal — CSS tier only, so it can never hide the footer:
+  /* ── Scroll reveal, CSS tier only, so it can never hide the footer:
        without animation-timeline support the animation just plays on load ── */
   @keyframes footer-reveal {
     from {
@@ -149,7 +149,7 @@
   }
 
   /* ── Panel sits on the shared surface so the afterglow reads continuous.
-       Transparent so the wrapper's wash shows through — a host-element rule
+       Transparent so the wrapper's wash shows through; a host-element rule
        outranks the component's own :host background. ── */
   .site-footer__panel {
     position: relative;
@@ -198,7 +198,7 @@
     text-wrap: balance;
   }
 
-  /* One claim per line — "One Lit / source" is not a place to break */
+  /* One claim per line; "One Lit / source" is not a place to break */
   .site-footer__tagline-line {
     display: block;
   }
@@ -298,12 +298,12 @@
   /* ── Afterglow ── */
   /* ── The afterglow is a logomark, not themed UI ──
      It is the ARC UI name rendered as brand, so it holds one appearance in
-     every theme — the same reason a logo file does not have a light variant.
+     every theme, the same reason a logo file does not have a light variant.
      It only ever looked right by accident: .theme-fixed used to restate the
      accent channels inside the region, so the word got ARC blue and ARC violet
      regardless of the page, even though this site retunes secondary to teal at
-     :root. When pinned regions stopped restating those channels — so that a
-     consumer's accent could finally reach into a nav — the two stops here
+     :root. When pinned regions stopped restating those channels (so that a
+     consumer's accent could finally reach into a nav), the two stops here
      started floating with the theme, and the word went teal in dark mode and
      nearly invisible against the navy in light.
      Pinned to the brand values it was drawn against, so nothing upstream can
@@ -349,19 +349,19 @@
     filter: blur(30px);
   }
 
-  /* White-hot at the top edge — the same tip treatment as the tunnel's beams —
+  /* White-hot at the top edge, the same tip treatment as the tunnel's beams,
      dying out before the crop finishes the sinking-light read. The highlight
      across the glyphs is now a fixed specular rather than a drifting one: a
      moving background-position on background-clip:text cannot go to the
      compositor, so every frame repainted 250px of clipped type and the sweep
      measured 44 long frames and a 192ms spike against 27/33ms with the same
-     word standing still. The drift moved to the bloom, where it is opacity —
+     word standing still. The drift moved to the bloom, where it is opacity,
      which composites. */
   .afterglow__word {
     position: relative;
-    /* Brand literals, deliberately not tokens — see --afterglow-* above. */
+    /* Brand literals, not tokens; see --afterglow-* above. */
     /* Every stop fades in its own color at zero alpha, never the `transparent`
-       keyword — that keyword is transparent *black*, so the specular sweep
+       keyword; that keyword is transparent *black*, so the specular sweep
        would darken as it fell off instead of thinning, and the word's sink
        would end on a grey edge rather than on nothing. */
     background:
@@ -383,15 +383,15 @@
 
   /* Nothing here animates, and that is the fix. Three mechanics were tried on
      this word: a sweeping background-position (44 long frames, 192ms spike),
-     the same with layer hints (median frame 8ms to 25ms — a permanently
+     the same with layer hints (median frame 8ms to 25ms: a permanently
      composited 30px blur costs more than the repaint it was meant to save),
      and an opacity breathe on the bloom (median 50ms: opacity over a blurred
      box re-renders the blur rather than compositing it). The word is 250px of
-     background-clip:text with a blurred twin behind it — every frame of motion
+     background-clip:text with a blurred twin behind it, so every frame of motion
      over that is a re-render of both. It reads as emitted light from the bloom
      and the white-hot top edge alone, which cost nothing to hold still. */
 
-  /* The page's last pixel row is the site's recurring glow hairline — the
+  /* The page's last pixel row is the site's recurring glow hairline. The
      word sinks through it and the page ends the way its sections divide */
   .afterglow__horizon {
     position: absolute;
@@ -416,7 +416,7 @@
     .site-footer__social-row { justify-content: center; }
     .site-footer__legal-inner { flex-direction: column; gap: var(--space-xs); text-align: center; }
     /* At phone scale the glyphs are a quarter the size but the gap above
-       them wasn't — tuck the afterglow up under the legal block. A gentler
+       them wasn't, so tuck the afterglow up under the legal block. A gentler
        blur needs less headroom, so the bloom still fades before the clip. */
     .afterglow {
       padding-top: 8px;

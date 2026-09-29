@@ -1,11 +1,11 @@
 ---
 /**
- * /synth — the Theme Synthesizer.
+ * /synth: the Theme Synthesizer.
  *
  * This is an application, not a docs page, and it is laid out like one: a
  * control rail on the left, a live stage on the right, both filling the
  * viewport with their own scroll. The previous version was a docs article you
- * scrolled — every control was a screen away from the thing it changed, so you
+ * scrolled: every control was a screen away from the thing it changed, so you
  * dragged a slider, scrolled down to see what happened, and scrolled back.
  *
  * The site chrome stays: same SiteTopBar as every other page, so this reads as
@@ -30,7 +30,7 @@ const description =
 ---
 
 <BaseLayout
-  title="Theme Synthesizer — ARC UI"
+  title="Theme Synthesizer | ARC UI"
   description={description}
   ogImage="/og/synth.png"
 >
@@ -39,13 +39,13 @@ const description =
   </nav>
 
   {/* Full-width bar: the synth is an app surface, and its workbench runs
-      edge to edge — a contained nav would strand the chrome mid-page. */}
+      edge to edge; a contained nav would strand the chrome mid-page. */}
   <SiteTopBar mobileMenu="nav" contained={null} />
 
   <div class="synth">
     {/*
       The command bar is pinned on purpose. Every other surface here wears the
-      theme being edited — that is the whole point — but a palette with 1.2:1
+      theme being edited, but a palette with 1.2:1
       text is a legitimate thing to build and briefly look at, and when you do,
       the controls that undo it must still be readable. Pinned regions force
       the --bg-*, --text-* and accent families, so Reset is always visible no
@@ -75,7 +75,7 @@ const description =
         </arc-segmented-control>
         {/*
           On by default. Editing one theme and shipping both is the failure
-          mode here — you tune an accent in dark, never open light, and half
+          mode here: you tune an accent in dark, never open light, and half
           your theme goes out on the shipped defaults. Mirroring copies the
           value across and the contrast table says immediately whether it
           survived the trip; unlink when you want to tune the two separately.
@@ -175,7 +175,7 @@ const description =
               <h2 class="rail-group__title">Font roles</h2>
               <p class="rail-group__hint">
                 ARC UI ships no font files. Assign a typeface to a role and every component wearing
-                that role follows — you never name a font in a component again.
+                that role follows, so you never name a font in a component again.
               </p>
               <div class="rail-group__body rail-group__body--stack">
                 {FONT_ROLES.map((role) => (
@@ -297,7 +297,7 @@ const description =
 
       <!-- ── Stage ──────────────────────────────────────────────────── -->
       <main class="synth-stage" id="synth-stage" tabindex="-1">
-        {/* Roving tabindex: one stop for the group, arrows move within it —
+        {/* Roving tabindex: one stop for the group, arrows move within it;
             the pattern the tab role promises and the reason only the selected
             tab is reachable by Tab. */}
         <div class="stage-tabs" role="tablist" aria-label="Preview">
@@ -381,9 +381,9 @@ const description =
                   <div class="demo-form">
                     <arc-input label="Service name" value="edge-cache" size="sm"></arc-input>
                     <arc-select label="Region" size="sm" value="iad">
-                      <arc-option value="iad">us-east — IAD</arc-option>
-                      <arc-option value="fra">eu-central — FRA</arc-option>
-                      <arc-option value="syd">ap-southeast — SYD</arc-option>
+                      <arc-option value="iad">us-east (IAD)</arc-option>
+                      <arc-option value="fra">eu-central (FRA)</arc-option>
+                      <arc-option value="syd">ap-southeast (SYD)</arc-option>
                     </arc-select>
                     <arc-toggle label="Automatic rollback" checked></arc-toggle>
                     <arc-slider label="Canary traffic" value="25" min="0" max="100" step="5" size="sm"></arc-slider>
@@ -471,7 +471,7 @@ const description =
               <section class="matrix-cell matrix-cell--wide">
                 <h3 class="matrix-cell__title">Accent, composed</h3>
                 <p class="matrix-cell__note">
-                  None of these read an accent token directly — they read the gradients, glows and
+                  None of these read an accent token directly. They read the gradients, glows and
                   focus rings that compose from it. They move because the base tokens moved.
                 </p>
                 <div class="matrix-cell__body matrix-cell__body--stack">
@@ -572,7 +572,7 @@ const description =
               </div>
 
               <arc-alert variant="info">
-                Load this after ARC UI's stylesheet. Only what you changed is here — gradients,
+                Load this after ARC UI's stylesheet. Only what you changed is here. Gradients,
                 glows, focus rings and shadows compose from the base tokens at <code>:root</code>,
                 so they re-derive on their own.
               </arc-alert>
@@ -594,7 +594,7 @@ const description =
   <!-- Import -->
   <arc-dialog data-import-modal heading="Import a theme">
     <p class="modal-lede">
-      Paste a stylesheet — what this tool exports, ARC UI's own <code>base.css</code>, or a theme
+      Paste a stylesheet: what this tool exports, ARC UI's own <code>base.css</code>, or a theme
       you hand-edited. A single color works too, and becomes the primary accent.
     </p>
     <textarea
@@ -719,7 +719,7 @@ const description =
    * `docs/src/styles/global.css` gives arcui.dev its own brand: it retunes
    * `--accent-secondary` to teal and hard-codes two compound tokens with the
    * channels spelled out. Left alone, the synthesizer would preview against
-   * that brand while exporting against the library's — you would pick colors
+   * that brand while exporting against the library's, so you would pick colors
    * next to a teal gradient and ship a violet one. These re-compose the two
    * hard-coded tokens from whatever the base tokens currently are, which is
    * what they look like in a consuming project that never touched them.
@@ -781,7 +781,7 @@ const description =
       return;
     }
 
-    // One at a time — a rail of thirteen open pickers is a scroll, not a tool.
+    // One at a time: a rail of thirteen open pickers is a scroll, not a tool.
     if (openPicker) {
       const prev = $(`.color-row[data-token="${openPicker}"]`);
       if (prev) {
@@ -921,7 +921,7 @@ const description =
     }
 
     // The chip in the command bar reports both themes regardless of which one
-    // you are editing — a theme that only works in dark is not finished.
+    // you are editing. A theme that only works in dark is not finished.
     const bothFailures = summarize([...dark, ...light]).failures;
     const chipText = $('[data-contrast-text]');
     const chipDot = $('[data-contrast-dot]');
@@ -955,7 +955,7 @@ const description =
       const n = changedCount(state);
       lede.textContent = n
         ? `${n} token${n === 1 ? '' : 's'} changed from the ARC UI defaults.`
-        : 'Nothing changed yet — every token still matches the ARC UI defaults.';
+        : 'Nothing changed yet. Every token still matches the ARC UI defaults.';
     }
   }
 
@@ -1031,7 +1031,7 @@ const description =
      *
      * `astro:page-load` fires on the initial load as well as after a soft
      * navigation, so the usual `init(); addEventListener('astro:page-load',
-     * init)` pairing wires this page twice on arrival — every slider applies
+     * init)` pairing wires this page twice on arrival, so every slider applies
      * twice, and the import handler ran a second time against the textarea the
      * first one had just cleared, reporting failure on a paste that worked.
      * The marker lives on the element, not in a module flag, so a view
@@ -1320,7 +1320,7 @@ const description =
     color: var(--text-ghost);
   }
 
-  /* Fixed box, held whether or not it has anything to say — see render(). The
+  /* Fixed box, held whether or not it has anything to say; see render(). The
      width fits "888 changed", past which the theme is a rewrite, not an edit. */
   .synth-bar__count {
     inline-size: 84px;
@@ -1352,7 +1352,7 @@ const description =
 
   .synth-mirror:hover { color: var(--text-secondary); }
 
-  /* A native checkbox, so without this it paints the UA's own accent — a fixed
+  /* A native checkbox, so without this it paints the UA's own accent, a fixed
      blue that ignores the theme entirely. Invisible while the bar was blue;
      the moment the accent went orange it was the one thing in the region still
      wearing the browser's mind rather than ours. */
@@ -1473,7 +1473,7 @@ const description =
     color: var(--text-primary);
   }
 
-  /* Marked underneath, where a tab's own affordance lives — never with a
+  /* Marked underneath, where a tab's own affordance lives, never with a
      colored edge on the leading side. */
   .stage-tab[aria-selected='true']::after {
     content: '';
@@ -1632,7 +1632,7 @@ const description =
     line-height: 1.3;
   }
 
-  /* A changed token lifts to primary rather than growing an edge marker —
+  /* A changed token lifts to primary rather than growing an edge marker:
      hierarchy by weight of color, not by a bar down the side. */
   .color-row.is-changed .color-row__label {
     color: var(--text-primary);

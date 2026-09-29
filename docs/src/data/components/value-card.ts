@@ -33,11 +33,11 @@ Like FeatureCard, ValueCard exposes an \`icon\` named slot for custom icon conte
       'Pair with a section heading above the grid for context',
     ],
     dont: [
-      'Do not add an href — value cards are not linkable; use FeatureCard for navigation',
+      'Do not add an href. Value cards are not linkable; use FeatureCard for navigation',
       'Do not use excessively long descriptions that break the horizontal balance',
       'Do not mix value cards and feature cards in the same grid row',
       'Do not override the violet icon color without updating the hover glow to match',
-      'Do not use value cards for single items — they are designed for grouped lists',
+      'Do not use value cards for single items. They are designed for grouped lists',
     ],
   },
 

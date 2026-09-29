@@ -1,12 +1,12 @@
 ---
 /**
- * Pinned schemes — an internal eyeballing page, not part of the public docs.
+ * Pinned schemes: an internal eyeballing page, not part of the public docs.
  *
  * Two classes, each with two landing points. `.theme-fixed-dark` is plain
  * near-black on a dark page and lifts to an accent-derived deep color on a
  * light one, because it is not allowed to go full light; `.theme-fixed-light`
  * is the same in mirror. So each pinned row *should* differ between the two
- * columns — that is the behavior, not a bug.
+ * columns. That is the behavior, not a bug.
  *
  * A pinned region is only ever judged by what it sits next to, which is why
  * both grounds are on screen at once.
@@ -17,7 +17,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const VARIANTS = [
-  { cls: '', label: 'unpinned', note: 'the column itself — the baseline' },
+  { cls: '', label: 'unpinned', note: 'the column itself, the baseline' },
   { cls: 'theme-fixed-dark', label: '.theme-fixed-dark', note: 'black on dark, lifted on light' },
   { cls: 'theme-fixed-light', label: '.theme-fixed-light', note: 'white on light, deepened on dark' },
 ];
@@ -26,8 +26,8 @@ const VARIANTS = [
  * The light column wears `.theme-fixed-light` to be light.
  *
  * A bare `[data-theme=light]` on a section does not work: it retunes
- * `--bg-deep`, but the aliases built on it — `--surface-base: var(--bg-deep)`
- * and the rest — were substituted back at `:root` and inherit already
+ * `--bg-deep`, but the aliases built on it (`--surface-base: var(--bg-deep)`
+ * and the rest) were substituted back at `:root` and inherit already
  * resolved, so they keep the dark answer. Only the pinned classes re-declare
  * that closure, which is the whole reason they exist.
  */
@@ -43,7 +43,7 @@ const TINTS = ['accent-primary', 'accent-secondary', 'color-success', 'color-err
 ---
 
 <BaseLayout
-  title="Pinned schemes — internal"
+  title="Pinned schemes (internal)"
   description="Internal eyeballing page for the pinned scheme variants."
   noindex
 >
@@ -53,7 +53,7 @@ const TINTS = ['accent-primary', 'accent-secondary', 'color-success', 'color-err
       <p>
         Each column paints a page ground, with the unpinned baseline followed by both pinned
         classes. A pinned region matches its column when the schemes agree and lands on an
-        accent-derived deep colour when they don't — so the dark pin should read near-black on
+        accent-derived deep colour when they don't, so the dark pin should read near-black on
         the left and blue on the right, and the light pin the reverse.
       </p>
       <p class="pin__hint">
@@ -101,7 +101,7 @@ const TINTS = ['accent-primary', 'accent-secondary', 'color-success', 'color-err
                 ))}
               </div>
 
-              {/* Borders on bg-card, the surface they actually outline — against
+              {/* Borders on bg-card, the surface they actually outline; against
                   the deepest ground they can measure fine and still vanish
                   where they are used. */}
               <div class="pin__borders">
@@ -137,8 +137,8 @@ const TINTS = ['accent-primary', 'accent-secondary', 'color-success', 'color-err
   const reset = document.querySelector<HTMLButtonElement>('[data-reset]');
 
   /* Both the solid token and its channel triplet: the triplet backs every glow,
-     tint and focus ring, so setting only the solid leaves those on the old hue
-     — which is one of the bugs this page exists to catch. */
+     tint and focus ring, so setting only the solid leaves those on the old hue,
+     which is one of the bugs this page exists to catch. */
   const apply = (hex: string) => {
     const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16));
     root.style.setProperty('--accent-primary', `rgb(${r}, ${g}, ${b})`);

@@ -1,5 +1,5 @@
 /**
- * PositionController — shared floating-panel positioning on the top layer.
+ * PositionController: shared floating-panel positioning on the top layer.
  *
  * Every floating component in the library (tooltip, popover, hover-card, the
  * menus, the pickers, the listbox-bearing inputs) used to rest at a static
@@ -9,9 +9,9 @@
  * anything, and only for a right-edge flip. This controller generalises that
  * measurement pass and gives every panel the same three behaviors:
  *
- *   flip   — swap to the opposite side when the preferred one doesn't fit
- *   shift  — slide along the cross axis to stay inside the viewport
- *   clamp  — last resort for panels taller/wider than the space available
+ *   flip:  swap to the opposite side when the preferred one doesn't fit
+ *   shift: slide along the cross axis to stay inside the viewport
+ *   clamp: last resort for panels taller/wider than the space available
  *
  * ## Why the top layer
  *
@@ -21,9 +21,9 @@
  * viewport coordinates and what makes the `--z-*` ladder unnecessary for
  * anything this controller manages.
  *
- * `popover="manual"` rather than `"auto"`, deliberately. An `auto` popover
+ * `popover="manual"` rather than `"auto"`, on purpose. An `auto` popover
  * brings its own light-dismiss and Escape handling, but it also closes every
- * other `auto` popover in an unrelated part of the tree when it opens — a
+ * other `auto` popover in an unrelated part of the tree when it opens: a
  * tooltip would dismiss an open dropdown. Components already own dismissal via
  * DismissController and their own key handlers, so `manual` keeps
  * behavior identical to before and leaves the dismiss policy with the
@@ -33,7 +33,7 @@
  *
  * `popover` is set from JS on first show and must NEVER appear in a component's
  * template. Prism exports static HTML from these templates, and a `[popover]`
- * element in a page that never runs JS is `display: none` forever — it would
+ * element in a page that never runs JS is `display: none` forever: it would
  * silently delete tooltip's no-JS `:hover` fallback and every static panel
  * example. Same discipline as tooltip's `is-managed` marker, and guarded by
  * test/position-controller.test.js.
@@ -111,7 +111,7 @@ function anchorGone(anchor) {
  *
  * `capture: true` because scroll does not bubble: a capture-phase listener on
  * window is the only way a single listener sees an ancestor scroll container
- * move the anchor. The flag has to match on the way out too — a
+ * move the anchor. The flag has to match on the way out too: a
  * `removeEventListener` keyed on a different capture flag removes nothing and
  * says nothing.
  *
@@ -126,7 +126,7 @@ const RESIZE_LISTENER = { passive: true };
 function clamp(v, min, max) {
   // max < min when the panel is larger than the space it has to fit in. Biasing
   // to `min` then keeps the panel's start edge on screen, which is where its
-  // first focusable content and its scroll origin are — clamping to `max`
+  // first focusable content and its scroll origin are; clamping to `max`
   // instead would push the top of a too-tall menu off the top of the screen.
   return max < min ? min : Math.min(Math.max(v, min), max);
 }
@@ -238,7 +238,7 @@ export class PositionController {
     // Keyed on the element, not a boolean: a panel rendered conditionally
     // (breadcrumb-menu builds a fresh dropdown for whichever crumb is open) is a
     // different element each time, and a once-only flag would leave every panel
-    // after the first without its popover attribute — silently back in the
+    // after the first without its popover attribute, silently back in the
     // normal layer.
     if (this._adoptedEl !== floating) {
       this._adoptedEl = floating;
@@ -258,7 +258,7 @@ export class PositionController {
       try {
         floating.showPopover();
       } catch {
-        /* not showable this frame — the next show() will retry */
+        /* not showable this frame; the next show() will retry */
       }
     }
   }
@@ -366,7 +366,7 @@ export class PositionController {
 
   /**
    * Swap to the opposite side when the preferred one doesn't fit and the
-   * opposite one does. Never swaps into an equally bad fit — a panel too tall
+   * opposite one does. Never swaps into an equally bad fit: a panel too tall
    * for either side stays on the side the author asked for and gets clamped.
    */
   _flip(placement, a, w, h, vw, vh, offset, padding) {

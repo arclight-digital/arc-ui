@@ -8,17 +8,17 @@ export const commandPalette: ComponentDef = {
   interactivity: 'interactive',
   description: 'Spotlight-style command palette with search and keyboard shortcuts.',
 
-  overview: `CommandPalette provides a spotlight-style overlay for quick access to application commands, navigation, and actions. It renders as a centered modal dialog with a prominent search input at the top, a scrollable results list in the middle, and a keyboard-hint footer at the bottom. Users open it with a trigger (typically a keyboard shortcut like Cmd+K), type to filter commands, and press Enter to execute the focused item.
+  overview: `CommandPalette is a spotlight-style overlay for quick access to application commands, navigation, and actions. It renders as a centered modal dialog with a search input at the top, a scrollable results list in the middle, and a keyboard-hint footer at the bottom. Users open it with a trigger (typically a keyboard shortcut like Cmd+K), type to filter commands, and press Enter to execute the focused item.
 
-The palette accepts \`<arc-command-item>\` children in its default slot, each with a \`label\` and an optional \`shortcut\` string. On open, the search input auto-focuses and the query resets so users start from a clean state every time. The filtered results update live as the user types, matching against each item's label. Arrow keys cycle the focus highlight through the visible results, and the footer displays the key bindings so users can navigate without a mouse.
+The palette accepts \`<arc-command-item>\` children in its default slot, each with a \`label\` and an optional \`shortcut\` string. On open, the search input auto-focuses and the query resets so users start clean every time. The filtered results update live as the user types, matching against each item's label. Arrow keys cycle the focus highlight through the visible results, and the footer displays the key bindings so users can navigate without a mouse.
 
-When an item is selected — by clicking or pressing Enter — the palette dispatches an \`arc-select\` event containing the item's label and shortcut, then closes itself. The Escape key and backdrop click both dismiss the palette and fire an \`arc-close\` event. The component locks body scroll while open and restores it on close, preventing the background page from shifting under the overlay.`,
+When an item is selected (by clicking or pressing Enter), the palette dispatches an \`arc-select\` event containing the item's label and shortcut, then closes itself. The Escape key and backdrop click both dismiss the palette and fire an \`arc-close\` event. The component locks body scroll while open and restores it on close, so the background page does not shift under the overlay.`,
 
   features: [
-    'Centered modal dialog with animated scale-in transition on open',
+    'Centered modal dialog with a scale-in transition on open',
     'Auto-focusing search input that resets the query on every open',
     'Live type-ahead filtering against command item labels',
-    'Full keyboard navigation: ArrowUp/ArrowDown cycle focus, Enter selects, Escape closes',
+    'Keyboard navigation: ArrowUp/ArrowDown cycle focus, Enter selects, Escape closes',
     'Keyboard shortcut hints displayed next to each command item in monospace',
     'Footer bar showing navigation key bindings for discoverability',
     'Backdrop overlay with click-to-close and body scroll locking',
@@ -34,10 +34,10 @@ When an item is selected — by clicking or pressing Enter — the palette dispa
       'Keep the command list under 20-30 items; for larger sets, rely on the search filter',
     ],
     dont: [
-      'Do not use CommandPalette as a generic search bar — it is designed for discrete actions, not content search',
+      'Do not use CommandPalette as a generic search bar; it is for discrete actions, not content search',
       'Do not leave the palette open after an item is selected; it should always close to return focus to the app',
       'Do not put nested interactive components like forms or modals inside command items',
-      'Do not omit the label attribute on <arc-command-item> — the filter and display both depend on it',
+      'Do not omit the label attribute on <arc-command-item>; the filter and display both depend on it',
       'Do not override the body scroll lock behavior, as this prevents jarring background movement',
     ],
   },

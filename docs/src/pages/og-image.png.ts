@@ -1,11 +1,11 @@
 /**
- * og-image.png — the site's front-door social card.
+ * og-image.png: the site's front-door social card.
  *
  * The background, chrome and fonts come from lib/og-card.ts, which is the
  * whole reason that module exists ("so the background treatment, chrome, and
  * fonts stay identical across all cards"). This route used to carry its own
- * copy of every one of them — dot grid, glows, border, edge lines, font
- * loading — so a change to the shared treatment silently skipped the one card
+ * copy of every one of them (dot grid, glows, border, edge lines, font
+ * loading), so a change to the shared treatment silently skipped the one card
  * most people ever see. Only what is unique to the front door lives here: the
  * wordmark, the promise, and the stats.
  */
@@ -184,7 +184,7 @@ export const GET: APIRoute = async () => {
               children: 'ARC UI',
             },
           },
-          // Divider — bloom under a crisp line
+          // Divider: bloom under a crisp line
           {
             type: 'div',
             props: {

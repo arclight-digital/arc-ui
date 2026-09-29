@@ -1,8 +1,8 @@
 /**
  * A DOM-less markup sanitizer.
  *
- * Two components need to sanitize untrusted markup — arc-icon for SVG and
- * arc-markdown for the HTML its parser emits — and both used `DOMParser`, which
+ * Two components need to sanitize untrusted markup (arc-icon for SVG and
+ * arc-markdown for the HTML its parser emits), and both used `DOMParser`, which
  * does not exist in Node. That confined each of them to the browser: a page
  * that server-rendered either one threw.
  *
@@ -14,7 +14,7 @@
  *
  * Scope: defence in depth, not a trust boundary. Icons come from the generated
  * Phosphor/Lucide sets or `iconRegistry.set()`, and arc-markdown's parser
- * escapes `<`, `>` and `&` in its source before emitting any tag — so neither
+ * escapes `<`, `>` and `&` in its source before emitting any tag, so neither
  * caller can normally be fed attacker-authored markup at all. This exists so
  * that a registry fed from a CMS, or a parser bug, is not instantly a script
  * injection.
@@ -35,7 +35,7 @@ export function normalizeUrl(value) {
  * Scan one tag starting at `<`, returning what it is and where it ends.
  *
  * Attribute values are read quote-aware, because `>` inside a quoted value is
- * data — splitting on the next `>` would truncate `<svg data-x="a>b">` mid-tag.
+ * data, splitting on the next `>` would truncate `<svg data-x="a>b">` mid-tag.
  */
 function readTag(src, start) {
   const closing = src[start + 1] === '/';

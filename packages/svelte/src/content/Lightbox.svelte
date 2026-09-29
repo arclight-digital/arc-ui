@@ -2,11 +2,16 @@
 <script lang="ts">
   import '@arclux/arc-ui/lightbox';
   import type { ArcLightbox } from '@arclux/arc-ui/lightbox';
+  import type { Snippet } from 'svelte';
 
   interface Props {
     images?: unknown[];
     index?: number;
     open?: boolean;
+    gallery?: string;
+    thumbnails?: boolean;
+    /** <slot name="actions"> — put slot="actions" on the element inside. */
+    actions?: Snippet;
     class?: string;
     id?: string;
     style?: string;
@@ -34,7 +39,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { images = [], index = $bindable(), open = false, ...rest }: Props = $props();
+  let { images = [], index = $bindable(), open = false, gallery, thumbnails = false, actions, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
 
@@ -61,7 +66,8 @@
   }
 </script>
 
-<arc-lightbox {images} {index} {open} bind:this={__el} {...rest}
+<arc-lightbox {images} {index} {open} {gallery} {thumbnails} bind:this={__el} {...rest}
   onarc-change={__onArcChange}
 >
+  {@render actions?.()}
 </arc-lightbox>

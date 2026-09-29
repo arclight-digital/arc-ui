@@ -7,23 +7,23 @@ export const radioGroup: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Ideal for pricing tiers, settings panels, and any context where exactly one choice must be made from a visible set of options.',
+    'Single-select option group with arrow-key navigation and ARIA radiogroup semantics. Fits pricing tiers, settings panels, and any place where exactly one choice must be made from a visible set of options.',
 
-  overview: `RadioGroup lets users pick exactly one option from a visible set. Unlike Select, which hides choices behind a dropdown, RadioGroup displays every option up front so users can compare them at a glance. This makes it the right choice when the number of options is small (typically two to six) and the decision benefits from side-by-side visibility — pricing tiers, shipping methods, account types, or preference toggles.
+  overview: `RadioGroup lets users pick exactly one option from a visible set. Unlike Select, which hides choices behind a dropdown, RadioGroup displays every option up front so users can compare them at a glance. This makes it the right choice when the number of options is small (typically two to six) and the decision benefits from side-by-side visibility: pricing tiers, shipping methods, account types, or preference toggles.
 
-Under the hood, the component manages focus with arrow-key navigation following the WAI-ARIA radiogroup pattern. Pressing Arrow Down or Arrow Right moves focus to the next option and selects it; Arrow Up or Arrow Left moves backward. This roving-tabindex approach means the entire group occupies a single Tab stop, keeping keyboard navigation fast and predictable.
+The component manages focus with arrow-key navigation, following the WAI-ARIA radiogroup pattern. Pressing Arrow Down or Arrow Right moves focus to the next option and selects it; Arrow Up or Arrow Left moves backward. This roving-tabindex approach means the entire group occupies a single Tab stop, which keeps keyboard navigation fast.
 
-RadioGroup supports both vertical and horizontal orientations. Vertical is the default and works best for options with longer labels or descriptions. Horizontal layout suits compact rows of short labels — for example, a row of size options (S, M, L, XL) or a light/dark theme toggle with more than two states. The component also integrates seamlessly with native form submission through its \`name\` and \`value\` properties.`,
+RadioGroup supports both vertical and horizontal orientations. Vertical is the default and works best for options with longer labels or descriptions. Horizontal layout suits compact rows of short labels, for example a row of size options (S, M, L, XL) or a light/dark theme toggle with more than two states. The component also submits with native forms through its \`name\` and \`value\` properties.`,
 
   features: [
-    'Single-select from a visible set of options — one choice at a time',
+    'Single-select from a visible set of options: one choice at a time',
     'Arrow-key navigation with roving tabindex (single Tab stop)',
     'ARIA radiogroup role with automatic `aria-checked` management',
     'Vertical and horizontal orientation modes',
     'Disabled state for the entire group or individual options',
     'Native form integration via name and value properties',
     'Fires `arc-change` event on selection with the new value',
-    'Supports rich option objects with label and value fields',
+    'Supports option objects with label and value fields',
   ],
 
   guidelines: {
@@ -35,10 +35,10 @@ RadioGroup supports both vertical and horizontal orientations. Vertical is the d
       'Group related radio groups under a shared fieldset or section heading',
     ],
     dont: [
-      'Do not use RadioGroup for more than six or seven options — switch to Select or Combobox instead',
+      'Do not use RadioGroup for more than six or seven options; switch to Select or Combobox instead',
       'Do not leave the group without a default selection unless the choice is truly optional',
-      'Do not mix RadioGroup with checkboxes in the same visual row — they imply different selection models',
-      'Do not use horizontal orientation with long labels — text will wrap awkwardly on small screens',
+      'Do not mix RadioGroup with checkboxes in the same visual row: they imply different selection models',
+      'Do not use horizontal orientation with long labels: text will wrap awkwardly on small screens',
       'Do not disable individual options without explaining why they are unavailable',
     ],
   },

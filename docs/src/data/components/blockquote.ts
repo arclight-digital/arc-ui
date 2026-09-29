@@ -8,11 +8,11 @@ export const blockquote: ComponentDef = {
   interactivity: 'static',
   description: 'Styled pull-quote with optional citation for editorial emphasis.',
 
-  overview: `Blockquote is a typographic component for presenting quotations, testimonials, and editorial callouts with visual distinction. It renders a semantic \`<blockquote>\` element wrapped in a dark-themed container with a subtle gradient accent line across the top edge and a large decorative opening-quote glyph.
+  overview: `Blockquote presents quotations, testimonials, and editorial callouts. It renders a semantic \`<blockquote>\` element wrapped in a dark-themed container with a subtle gradient accent line across the top edge and a large decorative opening-quote glyph.
 
 The default variant displays quote text in the primary text color with an italic style, while the \`accent\` variant renders the quote text with a gradient fill derived from the accent token system. Both variants include an optional citation footer that appears beneath the quote in small, uppercase, accented type prefixed with an em dash.
 
-The component uses CSS parts (\`blockquote\`, \`quote\`, \`cite\`) for fine-grained external style overrides. The top gradient line and decorative quote mark are rendered with pseudo-elements, keeping the DOM minimal and the markup semantic.`,
+The component uses CSS parts (\`blockquote\`, \`quote\`, \`cite\`) for external style overrides. The top gradient line and decorative quote mark are rendered with pseudo-elements, keeping the DOM minimal and the markup semantic.`,
 
   features: [
     'Semantic <blockquote> element with optional <footer> citation',
@@ -30,13 +30,13 @@ The component uses CSS parts (\`blockquote\`, \`quote\`, \`cite\`) for fine-grai
       'Use for editorial pull-quotes, testimonials, and highlighted excerpts',
       'Provide a cite attribute when the source or author is known',
       'Use the accent variant sparingly to highlight a single key quote on a page',
-      'Keep quote content concise - one to three sentences works best',
-      'Pair with Text and Card components for rich editorial layouts',
+      'Keep quote content concise: one to three sentences works best',
+      'Pair with Text and Card components for editorial layouts',
     ],
     dont: [
-      'Do not use Blockquote for generic content boxes — use an Alert (`variant="tip"`) or Card instead',
-      'Do not Stack multiple accent-variant blockquotes on the same page',
-      'Do not use overly long quotations that would be better served by inline text',
+      'Do not use Blockquote for generic content boxes. Use an Alert (`variant="tip"`) or Card instead',
+      'Do not stack multiple accent-variant blockquotes on the same page',
+      'Do not use overly long quotations that would work better as inline text',
       'Do not remove the cite attribute if the quote has a known author',
       'Do not nest blockquotes inside other blockquotes',
     ],

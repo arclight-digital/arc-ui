@@ -7,26 +7,26 @@ export const confirm: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned promise. Same visual treatment as dialog.',
+    'Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned promise. Looks the same as dialog.',
 
-  overview: `Confirm provides a promise-based programmatic API for confirmation dialogs. Instead of managing dialog open/close state and listening for button clicks, you call \`ArcConfirm.open()\` with a heading and message, and \`await\` the returned promise. The promise resolves to \`true\` if the user confirms and \`false\` if they cancel — making it trivial to gate destructive actions behind user consent.
+  overview: `Confirm is a promise-based API for confirmation dialogs. Instead of managing dialog open/close state and listening for button clicks, you call \`ArcConfirm.open()\` with a heading and message, and \`await\` the returned promise. The promise resolves to \`true\` if the user confirms and \`false\` if they cancel, which makes it easy to gate destructive actions behind user consent.
 
-Under the hood, Confirm renders a dialog with the same visual treatment — backdrop blur, surface-raised panel, and focus trap — but with a fixed two-button layout: a cancel button (ghost variant) and a confirm button styled by the \`variant\` prop. The \`error\` variant recolors the confirm button with the error color, making it visually clear that the action is destructive.
+Confirm renders a dialog with the same visual treatment (backdrop blur, surface-raised panel, and focus trap) but with a fixed two-button layout: a cancel button (ghost variant) and a confirm button styled by the \`variant\` prop. The \`error\` variant recolors the confirm button with the error color to mark the action as destructive.
 
-The component keeps both of its shapes, which are different rather than duplicated: \`ArcConfirm.open()\` for a call site that has to decide something before continuing, and the element itself as \`<arc-confirm>\` for a template — with a default slot for body markup the \`message\` string cannot carry. A single \`<arc-confirm>\` element in the layout can be reused for all confirmation prompts in the application.
+The component has two shapes, and they do different jobs: \`ArcConfirm.open()\` for a call site that has to decide something before continuing, and the element itself as \`<arc-confirm>\` for a template, with a default slot for body markup the \`message\` string cannot carry. A single \`<arc-confirm>\` element in the layout can be reused for all confirmation prompts in the application.
 
-**Coming from v3?** The tag \`arc-dialog\` used to be this confirm prompt. In v4 it is the overlay primitive (renamed from \`arc-modal\`), and the prompt — \`heading\`, \`message\`, \`confirm-label\`, \`cancel-label\`, \`variant\` — lives here. The props are unchanged; only the tag name moved.`,
+**Coming from v3?** The tag \`arc-dialog\` used to be this confirm prompt. In v4 it is the overlay primitive (renamed from \`arc-modal\`), and the prompt (\`heading\`, \`message\`, \`confirm-label\`, \`cancel-label\`, \`variant\`) lives here. The props are unchanged; only the tag name moved.`,
 
   features: [
-    'Promise-based ArcConfirm.open() API — await user confirmation in one line',
-    'Resolves true on confirm, false on cancel — no event listeners needed',
+    'Promise-based ArcConfirm.open() API: await user confirmation in one line',
+    'Resolves true on confirm, false on cancel, with no event listeners needed',
     'Two variants: default (primary confirm button) and error (error-colored confirm button)',
     'Customizable heading, message, confirm label, and cancel label',
-    'Same visual treatment as dialog — backdrop blur, surface-raised panel, focus trap',
+    'Same visual treatment as dialog: backdrop blur, surface-raised panel, focus trap',
     'Focus trap keeps keyboard navigation within the dialog while open',
     'Escape key and backdrop click trigger cancel',
     '`arc-confirm` and `arc-cancel` events for declarative usage',
-    'Accessible — `role="alertdialog"`, `aria-modal`, auto-focus on confirm button',
+    '`role="alertdialog"`, `aria-modal`, and auto-focus on the confirm button',
   ],
 
   guidelines: {
@@ -38,11 +38,11 @@ The component keeps both of its shapes, which are different rather than duplicat
       'Place a single <arc-confirm> at the root of your layout for reuse across the application',
     ],
     dont: [
-      "Do not use confirm for informational messages that don't require a decision — use alert or dialog",
-      'Do not chain multiple confirmations — if the action needs more context, use a full dialog or form',
-      'Do not use vague labels like "OK" and "Cancel" — be specific about what each button does',
-      'Do not fire a confirmation for every action — reserve it for destructive or irreversible operations',
-      'Do not rely on the default browser confirm() — it blocks the thread and cannot be styled',
+      "Do not use confirm for informational messages that don't require a decision. Use alert or dialog",
+      'Do not chain multiple confirmations. If the action needs more context, use a full dialog or form',
+      'Do not use vague labels like "OK" and "Cancel". Be specific about what each button does',
+      'Do not fire a confirmation for every action. Reserve it for destructive or irreversible operations',
+      'Do not rely on the default browser confirm(); it blocks the thread and cannot be styled',
     ],
   },
 

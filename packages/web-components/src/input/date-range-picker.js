@@ -45,7 +45,7 @@ import { DeclaredPropsMixin, flag, oneOf, list, int } from '../shared/props.js';
  * @prop {number} firstDayOfWeek - Which day the week starts on, 1 = Monday … 7 = Sunday. Defaults to the locale's own convention.
  */
 export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
-  /** Runs its own constraint logic — owns the whole validity flag set. */
+  /** Runs its own constraint logic and owns the whole validity flag set. */
   static autoValidates = false;
 
   static properties = {
@@ -394,7 +394,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
       anchor: () => this.shadowRoot?.querySelector('.input-wrapper'),
       floating: () => this.shadowRoot?.querySelector('.dropdown'),
       // Two calendars side by side size to their own content, left-aligned with
-      // the field — same as date-picker.
+      // the field; same as date-picker.
       align: () => 'start',
       offset: 4,
     });
@@ -455,7 +455,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
   }
 
   /**
-   * Anchor the calendar whenever `open` turns true — on *either* path.
+   * Anchor the calendar whenever `open` turns true, on *either* path.
    *
    * This used to live in `_toggleDropdown`, which is only the click path, so
    * `el.open = true` (documented and supported) showed today's month rather
@@ -527,8 +527,8 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
 
     this.dispatchEvent(
       new CustomEvent('arc-change', {
-        // `detail.value` is the control's value — the ISO 8601 interval string
-        // `this.value` returns — not a second shape named after it. It carried
+        // `detail.value` is the control's value: the ISO 8601 interval string
+        // `this.value` returns, not a second shape named after it. It carried
         // `{ start, end }`, so reading `e.detail.value` and reading `el.value`
         // on the same component gave two different types (finding #45), which
         // defeats the point of the canonical key: one generic handler reading
@@ -553,8 +553,8 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
 
     this.dispatchEvent(
       new CustomEvent('arc-change', {
-        // `detail.value` is the control's value — the ISO 8601 interval string
-        // `this.value` returns — not a second shape named after it. It carried
+        // `detail.value` is the control's value: the ISO 8601 interval string
+        // `this.value` returns, not a second shape named after it. It carried
         // `{ start, end }`, so reading `e.detail.value` and reading `el.value`
         // on the same component gave two different types (finding #45), which
         // defeats the point of the canonical key: one generic handler reading
@@ -762,7 +762,7 @@ export class ArcDateRangePicker extends DeclaredPropsMixin(FormControlMixin(LitE
       this.open ? this._position.show() : this._position.hide();
     }
     // The submitted value tracks `start`/`end`, not `value`, so the mixin's
-    // value-watch never fires for this control — sync locally.
+    // value-watch never fires for this control; sync locally.
     if (changed.has('start') || changed.has('end')) {
       this._updateFormValue();
     }

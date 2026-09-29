@@ -9,16 +9,16 @@ export const sortableList: ComponentDef = {
   description:
     'Drag-and-drop reorderable list with grip handles, keyboard reordering support, and visual insertion indicators.',
 
-  overview: `SortableList enables users to reorder a set of items through intuitive drag-and-drop or keyboard interaction. Each item renders with a six-dot grip handle on the left and the item content on the right, wrapped in a card-like container with subtle borders. When dragging, the source item fades to 50% opacity with an elevated shadow, while a blue insertion line appears above or below the target position to indicate where the item will land.
+  overview: `SortableList lets users reorder a set of items with drag-and-drop or the keyboard. Each item renders with a six-dot grip handle on the left and the item content on the right, wrapped in a card-like container with a thin border. When dragging, the source item fades to 50% opacity with a raised shadow, while a blue insertion line appears above or below the target position to indicate where the item will land.
 
-Beyond mouse-based reordering, SortableList provides a complete keyboard workflow. Users can press Space to select an item (highlighted with a blue border), then Enter to enter move mode (elevated with a stronger blue glow), and finally Arrow Up/Down to shift the item through the list. Pressing Space or Enter again confirms the placement, while Escape cancels the operation. This two-phase keyboard model ensures that screen reader users and keyboard-only users have full control over item ordering.
+SortableList also has a full keyboard workflow. Users can press Space to select an item (highlighted with a blue border), then Enter to enter move mode (elevated with a stronger blue glow), and finally Arrow Up/Down to shift the item through the list. Pressing Space or Enter again confirms the placement, while Escape cancels the operation. This two-phase keyboard model gives screen reader users and keyboard-only users full control over item ordering.
 
-The component fires a single \`arc-change\` event after every reorder, providing the new order as an array of original indices in the event detail. This makes it straightforward to sync the visual order back to your data model without tracking individual move operations.`,
+The component fires a single \`arc-change\` event after every reorder, with the new order as an array of original indices in the event detail, so you can sync the visual order back to your data model without tracking individual moves.`,
 
   features: [
     'Drag-and-drop reordering with HTML5 Drag and Drop API and visual insertion indicators',
     'Six-dot grip handle icon rendered for each item as a drag affordance',
-    'Full keyboard reordering: Space to select, Enter to move, Arrow keys to shift, Escape to cancel',
+    'Keyboard reordering: Space to select, Enter to move, Arrow keys to shift, Escape to cancel',
     'Blue border highlight for keyboard-selected items and elevated glow for items being moved',
     'Dragged items fade to 50% opacity with an elevated box shadow for clear visual feedback',
     'Fires `arc-change` with `detail.order` containing the new index mapping after every reorder',
@@ -28,18 +28,18 @@ The component fires a single \`arc-change\` event after every reorder, providing
 
   guidelines: {
     do: [
-      'Wrap plain elements (e.g. `<div>`) as direct children — the component reads their `textContent` for display',
+      'Wrap plain elements (e.g. `<div>`) as direct children: the component reads their `textContent` for display',
       'Listen for `arc-change` to persist the new order back to your data store',
       'Use SortableList for short to medium lists (under ~50 items) where manual ordering matters',
       'Provide clear, distinguishable text content for each item so users can identify what they are reordering',
       'Test keyboard reordering to ensure your application handles the order array correctly',
     ],
     dont: [
-      'Do not nest interactive elements (buttons, links) inside list items — they conflict with drag handles and keyboard interaction',
+      'Do not nest interactive elements (buttons, links) inside list items: they conflict with drag handles and keyboard interaction',
       'Do not use SortableList for very long lists where search or filtering would be more efficient than manual reordering',
-      'Do not rely solely on the visual grip dots to communicate draggability — ensure items have descriptive labels for screen readers',
+      'Do not rely solely on the visual grip dots to communicate draggability; ensure items have descriptive labels for screen readers',
       'Do not place multiple Sortable Lists adjacent without clear visual separation between them',
-      'Avoid using SortableList for single-item lists — there is nothing to reorder',
+      'Avoid using SortableList for single-item lists: there is nothing to reorder',
     ],
   },
 

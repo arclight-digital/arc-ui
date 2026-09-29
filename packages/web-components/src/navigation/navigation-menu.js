@@ -41,11 +41,11 @@ export class ArcNavigationMenu extends LitElement {
         position: relative;
         font-family: var(--font-body);
         /* container-type: inline-size on .nav__container (below) makes the
-           component's intrinsic inline size zero — containment is the point,
+           component's intrinsic inline size zero: containment is the point,
            but it means a shrink-to-fit parent has nothing to measure. As a
            flex item this host therefore sized to 0, the collapse query read
            0 <= 900, and the desktop bar display:none'd itself at every
-           viewport — the site's own top-bar nav vanished on the day the
+           viewport: the site's own top-bar nav vanished on the day the
            container query landed. A contained container must be sized from
            outside, so the host claims the row's free space instead of asking
            its contents. In non-flex contexts flex is inert and display:block
@@ -59,7 +59,7 @@ export class ArcNavigationMenu extends LitElement {
         align-items: center;
         gap: var(--space-xs);
         /* With the host stretching (above), where the items sit inside it is
-           the embedder's call — arc-top-bar sets this from nav-align. */
+           the embedder's call; arc-top-bar sets this from nav-align. */
         justify-content: var(--nav-justify, flex-start);
       }
 
@@ -85,7 +85,7 @@ export class ArcNavigationMenu extends LitElement {
            floating on a bar, not a hairline between rows, and subtle put its
            outline within a point of the background. */
         border: 1px solid var(--border-default);
-        /* Pill, like every other standalone control in a top bar — the buttons,
+        /* Pill, like every other standalone control in a top bar: the buttons,
            the version badge, the icon-only toggles. The dropdown rows and the
            mobile panel links below keep --radius-sm: those are rows inside a
            container, the same class of thing as a sidebar link, and rounding
@@ -94,7 +94,7 @@ export class ArcNavigationMenu extends LitElement {
         /* The inline padding is asymmetric by half the letter-spacing, which is
            what puts the word in the middle rather than merely putting its *box*
            there. letter-spacing adds its 2px after the final letter too, and
-           that trailing space is inside the box being centered — so the glyphs
+           that trailing space is inside the box being centered, so the glyphs
            end up sitting half of it, 1px, to the left. Derived from the same
            custom property the letter-spacing uses, so the two cannot drift. */
         padding-block: var(--space-sm);
@@ -123,7 +123,7 @@ export class ArcNavigationMenu extends LitElement {
          background, border and shadow but had no :active rule and no transform
          in its transition list, so it was the one control in the bar that did
          not move under the pointer while the buttons and icon buttons beside it
-         did. 0.97 and 120ms are what arc-button uses for a wide control —
+         did. 0.97 and 120ms are what arc-button uses for a wide control;
          arc-icon-button's 0.93 is pitched for a small square and reads as a
          lurch across something this long. */
       .nav__trigger:active {
@@ -281,7 +281,7 @@ export class ArcNavigationMenu extends LitElement {
        * A wrapper rather than :host, and the reason is that containment is
        * public. container-type: inline-size implies contain: layout style
        * inline-size on whatever carries it, and on :host that is the custom
-       * element itself — so a consumer's page would inherit a containing block
+       * element itself, so a consumer's page would inherit a containing block
        * for fixed-position content and an element whose size stops depending on
        * its contents, neither of which this component asked them to accept.
        *
@@ -299,19 +299,19 @@ export class ArcNavigationMenu extends LitElement {
 
       /* ── Mobile panel ── */
       /* nav-fit: keep in step with tokens.breakpoint.navFit.
-         Literal for prism's sake — see the note in arc-top-bar. Guarded by
+         Literal for prism's sake; see the note in arc-top-bar. Guarded by
          check-breakpoint-drift.js.
 
          A container query, not a media query (V4-PLAN 4.4). The unit here is
          the component: a nav in a narrow sidebar should collapse whatever the
          viewport is doing, and a nav in a wide page should not collapse because
          a phone is holding the page. It is also what makes the desktop bar
-         testable — a test can set the container's width, and could never set
+         testable: a test can set the container's width, and could never set
          the viewport's.
 
          navFit, not navCollapse: this measures the *column the pills sit in*,
          not the page. Carrying the 900px viewport number into a container
-         query hid the nav on every docs page at every desktop width — the
+         query hid the nav on every docs page at every desktop width: the
          search box and actions leave the centre column ~860px inside the
          bar's 1280px cap, which a 900px reading calls mobile while the
          viewport-keyed hamburger stays hidden. See the token's comment. */
@@ -358,8 +358,8 @@ export class ArcNavigationMenu extends LitElement {
         will-change: clip-path, opacity;
       }
 
-      /* The lit hairline every other v3 surface ends on — the footer's horizon,
-         the tooltip's top edge — rather than a flat --divider. The panel hangs
+      /* The lit hairline every other v3 surface ends on (the footer's horizon,
+         the tooltip's top edge), rather than a flat --divider. The panel hangs
          from the bar, so its own bottom edge is where it meets the page. */
       .mobile-panel::after {
         content: '';
@@ -472,9 +472,8 @@ export class ArcNavigationMenu extends LitElement {
       }
 
       /* One row is marked, and it is marked the way v3 marks state everywhere
-         else: tint, glow, accent text. Every row used to carry its own fill and
-         border, which ranks none of them — the same thing the API tables were
-         doing before they stopped. The color goes through the theme's solved
+         else: tint, glow, accent text. A fill and border on every row would
+         rank none of them. The color goes through the theme's solved
          text mix, so the label holds AA on the tint in both themes. */
       .mobile-trigger--active {
         color: color-mix(in srgb, var(--interactive), var(--text-primary) var(--accent-text-mix, 0%));
@@ -647,7 +646,7 @@ export class ArcNavigationMenu extends LitElement {
     this._portalRoot = this._portal.attachShadow({ mode: 'open' });
     document.body.appendChild(this._portal);
     // Fill it now rather than waiting for the next render. `updated()` is the
-    // only other caller, and a reconnect does not by itself request an update —
+    // only other caller, and a reconnect does not by itself request an update,
     // so a reparented menu was left holding an empty, unstyled portal until
     // something unrelated happened to re-render it (finding #67).
     this._renderPortal();
@@ -669,15 +668,14 @@ export class ArcNavigationMenu extends LitElement {
    * so the assignment has already happened by the time this listener exists
    * and the event never arrives. This component mirrors its children into its
    * own nav and hides the light DOM with `.nav__slot-host { display: none }`,
-   * so upgrading with zero items doesn't degrade to the plain link list — it
+   * so upgrading with zero items doesn't degrade to the plain link list; it
    * renders an empty bar and hides the real links behind it. The site's whole
    * top-bar nav disappeared on the first server-rendered deploy.
    *
-   * Same fix, same reason, as arc-segmented-control — and, as there, the
-   * direct read that used to sit beside this call is gone. hydrateSlots
-   * delivers the event the parser ate, `_onSlotChange` does the reading, and a
-   * second read from inside the update is what produced this component's
-   * `change-in-update` warning.
+   * Same fix, same reason, as arc-segmented-control, and, as there, with no
+   * direct read beside this call. hydrateSlots delivers the event the parser
+   * ate and `_onSlotChange` does the reading; a second read from inside the
+   * update produces Lit's `change-in-update` warning.
    */
   firstUpdated() {
     hydrateSlots(this);
@@ -705,7 +703,7 @@ export class ArcNavigationMenu extends LitElement {
       if (this._openIndex >= 0) {
         // Captured *before* closing: `_close()` sets `_openIndex` to -1, so
         // reading it afterwards indexed the trigger list with -1, got undefined,
-        // and the optional chaining swallowed it — Escape closed the panel and
+        // and the optional chaining swallowed it. Escape closed the panel and
         // dropped focus to the top of the document, silently (finding #66).
         const index = this._openIndex;
         this._close();
@@ -783,7 +781,7 @@ export class ArcNavigationMenu extends LitElement {
    * query that decides the same thing in CSS. Before this the two disagreed
    * whenever the nav was not full-bleed: a nav in a narrow column kept its
    * desktop bar hidden by CSS while the JS, reading a wide viewport, insisted
-   * the mobile panel should close — leaving no navigation at all.
+   * the mobile panel should close, leaving no navigation at all.
    */
   _onResize() {
     const container = this.shadowRoot?.querySelector('.nav__container');
@@ -864,7 +862,7 @@ export class ArcNavigationMenu extends LitElement {
     if (!this._portalRoot) return;
     // Keyed on the portal root's own state, not on an instance flag.
     // `_createPortal` runs on every connect and builds a *new* shadow root,
-    // while a `_portalStyled` boolean survived the reconnect — so after a
+    // while a `_portalStyled` boolean survived the reconnect, so after a
     // reparenting the styling step was skipped for a root that had never been
     // styled, and the mobile overlay rendered as unstyled markup over the page.
     // A portal shadow root inherits nothing from its host, so there is no

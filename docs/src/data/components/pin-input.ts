@@ -9,11 +9,11 @@ export const pinInput: ComponentDef = {
   description:
     'One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste support, and optional masking.',
 
-  overview: `PinInput renders a row of individual input boxes — one per character — designed for entering PINs, one-time passwords, and verification codes. Each box accepts a single character and automatically advances focus to the next box on entry, creating a fast and fluid typing experience. The component supports backspace navigation (moving back to the previous box when the current one is empty), arrow key movement between boxes, and full clipboard paste that fills multiple boxes at once.
+  overview: `PinInput renders a row of individual input boxes, one per character, for entering PINs, one-time passwords, and verification codes. Each box accepts a single character and automatically advances focus to the next box on entry, so typing is fast. The component supports backspace navigation (moving back to the previous box when the current one is empty), arrow key movement between boxes, and full clipboard paste that fills multiple boxes at once.
 
-The \`type\` prop controls character validation: \`"number"\` restricts input to digits 0-9, \`"alphanumeric"\` allows letters and digits, and \`"text"\` accepts any single character. When \`mask\` is enabled, entered characters are obscured with dots (using CSS \`-webkit-text-security: disc\`) for sensitive codes. An optional \`separator\` prop inserts a visual dash between groups of boxes — for example, setting \`separator="3"\` on a 6-digit code renders it as three boxes, a dash, and three more boxes.
+The \`type\` prop controls character validation: \`"number"\` restricts input to digits 0-9, \`"alphanumeric"\` allows letters and digits, and \`"text"\` accepts any single character. When \`mask\` is enabled, entered characters are obscured with dots (using CSS \`-webkit-text-security: disc\`) for sensitive codes. An optional \`separator\` prop inserts a visual dash between groups of boxes. For example, setting \`separator="3"\` on a 6-digit code renders it as three boxes, a dash, and three more boxes.
 
-PinInput fires \`arc-input\` on every character entry or deletion, providing the current partial value. When all boxes are filled it fires \`arc-change\` — the commit for a fixed-length code — along with \`arc-complete\`, the more specific name kept for consumers that auto-submit. Either one makes it easy to trigger form submission or validation at the right moment without polling or length-checking.`,
+PinInput fires \`arc-input\` on every character entry or deletion, providing the current partial value. When all boxes are filled it fires \`arc-change\` (the commit for a fixed-length code) along with \`arc-complete\`, the more specific name kept for consumers that auto-submit. Listen to either one to trigger form submission or validation at the right moment, with no polling or length-checking.`,
 
   features: [
     'Auto-advance focus to the next box after each valid character entry',
@@ -28,18 +28,18 @@ PinInput fires \`arc-input\` on every character entry or deletion, providing the
 
   guidelines: {
     do: [
-      'Set `length` to match the expected code length — 4 for PINs, 6 for OTPs, etc.',
+      'Set `length` to match the expected code length: 4 for PINs, 6 for OTPs, etc.',
       'Use `type="number"` for numeric-only codes and set `inputmode="numeric"` for mobile keyboards',
       'Enable `mask` for sensitive codes like passwords or security PINs',
       'Listen for `arc-complete` to auto-submit or validate once the full code is entered',
       'Provide a `label` so users understand what code they are entering',
     ],
     dont: [
-      'Do not use PinInput for general text entry — it is designed exclusively for fixed-length codes',
-      'Do not set `length` higher than ~8 — long codes are better handled with a standard text input',
+      'Do not use PinInput for general text entry: it is designed exclusively for fixed-length codes',
+      'Do not set `length` higher than ~8: long codes are better handled with a standard text input',
       'Do not omit the `label` prop when the pin input is used standalone without surrounding context',
       'Do not use `separator` values that produce uneven groups at the end (e.g. `separator="4"` on a 6-digit code)',
-      'Avoid placing PinInput in very narrow containers — each box needs at least 42px width plus gaps',
+      'Avoid placing PinInput in very narrow containers: each box needs at least 42px width plus gaps',
     ],
   },
 

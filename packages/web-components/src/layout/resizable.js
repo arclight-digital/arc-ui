@@ -8,7 +8,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  * @tag arc-resizable
  * @status stable
  * @prop {'horizontal' | 'vertical'} direction - Which dimension the handle resizes. Horizontal resizes width, with the handle on an inline edge; vertical resizes height, with the handle on the top or bottom edge.
- * @prop {'end' | 'start'} handle - Which edge the handle sits on. `end` (the default) is the inline end — the right edge in a left-to-right page — or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way.
+ * @prop {'end' | 'start'} handle - Which edge the handle sits on. `end` (the default) is the inline end (the right edge in a left-to-right page) or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way.
  * @prop {number} size - Current size of the panel in pixels. Updated in real time during drag. Maps to the --panel-size CSS custom property.
  * @prop {number} minSize - Minimum allowed size in pixels. The panel cannot be dragged smaller than this value.
  * @prop {number} maxSize - Maximum allowed size in pixels. The panel cannot be dragged larger than this value. Defaults to no limit.

@@ -5,7 +5,7 @@
  * bookmark pointing at the old URL working.
  *
  * A meta refresh rather than a server redirect: the docs site is static, and a
- * `_redirects` rule would only cover the Cloudflare deployment — anyone
+ * `_redirects` rule would only cover the Cloudflare deployment. Anyone
  * previewing a build locally, or serving the output anywhere else, would get a
  * 404 on a URL that has been in the sidebar for two minor versions.
  */
@@ -15,7 +15,7 @@ const target = '/synth';
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Theme Synthesizer — ARC UI</title>
+    <title>Theme Synthesizer | ARC UI</title>
     <link rel="canonical" href={new URL(target, Astro.site)} />
     <meta http-equiv="refresh" content={`0; url=${target}`} />
     <meta name="robots" content="noindex, follow" />

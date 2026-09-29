@@ -9,7 +9,7 @@ export const hotkey: ComponentDef = {
   description:
     'Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences (g i). Fires an event when the key pattern is matched.',
 
-  overview: `Hotkey is a zero-UI component that listens for keyboard shortcuts and fires an \`arc-hotkey-trigger\` event when a matching key pattern is detected. It renders nothing visible — \`display: none\` is enforced — so it acts purely as a declarative shortcut binding you drop into your template.
+  overview: `Hotkey is a zero-UI component that listens for keyboard shortcuts and fires an \`arc-hotkey-trigger\` event when a matching key pattern is detected. It renders nothing visible (\`display: none\` is enforced), so it acts purely as a declarative shortcut binding you drop into your template.
 
 The \`keys\` prop accepts modifier combos like \`"ctrl+k"\`, \`"meta+shift+p"\`, and \`"alt+n"\`, as well as Vim-style chord sequences where space-separated keys must be pressed in order (e.g. \`"g i"\` means press G, release, then press I within 1 second). Modifier names are normalized: \`cmd\`/\`command\` → \`meta\`, \`option\` → \`alt\`, \`control\` → \`ctrl\`.
 
@@ -19,10 +19,10 @@ By default, Hotkey skips events when focus is inside an input, textarea, select,
     'Modifier combos: ctrl+k, meta+shift+p, alt+n, etc.',
     'Chord sequences: "g i" (press G, then I within 1 second)',
     'Normalized modifier names: cmd/command → meta, option → alt',
-    "Automatic input/textarea/select filtering — won't fire while typing",
+    "Automatic input/textarea/select filtering: won't fire while typing",
     'Global mode attaches to window and bypasses focus filtering',
     'Disabled prop to temporarily suspend the shortcut',
-    'Zero UI — `display: none` enforced, no layout impact',
+    'Zero UI: `display: none` is enforced, so there is no layout impact',
     'Fires `arc-hotkey-trigger` with `event.detail.keys` containing the matched pattern',
   ],
 
@@ -34,10 +34,10 @@ By default, Hotkey skips events when focus is inside an input, textarea, select,
       'Use `disabled` to suspend shortcuts when a modal or dialog is open',
     ],
     dont: [
-      "Do not override browser-reserved shortcuts (Ctrl+T, Ctrl+W, Ctrl+N) — they won't work",
-      "Do not create chord sequences longer than 2-3 keys — users can't remember them",
-      'Do not rely on hotkeys as the only way to access a feature — always provide a clickable alternative',
-      'Do not forget the 1-second chord timeout — slow typists may miss the window',
+      "Do not override browser-reserved shortcuts (Ctrl+T, Ctrl+W, Ctrl+N). They won't work",
+      "Do not create chord sequences longer than 2-3 keys. Users can't remember them",
+      'Do not rely on hotkeys as the only way to access a feature. Always provide a clickable alternative',
+      'Do not forget the 1-second chord timeout. Slow typists may miss the window',
     ],
   },
 

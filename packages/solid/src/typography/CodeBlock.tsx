@@ -13,9 +13,17 @@ declare module 'solid-js/jsx-runtime' {
 
 export interface CodeBlockProps {
   language?: string;
+  label?: string;
   filename?: string;
   code?: string;
   variant?: 'default' | 'window' | 'basic';
+  prompt?: string;
+  lineNumbers?: boolean;
+  highlight?: string;
+  diff?: boolean;
+  wrap?: boolean;
+  maxLines?: number;
+  onArcToggle?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
   style?: string;
@@ -44,9 +52,9 @@ export interface CodeBlockProps {
 }
 
 export const CodeBlock: Component<CodeBlockProps> = (props) => {
-  const [local, rest] = splitProps(props, ['language', 'filename', 'code', 'variant']);
+  const [local, rest] = splitProps(props, ['language', 'label', 'filename', 'code', 'variant', 'prompt', 'lineNumbers', 'highlight', 'diff', 'wrap', 'maxLines', 'onArcToggle']);
   return (
-    <arc-code-block language={local.language} filename={local.filename} code={local.code} variant={local.variant} {...rest}>
+    <arc-code-block language={local.language} label={local.label} filename={local.filename} code={local.code} variant={local.variant} prompt={local.prompt} prop:lineNumbers={local.lineNumbers} highlight={local.highlight} diff={local.diff} wrap={local.wrap} prop:maxLines={local.maxLines} on:arc-toggle={local.onArcToggle} {...rest}>
     </arc-code-block>
   );
 };

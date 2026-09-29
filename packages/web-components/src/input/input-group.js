@@ -128,7 +128,7 @@ export class ArcInputGroup extends DeclaredPropsMixin(LitElement) {
     this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

@@ -2,14 +2,14 @@
  * Linear value↔pixel mapping shared by every time-axis component
  * (ruler, timeline grid, waveform, piano roll).
  *
- * A scale is a plain, frozen, structured-cloneable object — not a controller
+ * A scale is a plain, frozen, structured-cloneable object, not a controller
  * and not reactive state. Viewport ownership belongs to the application: it
  * holds offset and zoom, passes them down as props, and components emit intent
  * events rather than mutating. That keeps components viewport-stateless, which
  * is what lets a ruler stay aligned with a grid (one offset, several
  * projections) and what makes them reusable outside a timeline at all.
  *
- * The mapping is deliberately linear — `(value - origin) * pixelsPerUnit`. It
+ * The mapping is linear: `(value - origin) * pixelsPerUnit`. It
  * is the caller's job to work in a unit where that holds. Musical time in
  * ticks at a constant tempo qualifies; seconds under a tempo map would not.
  *
@@ -30,7 +30,7 @@
 
 /**
  * Build a scale. Throws on a degenerate `pixelsPerUnit` rather than silently
- * producing NaN downstream — components should default the prop instead of
+ * producing NaN downstream: components should default the prop instead of
  * constructing a scale from an unset value.
  *
  * @param {{ origin?: number, pixelsPerUnit: number, invert?: boolean }} spec
@@ -146,7 +146,7 @@ export function panBy(scale, deltaPx) {
 /**
  * Build an exact integer snapper for a fixed grid.
  *
- * Inject the same grid size your validator enforces — an editor that snaps to a
+ * Inject the same grid size your validator enforces: an editor that snaps to a
  * different grid than the one being validated against authors content that
  * fails the moment it is written. Different granularities (notes to a
  * subdivision, clip placements to a bar) are separate snappers, not a concept
@@ -172,7 +172,7 @@ const MAX_GRID_LINES = 10000;
  * Pass a *visible* range. Generating lines for an entire project is never
  * correct and throws rather than quietly allocating millions of entries.
  *
- * When boundaries stop being evenly spaced — a per-section meter change, say —
+ * When boundaries stop being evenly spaced (a per-section meter change, say),
  * this is the function you stop calling; hand the ruler an explicit array via
  * `boundariesWithin()` instead. Its subdivision logic does not change.
  *
@@ -200,8 +200,8 @@ export function gridLines(from, to, step) {
 
 /**
  * The subset of an explicit, possibly irregular boundary list that falls within
- * `[from, to]`. The escape hatch from `gridLines()` for non-uniform spacing —
- * same return shape, so consumers are agnostic to which one produced it.
+ * `[from, to]`. The escape hatch from `gridLines()` for non-uniform spacing,
+ * with the same return shape, so consumers are agnostic to which one produced it.
  *
  * @param {number[]} boundaries Ascending domain positions.
  * @param {number} from
@@ -217,7 +217,7 @@ export function boundariesWithin(boundaries, from, to) {
  * whose on-screen spacing meets `minPixelSpacing`, so labels thin out as you
  * zoom out instead of colliding.
  *
- * Candidates are plain numbers, which is what keeps this meter-agnostic — the
+ * Candidates are plain numbers, which is what keeps this meter-agnostic: the
  * caller decides whether they mean bars, beats, or subdivisions.
  *
  * @param {Scale} scale

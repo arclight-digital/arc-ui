@@ -564,3 +564,6 @@ export type { FieldRowProps } from './input/FieldRow.js';
 
 export { SettingsNavItem } from './layout/SettingsNavItem.js';
 export type { SettingsNavItemProps } from './layout/SettingsNavItem.js';
+
+export { CodeGroup } from './typography/CodeGroup.js';
+export type { CodeGroupProps } from './typography/CodeGroup.js';

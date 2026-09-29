@@ -3,11 +3,8 @@ import { isEditingTarget } from '../shared/editing-target.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
- * Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences
- * (g i). Fires an event when the key pattern is matched.
- *
  * Invisible keyboard shortcut listener. Supports modifier combos ("ctrl+k", "meta+shift+p") and
- * chord sequences ("g i" = press g, then i).
+ * chord sequences ("g i" = press g, then i), and fires an event when the key pattern is matched.
  *
  * @tag arc-hotkey
  * @status stable
@@ -116,7 +113,7 @@ export class ArcHotkey extends DeclaredPropsMixin(LitElement) {
       this._chordIndex++;
 
       if (this._chordIndex >= this._parsedChords.length) {
-        // Full match — fire trigger
+        // Full match: fire trigger
         this._chordIndex = 0;
         this._clearChord();
         this.dispatchEvent(
@@ -127,14 +124,14 @@ export class ArcHotkey extends DeclaredPropsMixin(LitElement) {
           }),
         );
       } else {
-        // Waiting for next chord key — timeout after 1s
+        // Waiting for next chord key: timeout after 1s
         this._clearChord();
         this._chordTimer = setTimeout(() => {
           this._chordIndex = 0;
         }, 1000);
       }
     } else if (this._chordIndex > 0) {
-      // Wrong key during chord — reset
+      // Wrong key during chord: reset
       this._chordIndex = 0;
       this._clearChord();
     }

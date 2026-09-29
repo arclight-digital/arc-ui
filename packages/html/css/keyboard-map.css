@@ -50,7 +50,7 @@
           box-shadow var(--transition-fast);
       }
 
-      /* The house state marking: tint, glow, accent text — never an edge. */
+      /* The house state marking: tint, glow, accent text, never an edge. */
       .arc-keyboard-map .key--hit {
         color: var(--accent-primary);
         background: rgba(var(--accent-primary-rgb), 0.16);

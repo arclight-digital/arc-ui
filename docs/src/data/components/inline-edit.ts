@@ -10,18 +10,18 @@ export const inlineEdit: ComponentDef = {
   description:
     'Click-to-edit text that renders as plain content until activated, then swaps to a pre-filled field. Enter or blur commits, Escape cancels. Built for track renames, titles, and other fields where a permanent input box would be visual noise.',
 
-  overview: `Inline Edit is text that happens to be editable. In its resting state it renders the current value as plain text with no field chrome at all — just a faint pencil affordance on hover or focus. Clicking it, or pressing Enter or F2 while it is focused, swaps in a field pre-filled with the current value, text selected and ready to overtype. Enter or clicking away commits; Escape throws the edit away.
+  overview: `Inline Edit is editable text. In its resting state it renders the current value as plain text with no field chrome at all, only a faint pencil affordance on hover or focus. Clicking it, or pressing Enter or F2 while it is focused, swaps in a field pre-filled with the current value, text selected and ready to overtype. Enter or clicking away commits; Escape throws the edit away.
 
 The display text inherits the surrounding typography, and the edit field matches it, so the swap never changes the text's size or position. An Inline Edit inside a heading edits at heading size; one in a table cell edits at cell size. This is the component's whole reason to exist: rename flows and title fields where a visible input box would say "form" when the page is saying "document".
 
-While the user types, keystrokes accumulate in an internal draft and stream out as \`arc-input\` events. The \`value\` prop — and the value a surrounding form submits — only changes when the edit commits, which fires a single \`arc-change\`. Committing an unchanged value fires nothing, so listeners never see a rename that didn't happen. Cancelling fires \`arc-cancel\` and restores the previous text.
+While the user types, keystrokes accumulate in an internal draft and stream out as \`arc-input\` events. The \`value\` prop and the value a surrounding form submits change only when the edit commits, which fires a single \`arc-change\`. Committing an unchanged value fires nothing, so listeners never see a rename that didn't happen. Cancelling fires \`arc-cancel\` and restores the previous text.
 
-**The same three transitions are available from script.** \`edit()\` enters edit mode with the field focused and its text selected — the path for a "Rename" item in a context menu, or for focusing a freshly added row so the user can name it without hunting for it. \`commit()\` and \`cancel()\` leave edit mode the two ways the keyboard does, firing the same \`arc-change\` (or nothing, if the value is unchanged) and \`arc-cancel\`. Reach for \`commit()\` when something outside the component ends the edit — a toolbar Save, a route change — and \`cancel()\` when a save fails and the previous text should come back. \`edit()\` is a no-op when the component is disabled, readonly, or already editing, so it is safe to call without checking first.
+**The same three transitions are available from script.** \`edit()\` enters edit mode with the field focused and its text selected. Use it for a "Rename" item in a context menu, or to focus a freshly added row so the user can name it without hunting for it. \`commit()\` and \`cancel()\` leave edit mode the two ways the keyboard does, firing the same \`arc-change\` (or nothing, if the value is unchanged) and \`arc-cancel\`. Reach for \`commit()\` when something outside the component ends the edit (a toolbar Save, a route change), and \`cancel()\` when a save fails and the previous text should come back. \`edit()\` is a no-op when the component is disabled, readonly, or already editing, so it is safe to call without checking first.
 
 Inline Edit participates in forms through the same ElementInternals machinery as Input: give it a \`name\` and the committed value is submitted, \`required\` makes an empty committed value invalid (shown as a quiet error tint even in display state), and \`form.reset()\` restores the initial text. The \`multiline\` prop swaps the edit field to a textarea, where Enter inserts a newline and Cmd/Ctrl+Enter commits.`,
 
   features: [
-    'Renders as plain text until activated — no field chrome in the resting state',
+    'Renders as plain text until activated. No field chrome in the resting state',
     'Display text inherits surrounding typography, and the edit field matches it, so the swap never reflows',
     'Activation by click, or Enter, Space, or F2 while focused; the field opens pre-filled with the text selected',
     'Enter or blur commits and fires a single `arc-change`; Escape reverts and fires `arc-cancel`',
@@ -29,24 +29,24 @@ Inline Edit participates in forms through the same ElementInternals machinery as
     '`arc-input` streams the draft on every keystroke while editing',
     'Multiline mode edits in a textarea: Enter inserts a newline, Cmd/Ctrl+Enter commits',
     'Full form participation: named submission of the committed value, `required` validation, reset support',
-    'Programmatic control through `edit()`, `commit()`, and `cancel()` — the same three transitions the keyboard drives, firing the same events',
+    'Programmatic control through `edit()`, `commit()`, and `cancel()`. The same three transitions the keyboard drives, firing the same events',
     'Pencil affordance and hover tint follow the design tokens; the swap animates subtly and honors reduced motion',
   ],
 
   guidelines: {
     do: [
       'Use Inline Edit where the text is content first and a field second: titles, track names, table cells, sidebar labels',
-      'Always provide a `label` — it becomes the accessible name ("Edit Track title") for the display button and the field',
+      'Always provide a `label`. It becomes the accessible name ("Edit Track title") for the display button and the field',
       'Listen for `arc-change` to persist a rename; it fires once per commit and only when the value actually changed',
       'Use `multiline` for short notes and descriptions that may wrap, and tell users that Cmd/Ctrl+Enter saves',
       'Set a domain-specific `placeholder` ("Untitled track") so an empty value still reads as something clickable',
-      'Use `readonly` when a value is temporarily locked — the text stays in the reading order without inviting an edit',
+      'Use `readonly` when a value is temporarily locked. The text stays in the reading order without inviting an edit',
     ],
     dont: [
-      'Do not use Inline Edit in a conventional form layout — a labeled Input communicates "fill me in"; Inline Edit deliberately hides that invitation',
-      'Do not use it for values needing heavy validation or structured entry (emails, dates, numbers) — use Input, DatePicker, or NumberInput',
+      'Do not use Inline Edit in a conventional form layout. A labeled Input communicates "fill me in"; Inline Edit hides that invitation',
+      'Do not use it for values needing heavy validation or structured entry (emails, dates, numbers). Use Input, DatePicker, or NumberInput',
       'Do not treat `arc-input` as a save signal; it carries the in-progress draft, which Escape may still throw away',
-      'Do not hide the only editing path behind hover alone on touch-heavy interfaces — the affordance also appears on focus, so keep the control reachable by keyboard',
+      'Do not hide the only editing path behind hover alone on touch-heavy interfaces. The affordance also appears on focus, so keep the control reachable by keyboard',
     ],
   },
 

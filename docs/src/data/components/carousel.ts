@@ -10,11 +10,11 @@ export const carousel: ComponentDef = {
   description:
     'A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and keyboard controls.',
 
-  overview: `Carousel presents a sequence of slotted elements as full-width slides within a scroll-snapping viewport. Users navigate between slides using circular arrow buttons on the left and right edges, clickable dot indicators below the viewport, or left/right arrow keys. Each slotted child becomes a slide that snaps into position with smooth scroll behavior, and the component tracks the current index to keep the arrows and dots synchronized.
+  overview: `Carousel presents a sequence of slotted elements as full-width slides within a scroll-snapping viewport. Users navigate between slides using circular arrow buttons on the left and right edges, clickable dot indicators below the viewport, or left/right arrow keys. Each slotted child becomes a slide that snaps into position, and the component tracks the current index to keep the arrows and dots in sync.
 
-Auto-play mode advances slides on a configurable interval (default 5 seconds) and automatically pauses when the user hovers over the carousel or when any element inside receives keyboard focus, preventing content from changing while the user is interacting. The auto-play timer also respects \`prefers-reduced-motion\` — if the user has requested reduced motion, auto-play is disabled entirely and scroll behavior falls back to instant jumps.
+Auto-play mode advances slides on a configurable interval (default 5 seconds) and automatically pauses when the user hovers over the carousel or when any element inside receives keyboard focus, so content does not change while the user is interacting. Auto-play also respects \`prefers-reduced-motion\`: if the user has requested reduced motion, auto-play is disabled and scrolling falls back to instant jumps.
 
-When \`loop\` is enabled (the default), navigating past the last slide wraps to the first and vice versa, creating an infinite cycle. The arrow buttons are disabled at the edges when looping is off. Dot indicators use a \`tablist\` ARIA role with individual \`tab\` roles and \`aria-selected\` state, allowing screen reader users to jump directly to any slide. The component fires \`arc-change\` with the new slide index whenever the active slide changes.`,
+When \`loop\` is enabled (the default), navigating past the last slide wraps to the first and vice versa. The arrow buttons are disabled at the edges when looping is off. Dot indicators use a \`tablist\` ARIA role with individual \`tab\` roles and \`aria-selected\` state, so screen reader users can jump directly to any slide. The component fires \`arc-change\` with the new slide index whenever the active slide changes.`,
 
   features: [
     'Scroll-snap viewport with smooth scrolling and full-width slides from slotted children',
@@ -30,17 +30,17 @@ When \`loop\` is enabled (the default), navigating past the last slide wraps to 
   guidelines: {
     do: [
       'Use Carousel for image galleries, testimonial rotators, or feature highlights',
-      'Provide meaningful content in each slide — avoid empty or placeholder slides',
+      'Provide real content in each slide; avoid empty or placeholder slides',
       'Set `auto-play` only when the content is supplementary and not time-sensitive',
-      'Include at least 2 slides — a single slide makes the navigation controls meaningless',
+      'Include at least 2 slides; a single slide makes the navigation controls meaningless',
       'Use the `arc-change` event to synchronize external indicators or captions with the current slide',
     ],
     dont: [
-      'Do not use Carousel for critical content that users must see — some users never advance past the first slide',
-      'Do not set `interval` below 3000ms — slides change too fast to read or interact with',
-      'Do not place form inputs inside carousel slides — the scrolling behavior conflicts with input focus',
-      'Do not hide navigation arrows and dots simultaneously — the user needs at least one way to navigate',
-      'Avoid nesting a Carousel inside another Carousel — the scroll-snapping conflicts are unpredictable',
+      'Do not use Carousel for critical content that users must see; some users never advance past the first slide',
+      'Do not set `interval` below 3000ms; slides change too fast to read or interact with',
+      'Do not place form inputs inside carousel slides; the scrolling conflicts with input focus',
+      'Do not hide navigation arrows and dots simultaneously; the user needs at least one way to navigate',
+      'Avoid nesting a Carousel inside another Carousel; the scroll-snapping conflicts are unpredictable',
     ],
   },
 

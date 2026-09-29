@@ -5,6 +5,8 @@
   interface Props {
     value?: string;
     disabled?: boolean;
+    iconOnly?: boolean;
+    label?: string;
     class?: string;
     id?: string;
     style?: string;
@@ -32,8 +34,15 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { value = '', disabled = false, ...rest }: Props = $props();
+  let { value = '', disabled = false, iconOnly = false, label = '', ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (iconOnly !== undefined) el.iconOnly = iconOnly;
+  });
 </script>
 
-<arc-copy-button {value} {disabled} {...rest}>
+<arc-copy-button {value} {disabled} {label} bind:this={__el} {...rest}>
 </arc-copy-button>

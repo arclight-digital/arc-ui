@@ -22,7 +22,7 @@ The \`min-column-width\` attribute controls the minimum width of each column in 
     'CSS custom properties (`--columns`, `--gap`, `--min-col`) for external override',
     'Built-in padding via `--space-lg` for comfortable card spacing',
     'Exposes a grid CSS part for targeted ::part() styling',
-    'Zero JavaScript layout logic — pure CSS Grid under the hood',
+    'Zero JavaScript layout logic: pure CSS Grid',
   ],
 
   guidelines: {
@@ -34,11 +34,11 @@ The \`min-column-width\` attribute controls the minimum width of each column in 
       'Use spacing tokens like var(--space-md) for the gap prop to stay on the design system grid',
     ],
     dont: [
-      'Do not use DashboardGrid for general page layout — use PageLayout for sidebar/main structures',
+      'Do not use DashboardGrid for general page layout. Use PageLayout for sidebar/main structures',
       'Do not set columns to a high number without testing on narrow viewports; cards will crush',
-      'Do not nest DashboardGrid inside another DashboardGrid — use a single grid with appropriate min-column-width',
+      'Do not nest DashboardGrid inside another DashboardGrid. Use a single grid with appropriate min-column-width',
       'Do not mix radically different card heights in the same grid without aligning their internal content',
-      'Do not override the grid CSS with inline flex or float styles — let the component manage the layout',
+      'Do not override the grid CSS with inline flex or float styles. Let the component manage the layout',
     ],
   },
 

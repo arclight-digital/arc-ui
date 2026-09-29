@@ -6,7 +6,7 @@ story.
 
 **v3 → v4 is complete.** Its sections are collected under
 [v4 breaking changes](#v4-breaking-changes) at the bottom, written as the work
-landed rather than at tag time — V4-PLAN 4.11 completed and ordered them, it did
+landed rather than at tag time. V4-PLAN 4.11 completed and ordered them; it did
 not discover them.
 
 The v4 contents list below is **generated** by `scripts/generate/migration-toc.js`,
@@ -14,7 +14,7 @@ which also enforces the order the sections appear in. Adding a section means
 giving it a place in that order; leaving it out fails the build rather than
 appending it silently to the end. The list had drifted to seven of eighteen
 entries before it was derived, which is what a hand-maintained index does and
-why nobody noticed — a missing entry looks exactly like a section that does not
+why nobody noticed: a missing entry looks exactly like a section that does not
 exist.
 
 ## v2 → v3
@@ -108,7 +108,7 @@ expensive work on `arc-change`.
 `ac5760e`
 
 **What changed.** FormControlMixin gives all 21 consumers `required` and
-`readonly` and wires constraint validation — `required` + empty sets
+`readonly` and wires constraint validation: `required` + empty sets
 `valueMissing`, so `checkValidity()` stops returning true unconditionally.
 Programmatic value changes now sync to the form. Renames in the same pass:
 `compact` becomes `density="compact"` on alert, footer, and table (pagination
@@ -123,7 +123,7 @@ reflected `open` on date-picker, time-picker, search, and date-range-picker;
 **Fix.** Replace `variant="danger"` with `variant="error"`, `compact` with
 `density="compact"` on the three renamed components, and any `_open` poking with
 the public `open` prop. Controls marked `required` now actually fail validation
-when empty — remove any hand-rolled required checks.
+when empty. Remove any hand-rolled required checks.
 
 ## arc-form delegates to its controls
 
@@ -132,7 +132,7 @@ when empty — remove any hand-rolled required checks.
 **What changed.** Control discovery no longer skips elements with shadow roots
 (controls nested in fieldsets or layout components are now found), validation
 calls each control's `checkValidity()` instead of re-deriving `required` with a
-string trim, and `reset()` delegates to `formResetCallback` — restoring initial
+string trim, and `reset()` delegates to `formResetCallback`, restoring initial
 state instead of blanking every control.
 
 **Why.** Three parallel re-implementations of what the controls already knew,
@@ -141,7 +141,7 @@ validation, reset erasing defaults).
 
 **Fix.** A form whose markup carries default values now resets to those
 defaults; clear controls explicitly if a blank form was intended. Consumer-set
-error messages survive submits — only messages the form wrote are cleared.
+error messages survive submits: only messages the form wrote are cleared.
 
 ## arc-toast-manager folded into arc-toast
 
@@ -156,7 +156,7 @@ separate layer the manager had to dismiss-and-reshow a visible toast just to
 update its "(×N)" counter.
 
 **Fix.** Delete the manager element, set the queue props on `arc-toast`
-directly. `maxVisible` now defaults to 3 — set `max-visible="0"` to keep
+directly. `maxVisible` now defaults to 3. Set `max-visible="0"` to keep
 unbounded stacking.
 
 ## Virtual list: renderItem and windowed rows
@@ -168,12 +168,12 @@ unbounded stacking.
 slots for just the visible range, announced via `arc-range-change`
 (`{value: {start, end}, start, end}`, fired only when the range changes).
 `scrollToIndex()` added; `visibleRange.end` is exclusive. The six framework
-wrappers are hand-authored and render the window in their own idiom — a
+wrappers are hand-authored and render the window in their own idiom (a
 `renderItem` prop in React/Preact/Solid, a `row` scoped slot in Vue, a `row`
-snippet in Svelte, a `rowTemplate` in Angular — and no longer accept arbitrary
+snippet in Svelte, a `rowTemplate` in Angular) and no longer accept arbitrary
 children. Angular gains `@angular/common` as a peer.
 
-**Why.** v2 built all N rows in the light DOM and hid all but a dozen — the
+**Why.** v2 built all N rows in the light DOM and hid all but a dozen. The
 scroll was virtual, the cost was not.
 
 **Fix.** Supply `items` + `renderItem` (or the framework equivalent) instead of
@@ -198,7 +198,7 @@ reduced-motion guard at all.
 
 **Fix.** Consumers retune motion by overriding the `--duration-*` and
 `--ease-*` bases. The `--transition-*` shorthands are `var()`-compositions of
-those bases (`var(--duration-base) var(--ease-standard)` and so on) — the
+those bases (`var(--duration-base) var(--ease-standard)` and so on). The
 base tokens are forwarded past `:host` via the `:where(arc-*)` inherit block,
 so a `:root` override of either scale reaches every composition.
 `check-motion-tokens.js` now fails the build on bare timing keywords and
@@ -210,8 +210,8 @@ literal cubic-beziers.
 
 **What changed.** Fifteen floating components position through a shared
 controller and promote their panels with the native popover API, so they render
-in the top layer. Listbox options are no longer focusable `<button>` elements —
-virtual focus keeps DOM focus on the control. The `:host` token layer is
+in the top layer. Listbox options are no longer focusable `<button>` elements.
+Virtual focus keeps DOM focus on the control. The `:host` token layer is
 generated from `shared/tokens.js` (19 of 81 values had drifted; `--text-3xl`,
 `--radius-xs`, and `--label-inline-size` change rendered output), and base.css
 forwards 71 tokens into shadow DOM so `:root` overrides finally reach
@@ -223,7 +223,7 @@ date names come from `Intl` with `locale` / `first-day-of-week` props.
 `:host` token copy was maintained by hand.
 
 **Fix.** Layouts relying on a panel being clipped by an ancestor will see it
-escape — that is the feature. Keyboard interaction happens on the input or
+escape. That is the feature. Keyboard interaction happens on the input or
 trigger, not on option elements. A `:root` override of the forwarded tokens now
 takes effect where it was silently ignored; re-check any override you thought
 was a no-op.
@@ -240,7 +240,7 @@ everything entry. It is reached only by `@arclux/arc-ui/code-block`.
 component most of them never render.
 
 **Fix.** `import '@arclux/arc-ui/code-block'` where code is rendered, and
-install `shiki` + `@shikijs/langs`. Missing shiki is a supported state — code
+install `shiki` + `@shikijs/langs`. Missing shiki is a supported state: code
 renders uncoloured, with a one-time warning saying how to fix it.
 
 ## Wrapper prop renames
@@ -275,7 +275,7 @@ so deleting it changes nothing rendered.
 
 `d780c03`, `9ade764`
 
-**What changed.** All six wrappers compile real outputs — Svelte via
+**What changed.** All six wrappers compile real outputs: Svelte via
 svelte-package, Vue via a Vite lib build with declarations, Solid with a
 compiled fallback plus a `solid` condition, Angular via ng-packagr APF, React
 and Preact via tsc to `dist/`. Exports maps are generated per framework with
@@ -318,15 +318,15 @@ Every other section here describes a change you find out about. This one is
 about the three that you do not, and it is first because the fix for all three
 is one import.
 
-A rename fails loudly when the old spelling stops resolving — a missing tag, a
+A rename fails loudly when the old spelling stops resolving: a missing tag, a
 prop that throws, a build that breaks. These three fail by rendering something
 plausible instead:
 
 | Change | What a stale call site does |
 |---|---|
-| `arc-toolbar` / `arc-status-bar` slots `start`/`end` → `prefix`/`suffix` ([section](#side-slots-are-prefix-and-suffix)) | content with an unrecognised `slot=` is not rendered at all — the same symptom as the 2.10.0 wrapper bug that dropped named slots, so the two are easy to confuse |
+| `arc-toolbar` / `arc-status-bar` slots `start`/`end` → `prefix`/`suffix` ([section](#side-slots-are-prefix-and-suffix)) | content with an unrecognised `slot=` is not rendered at all, the same symptom as the 2.10.0 wrapper bug that dropped named slots, so the two are easy to confuse |
 | `arc-confirm` `variant="danger"` → `"error"` ([section](#props-that-documented-a-rule-now-enforce-it)) | `oneOf` coerces the unknown value to the declared default, so a destructive dialog renders as an ordinary one |
-| `closable` → `dismissible` on `arc-dialog` ([section](#size-is-sm--md--lg-and-dismissal-is-dismissible)) | the prop is ignored and the close affordance is simply absent |
+| `closable` → `dismissible` on `arc-dialog` ([section](#size-is-sm--md--lg-and-dismissal-is-dismissible)) | the prop is ignored and the close affordance is absent |
 
 **`@arclux/arc-ui/dev` catches all three**, at the point of use, with the tag and
 the attribute named:
@@ -337,7 +337,7 @@ if (import.meta.env.DEV) import('@arclux/arc-ui/dev');
 
 It is worth loading permanently behind your dev flag rather than reaching for it
 during an upgrade. The report this section comes from found four
-`variant="danger"` alerts that had never matched a real variant — they predated
+`variant="danger"` alerts that had never matched a real variant; they predated
 v4 entirely, and had been rendering as neutral `info` notices since the day they
 were written.
 
@@ -355,8 +355,8 @@ than against a list of renames.
 subpaths (`@arclux/arc-ui/dock` and the rest) are gone from the export map, and
 their wrappers are gone from all six framework packages.
 
-Each keeps its docs page as a tombstone — `/docs/components/dock` still answers,
-with the reason and the alternative — so an existing link explains itself rather
+Each keeps its docs page as a tombstone: `/docs/components/dock` still answers,
+with the reason and the alternative, so an existing link explains itself rather
 than 404ing.
 
 This is the whole v4 deletion list. It started at roughly 25 tags and ended at
@@ -370,7 +370,7 @@ Shipped as stable while broken in the two ways that matter for a tour. A
 finished tour reopened on its last step instead of the first, because nothing
 reset the step index on close (`arc-change` was documented as the progress
 signal, and writing `active` directly moved the tour without firing it). And the
-backdrop it drew over the page had no keyboard dismissal at all — no Escape, no
+backdrop it drew over the page had no keyboard dismissal at all: no Escape, no
 key handling of any kind.
 
 Underneath both: steps were addressed by CSS selector through
@@ -378,7 +378,7 @@ Underneath both: steps were addressed by CSS selector through
 web-component UI could not point at anything inside one, which includes every
 component in this library.
 
-**`arc-tour` (V4-PLAN 4.8) is the rebuild** — the same job on the v4 overlay
+**`arc-tour` (V4-PLAN 4.8) is the rebuild**: the same job on the v4 overlay
 contract, taking **element references** rather than selectors, which is the fix
 for shadow-DOM targeting by API design rather than by workaround. It is not
 shipped yet; the tombstone says so and will be updated when it lands. For a
@@ -391,7 +391,7 @@ Half of a tour with no tour around it, and it addressed its target by selector
 for the same reason and with the same consequence. `arc-tour` absorbs it: a
 one-step tour is a spotlight.
 
-`DismissController`'s `boundary` option was built for this component — it is what
+`DismissController`'s `boundary` option was built for this component; it is what
 lets an overlay treat a *separate* element as "inside" so a click on the
 highlighted target does not dismiss it. The option stays, with no consumer, for
 `arc-tour` to pick up; it is pinned directly by `dismiss-controller.test.js`
@@ -403,7 +403,7 @@ Three defects, all in the first thing a consumer would touch:
 
 - **Closed actions stayed focusable and clickable.** The closed state was
   `opacity: 0` and a transform, so the buttons were invisible and still in the
-  tab order — a keyboard user could activate a control they could not see.
+  tab order. A keyboard user could activate a control they could not see.
 - **An unrecognised `position` anchored it nowhere.** The CSS keyed on
   `bottom-right` and `bottom-left` with no fallback rule, so any other value
   left `position: absolute` with no offsets and the fan landed wherever the
@@ -412,8 +412,8 @@ Three defects, all in the first thing a consumer would touch:
   `{ index }` only, so a handler could not tell which action fired without
   keeping its own copy of the array.
 
-On top of that it had no dismissal of any kind — no controller, no backdrop, no
-key handling — so once open the only way to close it was clicking the trigger
+On top of that it had no dismissal of any kind: no controller, no backdrop, no
+key handling, so once open the only way to close it was clicking the trigger
 again.
 
 `arc-dropdown-menu` is a trigger with a set of actions and has the dismissal and
@@ -423,7 +423,7 @@ should be visible rather than behind a trigger.
 ### `arc-dock` → `arc-drawer`, or `arc-toolbar`
 
 With `auto-hide` set, the reveal was a bare CSS `:hover` rule and nothing else.
-No keyboard path, no touch path — on a phone or from a keyboard the panel and
+No keyboard path, no touch path: on a phone or from a keyboard the panel and
 everything in it were unreachable.
 
 The API described a component that was never built. `open` was documented as
@@ -432,7 +432,7 @@ nothing wrote `open` on hover, so neither happened; a `_hovered` state property
 was declared, assigned once in the constructor, and never read. Fixing it means
 giving it a trigger, at which point it is `arc-drawer`.
 
-Note that `auto-hide` defaulted to `false`, so a dock without it was a fixed
+`auto-hide` defaulted to `false`, so a dock without it was a fixed
 panel. If that is what you were using, `arc-toolbar` or a plain `position: fixed`
 container is the direct replacement and you lose nothing.
 
@@ -443,16 +443,16 @@ no end time, no week or day view, no overlap handling. A calendar that cannot
 express "Tuesday at 2pm" cannot express an appointment.
 
 This is a scope failure, not a bug list. The missing part is the hard part, and
-building it properly is a component in its own right rather than a fix — so ARC
+building it properly is a component in its own right rather than a fix, so ARC
 does not intend to ship a scheduler.
 
-- **Date selection** — `arc-calendar` is what most reaches for a calendar
+- **Date selection**: `arc-calendar` is what most reaches for a calendar
   actually wanted, and it is unaffected.
-- **Per-day density over a long span** — `arc-activity-heatmap`.
-- **Real scheduling** — drive a dedicated calendar library (FullCalendar,
+- **Per-day density over a long span**: `arc-activity-heatmap`.
+- **Real scheduling**: drive a dedicated calendar library (FullCalendar,
   Schedule-X, or similar) and use ARC for everything around it. The recipe is
-  the ordinary one: give the library a container, pass it your events, and let
-  ARC own the surrounding chrome — `arc-toolbar` for the view switcher and
+  the ordinary one. Give the library a container, pass it your events, and let
+  ARC own the surrounding chrome: `arc-toolbar` for the view switcher and
   navigation, `arc-modal` for the event editor, `arc-select` and
   `arc-date-picker` inside it, `arc-tag` for categories. ARC's tokens are CSS
   custom properties, so the embedded calendar can be themed from the same
@@ -463,8 +463,8 @@ does not intend to ship a scheduler.
 **Five components are removed in v4.0.0.** Each has a survivor that can do
 its job, and the tables below are the whole migration. Removed rather than
 deprecated-then-removed: v4 has never shipped, so a deprecation period here
-would be a promise to consumers who cannot exist yet — shelf-stock carried for
-nobody — and v3, where every one of these still works, receives patches for a
+would be a promise to consumers who cannot exist yet (shelf-stock carried for
+nobody), and v3, where every one of these still works, receives patches for a
 quarter after the v4 tag.
 
 | removed | use instead | what to change |
@@ -476,7 +476,7 @@ quarter after the v4 tag.
 | `arc-otp-input` | `arc-pin-input` | part `otp` → `pin`; props carry over |
 
 Each removed tag keeps its docs URL as a tombstone naming the survivor and
-the exact prop translation — the same treatment as the five cuts, because a
+the exact prop translation, the same treatment as the five cuts, because a
 bookmarked link should say what happened rather than 404.
 
 ### The survivors gained what they were missing
@@ -485,13 +485,13 @@ Not renames. Four of the five needed the survivor to grow first, because the
 merge list was drawn up from prop lists and the differences were in the styles:
 
 - **`arc-divider` gained `line`, `dashed`, `dotted` and `fade`.** It had no
-  dashed or dotted rule of any kind, and no flat one — `subtle`, its default, is
+  dashed or dotted rule of any kind, and no flat one: `subtle`, its default, is
   the token *gradient*, which fades at both ends. `line` is the flat rule every
   unadorned `arc-separator` drew. All four work horizontally, vertically, and on
   both halves of a labelled divider.
 - **`arc-description-list` gained `layout`.** `arc-key-value[layout=horizontal]`
   put the term beside the detail, and `arc-description-list` could only stack.
-  It defaults to `stacked`, so existing description lists are unchanged — which
+  It defaults to `stacked`, so existing description lists are unchanged, which
   is why migrating from `arc-key-value` means adding `layout="horizontal"`
   rather than nothing.
 - **`arc-tag` gained `info`.** Every other status set in the library has one.
@@ -501,23 +501,23 @@ merge list was drawn up from prop lists and the differences were in the styles:
 
 ### The feedback family
 
-Four more, on the same terms — removed in v4.0.0, with the survivor and the
+Four more, on the same terms: removed in v4.0.0, with the survivor and the
 translation below.
 
 | removed | use instead | what to change |
 |---|---|---|
-| `arc-callout` | `arc-alert` | `variant` carries over, `tip` included; the derived uppercase label has no equivalent — pass `heading` if you want one |
+| `arc-callout` | `arc-alert` | `variant` carries over, `tip` included; the derived uppercase label has no equivalent, so pass `heading` if you want one |
 | `arc-snackbar` | `arc-toast` | `position` covers every value it had; `show({ message, action, actionLabel })` is unchanged |
 | `arc-progress-toast` | `arc-toast` | pass `progress` to `show()`; `updateToast`, `complete` and the events keep their names |
 | `arc-inline-message` | the control's own `error` prop | standing alone, `<arc-alert density="compact">` |
 
-**`arc-alert` gained `tip`, an `icon` slot, and a `live` prop** — and `info`
+**`arc-alert` gained `tip`, an `icon` slot, and a `live` prop**, and `info`
 changed behaviour, which is the one thing in this section that affects existing
 `arc-alert` users who never touched `arc-callout`. See below.
 
 **`arc-toast` gained a progress mode.** `show({ message, progress })` renders a
 track, skips dedupe (two uploads of a file with the same name are two uploads),
-and never auto-dismisses — a progress toast is finished by `complete(id)`, which
+and never auto-dismisses: a progress toast is finished by `complete(id)`, which
 fires `arc-complete` rather than `arc-close`. `updateToast(id, { progress })`
 moves the bar, `onCancel` renders a cancel button that fires `arc-cancel`. It
 also fires `arc-action` when a toast's action button is clicked, alongside
@@ -526,7 +526,7 @@ declaratively and that is how `arc-snackbar` consumers were listening.
 
 **`arc-inline-message` has no single replacement, on purpose.** Below a form
 control, use that control's own `error` prop: every form control in the library
-renders one, with its own `part="error"` and the aria wiring already done —
+renders one, with its own `part="error"` and the aria wiring already done,
 which is the thing a sibling element cannot do for it. Standing alone, it was an
 alert in all but name.
 
@@ -538,7 +538,7 @@ polite live region. It now renders `role="note"`, which is not.
 
 `arc-callout`'s default variant is `info` and it was a static `role="note"` box.
 Merging the two without this correction would have upgraded every informational
-callout on every page into an announcement — the exact regression the merge was
+callout on every page into an announcement: the exact regression the merge was
 decided in order to prevent, landing on the single most common variant.
 
 The full mapping, and it is what the component now derives:
@@ -551,7 +551,7 @@ The full mapping, and it is what the component now derives:
 
 **If you have an `arc-alert variant="info"` that genuinely needs announcing, set
 `live`.** The new prop takes `auto` (the default, meaning the table above),
-`off`, `polite` or `assertive`, and overrides in both directions — `live="off"`
+`off`, `polite` or `assertive`, and overrides in both directions: `live="off"`
 on an `error` keeps `role="alert"` and stops the announcement.
 
 It exists because severity and urgency are different questions. Severity asks
@@ -598,13 +598,13 @@ The expensive row, and the only one where the column model itself changes.
 </script>
 ```
 
-Sorting becomes the multi-sort `sort` array — a single entry behaves exactly as
+Sorting becomes the multi-sort `sort` array: a single entry behaves exactly as
 `sort-column` plus `sort-direction` did, and `manualSort` is there for
 server-side sorting. Selection, virtual scrolling and `rowHeight` are unchanged.
 
 **`arc-data-grid` gained `density` and `striped`** from `arc-table`. `striped`
 defaults **on**, because that is what this grid has always drawn and a merge is
-not the place to restyle the survivor — pass `no-striped` for the plain look an
+not the place to restyle the survivor. Pass `no-striped` for the plain look an
 unstriped `arc-table` had.
 
 **`arc-column` was listed as a keep in Phase 1 and is removed anyway.** That
@@ -618,27 +618,27 @@ its parent.
 It was a public prop on `arc-virtual-list` and a hardcoded `5` inside
 `arc-data-table` and `arc-data-grid`. All three now share one
 `VirtualController` and all three expose it. Same default, so nothing changes
-unless you set it — raise it to trade DOM nodes for fewer blank rows on a fling.
+unless you set it. Raise it to trade DOM nodes for fewer blank rows on a fling.
 
 ### Fixed on the way through: `arc-data-table` could render a blank table
 
 Its windowing computed `visibleCount = end - start` with no floor, where the
 other two implementations of the same five lines clamped at zero. `end` is
 `min(total, …)` and `start` is `max(0, …)`, so any state where the row set
-shrank below the current scroll offset — a filter applied, rows removed, `rows`
-reassigned — inverted them. The slice that followed rendered nothing under a
+shrank below the current scroll offset (a filter applied, rows removed, `rows`
+reassigned) inverted them. The slice that followed rendered nothing under a
 full-height spacer: a table that scrolls and shows no rows.
 
 The three copies of the arithmetic are now one, which is how this was found.
 
 ### `arc-badge` is **not** deprecated
 
-It was on the merge list — `arc-tag` has `removable`, so `arc-tag` looked like
+It was on the merge list: `arc-tag` has `removable`, so `arc-tag` looked like
 the superset. It is not, in the way that matters here: `arc-badge` is
 `--font-mono`, normal letter-spacing and sentence case; `arc-tag` is
 `--font-label`, 2px tracking, UPPERCASE, with a `min-height` of the touch
 target. Merging as written would have re-set every badge on every page in an
-uppercase label face — `v3.2.0` becoming `V3.2.0` in a taller box.
+uppercase label face: `v3.2.0` becoming `V3.2.0` in a taller box.
 
 Resolving it means deciding whether ARC has one chip typography or two, which
 is a design-language question rather than a catalog one. Both components stay
@@ -650,12 +650,12 @@ for now, and the row is reopened after the type-scale work.
 still supported, still in this package and this test suite. What changed is
 which import reaches them.
 
-`@arclux/arc-ui/marketing` — `arc-carousel`, `arc-comparison`,
+`@arclux/arc-ui/marketing`: `arc-carousel`, `arc-comparison`,
 `arc-comparison-column`, `arc-countdown-timer`, `arc-cta-banner`,
 `arc-feature-card`, `arc-gradient-text`, `arc-hotspot`, `arc-image-compare`,
 `arc-image-hotspots`, `arc-marquee`, `arc-typewriter`.
 
-`@arclux/arc-ui/media` — `arc-knob`, `arc-level-meter`, `arc-waveform`, and the
+`@arclux/arc-ui/media`: `arc-knob`, `arc-level-meter`, `arc-waveform`, and the
 `shared/time-scale` module that the last two are built on.
 
 ```js
@@ -668,12 +668,12 @@ import { ArcCarousel } from '@arclux/arc-ui/marketing';
 import { ArcWaveform, createScale } from '@arclux/arc-ui/media';
 ```
 
-**Per-component subpaths are unchanged** — `@arclux/arc-ui/carousel` works
+**Per-component subpaths are unchanged**: `@arclux/arc-ui/carousel` works
 exactly as before, in this release and after it. If that is how you import, this
 change is invisible to you. Framework wrapper consumers are in the same
 position: every wrapper component has had its own subpath since v3
 (`@arclux/arc-ui-react/Carousel`), and that is unaffected. Only the wrapper
-*barrels* — `@arclux/arc-ui-react` and its per-tier barrels — stop carrying
+*barrels* (`@arclux/arc-ui-react` and its per-tier barrels) stop carrying
 these 15 names.
 
 **HTML and CSS consumers are unaffected.** `arc-carousel.css`, the standalone
@@ -682,7 +682,7 @@ examples, and `@arclux/arc-ui/register` all still cover every component.
 **Why.** The catalog was flat: 200-odd tags with no way to express "this one is
 for a different kind of product". So every question about the marketing cluster
 and the DAW primitives came out as *delete or exile?*, and both answers were
-wrong — they are good components for a product this kit is not. A domain axis
+wrong. They are good components for a product this kit is not. A domain axis
 says that precisely, and once it existed the v4 deletion list fell from about 25
 tags to 5.
 
@@ -691,8 +691,8 @@ an admin dashboard no longer puts a landing-page carousel and a rotary synth
 knob in the module graph. Same mechanism `arc-code-block` has used since v3.
 
 They are subpaths of this package rather than separate packages on purpose, and
-that is the part meant to last: a satellite package is where components go to
-die — different version, different CI, different suite, quietly rotting. These
+that is the part meant to last. A satellite package is where components go to
+die, with a different version, different CI and a different suite, quietly rotting. These
 share all three. A subpath can also be promoted to its own package later without
 moving a source file; un-splitting a published package cannot. See V4-SCOPE §1.
 
@@ -700,30 +700,30 @@ moving a source file; un-splitting a published package cannot. See V4-SCOPE §1.
 
 **Two changes, and only the second can break anything today.**
 
-`@status` is now a required annotation on all 202 components — `stable`, `beta`
+`@status` is now a required annotation on all 202 components: `stable`, `beta`
 or `experimental`, with no default. It rides `custom-elements.json` with the
 rest of the derived API surface, so editors, the docs and any tool reading the
 manifest can see maturity for every component rather than for the fourteen that
 happened to have it written on their docs page.
 
 **`experimental` components are absent from the default barrel.** They are
-published and reachable by their own subpath — `@arclux/arc-ui/tree-grid` — and
+published and reachable by their own subpath (`@arclux/arc-ui/tree-grid`) and
 absent from `import { … } from '@arclux/arc-ui'` and from every framework
 package's barrel. Nothing is experimental as of v4.0.0, so this breaks nothing
 right now; it is here early on purpose. Everything V4-PLAN 4.8 adds ships
 experimental, and gating at the point a component is born means no addition
-ever enters the barrel only to be removed from it inside one major — removing a
+ever enters the barrel only to be removed from it inside one major: removing a
 barrel entry is a breaking change even when the component was never meant to be
 there.
 
-**`beta` deliberately does not gate.** Beta says the API may still move, not
+**`beta` does not gate.** Beta says the API may still move, not
 that the component should be hard to find; a beta nobody can import is a beta
-nobody evaluates. Ten components are beta in v4.0.0 — `arc-chart`,
+nobody evaluates. Ten components are beta in v4.0.0: `arc-chart`,
 `arc-data-grid`, `arc-date-range-picker`, `arc-image-cropper`, `arc-kanban`,
 `arc-menubar`, `arc-password-input`, `arc-qr-code`, `arc-tag-input`,
-`arc-transfer-list` — and all ten are in the barrel exactly as before.
+`arc-transfer-list`, and all ten are in the barrel exactly as before.
 
-If you consume the manifest, note that every custom element now carries
+If you consume the manifest, every custom element now carries
 `status` and `group`. `status` is always present; `group` is `null` for the app
 catalog.
 
@@ -740,17 +740,17 @@ them.
 | `<arc-confirm>` | `<arc-confirm>` | unchanged, and it absorbed the prompt above |
 
 The element is a dialog, the platform calls it a dialog, and `modal` named one
-of its behaviours rather than what it is. The rename is the whole migration —
-same props, events, parts and custom properties — and the old tag is removed in
-v4.0.0 rather than aliased: v4 has never shipped, so an alias would serve
+of its behaviours rather than what it is. The rename is the whole migration:
+same props, events, parts and custom properties. The old tag is removed in
+v4.0.0 rather than aliased, because v4 has never shipped, so an alias would serve
 nobody, and v3 keeps `arc-modal` for as long as it is patched.
 
 **The dangerous case is the middle row.** The old `<arc-dialog>` was a small
 confirm prompt: `heading`, `message`, `confirm-label`, `cancel-label`,
 `variant`. The new one is the overlay primitive. It knows `heading` and would
-silently ignore the rest — an empty panel with a title. So it doesn't ignore
+silently ignore the rest: an empty panel with a title. So it doesn't ignore
 them: `arc-dialog` writes a `console.error` naming `arc-confirm` when it is
-handed `message`, `confirmLabel` or `cancelLabel`. `heading` is deliberately
+handed `message`, `confirmLabel` or `cancelLabel`. `heading` is
 not in that list, since it means the same thing in both.
 
 `arc-confirm` kept both of its shapes, which are different rather than
@@ -763,16 +763,16 @@ The first two of v4's five API conventions. Both are small; the checks behind
 them are the point, since a convention nothing enforces is a preference.
 
 **`arc-toolbar` gains `lg` and reorders its scale.** It declared
-`['md', 'sm']` — the right default, a reversed order, and no `lg` at all, so a
+`['md', 'sm']`: the right default, a reversed order, and no `lg` at all, so a
 toolbar was the one control in the library that could not be made taller. It is
 `['sm', 'md', 'lg']` now with `md` still the default, and `lg` is 60px, stepping
 up from the 48px default by the same 12px that `sm` steps down.
 
 **`arc-icon-button` and `arc-theme-toggle` reorder theirs**, from
-`['xs', 'sm', 'md', 'lg']` to `['sm', 'md', 'lg', 'xs']`. `xs` is kept — the
-library's own `arc-signature-pad` renders an icon button at that size — but it
+`['xs', 'sm', 'md', 'lg']` to `['sm', 'md', 'lg', 'xs']`. `xs` is kept (the
+library's own `arc-signature-pad` renders an icon button at that size), but it
 now sits after the canon rather than in front of it. Both declare an explicit
-`default: 'md'`, so **nothing changes at runtime**; the declaration simply reads
+`default: 'md'`, so **nothing changes at runtime**; the declaration now reads
 the way every other size does.
 
 `arc-icon`, `arc-container`, `arc-qr-code` and `arc-resizable` keep their own
@@ -781,7 +781,7 @@ layout scale respectively, and the last two are pixel dimensions that share the
 word `size` and nothing else.
 
 **`arc-dialog.closable` becomes `arc-dialog.dismissible`.** The old spelling
-is removed in v4.0.0 — `closable` and `no-closable` stop existing along with
+is removed in v4.0.0: `closable` and `no-closable` stop existing along with
 the tag rename above, in the same pre-release housecleaning.
 
 ```html
@@ -793,15 +793,15 @@ the tag rename above, in the same pre-release housecleaning.
 
 **Only the spelling converges, not the default.** A modal is dismissible unless
 you say otherwise; an alert is not dismissible unless you say so. Both defaults
-are right for their component — an inescapable modal is the exception, an alert
-with an X is the exception — so making them agree would trade a naming
+are right for their component: an inescapable modal is the exception, an alert
+with an X is the exception. So making them agree would trade a naming
 inconsistency for a behavioural one, which is worse.
 
 ## Side slots are `prefix` and `suffix`
 
 **Affects `arc-toolbar` and `arc-status-bar`.** Both took `start` and `end`;
-five other components — `arc-button`, `arc-input`, `arc-masked-input`,
-`arc-input-group`, `arc-list-item` — already took `prefix` and `suffix` for the
+five other components (`arc-button`, `arc-input`, `arc-masked-input`,
+`arc-input-group`, `arc-list-item`) already took `prefix` and `suffix` for the
 same thing. One name won, and it is the one already in the majority and already
 in the rest of the ecosystem.
 
@@ -821,7 +821,7 @@ in the rest of the ecosystem.
 
 **`start` and `end` are removed in v4.0.0.** Content slotted into them
 renders in the default slot rather than the side regions, which is visible
-immediately — rename the slot attribute and you are done.
+immediately. Rename the slot attribute and you are done.
 
 The CSS parts moved the same way: the regions are `::part(prefix)` and
 `::part(suffix)`; `::part(start)` and `::part(end)` no longer select anything.
@@ -829,7 +829,7 @@ The CSS parts moved the same way: the regions are `::part(prefix)` and
 ### Two pairs the plan listed and this deliberately did not touch
 
 `arc-image-compare`'s `before` and `after` are **the two images being
-compared** — a sequence, with one layered over the other. `arc-page-header`'s
+compared**: a sequence, with one layered over the other. `arc-page-header`'s
 `above` and `below` are **the block axis**, where prefix/suffix are the inline
 one. Neither is a side slot, and folding them in would have described the wrong
 thing in the wrong dimension. They are unchanged and stay unchanged.
@@ -851,13 +851,13 @@ el.features = ['Storage', 'Bandwidth'];
 ```
 
 **Markup is unchanged.** `features='["Storage","Bandwidth"]'` works exactly as
-before — the JSON spelling is what an attribute is *for*, and `list()` parses it.
+before: the JSON spelling is what an attribute is *for*, and `list()` parses it.
 Only the property path changed, and only for these two props.
 
 Assigning a string now normalises to the declared default (an empty list) rather
 than being parsed, so the failure is a component that renders nothing rather than
 a thrown error. If you set these from script, the mechanical fix is to delete the
-`JSON.stringify` you were doing — or the string literal's quotes.
+`JSON.stringify` you were doing, or the string literal's quotes.
 
 The generated wrapper types moved with it: `features?: string` became
 `features?: string[]` in all six packages, so TypeScript consumers get a compile
@@ -886,7 +886,7 @@ previously threw on `null`.
 
 ## Every array prop is `list()`, and every one of them has an attribute
 
-**Affects 26 props across 19 components** — the rest of the sitewide migration
+**Affects 26 props across 19 components**: the rest of the sitewide migration
 the two sections above began. Nothing here changes what a well-formed value
 does; what changes is what a *malformed* one does, and what markup can reach.
 
@@ -895,8 +895,8 @@ does; what changes is what a *malformed* one does, and what markup can reach.
 `arc-lightbox.images`, `arc-waveform.peaks`, `arc-terminal.lines`,
 `arc-uptime.data`, `arc-activity-heatmap.data` and `arc-tree-select.items` were
 declared `{ attribute: false }` and documented as property-only. Three of them
-said so with a reason that was simply wrong — *"an array can't survive a round
-trip through an attribute"* — which `list()` disproves: JSON is a round trip.
+said so with a reason that was wrong: *"an array can't survive a round
+trip through an attribute"*, which `list()` disproves. JSON is a round trip.
 
 They all take a JSON attribute now, so a server-rendered page can set them:
 
@@ -909,14 +909,14 @@ stops working.
 
 ### Twenty props stopped throwing on bad markup
 
-The rest were `{ type: Array }`, which is Lit's stock converter — it calls
+The rest were `{ type: Array }`, which is Lit's stock converter: it calls
 `JSON.parse` and lets it throw, from inside `attributeChangedCallback`, where a
 custom-element reaction's exception is reported globally rather than propagated.
 One malformed attribute and the element never rendered, with no way for the call
 site to catch it. A malformed attribute now falls back to the declared default.
 
-If you were relying on that throw to detect bad data — nobody was, since it
-could not be caught — check `.length` instead.
+If you were relying on that throw to detect bad data (nobody was, since it
+could not be caught), check `.length` instead.
 
 ### `arc-knob.detents` accepts both spellings
 
@@ -930,7 +930,7 @@ generated wrapper type tightened from `number[] | string` to `number[]`.
 
 ### Constructor defaults are gone, and that is visible in one place
 
-All 26 props dropped their `this.x = []` constructor line — the declaration is
+All 26 props dropped their `this.x = []` constructor line: the declaration is
 the default now, and `DeclaredPropsMixin` seeds it at construction. One
 consequence is worth knowing about if you read the generated Svelte wrappers:
 `let { columns = [], rows = [] }` became `let { columns, rows }`, matching every
@@ -942,7 +942,7 @@ in `willUpdate` rather than falling back. It no longer does. The reason it could
 happen at all is worth recording: Lit runs a component's own `willUpdate`
 *before* a controller's `hostUpdate`, so a component that reads a declared prop
 in `willUpdate` sees the raw assigned value, not the normalised one. Guard with
-`Array.isArray`, not `|| []` — a string is truthy.
+`Array.isArray`, not `|| []`: a string is truthy.
 
 ## Props that documented a rule now enforce it
 
@@ -952,13 +952,13 @@ read a numeric prop back after assigning it.
 
 V4-PLAN 2.1, in two slices. One shape throughout: a constraint that lived where
 a value was *used* rather than where it was *held*, so the render obeyed it and
-the property did not — or nothing obeyed it at all and the docs said otherwise.
+the property did not, or nothing obeyed it at all and the docs said otherwise.
 
 ### Per-item `disabled` is honoured
 
 `arc-tab` had no `disabled` property at all, while its own documentation
 promised "disabling a specific tab". It has one now, and `arc-tabs` honours it
-on click, on the programmatic path, and on the arrow keys, Home and End — via a
+on click, on the programmatic path, and on the arrow keys, Home and End, via a
 bounded walk that terminates on an all-disabled bar rather than spinning. The
 key stays `preventDefault`ed even when no target survives the walk, so a fully
 disabled bar does not scroll the page instead.
@@ -967,7 +967,7 @@ disabled bar does not scroll the page instead.
 half is one `isItemDisabled` option on the shared `ListboxController`, so
 `arc-select`, `arc-combobox` and `arc-multi-select` all gained it at once;
 `arc-segmented-control` gained a click guard. Disabled options stay rendered and
-stay counted — filtering them out renumbers every option after them, and
+stay counted: filtering them out renumbers every option after them, and
 `aria-activedescendant` is an index into what is rendered.
 
 The path worth calling out is auto-selection: a guard on every way *in* is
@@ -984,24 +984,24 @@ reading the property back gave you the unclamped value while the screen showed
 the clamped one. The bound is on the declaration now, which means **the property
 you read is the value in use**.
 
-- **`arc-pagination`** — `current`, `total` and the page range. `current` names
+- **`arc-pagination`**: `current`, `total` and the page range. `current` names
   `total` as its `max` rather than a literal, so shrinking the page count pulls
   `current` down with it.
-- **`arc-stepper-nav`** — the button said "Next" on the last step while the
+- **`arc-stepper-nav`**: the button said "Next" on the last step while the
   handler took the completion branch, so the wizard submitted when the user was
   told there was more. Both read a bounded `active` now and agree by
   construction.
-- **`arc-image-cropper`** — `zoom` is declared and the `_zoomClamped` getter is
+- **`arc-image-cropper`**: `zoom` is declared and the `_zoomClamped` getter is
   gone, so the picture and the property are the same number.
-- **`arc-label`** — resolves its target with `getElementById` rather than
+- **`arc-label`**: resolves its target with `getElementById` rather than
   splicing an id into a CSS selector, so ids containing CSS-special characters
   work.
-- **`arc-icon-library`** — see
+- **`arc-icon-library`**: see
   [Icons moved to `@arclux/arc-ui-icons`](#icons-moved-to-arcluxarc-ui-icons);
   4.7 revisited this one.
 
 Normalisation runs in the mixin's `hostUpdate`, which is *before* a
-controller's `hostUpdate` but *after* assignment — so a component reading a
+controller's `hostUpdate` but *after* assignment, so a component reading a
 declared prop in `willUpdate` sees the raw value, not the normalised one.
 
 ## The five modal overlays run on `<dialog>`
@@ -1012,14 +1012,14 @@ with `showModal()` instead of a hand-rolled backdrop.
 
 Most of this is invisible and better. Focus is contained by the browser, the
 rest of the page is genuinely `inert` rather than merely untabbable, Escape and
-focus restore come from the platform, and the panel paints in the top layer — so
+focus restore come from the platform, and the panel paints in the top layer, so
 an overlay inside a `transform` or a `z-index` stacking context no longer loses
 to it.
 
 ### `::part(backdrop)` is gone from four of them
 
 The scrim is `::backdrop` now: a pseudo-element, which cannot carry a part.
-Style it with custom properties on the host instead — `::backdrop` inherits
+Style it with custom properties on the host instead: `::backdrop` inherits
 from the element it belongs to, which is what makes this work:
 
 ```css
@@ -1032,7 +1032,7 @@ arc-sheet { --sheet-backdrop: rgba(0 0 0 / 0.8); --sheet-backdrop-filter: none; 
 
 The properties are `--dialog-backdrop`, `--sheet-backdrop`, `--drawer-backdrop`
 and `--palette-backdrop`, each with a `-filter` companion where there was a
-blur. **`arc-lightbox` keeps its `backdrop` part** — there the scrim and the
+blur. **`arc-lightbox` keeps its `backdrop` part**: there the scrim and the
 panel are the same box, so there is still an element to name.
 
 ### Initial focus honours `autofocus`
@@ -1070,7 +1070,7 @@ there.
 900px *viewport*; it now hides when the *component* is narrower than **480px**
 (`tokens.breakpoint.navFit`). Two numbers where there used to be one, because
 they answer different questions: 900px (`navCollapse`) remains the viewport
-point where the mobile affordances begin — the hamburger, the panel — and
+point where the mobile affordances begin (the hamburger, the panel), and
 480px is the width below which the pill row itself no longer fits in whatever
 column the bar's other occupants leave it.
 
@@ -1078,7 +1078,7 @@ Where it differs, it differs in your favour: a nav squeezed into a genuinely
 narrow column hides its pills instead of overflowing, and a nav on a wide page
 stays expanded regardless of what a phone is doing to the viewport. Carrying
 the 900px viewport number straight into the container query was tried first
-and collapsed the nav on every docs page at every desktop width — search and
+and collapsed the nav on every docs page at every desktop width: search and
 actions leave the centre column ~860px inside the bar's 1280px cap, which a
 900px reading calls mobile while the viewport-keyed hamburger reads the same
 moment as desktop.
@@ -1091,8 +1091,8 @@ moment as desktop.
 </div>
 ```
 
-If you were relying on the viewport gate — a media query of your own at 900px
-that assumed the desktop bar flipped at the same moment — the bar's gate is
+If you were relying on the viewport gate (a media query of your own at 900px
+that assumed the desktop bar flipped at the same moment), the bar's gate is
 now `navFit` against its own width; key your rule off the nav's container, or
 give the nav a container that matches the viewport.
 
@@ -1109,8 +1109,8 @@ Two consequences, both improvements:
 - **Tabbing away dismisses too.** A backdrop cannot observe focus, so keyboard
   users had no dismissal path except Escape.
 
-If you were reaching into the shadow root for `.backdrop` — in a test, most
-likely — dispatch a `pointerdown` on `document.body` instead.
+If you were reaching into the shadow root for `.backdrop` (in a test, most
+likely), dispatch a `pointerdown` on `document.body` instead.
 
 ## Event details that named the wrong thing
 
@@ -1158,7 +1158,7 @@ identity: `src/index.js` and `test/index.js` are two nodes called `index.js`,
 and "General" under two different sections is the same shape. Selecting one
 marked both. Expanding one `assets` folder opened every other.
 
-Both are keyed on the path now — the same `_pathKey` the component already
+Both are keyed on the path now, the same `_pathKey` the component already
 computed for its roving focus. `arc-toggle` carries `path` alongside `item`, so
 it agrees with `arc-select` about what names a node.
 
@@ -1168,7 +1168,7 @@ off `detail.item.label` to work around it, `detail.path` is what you want.
 
 ### `arc-list`'s selection is an array, and survives a comma
 
-`value` *was* the selection, split apart on every read — so a value containing a
+`value` *was* the selection, split apart on every read, so a value containing a
 comma never matched its own fragments, and `"Smith, John"` was recorded in
 `value` and never marked selected on screen. The selection is an array
 internally now and `value` is its serialised view, parsed back only when
@@ -1177,7 +1177,7 @@ something outside assigns it.
 The attribute format is unchanged, so markup and `el.value = 'a,b'` work exactly
 as before. What changed is that every interaction path now round-trips exactly,
 including the toggle. Assigning a multi-select value from outside still cannot
-express a comma — that is the format's separator — and the prop says so now
+express a comma (that is the format's separator), and the prop says so now
 rather than leaving it to be discovered.
 
 `aria-multiselectable` is also gone from plain `role="list"`, where it is not
@@ -1197,7 +1197,7 @@ defined. It stays on listbox, grid, tree and tablist, including when it is
 Nothing is renamed and nothing is removed, so `::part(stat)` keeps working. The
 point is the other direction: `::part(base)` now works on any component without
 looking up what that component happens to call its outer box. Before this there
-were **86 distinct spellings** of the root part across the library — `container`,
+were **86 distinct spellings** of the root part across the library: `container`,
 `wrapper`, `bar`, `shell`, `inner`, `body`, and eighty more.
 
 ```css
@@ -1208,7 +1208,7 @@ arc-chart::part(base) { margin-block-end: 1.5rem; }
 
 ### One rename
 
-`arc-waveform`'s `base` was the unplayed waveform layer — the only place in the
+`arc-waveform`'s `base` was the unplayed waveform layer, the only place in the
 library where `base` meant something other than the root. It is **`unplayed`**
 now, beside its `played` sibling, and `base` on arc-waveform means what it means
 everywhere else. If you styled `arc-waveform::part(base)` expecting the muted
@@ -1228,25 +1228,25 @@ el.shadowRoot.querySelector('[part="stat"]')
 el.shadowRoot.querySelector('[part~="stat"]')
 ```
 
-`::part(stat)` is unaffected — it has always matched on tokens. This only bites
+`::part(stat)` is unaffected: it has always matched on tokens. This only bites
 code reaching into a shadow root directly, which is mostly test code; it was 226
 selectors in ours.
 
 ### Twenty-seven components have no `base`, on purpose
 
-Twenty-one render a bare `<slot>` as their entire shadow root — `arc-tab`,
+Twenty-one render a bare `<slot>` as their entire shadow root: `arc-tab`,
 `arc-option`, `arc-stack`, `arc-center` and the like. The host *is* the box for
 those: style the element itself. Two more (`arc-inline-message`, `arc-kv-pair`)
 render two peer boxes with the host as their only container, and naming either
 half `base` would point the selector at something no reader would predict. Four
-render nothing at all — they are configuration elements.
+render nothing at all: they are configuration elements.
 
 The full list, with the reason for each, is `EXEMPT` in
 `scripts/checks/part-base.js`.
 
 ### If your component's root changes with a prop, `base` does not
 
-Fourteen components render a *different root element* depending on a prop —
+Fourteen components render a *different root element* depending on a prop:
 `arc-text` renders `h1` through `h6`, `span` or `p`; `arc-button` renders `<a>`
 or `<button>` depending on `href`; `arc-qr-code` renders a card wrapper or a bare
 svg depending on `contrast`. Every branch carries `base`, which is the clearest
@@ -1256,8 +1256,8 @@ depend on how they are configured.
 ## Text is described by a type context
 
 **Affects every component that renders text, and every theme that overrides
-typography.** V4-PLAN 4.5's first row. The role slots — `--font-body`,
-`--font-label`, their weights — shipped in v3 and proved a consumer's override
+typography.** V4-PLAN 4.5's first row. The role slots (`--font-body`,
+`--font-label`, their weights) shipped in v3 and proved a consumer's override
 *reaches* a component. They said nothing about the components that never asked,
 and a census found a lot of them:
 
@@ -1269,7 +1269,7 @@ and a census found a lot of them:
 | `line-height` | 80 | 98 |
 | `letter-spacing` | 65 | 89 |
 
-`font-weight: 600` was written out 39 times — the label role's *own* weight, in
+`font-weight: 600` was written out 39 times: the label role's *own* weight, in
 components that could not follow it when a face arrived without a semibold,
 which is the exact failure the role weight exists to prevent.
 
@@ -1277,17 +1277,17 @@ which is the exact failure the role weight exists to prevent.
 
 Four contexts, for treatments the tree used everywhere and named nowhere:
 
-- **`--ui-lh`** (1.4) — running text inside a control: a field, a list row, a
-  menu item, a table cell. Thirty components wrote this by hand, twenty at 1.4
+- **`--ui-lh`** (1.4): running text inside a control (a field, a list row, a
+  menu item, a table cell). Thirty components wrote this by hand, twenty at 1.4
   and ten at 1.5.
-- **`--glyph-lh`** (1) — a box whose whole content is one mark: an icon, a
-  badge, a counter, a kbd cap. Leading has to add nothing or the box grows
+- **`--glyph-lh`** (1): a box whose whole content is one mark (an icon, a
+  badge, a counter, a kbd cap). Leading has to add nothing or the box grows
   taller than the mark and stops centring. Twenty-four components wrote it.
-- **`--numeral-size`** / **`--numeral-weight`** — the large figure a stat,
+- **`--numeral-size`** / **`--numeral-weight`**: the large figure a stat,
   clock, countdown or gauge displays. `arc-clock` and `arc-countdown-timer` had
   independently arrived at `clamp(24px, 3vw, 36px)`, character for character.
-- **`--label-size`** / **`--label-weight`** / **`--label-spacing`** — the
-  uppercase tracked label: a form label, a table header, an eyebrow.
+- **`--label-size`** / **`--label-weight`** / **`--label-spacing`**: the
+  uppercase tracked label on a form label, a table header or an eyebrow.
   **`--section-title-*` now points at these** rather than restating them, so
   overriding either name moves everything wearing the treatment. If you
   override `--section-title-spacing`, nothing changes; prefer `--label-*` in
@@ -1302,7 +1302,7 @@ and the value that lost:
 - **Label tracking is 2px everywhere.** The same uppercase 12px label shipped at
   `2px`, `1.5px`, `1px`, `0.08em` and `0.12em`. `shared/tokens.js` already
   records 2px as the value chosen for the current label face, and names `1px` as
-  the retired Azeret-era value and `3px`/`4px` as Tektur's — so the deliberated
+  the retired Azeret-era value and `3px`/`4px` as Tektur's, so the deliberated
   number won. `arc-table`'s `th` and `arc-data-grid`'s `th` are the same element
   and had differed by exactly this.
 - **`arc-textarea`'s label matches the other fields.** It was 12px at 2px
@@ -1311,7 +1311,7 @@ and the value that lost:
   in the same form constantly.
 - **UI leading is 1.4** (was 1.5 in ten components) and **prose leading is 1.7**
   (was 1.6 in nine, 1.75 in one, 1.8 in `arc-blockquote`'s pull-quote).
-- **`arc-page-header`'s heading is the heading context** — it was 28px/700
+- **`arc-page-header`'s heading is the heading context**: it was 28px/700
   against the context's own size and weight.
 - **`arc-cta-banner`'s headline is `--text-2xl`**, one step off the clamp it had.
 - **`arc-gauge`'s value weighs 200** like the other three numerals, not 300; the
@@ -1325,7 +1325,7 @@ value can set it.
 
 `arc-command-palette` read `--weight-medium`, which nothing in the tree
 declares. That text had been rendering at its hard-coded fallback since it was
-written — unreachable by any theme and indistinguishable from working.
+written, unreachable by any theme and indistinguishable from working.
 `scripts/checks/type-roles.js` fails the build on a `var()` naming a token
 nothing declares, so that class of bug is now impossible rather than fixed.
 
@@ -1354,16 +1354,16 @@ independently of the tree.
 
 **Colors moved.** Every foreground in the preset is re-solved, so if you were
 matching one of its values in your own CSS, read it from the token instead. The
-text ramp is *lifted* rather than floored — every step multiplied by whatever
-the lowest step needs to reach 7:1 — so the four levels keep their spacing
+text ramp is *lifted* rather than floored: every step multiplied by whatever
+the lowest step needs to reach 7:1, so the four levels keep their spacing
 instead of collapsing onto the floor. Grounds, focus-ring widths, touch-target
 sizes and the hover wash are unchanged.
 
 ### The shipped schemes moved by a channel, too
 
 The solver searches in continuous OKLCH lightness and ships three 8-bit
-channels, and the rounding could walk an answer back under its own target — by
-a hundredth, but under. `solveContrast` now takes its final step on the value
+channels, and the rounding could walk an answer back under its own target (by
+a hundredth, but under). `solveContrast` now takes its final step on the value
 that actually ships. This moved **24 tokens in base.css by one channel step**.
 Nothing is visibly different; the difference is that the 5.5:1 contract those
 schemes carry is now true of the file rather than of the search.
@@ -1384,10 +1384,10 @@ element for a region:
 
 It restates the scale rather than multiplying it, and that is not cosmetic:
 base.css forwards `--space-*` into shadow DOM with `inherit`, which carries the
-parent's *computed* value — so a `calc(16px * var(--density))` would have
+parent's *computed* value, so a `calc(16px * var(--density))` would have
 resolved once at `:root` and silently done nothing on a section.
 
-Two things deliberately do not move. **Touch targets stay at 24×24**, the WCAG
+Two things do not move. **Touch targets stay at 24×24**, the WCAG
 2.2 minimum; density moves the padding around a control, never the hit area
 inside it. **Type does not scale**, because tightening a layout and shrinking
 text are different decisions and only one of them is reversible by the reader.
@@ -1399,7 +1399,7 @@ because it sets padding directly rather than the scale.
 
 ### The two-color contract
 
-Nothing changes — this names what the pipeline already does and puts a check
+Nothing changes. This names what the pipeline already does and puts a check
 behind it. **Two colors are the inputs**, `--accent-primary` and
 `--accent-secondary` with their `-rgb` channels: four declarations for two
 decisions, because CSS cannot turn a color back into a bare channel list.
@@ -1410,7 +1410,7 @@ at build time and are not knobs.
 `scripts/checks/two-color-contract.js` fails the build on a token that spells
 the brand instead of referencing it, on one that follows the accents at `:root`
 and stops in another block, and on the count of accent-following tokens
-dropping. The failure it exists for is the local rescue — a pinned literal that
+dropping. The failure it exists for is the local rescue: a pinned literal that
 fixes one region's contrast and is a place the brand quietly stops.
 
 ## Icons moved to `@arclux/arc-ui-icons`
@@ -1426,7 +1426,7 @@ import '@arclux/arc-ui-icons/phosphor';
 ```
 
 That import registers Phosphor and, because nothing else has been selected, makes
-it the active library — so `<arc-icon name="star">` behaves exactly as it did in
+it the active library, so `<arc-icon name="star">` behaves exactly as it did in
 v3. `lucide.register` is the same line for the other pack. Everything else in
 this section is what changed underneath and how to tell if it affects you.
 
@@ -1439,13 +1439,13 @@ rendered an icon. Splitting them takes core from 3,895 files and 8.5 MB unpacked
 to 476 files and 4.8 MB, and roughly halves the download.
 
 The tarball was the smaller half of it. Each pack's resolver is a map of `() =>
-import('./name.js')` thunks — 1,896 for Lucide, 1,512 for Phosphor — and every
+import('./name.js')` thunks (1,896 for Lucide, 1,512 for Phosphor), and every
 entry is a static specifier, so a bundler had to walk 3,408 modules and emit a
 chunk each. That is the price of per-icon code splitting and it is worth paying
 *if you use icons*; it was in everyone's build graph by default, because
 `icon-registry.js` reached for the packs by relative path. A relative import is a
-hard edge — no export map, no dependency declaration and no barrel exclusion can
-cut it — so the packs had to leave the package for the coupling to go.
+hard edge: no export map, no dependency declaration and no barrel exclusion can
+cut it, so the packs had to leave the package for the coupling to go.
 
 ### There is no default library any more
 
@@ -1453,7 +1453,7 @@ v3 defaulted to Phosphor. v4 selects nothing until something registers, because
 core ships no icons and naming a default would be a promise it cannot keep.
 
 If you upgrade without installing the icons package, every named icon renders its
-slot fallback — an empty box, or whatever you slotted — and the registry logs
+slot fallback (an empty box, or whatever you slotted), and the registry logs
 **one** line saying so, with the two lines above in it. It will not fail
 silently. It will not guess either.
 
@@ -1482,7 +1482,7 @@ so this is a find-and-replace:
 | `@arclux/arc-ui/icons/types` | `@arclux/arc-ui-icons/types` |
 
 `@arclux/arc-ui/icon`, `@arclux/arc-ui/icon-button`, `@arclux/arc-ui/icon-library`
-and `@arclux/arc-ui/icon-registry` are components and API — they have not moved.
+and `@arclux/arc-ui/icon-registry` are components and API; they have not moved.
 
 ### If you use a handful of icons
 
@@ -1498,7 +1498,7 @@ iconRegistry.set({ check, x });
 ```
 
 That pulls in two modules and no resolver. Icons registered this way are
-library-independent — they answer to their name whatever `use()` points at, and
+library-independent. They answer to their name whatever `use()` points at, and
 they take precedence over a registered pack, which is how you override one glyph
 without replacing a set.
 
@@ -1515,22 +1515,22 @@ iconRegistry.register('brand', {
 iconRegistry.use('brand');
 ```
 
-`aliases` maps ARC UI's canonical icon names — the Lucide spellings, which
-built-in components ask for — onto whatever your library calls them. Supply it
+`aliases` maps ARC UI's canonical icon names (the Lucide spellings, which
+built-in components ask for) onto whatever your library calls them. Supply it
 and the built-in components resolve against your set too.
 
 ### Server rendering
 
 `@arclux/arc-ui/ssr` resolves against whatever the rendering process has
 registered, so a server build that wants glyphs in its HTML imports a pack the
-same way a browser bundle does. Without one, icons render their fallback — and
+same way a browser bundle does. Without one, icons render their fallback, and
 that is the same tree the client produces under the same conditions, so the page
 still hydrates cleanly. It is a page with no icons, not a broken one.
 
 ## Wrappers: four defects that were shipping
 
 **Do this:** upgrade the wrapper package you use. No source changes, unless you
-worked around one of these — in which case the workaround is now the bug.
+worked around one of these, in which case the workaround is now the bug.
 
 None of these were regressions; all four had shipped since the wrapper packages
 existed, and all four were found by the runtime harness added in 2.4a, which
@@ -1548,7 +1548,7 @@ never reached the bundle. An Angular consumer was getting an
 
 Every wrapper now emits a bare `import '@arclux/arc-ui/x'` alongside its
 `import type { ArcX }`. If you were importing `@arclux/arc-ui/register`
-yourself to work around this, you can stop — though it still works and is still
+yourself to work around this, you can stop, though it still works and is still
 the right call if you use elements Angular does not wrap.
 
 ### Angular and Solid discarded children of named-slot components
@@ -1557,7 +1557,7 @@ Both forwarded children only for components declaring a *default* slot, so the
 ten whose slots are all named threw every child away silently. The rule is now
 **any declared slot means the wrapper forwards children**: Angular emits
 `<ng-content />` and Solid takes `children` through `splitProps`. A single bare
-`<ng-content />` is sufficient for named slots — Angular's job is to place
+`<ng-content />` is sufficient for named slots: Angular's job is to place
 children in the host's light DOM with their `slot` attributes intact, and
 assignment is the custom element's job.
 
@@ -1569,8 +1569,8 @@ the visible change.
 
 ### 18 Vue and Solid subpaths resolved to nothing
 
-Every tier barrel — `./content`, `./data`, `./input`, `./layout`,
-`./navigation`, `./feedback`, `./typography`, `./shared` — in both
+Every tier barrel (`./content`, `./data`, `./input`, `./layout`,
+`./navigation`, `./feedback`, `./typography`, `./shared`) in both
 `@arclux/arc-ui-vue` and `@arclux/arc-ui-solid`, plus `./CodeBlock` in each.
 `npm install` succeeded, the root barrel worked, and the import threw
 `ERR_MODULE_NOT_FOUND`.
@@ -1580,7 +1580,7 @@ Both packages build with Vite lib + `preserveModules` from a single entry, and
 re-exports components directly, never through the tier barrels, so those eight
 files were compiled by nothing. `./CodeBlock` went the same way for the opposite
 reason: it is `barrelExclude`d so the root never imports it (shiki is 13.6 MB),
-which meant nothing did — and that subpath is the only documented way to reach
+which meant nothing did, and that subpath is the only documented way to reach
 it.
 
 The build entries are derived from each package's own `exports` map now, so the
@@ -1603,14 +1603,14 @@ it gets a deprecation release rather than being deleted outright. It goes in v5.
 ## Angular form controls bind to `@angular/forms`
 
 **Do this:** nothing, if you were not using them. `@angular/forms` is now a peer
-dependency of `@arclux/arc-ui-angular` — install it if your project somehow does
+dependency of `@arclux/arc-ui-angular`; install it if your project somehow does
 not already have it.
 
 `formControlName`, `formControl` and `ngModel` worked on **zero** wrappers,
 which is most of the reason an Angular wrapper package exists: an Angular team
 reaching for a component library reaches for reactive forms in the same breath.
 `<arc-input formControlName="email">` bound nothing and reported nothing, and
-failed silently — the control stayed pristine and empty while the element on
+failed silently: the control stayed pristine and empty while the element on
 screen held the user's text.
 
 27 controls implement `ControlValueAccessor` now. The set is derived from
@@ -1623,8 +1623,8 @@ a 28th is covered by writing it rather than by editing a list.
 <arc-switch [(ngModel)]="notify"></arc-switch>
 ```
 
-Two controls have no single value — `arc-date-range-picker` binds `start`/`end`
-and `arc-range-slider` binds `low`/`high` — and both carry a **composite**
+Two controls have no single value: `arc-date-range-picker` binds `start`/`end`
+and `arc-range-slider` binds `low`/`high`, and both carry a **composite**
 accessor rather than being left out, because `formControlName` working on 25 of
 27 is a gap a consumer discovers rather than reads. The form value is an object:
 
@@ -1661,8 +1661,8 @@ Both spellings it shipped with are silent no-ops.
 /// <reference types="@arclux/arc-ui/react-jsx" />
 ```
 
-TypeScript resolves a `types` entry as a **package** — `node_modules/@types/
-<name>`, or `<name>/package.json#types` — and never follows an export-map
+TypeScript resolves a `types` entry as a **package**: `node_modules/@types/
+<name>`, or `<name>/package.json#types`, and never follows an export-map
 subpath. So the name resolved to nothing, nothing was included, every tag stayed
 untyped, and no diagnostic was emitted, because a `types` entry that resolves to
 nothing is not an error. The file's *content* was correct the whole time. If

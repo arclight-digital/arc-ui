@@ -7,21 +7,21 @@ export const scrollToTop: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Floating button that appears after scrolling and smoothly returns the user to the top of the page.',
+    'Floating button that appears after scrolling and returns the user to the top of the page.',
 
-  overview: `ScrollToTop renders a fixed-position button that fades into view once the user scrolls past a configurable threshold (default 300px). Clicking it scrolls the page back to the top using the browser's native smooth scroll behavior. The component handles its own visibility state via a throttled passive scroll listener, so there is no setup required beyond placing the element in your page.
+  overview: `ScrollToTop renders a fixed-position button that fades into view once the user scrolls past a configurable threshold (default 300px). Clicking it scrolls the page back to the top using the browser's native smooth scroll behavior. The component handles its own visibility state via a throttled passive scroll listener, so you only need to place the element in your page.
 
-The button uses a circular design with a chevron-up icon, positioned in the bottom-right corner by default. Both the corner placement and the edge offset are configurable via the \`position\` and \`offset\` properties. The show/hide animation uses opacity and translateY for a subtle fade-and-slide effect that feels native.
+The button uses a circular design with a chevron-up icon, positioned in the bottom-right corner by default. Both the corner placement and the edge offset are configurable via the \`position\` and \`offset\` properties. The show/hide animation uses opacity and translateY for a fade-and-slide effect.
 
-Accessibility is built in: the button has \`aria-label="Scroll to top"\` and proper focus styles. The component also respects \`prefers-reduced-motion\` — when the user has opted out of motion, smooth scrolling is replaced with an instant jump and the CSS transition is disabled.`,
+The button has \`aria-label="Scroll to top"\` and focus styles. The component also respects \`prefers-reduced-motion\`: when the user has opted out of motion, smooth scrolling is replaced with an instant jump and the CSS transition is disabled.`,
 
   features: [
     'Auto show/hide based on scroll position with configurable threshold',
     'Smooth scroll to top with `prefers-reduced-motion` fallback to instant',
-    'Passive, throttled scroll listener for zero layout thrashing',
+    'Passive, throttled scroll listener that avoids layout thrashing',
     'Configurable corner placement: bottom-right or bottom-left',
     'Configurable edge offset via CSS length values',
-    'Circular button with chevron-up icon, fully token-styled',
+    'Circular button with chevron-up icon, styled with tokens',
     'Accessible: `aria-label`, focus-visible glow, keyboard operable',
   ],
 
@@ -33,9 +33,9 @@ Accessibility is built in: the button has \`aria-label="Scroll to top"\` and pro
       'Pair with ScrollSpy for complete scroll navigation',
     ],
     dont: [
-      'Do not place inside a scrollable container — it listens to window scroll',
+      'Do not place inside a scrollable container: it listens to window scroll',
       'Do not add multiple ScrollToTop instances on the same page',
-      'Do not set the threshold too low — the button should appear after meaningful scrolling',
+      'Do not set the threshold too low: the button should appear after meaningful scrolling',
       'Do not override the aria-label without providing an equivalent accessible name',
     ],
   },

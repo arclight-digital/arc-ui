@@ -10,10 +10,13 @@ const props = withDefaults(defineProps<{
   images?: unknown[];
   index?: number;
   open?: boolean;
+  gallery?: string;
+  thumbnails?: boolean;
 }>(), {
   images: () => ([]),
   index: 0,
   open: false,
+  thumbnails: false,
 });
 
 const emit = defineEmits<{
@@ -41,10 +44,13 @@ defineExpose({ element: __el });
     :images="props.images"
     :index="props.index"
     :open="props.open"
+    :gallery="props.gallery"
+    :thumbnails="props.thumbnails"
     @arc-change="onArcChange"
     @arc-close="(payload: CustomEvent) => emit('arc-close', payload)"
     @arc-open="(payload: CustomEvent) => emit('arc-open', payload)"
     ref="__el"
   >
+    <slot name="actions" />
   </arc-lightbox>
 </template>

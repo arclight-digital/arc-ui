@@ -8,9 +8,9 @@ export const toolbar: ComponentDef = {
   interactivity: 'hybrid',
   description: 'Horizontal toolbar with prefix, center, and suffix slots.',
 
-  overview: `Toolbar is a horizontal action bar that groups related controls — buttons, dropdowns, search fields — into a consistent strip above or within a content region. It follows the classic three-slot pattern: the prefix slot anchors inline-start actions (like a file menu or back button), the center (default) slot holds a title or contextual info, and the suffix slot pins inline-end actions (like save, share, or settings). The v3 slot names start/end still work as deprecated aliases through v4.
+  overview: `Toolbar is a horizontal action bar that groups related controls (buttons, dropdowns, search fields) into a consistent strip above or within a content region. It follows the classic three-slot pattern: the prefix slot anchors inline-start actions (like a file menu or back button), the center (default) slot holds a title or contextual info, and the suffix slot pins inline-end actions (like save, share, or settings). The v3 slot names start/end still work as deprecated aliases through v4.
 
-The component renders with \`role="toolbar"\` for accessibility, signaling to screen readers that the contained controls are a logically grouped set. Three size variants are available: the default \`md\` (48px height) for primary toolbars, \`sm\` (36px) for secondary or nested ones, and \`lg\` (60px) for a prominent application bar. \`lg\` was added in v4 when the size enum was canonicalised across the library — this component declared only \`md\` and \`sm\`, so a toolbar was the one control that could not be made taller. The nested arc-icon-button in the overflow menu tracks whichever size you set. The \`border\` prop (on by default) adds a subtle bottom border to visually separate the toolbar from the content below.
+The component renders with \`role="toolbar"\` so screen readers treat the contained controls as one group. Three size variants are available: the default \`md\` (48px height) for primary toolbars, \`sm\` (36px) for secondary or nested ones, and \`lg\` (60px) for a prominent application bar. \`lg\` was added in v4 when the size enum was canonicalised across the library. This component declared only \`md\` and \`sm\`, so a toolbar was the one control that could not be made taller. The nested arc-icon-button in the overflow menu tracks whichever size you set. The \`border\` prop (on by default) adds a subtle bottom border to visually separate the toolbar from the content below.
 
 When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`top: 0\` and a z-index of 50, keeping it visible as the user scrolls through long content. The toolbar background uses \`--bg-card\` to provide a slight elevation from the page surface. Combine Toolbar with SplitPane panels, code editors, or document viewers where contextual actions should remain accessible without scrolling.`,
 
@@ -34,11 +34,11 @@ When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`to
       'Group related buttons together in each slot for visual clarity',
     ],
     dont: [
-      'Do not use Toolbar as the primary site navigation — use TopBar or NavigationMenu instead',
+      'Do not use Toolbar as the primary site navigation. Use TopBar or NavigationMenu instead',
       'Do not overload the toolbar with more than five or six controls; move overflow into a DropdownMenu',
-      'Do not nest Toolbar inside another Toolbar — use a single toolbar with grouped slot content',
+      'Do not nest Toolbar inside another Toolbar. Use a single toolbar with grouped slot content',
       'Do not disable the border prop when the toolbar sits above content with the same background color',
-      'Do not use Toolbar for status information — use StatusBar for persistent informational displays',
+      'Do not use Toolbar for status information. Use StatusBar for persistent informational displays',
     ],
   },
 

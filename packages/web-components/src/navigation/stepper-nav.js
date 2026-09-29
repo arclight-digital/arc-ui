@@ -11,7 +11,7 @@ import { DeclaredPropsMixin, flag, int, list } from '../shared/props.js';
  * @requires arc-button
  * @prop {Array<string>} steps - Array of step labels displayed along the progress track.
  * @prop {number} active - Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have.
- * @prop {boolean} linear - When true, prevents jumping to future steps — the user must complete each step sequentially.
+ * @prop {boolean} linear - When true, prevents jumping to future steps: the user must complete each step sequentially.
  * @fires {CustomEvent<{ step: number }>} arc-change - Fired when the active step changes with detail: { step }.
  * @fires {CustomEvent<void>} arc-complete - Fired when the user confirms the final step.
  * @slot - Default content.
@@ -31,7 +31,7 @@ export class ArcStepperNav extends DeclaredPropsMixin(LitElement) {
      * disagreeing: the button's label asked `active === steps.length - 1`
      * (99 === 4, false) and read "Next", while `_next()` asked
      * `active < steps.length - 1` (99 < 4, false) and took the *completion*
-     * branch — the user was told there was another step, clicked Next, and the
+     * branch: the user was told there was another step, clicked Next, and the
      * wizard submitted. Neither guard changed; the value can no longer reach a
      * state where they differ.
      */
@@ -130,7 +130,7 @@ export class ArcStepperNav extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this.steps = [];
-    // `active` is seeded from its declaration — see DeclaredPropsMixin.
+    // `active` is seeded from its declaration; see DeclaredPropsMixin.
   }
 
   /** Upper bound for `active`: the last real step, or 0 when there are none. */

@@ -65,11 +65,18 @@ const SAMPLES = {
 
 describe('hydration with script-set list() data', () => {
   const classes = {};
-  before(async () => {
-    for (const [tag, { register }] of Object.entries(fixtures)) {
-      const mod = await import(register);
-      classes[tag] = Object.values(mod).find((v) => typeof v === 'function' && v.prototype instanceof HTMLElement);
-    }
+  // Every component with a list() prop loads here, in parallel. Under a full
+  // suite that is several seconds of module work, so the hook gets more than
+  // mocha's 2s: at 2s it timed out on a loaded runner and took all 51 cases
+  // with it.
+  before(async function () {
+    this.timeout(20000);
+    await Promise.all(
+      Object.entries(fixtures).map(async ([tag, { register }]) => {
+        const mod = await import(register);
+        classes[tag] = Object.values(mod).find((v) => typeof v === 'function' && v.prototype instanceof HTMLElement);
+      }),
+    );
   });
 
   it('has a sample for every component with a list() prop', () => {

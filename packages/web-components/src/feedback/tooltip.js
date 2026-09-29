@@ -12,7 +12,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
  *
  * @tag arc-tooltip
  * @status stable
- * @prop {string} content - The plain-text string displayed inside the tooltip popup. Keep this concise — one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for rich content, use the Popover component instead.
+ * @prop {string} content - The plain-text string displayed inside the tooltip popup. Keep this concise: one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for formatted content, use the Popover component instead.
  * @prop {'top' | 'bottom' | 'left' | 'right'} position - Controls which side of the trigger the tooltip appears on. Top is the most common default. Switch to bottom, left, or right when the trigger sits near a viewport edge or when the surrounding layout makes another direction more natural.
  * @prop {number} delay - Time in milliseconds to wait after mouseenter or focusin before the tooltip becomes visible. The default of 200 ms prevents accidental activation during casual pointer movement. Increase to 400-600 ms in dense toolbars; avoid setting to 0 as it creates a jittery experience.
  * @slot - Default content.
@@ -91,7 +91,7 @@ export class ArcTooltip extends DeclaredPropsMixin(LitElement) {
         transform: rotate(45deg);
       }
 
-      /* Positions — the resting fallback, for a popup PositionController has
+      /* Positions: the resting fallback, for a popup PositionController has
          not adopted: the static HTML export and anything pre-upgrade. Scoped
          off managed popups because the controller writes fixed viewport
          coordinates, which the translateX(-50%) centring here would shift the
@@ -150,8 +150,8 @@ export class ArcTooltip extends DeclaredPropsMixin(LitElement) {
         border-right: none;
       }
 
-      /* Arrow for a managed popup. Keyed on data-placement — the side the
-         popup actually landed on — so the arrow follows a flip instead of
+      /* Arrow for a managed popup. Keyed on data-placement (the side the
+         popup actually landed on), so the arrow follows a flip instead of
          pointing at nothing. */
       .tooltip__popup[data-managed][data-placement="top"] .tooltip__arrow {
         bottom: -5px;
@@ -182,7 +182,7 @@ export class ArcTooltip extends DeclaredPropsMixin(LitElement) {
         border-inline-end: none;
       }
     `,
-    // scale: 1 — a tooltip cross-fades rather than scaling, but it still needs
+    // scale: 1; a tooltip cross-fades rather than scaling, but it still needs
     // the allow-discrete treatment or the fade is lost to display:none in the
     // top layer.
     managedPanelStyles('tooltip__popup', {
@@ -267,7 +267,7 @@ export class ArcTooltip extends DeclaredPropsMixin(LitElement) {
     this._visible = false;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

@@ -10,7 +10,7 @@ import { DeclaredPropsMixin, int } from '../shared/props.js';
  * @status stable
  * @child arc-step
  * @requires arc-step
- * @prop {number} active - Zero-indexed active step — steps before this index show as completed.
+ * @prop {number} active - Zero-indexed active step; steps before this index show as completed.
  *   Clamped to the range of rendered steps.
  * @slot - `arc-step` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
@@ -30,7 +30,7 @@ export class ArcStepper extends DeclaredPropsMixin(LitElement) {
    * Upper bound for `active`; undefined while there are no steps to bound it.
    *
    * Returning 0 instead would clamp an `active="2"` set in markup down to 0
-   * before the slot has populated, and clamping is destructive — the value
+   * before the slot has populated, and clamping is destructive; the value
    * would not come back when the steps arrive. `bound()` ignores a non-number,
    * which is what makes the deferred case safe. Same shape as arc-tabs.
    */
@@ -206,7 +206,7 @@ export class ArcStepper extends DeclaredPropsMixin(LitElement) {
     return 'upcoming';
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

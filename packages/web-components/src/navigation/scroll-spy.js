@@ -37,7 +37,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
 
   /* Both readings of `progress` are derived, never stored, so the two can only
      ever agree with the prop. An unrecognized value answers false to both and
-     so behaves as `none` — the default — rather than half-enabling something. */
+     so behaves as `none` (the default) rather than half-enabling something. */
   get _showRing() {
     return this.progress === 'ring' || this.progress === 'both';
   }
@@ -112,7 +112,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
       .scroll-spy__ring-fill {
         stroke: var(--interactive);
         stroke-linecap: round;
-        /* Deliberately untransitioned: the offset is rewritten on every scroll
+        /* Untransitioned: the offset is rewritten on every scroll
            frame, so easing between frames only makes the ring trail the page. */
       }
 
@@ -137,7 +137,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
         line-height: var(--ui-lh);
         /* The unread baseline. --text-primary, and not one of the greys, for a
            reason worth writing down: secondary, muted and ghost are rgb 150,
-           142 and 133 — seventeen points end to end. A read/unread split built
+           142 and 133: seventeen points end to end. A read/unread split built
            from any two of them is invisible, which is exactly how it looked.
            The only real interval in the ramp is up to primary, so the hierarchy
            is built by lifting what is ahead rather than by sinking what is
@@ -170,7 +170,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
         /* --surface-hover, not a white wash: --white-rgb is 255,255,255 in both
            themes, so 3% of it over a light background was invisible and the
            link had no hover affordance at all there. The token is the same
-           thing done per-theme — white at 4% on dark, accent at 4% on light. */
+           thing done per-theme: white at 4% on dark, accent at 4% on light. */
         background: var(--surface-hover);
       }
 
@@ -183,7 +183,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
       }
 
       /* Sections already scrolled past. Reading the list top to bottom, the
-         point where it brightens is where you are — the same fact the ring
+         point where it brightens is where you are, the same fact the ring
          gives as a quantity, in the place you are already looking.
          Hover puts it back: going *back* to a section you have read is the
          second thing a table of contents is for, and a receded row must not be
@@ -197,13 +197,13 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
       }
 
       /* The accent, not a brighter grey. Unread entries already sit at
-         --text-primary — the ramp has nothing above it — so lightness cannot
+         --text-primary (the ramp has nothing above it), so lightness cannot
          say "here" as well as "ahead" at the same time. Hue can, and this is
          the treatment arc-sidebar gives its current page, which makes the two
          navigation panels agree about what current looks like. */
       /* The accent, carried to AA by the theme's own text-mix rather than by a
          number chosen here. Raw, it is 4.17:1 on its own tint in the light
-         theme — the tint costs 0.73 against the 4.90 the same blue manages on
+         theme: the tint costs 0.73 against the 4.90 the same blue manages on
          plain white, and this is the one state that marks where the reader is.
          --accent-text-mix is solved per theme against every accent the library
          sets as text, so this rule states the intent and the palette states
@@ -264,7 +264,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
 
   updated(changed) {
     // A first pass as soon as there is anything to measure, so the current
-    // section is marked on arrival rather than only after the reader scrolls —
+    // section is marked on arrival rather than only after the reader scrolls,
     // which, on a page opened at a #hash, meant the highlight sat on the first
     // heading while the viewport showed the eighth.
     // Scheduled rather than measured inline: _measure sets reactive state, and
@@ -299,7 +299,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
    * The observer version took the id of any entry reporting `isIntersecting`,
    * in callback order. Scrolling up fires the entry for the section being
    * *entered* and the one being *left* in the same batch, so the highlight
-   * settled on whichever the browser listed second — usually the wrong one, and
+   * settled on whichever the browser listed second, usually the wrong one, and
    * inconsistently. Reading positions directly has one answer: the last heading
    * that has crossed the line, and nothing to get out of order.
    */
@@ -372,7 +372,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
     });
 
     // A table of contents whose entries do not change the URL cannot be used to
-    // link to a section — the whole point of the headings having ids.
+    // link to a section, which is what the heading ids are for.
     if (globalThis.history?.replaceState) {
       history.replaceState(null, '', `#${target}`);
     }
@@ -386,7 +386,7 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
    *
    * aria-hidden on purpose. It is an ambient restatement of a position assistive
    * technology already reports far more precisely, and as a live progressbar it
-   * would announce on every scroll frame — noise in place of information. The
+   * would announce on every scroll frame: noise in place of information. The
    * heading keeps its own name as the button's label.
    */
   _renderRing() {
@@ -411,14 +411,14 @@ export class ArcScrollSpy extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
 
   render() {
     // Everything before the current section reads as covered ground. -1 while
-    // nothing is active yet, which marks nothing — the correct starting state,
+    // nothing is active yet, which marks nothing, the correct starting state,
     // and the same value that switches the treatment off entirely.
     const activeIndex = this._showRead
       ? this._links.findIndex((l) => l.target === this._active)

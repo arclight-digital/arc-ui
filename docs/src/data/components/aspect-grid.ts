@@ -8,11 +8,11 @@ export const aspectGrid: ComponentDef = {
   interactivity: 'static',
   description: 'Uniform aspect-ratio cell grid with configurable columns and ratio.',
 
-  overview: `AspectGrid is a layout component that creates a uniform grid of cells where every cell maintains the same aspect ratio. This is the standard pattern for image galleries, video thumbnails, product grids, and any collection where visual uniformity matters more than accommodating variable content heights.
+  overview: `AspectGrid is a layout component that creates a uniform grid of cells where every cell maintains the same aspect ratio. It fits image galleries, video thumbnails, product grids, and any collection where uniform cells matter more than variable content heights.
 
 Each cell uses CSS \`aspect-ratio\` to enforce the configured ratio (1/1 for squares, 16/9 for widescreen, 4/3 for classic), and the grid uses \`grid-template-columns\` with \`repeat()\` to create the specified number of equal-width columns. The \`gap\` prop maps to design system spacing tokens so the grid rhythm stays consistent with the rest of your layout.
 
-Use AspectGrid when all items should have identical dimensions — photo galleries, team member portraits, video thumbnail grids, or product card collections. For variable-height content where items should pack tightly, use Masonry instead. For responsive dashboard-style layouts with named regions, use DashboardGrid.`,
+Use AspectGrid when all items should have identical dimensions: photo galleries, team member portraits, video thumbnail grids, or product card collections. For variable-height content where items should pack tightly, use Masonry instead. For responsive dashboard-style layouts with named regions, use DashboardGrid.`,
 
   features: [
     'CSS Grid layout with uniform aspect-ratio cells',
@@ -20,7 +20,7 @@ Use AspectGrid when all items should have identical dimensions — photo galleri
     'Aspect ratio options: 1/1 (square), 16/9 (widescreen), 4/3 (classic)',
     'Design-token-based gap spacing (sm, md, lg) for consistent rhythm',
     'Children overflow-hidden with border-radius for clean cell edges',
-    'Pure CSS — no JavaScript for layout calculations',
+    'Pure CSS, with no JavaScript for layout calculations',
     'CSS part: `grid` for targeted ::part() styling',
   ],
 
@@ -33,10 +33,10 @@ Use AspectGrid when all items should have identical dimensions — photo galleri
       'Adjust columns based on viewport width for responsive grids',
     ],
     dont: [
-      'Do not use AspectGrid for variable-height content — use Masonry instead',
+      'Do not use AspectGrid for variable-height content. Use Masonry instead',
       'Do not set very high column counts that make cells too small to be useful',
-      'Do not mix different aspect ratios within the same grid — use separate grids',
-      'Do not put long text content in aspect-ratio cells — it will overflow or be clipped',
+      'Do not mix different aspect ratios within the same grid. Use separate grids',
+      'Do not put long text content in aspect-ratio cells; it will overflow or be clipped',
       'Do not nest AspectGrid inside Masonry or vice versa',
     ],
   },

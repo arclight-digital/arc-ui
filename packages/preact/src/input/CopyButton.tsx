@@ -7,6 +7,8 @@ import '@arclux/arc-ui/copy-button';
 export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;
+  iconOnly?: boolean;
+  label?: string;
   onArcCopy?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
@@ -35,7 +37,7 @@ export interface CopyButtonProps {
   [key: `on${string}`]: unknown;
 }
 
-export const CopyButton: FunctionComponent<CopyButtonProps> = ({ value, disabled, onArcCopy, ...rest }) => {
+export const CopyButton: FunctionComponent<CopyButtonProps> = ({ value, disabled, iconOnly, label, onArcCopy, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -48,5 +50,5 @@ export const CopyButton: FunctionComponent<CopyButtonProps> = ({ value, disabled
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcCopy]);
-  return h('arc-copy-button', { ref, value, disabled, ...rest });
+  return h('arc-copy-button', { ref, value, disabled, iconOnly, label, ...rest });
 };

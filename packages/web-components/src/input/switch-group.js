@@ -97,7 +97,7 @@ export class ArcSwitchGroup extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

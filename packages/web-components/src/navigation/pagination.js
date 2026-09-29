@@ -8,7 +8,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  *
  * @tag arc-pagination
  * @status stable
- * @prop {number} total - Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.
+ * @prop {number} total - Total number of pages. At least 1: a pager with no pages is still a pager showing page 1 of 1.
  * @prop {number} current - The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control.
  * @prop {number} siblings - Number of page buttons to show on each side of the current page before ellipsis truncation kicks in. Never negative.
  * @prop {boolean} compact - Shows only previous/next buttons with a 'current / total' label. Hides individual page numbers.
@@ -24,7 +24,7 @@ import { DeclaredPropsMixin, flag, int } from '../shared/props.js';
  */
 export class ArcPagination extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    // All three bounds were in `_getPageRange()` — three `Math.max`/`Math.min`
+    // All three bounds were in `_getPageRange()`: three `Math.max`/`Math.min`
     // calls on the render's local copies. They are declarations now, so the
     // property agrees with what is drawn (finding #76). `total` needs its own
     // floor before `current` can name it as a bound: without it, `total="0"`
@@ -35,7 +35,7 @@ export class ArcPagination extends DeclaredPropsMixin(LitElement) {
      * legal `current` re-clamps it. The bound has to live here rather than in
      * `_getPageRange()`: clamping the render left the property out of range,
      * no page carried `aria-current`, and `_goToPage`'s `page > this.total`
-     * guard then refused to walk back in — the control displayed one page and
+     * guard then refused to walk back in: the control displayed one page and
      * held another, with no way out (finding #76).
      */
     current: int({ default: 1, min: 1, max: 'total', clamp: 'toRange', reflect: true }),

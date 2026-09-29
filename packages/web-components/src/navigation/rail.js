@@ -41,7 +41,7 @@ export class ArcRail extends DeclaredPropsMixin(LitElement) {
         height: 100%;
         padding: var(--space-sm) 0;
         gap: var(--space-xs);
-        transition: width var(--transition-base) var(--ease-out-expo);
+        transition: width var(--duration-base) var(--ease-out-expo);
         overflow: hidden;
       }
 

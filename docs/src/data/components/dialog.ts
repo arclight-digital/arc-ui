@@ -8,21 +8,21 @@ export const dialog: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['modal', 'popup', 'overlay'],
   description:
-    'General-purpose focus-trapping overlay on the platform <dialog> — backdrop blur, slide-up entrance, and Escape-to-dismiss for forms, settings, and rich content that needs full user attention.',
+    'General-purpose focus-trapping overlay on the platform <dialog>, with backdrop blur, a slide-up entrance, and Escape-to-dismiss. For forms, settings, and content that needs full user attention.',
 
-  overview: `Dialog is the general-purpose overlay primitive, built on the platform's native \`<dialog>\` element. It floats above the page behind a blurred backdrop, moves focus inside on open, and returns focus to the trigger element on close. Use it any time you need a rich container for forms, settings panels, content previews, or multi-step workflows where background interaction must be blocked — the native top layer and \`::backdrop\` do the heavy lifting the way the platform intends.
+  overview: `Dialog is the general-purpose overlay primitive, built on the platform's native \`<dialog>\` element. It floats above the page behind a blurred backdrop, moves focus inside on open, and returns focus to the trigger element on close. Use it when you need a container for forms, settings panels, content previews, or multi-step workflows where background interaction must be blocked. The native top layer and \`::backdrop\` handle stacking and modality.
 
-**Renamed in v4.** This component was \`arc-modal\` through v3; the element is a dialog, the platform calls it a dialog, and *modal* named one of its behaviours rather than what it is. The old tag is gone in v4.0.0 — removed rather than aliased, since v4 never shipped and an alias would have served nobody. Note the hazard in the other direction: the v3 tag \`arc-dialog\` was a small confirm prompt, and that component is now \`arc-confirm\`. Handing this Dialog the old prompt props (\`message\`, \`confirm-label\`, \`cancel-label\`) logs a \`console.error\` naming \`arc-confirm\` rather than silently ignoring them.
+**Renamed in v4.** This component was \`arc-modal\` through v3; the element is a dialog, the platform calls it a dialog, and *modal* named one of its behaviours rather than what it is. The old tag is gone in v4.0.0, removed rather than aliased, since v4 never shipped and an alias would have served nobody. The reverse also bites: the v3 tag \`arc-dialog\` was a small confirm prompt, and that component is now \`arc-confirm\`. Handing this Dialog the old prompt props (\`message\`, \`confirm-label\`, \`cancel-label\`) logs a \`console.error\` naming \`arc-confirm\` rather than silently ignoring them.
 
-The component ships with three width presets (\`sm\`/\`md\`/\`lg\`), a \`fullscreen\` mode, and a smooth slide-up entrance. Dismissal is governed by one prop: \`dismissible\` renders the built-in close button and enables Escape and backdrop click, and it defaults to on — a dialog is dismissible unless you say otherwise. Set it to \`false\` for decisions the user must resolve through the footer buttons. The \`arc-close\` event is cancelable, so \`preventDefault()\` can veto a close while a form inside is mid-save.`,
+The component ships with three width presets (\`sm\`/\`md\`/\`lg\`), a \`fullscreen\` mode, and a slide-up entrance. Dismissal is governed by one prop: \`dismissible\` renders the built-in close button and enables Escape and backdrop click, and it defaults to on. A dialog is dismissible unless you say otherwise. Set it to \`false\` for decisions the user must resolve through the footer buttons. The \`arc-close\` event is cancelable, so \`preventDefault()\` can veto a close while a form inside is mid-save.`,
 
   features: [
-    'Built on the native `<dialog>` element — top layer, `::backdrop`, and modality from the platform',
-    'Automatic focus trap — focus moves inside on open and returns to the trigger on close',
+    'Built on the native `<dialog>` element: top layer, `::backdrop`, and modality come from the platform',
+    'Automatic focus trap: focus moves inside on open and returns to the trigger on close',
     'Backdrop blur and dim, styled via `--dialog-backdrop` and `--dialog-backdrop-filter`',
     'Slide-up entry and fade-out exit animations',
     '`dismissible` (default on): built-in close button, Escape key, and backdrop click',
-    'Cancelable `arc-close` event — `preventDefault()` vetoes the close',
+    'Cancelable `arc-close` event: `preventDefault()` vetoes the close',
     'Three width presets: sm (400px), md (560px), lg (720px), plus `fullscreen`',
     '`header` and `footer` slots around arbitrary body content',
     '`heading` doubles as the dialog’s accessible name',
@@ -37,9 +37,9 @@ The component ships with three width presets (\`sm\`/\`md\`/\`lg\`), a \`fullscr
       'Cancel the `arc-close` event to hold the dialog open while an in-flight save completes',
     ],
     dont: [
-      'Do not use Dialog for a yes/no prompt — that is `arc-confirm`, which exists so you never rebuild the two-button layout',
-      'Do not stack dialogs — resolve one before opening another',
-      'Do not use Dialog for passive notifications — use Alert or Toast, which do not steal focus',
+      'Do not use Dialog for a yes/no prompt. That is `arc-confirm`, which exists so you never rebuild the two-button layout',
+      'Do not stack dialogs. Resolve one before opening another',
+      'Do not use Dialog for passive notifications. Use Alert or Toast, which do not steal focus',
       'Do not disable `dismissible` for convenience; an inescapable overlay must be earning that severity',
     ],
   },

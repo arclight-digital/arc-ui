@@ -31,7 +31,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
   static properties = {
     sticky: flag(false),
-    // Canonical members and order (V4-PLAN 4.3). It declared ['md', 'sm'] —
+    // Canonical members and order (V4-PLAN 4.3). It declared ['md', 'sm']:
     // right default, reversed order, and no `lg` at all, so a toolbar could not
     // be made taller while every other control in the library could. The
     // explicit default keeps `md` the default now that `sm` is first.
@@ -126,8 +126,8 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
         top: calc(100% + var(--space-xs));
         inset-inline-end: 0;
         /* Sizes to its widest collapsed action rather than to the width available
-           from a narrow positioned ancestor — a toolbar in a sidebar is exactly
-           the case that squeezed it. See the note in navigation/menubar.js. */
+           from a narrow positioned ancestor (a toolbar in a sidebar is exactly
+           the case that squeezed it). See the note in navigation/menubar.js. */
         width: max-content;
         min-width: 200px;
         max-width: var(--menu-max-width, min(420px, calc(100vw - 2 * var(--space-md))));
@@ -313,7 +313,7 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
       const collapsedByUs = el.hasAttribute('data-arc-overflow-hidden');
       if (toHide.has(el) && !collapsedByUs) {
         // We never own slotted light DOM, so we hide via the reversible `hidden`
-        // attribute (plus a data marker so we only ever un-hide what we hid) —
+        // attribute (plus a data marker so we only ever un-hide what we hid),
         // never style.display, which would clobber consumer inline styles.
         el.setAttribute('data-arc-overflow-hidden', '');
         el.setAttribute('hidden', '');
@@ -421,7 +421,7 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

@@ -51,7 +51,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
     _sat: { state: true },
     _lit: { state: true },
     _hexInput: { state: true },
-    // What the swatch row actually renders — see connectedCallback.
+    // What the swatch row actually renders; see connectedCallback.
     _presets: { state: true },
     _draggingArea: { state: true },
     _draggingHue: { state: true },
@@ -106,7 +106,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
         height: 14px;
         border-radius: var(--radius-full);
         border: 2px solid var(--picker-thumb-color, #fff);
-        /* Functional contrast ring over arbitrary swatch colors — stays black in all themes */
+        /* Functional contrast ring over arbitrary swatch colors; stays black in all themes */
         box-shadow: 0 0 2px rgba(var(--black-rgb), 0.6), inset 0 0 2px rgba(var(--black-rgb), 0.3);
         transform: translate(-50%, -50%);
         pointer-events: none;
@@ -195,7 +195,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
         box-sizing: border-box;
       }
 
-      /* Sizes — the current-color preview and the preset swatches. md is the
+      /* Sizes: the current-color preview and the preset swatches. md is the
          base rule above, so an unrecognized value lands on it. */
       :host([size="sm"]) .picker__preview { width: 26px; height: 26px; }
       :host([size="sm"]) .picker__swatch { width: 18px; height: 18px; }
@@ -250,8 +250,8 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
    *
    * The server only ever sees markup, so the presets it can render are the ones
    * the `presets` *attribute* carried. A page that instead assigns
-   * `.presets = [...]` from script — the documented way, since most callers
-   * have colours in hand rather than JSON in markup — hands the element that
+   * `.presets = [...]` from script (the documented way, since most callers
+   * have colours in hand rather than JSON in markup) hands the element that
    * array before it upgrades, and Lit re-applies it during the first update,
    * before this. Rendering it here would put a whole swatch row into the
    * client's first render where the server put nothing, and a part that changes
@@ -275,7 +275,7 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
     }
     // Compared by content, not identity: the seed above is a fresh array, so
     // an identity test would re-render every picker whose presets never
-    // changed — including the ones that have none.
+    // changed, including the ones that have none.
     if (changed.has('presets') && !sameColors(this._presets, this.presets)) {
       this._presets = this.presets;
     }
@@ -305,10 +305,10 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
       else if (max === g) h = ((b - r) / d + 2) * 60;
       else h = ((r - g) / d + 4) * 60;
     }
-    // Deliberately *not* rounded. Integer HSL has far fewer points than the
+    // *Not* rounded. Integer HSL has far fewer points than the
     // 16.7M hex colours this accepts, so rounding here cannot represent most of
-    // its own input — `#4d7ef7`, which used to be this component's default,
-    // came back as `#507ff7`. The visible symptom was a colour that jumped to a
+    // its own input: `#4d7ef7`, this component's old default, came back as
+    // `#507ff7`. The visible symptom was a colour that jumped to a
     // neighbour it had never been on as soon as the hue slider moved one pixel
     // (finding #62). The pointer handlers still round, and should: those values
     // come from pixels and are quantised already.
@@ -354,10 +354,10 @@ export class ArcColorPicker extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   /**
    * Called on every pointermove while dragging the saturation area or the hue
-   * track, so this is the continuous edit — arc-input. The commit is
+   * track, so this is the continuous edit: arc-input. The commit is
    * pointerup, which fires arc-change once. Dragging across the area used to
-   * emit arc-change on every frame, so anything expensive on that listener —
-   * a save, a network call — ran hundreds of times per drag.
+   * emit arc-change on every frame, so anything expensive on that listener
+   * (a save, a network call) ran hundreds of times per drag.
    */
   _updateFromHSL() {
     const hex = this._hslToHex(this._hue, this._sat, this._lit);

@@ -7,29 +7,29 @@ export const button: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Primary call-to-action element with three visual variants that map to action hierarchy. Supports prefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for navigation-driven actions across landing pages, toolbars, and forms.',
+    'Primary call-to-action element with three visual variants that map to action hierarchy. Supports prefix and suffix slots for icons. Renders as an anchor when given an href, for navigation actions on landing pages, toolbars, and forms.',
 
-  overview: `Button is the primary CTA element in ARC UI. Its three variants — primary, secondary, and ghost — map directly to a clear action hierarchy: primary draws the eye to the single most important action, secondary offers a visible but lower-emphasis alternative, and ghost provides a minimal, unobtrusive option for tertiary actions.
+  overview: `Button is the primary CTA element in ARC UI. Its three variants (primary, secondary, and ghost) map to an action hierarchy: primary is the single most important action, secondary is a visible but lower-emphasis alternative, and ghost is a minimal option for tertiary actions.
 
-The \`prefix\` and \`suffix\` slots allow you to place icons or other inline elements alongside the button label. This is useful for adding a search icon, an arrow indicator, an RSS icon, or any visual cue that reinforces the button's action.
+The \`prefix\` and \`suffix\` slots hold icons or other inline elements beside the label, such as a search icon or an arrow.
 
-For links, slot a real \`<a>\` as the button's only child. That anchor is ordinary HTML in the initial markup, so the link works with JavaScript disabled and before the element upgrades — on a slow connection your hero CTA is clickable immediately rather than after hydration. Button adopts the anchor on upgrade and styles it as the control, so there is only ever one link in the accessibility tree.
+For links, slot a real \`<a>\` as the button's only child. That anchor is ordinary HTML in the initial markup, so the link works with JavaScript disabled and before the element upgrades. On a slow connection your hero CTA is clickable immediately instead of after hydration. Button adopts the anchor on upgrade and styles it as the control, so there is only ever one link in the accessibility tree.
 
-The \`href\` attribute is still fully supported and renders an \`<a>\` in the shadow root. Reach for it inside app shells behind a login, where JavaScript is a given and the extra markup is noise. Prefer the slotted-anchor form anywhere the page is public, indexed, or first-load critical — that anchor cannot exist without JavaScript when the destination lives on the custom element instead. When no href and no slotted anchor are present, Button behaves as a standard button element for form submissions and interactive triggers.
+The \`href\` attribute is still supported and renders an \`<a>\` in the shadow root. Use it inside app shells behind a login, where JavaScript is a given and the extra markup is noise. Prefer the slotted-anchor form anywhere the page is public, indexed, or first-load critical, because when the destination lives on the custom element the anchor cannot exist without JavaScript. When no href and no slotted anchor are present, Button behaves as a standard button element for form submissions and interactive triggers.
 
-Three size presets — sm, md, and lg — let you scale buttons to their context. Use lg for hero sections and high-impact CTAs, md for general UI, and sm for compact toolbars or inline actions. All sizes maintain consistent padding ratios and touch targets.`,
+Three size presets (sm, md, lg) scale buttons to their context. Use lg for hero sections and high-impact CTAs, md for general UI, and sm for compact toolbars or inline actions. All sizes keep the same padding ratios and touch targets.`,
 
   features: [
-    'Three variants (primary, secondary, ghost) for clear action hierarchy',
+    'Three variants (primary, secondary, ghost) for action hierarchy',
     'Three size presets (sm, md, lg) scaled for context',
     'Prefix and suffix slots for icons or inline elements alongside the label',
     'Adopts a slotted <a> so links work without JavaScript and before hydration',
     'Renders as <a> with href for accessible navigation',
     'Neon glow hover effect on primary variant',
     'Focus-visible ring for keyboard accessibility',
-    'Subtle scale-down on active press for tactile feedback',
+    'Scale-down on active press',
     'Disabled state that prevents interaction and dims the element',
-    'Uppercase Tomorrow type treatment for strong visual presence',
+    'Uppercase Tomorrow type',
   ],
 
   guidelines: {
@@ -43,9 +43,9 @@ Three size presets — sm, md, and lg — let you scale buttons to their context
       'Keep button labels short and action-oriented (e.g. "Get Started", "View Docs")',
     ],
     dont: [
-      'Do not place multiple primary buttons side by side — one primary per action group',
+      'Do not place multiple primary buttons side by side. Use one primary per action group',
       'Do not use ghost variant for the most important action; it is too subtle for primary CTAs',
-      'Do not render navigation as a plain button — this hurts accessibility and SEO',
+      'Do not render navigation as a plain button; this hurts accessibility and SEO',
       'Do not put a second link inside a slotted anchor; the adopted anchor is already the control',
       'Do not use long sentences as button labels; aim for two to three words maximum',
       'Do not disable buttons without explaining why the action is unavailable',

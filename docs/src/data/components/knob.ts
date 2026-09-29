@@ -12,9 +12,9 @@ export const knob: ComponentDef = {
 
   overview: `Knob is the input a slider cannot be: a rotary control that packs a full parameter range into a compact circular footprint, so a rack of channel strips or a synth panel can put a dozen of them side by side. A 270-degree arc track fills from \`min\` to the current value, a glowing indicator line marks the position, and the readout below renders in the monospace role with tabular digits so it never shifts width while turning.
 
-Interaction follows audio-software convention. Dragging vertically turns the knob — the full range covers about 150 pixels of travel, and holding Shift slows the drag to a tenth for fine adjustment. The mouse wheel and arrow keys step by \`step\`, Page Up and Page Down jump by ten steps, and Home and End go straight to the rails. The optional \`detents\` prop names snap values (an array from script, or a comma-separated attribute): each renders as a tick mark around the dial, and a drag snaps magnetically when it lands close — the centre detent on a pan knob, unity on a gain knob. Keyboard and wheel stepping ignore detents, so precise entry is never fought.
+Interaction follows audio-software convention. Dragging vertically turns the knob (the full range covers about 150 pixels of travel), and holding Shift slows the drag to a tenth for fine adjustment. The mouse wheel and arrow keys step by \`step\`, Page Up and Page Down jump by ten steps, and Home and End go straight to the rails. The optional \`detents\` prop names snap values (an array from script, or a comma-separated attribute): each renders as a tick mark around the dial, and a drag snaps magnetically when it lands close, as with the centre detent on a pan knob or unity on a gain knob. Keyboard and wheel stepping ignore detents, so precise entry is never fought.
 
-Knob follows the v3 edit/commit contract: \`arc-input\` fires continuously while the knob turns and \`arc-change\` fires once when the turn commits, so a live preview and an expensive save can listen separately. The component participates in forms through ElementInternals, submitting its value under \`name\`, and the dial is a keyboard-operable \`role="slider"\` with the full ARIA value set — \`format\` shapes both the visible readout and the accessible value text, so a screen reader hears "440 Hz" rather than a bare number.`,
+Knob follows the v3 edit/commit contract: \`arc-input\` fires continuously while the knob turns and \`arc-change\` fires once when the turn commits, so a live preview and an expensive save can listen separately. The component participates in forms through ElementInternals, submitting its value under \`name\`, and the dial is a keyboard-operable \`role="slider"\` with the full ARIA value set. \`format\` shapes both the visible readout and the accessible value text, so a screen reader hears "440 Hz" rather than a bare number.`,
 
   features: [
     'A 270-degree SVG arc track with an accent fill from `min` to the current value and a glowing indicator line',
@@ -23,23 +23,23 @@ Knob follows the v3 edit/commit contract: \`arc-input\` fires continuously while
     'Optional `detents` render tick marks and snap the drag magnetically to named values',
     '`format` callback shapes the readout and the ARIA value text, e.g. adding a unit suffix',
     'The v3 event contract: `arc-input` continuously while turning, `arc-change` once on commit',
-    'Form participation via ElementInternals — the value submits under `name` and restores on `form.reset()`',
+    'Form participation via ElementInternals. The value submits under `name` and restores on `form.reset()`',
     'Keyboard-operable `role="slider"` dial with `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, and `aria-valuetext`',
   ],
 
   guidelines: {
     do: [
-      'Use Knob where horizontal space is scarce and controls sit in columns — mixer strips, effect panels, tool palettes',
+      'Use Knob where horizontal space is scarce and controls sit in columns: mixer strips, effect panels, tool palettes',
       'Provide a `label`; a bare dial gives no clue what parameter it turns',
       'Set `format` to include the unit, so both the readout and screen readers announce "440 Hz" rather than "440"',
-      'Put a detent at the neutral position of a bipolar parameter — 0 on a pan knob, unity on a gain knob',
+      'Put a detent at the neutral position of a bipolar parameter: 0 on a pan knob, unity on a gain knob',
       'Listen to `arc-input` for live audible or visible preview and to `arc-change` for persisting the committed value',
     ],
     dont: [
-      'Do not use Knob for a wide-layout single value where a slider fits — a slider shows its whole range at a size a knob cannot',
-      'Do not use Knob for exact numeric entry — pair it with or replace it by Number Input when users need to type a value',
+      'Do not use Knob for a wide-layout single value where a slider fits. A slider shows its whole range at a size a knob cannot',
+      'Do not use Knob for exact numeric entry. Pair it with or replace it by Number Input when users need to type a value',
       'Do not scatter detents densely across the range; a magnet every few units makes smooth dragging impossible',
-      'Do not rely on the dial alone to convey the value — the readout below it is part of the control, so leave it visible',
+      'Do not rely on the dial alone to convey the value. The readout below it is part of the control, so leave it visible',
     ],
   },
 

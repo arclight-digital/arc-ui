@@ -15,7 +15,7 @@ export const imageCropper: ComponentDef = {
 
 Setting the \`aspect\` prop (width/height, e.g. \`1\` for square avatars or \`16/9\`) locks the rectangle to that ratio through every drag, resize, and keyboard interaction. Leave it at \`0\` for free-form cropping. The rectangle is always clamped to the visible image and never shrinks below 32px.
 
-The component exposes three methods: \`getCrop()\` returns \`{ x, y, width, height }\` in natural image pixel coordinates (letterbox scale and zoom are accounted for precisely); \`getCroppedBlob(type, quality)\` and \`getCroppedDataUrl(type, quality)\` draw the crop to an offscreen canvas at natural resolution. Canvas export requires \`src\` to be same-origin or served with CORS headers — a cross-origin image taints the canvas and the methods throw a descriptive error. The \`arc-crop-change\` event fires with natural-pixel coordinates, debounced to animation frames during drags.`,
+The component exposes three methods: \`getCrop()\` returns \`{ x, y, width, height }\` in natural image pixel coordinates (letterbox scale and zoom are accounted for precisely); \`getCroppedBlob(type, quality)\` and \`getCroppedDataUrl(type, quality)\` draw the crop to an offscreen canvas at natural resolution. Canvas export requires \`src\` to be same-origin or served with CORS headers. A cross-origin image taints the canvas and the methods throw a descriptive error. The \`arc-crop-change\` event fires with natural-pixel coordinates, debounced to animation frames during drags.`,
 
   features: [
     'Draggable crop rectangle with 8 resize handles (corners + edges) and touch-friendly hit areas',
@@ -39,10 +39,10 @@ The component exposes three methods: \`getCrop()\` returns \`{ x, y, width, heig
       'Serve remote images from the same origin or with CORS headers so canvas export works',
     ],
     dont: [
-      'Do not pass a cross-origin `src` without CORS headers if you need `getCroppedBlob()` / `getCroppedDataUrl()` — the canvas will be tainted and the methods throw',
-      'Do not read crop coordinates from the rectangle position on screen — always use `getCrop()`, which converts to natural image pixels',
-      'Do not set `height` smaller than ~160px — the crop rectangle and handles need room to operate',
-      'Do not use ImageCropper for simple display-only image framing — use CSS `object-fit` or an aspect-ratio container instead',
+      'Do not pass a cross-origin `src` without CORS headers if you need `getCroppedBlob()` / `getCroppedDataUrl()`. The canvas will be tainted and the methods throw',
+      'Do not read crop coordinates from the rectangle position on screen. Use `getCrop()` instead, which converts to natural image pixels',
+      'Do not set `height` smaller than ~160px. The crop rectangle and handles need room to operate',
+      'Do not use ImageCropper for simple display-only image framing. Use CSS `object-fit` or an aspect-ratio container instead',
     ],
   },
 

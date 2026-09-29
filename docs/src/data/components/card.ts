@@ -7,21 +7,21 @@ export const card: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Content container with subtle border styling and hover effects. Links the entire card surface when an href is provided, creating a seamless clickable area with an animated gradient border.',
+    'Content container with a subtle border and hover effects. Links the entire card surface when an href is provided, with an animated gradient border.',
 
-  overview: `Card is the foundational content container in ARC UI. It wraps any slotted content inside a rounded, bordered surface that sits on top of the page background, giving visual separation and hierarchy to grouped information.
+  overview: `Card is the content container in ARC UI. It wraps any slotted content in a rounded, bordered surface that sits on top of the page background, separating grouped information from its surroundings.
 
-When you provide an \`href\` attribute, the card transforms into a full-surface link. On hover, a gradient border animates from blue to violet, and the inner surface gains a subtle lift shadow. This makes linked cards ideal for navigation grids, project listings, and dashboard tiles where the entire card should be clickable.
+When you provide an \`href\` attribute, the card transforms into a full-surface link. On hover, a gradient border animates from blue to violet, and the inner surface gains a subtle lift shadow. Linked cards suit navigation grids, project listings, and dashboard tiles where the entire card should be clickable.
 
-Cards are intentionally unopinionated about their inner layout. Slot any combination of headings, paragraphs, badges, icons, or images inside and style them with your own markup. The card handles the outer chrome — border, radius, background, padding, focus ring, and responsive adjustments — so you can focus on content.`,
+Cards have no opinion about their inner layout. Slot any headings, paragraphs, badges, icons, or images inside and style them with your own markup. The card handles the outer chrome (border, radius, background, padding, focus ring, and responsive adjustments).`,
 
   features: [
     'Gradient border hover animation on linked cards (blue to violet)',
-    'Full-surface link behavior when href is set — no nested anchor tags needed',
+    'Full-surface link behavior when href is set, so no nested anchor tags are needed',
     'Accessible focus ring with glow effect for keyboard navigation',
     'Responsive padding that tightens on small viewports',
-    'Footer slot for actions, links, or metadata — no visual chrome, hidden when empty',
-    'CSS parts (card, body, footer, inner) for deep style customization',
+    'Footer slot for actions, links, or metadata, with no visual chrome and hidden when empty',
+    'CSS parts (card, body, footer, inner) for style customization',
     'Equal-height support via height: 100% for grid layouts',
     'Dark-mode-native design with subtle inset highlight on hover',
   ],
@@ -31,13 +31,13 @@ Cards are intentionally unopinionated about their inner layout. Slot any combina
       'Use cards to group related content that belongs together visually',
       'Provide an href when the entire card should navigate somewhere',
       'Place cards in CSS Grid or Flexbox layouts for consistent sizing',
-      'Keep card content concise — a heading, short description, and optional metadata',
+      'Keep card content concise: a heading, short description, and optional metadata',
       'Use arc-badge or arc-tag inside cards to surface status or category information',
     ],
     dont: [
-      'Do not nest interactive elements (buttons, links) inside a linked card — it creates conflicting click targets',
-      'Do not use cards for single lines of text — prefer inline elements or a list instead',
-      'Do not overload a card with too much content — if it needs scrolling, break it into sections',
+      'Do not nest interactive elements (buttons, links) inside a linked card; it creates conflicting click targets',
+      'Do not use cards for single lines of text. Use inline elements or a list instead',
+      'Do not overload a card with too much content. If it needs scrolling, break it into sections',
       'Do not mix linked and non-linked cards in the same grid without visual distinction',
     ],
   },

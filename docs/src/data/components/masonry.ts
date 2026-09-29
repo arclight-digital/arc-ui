@@ -9,17 +9,17 @@ export const masonry: ComponentDef = {
   description:
     'Pinterest-style vertical-pack grid using CSS columns for efficient masonry layout without JavaScript.',
 
-  overview: `Masonry is a layout primitive that arranges variable-height children into a Pinterest-style vertical-pack grid using pure CSS columns. Items flow top-to-bottom within each column, filling vertical space efficiently without leaving gaps — the classic masonry pattern used in image galleries, card feeds, and content discovery interfaces.
+  overview: `Masonry is a layout primitive that arranges variable-height children into a Pinterest-style vertical-pack grid using pure CSS columns. Items flow top-to-bottom within each column, filling vertical space efficiently without leaving gaps. This is the classic masonry pattern used in image galleries, card feeds, and content discovery interfaces.
 
-The component uses CSS \`column-count\` and \`column-gap\` under the hood, which means layout is handled entirely by the browser with zero JavaScript overhead. Each child element is automatically placed into the shortest column, creating a tightly packed grid that adapts to varying content heights. The \`columns\` prop controls the number of columns, while the \`gap\` prop maps to design system spacing tokens for consistent rhythm.
+The component uses CSS \`column-count\` and \`column-gap\` so layout is handled entirely by the browser with zero JavaScript overhead. The browser balances the columns: children fill the first column top to bottom, then the next, and the break points are chosen so the columns end at similar heights. The \`columns\` prop controls the number of columns, while the \`gap\` prop maps to design system spacing tokens for consistent rhythm.
 
-Use Masonry when your content items have naturally varying heights — image galleries, blog post cards, testimonial collections, or any feed where uniform row heights would waste space. For uniform aspect-ratio grids, use AspectGrid instead. For responsive column-to-stack behavior, combine Masonry with ResponsiveSwitcher.`,
+Use Masonry when your content items have naturally varying heights: image galleries, blog post cards, testimonial collections, or any feed where uniform row heights would waste space. For uniform aspect-ratio grids, use AspectGrid instead. For responsive column-to-stack behavior, combine Masonry with ResponsiveSwitcher.`,
 
   features: [
-    'Pure CSS columns layout — zero JavaScript for masonry positioning',
+    'Pure CSS columns layout with zero JavaScript for masonry positioning',
     'Configurable column count via the `columns` prop',
     'Design-token-based gap spacing (sm, md, lg) for consistent rhythm',
-    'Vertical-pack flow fills shortest columns first for tight packing',
+    'Balanced columns: the browser splits children so the columns end at similar heights',
     'Break-inside: avoid ensures children are never split across columns',
     'Lightweight wrapper with no resize observers or layout calculations',
     'CSS part: `grid` for targeted ::part() styling',
@@ -29,16 +29,16 @@ Use Masonry when your content items have naturally varying heights — image gal
     do: [
       'Use for image galleries with varying aspect ratios',
       'Use for card feeds where content height varies (blog posts, testimonials, products)',
-      'Set columns to match the expected viewport width — 2 for narrow, 3-4 for wide',
+      'Set columns to match the expected viewport width: 2 for narrow, 3-4 for wide',
       'Combine with ResponsiveSwitcher to reduce columns on smaller screens',
       'Use gap="md" for most card-based layouts; gap="sm" for dense image grids',
     ],
     dont: [
-      'Do not use Masonry for uniform-height content — use a regular CSS grid or AspectGrid instead',
+      'Do not use Masonry for uniform-height content. Use a regular CSS grid or AspectGrid instead',
       'Do not set very high column counts (>5) as it creates unreadably narrow columns',
-      'Do not expect left-to-right reading order — masonry flows top-to-bottom per column',
+      'Do not expect left-to-right reading order. Masonry flows top-to-bottom per column',
       'Do not nest Masonry inside Masonry',
-      'Do not use for layouts that require precise item ordering — column flow is determined by height',
+      'Do not use for layouts that require precise item ordering. Column flow is determined by height',
     ],
   },
 

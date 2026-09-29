@@ -4,7 +4,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring
- * easing. For bulk actions, unsaved-changes prompts.
+ * easing. For bulk actions and unsaved-changes prompts.
  *
  * @tag arc-float-bar
  * @status stable
@@ -43,8 +43,8 @@ export class ArcFloatBar extends DeclaredPropsMixin(LitElement) {
         align-items: center;
         gap: var(--space-sm);
         z-index: 100;
-        transition: transform var(--transition-base) var(--ease-out-expo),
-                    opacity var(--transition-base) var(--ease-out-expo);
+        transition: transform var(--duration-base) var(--ease-out-expo),
+                    opacity var(--duration-base) var(--ease-out-expo);
         opacity: 1;
       }
 

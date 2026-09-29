@@ -4,9 +4,16 @@
 
   interface Props {
     language?: string;
+    label?: string;
     filename?: string;
     code?: string;
     variant?: 'default' | 'window' | 'basic';
+    prompt?: string;
+    lineNumbers?: boolean;
+    highlight?: string;
+    diff?: boolean;
+    wrap?: boolean;
+    maxLines?: number;
     class?: string;
     id?: string;
     style?: string;
@@ -34,8 +41,16 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { language = '', filename = '', code = '', variant = 'default', ...rest }: Props = $props();
+  let { language = '', label = '', filename = '', code = '', variant = 'default', prompt, lineNumbers = false, highlight = '', diff = false, wrap = false, maxLines, ...rest }: Props = $props();
+
+  let __el: HTMLElement | undefined = $state();
+  $effect(() => {
+    const el = __el as unknown as Record<string, unknown> | undefined;
+    if (!el) return;
+    if (lineNumbers !== undefined) el.lineNumbers = lineNumbers;
+    if (maxLines !== undefined) el.maxLines = maxLines;
+  });
 </script>
 
-<arc-code-block {language} {filename} {code} {variant} {...rest}>
+<arc-code-block {language} {label} {filename} {code} {variant} {prompt} {highlight} {diff} {wrap} bind:this={__el} {...rest}>
 </arc-code-block>

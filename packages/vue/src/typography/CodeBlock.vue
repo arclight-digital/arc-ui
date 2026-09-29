@@ -6,23 +6,47 @@ defineOptions({ name: 'CodeBlock' });
 
 const props = withDefaults(defineProps<{
   language?: string;
+  label?: string;
   filename?: string;
   code?: string;
   variant?: 'default' | 'window' | 'basic';
+  prompt?: string;
+  lineNumbers?: boolean;
+  highlight?: string;
+  diff?: boolean;
+  wrap?: boolean;
+  maxLines?: number;
 }>(), {
   language: '',
+  label: '',
   filename: '',
   code: '',
   variant: 'default',
+  lineNumbers: false,
+  highlight: '',
+  diff: false,
+  wrap: false,
 });
+
+const emit = defineEmits<{
+  'arc-toggle': [event: CustomEvent];
+}>();
 </script>
 
 <template>
   <arc-code-block
     :language="props.language"
+    :label="props.label"
     :filename="props.filename"
     :code="props.code"
     :variant="props.variant"
+    :prompt="props.prompt"
+    :lineNumbers="props.lineNumbers"
+    :highlight="props.highlight"
+    :diff="props.diff"
+    :wrap="props.wrap"
+    :maxLines="props.maxLines"
+    @arc-toggle="(payload: CustomEvent) => emit('arc-toggle', payload)"
   >
   </arc-code-block>
 </template>

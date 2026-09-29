@@ -7,13 +7,13 @@ export const commandBar: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Always-visible search input designed to sit inside a top bar. Accent-primary bottom border on focus with glow ring.',
+    'Always-visible search input that sits inside a top bar. Accent-primary bottom border on focus with a glow ring.',
 
-  overview: `CommandBar is a persistent search-and-command input designed to live permanently inside a TopBar or toolbar region. Unlike CommandPalette, which is a modal overlay triggered by a keyboard shortcut, CommandBar is always visible and ready for input. This makes it ideal for applications where search is a primary workflow — admin dashboards, documentation sites, and developer tools that benefit from an always-accessible entry point.
+  overview: `CommandBar is a persistent search-and-command input that lives inside a TopBar or toolbar region. Unlike CommandPalette, which is a modal overlay triggered by a keyboard shortcut, CommandBar is always visible and ready for input. It suits applications where search is a primary workflow, such as admin dashboards, documentation sites, and developer tools.
 
-When focused, the input reveals an accent-primary bottom border with a subtle glow ring, drawing the user's eye without disrupting the surrounding layout. The component dispatches \`arc-input\` on every keystroke for live filtering and \`arc-submit\` when the user presses Enter, making it easy to wire up search-as-you-type or explicit command submission patterns.
+When focused, the input reveals an accent-primary bottom border with a subtle glow ring. The component dispatches \`arc-input\` on every keystroke for live filtering and \`arc-submit\` when the user presses Enter, so you can wire up search-as-you-type or explicit command submission.
 
-CommandBar is intentionally minimal — it handles the input chrome and events while leaving result rendering to your application. Pair it with a dropdown or popover to display search results, or route the submitted value to a dedicated search results page. For modal command experiences, use CommandPalette instead.`,
+CommandBar is minimal: it handles the input chrome and events and leaves result rendering to your application. Pair it with a dropdown or popover to display search results, or route the submitted value to a dedicated search results page. For modal command experiences, use CommandPalette instead.`,
 
   features: [
     'Always-visible search input for persistent toolbar placement',
@@ -35,11 +35,11 @@ CommandBar is intentionally minimal — it handles the input chrome and events w
       'Constrain the width with max-width so the bar does not dominate the toolbar',
     ],
     dont: [
-      'Do not use CommandBar when search is secondary — prefer CommandPalette for on-demand access',
+      'Do not use CommandBar when search is secondary. Prefer CommandPalette for on-demand access',
       'Do not place multiple CommandBars on the same page',
-      'Do not omit the placeholder — an empty input gives no affordance',
-      'Do not use CommandBar as a general-purpose text input — it is styled for search context only',
-      'Do not forget to handle the arc-submit event — users expect Enter to do something',
+      'Do not omit the placeholder; an empty input gives no affordance',
+      'Do not use CommandBar as a general-purpose text input; it is styled for search only',
+      'Do not forget to handle the arc-submit event; users expect Enter to do something',
     ],
   },
 

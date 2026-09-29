@@ -6,14 +6,14 @@ import './dialog.js';
 /**
  * Confirmation prompt, in both of the shapes a confirmation needs.
  *
- * **Imperative:** `ArcConfirm.open({ heading, message, variant })` returns a `Promise<boolean>` —
+ * **Imperative:** `ArcConfirm.open({ heading, message, variant })` returns a `Promise<boolean>`,
  * the shape you want at a call site that has to decide something before continuing.
  * **Declarative:** the element itself, with `open` bound and `arc-confirm`/`arc-cancel` listened
- * for — the shape you want when the prompt is part of a template.
+ * for: the shape you want when the prompt is part of a template.
  *
  * V4-SCOPE §3.3: those two are different shapes rather than duplicates of each other, which is why
- * both survive. The duplicate was the old `<arc-dialog>` — a third spelling of this same prompt,
- * with a strict subset of these props and no slot — and it merged in here. The `arc-dialog` tag
+ * both survive. The duplicate was the old `<arc-dialog>`, a third spelling of this same prompt,
+ * with a strict subset of these props and no slot, and it merged in here. The `arc-dialog` tag
  * now names the modal primitive this is built on (renamed from `arc-modal`), and that component
  * throws in dev if it is handed `message` or `confirmLabel`, so the reuse of the name cannot fail
  * quietly.
@@ -27,10 +27,10 @@ import './dialog.js';
  * @prop {string} message - The body message explaining what the user is confirming. Used as the fallback for the default slot, so it is the simplest way to set the body and the only one available to the imperative `ArcConfirm.open()` API.
  * @prop {string} confirmLabel - Label for the confirm button. Use a specific verb like "Delete" or "Publish" instead of generic "OK".
  * @prop {string} cancelLabel - Label for the cancel button. Use a specific alternative like "Keep" or "Go back" when possible.
- * @prop {'default' | 'error'} variant - Controls the confirm button style. Use "error" for destructive actions — the confirm button renders in the error color.
+ * @prop {'default' | 'error'} variant - Controls the confirm button style. Use "error" for destructive actions; the confirm button renders in the error color.
  * @fires {CustomEvent<void>} arc-confirm - Fired when the user clicks the confirm button
  * @fires {CustomEvent<void>} arc-cancel - Fired when the user clicks cancel, presses Escape, or clicks the backdrop
- * @slot - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.
+ * @slot - Body content, for when the confirmation needs markup the `message` string cannot carry, such as a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.
  * @csspart base - The root element.
  * @csspart message
  * @csspart cancel
@@ -57,7 +57,7 @@ export class ArcConfirm extends DeclaredPropsMixin(LitElement) {
         line-height: var(--body-lh);
       }
 
-      /* Slotted bodies are usually a sentence with one thing picked out of it —
+      /* Slotted bodies are usually a sentence with one thing picked out of it,
          most often the name of whatever is about to be deleted. Inherited
          properties cross the shadow boundary on their own; these two do not,
          and a filename in the UA's default monospace is the tell. */

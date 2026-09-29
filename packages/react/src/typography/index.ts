@@ -35,3 +35,6 @@ export type { TerminalProps } from './Terminal.js';
 
 export { KeyboardMap } from './KeyboardMap.js';
 export type { KeyboardMapProps } from './KeyboardMap.js';
+
+export { CodeGroup } from './CodeGroup.js';
+export type { CodeGroupProps } from './CodeGroup.js';

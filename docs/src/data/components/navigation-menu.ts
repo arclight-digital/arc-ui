@@ -26,21 +26,21 @@ export const navigationMenu: ComponentDef = {
   description:
     'Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard accessibility. Designed for marketing sites, documentation hubs, and product landing pages where top-level sections expand into categorised link lists.',
 
-  overview: `NavigationMenu is a horizontal nav bar that pairs top-level links with hover-triggered dropdown panels. It is the right choice whenever a site needs to expose multiple content categories — products, solutions, resources — without cluttering the header with dozens of links. Each top-level item can be a simple link or a parent that reveals a dropdown on hover (and on click for touch devices).
+  overview: `NavigationMenu is a horizontal nav bar that pairs top-level links with hover-triggered dropdown panels. It is the right choice whenever a site needs to expose multiple content categories (products, solutions, resources) without cluttering the header with dozens of links. Each top-level item can be a simple link or a parent that reveals a dropdown on hover (and on click for touch devices).
 
-Dropdown items support an optional description line, turning each link into a mini feature card. This "mega-menu" pattern helps users scan a large information architecture at a glance rather than drilling through nested pages. Because descriptions are optional, the same component works for both rich marketing navs and lean documentation menus.
+Dropdown items support an optional description line, turning each link into a mini feature card. This "mega-menu" pattern helps users scan a large information architecture at a glance rather than drilling through nested pages. Because descriptions are optional, the same component works for both full marketing navs and lean documentation menus.
 
-Keyboard support is built in from the start. Arrow keys move between top-level items, Enter and Space toggle dropdowns, and Escape closes any open panel and returns focus to the trigger. All ARIA attributes — \`aria-expanded\`, \`aria-haspopup\`, and \`role="menu"\` / \`role="menuitem"\` — are managed automatically. When a link is navigated, the component dispatches an \`arc-navigate\` custom event so frameworks can intercept client-side routing without full page reloads.`,
+Keyboard support is built in. Arrow keys move between top-level items, Enter and Space toggle dropdowns, and Escape closes any open panel and returns focus to the trigger. The component manages all ARIA attributes (\`aria-expanded\`, \`aria-haspopup\`, and \`role="menu"\` / \`role="menuitem"\`) automatically. When a link is navigated, the component dispatches an \`arc-navigate\` custom event so frameworks can intercept client-side routing without full page reloads.`,
 
   features: [
-    'Hover-triggered dropdowns with smooth fade-and-slide transition',
+    'Hover-triggered dropdowns with a fade-and-slide transition',
     'Click fallback for touch devices and assistive tech',
     'Full keyboard navigation with Arrow, Enter, Space, and Escape keys',
     'Automatic ARIA attributes (`aria-expanded`, `aria-haspopup`, `role="menu"`)',
     'Optional description text per dropdown item for mega-menu layouts',
     'Active state indicator via accent-colored bottom border',
     '`arc-navigate` custom event for client-side routing integration',
-    'Graceful close delay prevents accidental dismissal on mouse exit',
+    'Short close delay prevents accidental dismissal on mouse exit',
     'CSS custom-property theming via design tokens',
     'Shadow DOM encapsulation with ::part() hooks for targeted styling',
   ],
@@ -55,11 +55,11 @@ Keyboard support is built in from the start. Arrow keys move between top-level i
       'Place NavigationMenu inside a TopBar or sticky header for consistent positioning',
     ],
     dont: [
-      'Do not nest dropdowns more than one level deep — the component is flat by design',
+      'Do not nest dropdowns more than one level deep: the component is flat by design',
       'Do not mix NavigationMenu and Sidebar in the same viewport; pick one navigation pattern',
-      'Do not use NavigationMenu for in-page section links — use ScrollSpy or Tabs instead',
+      'Do not use NavigationMenu for in-page section links; use ScrollSpy or Tabs instead',
       'Do not omit href on leaf items; every clickable link should have a destination',
-      'Do not add more than six or seven items per dropdown — group into separate top-level categories instead',
+      'Do not add more than six or seven items per dropdown; group into separate top-level categories instead',
       'Do not rely on hover alone for critical paths; ensure click and keyboard access too',
     ],
   },

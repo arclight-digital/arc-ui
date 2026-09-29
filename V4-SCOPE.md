@@ -393,7 +393,7 @@ array rather than as slotted children, so it has no element to migrate to and go
 | `arc-field-list`, `arc-field-row` | keep — app. Added in 4.6 (test-findings #118): a repeating form field. The application owns the rows; the list asks for changes and handles focus, limits, reordering and announcements. `arc-sortable-list` reorders but has no idea of a form row. |
 | `arc-settings-nav-item` | keep — app. Added in 4.6 (test-findings #120): the nav item `arc-settings-layout` lacked, with an active state from the URL hash and a tab row on phones. |
 
-### typography (14)
+### typography (15)
 
 | tag | verdict |
 |---|---|
@@ -401,6 +401,7 @@ array rather than as slotted children, so it has no element to migrate to and go
 | `arc-keyboard-map` | **keep — app** — removed from the delete list; pairs with `arc-hotkey` and `arc-shortcut-help` (§2.6) |
 | `arc-terminal` | **keep — app** — reclassified from "devtool"; its hardcoded macOS traffic-light hex triplets get tokens in 4.5 |
 | `arc-code-block` | **keep — app** — the docs site depends on it; same 4.5 token fix |
+| `arc-code-group` | keep — app. Added in 4.8: one block with tabs over variants of the same code (package managers, product editions), a single copy button, and `sync-key` to switch groups together. Asked for by getpulsar.dev, which stacked near-identical install blocks. Light: it does not import arc-code-block, so it can sit in the barrel. |
 | `arc-blockquote`, `arc-highlight`, `arc-kbd`, `arc-markdown`, `arc-number-format`, `arc-prose`, `arc-text`, `arc-time-ago`, `arc-truncate` | keep — app |
 
 ## 5. Additions (V4-PLAN 1.5) — RATIFIED

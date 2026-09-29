@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-preact",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "Preact wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -267,6 +267,10 @@
     "./CodeBlock": {
       "types": "./dist/typography/CodeBlock.d.ts",
       "default": "./dist/typography/CodeBlock.js"
+    },
+    "./CodeGroup": {
+      "types": "./dist/typography/CodeGroup.d.ts",
+      "default": "./dist/typography/CodeGroup.js"
     },
     "./GradientText": {
       "types": "./dist/typography/GradientText.d.ts",

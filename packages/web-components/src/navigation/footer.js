@@ -10,7 +10,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @tag arc-footer
  * @status stable
  * @requires arc-container
- * @prop {'default' | 'compact'} density - Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.
+ * @prop {'default' | 'compact'} density - Visual density. 'compact' reduces internal padding and spacing throughout the footer, for dashboard layouts or admin panels where vertical space is limited.
  * @prop {boolean} border - Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant.
  * @prop {string} contained - Sets a max-width containment on the footer content. Accepts any CSS length value or named size token.
  * @prop {'left' | 'center'} align - Controls footer content alignment.

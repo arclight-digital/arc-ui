@@ -12,8 +12,9 @@ const props = withDefaults(defineProps<{
   fixed?: boolean;
   contained?: string;
   menuOpen?: boolean;
-  mobileMenu?: string;
+  mobileMenu?: 'sidebar' | 'nav' | 'none';
   menuPosition?: string;
+  mobileCenter?: 'center' | 'end' | 'hidden';
   navAlign?: 'left' | 'center' | 'right';
 }>(), {
   heading: '',
@@ -24,6 +25,7 @@ const props = withDefaults(defineProps<{
   menuOpen: false,
   mobileMenu: 'sidebar',
   menuPosition: 'left',
+  mobileCenter: 'center',
   navAlign: 'center',
 });
 
@@ -44,6 +46,7 @@ const emit = defineEmits<{
     :menuOpen="props.menuOpen"
     :mobileMenu="props.mobileMenu"
     :menuPosition="props.menuPosition"
+    :mobileCenter="props.mobileCenter"
     :navAlign="props.navAlign"
     @arc-sidebar-toggle="(payload: CustomEvent) => emit('arc-sidebar-toggle', payload)"
     @arc-mobile-menu-toggle="(payload: CustomEvent) => emit('arc-mobile-menu-toggle', payload)"

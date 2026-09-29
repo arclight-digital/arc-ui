@@ -28,11 +28,11 @@
     },
     {
       "name": "arc-aspect-ratio",
-      "description": "Container that enforces a consistent width-to-height ratio on its content, ideal for images,\nvideos, and embedded media.\n---\n\n\n### **Methods:**\n - **parseRatio(value)** - `W/H` if the string is a usable ratio, else null.\n\nA zero on either side is rejected rather than passed through: `0/5` matched\nthe old format check, reached the CSS as `aspect-ratio: 0 / 5`, and\ncollapsed the box. The guard for exactly that (`if (w === 0) …`) existed —\ninside `_paddingFallback`, a getter the render never called, so the check\nhad been written and then stranded. That getter is gone; its docstring\npromised a padding-top fallback \"for browsers that don't support the\naspect-ratio CSS property\" and nothing rendered one, which is the same\ndoc/code drift as the rest of this batch.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **inner**",
+      "description": "Container that enforces a consistent width-to-height ratio on its content, ideal for images,\nvideos, and embedded media.\n---\n\n\n### **Methods:**\n - **parseRatio(value)** - `W/H` if the string is a usable ratio, else null.\n\nA zero on either side is rejected: `0/5` would reach the CSS as\n`aspect-ratio: 0 / 5` and collapse the box.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **inner**",
       "attributes": [
         {
           "name": "ratio",
-          "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using.",
+          "description": "Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9`, so reading `ratio` back always gives the ratio the component is actually using.",
           "values": []
         }
       ],
@@ -99,7 +99,7 @@
     },
     {
       "name": "arc-card",
-      "description": "Content container with subtle border styling and hover effects. Links the entire card surface\nwhen an href is provided, creating a seamless clickable area with an animated gradient border.\n---\n\n\n### **Slots:**\n - _default_ - Default content. Wrapping the content in a single `<a>` adopts it as the card's link — the recommended form for cards that must work before hydration or without JavaScript. The anchor fills the padded surface; the `footer` slot stays outside it so footer actions remain separately clickable.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **body**\n- **footer**\n- **card**\n- **inner**",
+      "description": "Content container with subtle border styling and hover effects. Links the entire card surface\nwhen an href is provided, making the whole card one clickable area with an animated gradient border.\n---\n\n\n### **Slots:**\n - _default_ - Default content. Wrapping the content in a single `<a>` adopts it as the card's link. This is the recommended form for cards that must work before hydration or without JavaScript. The anchor fills the padded surface; the `footer` slot stays outside it so footer actions remain separately clickable.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **body**\n- **footer**\n- **card**\n- **inner**",
       "attributes": [
         {
           "name": "href",
@@ -175,7 +175,7 @@
     },
     {
       "name": "arc-color-swatch",
-      "description": "Color sample square with label — useful for token docs.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **swatch**\n- **color**\n- **label**",
+      "description": "Color sample square with label, useful for token docs.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **swatch**\n- **color**\n- **label**",
       "attributes": [
         {
           "name": "color",
@@ -306,7 +306,7 @@
     },
     {
       "name": "arc-hotspot",
-      "description": "A single glowing pin inside an Image Hotspots surface. The pin sits at percentage coordinates\nover the slotted image and opens a small anchored popover holding the slotted detail content.\nInside an arc-image-hotspots parent, opening one pin closes any other open pin.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the popover opens. detail.value carries the label, or the pin's index within its parent when no label is set.\n- **arc-close** - Fired before the popover closes and cancelable — preventDefault() vetoes the close. detail.value matches arc-open.\n\n### **Methods:**\n - **close(restoreFocus: _boolean_): _void_** - Close the popover, firing the cancelable `arc-close` first — so a listener\nthat calls `preventDefault()` keeps it open, whoever asked for the close.\n\narc-image-hotspots calls this to enforce one-open-at-a-time, which is why\na consumer's veto is honoured there too and not only on a manual close.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pin**\n- **panel**",
+      "description": "A single glowing pin inside an Image Hotspots surface. The pin sits at percentage coordinates\nover the slotted image and opens a small anchored popover holding the slotted detail content.\nInside an arc-image-hotspots parent, opening one pin closes any other open pin.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the popover opens. detail.value carries the label, or the pin's index within its parent when no label is set.\n- **arc-close** - Fired before the popover closes and cancelable: preventDefault() vetoes the close. detail.value matches arc-open.\n\n### **Methods:**\n - **close(restoreFocus: _boolean_): _void_** - Close the popover, firing the cancelable `arc-close` first, so a listener\nthat calls `preventDefault()` keeps it open, whoever asked for the close.\n\narc-image-hotspots calls this to enforce one-open-at-a-time, which is why\na consumer's veto is honoured there too and not only on a manual close.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pin**\n- **panel**",
       "attributes": [
         {
           "name": "x",
@@ -320,7 +320,7 @@
         },
         {
           "name": "label",
-          "description": "Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader.",
+          "description": "Accessible name for the pin button, repeated as the heading of the popover. Always set it: without a label the pin announces nothing useful to a screen reader.",
           "values": []
         },
         {
@@ -333,11 +333,11 @@
     },
     {
       "name": "arc-icon-library",
-      "description": "Switches the icon set every arc-icon on the page resolves against. Renders nothing itself —\nput one anywhere in the document and it applies globally.\n---\n",
+      "description": "Switches the icon set every arc-icon on the page resolves against. Renders nothing itself.\nPut one anywhere in the document and it applies globally.\n---\n",
       "attributes": [
         {
           "name": "name",
-          "description": "Which registered icon library to resolve names against — `phosphor` or `lucide` from `@arclux/arc-ui-icons`, or the name a custom library was registered under.",
+          "description": "Which registered icon library to resolve names against: `phosphor` or `lucide` from `@arclux/arc-ui-icons`, or the name a custom library was registered under.",
           "values": []
         }
       ],
@@ -345,7 +345,7 @@
     },
     {
       "name": "arc-icon",
-      "description": "Renders icons by name from any registered library — Phosphor (1,500+) and Lucide (1,900+) ship in\n`@arclux/arc-ui-icons` — with one-line library switching and custom icon registration.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **icon**",
+      "description": "Renders icons by name from any registered library. Phosphor (1,500+) and Lucide (1,900+) ship in\n`@arclux/arc-ui-icons`, with one-line library switching and custom icon registration.\n---\n\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **icon**",
       "attributes": [
         {
           "name": "name",
@@ -373,7 +373,7 @@
     },
     {
       "name": "arc-image-compare",
-      "description": "Before/after image comparison: two layered images with a draggable divider revealing one over\nthe other. The `before` layer sits on top, clipped to the region between the start edge and the\ndivider; dragging the handle (or pressing arrow keys on it) moves the reveal line.\n\nThe clip is pure CSS driven by a private custom property, so the component server-renders at\nits initial position with no client-side measurement.\n\n`orientation` is named for the axis the divider *moves* along: `horizontal` (the default)\nslides a vertical divider line left and right; `vertical` slides a horizontal divider line up\nand down.\n\nThe position axis is logical: 0 is the inline-start edge (left in LTR, right in RTL) for\nhorizontal orientation, and the block-start edge (top) for vertical. Before/after has no\ninherent screen direction — unlike an audio timeline there is no convention fixing it — so the\ncontrol mirrors with the document like the rest of the reading order. Arrow keys follow the\ndivider's visible motion.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while dragging (every pointer move) and on each keyboard nudge. `value` is the position, 0-100. Use for live readouts.\n- **arc-change** - Fired once when the position commits: on pointer release, or with each keyboard nudge. Use for persisting the position.\n\n### **Slots:**\n - **before** - The \"before\" image (`<img>` or `<arc-image>`), revealed between the start edge and the divider.\n- **after** - The \"after\" image (`<img>` or `<arc-image>`). Sits underneath and sizes the component.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container** - The clipping frame wrapping both layers.\n- **before** - The clipped before layer.\n- **after** - The base after layer.\n- **divider** - The hairline divider.\n- **handle** - The circular grab handle (the focusable slider).\n- **label-before** - The before caption chip.\n- **label-after** - The after caption chip.",
+      "description": "Before/after image comparison: two layered images with a draggable divider revealing one over\nthe other. The `before` layer sits on top, clipped to the region between the start edge and the\ndivider; dragging the handle (or pressing arrow keys on it) moves the reveal line.\n\nThe clip is pure CSS driven by a private custom property, so the component server-renders at\nits initial position with no client-side measurement.\n\n`orientation` is named for the axis the divider *moves* along: `horizontal` (the default)\nslides a vertical divider line left and right; `vertical` slides a horizontal divider line up\nand down.\n\nThe position axis is logical: 0 is the inline-start edge (left in LTR, right in RTL) for\nhorizontal orientation, and the block-start edge (top) for vertical. Before/after has no\ninherent screen direction (unlike an audio timeline there is no convention fixing it), so the\ncontrol mirrors with the document like the rest of the reading order. Arrow keys follow the\ndivider's visible motion.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while dragging (every pointer move) and on each keyboard nudge. `value` is the position, 0-100. Use for live readouts.\n- **arc-change** - Fired once when the position commits: on pointer release, or with each keyboard nudge. Use for persisting the position.\n\n### **Slots:**\n - **before** - The \"before\" image (`<img>` or `<arc-image>`), revealed between the start edge and the divider.\n- **after** - The \"after\" image (`<img>` or `<arc-image>`). Sits underneath and sizes the component.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container** - The clipping frame wrapping both layers.\n- **before** - The clipped before layer.\n- **after** - The base after layer.\n- **divider** - The hairline divider.\n- **handle** - The circular grab handle (the focusable slider).\n- **label-before** - The before caption chip.\n- **label-after** - The after caption chip.",
       "attributes": [
         {
           "name": "position",
@@ -405,7 +405,7 @@
     },
     {
       "name": "arc-image-hotspots",
-      "description": "An annotated image: glowing pins positioned over a slotted picture, each opening a small\npopover of detail content. Built for product-feature callouts, annotated screenshots, and\nsimple maps. Slot the image and the arc-hotspot pins together as children — the pins position\nthemselves by percentage coordinates, so source order never matters. The parent keeps one\npopover open at a time; open and close activity arrives as the arc-open and arc-close events\nbubbling up from each arc-hotspot child, with detail.value naming the hotspot.\n---\n\n\n### **Slots:**\n - _default_ - `arc-hotspot` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**",
+      "description": "An annotated image: glowing pins positioned over a slotted picture, each opening a small\npopover of detail content. Built for product-feature callouts, annotated screenshots, and\nsimple maps. Slot the image and the arc-hotspot pins together as children. The pins position\nthemselves by percentage coordinates, so source order never matters. The parent keeps one\npopover open at a time; open and close activity arrives as the arc-open and arc-close events\nbubbling up from each arc-hotspot child, with detail.value naming the hotspot.\n---\n\n\n### **Slots:**\n - _default_ - `arc-hotspot` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**",
       "attributes": [],
       "references": []
     },
@@ -485,11 +485,11 @@
     },
     {
       "name": "arc-lightbox",
-      "description": "Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery\nwith wrapping prev/next navigation, zoom to 2x with drag-to-pan, and dismiss with Escape or a\nbackdrop click.\n\nThe gallery is data, not layout: images are supplied through the `images` property rather than\nslotted children, so the closed component renders nothing. Entries may be plain `src` strings or\n`{ src, alt, caption }` objects; the two forms mix freely. The server render stays empty either\nway — a property is one it never sees, and the static JSON attribute form it does see is skipped\nas a closed overlay, which is what keeps a full-size photograph from being fetched for a first\npaint that cannot show it.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the displayed image changes. `detail.value` is the new index.\n- **arc-close** - Fired when the lightbox closes. Cancelable: call `preventDefault()` to veto the close.\n- **arc-open** - Fired when the lightbox opens\n\n### **Methods:**\n - **show(index: _number_): _void_** - Open the viewer, optionally jumping to a specific image first.\n- **close(): _void_** - Closes the viewer through the cancelable arc-close contract.\n- **next(): _void_** - Advances to the next image, wrapping past the end.\n- **prev(): _void_** - Steps to the previous image, wrapping past the start.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **backdrop**\n- **bar**\n- **counter**\n- **zoom**\n- **close**\n- **prev**\n- **next**\n- **figure**\n- **image**\n- **caption**",
+      "description": "Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery\nwith wrapping prev/next navigation, zoom up to 4x with pinch, wheel or double-click, and dismiss\nwith Escape, a backdrop click or a downward swipe.\n\nThe gallery is data, not layout: images are supplied through the `images` property rather than\nslotted children, so the closed component renders nothing. Entries may be plain `src` strings or\n`{ src, alt, caption, srcset, sizes, width, height }` objects; the two forms mix freely. The\nserver render stays empty either way. A property is one it never sees, and the static JSON\nattribute form it does see is skipped as a closed overlay, which keeps a full-size photograph\nfrom being fetched for a first paint that cannot show it.\n\nOr point it at links already on the page with `gallery`: each matched `<a href>` becomes an\nentry, and clicking one opens the viewer on it. Without script, the links still go to the images.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the displayed image changes. `detail.value` is the new index.\n- **arc-close** - Fired when the lightbox closes. Cancelable: call `preventDefault()` to veto the close.\n- **arc-open** - Fired when the lightbox opens\n\n### **Methods:**\n - **show(index: _number_): _void_** - Open the viewer, optionally jumping to a specific image first.\n- **close(): _void_** - Closes the viewer through the cancelable arc-close contract.\n- **next(): _void_** - Advances to the next image, wrapping past the end.\n- **prev(): _void_** - Steps to the previous image, wrapping past the start.\n\n### **Slots:**\n - **actions** - Extra controls in the top bar, before zoom and close. For download, share or delete buttons.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **backdrop**\n- **bar**\n- **counter**\n- **zoom**\n- **close**\n- **prev**\n- **next**\n- **figure**\n- **image**\n- **caption**\n- **loading** - The spinner shown while a slow image loads.\n- **error** - Shown in place of an image that failed to load.\n- **thumbnails** - The filmstrip row.\n- **thumbnail** - Each button in the filmstrip.",
       "attributes": [
         {
           "name": "images",
-          "description": "The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property, or as a JSON attribute for a gallery that is static.",
+          "description": "The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption, srcset, sizes, width, height, thumb, origin }`; everything but `src` is optional. `width` and `height` reserve the image's shape while it loads. `thumb` is a small source for the filmstrip (it falls back to `src`). `origin` is the element the picture grows out of on open and back into on close, as an element or a selector; without it the viewer uses the element that was clicked or focused when `show()` ran, for the image it opened on. Set as a property, or as a JSON attribute for a gallery that is static.",
           "values": [{ "name": "Array" }]
         },
         {
@@ -500,6 +500,16 @@
         {
           "name": "open",
           "description": "Controls the visible state of the viewer. Set to `true` to open at the current `index` and activate the focus trap; set to `false` to close and restore focus to the previously-focused element.",
+          "values": []
+        },
+        {
+          "name": "gallery",
+          "description": "CSS selector for links on the page to build the gallery from, such as `#photos a`. Each match becomes an entry: `href` is the image, the inner `<img>`'s `alt` is the alt text, and `data-caption` (or the image's `title`) is the caption. A click on a match opens the viewer on it. Resolved against the lightbox's own document or shadow root, so links added later are included. Ignored while `images` has entries.",
+          "values": []
+        },
+        {
+          "name": "thumbnails",
+          "description": "Shows a filmstrip of small thumbnails under the image. Each is a button that jumps to its image; the strip stays faint until pointed at or focused, and fades with the other controls when idle.",
           "values": []
         }
       ],
@@ -534,7 +544,7 @@
     },
     {
       "name": "arc-qr-code",
-      "description": "Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes\nautomatically via currentColor, with an optional contrast card for guaranteed scanability on\ndark backgrounds.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element. Which element that is depends on `contrast`: the card wrapper when it is set, the svg otherwise — which is the case `base` exists for.\n- **svg**\n- **card**",
+      "description": "Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes\nautomatically via currentColor, with an optional contrast card for guaranteed scanability on\ndark backgrounds.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element. Which element that is depends on `contrast`: the card wrapper when it is set, the svg otherwise, which is the case `base` exists for.\n- **svg**\n- **card**",
       "attributes": [
         {
           "name": "value",
@@ -558,7 +568,7 @@
         },
         {
           "name": "label",
-          "description": "Accessible description announced to screen readers (falls back to \"QR code\"). Describe the purpose, not the encoded value — the value is never exposed by default since it may be a secret.",
+          "description": "Accessible description announced to screen readers (falls back to \"QR code\"). Describe the purpose, not the encoded value. The value is never exposed by default since it may be a secret.",
           "values": []
         },
         {
@@ -680,7 +690,7 @@
       "attributes": [
         {
           "name": "direction",
-          "description": "Flex direction — vertical is column, horizontal is row",
+          "description": "Flex direction: vertical is column, horizontal is row",
           "values": [{ "name": "vertical" }, { "name": "horizontal" }]
         },
         {
@@ -726,7 +736,7 @@
     },
     {
       "name": "arc-video",
-      "description": "House-styled video player. Before the first play it shows the poster with a large glowing\nplay button; once playback starts, a minimal custom control bar rides the native video —\nplay/pause, a mono time readout, a scrub bar that seeks directly, a mute toggle, and a\nfullscreen button. During playback the bar dims after two seconds of idle rather than\nleaving — it stays visible and clickable, and returns to full strength when the pointer is\nanywhere over the player or a control takes focus. Standard player\nkeys work on the focused player: Space or K toggles playback, the arrow keys seek five\nseconds, M toggles mute, F toggles fullscreen.\n\nTakes a single `src` — there is no source-element fallback chain for multiple formats.\nServe one broadly supported encoding (H.264/MP4 plays everywhere), or reach for the native\nvideo element directly when you need format negotiation or adaptive streaming.\n---\n\n\n### **Events:**\n - **arc-play** - Fired when playback starts or resumes. `detail.value` is the current time in seconds.\n- **arc-pause** - Fired when playback pauses. `detail.value` is the current time in seconds.\n- **arc-ended** - Fired when playback reaches the end. `detail.value` is the final time in seconds.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **wrapper** - The player frame.\n- **video** - The native video element.\n- **overlay** - The pre-play overlay covering the poster.\n- **play-button** - The large centered play button inside the overlay.\n- **controls** - The control bar.\n- **play-toggle** - The play/pause button in the control bar.\n- **time** - The current/total time readout.\n- **scrubber** - The seek range input.\n- **mute-button** - The mute toggle button.\n- **fullscreen-button** - The fullscreen button.",
+      "description": "House-styled video player. Before the first play it shows the poster with a large glowing\nplay button; once playback starts, a minimal custom control bar rides the native video:\nplay/pause, a mono time readout, a scrub bar that seeks directly, a mute toggle, and a\nfullscreen button. During playback the bar dims after two seconds of idle rather than\nleaving. It stays visible and clickable, and returns to full strength when the pointer is\nanywhere over the player or a control takes focus. Standard player\nkeys work on the focused player: Space or K toggles playback, the arrow keys seek five\nseconds, M toggles mute, F toggles fullscreen.\n\nTakes a single `src`. There is no source-element fallback chain for multiple formats.\nServe one broadly supported encoding (H.264/MP4 plays everywhere), or reach for the native\nvideo element directly when you need format negotiation or adaptive streaming.\n---\n\n\n### **Events:**\n - **arc-play** - Fired when playback starts or resumes. `detail.value` is the current time in seconds.\n- **arc-pause** - Fired when playback pauses. `detail.value` is the current time in seconds.\n- **arc-ended** - Fired when playback reaches the end. `detail.value` is the final time in seconds.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **wrapper** - The player frame.\n- **video** - The native video element.\n- **overlay** - The pre-play overlay covering the poster.\n- **play-button** - The large centered play button inside the overlay.\n- **controls** - The control bar.\n- **play-toggle** - The play/pause button in the control bar.\n- **time** - The current/total time readout.\n- **scrubber** - The seek range input.\n- **mute-button** - The mute toggle button.\n- **fullscreen-button** - The fullscreen button.",
       "attributes": [
         {
           "name": "src",
@@ -745,7 +755,7 @@
         },
         {
           "name": "autoplay",
-          "description": "Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay simply remains and the user starts playback themselves.",
+          "description": "Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay remains and the user starts playback themselves.",
           "values": []
         },
         {
@@ -777,7 +787,7 @@
     },
     {
       "name": "arc-virtual-list",
-      "description": "Windowed list that renders only the visible slice of a large array.\nFixed row height with configurable overscan.\n\nTwo ways to supply rows, because \"render a row\" means something different\ninside a framework than it does outside one:\n\n  - `renderItem` — a callback returning the row's content. The component\n    mounts only the visible rows, so a million-row array puts a screenful of\n    nodes in the DOM. This is the direct path: plain JS, HTML, Lit.\n  - windowed slots — the component renders an `item-N` slot for each index in\n    the visible range only, and announces that range as it scrolls. (Spelled\n    without the tag on purpose: prism scans this whole file for slot markup,\n    and a literal one in a comment invents a slot named `item-N`.)\n    Whoever owns\n    the light DOM supplies just those rows. This is how the framework\n    wrappers do it, so a React consumer writes JSX and a Svelte consumer\n    writes markup, rather than a callback returning nodes their framework\n    didn't create.\n\nBoth paths share one geometry engine, so scrolling behaves identically.\n`renderItem` wins if both are present.\n---\n\n\n### **Events:**\n - **arc-range-change** - Fired when the visible range changes. `end` is exclusive.\n\n### **Methods:**\n - **scrollToIndex(index: _number_): _void_** - Scroll a row into view.\n\n### **Slots:**\n - **item-${index}**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **spacer**\n- **item**",
+      "description": "Windowed list that renders only the visible slice of a large array.\nFixed row height with configurable overscan.\n\nTwo ways to supply rows, because \"render a row\" means something different\ninside a framework than it does outside one:\n\n  - `renderItem`: a callback returning the row's content. The component\n    mounts only the visible rows, so a million-row array puts a screenful of\n    nodes in the DOM. This is the direct path: plain JS, HTML, Lit.\n  - windowed slots: the component renders an `item-N` slot for each index in\n    the visible range only, and announces that range as it scrolls. (Spelled\n    without the tag on purpose: prism scans this whole file for slot markup,\n    and a literal one in a comment invents a slot named `item-N`.)\n    Whoever owns\n    the light DOM supplies only those rows. This is how the framework\n    wrappers do it, so a React consumer writes JSX and a Svelte consumer\n    writes markup, rather than a callback returning nodes their framework\n    didn't create.\n\nBoth paths share one geometry engine, so scrolling behaves identically.\n`renderItem` wins if both are present.\n---\n\n\n### **Events:**\n - **arc-range-change** - Fired when the visible range changes. `end` is exclusive.\n\n### **Methods:**\n - **scrollToIndex(index: _number_): _void_** - Scroll a row into view.\n\n### **Slots:**\n - **item-${index}**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **spacer**\n- **item**",
       "attributes": [
         {
           "name": "items",
@@ -786,7 +796,7 @@
         },
         {
           "name": "itemHeight",
-          "description": "Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.",
+          "description": "Height in pixels of each row. Must match what actually renders, and must be at least 1: it is a divisor, so a zero would put NaN through every window calculation.",
           "values": []
         },
         {
@@ -799,7 +809,7 @@
     },
     {
       "name": "arc-activity-heatmap",
-      "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail — the date and the day's label or value — in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, adopted in the browser one render after the first; before\nthat — the server render, and the client render that hydrates it — the\nanchor is derived from the newest date present in `data`, so both are\ndeterministic and identical. Pin `end-date` explicitly whenever server and\nclient must agree exactly.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **heatmap**\n- **months**\n- **month**\n- **weekdays**\n- **weekday**\n- **grid**\n- **cell**\n- **detail**\n- **legend**\n- **swatch**",
+      "description": "GitHub-style contribution calendar: a year of day cells laid out as one\ncolumn per week, each cell tinted by that day's activity on a five-step\naccent ramp. Hovering or arrow-keying a cell raises it with the house glow\nand shows its detail (the date and the day's label or value) in the same\nbuilt-in bubble arc-uptime carries. Month labels run along the top, sparse\nweekday labels down the side, and a Less→More legend sits below.\n\nThe grid is a pure function of its props. When `end-date` is unset the\nanchor is today, adopted in the browser one render after the first. Before\nthat (the server render, and the client render that hydrates it) the\nanchor is derived from the newest date present in `data`, so both are\ndeterministic and identical. Pin `end-date` explicitly whenever server and\nclient must agree exactly.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **heatmap**\n- **months**\n- **month**\n- **weekdays**\n- **weekday**\n- **grid**\n- **cell**\n- **detail**\n- **legend**\n- **swatch**",
       "attributes": [
         {
           "name": "data",
@@ -990,7 +1000,7 @@
         },
         {
           "name": "labels",
-          "description": "Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width.",
+          "description": "Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned; every Nth label renders based on available width.",
           "values": [{ "name": "string[]" }]
         },
         {
@@ -1005,7 +1015,7 @@
         },
         {
           "name": "hideAxis",
-          "description": "Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip.",
+          "description": "Removes the axis layer (gridlines, y tick labels, and x category labels) for compact trend panels where exact values are read from the tooltip.",
           "values": []
         },
         {
@@ -1069,7 +1079,7 @@
     },
     {
       "name": "arc-comparison-column",
-      "description": "Data-holder child element that defines a single column in the comparison grid. Renders nothing\nvisible — it provides heading, highlight, and values data to the parent.\n---\n",
+      "description": "Data-holder child element that defines a single column in the comparison grid. Renders nothing\nvisible; it provides heading, highlight, and values data to the parent.\n---\n",
       "attributes": [
         {
           "name": "heading",
@@ -1130,7 +1140,7 @@
     },
     {
       "name": "arc-data-grid",
-      "description": "A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column\nsorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a\nJavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single\ntab stop.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order\n- **arc-select** - Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array\n- **arc-cell-change** - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array\n\n### **CSS Parts:**\n - **base** - The root element.\n- **header-cell**\n- **cell**\n- **editor**\n- **row**\n- **wrapper**\n- **table**\n- **header**\n- **body**",
+      "description": "A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column\nsorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a\nJavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single\ntab stop.\n---\n\n\n### **Events:**\n - **arc-sort** - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order\n- **arc-select** - Fired when row selection changes. detail: { value, selectedIndices }, where selectedIndices are sorted indices into the original rows array\n- **arc-cell-change** - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row }; rowIndex refers to the original rows array\n\n### **CSS Parts:**\n - **base** - The root element.\n- **header-cell**\n- **cell**\n- **editor**\n- **row**\n- **wrapper**\n- **table**\n- **header**\n- **body**",
       "attributes": [
         {
           "name": "columns",
@@ -1147,7 +1157,7 @@
         },
         {
           "name": "rows",
-          "description": "The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy — sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor.",
+          "description": "The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy; sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor.",
           "values": [{ "name": "Array<Record<string" }, { "name": "any>>" }]
         },
         {
@@ -1160,7 +1170,7 @@
         },
         {
           "name": "manualSort",
-          "description": "Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.",
+          "description": "Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort`; use this to implement server-side sorting.",
           "values": []
         },
         {
@@ -1219,7 +1229,7 @@
         },
         {
           "name": "layout",
-          "description": "How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across — one item can be horizontal inside a three-column list.",
+          "description": "How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across. One item can be horizontal inside a three-column list.",
           "values": [{ "name": "stacked" }, { "name": "horizontal" }]
         },
         {
@@ -1325,7 +1335,7 @@
     },
     {
       "name": "arc-json-tree",
-      "description": "Collapsible JSON explorer with house syntax coloring — the dev-tools\ninspector for API payloads, configuration objects, and structured state.\nPure recursive rendering with zero dependencies: unlike arc-code-block it\nloads no highlighter, so it ships in the register barrel.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a node is expanded or collapsed, with the node path and new expanded state\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **item**\n- **row**\n- **key**\n- **value**\n- **preview**\n- **error**",
+      "description": "Collapsible JSON explorer with house syntax coloring: the dev-tools\ninspector for API payloads, configuration objects, and structured state.\nPure recursive rendering with zero dependencies: unlike arc-code-block it\nloads no highlighter, so it ships in the register barrel.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a node is expanded or collapsed, with the node path and new expanded state\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **item**\n- **row**\n- **key**\n- **value**\n- **preview**\n- **error**",
       "attributes": [
         {
           "name": "json",
@@ -1373,7 +1383,7 @@
     },
     {
       "name": "arc-level-meter",
-      "description": "Segmented audio level meter with peak-hold — the live vertical sibling of arc-meter,\nbuilt for signal-rate updates (audio levels, buffer fill, realtime telemetry).\nSegments below the warn threshold render success-tinted, between warn and clip\nwarning-tinted, and above clip error-tinted, with the house glow on lit segments.\nA thin peak-hold line rides the highest recent level and decays toward the\ncurrent value; feed the `peak` property to drive it yourself instead.\n\nOne element is one channel. There is deliberately no stereo mode — compose two\nmeters side by side for a stereo pair, one per channel, so channel count is the\nconsumer's decision rather than a prop fork.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **meter** - The outer wrapper carrying role=\"meter\".\n- **track** - The tinted track containing segments or the continuous fill.\n- **segment** - Each discrete segment (segmented mode only).\n- **fill** - The continuous fill bar (segments=0 only).\n- **peak** - The thin peak-hold line.",
+      "description": "Segmented audio level meter with peak-hold. It is the live vertical sibling of arc-meter,\nbuilt for signal-rate updates (audio levels, buffer fill, realtime telemetry).\nSegments below the warn threshold render success-tinted, between warn and clip\nwarning-tinted, and above clip error-tinted, with the house glow on lit segments.\nA thin peak-hold line rides the highest recent level and decays toward the\ncurrent value; feed the `peak` property to drive it yourself instead.\n\nOne element is one channel. There is no stereo mode; compose two\nmeters side by side for a stereo pair, one per channel, so channel count is the\nconsumer's decision rather than a prop fork.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **meter** - The outer wrapper carrying role=\"meter\".\n- **track** - The tinted track containing segments or the continuous fill.\n- **segment** - Each discrete segment (segmented mode only).\n- **fill** - The continuous fill bar (segments=0 only).\n- **peak** - The thin peak-hold line.",
       "attributes": [
         {
           "name": "value",
@@ -1417,7 +1427,7 @@
         },
         {
           "name": "label",
-          "description": "Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like \"Master left\" rather than \"Level\".",
+          "description": "Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get; use something like \"Master left\" rather than \"Level\".",
           "values": []
         }
       ],
@@ -1452,7 +1462,7 @@
     },
     {
       "name": "arc-list",
-      "description": "Structured list container with optional selection, keyboard navigation, and multiple visual\nvariants. Pairs with arc-list-item for rich content rows.\n---\n\n\n### **Events:**\n - **arc-select** - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.\n- **arc-change** - Fired when the selection changes. `event.detail.value` contains the new value string.\n\n### **Slots:**\n - _default_ - `arc-list-item` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **list**",
+      "description": "Structured list container with optional selection, keyboard navigation, and multiple visual\nvariants. Pairs with arc-list-item for content rows.\n---\n\n\n### **Events:**\n - **arc-select** - Fired from the activated arc-list-item when a selectable list is driven by Enter or Space.\n- **arc-change** - Fired when the selection changes. `event.detail.value` contains the new value string.\n\n### **Slots:**\n - _default_ - `arc-list-item` elements.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **list**",
       "attributes": [
         {
           "name": "variant",
@@ -1640,7 +1650,7 @@
       "attributes": [
         {
           "name": "active",
-          "description": "Zero-indexed active step — steps before this index show as completed. Clamped to the range of rendered steps.",
+          "description": "Zero-indexed active step; steps before this index show as completed. Clamped to the range of rendered steps.",
           "values": []
         }
       ],
@@ -1760,7 +1770,7 @@
     },
     {
       "name": "arc-waveform",
-      "description": "Audio waveform visualization that doubles as a scrubber. Renders a peaks array as an SVG\nwaveform — the played region in accent with a soft glow, the unplayed region muted, and a\nglowing playhead line at the current position. With `interactive` set it becomes a seek\ncontrol: pointer scrubbing and keyboard arrows move the playhead, emitting `arc-input`\nwhile the gesture is in flight and `arc-change` when the value commits.\n\nThe component never touches audio itself — no AudioContext, no decoding. The consumer\ncomputes peak amplitudes (one number per bar, 0 to 1) however it likes and hands them\nover as an array. This keeps the component a pure function of its props, so it\nserver-renders and stays cheap enough for a lane of clips in a DAW timeline.\n\nThe time axis is deliberately direction-fixed: audio time flows left-to-right even in\nRTL contexts, matching every DAW, player, and editor convention.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview — updating a time display or audibly scrubbing.\n- **arc-change** - Fired once when the seek commits: on pointer release, or with each keyboard nudge. Use for the actual seek on your audio source.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **waveform** - The interactive track region wrapping the SVG and playhead.\n- **svg** - The SVG element.\n- **unplayed** - The unplayed (muted) waveform layer. Named `base` before v4, which is the name the root element takes across every component now.\n- **played** - The played (accent) waveform layer.\n- **playhead** - The playhead line.\n- **time** - The time readout row (renders only when duration is set).",
+      "description": "Audio waveform visualization that doubles as a scrubber. Renders a peaks array as an SVG\nwaveform: the played region in accent with a soft glow, the unplayed region muted, and a\nglowing playhead line at the current position. With `interactive` set it becomes a seek\ncontrol: pointer scrubbing and keyboard arrows move the playhead, emitting `arc-input`\nwhile the gesture is in flight and `arc-change` when the value commits.\n\nThe component never touches audio itself: no AudioContext, no decoding. The consumer\ncomputes peak amplitudes (one number per bar, 0 to 1) however it likes and hands them\nover as an array. This keeps the component a pure function of its props, so it\nserver-renders and stays cheap enough for a lane of clips in a DAW timeline.\n\nThe time axis is direction-fixed: audio time flows left-to-right even in\nRTL contexts, matching every DAW, player, and editor convention.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview: updating a time display, or audibly scrubbing.\n- **arc-change** - Fired once when the seek commits: on pointer release, or with each keyboard nudge. Use for the actual seek on your audio source.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **waveform** - The interactive track region wrapping the SVG and playhead.\n- **svg** - The SVG element.\n- **unplayed** - The unplayed (muted) waveform layer. Named `base` before v4, which is the name the root element takes across every component now.\n- **played** - The played (accent) waveform layer.\n- **playhead** - The playhead line.\n- **time** - The time readout row (renders only when duration is set).",
       "attributes": [
         {
           "name": "peaks",
@@ -1811,7 +1821,7 @@
       "attributes": [
         {
           "name": "variant",
-          "description": "Controls the semantic color palette, the icon, and — through the `ROLES` table — the ARIA role and whether the alert is announced. Use \"info\" for neutral guidance, \"tip\" for advice, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
+          "description": "Controls the semantic color palette, the icon, and, through the `ROLES` table, the ARIA role and whether the alert is announced. Use \"info\" for neutral guidance, \"tip\" for advice, \"success\" for confirmations, \"warning\" for caution states, and \"error\" for failures or blocking issues.",
           "values": [
             { "name": "info" },
             { "name": "tip" },
@@ -1822,7 +1832,7 @@
         },
         {
           "name": "live",
-          "description": "Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree — an `info` alert injected after a background save wants `polite`; a `warning` rendered in the initial page probably wants `off`.",
+          "description": "Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree: an `info` alert injected after a background save wants `polite`, and a `warning` rendered in the initial page probably wants `off`.",
           "values": [
             { "name": "auto" },
             { "name": "off" },
@@ -1850,7 +1860,7 @@
     },
     {
       "name": "arc-announcement",
-      "description": "ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen\nreaders. Zero visual footprint — pure accessibility utility.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **region**",
+      "description": "ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen\nreaders.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **region**",
       "attributes": [
         {
           "name": "politeness",
@@ -1920,7 +1930,7 @@
         },
         {
           "name": "keywords",
-          "description": "Extra space-separated terms the search filter matches against but never displays — e.g. keywords=\"dialog popup\" on a Modal item.",
+          "description": "Extra space-separated terms the search filter matches against but never displays, e.g. keywords=\"dialog popup\" on a Modal item.",
           "values": []
         },
         {
@@ -1930,7 +1940,7 @@
         },
         {
           "name": "value",
-          "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+          "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one; give anything a handler must act on its own value rather than matching against display text.",
           "values": []
         }
       ],
@@ -1938,7 +1948,7 @@
     },
     {
       "name": "arc-command-palette",
-      "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - `arc-command-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **item**\n- **match**\n- **description**\n- **dialog** - The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--palette-backdrop` custom property.\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
+      "description": "Spotlight-style command palette with fuzzy search and keyboard shortcuts.\n\nMatching is fuzzy and ranked; see shared/fuzzy-match.js for the scoring.\n\"cmdpal\" finds \"Command Palette\", terms may be typed in any order, and\nresults come back best-first rather than in DOM order, with the matched\ncharacters marked. Items are searched on their label, their `keywords`, and\ntheir `description`; the description is also the second line the palette\nrenders, which is what lets a consumer search page content rather than only\npage titles.\n---\n\n\n### **Events:**\n - **arc-select** - Fired when a command item is selected. `detail.value` is the item's `value`, falling back to its label.\n- **arc-close** - Fired when the palette closes\n\n### **Slots:**\n - _default_ - `arc-command-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **item**\n- **match**\n- **description**\n- **dialog** - The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--palette-backdrop` custom property.\n- **search**\n- **input**\n- **results**\n- **empty**\n- **group-heading**\n- **footer**",
       "attributes": [
         {
           "name": "open",
@@ -1960,7 +1970,7 @@
     },
     {
       "name": "arc-confirm",
-      "description": "Confirmation prompt, in both of the shapes a confirmation needs.\n\n**Imperative:** `ArcConfirm.open({ heading, message, variant })` returns a `Promise<boolean>` —\nthe shape you want at a call site that has to decide something before continuing.\n**Declarative:** the element itself, with `open` bound and `arc-confirm`/`arc-cancel` listened\nfor — the shape you want when the prompt is part of a template.\n\nV4-SCOPE §3.3: those two are different shapes rather than duplicates of each other, which is why\nboth survive. The duplicate was the old `<arc-dialog>` — a third spelling of this same prompt,\nwith a strict subset of these props and no slot — and it merged in here. The `arc-dialog` tag\nnow names the modal primitive this is built on (renamed from `arc-modal`), and that component\nthrows in dev if it is handed `message` or `confirmLabel`, so the reuse of the name cannot fail\nquietly.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **Slots:**\n - _default_ - Body content, for when the confirmation needs markup the `message` string cannot carry — a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **message**\n- **cancel**\n- **confirm**",
+      "description": "Confirmation prompt, in both of the shapes a confirmation needs.\n\n**Imperative:** `ArcConfirm.open({ heading, message, variant })` returns a `Promise<boolean>`,\nthe shape you want at a call site that has to decide something before continuing.\n**Declarative:** the element itself, with `open` bound and `arc-confirm`/`arc-cancel` listened\nfor: the shape you want when the prompt is part of a template.\n\nV4-SCOPE §3.3: those two are different shapes rather than duplicates of each other, which is why\nboth survive. The duplicate was the old `<arc-dialog>`, a third spelling of this same prompt,\nwith a strict subset of these props and no slot, and it merged in here. The `arc-dialog` tag\nnow names the modal primitive this is built on (renamed from `arc-modal`), and that component\nthrows in dev if it is handed `message` or `confirmLabel`, so the reuse of the name cannot fail\nquietly.\n---\n\n\n### **Events:**\n - **arc-confirm** - Fired when the user clicks the confirm button\n- **arc-cancel** - Fired when the user clicks cancel, presses Escape, or clicks the backdrop\n\n### **Slots:**\n - _default_ - Body content, for when the confirmation needs markup the `message` string cannot carry, such as a filename in `<code>`, an emphasized consequence, a short list of what is about to change. Falls back to `message` when nothing is slotted.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **message**\n- **cancel**\n- **confirm**",
       "attributes": [
         {
           "name": "open",
@@ -1989,7 +1999,7 @@
         },
         {
           "name": "variant",
-          "description": "Controls the confirm button style. Use \"error\" for destructive actions — the confirm button renders in the error color.",
+          "description": "Controls the confirm button style. Use \"error\" for destructive actions; the confirm button renders in the error color.",
           "values": [{ "name": "default" }, { "name": "error" }]
         }
       ],
@@ -2015,7 +2025,7 @@
     },
     {
       "name": "arc-conversation",
-      "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels — the layout, the role alignment, and the scroll behavior all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().\n---\n\n\n### **Events:**\n - **arc-scroll-away** - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.\n- **arc-scroll-return** - Fired once when the reader comes back within the near-bottom zone. detail.value is the distance from the bottom in pixels.\n\n### **Methods:**\n - **scrollToEnd(): _void_** - Scroll the transcript to its newest message.\n\n### **Slots:**\n - _default_ - Default content: the arc-message children making up the transcript.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **conversation**",
+      "description": "A chat transcript: the scrollable column that holds arc-message children. Built for AI\nassistant panels: the layout, the role alignment, and the scroll behavior all assume messages\narrive while the user is reading. While the reader sits near the bottom, new or growing\nmessages keep the view pinned to the latest; once they scroll up to re-read, the transcript\nnever yanks them back down. The arc-scroll-away and arc-scroll-return events report those\ntransitions with the distance from the bottom, so a consumer can float a \"jump to latest\" chip\nand wire it to scrollToEnd().\n---\n\n\n### **Events:**\n - **arc-scroll-away** - Fired once when the reader scrolls up out of the near-bottom zone of the transcript. detail.value is the distance from the bottom in pixels.\n- **arc-scroll-return** - Fired once when the reader comes back within the near-bottom zone. detail.value is the distance from the bottom in pixels.\n\n### **Methods:**\n - **scrollToEnd(): _void_** - Scroll the transcript to its newest message.\n\n### **Slots:**\n - _default_ - Default content: the arc-message children making up the transcript.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **conversation**",
       "attributes": [
         {
           "name": "autoScroll",
@@ -2027,7 +2037,7 @@
     },
     {
       "name": "arc-dialog",
-      "description": "General-purpose modal overlay on the platform's `<dialog>`: the browser's focus containment,\ninert background, Escape handling and top layer, with the library's sizing, header/body/footer\nstructure and cancelable close contract on top.\n\nNamed `arc-modal` before v4. The rename is V4-SCOPE §2.4 — the element is a dialog, the platform\ncalls it a dialog, and `modal` names one of its behaviours rather than what it is. `arc-modal`\nstays as a deprecated alias for the whole of v4.\n\n**This is not the confirm prompt that used to be called `arc-dialog`.** That one is\n`<arc-confirm>` now, and it absorbed both of its old spellings. The tag name is reused here for\na different component, so this one throws in dev when it is handed `message` or `confirmLabel` —\nthe two props that would otherwise be silently ignored, leaving an empty panel.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close.\n- **arc-open** - Fired when the dialog opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **dialog** - The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties.\n- **header**\n- **close**\n- **body**\n- **footer**",
+      "description": "General-purpose modal overlay on the platform's `<dialog>`: the browser's focus containment,\ninert background, Escape handling and top layer, with the library's sizing, header/body/footer\nstructure and cancelable close contract on top.\n\nNamed `arc-modal` before v4. The rename is V4-SCOPE §2.4; the element is a dialog, the platform\ncalls it a dialog, and `modal` names one of its behaviours rather than what it is. `arc-modal`\nstays as a deprecated alias for the whole of v4.\n\n**This is not the confirm prompt that used to be called `arc-dialog`.** That one is\n`<arc-confirm>` now, and it absorbed both of its old spellings. The tag name is reused here for\na different component, so this one throws in dev when it is handed `message` or `confirmLabel`,\nthe two props that would otherwise be silently ignored, leaving an empty panel.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close.\n- **arc-open** - Fired when the dialog opens\n\n### **Slots:**\n - **header**\n- _default_ - Default content.\n- **footer**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **dialog** - The dialog panel. Same element as `base`. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties.\n- **header**\n- **close**\n- **body**\n- **footer**",
       "attributes": [
         {
           "name": "open",
@@ -2051,7 +2061,7 @@
         },
         {
           "name": "dismissible",
-          "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.",
+          "description": "When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so; the name is the convention, the default belongs to the component.",
           "values": []
         }
       ],
@@ -2120,7 +2130,7 @@
     },
     {
       "name": "arc-message",
-      "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centered, muted and small. The default slot is the\nmessage body — append text to it to stream a reply in — and with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.\n---\n\n\n### **Slots:**\n - _default_ - The message body. Text when markdown is set; any markup otherwise.\n- **avatar** - An optional avatar beside the bubble; the component ships none of its own.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **message**\n- **meta**\n- **bubble**",
+      "description": "One message in a conversation transcript. The speaker attribute decides the voice: user messages\nsit at the inline end on a faint accent tint, assistant messages sit at the inline start on a\nneutral surface, and system messages run centered, muted and small. The default slot is the\nmessage body. Append text to it to stream a reply in; with the markdown attribute set,\nthat slotted text renders through arc-markdown, re-rendering as the text grows. A pending\nmessage shows the typing indicator in place of its body. Slot an avatar for either speaker if\nthe product wants faces; none is built in.\n---\n\n\n### **Slots:**\n - _default_ - The message body. Text when markdown is set; any markup otherwise.\n- **avatar** - An optional avatar beside the bubble; the component ships none of its own.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **message**\n- **meta**\n- **bubble**",
       "attributes": [
         {
           "name": "speaker",
@@ -2143,7 +2153,7 @@
         },
         {
           "name": "pending",
-          "description": "Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.",
+          "description": "Renders the typing indicator (three pulsing dots) in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.",
           "values": []
         },
         {
@@ -2214,7 +2224,7 @@
         },
         {
           "name": "variant",
-          "description": "Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right — best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.",
+          "description": "Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right, best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.",
           "values": [{ "name": "bar" }, { "name": "spinner" }]
         },
         {
@@ -2242,7 +2252,7 @@
     },
     {
       "name": "arc-sheet",
-      "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the user moves the sheet to another snap point. `value` is the new `snap` index.\n- **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header** - Replaces the heading. The header row is left out when there is no heading, nothing here, and no close button (a `persistent` sheet), so a short snap point is all content.\n- _default_ - Default content.\n- **footer** - Actions under the body. The footer row renders only when something is slotted here.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part.\n- **handle** - The drag handle. With `snapPoints` it is a focusable vertical slider.\n- **header**\n- **body**\n- **footer**",
+      "description": "A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a\nblurred backdrop, header, scrollable body, and footer slot.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when the user moves the sheet to another snap point. `value` is the new `snap` index.\n- **arc-close** - Fired when the sheet closes\n- **arc-open** - Fired when the sheet opens\n\n### **Slots:**\n - **header** - Replaces the heading. The header row is left out when there is no heading, nothing here, and no close button (a `persistent` sheet), so a short snap point is all content.\n- _default_ - Default content.\n- **footer** - Actions under the body. The footer row renders only when something is slotted here.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **close**\n- **panel** - The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part.\n- **handle** - The drag handle. With `snapPoints` it is a focusable vertical slider.\n- **header**\n- **body**\n- **footer**",
       "attributes": [
         {
           "name": "open",
@@ -2284,7 +2294,7 @@
     },
     {
       "name": "arc-toast",
-      "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix — a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.\n\nEvery method has a document-level event beside it, so a consumer who cannot\nreach the element — a framework wrapper that exposes no handle, a module with\nno reference to the page's toast host — can still drive it:\n`arc-toast` (show), `arc-toast-update`, `arc-toast-complete`,\n`arc-toast-dismiss` and `arc-toast-clear`. Pass `detail.id` to `arc-toast` to\nname the toast yourself; the other four take that id back. A CustomEvent's\n`detail` is never cloned, so an `action` callback survives the trip.\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n- **arc-complete** - Fired when a progress toast is completed with complete(id). detail: { id }.\n- **arc-cancel** - Fired when the user clicks a progress toast's cancel button. detail: { id }.\n- **arc-action** - Fired when the user clicks a toast's action button, before it dismisses. detail: { id }. Absorbed from arc-snackbar, whose action was reachable as an event as well as the `action` callback — a callback cannot be attached declaratively.\n- **arc-close** - Fired when a toast notification is dismissed. detail: { id } — the id show() returned.\n\n### **Methods:**\n - **show(options: _{ id?: number|string, message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }_): _number|string_** - Show a toast, or coalesce it into an identical one that is already showing.\n\nPassing `progress` puts the toast in progress mode, absorbed from\narc-progress-toast in 4.2: it renders a track beneath the message, exempts\nitself from dedupe and from the auto-dismiss timer, and — given `onCancel`\n— offers a cancel button that fires `arc-cancel`. Move the bar with\n`updateToast(id, { progress })` and end it with `complete(id)`, which fires\n`arc-complete`. The mode is chosen here and is not switchable afterwards: a\ntrack appearing mid-life would relayout a notification the reader is\nalready reading.\n\n`action` and `actionLabel` arrive from arc-snackbar the same way. The label\nrenders a ghost button; a click runs the callback and fires `arc-action`\nbefore the toast dismisses.\n- **dismiss(id: _number|string_): _void_** - Dismiss a toast by the id show() returned, whether it is visible or still\nqueued. Unknown ids are ignored.\n- **clear(): _void_** - Dismiss everything on screen and discard the queue.\n- **updateToast(id: _number|string_, changes: _{ progress?: number, message?: string }_): _void_** - Move a progress toast's bar, its message, or both. Unknown ids are ignored,\nmatching dismiss().\n\nNamed `updateToast` rather than `update` because `update` is Lit's — the\nname arc-progress-toast used, and the reason it also carried a do-nothing\n`update(changedProps) { super.update(changedProps); }` override that read\nas if it meant something.\n- **complete(id: _number|string_): _void_** - Finish a progress toast: dismiss it and fire `arc-complete`.\n\nDistinct from `dismiss()` on purpose — the operation finishing and the user\nclosing the toast are different events, and a consumer waiting on the first\nshould not be woken by the second.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **toast**\n- **action**\n- **dismiss**\n- **track**\n- **fill**\n- **cancel**",
+      "description": "Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable\nposition, smooth enter/exit animations, and the stacking policy that used to live in a separate\narc-toast-manager: a cap on how many show at once, a FIFO queue for the overflow, and\ndeduplication of repeated messages.\n\nQueueing belongs here rather than in a wrapper. As a separate component it could only reach\narc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown\nto gain its \"(×N)\" suffix: a visible flicker for what is conceptually a counter increment. Owning\nthe render state makes that an in-place update.\n\nEvery method has a document-level event beside it, so a consumer who cannot\nreach the element (a framework wrapper that exposes no handle, a module with\nno reference to the page's toast host) can still drive it:\n`arc-toast` (show), `arc-toast-update`, `arc-toast-complete`,\n`arc-toast-dismiss` and `arc-toast-clear`. Pass `detail.id` to `arc-toast` to\nname the toast yourself; the other four take that id back. A CustomEvent's\n`detail` is never cloned, so an `action` callback survives the trip.\n---\n\n\n### **Events:**\n - **arc-queue-overflow** - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.\n- **arc-queue-change** - Fired whenever the visible or queued count changes. detail: { visible, queued }.\n- **arc-complete** - Fired when a progress toast is completed with complete(id). detail: { id }.\n- **arc-cancel** - Fired when the user clicks a progress toast's cancel button. detail: { id }.\n- **arc-action** - Fired when the user clicks a toast's action button, before it dismisses. detail: { id }. Absorbed from arc-snackbar, whose action was reachable as an event as well as the `action` callback; a callback cannot be attached declaratively.\n- **arc-close** - Fired when a toast notification is dismissed. detail: { id }, the id show() returned.\n\n### **Methods:**\n - **show(options: _{ id?: number|string, message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }_): _number|string_** - Show a toast, or coalesce it into an identical one that is already showing.\n\nPassing `progress` puts the toast in progress mode, absorbed from\narc-progress-toast in 4.2: it renders a track beneath the message, exempts\nitself from dedupe and from the auto-dismiss timer, and, given `onCancel`,\noffers a cancel button that fires `arc-cancel`. Move the bar with\n`updateToast(id, { progress })` and end it with `complete(id)`, which fires\n`arc-complete`. The mode is chosen here and is not switchable afterwards: a\ntrack appearing mid-life would relayout a notification the reader is\nalready reading.\n\n`action` and `actionLabel` arrive from arc-snackbar the same way. The label\nrenders a ghost button; a click runs the callback and fires `arc-action`\nbefore the toast dismisses.\n- **dismiss(id: _number|string_): _void_** - Dismiss a toast by the id show() returned, whether it is visible or still\nqueued. Unknown ids are ignored.\n- **clear(): _void_** - Dismiss everything on screen and discard the queue.\n- **updateToast(id: _number|string_, changes: _{ progress?: number, message?: string }_): _void_** - Move a progress toast's bar, its message, or both. Unknown ids are ignored,\nmatching dismiss().\n\nNamed `updateToast` rather than `update` because `update` is Lit's. It is\nthe name arc-progress-toast used, and the reason that component carried a do-nothing\n`update(changedProps) { super.update(changedProps); }` override that read\nas if it meant something.\n- **complete(id: _number|string_): _void_** - Finish a progress toast: dismiss it and fire `arc-complete`.\n\nDistinct from `dismiss()` on purpose: the operation finishing and the user\nclosing the toast are different events, and a consumer waiting on the first\nshould not be woken by the second.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **container**\n- **toast**\n- **action**\n- **dismiss**\n- **track**\n- **fill**\n- **cancel**",
       "attributes": [
         {
           "name": "position",
@@ -2327,7 +2337,7 @@
       "attributes": [
         {
           "name": "content",
-          "description": "The plain-text string displayed inside the tooltip popup. Keep this concise — one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for rich content, use the Popover component instead.",
+          "description": "The plain-text string displayed inside the tooltip popup. Keep this concise: one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for formatted content, use the Popover component instead.",
           "values": []
         },
         {
@@ -2372,7 +2382,7 @@
     },
     {
       "name": "arc-button",
-      "description": "Primary call-to-action element with three visual variants that map to action hierarchy. Supports\nprefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for\nnavigation-driven actions across landing pages, toolbars, and forms.\n---\n\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript, since the anchor is real HTML in the initial markup. Put any icons inside that anchor; the `prefix`/`suffix` slots and `::part(button)` do not apply in this form.\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **button**",
+      "description": "Primary call-to-action element with three visual variants that map to action hierarchy. Supports\nprefix and suffix slots for icons. Renders as an anchor when given an href, making it ideal for\nnavigation-driven actions across landing pages, toolbars, and forms.\n---\n\n\n### **Slots:**\n - **prefix**\n- _default_ - Default content. Slotting a single `<a>` as the only child adopts it as the button's control: the recommended form for links that must work before hydration or without JavaScript, since the anchor is real HTML in the initial markup. Put any icons inside that anchor; the `prefix`/`suffix` slots and `::part(button)` do not apply in this form.\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **button**",
       "attributes": [
         {
           "name": "variant",
@@ -2615,6 +2625,16 @@
           "name": "disabled",
           "description": "Disables the button, preventing clicks and reducing visual opacity.",
           "values": []
+        },
+        {
+          "name": "iconOnly",
+          "description": "Shows the icon alone in a round, borderless 30px button, for a toolbar or a header bar. The icon turns into a check for 1.4 seconds after copying.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name before copying, such as \"Copy code\". Defaults to \"Copy to clipboard\". After copying the name is \"Copied\".",
+          "values": []
         }
       ],
       "references": []
@@ -2815,7 +2835,7 @@
       "attributes": [
         {
           "name": "legend",
-          "description": "Text displayed in the `<legend>` element. Also available via the `legend` slot for rich content.",
+          "description": "Text displayed in the `<legend>` element. Also available via the `legend` slot for markup.",
           "values": []
         },
         {
@@ -2870,7 +2890,7 @@
     },
     {
       "name": "arc-form",
-      "description": "Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input,\nTextarea, and Button into a cohesive data-entry workflow.\n---\n\n\n### **Events:**\n - **arc-invalid** - Fired when validation fails, with error details\n- **arc-submit** - Fired on valid form submission with serialized form data\n- **arc-reset** - Fired when the form is reset via the .reset() method\n\n### **Methods:**\n - **submit(): _void_** - Submit the form as though its submit button had been pressed: validation\nruns, and `arc-submit` fires cancelably.\n\nThe path for a submit control the form cannot own — a wizard's \"Next\" in a\nparent toolbar, a keyboard shortcut — since a button outside the form does\nnot trigger it. Routed through the real `<form>` so action-mode submits\nstill navigate.\n- **reset(): _void_** - Reset every child control to the state it had when it first connected,\nand clear error display.\n\nDelegates to each control's formResetCallback — the same path a native\nform.reset() takes, which never reaches these controls because they live\nin this element's light DOM rather than inside the shadow <form>. The form\nused to blank them instead (`value = ''`, `checked = false`), which is not\nwhat reset means: a control that shipped with a default lost it, and a\nnon-string value (a multi-select's array, a date range's object) was left\nuntouched entirely.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **form**\n- **layout**\n- **errors**",
+      "description": "Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input,\nTextarea, and Button into one data-entry workflow.\n---\n\n\n### **Events:**\n - **arc-invalid** - Fired when validation fails, with error details\n- **arc-submit** - Fired on valid form submission with serialized form data\n- **arc-reset** - Fired when the form is reset via the .reset() method\n\n### **Methods:**\n - **submit(): _void_** - Submit the form as though its submit button had been pressed: validation\nruns, and `arc-submit` fires cancelably.\n\nThe path for a submit control the form cannot own: a wizard's \"Next\" in a\nparent toolbar, a keyboard shortcut, since a button outside the form does\nnot trigger it. Routed through the real `<form>` so action-mode submits\nstill navigate.\n- **reset(): _void_** - Reset every child control to the state it had when it first connected,\nand clear error display.\n\nDelegates to each control's formResetCallback: the same path a native\nform.reset() takes, which never reaches these controls because they live\nin this element's light DOM rather than inside the shadow <form>. The form\nused to blank them instead (`value = ''`, `checked = false`), which is not\nwhat reset means: a control that shipped with a default lost it, and a\nnon-string value (a multi-select's array, a date range's object) was left\nuntouched entirely.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **form**\n- **layout**\n- **errors**",
       "attributes": [
         {
           "name": "action",
@@ -2884,7 +2904,7 @@
         },
         {
           "name": "novalidate",
-          "description": "When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation.",
+          "description": "When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still using Form for data serialisation.",
           "values": []
         },
         {
@@ -2907,7 +2927,7 @@
     },
     {
       "name": "arc-hotkey",
-      "description": "Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences\n(g i). Fires an event when the key pattern is matched.\n\nInvisible keyboard shortcut listener. Supports modifier combos (\"ctrl+k\", \"meta+shift+p\") and\nchord sequences (\"g i\" = press g, then i).\n---\n\n\n### **Events:**\n - **arc-hotkey-trigger** - Fired when the full key pattern is matched. `event.detail.keys` contains the matched pattern string.",
+      "description": "Invisible keyboard shortcut listener. Supports modifier combos (\"ctrl+k\", \"meta+shift+p\") and\nchord sequences (\"g i\" = press g, then i), and fires an event when the key pattern is matched.\n---\n\n\n### **Events:**\n - **arc-hotkey-trigger** - Fired when the full key pattern is matched. `event.detail.keys` contains the matched pattern string.",
       "attributes": [
         {
           "name": "keys",
@@ -2929,7 +2949,7 @@
     },
     {
       "name": "arc-icon-button",
-      "description": "Compact button that renders an icon with optional text label, supporting ghost, secondary, and\nprimary variants.\n---\n\n\n### **Slots:**\n - _default_ - Default content. Slotting a single `<a>` as the only child adopts it as the button's control — the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **button**",
+      "description": "Compact button that renders an icon with optional text label, supporting ghost, secondary, and\nprimary variants.\n---\n\n\n### **Slots:**\n - _default_ - Default content. Slotting a single `<a>` as the only child adopts it as the button's control: the recommended form for links that must work before hydration or without JavaScript. Put the icon inside that anchor; `::part(button)` does not apply in this form.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **button**",
       "attributes": [
         {
           "name": "name",
@@ -2985,7 +3005,7 @@
     },
     {
       "name": "arc-image-cropper",
-      "description": "Crop-before-upload control with a draggable, resizable crop rectangle, aspect-ratio locking,\nzoom, and canvas export at natural image resolution.\n\nCrop-before-upload for avatar/media flows. The crop rect lives in stage coordinates; zoom scales\nthe letterboxed image around its center underneath. `getCroppedBlob()`/`getCroppedDataUrl()`\nrequire `src` to be same-origin or CORS-enabled — a tainted canvas throws with a clear message.\n---\n\n\n### **Events:**\n - **arc-crop-change** - Fired when the crop changes (drag, resize, keyboard, zoom, stage resize). `event.detail` is `{ x, y, width, height }` in natural image pixels, debounced to animation frames.\n\n### **Methods:**\n - **getCrop(): _{ x: number, y: number, width: number, height: number } | null_** - Current crop in natural image pixels, or null before the image has loaded.\n- **getCroppedBlob(type: _string_, quality: _number_): _Promise<Blob>_** - Export the crop as a Blob at natural resolution.\n- **getCroppedDataUrl(type: _string_, quality: _number_): _Promise<string>_** - Export the crop as a data URL at natural resolution.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **stage**\n- **image**\n- **skeleton**\n- **error**\n- **crop**\n- **handle**\n- **zoom**",
+      "description": "Crop-before-upload control with a draggable, resizable crop rectangle, aspect-ratio locking,\nzoom, and canvas export at natural image resolution.\n\nCrop-before-upload for avatar/media flows. The crop rect lives in stage coordinates; zoom scales\nthe letterboxed image around its center underneath. `getCroppedBlob()`/`getCroppedDataUrl()`\nrequire `src` to be same-origin or CORS-enabled; a tainted canvas throws with a clear message.\n---\n\n\n### **Events:**\n - **arc-crop-change** - Fired when the crop changes (drag, resize, keyboard, zoom, stage resize). `event.detail` is `{ x, y, width, height }` in natural image pixels, debounced to animation frames.\n\n### **Methods:**\n - **getCrop(): _{ x: number, y: number, width: number, height: number } | null_** - Current crop in natural image pixels, or null before the image has loaded.\n- **getCroppedBlob(type: _string_, quality: _number_): _Promise<Blob>_** - Export the crop as a Blob at natural resolution.\n- **getCroppedDataUrl(type: _string_, quality: _number_): _Promise<string>_** - Export the crop as a data URL at natural resolution.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **stage**\n- **image**\n- **skeleton**\n- **error**\n- **crop**\n- **handle**\n- **zoom**",
       "attributes": [
         {
           "name": "src",
@@ -3012,7 +3032,7 @@
     },
     {
       "name": "arc-inline-edit",
-      "description": "Click-to-edit text: renders as plain text until activated, then swaps to a\npre-filled field. Enter or blur commits, Escape cancels. Built for track\nrenames, document titles, and other fields where a permanent input box would\nbe visual noise.\n\nThe display text inherits the surrounding typography (`font: inherit`) and\nthe edit field matches it, so the swap never changes the text's metrics —\nan inline-edit inside a heading edits at heading size, one in a table cell\nedits at cell size. This is why there is no `size` prop: sizing comes from\ncontext, and a fixed scale would fight it.\n\nWhile editing, keystrokes accumulate in an internal draft. `value` — and the\nvalue a form submits — only changes on commit, so Escape can always revert\nand a half-typed rename is never submitted. Committing an unchanged value\nfires no event at all.\n---\n\n\n### **Events:**\n - **arc-change** - Fired once on commit when the value actually changed, with the new value in detail.value.\n- **arc-cancel** - Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.\n- **arc-input** - Fired on each keystroke while editing, with the draft text in detail.value.\n\n### **Methods:**\n - **focus(options: _FocusOptions_): _void_** - Move focus to whichever element is currently the control: the field while\nediting, the display row otherwise.\n\nThe host sets no `delegatesFocus` and everything focusable lives in the\nshadow root, so `el.focus()` used to do nothing at all — silently, which\ncost a consumer a \"Rename\" menu item that appeared dead. `edit()` is the\nway *into* editing and stays that way; this is only the obvious call\nlanding where a caller expects it.\n- **edit(): _void_** - Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.\n- **commit(): _void_** - Commit the current draft and leave edit mode. Fires arc-change only if the value changed.\n- **cancel(): _void_** - Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel.\n- **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **display** - The display-state button wrapping the text and pencil affordance.\n- **field** - The input or textarea shown while editing.\n- **icon** - The pencil affordance icon.",
+      "description": "Click-to-edit text: renders as plain text until activated, then swaps to a\npre-filled field. Enter or blur commits, Escape cancels. Built for track\nrenames, document titles, and other fields where a permanent input box would\nbe visual noise.\n\nThe display text inherits the surrounding typography (`font: inherit`) and\nthe edit field matches it, so the swap never changes the text's metrics:\nan inline-edit inside a heading edits at heading size, one in a table cell\nat cell size. This is why there is no `size` prop: sizing comes from\ncontext, and a fixed scale would fight it.\n\nWhile editing, keystrokes accumulate in an internal draft. `value` (and the\nvalue a form submits) only changes on commit, so Escape can always revert\nand a half-typed rename is never submitted. Committing an unchanged value\nfires no event at all.\n---\n\n\n### **Events:**\n - **arc-change** - Fired once on commit when the value actually changed, with the new value in detail.value.\n- **arc-cancel** - Fired when an edit is canceled (Escape or cancel()), with the retained value in detail.value. No arc-change accompanies it.\n- **arc-input** - Fired on each keystroke while editing, with the draft text in detail.value.\n\n### **Methods:**\n - **focus(options: _FocusOptions_): _void_** - Move focus to whichever element is currently the control: the field while\nediting, the display row otherwise.\n\nThe host sets no `delegatesFocus` and everything focusable lives in the\nshadow root, so `el.focus()` used to do nothing at all, silently, which\ncost a consumer a \"Rename\" menu item that appeared dead. `edit()` is the\nway *into* editing and stays that way; this is only the obvious call\nlanding where a caller expects it.\n- **edit(): _void_** - Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing.\n- **commit(): _void_** - Commit the current draft and leave edit mode. Fires arc-change only if the value changed.\n- **cancel(): _void_** - Discard the draft, keep the previous value, and leave edit mode. Fires arc-cancel.\n- **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **display** - The display-state button wrapping the text and pencil affordance.\n- **field** - The input or textarea shown while editing.\n- **icon** - The pencil affordance icon.",
       "attributes": [
         {
           "name": "value",
@@ -3063,7 +3083,7 @@
     },
     {
       "name": "arc-input",
-      "description": "Versatile form control supporting single-line text, email, password, and multiline textarea\nmodes with built-in label, placeholder, and validation states. Pairs with Form for complete\ndata-entry workflows.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - **prefix**\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **field**\n- **label**\n- **wrapper** - The box around the field. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself.\n- **prefix**\n- **suffix**\n- **error**",
+      "description": "Form control supporting single-line text, email, password, and multiline textarea\nmodes with built-in label, placeholder, and validation states. Pairs with Form for complete\ndata-entry workflows.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - **prefix**\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **field**\n- **label**\n- **wrapper** - The box around the field. Its border, radius and shadow read `--input-border`, `--input-radius` and `--input-shadow`, so a container such as arc-input-group can draw the box itself.\n- **prefix**\n- **suffix**\n- **error**",
       "attributes": [
         {
           "name": "type",
@@ -3088,7 +3108,7 @@
         },
         {
           "name": "placeholder",
-          "description": "Hint text displayed inside the field when it is empty. Use it to show an example value -- never as a substitute for the label.",
+          "description": "Hint text displayed inside the field when it is empty. Use it to show an example value, never as a substitute for the label.",
           "values": []
         },
         {
@@ -3132,7 +3152,7 @@
     },
     {
       "name": "arc-knob",
-      "description": "Rotary knob input for continuous parameters — the control a slider can't be when the panel\nis a rack of channel strips. A 270-degree arc track fills from min to the current value with\na glowing indicator line, a monospace readout below, and synth-style interaction: vertical\ndrag to turn (Shift for fine adjustment), mouse wheel and arrow keys to step, optional\nmagnetic detents at named values.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while the knob is turning — every drag movement, wheel notch, or key step. Use for real-time preview such as a filter cutoff or gain applied live.\n- **arc-change** - Fired once when a turn commits: on drag release, and after each discrete wheel or key step. Use for persisting the value or triggering an expensive operation.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **knob**\n- **label**\n- **dial**\n- **track**\n- **fill**\n- **indicator**\n- **value**",
+      "description": "Rotary knob input for continuous parameters: the control a slider can't be when the panel\nis a rack of channel strips. A 270-degree arc track fills from min to the current value with\na glowing indicator line, a monospace readout below, and synth-style interaction: vertical\ndrag to turn (Shift for fine adjustment), mouse wheel and arrow keys to step, optional\nmagnetic detents at named values.\n---\n\n\n### **Events:**\n - **arc-input** - Fired continuously while the knob is turning: every drag movement, wheel notch, or key step. Use for real-time preview such as a filter cutoff or gain applied live.\n- **arc-change** - Fired once when a turn commits: on drag release, and after each discrete wheel or key step. Use for persisting the value or triggering an expensive operation.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **knob**\n- **label**\n- **dial**\n- **track**\n- **fill**\n- **indicator**\n- **value**",
       "attributes": [
         {
           "name": "size",
@@ -3209,7 +3229,7 @@
     },
     {
       "name": "arc-masked-input",
-      "description": "Text field that enforces a character mask as you type — dates, card numbers,\nphone numbers, license keys. The mask's literals are typed for the user;\n`value` holds only the raw characters, and the raw value is what forms\nreceive, so the mask stays presentation.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each accepted edit. `value` is the raw characters; `formatted` is the presentation string. A rejected character fires nothing.\n- **arc-change** - Fired on blur or Enter when the value changed, and immediately when the last mask position fills — a complete mask is a committed value, the fixed-length precedent set by OTP Input.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - **prefix**\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **field**\n- **label**\n- **wrapper**\n- **prefix**\n- **suffix**\n- **hint**\n- **error**",
+      "description": "Text field that enforces a character mask as you type: dates, card numbers,\nphone numbers, license keys. The mask's literals are typed for the user;\n`value` holds only the raw characters, and the raw value is what forms\nreceive, so the mask stays presentation.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on each accepted edit. `value` is the raw characters; `formatted` is the presentation string. A rejected character fires nothing.\n- **arc-change** - Fired on blur or Enter when the value changed, and immediately when the last mask position fills. A complete mask is a committed value (the fixed-length precedent set by OTP Input).\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **Slots:**\n - **prefix**\n- **suffix**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **field**\n- **label**\n- **wrapper**\n- **prefix**\n- **suffix**\n- **hint**\n- **error**",
       "attributes": [
         {
           "name": "mask",
@@ -3218,7 +3238,7 @@
         },
         {
           "name": "value",
-          "description": "The RAW accepted characters only, with no mask literals — `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts.",
+          "description": "The RAW accepted characters only, with no mask literals: `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts.",
           "values": []
         },
         {
@@ -3347,7 +3367,7 @@
     },
     {
       "name": "arc-password-input",
-      "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.\n\nTrue when the password contains a 4+ run of consecutive chars (abcd, 4321). *\\/ function\nhasSequentialRun(pw) { const s = pw.toLowerCase(); let asc = 1; let desc = 1; for (let i = 1; i\n< s.length; i++) { const d = s.charCodeAt(i) - s.charCodeAt(i - 1); asc = d === 1 ? asc + 1 : 1;\ndesc = d === -1 ? desc + 1 : 1; if (asc >= 4 || desc >= 4) return true; } return false; }\nSelf-contained heuristic: 0 = empty, 1–4 = Weak…Strong. *\\/ function scorePassword(pw) { if\n(!pw) return 0; if (COMMON_PASSWORDS.has(pw.toLowerCase())) return 1; let score = 0; if\n(pw.length >= 8) score += 1; if (pw.length >= 12) score += 1; if (pw.length >= 16) score += 1;\nconst classes = (/[a-z]/.test(pw) ? 1 : 0) + (/[A-Z]/.test(pw) ? 1 : 0) + (/\\d/.test(pw) ? 1 :\n0) + (/[^A-Za-z0-9]/.test(pw) ? 1 : 0); if (classes >= 2) score += 1; if (classes >= 4) score +=\n1; if (/(.)\\1\\1/.test(pw)) score -= 1; if (hasSequentialRun(pw)) score -= 1; return Math.min(4,\nMath.max(1, score)); }\n---\n\n\n### **Events:**\n - **arc-strength-change** - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)\n- **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed, with { value } detail\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **strength**\n- **label**\n- **field**\n- **input**\n- **toggle**\n- **error**",
+      "description": "Password entry field with a built-in visibility toggle and an optional four-segment strength\nmeter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.\n---\n\n\n### **Events:**\n - **arc-strength-change** - Fired when the strength score changes (only while show-strength is set), with { score } detail (0-4)\n- **arc-input** - Fired on each keystroke with { value } detail\n- **arc-change** - Fired on blur when value has changed, with { value } detail\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **strength**\n- **label**\n- **field**\n- **input**\n- **toggle**\n- **error**",
       "attributes": [
         {
           "name": "name",
@@ -3405,7 +3425,7 @@
     },
     {
       "name": "arc-pin-input",
-      "description": "One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste\nsupport, and optional masking.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.\n- **arc-change** - Fired when the pin is complete — every box filled. That is the commit for a fixed-length value.\n- **arc-complete** - Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pin**\n- **label**\n- **boxes**\n- **box**",
+      "description": "One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste\nsupport, and optional masking.\n---\n\n\n### **Events:**\n - **arc-input** - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.\n- **arc-change** - Fired when the pin is complete: every box filled. That is the commit for a fixed-length value.\n- **arc-complete** - Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pin**\n- **label**\n- **boxes**\n- **box**",
       "attributes": [
         {
           "name": "size",
@@ -3468,7 +3488,7 @@
         },
         {
           "name": "name",
-          "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
+          "description": "The form field name submitted with the selected value. Required for native form integration: without it, the selection will not appear in FormData.",
           "values": []
         },
         {
@@ -3574,7 +3594,7 @@
         },
         {
           "name": "value",
-          "description": "Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
+          "description": "Current rating value, 0 to `max`. **0 means unrated**; it is a legal state of the control, not a rating of zero: it submits nothing, announces as \"No rating\", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction.",
           "values": []
         },
         {
@@ -3650,7 +3670,7 @@
         },
         {
           "name": "name",
-          "description": "The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData.",
+          "description": "The form field name submitted with the selected value. Required for native form integration: without it, the selection will not appear in FormData.",
           "values": []
         },
         {
@@ -3714,11 +3734,11 @@
     },
     {
       "name": "arc-signature-pad",
-      "description": "Canvas signature capture that participates in forms. A bordered drawing surface with a muted\n\"Sign here\" baseline while empty, a velocity-scaled pen line for a natural stroke, and a ghost\nclear button once ink is down. Each completed stroke serializes the whole canvas to a PNG\ndata-URL and submits it as the field value; required-and-blank reports `valueMissing` like any\nother input.\n\nSigning by hand is inherently a pointer gesture: the pad itself offers no keyboard path to\nproduce a signature (the clear button is keyboard-reachable, the canvas is focusable so its\nsigned/empty state is announced). A consumer collecting signatures must offer keyboard users an\nequivalent — a type-to-sign field, an upload — alongside this control; the pad does not\nsimulate one.\n---\n\n\n### **Events:**\n - **arc-clear** - Fired when the pad is cleared, via the clear button or the clear() method.\n- **arc-input** - Fired once per completed stroke with the serialized data-URL. A stroke is the edit unit — nothing fires per point while the pen is down.\n- **arc-change** - Fired when the pointer session ends and the value serializes. A stroke is a discrete gesture, so each stroke end fires arc-input then arc-change together.\n\n### **Methods:**\n - **formStateRestoreCallback(state)** - Restore only what could plausibly be a serialized signature.\n- **clear(): _void_** - Wipe the canvas, empty the value, and bring the placeholder back.\n- **toDataURL(type: _string_): _string_** - The current canvas as a data-URL in the requested format (PNG by\ndefault). Unlike `value`, this reads the canvas directly, so a blank pad\nreturns a blank image rather than an empty string.\n- **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pad**\n- **label**\n- **canvas**\n- **placeholder**\n- **clear**",
+      "description": "Canvas signature capture that participates in forms. A bordered drawing surface with a muted\n\"Sign here\" baseline while empty, a velocity-scaled pen line for a natural stroke, and a ghost\nclear button once ink is down. Each completed stroke serializes the whole canvas to a PNG\ndata-URL and submits it as the field value; required-and-blank reports `valueMissing` like any\nother input.\n\nSigning by hand is inherently a pointer gesture: the pad itself offers no keyboard path to\nproduce a signature (the clear button is keyboard-reachable, the canvas is focusable so its\nsigned/empty state is announced). A consumer collecting signatures must offer keyboard users an\nequivalent (a type-to-sign field, an upload) alongside this control; the pad does not\nsimulate one.\n---\n\n\n### **Events:**\n - **arc-clear** - Fired when the pad is cleared, via the clear button or the clear() method.\n- **arc-input** - Fired once per completed stroke with the serialized data-URL. A stroke is the edit unit: nothing fires per point while the pen is down.\n- **arc-change** - Fired when the pointer session ends and the value serializes. A stroke is a discrete gesture, so each stroke end fires arc-input then arc-change together.\n\n### **Methods:**\n - **formStateRestoreCallback(state)** - Restore only what could plausibly be a serialized signature.\n- **clear(): _void_** - Wipe the canvas, empty the value, and bring the placeholder back.\n- **toDataURL(type: _string_): _string_** - The current canvas as a data-URL in the requested format (PNG by\ndefault). Unlike `value`, this reads the canvas directly, so a blank pad\nreturns a blank image rather than an empty string.\n- **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pad**\n- **label**\n- **canvas**\n- **placeholder**\n- **clear**",
       "attributes": [
         {
           "name": "value",
-          "description": "The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected — a data-URL is far too large to live in an attribute.",
+          "description": "The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected: a data-URL is far too large to live in an attribute.",
           "values": []
         },
         {
@@ -3743,7 +3763,7 @@
         },
         {
           "name": "penWidth",
-          "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
+          "description": "Base pen width in CSS pixels. The drawn line scales with stroke velocity, up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.",
           "values": []
         },
         { "name": "required", "values": [] },
@@ -3923,7 +3943,7 @@
         },
         {
           "name": "placeholder",
-          "description": "Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label.",
+          "description": "Hint text displayed inside the field when it is empty. Use it to show example input, never as a substitute for the label.",
           "values": []
         },
         {
@@ -3933,7 +3953,7 @@
         },
         {
           "name": "rows",
-          "description": "The number of visible text rows that set the initial height of the textarea. Does not limit content length -- the user can scroll or resize beyond this height.",
+          "description": "The number of visible text rows that set the initial height of the textarea. Does not limit content length; the user can scroll or resize beyond this height.",
           "values": []
         },
         {
@@ -3986,7 +4006,7 @@
       "attributes": [
         {
           "name": "theme",
-          "description": "The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.",
+          "description": "The current theme mode. Synced in both directions: changing it (by click, by key, or by assigning the property) writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.",
           "values": [
             { "name": "dark" },
             { "name": "light" },
@@ -4117,7 +4137,7 @@
     },
     {
       "name": "arc-transfer-list",
-      "description": "Dual-listbox for moving items between an available and a selected pane, ideal for permissions\nand settings UIs.\n---\n\n\n### **Events:**\n - **arc-change** - Fired after every move with `{ value }` -- the current array of selected values.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pane**\n- **pane-header**\n- **search**\n- **listbox**\n- **option**\n- **controls**",
+      "description": "Dual-listbox for moving items between an available and a selected pane, ideal for permissions\nand settings UIs.\n---\n\n\n### **Events:**\n - **arc-change** - Fired after every move with `{ value }`: the current array of selected values.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **pane**\n- **pane-header**\n- **search**\n- **listbox**\n- **option**\n- **controls**",
       "attributes": [
         {
           "name": "size",
@@ -4170,7 +4190,7 @@
     },
     {
       "name": "arc-tree-select",
-      "description": "Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder\npickers. Group nodes expand and collapse; only leaf nodes are selectable, which keeps\nsingle-select semantics clean.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a leaf is selected. `detail.value` is the leaf value, `detail.label` its label, and `detail.path` the array of ancestor group values from root to parent.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tree-select**\n- **label**\n- **trigger**\n- **panel**\n- **row**\n- **error**",
+      "description": "Dropdown select whose panel is a hierarchical tree: categories, instrument banks, folder\npickers. Group nodes expand and collapse; only leaf nodes are selectable, which keeps\nsingle-select semantics clean.\n---\n\n\n### **Events:**\n - **arc-change** - Fired when a leaf is selected. `detail.value` is the leaf value, `detail.label` its label, and `detail.path` the array of ancestor group values from root to parent.\n\n### **Methods:**\n - **checkValidity(): _boolean_** - Whether the control currently satisfies its constraints, per the native\nconstraint-validation API. Fires `invalid` on the element when it does\nnot, and reports nothing to the user.\n- **reportValidity(): _boolean_** - As checkValidity(), but also shows the browser's validation message\nagainst the control when it fails.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tree-select**\n- **label**\n- **trigger**\n- **panel**\n- **row**\n- **error**",
       "attributes": [
         {
           "name": "items",
@@ -4234,7 +4254,7 @@
     },
     {
       "name": "arc-app-shell",
-      "description": "Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a\ncohesive application frame. Handles responsive collapse, sidebar toggling, and optional\ntable-of-contents rail out of the box.\n\nA slotted `arc-top-bar` is put out of flow for you — the body already\nreserves `--nav-height` of padding for it — and whatever is slotted into the\nsidebar is stretched to the full height of the rail, `arc-sidebar` or a plain\n`<nav>` alike, so anything drawing an edge draws it the whole way down. The\nrail is 280px wide; set `--sidebar-width` on the shell to change it, which\nmoves the wrapper and the sidebar inside it together.\n\nBy default the shell is a page layout: at least `100vh` tall, with the page\nas the scroll context and a sticky sidebar rail. Set `embedded` to put the\nsame layout inside a box — a card, a dashboard cell, a split pane, a preview\n— where it takes its height from the container you give it and scrolls\ninside itself instead of moving the page.\n---\n\n\n### **Events:**\n - **arc-sidebar-toggle** - Fired when the shell itself opens or closes the mobile sidebar — on a backdrop click, on Escape, on navigation, or when the viewport widens past the breakpoint and the drawer stops existing. Listened to by arc-top-bar so its hamburger stays in step, and by any wrapper binding `sidebarOpen`. Not fired for a toggle the shell merely received, so the two cannot echo each other.\n\n### **Slots:**\n - **topbar**\n- **sidebar**\n- _default_ - Default content.\n- **toc**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **shell**\n- **body**\n- **sidebar**\n- **main**\n- **content**\n- **toc**",
+      "description": "Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into\nan application frame. Handles responsive collapse, sidebar toggling, and optional\ntable-of-contents rail.\n\nA slotted `arc-top-bar` is put out of flow for you: the body already\nreserves `--nav-height` of padding for it, and whatever is slotted into the\nsidebar is stretched to the full height of the rail (`arc-sidebar` or a plain\n`<nav>` alike), so anything drawing an edge draws it the whole way down. The\nrail is 280px wide; set `--sidebar-width` on the shell to change it, which\nmoves the wrapper and the sidebar inside it together.\n\nBy default the shell is a page layout: at least `100vh` tall, with the page\nas the scroll context and a sticky sidebar rail. Set `embedded` to put the\nsame layout inside a box (a card, a dashboard cell, a split pane, a preview)\nwhere it takes its height from the container you give it and scrolls\ninside itself instead of moving the page.\n---\n\n\n### **Events:**\n - **arc-sidebar-toggle** - Fired when the shell itself opens or closes the mobile sidebar: on a backdrop click, on Escape, on navigation, or when the viewport widens past the breakpoint and the drawer stops existing. Listened to by arc-top-bar so its hamburger stays in step, and by any wrapper binding `sidebarOpen`. Not fired for a toggle the shell merely received, so the two cannot echo each other.\n\n### **Slots:**\n - **topbar**\n- **sidebar**\n- _default_ - Default content.\n- **toc**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **shell**\n- **body**\n- **sidebar**\n- **main**\n- **content**\n- **toc**",
       "attributes": [
         {
           "name": "sidebarOpen",
@@ -4243,7 +4263,7 @@
         },
         {
           "name": "embedded",
-          "description": "Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen — a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for.",
+          "description": "Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen, since a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for.",
           "values": []
         },
         {
@@ -4278,7 +4298,7 @@
     },
     {
       "name": "arc-auth-shell",
-      "description": "Authentication page layout with centered and split variants for sign-in, sign-up,\npassword-reset, and other credential flows. Provides logo, form card, footer, and optional aside\nslots out of the box.\n---\n\n\n### **Slots:**\n - **logo**\n- _default_ - Default content.\n- **footer**\n- **aside**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **shell**\n- **form-side**\n- **logo**\n- **card**\n- **footer**\n- **aside**",
+      "description": "Authentication page layout with centered and split variants for sign-in, sign-up,\npassword-reset, and other credential flows. Provides logo, form card, footer, and optional aside\nslots.\n---\n\n\n### **Slots:**\n - **logo**\n- _default_ - Default content.\n- **footer**\n- **aside**\n\n### **CSS Parts:**\n - **base** - The root element.\n- **shell**\n- **form-side**\n- **logo**\n- **card**\n- **footer**\n- **aside**",
       "attributes": [
         {
           "name": "variant",
@@ -4367,7 +4387,7 @@
     },
     {
       "name": "arc-float-bar",
-      "description": "Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring\neasing. For bulk actions, unsaved-changes prompts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the float bar becomes visible after the open prop is set to true.\n- **arc-close** - Fired when the float bar hides after the open prop is set to false.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **bar**",
+      "description": "Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring\neasing. For bulk actions and unsaved-changes prompts.\n---\n\n\n### **Events:**\n - **arc-open** - Fired when the float bar becomes visible after the open prop is set to true.\n- **arc-close** - Fired when the float bar hides after the open prop is set to false.\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **bar**",
       "attributes": [
         {
           "name": "open",
@@ -4425,11 +4445,11 @@
     },
     {
       "name": "arc-page-header",
-      "description": "Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content\naround a heading and description.\n---\n\n\n### **Slots:**\n - **above** - Content above the title row — breadcrumbs, a back link, a status chip. The space it occupies is reserved only when something is in it.\n- **heading**\n- **aside**\n- **description**\n- **below**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **base**\n- **above**\n- **title-row**\n- **heading**\n- **aside**\n- **description**\n- **below**\n- **content**",
+      "description": "Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content\naround a heading and description.\n---\n\n\n### **Slots:**\n - **above** - Content above the title row: breadcrumbs, a back link, a status chip. The space it occupies is reserved only when something is in it.\n- **heading**\n- **aside**\n- **description**\n- **below**\n- _default_ - Default content.\n\n### **CSS Parts:**\n - **base**\n- **above**\n- **title-row**\n- **heading**\n- **aside**\n- **description**\n- **below**\n- **content**",
       "attributes": [
         {
           "name": "heading",
-          "description": "The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. \"Team Settings\", \"Order #4021\"). Keep it concise — two to five words is ideal.",
+          "description": "The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. \"Team Settings\", \"Order #4021\"). Keep it concise: two to five words is ideal.",
           "values": []
         },
         {
@@ -4483,7 +4503,7 @@
         },
         {
           "name": "handle",
-          "description": "Which edge the handle sits on. `end` (the default) is the inline end — the right edge in a left-to-right page — or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way.",
+          "description": "Which edge the handle sits on. `end` (the default) is the inline end (the right edge in a left-to-right page) or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way.",
           "values": [{ "name": "end" }, { "name": "start" }]
         },
         {
@@ -4584,7 +4604,7 @@
         },
         {
           "name": "ratio",
-          "description": "The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
+          "description": "The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path, including assignment from script. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).",
           "values": []
         },
         {
@@ -4713,7 +4733,7 @@
       "attributes": [
         {
           "name": "href",
-          "description": "Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current=\"page\"` and the primary text color automatically.",
+          "description": "Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page; it will receive `aria-current=\"page\"` and the primary text color automatically.",
           "values": []
         }
       ],
@@ -4779,7 +4799,7 @@
     },
     {
       "name": "arc-drawer",
-      "description": "Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for\noff-canvas navigation, filters, and detail views.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the drawer closes via backdrop click or escape key\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **panel** - The sliding panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--drawer-backdrop` custom property.\n- **header**\n- **title**\n- **close**\n- **body**",
+      "description": "Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for\noff-canvas navigation, filters, and detail views.\n---\n\n\n### **Events:**\n - **arc-close** - Fired when the drawer closes via backdrop click or escape key\n\n### **Slots:**\n - _default_ - Default content.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **panel** - The sliding panel. Same element as `base`. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--drawer-backdrop` custom property.\n- **header**\n- **title**\n- **close**\n- **body**",
       "attributes": [
         {
           "name": "open",
@@ -4810,7 +4830,7 @@
       "attributes": [
         {
           "name": "density",
-          "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited.",
+          "description": "Visual density. 'compact' reduces internal padding and spacing throughout the footer, for dashboard layouts or admin panels where vertical space is limited.",
           "values": [{ "name": "default" }, { "name": "compact" }]
         },
         {
@@ -4833,7 +4853,7 @@
     },
     {
       "name": "arc-link",
-      "description": "Styled anchor with nav, muted, and default variants.\n---\n\n\n### **Slots:**\n - _default_ - Default content. Slotting a single `<a>` as the only child adopts it as the link — the recommended form for links that must work before hydration or without JavaScript. In this form `external` contributes the marker icon only; put `target`/`rel` on your own anchor, and note that `::part(link)` does not apply.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **link**",
+      "description": "Styled anchor with nav, muted, and default variants.\n---\n\n\n### **Slots:**\n - _default_ - Default content. Slotting a single `<a>` as the only child adopts it as the link: the recommended form for links that must work before hydration or without JavaScript. In this form `external` contributes the marker icon only; put `target`/`rel` on your own anchor, and `::part(link)` does not apply.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **link**",
       "attributes": [
         {
           "name": "href",
@@ -4860,7 +4880,7 @@
         },
         {
           "name": "active",
-          "description": "Active state — applies accent-primary color for navigation highlighting.",
+          "description": "Active state: applies accent-primary color for navigation highlighting.",
           "values": []
         },
         {
@@ -4909,7 +4929,7 @@
         },
         {
           "name": "variant",
-          "description": "Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like \"Blog\" or \"Changelog\".",
+          "description": "Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text, ideal for secondary links like \"Blog\" or \"Changelog\".",
           "values": [
             { "name": "default" },
             { "name": "primary" },
@@ -4958,7 +4978,7 @@
       "attributes": [
         {
           "name": "total",
-          "description": "Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1.",
+          "description": "Total number of pages. At least 1: a pager with no pages is still a pager showing page 1 of 1.",
           "values": []
         },
         {
@@ -5080,12 +5100,12 @@
         },
         {
           "name": "icon",
-          "description": "Name of an icon to render before the label. Use icons consistently within a section — a sidebar where only some links carry one reads as an oversight rather than a hierarchy.",
+          "description": "Name of an icon to render before the label. Use icons consistently within a section: a sidebar where only some links carry one reads as an oversight rather than a hierarchy.",
           "values": []
         },
         {
           "name": "external",
-          "description": "Marks a destination that leaves the surrounding section — an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it.",
+          "description": "Marks a destination that leaves the surrounding section: an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it.",
           "values": []
         }
       ],
@@ -5129,7 +5149,7 @@
         },
         {
           "name": "collapsed",
-          "description": "When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail — the VS Code activity-bar shape — use `arc-rail`, which is a different component with its own labels and tooltips.",
+          "description": "When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail (the VS Code activity-bar shape), use `arc-rail`, which is a different component with its own labels and tooltips.",
           "values": []
         },
         {
@@ -5139,7 +5159,7 @@
         },
         {
           "name": "width",
-          "description": "Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.",
+          "description": "Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in, including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.",
           "values": []
         },
         {
@@ -5196,7 +5216,7 @@
         },
         {
           "name": "linear",
-          "description": "When true, prevents jumping to future steps — the user must complete each step sequentially.",
+          "description": "When true, prevents jumping to future steps: the user must complete each step sequentially.",
           "values": []
         }
       ],
@@ -5208,12 +5228,12 @@
       "attributes": [
         {
           "name": "label",
-          "description": "Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.",
+          "description": "Text displayed on the tab button. Keep labels concise (one or two words) to prevent the tab bar from overflowing.",
           "values": []
         },
         {
           "name": "disabled",
-          "description": "When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.",
+          "description": "When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible; disabling is not a way to hide a panel.",
           "values": []
         }
       ],
@@ -5266,7 +5286,7 @@
         },
         {
           "name": "scrolled",
-          "description": "Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.",
+          "description": "Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you. Read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.",
           "values": []
         },
         {
@@ -5291,13 +5311,26 @@
         },
         {
           "name": "mobile-menu",
-          "description": "Controls the mobile menu behavior. When set to a value like \"nav\", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.",
-          "values": []
+          "description": "What the hamburger does below the nav-collapse breakpoint. `sidebar` (the default) fires `arc-sidebar-toggle` for an app shell's drawer; `nav` fires `arc-mobile-menu-toggle` for your own panel; `none` renders no hamburger, for a site with nothing to open.",
+          "values": [
+            { "name": "sidebar" },
+            { "name": "nav" },
+            { "name": "none" }
+          ]
         },
         {
           "name": "menu-position",
           "description": "Position of the mobile menu panel when mobile-menu is active.",
           "values": []
+        },
+        {
+          "name": "mobileCenter",
+          "description": "Where the center slot goes below the nav-collapse breakpoint. `center` (the default) keeps it centered; `end` moves it to the right, next to the actions and the menu button; `hidden` removes it, for a center whose content the mobile menu already carries.",
+          "values": [
+            { "name": "center" },
+            { "name": "end" },
+            { "name": "hidden" }
+          ]
         },
         {
           "name": "navAlign",
@@ -5327,7 +5360,7 @@
     },
     {
       "name": "arc-tree-view",
-      "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.\n- **arc-select** - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.\n\n### **Slots:**\n - _default_ - `arc-tree-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
+      "description": "Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard\nnavigation, and indentation guide lines.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it: two nodes may share a label.\n- **arc-select** - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.\n\n### **Slots:**\n - _default_ - `arc-tree-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **tree** - The root list. The nested lists at deeper levels are `group`.\n- **group** - A nested list under an expanded branch.\n- **item**\n- **row**",
       "attributes": [],
       "references": []
     },
@@ -5343,7 +5376,7 @@
       "attributes": [
         {
           "name": "label",
-          "description": "Display text for the menu item. Settable, and falls back to the element's text content when unset — `<arc-menu-item label=\"Cut\">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent.",
+          "description": "Display text for the menu item. Settable, and falls back to the element's text content when unset: `<arc-menu-item label=\"Cut\">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent.",
           "values": []
         },
         {
@@ -5363,7 +5396,7 @@
         },
         {
           "name": "value",
-          "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text.",
+          "description": "Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one. Give anything a handler must act on its own value rather than matching against display text.",
           "values": []
         }
       ],
@@ -5371,7 +5404,7 @@
     },
     {
       "name": "arc-menu-label",
-      "description": "A heading over a group of menu items.\n\nThe items after it, up to the next label, become one group, announced by\nthis text: the parent menu wraps them in `role=\"group\"` labelled by it. It is\nnever focusable and never selected. It was reported missing (finding #115)\nby a consumer titling each specialist's items in one menu, whose workaround\nwas a disabled `arc-menu-item`, which reads as a dead option rather than a\nheading.\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
+      "description": "A heading over a group of menu items.\n\nThe items after it, up to the next label, become one group, announced by\nthis text: the parent menu wraps them in `role=\"group\"` labelled by it. It is\nnever focusable and never selected. Use it instead of a disabled\n`arc-menu-item`, which reads as a dead option rather than a heading\n(finding #115).\n---\n\n\n### **Slots:**\n - _default_ - Default content.",
       "attributes": [
         {
           "name": "label",
@@ -5418,31 +5451,88 @@
     },
     {
       "name": "arc-code-block",
-      "description": "Syntax-highlighted code display with optional filename and copy button.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **titlebar**\n- **orbs**\n- **filename**\n- **header**\n- **lang**\n- **status-bar**\n- **lines**\n- **code-block**\n- **copy**\n- **body**\n- **pre**\n- **code**",
+      "description": "Syntax-highlighted code display with an optional title, filename, copy\nbutton, line numbers, line emphasis, a shell prompt and a collapsed height.\n\nCode renders line by line, highlighted or not, so the numbers, the prompt,\nemphasis and diff tints work without shiki installed, and the colors\narriving never move a line.\n---\n\n\n### **Events:**\n - **arc-toggle** - Fired when a collapsed block is expanded or collapsed again. `detail.value` is `true` when expanded.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **titlebar**\n- **orbs**\n- **label**\n- **filename**\n- **header**\n- **lang**\n- **status-bar**\n- **lines**\n- **code-block**\n- **copy**\n- **body**\n- **pre**\n- **code**\n- **line** - One line of code. Emphasized lines add `line-highlight`, diff lines `line-add` or `line-remove`.\n- **line-highlight**\n- **line-add**\n- **line-remove**\n- **gutter** - The line number cell. The number is its `::before`.\n- **prompt** - The prompt cell. The prompt is its `::before`.\n- **expand** - The show-all / show-fewer button of a collapsed block.",
       "attributes": [
         {
           "name": "language",
-          "description": "Programming language identifier (e.g. `js`, `css`, `html`). Displayed in uppercase in the header bar.",
+          "description": "Language identifier (e.g. `js`, `css`, `bash`). Shown in uppercase in the header and used to pick the highlighter grammar.",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "A plain title for the header in the body font, such as \"Pulsar for NVIDIA\". Shown before the filename when both are set. Also the tab name inside an arc-code-group.",
           "values": []
         },
         {
           "name": "filename",
-          "description": "Optional filename displayed in the header in monospace font. When empty, the header shows only the language.",
+          "description": "A filename for the header, in monospace. When `label` is also set it follows the label, muted.",
           "values": []
         },
         {
           "name": "code",
-          "description": "Code content to display. Used as the `<pre><code>` content and copied to clipboard when the copy button is clicked.",
+          "description": "The code to display. Copied as-is by the copy button: no prompts, no line numbers.",
           "values": []
         },
         {
           "name": "variant",
-          "description": "Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display.",
+          "description": "Visual variant. `default` shows the standard layout with an optional header and status bar. `window` adds a macOS-style title bar with colored orbs and a centered title. `basic` strips all chrome for a compact display.",
           "values": [
             { "name": "default" },
             { "name": "window" },
             { "name": "basic" }
           ]
+        },
+        {
+          "name": "prompt",
+          "description": "Shows a prompt before each command line, never selectable and never copied. Set with no value for `$`, or give the character (`#`, `>`, `PS>`). Continuation lines after a trailing backslash and blank lines get none.",
+          "values": []
+        },
+        {
+          "name": "lineNumbers",
+          "description": "Shows line numbers in a gutter that is not selected or copied.",
+          "values": []
+        },
+        {
+          "name": "highlight",
+          "description": "Lines to emphasize, 1-based: a comma-separated list of numbers and ranges such as `2,4-6`.",
+          "values": []
+        },
+        {
+          "name": "diff",
+          "description": "Tints lines that start with `+` as added and `-` as removed, on top of the block's own language. Always on for `language=\"diff\"`.",
+          "values": []
+        },
+        {
+          "name": "wrap",
+          "description": "Soft-wraps long lines instead of scrolling them. Wrapped text stays aligned after the line number and prompt.",
+          "values": []
+        },
+        {
+          "name": "maxLines",
+          "description": "Collapses a longer block to this many lines, with a fade and a button to show the rest.",
+          "values": []
+        }
+      ],
+      "references": []
+    },
+    {
+      "name": "arc-code-group",
+      "description": "One code block with tabs for its variants: npm, pnpm and yarn, or the same\ncommand for two editions of a product.\n\nEach child `arc-code-block` is a tab, named by its `label` (or its\n`filename`, or its `language`). The group draws the frame, the tab strip and\na single copy button that copies the visible block; the blocks drop their\nown header. Groups with the same `sync-key` switch together across the page,\nand the choice is remembered in localStorage under that key.\n\nBefore the component upgrades, and without JavaScript, the blocks show one\nafter another with their own headers, so nothing is hidden from a reader.\nA server render selects the first tab; a remembered choice applies once the\npage is live.\n---\n\n\n### **Events:**\n - **arc-change** - The user picked a tab. `detail.value` is the tab's name, `detail.index` its position. Not fired on groups that follow along through `sync-key`.\n\n### **Slots:**\n - _default_ - `arc-code-block` elements, one per tab, in order.\n\n### **CSS Parts:**\n - **base** - The root element: the frame.\n- **bar** - The strip holding the tabs and the copy button.\n- **tabs** - The tab list.\n- **tab** - One tab. The selected one adds `tab-selected`.\n- **tab-selected**\n- **copy** - The copy button.\n- **panel** - The area holding the visible block.",
+      "attributes": [
+        {
+          "name": "selected",
+          "description": "Index of the visible block. Out-of-range values fall back to the first block.",
+          "values": []
+        },
+        {
+          "name": "sync-key",
+          "description": "Groups with the same key switch together, matched by tab name, and the choice is remembered in localStorage (`arc-code-group:<key>`).",
+          "values": []
+        },
+        {
+          "name": "label",
+          "description": "Accessible name for the tab list, such as \"Package manager\".",
+          "values": []
         }
       ],
       "references": []
@@ -5505,7 +5595,7 @@
     },
     {
       "name": "arc-keyboard-map",
-      "description": "A rendered keyboard with highlighted keys and chords — the visual big\nsibling of arc-kbd and arc-hotkey, for shortcut documentation and editor\ncheat sheets. Every key named in `highlight` lights up with the house\nstate marking: accent tint, glow, accent legend text.\n\nThe board is a stylised diagram, not a keyboard configurator: `compact`\n(the default) is a 60%-style block without nav cluster or numpad — enough\nfor almost all shortcut documentation — and `ansi` adds the F-row and nav\ncluster. There is deliberately no ISO/JIS machinery; a diagram that\nchased physical-layout fidelity would trade its one job (making a chord\nlegible at a glance) for configuration surface.\n\nIt is pure display typography — no slots, no click events, nothing\nfocusable. A shortcut diagram that responded to clicks would imply the\nkeys do something; wiring real shortcuts is arc-hotkey's job.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **board**\n- **key**\n- **key-highlighted**\n- **caption**",
+      "description": "A rendered keyboard with highlighted keys and chords, the visual big\nsibling of arc-kbd and arc-hotkey, for shortcut documentation and editor\ncheat sheets. Every key named in `highlight` lights up with the house\nstate marking: accent tint, glow, accent legend text.\n\nThe board is a stylised diagram, not a keyboard configurator: `compact`\n(the default) is a 60%-style block without nav cluster or numpad (enough\nfor almost all shortcut documentation), and `ansi` adds the F-row and nav\ncluster. There is no ISO/JIS machinery; a diagram that\nchased physical-layout fidelity would trade its one job (making a chord\nlegible at a glance) for configuration surface.\n\nIt is pure display typography: no slots, no click events, nothing\nfocusable. A shortcut diagram that responded to clicks would imply the\nkeys do something; wiring real shortcuts is arc-hotkey's job.\n---\n\n\n### **CSS Parts:**\n - **base** - The root element.\n- **board**\n- **key**\n- **key-highlighted**\n- **caption**",
       "attributes": [
         {
           "name": "layout",
@@ -5524,7 +5614,7 @@
         },
         {
           "name": "platform",
-          "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default — detected in the browser, mac on the server), \"mac\", or \"win\".",
+          "description": "Which platform's modifier legends and `mod` resolution to use: \"auto\" (default, detected in the browser, mac on the server), \"mac\", or \"win\".",
           "values": [{ "name": "auto" }, { "name": "mac" }, { "name": "win" }]
         },
         {
@@ -5578,12 +5668,12 @@
         },
         {
           "name": "decimals",
-          "description": "Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.",
+          "description": "Number of decimal places, 0 to 20 (`Intl.NumberFormat`'s own range). Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.",
           "values": []
         },
         {
           "name": "notation",
-          "description": "Number notation — compact gives \"12.3K\", \"1.2M\"",
+          "description": "Number notation: compact gives \"12.3K\", \"1.2M\"",
           "values": [{ "name": "standard" }, { "name": "compact" }]
         }
       ],
@@ -5603,7 +5693,7 @@
     },
     {
       "name": "arc-terminal",
-      "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it — typewriter animates one string, this sequences many lines\nwith three behaviors, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates — the same policy\narc-typewriter follows.\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when the whole sequence has finished printing (each cycle, when looping)\n\n### **Methods:**\n - **play(): _void_** - Play the sequence from the beginning.\n- **reset(): _void_** - Return to the blank, pre-animation state without starting playback.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **terminal**\n- **titlebar**\n- **orbs**\n- **title**\n- **body**\n- **line**\n- **prompt**\n- **text**\n- **cursor**",
+      "description": "Animated terminal window: a chrome'd frame that types commands\ncharacter-by-character and prints their output line by line.\n\nThe typing machinery mirrors arc-typewriter's setTimeout chain rather than\nimporting it: typewriter animates one string, this sequences many lines\nwith three behaviors, and a shared chain would serve neither cleanly.\n\nServer-side the full completed transcript renders (no animation in Node);\non the client, autoplay blanks it before first paint and replays it when\nthe element scrolls into view. Under prefers-reduced-motion the transcript\nrenders complete immediately and nothing animates, as arc-typewriter\ndoes.\n---\n\n\n### **Events:**\n - **arc-complete** - Fired when the whole sequence has finished printing (each cycle, when looping)\n\n### **Methods:**\n - **play(): _void_** - Play the sequence from the beginning.\n- **reset(): _void_** - Return to the blank, pre-animation state without starting playback.\n\n### **CSS Parts:**\n - **base** - The root element.\n- **terminal**\n- **titlebar**\n- **orbs**\n- **title**\n- **body**\n- **line**\n- **prompt**\n- **text**\n- **cursor**",
       "attributes": [
         {
           "name": "lines",

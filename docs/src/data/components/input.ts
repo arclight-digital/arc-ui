@@ -10,13 +10,13 @@ export const input: ComponentDef = {
   description:
     'Versatile form control supporting single-line text, email, password, and multiline textarea modes with built-in label, placeholder, and validation states. Pairs with Form for complete data-entry workflows.',
 
-  overview: `Input is the foundational text-entry component in ARC UI. It wraps a native \`<input>\` or \`<textarea>\` element with consistent styling, an integrated label, placeholder support, and validation feedback — all managed through a single declarative API.
+  overview: `Input is the foundational text-entry component in ARC UI. It wraps a native \`<input>\` or \`<textarea>\` element with consistent styling, an integrated label, placeholder support, and validation feedback. All of it goes through a single declarative API.
 
 Use Input whenever you need to collect freeform text from a user: names, emails, passwords, search queries, or longer messages. The \`multiline\` prop switches the underlying element to a \`<textarea>\` for multi-row content without changing the component interface, so forms stay uniform whether a field needs one line or twenty.
 
 Input supports \`prefix\` and \`suffix\` slots for placing icons, labels, or other inline elements inside the field box. This is useful for search icons, unit labels, clear buttons, or any adornment that should appear visually attached to the input.
 
-Input is designed to work seamlessly with the Form component. Wrap a set of Inputs inside a Form to get coordinated validation, submission handling, and error summary. Each Input exposes \`name\`, \`required\`, and \`type\` props that Form reads automatically, so you rarely need extra wiring.`,
+Input works with the Form component. Wrap a set of Inputs inside a Form to get coordinated validation, submission handling, and error summary. Each Input exposes \`name\`, \`required\`, and \`type\` props that Form reads automatically, so you rarely need extra wiring.`,
 
   features: [
     'Integrated label rendered above the field with automatic `for`/`id` association',
@@ -42,11 +42,11 @@ Input is designed to work seamlessly with the Form component. Wrap a set of Inpu
       'Mark required fields with the `required` prop so validation is handled automatically',
     ],
     dont: [
-      'Do not use placeholder text as the only label — it disappears on focus and fails accessibility',
-      'Do not set `type="password"` on a multiline input — passwords are always single-line',
+      'Do not use placeholder text as the only label. It disappears on focus and fails accessibility',
+      'Do not set `type="password"` on a multiline input. Passwords are always single-line',
       'Do not disable inputs without explaining to the user why the field is unavailable',
-      'Avoid overriding the built-in validation styling with custom CSS — use design tokens instead',
-      'Do not use Input for structured data like dates or selects — use DatePicker or Select instead',
+      'Avoid overriding the built-in validation styling with custom CSS. Use design tokens instead',
+      'Do not use Input for structured data like dates or selects. Use DatePicker or Select instead',
     ],
   },
 

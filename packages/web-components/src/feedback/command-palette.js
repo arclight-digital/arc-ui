@@ -10,7 +10,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
 /**
  * Spotlight-style command palette with fuzzy search and keyboard shortcuts.
  *
- * Matching is fuzzy and ranked — see shared/fuzzy-match.js for the scoring.
+ * Matching is fuzzy and ranked; see shared/fuzzy-match.js for the scoring.
  * "cmdpal" finds "Command Palette", terms may be typed in any order, and
  * results come back best-first rather than in DOM order, with the matched
  * characters marked. Items are searched on their label, their `keywords`, and
@@ -35,7 +35,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @csspart match
  * @csspart description
  * @csspart dialog - The palette panel. The scrim is `::backdrop`, which is not an
- *   element and so cannot be a part — style it with the `--palette-backdrop`
+ *   element and so cannot be a part; style it with the `--palette-backdrop`
  *   custom property.
  * @csspart search
  * @csspart input
@@ -59,7 +59,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
       :host { display: contents; }
 
       /* The dialog is the panel; the scrim is its ::backdrop. No backdrop
-         element and no z-index — the top layer has no ladder to climb. The
+         element and no z-index; the top layer has no ladder to climb. The
          scrim colour comes through a custom property so a consumer can still
          reach it: ::backdrop inherits from its originating element. */
       .palette__dialog {
@@ -220,8 +220,8 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
         display: block;
       }
 
-      /* The matched characters. A <mark> is the right element — this is a
-         relevance highlight, which is what mark means — but the UA paints it
+      /* The matched characters. A <mark> is the right element; this is a
+         relevance highlight, which is what mark means, but the UA paints it
          black-on-yellow, so the colors are ours. */
       .palette__item-match {
         background: none;
@@ -292,7 +292,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
   connectedCallback() {
     super.connectedCallback();
     // slotchange fires when the palette's own children change, and not when a
-    // child is added *inside* an arc-command-group — the slot assignment is
+    // child is added *inside* an arc-command-group; the slot assignment is
     // unchanged, so the event never comes and the item list goes stale. That is
     // the shape any asynchronous source has: results fetched on first open, a
     // remote query, a content index. Observing the subtree covers both, and the
@@ -315,7 +315,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
    * Flatten the slotted tree into the ordered item list.
    *
    * Reads from `this` rather than from the slot's assigned elements so it works
-   * whether it was triggered by slotchange or by the observer — assignedElements
+   * whether it was triggered by slotchange or by the observer, assignedElements
    * needs the event's slot, and the observer has no event.
    */
   _collectItems() {
@@ -334,8 +334,8 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
    * nothing to rank by, and the author's ordering is the only signal there is.
    *
    * Ranking is per-group rather than global, and groups are ordered by their
-   * best member. A flat global sort would interleave headings — a list that
-   * reads Guides, Input, Guides, Data as the scores happen to fall — and
+   * best member. A flat global sort would interleave headings: a list that
+   * reads Guides, Input, Guides, Data as the scores happen to fall, and
    * `_groupRuns` would fragment into a heading per item. Sorting inside each
    * group and moving the strongest group to the top keeps one run per heading
    * while still putting the best match first.
@@ -344,7 +344,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
    * Memoised on the query and the item list.
    *
    * This is a getter that scans every item, and it was being read three or four
-   * times per keystroke — once by render, and again through `_filteredItems`
+   * times per keystroke: once by render, and again through `_filteredItems`
    * every time the keyboard controller asked for its item count. At a hundred
    * items nobody notices; against a site-search index of fourteen hundred it is
    * four full scans per character typed, which is what made the first two
@@ -438,7 +438,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
     // The description is windowed around its first match before rendering. A
     // section snippet runs to a couple of hundred characters and the hit is
     // usually not in the first forty, so showing the head of the string shows a
-    // result whose relevance is invisible — the reader sees a row that matched
+    // result whose relevance is invisible; the reader sees a row that matched
     // and no indication of where.
     const description = item.description || '';
     const snippet = description ? snippetAround(description, hit.description || []) : null;
@@ -492,7 +492,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
       if (this.open) {
         // Scroll lock is OverlayController's; focus, inertness, Escape and
         // focus restore are the browser's. The search input is the dialog's
-        // first focusable child, so showModal() lands on it — no explicit
+        // first focusable child, so showModal() lands on it; no explicit
         // focus call, and unlike one it yields to an autofocus in the slot.
         this._query = '';
         this._menuKb.reset();
@@ -514,8 +514,8 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
     // detail.value is the canonical key the v3 event contract requires, and it
     // was missing here: a handler had to match the reported label and shortcut
     // back against the DOM to work out which item fired, which two items
-    // sharing a label quietly get wrong. `item` stays alongside it — the shape
-    // consumers already read — so this adds a key rather than moving one.
+    // sharing a label quietly get wrong. `item` stays alongside it (the shape
+    // consumers already read), so this adds a key rather than moving one.
     this.dispatchEvent(
       new CustomEvent('arc-select', {
         detail: {
@@ -544,7 +544,7 @@ export class ArcCommandPalette extends DeclaredPropsMixin(LitElement) {
     this.open = false;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

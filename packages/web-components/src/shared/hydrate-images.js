@@ -1,23 +1,23 @@
 /**
- * hydrate-images.js — deliver the `load` that declarative shadow DOM already spent.
+ * hydrate-images.js: deliver the `load` that declarative shadow DOM already spent.
  *
  * The sibling of hydrate-slots.js, and the same shape of problem: an event the
  * component is listening for has already happened by the time it can listen.
  *
- * Every image component here paints in two steps — the `<img>` starts at
+ * Every image component here paints in two steps: the `<img>` starts at
  * `opacity: 0` (or `visibility: hidden`) behind a shimmer, and the `load`
  * handler stores `_loaded`/`_state` and fades it in. Client-side the element is
  * created by Lit with its listener already attached, so the event always
  * arrives.
  *
  * Server-rendered, the parser creates that `<img>` from the declarative shadow
- * root and starts fetching immediately — a display:none `<dialog>` does not
- * stop it — while the listener does not exist until the hydrate bundle runs.
+ * root and starts fetching immediately (a display:none `<dialog>` does not
+ * stop it) while the listener does not exist until the hydrate bundle runs.
  * A cached, small or preloaded image finishes first, `load` fires into nothing,
  * and the flag never flips: arc-image and arc-avatar hold a transparent picture
  * under a shimmer that never stops, arc-lightbox opens onto its chrome with no
  * photograph in it, and arc-image-cropper keeps every control disabled. Nothing
- * errors, and it is timing-dependent, so it reads as flaky rather than broken —
+ * errors, and it is timing-dependent, so it reads as flaky rather than broken:
  * navigating to another image and back re-keys the element, Lit builds that one,
  * and it works.
  *
@@ -39,8 +39,8 @@
  */
 export function hydrateImages(host) {
   // Pre-first-update, a shadow root that already exists came from the parser.
-  // Client-side there is nothing to repair — the listener is attached before
-  // the element exists — and firing anyway would double a public arc-load.
+  // Client-side there is nothing to repair: the listener is attached before
+  // the element exists, and firing anyway would double a public arc-load.
   if (host.hasUpdated || host.shadowRoot === null) return;
 
   // After the update, not inside it: these handlers write reactive state, which

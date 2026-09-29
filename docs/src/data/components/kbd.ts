@@ -9,15 +9,15 @@ export const kbd: ComponentDef = {
   searchKeywords: ['keyboard key'],
   description: 'Keyboard key indicator styled like a physical key.',
 
-  overview: `Kbd renders a keyboard key indicator styled to resemble a physical keycap. It uses an elevated background, a 1px border with a thicker 2px bottom border, and monospace typography to create the classic "keycap" appearance. The component is inline-level, so it sits naturally within running text, making it ideal for documenting keyboard shortcuts, hotkeys, and key combinations.
+  overview: `Kbd renders a keyboard key indicator styled to resemble a physical keycap. It uses a raised background, a 1px border with a thicker 2px bottom border, and monospace typography to create the classic "keycap" appearance. The component is inline-level, so it sits within running text and suits documenting keyboard shortcuts, hotkeys, and key combinations.
 
-The component accepts any content via its default slot — single keys like "Ctrl", modifier combinations, or even special characters. The styling is intentionally minimal: 11px monospace text (\`--font-mono\`), \`--bg-elevated\` background, and \`--border-default\` borders. The thicker bottom border creates the "raised key" illusion. The \`user-select: none\` rule prevents accidental selection when users are reading shortcut documentation.
+The component accepts any content via its default slot: single keys like "Ctrl", modifier combinations, or special characters. The styling is minimal: 11px monospace text (\`--font-mono\`), \`--bg-elevated\` background, and \`--border-default\` borders. The thicker bottom border creates the "raised key" illusion. The \`user-select: none\` rule prevents accidental selection when users are reading shortcut documentation.
 
 Kbd renders a semantic \`<kbd>\` HTML element inside the shadow DOM, which is the correct element for representing user keyboard input. This ensures screen readers and other assistive technologies interpret the content correctly. The CSS part (\`kbd\`) is exposed for style overrides when you need to adjust colors for different contexts.`,
 
   features: [
     'Semantic <kbd> element for correct assistive technology interpretation',
-    'Physical keycap appearance with elevated background and thicker bottom border',
+    'Physical keycap appearance with a raised background and thicker bottom border',
     'Monospace typography (`--font-mono`) at 11px for consistent key label rendering',
     'Inline display for natural flow within paragraph text',
     'user-select: none prevents accidental selection during reading',
@@ -30,14 +30,14 @@ Kbd renders a semantic \`<kbd>\` HTML element inside the shadow DOM, which is th
       'Combine multiple Kbd elements with "+" or separator text for key combinations',
       'Use standard key names: Ctrl, Shift, Alt, Cmd, Enter, Esc, Tab',
       'Place inline within sentences: "Press Ctrl + C to copy"',
-      'Use for single keys or modifier labels — not for typing entire words',
+      'Use it for single keys or modifier labels, not for typing entire words',
     ],
     dont: [
       'Do not use Kbd for non-keyboard input like mouse actions or touch gestures',
-      'Do not put long strings inside a Kbd — it is designed for short key labels (1-5 characters)',
-      'Do not style Kbd to look like a button — it is a documentation element, not an interactive one',
+      'Do not put long strings inside a Kbd. It is designed for short key labels (1-5 characters)',
+      'Do not style Kbd to look like a button. It is a documentation element, not an interactive one',
       'Do not nest Kbd elements inside each other',
-      'Do not use Kbd for code snippets — use the CodeBlock component for code',
+      'Do not use Kbd for code snippets. Use the CodeBlock component for code',
     ],
   },
 

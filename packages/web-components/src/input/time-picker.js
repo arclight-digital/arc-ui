@@ -227,7 +227,7 @@ export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         .dropdown { animation: none; }
       }
     `,
-    // animate: false — this panel has its own keyframe entrance.
+    // animate: false; this panel has its own keyframe entrance.
     managedPanelStyles('dropdown', { animate: false }),
   ];
 
@@ -255,7 +255,7 @@ export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
     this._position = new PositionController(this, {
       anchor: () => this.shadowRoot?.querySelector('.input-wrapper'),
       floating: () => this.shadowRoot?.querySelector('.dropdown'),
-      // Content-sized columns, left-aligned with the input — same reasoning as
+      // Content-sized columns, left-aligned with the input; same reasoning as
       // date-picker.
       align: () => 'start',
       offset: 4,
@@ -304,13 +304,13 @@ export class ArcTimePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
   }
 
   /**
-   * Prepare the panel's state whenever `open` turns true — on *either* path.
+   * Prepare the panel's state whenever `open` turns true, on *either* path.
    *
-   * This used to live in `_toggleDropdown`, which is only the click path, so
-   * `el.open = true` (documented and supported: "Reflected so it can be opened
-   * programmatically") produced a panel that had skipped its own setup — no
-   * highlighted time despite having one. Finding #59; `arc-select` has always
-   * done its open-side work from a lifecycle hook, which is the pattern here.
+   * Not in `_toggleDropdown`, which is only the click path: `el.open = true`
+   * (documented and supported: "Reflected so it can be opened
+   * programmatically") would produce a panel that skipped its own setup, with
+   * no highlighted time despite having one (finding #59). `arc-select` does
+   * its open-side work from a lifecycle hook, which is the pattern here.
    *
    * `willUpdate` rather than `updated`: these are reactive state, so computing
    * them before render folds into the same update instead of scheduling a

@@ -7,16 +7,23 @@
   @media (prefers-reduced-motion: reduce) {
     .arc-code-block .code-block__copy { transition: none; }
   }
+  @media (prefers-reduced-motion: reduce) {
+    .arc-code-block .code-block__tok { transition: none; }
+  }
   .arc-code-block .code-block__body-wrap:hover .code-block__copy--quiet,
       .arc-code-block .code-block__copy--quiet:focus-within { opacity: 1; }
+  .arc-code-block .code-block__expand:hover { color: rgb(35, 35, 55);
+        background: rgba(55, 105, 235, 0.04); }
+  .arc-code-block .code-block__expand:focus-visible { outline: none;
+        box-shadow: inset 0 0 0 1px rgba(39, 86, 215,0.3), 0 0 6px rgba(39, 86, 215,0.5), 0 0 16px rgba(39, 86, 215,0.3), 0 0 40px rgba(113, 61, 221,0.18); }
 </style>
 <div class="arc-code-block">
-  <div class="code-block" style="position: relative; background: color-mix(in srgb, oklch(from oklch(from var(--_brand-primary) 0.4444 c h) 0.5050 c h) 22%, rgb(255, 255, 255)); border: 1px solid color-mix(in srgb, oklch(from oklch(from var(--_brand-primary) 0.4444 c h) 0.5050 c h) 41%, rgb(255, 255, 255)); border-radius: inherit; overflow: hidden; --shiki-foreground: rgb(59, 62, 81); --shiki-background: color-mix(in srgb, oklch(from oklch(from var(--_brand-primary) 0.4444 c h) 0.5050 c h) 22%, rgb(255, 255, 255)); --shiki-token-comment: rgb(74, 76, 98); --shiki-token-keyword: oklch(from var(--accent-primary) 0.4444 c h); --shiki-token-string: rgb(0, 92, 62); --shiki-token-constant: oklch(from var(--accent-secondary) 0.4574 c h); --shiki-token-function: rgb(35, 35, 55); --shiki-token-parameter: rgb(59, 62, 81); --shiki-token-string-expression: rgb(0, 92, 62); --shiki-token-punctuation: rgb(66, 69, 88); --shiki-token-link: oklch(from var(--accent-primary) 0.4444 c h)">
+  <div class="code-block" style="position: relative; background: color-mix(in srgb, oklch(from oklch(from var(--_brand-primary) 0.4444 c h) 0.5050 c h) 22%, rgb(255, 255, 255)); border: 1px solid color-mix(in srgb, oklch(from oklch(from var(--_brand-primary) 0.4444 c h) 0.5050 c h) 41%, rgb(255, 255, 255)); border-radius: inherit; overflow: hidden; --shiki-foreground: rgb(59, 62, 81); --shiki-background: color-mix(in srgb, oklch(from oklch(from var(--_brand-primary) 0.4444 c h) 0.5050 c h) 22%, rgb(255, 255, 255)); --shiki-token-comment: rgb(74, 76, 98); --shiki-token-keyword: oklch(from var(--accent-primary) 0.4444 c h); --shiki-token-string: rgb(0, 92, 62); --shiki-token-constant: oklch(from var(--accent-secondary) 0.4574 c h); --shiki-token-function: rgb(35, 35, 55); --shiki-token-parameter: rgb(59, 62, 81); --shiki-token-string-expression: rgb(0, 92, 62); --shiki-token-punctuation: rgb(66, 69, 88); --shiki-token-link: oklch(from var(--accent-primary) 0.4444 c h); --shiki-token-prefix: rgb(66, 69, 88); --shiki-token-command: rgb(35, 35, 55); --shiki-token-subcommand: oklch(from var(--accent-primary) 0.4444 c h); --shiki-token-argument: rgb(59, 62, 81); --shiki-token-flag: oklch(from var(--accent-secondary) 0.4574 c h); --shiki-token-variable: rgb(114, 70, 0); --shiki-token-operator: rgb(66, 69, 88); --shiki-token-continuation: rgb(74, 76, 98); --shiki-token-path: rgb(0, 92, 62)">
 
     <div class="code-block__body-wrap" style="position: relative">
 
       <div>
-        Code Block
+        <pre><code>Code Block</code></pre>
       </div>
     </div>
 

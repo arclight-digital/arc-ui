@@ -42,13 +42,13 @@ export declare class ArcActivityHeatmap extends LitElement {
  * Events: arc-close
  */
 export declare class ArcAlert extends LitElement {
-  /** Severity → ARIA role. V4-SCOPE §3.2, ratified 2026-08-13. `arc-alert` already implemented role-follows-severity, so most of this is a ratification of what the component did. The exception is `info`, and it is the reason the row needed a decision at all: `info` used to map to `role="status"`, which *is* a polite live region. `arc-callout`'s default variant is `info` and it was a static `role="note"` box — so a naive merge would have upgraded every informational callout on every page into an announcement, landing the regression on the single most common variant. **So `info` is `note` now, and that is a behaviour change for existing `arc-alert` users too**, not only for callout's. The reasoning: `info` is the variant most likely to be static page furniture, and an alert that genuinely needs announcing has two ways to say so — pick a severity that carries one, or set `live`. @default { error: 'alert', warning: 'alert', success: 'status', info: 'note', tip: 'note', } */
+  /** Severity → ARIA role. V4-SCOPE §3.2, ratified 2026-08-13. `arc-alert` already implemented role-follows-severity, so most of this is a ratification of what the component did. The exception is `info`, and it is the reason the row needed a decision at all: `info` used to map to `role="status"`, which *is* a polite live region. `arc-callout`'s default variant is `info` and it was a static `role="note"` box, so a naive merge would have upgraded every informational callout on every page into an announcement, landing the regression on the single most common variant. **So `info` is `note` now, and that is a behaviour change for existing `arc-alert` users too**, not only for callout's. The reasoning: `info` is the variant most likely to be static page furniture, and an alert that genuinely needs announcing has two ways to say so: pick a severity that carries one, or set `live`. @default { error: 'alert', warning: 'alert', success: 'status', info: 'note', tip: 'note', } */
   ROLES: Record<string, unknown>;
   /** Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message. @default '' */
   heading: string;
-  /** Controls the semantic color palette, the icon, and — through the `ROLES` table — the ARIA role and whether the alert is announced. Use "info" for neutral guidance, "tip" for advice, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
+  /** Controls the semantic color palette, the icon, and, through the `ROLES` table, the ARIA role and whether the alert is announced. Use "info" for neutral guidance, "tip" for advice, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues. @default 'info' */
   variant: 'info' | 'tip' | 'success' | 'warning' | 'error';
-  /** Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree — an `info` alert injected after a background save wants `polite`; a `warning` rendered in the initial page probably wants `off`. @default 'auto' */
+  /** Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree: an `info` alert injected after a background save wants `polite`, and a `warning` rendered in the initial page probably wants `off`. @default 'auto' */
   live: 'auto' | 'off' | 'polite' | 'assertive';
   /** When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to. @default false */
   dismissible: boolean;
@@ -108,7 +108,7 @@ export declare class ArcAppShell extends LitElement {
   breakpoint: number;
   /** Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation. @default false */
   sidebarOpen: boolean;
-  /** Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen — a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for. @default false */
+  /** Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen, since a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for. @default false */
   embedded: boolean;
 }
 
@@ -130,7 +130,7 @@ export declare class ArcAspectGrid extends LitElement {
 export declare class ArcAspectRatio extends LitElement {
   /** The documented default, and what anything unusable normalises to. @default '16/9' */
   DEFAULT_RATIO: string;
-  /** Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9` — so reading `ratio` back always gives the ratio the component is actually using. @default '16/9' */
+  /** Aspect ratio as a `W/H` string. Supports integers and decimals. An unparseable value, or one with a zero on either side, is normalised **on the property** to `16/9`, so reading `ratio` back always gives the ratio the component is actually using. @default '16/9' */
   ratio: string;
 }
 
@@ -253,11 +253,11 @@ export declare class ArcBreadcrumb extends LitElement {
  * `<arc-breadcrumb-item>`
  */
 export declare class ArcBreadcrumbItem extends LitElement {
-  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-breadcrumb-item><a href="/docs">Docs</a></arc-breadcrumb-item>` leaves a working trail in the pre-upgrade markup — arc-breadcrumb hides this light DOM only once it has re-rendered it into shadow DOM. */
+  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-breadcrumb-item><a href="/docs">Docs</a></arc-breadcrumb-item>` leaves a working trail in the pre-upgrade markup; arc-breadcrumb hides this light DOM only once it has re-rendered it into shadow DOM. */
   resolvedHref: unknown;
   /** textContent already reaches through an anchor child, so this needs no special case. */
   label: unknown;
-  /** Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current="page"` and the primary text color automatically. @default '' */
+  /** Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page; it will receive `aria-current="page"` and the primary text color automatically. @default '' */
   href: string;
 }
 
@@ -375,13 +375,13 @@ export declare class ArcChart extends LitElement {
   type: 'line' | 'area' | 'bar' | 'donut';
   /** The data that drives the chart. Each entry is one series; all series share the x axis defined by `labels`. Set as a property, or as a JSON attribute for a chart that is static. Colors are assigned in fixed order from --chart-1 to --chart-6; series beyond six are summed into an "Other" series noted in the legend. @default [] */
   series: Array<{label:string,data:number[]}>;
-  /** Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned — every Nth label renders based on available width. @default [] */
+  /** Category labels for the x axis (or donut segment names when a single series is given). Labels that would collide are automatically thinned; every Nth label renders based on available width. @default [] */
   labels: string[];
   /** Bar type only. Stacks series segments on a shared baseline with 2px surface gaps between segments; only the outermost segment gets the rounded value end. Assumes non-negative data. @default false */
   stacked: boolean;
   /** Suppresses the legend. By default the legend renders for two or more series and is omitted for a single series. @default false */
   hideLegend: boolean;
-  /** Removes the axis layer — gridlines, y tick labels, and x category labels — for compact trend panels where exact values are read from the tooltip. @default false */
+  /** Removes the axis layer (gridlines, y tick labels, and x category labels) for compact trend panels where exact values are read from the tooltip. @default false */
   hideAxis: boolean;
   /** Chart height in pixels. Width is fluid and tracked with a ResizeObserver. @default 260 */
   height: number;
@@ -410,7 +410,7 @@ export declare class ArcCheckbox extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -460,16 +460,44 @@ export declare class ArcClock extends LitElement {
 
 /**
  * `<arc-code-block>`
+ * Events: arc-toggle
  */
 export declare class ArcCodeBlock extends LitElement {
-  /** Programming language identifier (e.g. `js`, `css`, `html`). Displayed in uppercase in the header bar. @default '' */
+  /** Language identifier (e.g. `js`, `css`, `bash`). Shown in uppercase in the header and used to pick the highlighter grammar. @default '' */
   language: string;
-  /** Optional filename displayed in the header in monospace font. When empty, the header shows only the language. @default '' */
+  /** A plain title for the header in the body font, such as "Pulsar for NVIDIA". Shown before the filename when both are set. Also the tab name inside an arc-code-group. @default '' */
+  label: string;
+  /** A filename for the header, in monospace. When `label` is also set it follows the label, muted. @default '' */
   filename: string;
-  /** Code content to display. Used as the `<pre><code>` content and copied to clipboard when the copy button is clicked. @default '' */
+  /** The code to display. Copied as-is by the copy button: no prompts, no line numbers. @default '' */
   code: string;
-  /** Visual variant. `default` shows the standard layout with optional filename header and status bar. `window` adds a macOS-style title bar with colored orbs and centered filename. `basic` strips all chrome for a compact, minimal display. @default 'default' */
+  /** Shows a prompt before each command line, never selectable and never copied. Set with no value for `$`, or give the character (`#`, `>`, `PS>`). Continuation lines after a trailing backslash and blank lines get none. @default null */
+  prompt: string;
+  /** Lines to emphasize, 1-based: a comma-separated list of numbers and ranges such as `2,4-6`. @default '' */
+  highlight: string;
+  /** Visual variant. `default` shows the standard layout with an optional header and status bar. `window` adds a macOS-style title bar with colored orbs and a centered title. `basic` strips all chrome for a compact display. @default 'default' */
   variant: 'default' | 'window' | 'basic';
+  /** Shows line numbers in a gutter that is not selected or copied. @default false */
+  lineNumbers: boolean;
+  /** Tints lines that start with `+` as added and `-` as removed, on top of the block's own language. Always on for `language="diff"`. @default false */
+  diff: boolean;
+  /** Soft-wraps long lines instead of scrolling them. Wrapped text stays aligned after the line number and prompt. @default false */
+  wrap: boolean;
+  /** Collapses a longer block to this many lines, with a fade and a button to show the rest. @default 0 */
+  maxLines: number;
+}
+
+/**
+ * `<arc-code-group>`
+ * Events: arc-change
+ */
+export declare class ArcCodeGroup extends LitElement {
+  /** Groups with the same key switch together, matched by tab name, and the choice is remembered in localStorage (`arc-code-group:<key>`). @default '' */
+  syncKey: string;
+  /** Accessible name for the tab list, such as "Package manager". @default '' */
+  label: string;
+  /** Index of the visible block. Out-of-range values fall back to the first block. @default 0 */
+  selected: number;
 }
 
 /**
@@ -504,7 +532,7 @@ export declare class ArcColorPicker extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -552,7 +580,7 @@ export declare class ArcCombobox extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -601,11 +629,11 @@ export declare class ArcCommandItem extends LitElement {
   shortcut: string;
   /** Name of the icon to display before the item label. @default '' */
   icon: string;
-  /** Extra space-separated terms the search filter matches against but never displays — e.g. keywords="dialog popup" on a Modal item. @default '' */
+  /** Extra space-separated terms the search filter matches against but never displays, e.g. keywords="dialog popup" on a Modal item. @default '' */
   keywords: string;
   /** Secondary line shown under the label and matched by search. Use it for the sentence that tells two similar results apart; a docs site can put the matching passage here so a query finds page content rather than only page titles. @default '' */
   description: string;
-  /** Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text. @default '' */
+  /** Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one; give anything a handler must act on its own value rather than matching against display text. @default '' */
   value: string;
 }
 
@@ -657,7 +685,7 @@ export declare class ArcConfirm extends LitElement {
   confirmLabel: string;
   /** Label for the cancel button. Use a specific alternative like "Keep" or "Go back" when possible. @default 'Cancel' */
   cancelLabel: string;
-  /** Controls the confirm button style. Use "error" for destructive actions — the confirm button renders in the error color. @default 'default' */
+  /** Controls the confirm button style. Use "error" for destructive actions; the confirm button renders in the error color. @default 'default' */
   variant: 'default' | 'error';
 }
 
@@ -709,8 +737,12 @@ export declare class ArcConversation extends LitElement {
 export declare class ArcCopyButton extends LitElement {
   /** The text string to copy to the clipboard when the button is clicked. @default '' */
   value: string;
+  /** Accessible name before copying, such as "Copy code". Defaults to "Copy to clipboard". After copying the name is "Copied". @default '' */
+  label: string;
   /** Disables the button, preventing clicks and reducing visual opacity. @default false */
   disabled: boolean;
+  /** Shows the icon alone in a round, borderless 30px button, for a toolbar or a header bar. The icon turns into a check for 1.4 seconds after copying. @default false */
+  iconOnly: boolean;
 }
 
 /**
@@ -759,11 +791,11 @@ export declare class ArcDashboardGrid extends LitElement {
 export declare class ArcDataGrid extends LitElement {
   /** Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and inline-start-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property. @default [] */
   columns: Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>;
-  /** The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy — sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor. @default [] */
+  /** The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy; sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor. @default [] */
   rows: Array<Record<string, any>>;
   /** Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid. @default [] */
   sort: Array<{key:string,direction:'asc'|'desc'}>;
-  /** Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting. @default false */
+  /** Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort`; use this to implement server-side sorting. @default false */
   manualSort: boolean;
   /** Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices. @default false */
   selectable: boolean;
@@ -808,7 +840,7 @@ export declare class ArcDatePicker extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -830,7 +862,7 @@ export declare class ArcDatePicker extends LitElement {
  * Events: arc-change
  */
 export declare class ArcDateRangePicker extends LitElement {
-  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  /** Runs its own constraint logic and owns the whole validity flag set. @default false */
   autoValidates: boolean;
   /** Read-derived ISO 8601 interval ("start/end") when both dates are set, otherwise an empty string. This is the value submitted with forms. Assigning "start/end" sets both dates. */
   value: string;
@@ -866,7 +898,7 @@ export declare class ArcDateRangePicker extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   form: unknown;
   validity: unknown;
@@ -893,7 +925,7 @@ export declare class ArcDescriptionItem extends LitElement {
 export declare class ArcDescriptionList extends LitElement {
   /** Number of grid columns for laying out items side by side. @default 1 */
   columns: number;
-  /** How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across — one item can be horizontal inside a three-column list. @default 'stacked' */
+  /** How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across. One item can be horizontal inside a three-column list. @default 'stacked' */
   layout: 'stacked' | 'horizontal';
   /** Show horizontal dividers between rows and vertical dividers between columns. @default true */
   dividers: boolean;
@@ -904,7 +936,7 @@ export declare class ArcDescriptionList extends LitElement {
  * Events: arc-close, arc-open
  */
 export declare class ArcDialog extends LitElement {
-  /** The props that belonged to the *old* `arc-dialog`. V4-SCOPE §3.3 requires this and says why: the old `arc-dialog` was a confirm prompt with `heading`, `message` and `confirmLabel`, and it merged into `arc-confirm`. Anyone still writing that markup upgrades into this primitive, which knows `heading` and would silently ignore the other two — rendering an empty panel with a title. That is the quietest possible failure, and a line in MIGRATION.md is not a fix for it. `heading` is deliberately not in the list: it means the same thing in both components, so its presence is not evidence of the mistake. @default ['message', 'confirmLabel', 'cancelLabel'] */
+  /** The props that belonged to the *old* `arc-dialog`. V4-SCOPE §3.3 requires this and says why: the old `arc-dialog` was a confirm prompt with `heading`, `message` and `confirmLabel`, and it merged into `arc-confirm`. Anyone still writing that markup upgrades into this primitive, which knows `heading` and would silently ignore the other two, rendering an empty panel with a title. That is the quietest possible failure, and a line in MIGRATION.md is not a fix for it. `heading` is not in the list: it means the same thing in both components, so its presence is not evidence of the mistake. @default ['message', 'confirmLabel', 'cancelLabel'] */
   REUSED_TAG_PROPS: unknown[];
   /** Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?"). @default '' */
   heading: string;
@@ -912,7 +944,7 @@ export declare class ArcDialog extends LitElement {
   open: boolean;
   /** Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts. @default 'md' */
   size: 'sm' | 'md' | 'lg';
-  /** When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component. @default true */
+  /** When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so; the name is the convention, the default belongs to the component. @default true */
   dismissible: boolean;
   /** Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows. @default false */
   fullscreen: boolean;
@@ -1029,7 +1061,7 @@ export declare class ArcFieldRow extends LitElement {
  * `<arc-fieldset>`
  */
 export declare class ArcFieldset extends LitElement {
-  /** Text displayed in the `<legend>` element. Also available via the `legend` slot for rich content. @default '' */
+  /** Text displayed in the `<legend>` element. Also available via the `legend` slot for markup. @default '' */
   legend: string;
   /** Helper text displayed below the legend. @default '' */
   description: string;
@@ -1073,7 +1105,7 @@ export declare class ArcFloatBar extends LitElement {
 export declare class ArcFooter extends LitElement {
   /** Sets a max-width containment on the footer content. Accepts any CSS length value or named size token. @default null */
   contained: string;
-  /** Visual density. 'compact' reduces internal padding and spacing throughout the footer — for dashboard layouts or admin panels where vertical space is limited. @default 'default' */
+  /** Visual density. 'compact' reduces internal padding and spacing throughout the footer, for dashboard layouts or admin panels where vertical space is limited. @default 'default' */
   density: 'default' | 'compact';
   /** Renders a subtle top border on the footer to visually separate it from the page content above. Enabled by default; disable it only when the footer sits against a dark background where the border would be redundant. @default true */
   border: boolean;
@@ -1092,15 +1124,15 @@ export declare class ArcForm extends LitElement {
   method: string;
   /** Disables the entire form, propagating the disabled state to every child field. Useful for read-only previews or while awaiting permissions. @default false */
   disabled: boolean;
-  /** When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation. @default false */
+  /** When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still using Form for data serialisation. @default false */
   novalidate: boolean;
   /** Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests. @default false */
   loading: boolean;
   /** When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually. @default true */
   errorSummary: boolean;
-  /** Submit the form as though its submit button had been pressed: validation runs, and `arc-submit` fires cancelably. The path for a submit control the form cannot own — a wizard's "Next" in a parent toolbar, a keyboard shortcut — since a button outside the form does not trigger it. Routed through the real `<form>` so action-mode submits still navigate. */
+  /** Submit the form as though its submit button had been pressed: validation runs, and `arc-submit` fires cancelably. The path for a submit control the form cannot own: a wizard's "Next" in a parent toolbar, a keyboard shortcut, since a button outside the form does not trigger it. Routed through the real `<form>` so action-mode submits still navigate. */
   submit(): void;
-  /** Reset every child control to the state it had when it first connected, and clear error display. Delegates to each control's formResetCallback — the same path a native form.reset() takes, which never reaches these controls because they live in this element's light DOM rather than inside the shadow <form>. The form used to blank them instead (`value = ''`, `checked = false`), which is not what reset means: a control that shipped with a default lost it, and a non-string value (a multi-select's array, a date range's object) was left untouched entirely. */
+  /** Reset every child control to the state it had when it first connected, and clear error display. Delegates to each control's formResetCallback: the same path a native form.reset() takes, which never reaches these controls because they live in this element's light DOM rather than inside the shadow <form>. The form used to blank them instead (`value = ''`, `checked = false`), which is not what reset means: a control that shipped with a default lost it, and a non-string value (a multi-select's array, a date range's object) was left untouched entirely. */
   reset(): void;
 }
 
@@ -1176,7 +1208,7 @@ export declare class ArcHotkey extends LitElement {
  * Events: arc-open, arc-close
  */
 export declare class ArcHotspot extends LitElement {
-  /** Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader. @default '' */
+  /** Accessible name for the pin button, repeated as the heading of the popover. Always set it: without a label the pin announces nothing useful to a screen reader. @default '' */
   label: string;
   /** Horizontal position of the pin as a percentage of the image width, from 0 (left edge) to 100 (right edge). Values outside the range are clamped; a non-numeric value falls back to 50. @default 50 */
   x: number;
@@ -1184,7 +1216,7 @@ export declare class ArcHotspot extends LitElement {
   y: number;
   /** Whether the pin's popover is currently visible. Reflected as an attribute. Opens on click; closes on Escape, outside click, or a second click on the pin. @default false */
   open: boolean;
-  /** Close the popover, firing the cancelable `arc-close` first — so a listener that calls `preventDefault()` keeps it open, whoever asked for the close. arc-image-hotspots calls this to enforce one-open-at-a-time, which is why a consumer's veto is honoured there too and not only on a manual close. */
+  /** Close the popover, firing the cancelable `arc-close` first, so a listener that calls `preventDefault()` keeps it open, whoever asked for the close. arc-image-hotspots calls this to enforce one-open-at-a-time, which is why a consumer's veto is honoured there too and not only on a manual close. */
   close(restoreFocus?: boolean): void;
 }
 
@@ -1239,7 +1271,7 @@ export declare class ArcIconButton extends LitElement {
  * `<arc-icon-library>`
  */
 export declare class ArcIconLibrary extends LitElement {
-  /** Which registered icon library to resolve names against — `phosphor` or `lucide` from `@arclux/arc-ui-icons`, or the name a custom library was registered under. @default '' */
+  /** Which registered icon library to resolve names against: `phosphor` or `lucide` from `@arclux/arc-ui-icons`, or the name a custom library was registered under. @default '' */
   name: string;
 }
 
@@ -1338,20 +1370,20 @@ export declare class ArcInlineEdit extends LitElement {
   disabled: boolean;
   /** When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter. @default false */
   multiline: boolean;
-  /** Marks the field as required. An empty committed value is invalid — including in display state, which shows a subtle error tint. @default false */
+  /** Marks the field as required. An empty committed value is invalid, including in display state, which shows a subtle error tint. @default false */
   required: boolean;
   /** Renders the display state only: the text remains focusable for reading order, but activation is inert and no pencil affordance appears. @default false */
   readonly: boolean;
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
   form: unknown;
   validity: unknown;
   validationMessage: unknown;
-  /** Move focus to whichever element is currently the control: the field while editing, the display row otherwise. The host sets no `delegatesFocus` and everything focusable lives in the shadow root, so `el.focus()` used to do nothing at all — silently, which cost a consumer a "Rename" menu item that appeared dead. `edit()` is the way *into* editing and stays that way; this is only the obvious call landing where a caller expects it. */
+  /** Move focus to whichever element is currently the control: the field while editing, the display row otherwise. The host sets no `delegatesFocus` and everything focusable lives in the shadow root, so `el.focus()` used to do nothing at all, silently, which cost a consumer a "Rename" menu item that appeared dead. `edit()` is the way *into* editing and stays that way; this is only the obvious call landing where a caller expects it. */
   focus(options?: FocusOptions): void;
   /** Enter edit mode: focus the field and select its text. No-op when disabled, readonly, or already editing. */
   edit(): void;
@@ -1370,13 +1402,13 @@ export declare class ArcInlineEdit extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcInput extends LitElement {
-  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  /** Runs its own constraint logic and owns the whole validity flag set. @default false */
   autoValidates: boolean;
   /** The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation. @default '' */
   name: string;
   /** Visible label rendered above the input. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly. @default '' */
   label: string;
-  /** Hint text displayed inside the field when it is empty. Use it to show an example value -- never as a substitute for the label. @default '' */
+  /** Hint text displayed inside the field when it is empty. Use it to show an example value, never as a substitute for the label. @default '' */
   placeholder: string;
   /** The current value of the input. Can be set programmatically to pre-fill the field or used for controlled-component patterns. Updated internally on each keystroke. @default '' */
   value: string;
@@ -1398,7 +1430,7 @@ export declare class ArcInput extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   form: unknown;
   validity: unknown;
@@ -1469,7 +1501,7 @@ export declare class ArcKeyboardMap extends LitElement {
   highlight: string|string[];
   /** Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels="false"`. @default true */
   labels: boolean;
-  /** Which platform's modifier legends and `mod` resolution to use: "auto" (default — detected in the browser, mac on the server), "mac", or "win". @default 'auto' */
+  /** Which platform's modifier legends and `mod` resolution to use: "auto" (default, detected in the browser, mac on the server), "mac", or "win". @default 'auto' */
   platform: 'auto' | 'mac' | 'win';
   /** Optional caption rendered below the board in muted text. @default '' */
   caption: string;
@@ -1510,7 +1542,7 @@ export declare class ArcKnob extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -1543,7 +1575,7 @@ export declare class ArcLabel extends LitElement {
  * `<arc-level-meter>`
  */
 export declare class ArcLevelMeter extends LitElement {
-  /** Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like "Master left" rather than "Level". @default '' */
+  /** Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get; use something like "Master left" rather than "Level". @default '' */
   label: string;
   /** Current level. Interpreted against `min` and `max`, so with the defaults (0 and 1) it is a linear fraction, and with `min="-60" max="0"` it is a dB reading. Values outside the range are clamped. @default 0 */
   value: number;
@@ -1568,7 +1600,11 @@ export declare class ArcLevelMeter extends LitElement {
  * Events: arc-change, arc-close, arc-open
  */
 export declare class ArcLightbox extends LitElement {
-  /** The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption }`; `alt` and `caption` are optional. Set as a property, or as a JSON attribute for a gallery that is static. @default [] */
+  /** CSS selector for links on the page to build the gallery from, such as `#photos a`. Each match becomes an entry: `href` is the image, the inner `<img>`'s `alt` is the alt text, and `data-caption` (or the image's `title`) is the caption. A click on a match opens the viewer on it. Resolved against the lightbox's own document or shadow root, so links added later are included. Ignored while `images` has entries. @default null */
+  gallery: string;
+  /** Shows a filmstrip of small thumbnails under the image. Each is a button that jumps to its image; the strip stays faint until pointed at or focused, and fades with the other controls when idle. @default false */
+  thumbnails: boolean;
+  /** The gallery to display. Each entry is either a `src` string or an object of shape `{ src, alt, caption, srcset, sizes, width, height, thumb, origin }`; everything but `src` is optional. `width` and `height` reserve the image's shape while it loads. `thumb` is a small source for the filmstrip (it falls back to `src`). `origin` is the element the picture grows out of on open and back into on close, as an element or a selector; without it the viewer uses the element that was clicked or focused when `show()` ran, for the image it opened on. Set as a property, or as a JSON attribute for a gallery that is static. @default [] */
   images: Array;
   /** Index of the image currently displayed. Navigation wraps at both ends, so setting it out of range shows the nearest valid image. @default 0 */
   index: number;
@@ -1592,7 +1628,7 @@ export declare class ArcLink extends LitElement {
   href: string;
   /** Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout. @default 'default' */
   variant: 'default' | 'muted' | 'nav';
-  /** Active state — applies accent-primary color for navigation highlighting. @default false */
+  /** Active state: applies accent-primary color for navigation highlighting. @default false */
   active: boolean;
   /** When true, adds `target="_blank"` and `rel="noopener noreferrer"`, and renders an external link icon after the text. @default false */
   external: boolean;
@@ -1673,13 +1709,13 @@ export declare class ArcMarquee extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcMaskedInput extends LitElement {
-  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  /** Runs its own constraint logic and owns the whole validity flag set. @default false */
   autoValidates: boolean;
-  /** The formatted presentation string — raw characters interleaved with mask literals, e.g. raw 12042026 under a date mask reads 12/04/2026. Read-only: it is derived from value and mask, never stored, and never submitted. */
+  /** The formatted presentation string: raw characters interleaved with mask literals, e.g. raw 12042026 under a date mask reads 12/04/2026. Read-only: it is derived from value and mask, never stored, and never submitted. */
   formattedValue: unknown;
   /** The mask pattern. `#` accepts a digit, `A` an uppercase letter (lowercase input is uppercased), `a` any letter, `*` a letter or digit; every other character is a literal typed for the user. Examples: `##/##/####`, `#### #### #### ####`, `AAA-###`. @default '' */
   mask: string;
-  /** The RAW accepted characters only, with no mask literals — `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts. @default '' */
+  /** The RAW accepted characters only, with no mask literals: `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts. @default '' */
   value: string;
   /** Character rendered in unfilled positions of the in-field hint once typing starts (for example `12/__/____`). Before any input, the native placeholder shows the full mask shape. Defaults to `_`. @default '_' */
   placeholderChar: string;
@@ -1701,7 +1737,7 @@ export declare class ArcMaskedInput extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   form: unknown;
   validity: unknown;
@@ -1732,17 +1768,17 @@ export declare class ArcMenuDivider extends LitElement {
  * `<arc-menu-item>`
  */
 export declare class ArcMenuItem extends LitElement {
-  /** The text to draw. `label` was documented as a prop and implemented as a getter over textContent with no setter and no attribute, so `<arc-menu-item label="Cut"></arc-menu-item>` rendered a blank item — silently, and the six generated wrappers exposed a writable `label` that did nothing (finding #32). It is a real property now; the text-content form stays the fallback, so every existing consumer is unaffected. */
+  /** The text to draw. `label` was documented as a prop and implemented as a getter over textContent with no setter and no attribute, so `<arc-menu-item label="Cut"></arc-menu-item>` rendered a blank item, silently, and the six generated wrappers exposed a writable `label` that did nothing (finding #32). It is a real property now; the text-content form stays the fallback, so every existing consumer is unaffected. */
   displayLabel: unknown;
   /** What arc-select reports. Falls back to the label so an item that never sets `value` behaves as it always did. */
   selectionValue: unknown;
-  /** Display text for the menu item. Settable, and falls back to the element's text content when unset — `<arc-menu-item label="Cut">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent. @default '' */
+  /** Display text for the menu item. Settable, and falls back to the element's text content when unset: `<arc-menu-item label="Cut">` and `<arc-menu-item>Cut</arc-menu-item>` are equivalent. @default '' */
   label: string;
   /** Keyboard shortcut hint displayed on the right side. @default '' */
   shortcut: string;
   /** Name of the icon to display before the label. @default '' */
   icon: string;
-  /** Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one — give anything a handler must act on its own value rather than matching against display text. @default '' */
+  /** Stable identifier carried on the arc-select detail. Defaults to the label, which is fine until two items share one. Give anything a handler must act on its own value rather than matching against display text. @default '' */
   value: string;
   /** Disables the item, preventing interaction. @default false */
   disabled: boolean;
@@ -1776,7 +1812,7 @@ export declare class ArcMessage extends LitElement {
   timestamp: string;
   /** Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as "user". @default 'user' */
   speaker: 'user' | 'assistant' | 'system';
-  /** Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis. @default false */
+  /** Renders the typing indicator (three pulsing dots) in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis. @default false */
   pending: boolean;
   /** Render the slotted text through the house markdown renderer. The slot's text content is the source; it re-parses whenever the slot changes, so streaming into the slot streams through the renderer. When false, slotted content renders as-is. @default false */
   markdown: boolean;
@@ -1827,7 +1863,7 @@ export declare class ArcMultiSelect extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -1846,7 +1882,7 @@ export declare class ArcMultiSelect extends LitElement {
  * `<arc-nav-item>`
  */
 export declare class ArcNavItem extends LitElement {
-  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-nav-item><a href="/docs">Docs</a></arc-nav-item>` makes the pre-upgrade markup a working link list, which is what no-JS visitors and anyone on a slow connection actually see — arc-navigation-menu hides this light DOM only once it has upgraded and re-rendered it into shadow DOM. */
+  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-nav-item><a href="/docs">Docs</a></arc-nav-item>` makes the pre-upgrade markup a working link list, which is what no-JS visitors and anyone on a slow connection actually see; arc-navigation-menu hides this light DOM only once it has upgraded and re-rendered it into shadow DOM. */
   resolvedHref: unknown;
   label: unknown;
   /** Nested arc-nav-item children for dropdown menus. */
@@ -1858,7 +1894,7 @@ export declare class ArcNavItem extends LitElement {
   description: string;
   /** Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page. @default false */
   active: boolean;
-  /** Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like "Blog" or "Changelog". @default 'default' */
+  /** Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text, ideal for secondary links like "Blog" or "Changelog". @default 'default' */
   variant: 'default' | 'primary' | 'muted';
 }
 
@@ -1896,9 +1932,9 @@ export declare class ArcNumberFormat extends LitElement {
   value: number;
   /** Formatting style to apply @default 'number' */
   type: 'number' | 'currency' | 'percent' | 'compact';
-  /** Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent. @default 0 */
+  /** Number of decimal places, 0 to 20 (`Intl.NumberFormat`'s own range). Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent. @default 0 */
   decimals: number;
-  /** Number notation — compact gives "12.3K", "1.2M" @default 'standard' */
+  /** Number notation: compact gives "12.3K", "1.2M" @default 'standard' */
   notation: 'standard' | 'compact';
 }
 
@@ -1927,7 +1963,7 @@ export declare class ArcNumberInput extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -1960,7 +1996,7 @@ export declare class ArcOption extends LitElement {
  * `<arc-page-header>`
  */
 export declare class ArcPageHeader extends LitElement {
-  /** The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. "Team Settings", "Order #4021"). Keep it concise — two to five words is ideal. @default '' */
+  /** The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. "Team Settings", "Order #4021"). Keep it concise: two to five words is ideal. @default '' */
   heading: string;
   /** Optional supporting text displayed below the title row. Use it to provide a one-line summary of what the page contains or what action the user should take. When empty, the description paragraph is not rendered. @default '' */
   description: string;
@@ -1998,7 +2034,7 @@ export declare class ArcPageLayout extends LitElement {
  * Events: arc-change
  */
 export declare class ArcPagination extends LitElement {
-  /** Total number of pages. At least 1 — a pager with no pages is still a pager showing page 1 of 1. @default 1 */
+  /** Total number of pages. At least 1: a pager with no pages is still a pager showing page 1 of 1. @default 1 */
   total: number;
   /** The currently active page number (1-based). Reflected as an attribute. Clamped to 1..`total`, so a page number past either end lands on the nearest real page rather than stranding the control. @default 1 */
   current: number;
@@ -2013,7 +2049,7 @@ export declare class ArcPagination extends LitElement {
  * Events: arc-strength-change, arc-input, arc-change
  */
 export declare class ArcPasswordInput extends LitElement {
-  /** Runs its own constraint logic — owns the whole validity flag set. @default false */
+  /** Runs its own constraint logic and owns the whole validity flag set. @default false */
   autoValidates: boolean;
   /** The `name` attribute sent with form data on submission. Also used by the Form component to track field state. @default '' */
   name: string;
@@ -2037,7 +2073,7 @@ export declare class ArcPasswordInput extends LitElement {
   showStrength: boolean;
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   form: unknown;
   validity: unknown;
@@ -2077,7 +2113,7 @@ export declare class ArcPinInput extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2113,7 +2149,7 @@ export declare class ArcProgress extends LitElement {
   label: string;
   /** Current completion percentage from 0 to 100. Only meaningful in determinate mode. The bar fills proportionally and aria-valuenow updates to match, giving screen readers a live reading. @default 0 */
   value: number;
-  /** Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right — best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts. @default 'bar' */
+  /** Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right, best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts. @default 'bar' */
   variant: 'bar' | 'spinner';
   /** Controls the thickness of the bar track or the diameter of the spinner. Small (sm) fits inside table cells and tight layouts. Medium (md) is the standard default. Large (lg) is appropriate for page-level or hero loading states. @default 'md' */
   size: 'sm' | 'md' | 'lg';
@@ -2139,7 +2175,7 @@ export declare class ArcQrCode extends LitElement {
   value: string;
   /** Rendered width and height of the SVG in pixels. The code is vector-based and stays crisp at any size. @default 160 */
   size: number;
-  /** Accessible description announced to screen readers (falls back to "QR code"). Describe the purpose, not the encoded value — the value is never exposed by default since it may be a secret. @default '' */
+  /** Accessible description announced to screen readers (falls back to "QR code"). Describe the purpose, not the encoded value. The value is never exposed by default since it may be a secret. @default '' */
   label: string;
   /** Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes. @default 'M' */
   level: 'L' | 'M' | 'Q' | 'H';
@@ -2167,7 +2203,7 @@ export declare class ArcRadio extends LitElement {
 export declare class ArcRadioGroup extends LitElement {
   /** The currently selected value. Must match one of the child arc-radio value attributes. Setting this property programmatically updates the visual selection and the internal aria-checked state. @default '' */
   value: string;
-  /** The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData. @default '' */
+  /** The form field name submitted with the selected value. Required for native form integration: without it, the selection will not appear in FormData. @default '' */
   name: string;
   /** When true, disables all options in the group. The component becomes non-interactive: arrow-key navigation is suppressed, click events are ignored, and the group is excluded from the Tab order. @default false */
   disabled: boolean;
@@ -2177,7 +2213,7 @@ export declare class ArcRadioGroup extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2234,7 +2270,7 @@ export declare class ArcRangeSlider extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2262,7 +2298,7 @@ export declare class ArcRating extends LitElement {
   label: string;
   /** Disables interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
-  /** Current rating value, 0 to `max`. **0 means unrated** — it is a legal state of the control, not a rating of zero: it submits nothing, announces as "No rating", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction. @default 0 */
+  /** Current rating value, 0 to `max`. **0 means unrated**; it is a legal state of the control, not a rating of zero: it submits nothing, announces as "No rating", and is what Home and a left-arrow at the first star return to. Clicking the star that is already selected also clears back to it. Reflected as an attribute and updated on user interaction. @default 0 */
   value: number;
   /** Maximum number of stars to render. Determines the upper bound of the rating scale. @default 5 */
   max: number;
@@ -2272,7 +2308,7 @@ export declare class ArcRating extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2296,7 +2332,7 @@ export declare class ArcResizable extends LitElement {
   size: number;
   /** Which dimension the handle resizes. Horizontal resizes width, with the handle on an inline edge; vertical resizes height, with the handle on the top or bottom edge. @default 'horizontal' */
   direction: 'horizontal' | 'vertical';
-  /** Which edge the handle sits on. `end` (the default) is the inline end — the right edge in a left-to-right page — or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way. @default 'end' */
+  /** Which edge the handle sits on. `end` (the default) is the inline end (the right edge in a left-to-right page) or the bottom; `start` is the inline start or the top, for a panel docked against the far side of its container. Dragging the handle away from the panel grows it either way. @default 'end' */
   handle: 'end' | 'start';
   /** Minimum allowed size in pixels. The panel cannot be dragged smaller than this value. @default 100 */
   minSize: number;
@@ -2401,13 +2437,13 @@ export declare class ArcSection extends LitElement {
 export declare class ArcSegmentedControl extends LitElement {
   /** The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty. @default '' */
   value: string;
-  /** The form field name submitted with the selected value. Required for native form integration — without it, the selection will not appear in FormData. @default '' */
+  /** The form field name submitted with the selected value. Required for native form integration: without it, the selection will not appear in FormData. @default '' */
   name: string;
   /** Disables the entire control, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2447,7 +2483,7 @@ export declare class ArcSelect extends LitElement {
   open: boolean;
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2512,13 +2548,13 @@ export declare class ArcSheet extends LitElement {
 export declare class ArcSidebar extends LitElement {
   /** The href of the currently active sidebar link. Used to highlight the matching link with accent styling. @default '' */
   active: string;
-  /** Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together. @default '' */
+  /** Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in, including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together. @default '' */
   width: string;
   /** @default 'Sidebar navigation' */
   label: string;
   /** Controls which side the sidebar appears on. Moves the border line to the opposite edge. @default 'left' */
   position: 'left' | 'right';
-  /** When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail — the VS Code activity-bar shape — use `arc-rail`, which is a different component with its own labels and tooltips. @default false */
+  /** When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail (the VS Code activity-bar shape), use `arc-rail`, which is a different component with its own labels and tooltips. @default false */
   collapsed: boolean;
   /** Enables an accent glow effect on the active sidebar link for enhanced visual emphasis. @default false */
   glow: boolean;
@@ -2528,7 +2564,7 @@ export declare class ArcSidebar extends LitElement {
  * `<arc-sidebar-link>`
  */
 export declare class ArcSidebarLink extends LitElement {
-  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-sidebar-link><a href="/docs">Docs</a></arc-sidebar-link>` leaves a working link in the pre-upgrade markup — arc-sidebar hides this light DOM only once it has re-rendered it into shadow DOM. */
+  /** Destination, preferring the explicit attribute over an anchor child. Authoring `<arc-sidebar-link><a href="/docs">Docs</a></arc-sidebar-link>` leaves a working link in the pre-upgrade markup; arc-sidebar hides this light DOM only once it has re-rendered it into shadow DOM. */
   resolvedHref: unknown;
   /** textContent already reaches through an anchor child, so this needs no special case. */
   label: unknown;
@@ -2536,11 +2572,11 @@ export declare class ArcSidebarLink extends LitElement {
   href: string;
   /** Nesting depth for visual indentation. Level 0 links render at default size; level 1+ links are indented and use a smaller font size. @default 0 */
   level: number;
-  /** Name of an icon to render before the label. Use icons consistently within a section — a sidebar where only some links carry one reads as an oversight rather than a hierarchy. @default '' */
+  /** Name of an icon to render before the label. Use icons consistently within a section: a sidebar where only some links carry one reads as an oversight rather than a hierarchy. @default '' */
   icon: string;
   /** When true, applies a highlighted style (accent-colored text and a left-edge indicator) to signal that this link corresponds to the currently viewed page. Only one link should be active at a time. @default false */
   active: boolean;
-  /** Marks a destination that leaves the surrounding section — an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it. @default false */
+  /** Marks a destination that leaves the surrounding section: an app on its own route, another site, a repository. The link gains a persistent box-arrow glyph in place of the hover chevron, so the departure is legible before the click rather than after it. @default false */
   external: boolean;
 }
 
@@ -2570,7 +2606,7 @@ export declare class ArcSidebarSection extends LitElement {
 export declare class ArcSignaturePad extends LitElement {
   /** Stroke speed (CSS px per ms) at which the pen reaches its thinnest. @default 1.5 */
   SPEED_FULL: number;
-  /** The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected — a data-URL is far too large to live in an attribute. @default '' */
+  /** The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected: a data-URL is far too large to live in an attribute. @default '' */
   value: string;
   /** Form field name the data-URL submits under. @default '' */
   name: string;
@@ -2584,11 +2620,11 @@ export declare class ArcSignaturePad extends LitElement {
   readonly: boolean;
   /** When true and the pad is blank, the control is invalid with `valueMissing`. @default false */
   required: boolean;
-  /** Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2. @default 2 */
+  /** Base pen width in CSS pixels. The drawn line scales with stroke velocity, up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2. @default 2 */
   penWidth: number;
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2652,7 +2688,7 @@ export declare class ArcSlider extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2709,7 +2745,7 @@ export declare class ArcSpinner extends LitElement {
  * Events: arc-resize
  */
 export declare class ArcSplitPane extends LitElement {
-  /** Keyboard step, and the larger Shift step — the same 5-and-20 as arc-resizable. @default 0.05 */
+  /** Keyboard step, and the larger Shift step: the same 5-and-20 as arc-resizable. @default 0.05 */
   STEP: number;
   /** @default 0.2 */
   STEP_LARGE: number;
@@ -2717,7 +2753,7 @@ export declare class ArcSplitPane extends LitElement {
   label: string;
   /** Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider. @default 'horizontal' */
   orientation: 'horizontal' | 'vertical';
-  /** The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds; assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode). @default 0.5 */
+  /** The proportion of space allocated to the primary pane, clamped to `minRatio`..`maxRatio` on every path, including assignment from script. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode). @default 0.5 */
   ratio: number;
   /** Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing. @default 0.15 */
   minRatio: number;
@@ -2740,7 +2776,7 @@ export declare class ArcSpyLink extends LitElement {
  * `<arc-stack>`
  */
 export declare class ArcStack extends LitElement {
-  /** Flex direction — vertical is column, horizontal is row @default 'vertical' */
+  /** Flex direction: vertical is column, horizontal is row @default 'vertical' */
   direction: 'vertical' | 'horizontal';
   /** Gap between children, maps to --space-* tokens @default 'md' */
   gap: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
@@ -2790,7 +2826,7 @@ export declare class ArcStep extends LitElement {
  * `<arc-stepper>`
  */
 export declare class ArcStepper extends LitElement {
-  /** Zero-indexed active step — steps before this index show as completed. Clamped to the range of rendered steps. @default 0 */
+  /** Zero-indexed active step; steps before this index show as completed. Clamped to the range of rendered steps. @default 0 */
   active: number;
 }
 
@@ -2803,7 +2839,7 @@ export declare class ArcStepperNav extends LitElement {
   steps: Array<string>;
   /** Zero-based index of the currently active step. Clamped to the steps that exist, so it can never name a step the wizard does not have. @default 0 */
   active: number;
-  /** When true, prevents jumping to future steps — the user must complete each step sequentially. @default false */
+  /** When true, prevents jumping to future steps: the user must complete each step sequentially. @default false */
   linear: boolean;
 }
 
@@ -2845,9 +2881,9 @@ export declare class ArcSwitchGroup extends LitElement {
  * `<arc-tab>`
  */
 export declare class ArcTab extends LitElement {
-  /** Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing. @default '' */
+  /** Text displayed on the tab button. Keep labels concise (one or two words) to prevent the tab bar from overflowing. @default '' */
   label: string;
-  /** When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel. @default false */
+  /** When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible; disabling is not a way to hide a panel. @default false */
   disabled: boolean;
 }
 
@@ -2914,7 +2950,7 @@ export declare class ArcTagInput extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -2971,11 +3007,11 @@ export declare class ArcTextarea extends LitElement {
   value: string;
   /** Form field name submitted with the value. Required for native form integration via ElementInternals. @default '' */
   name: string;
-  /** Hint text displayed inside the field when it is empty. Use it to show example input -- never as a substitute for the label. @default '' */
+  /** Hint text displayed inside the field when it is empty. Use it to show example input, never as a substitute for the label. @default '' */
   placeholder: string;
   /** Visible label rendered above the textarea in uppercase. Automatically linked to the field via `aria-labelledby`, ensuring screen readers announce it correctly. @default '' */
   label: string;
-  /** The number of visible text rows that set the initial height of the textarea. Does not limit content length -- the user can scroll or resize beyond this height. @default 4 */
+  /** The number of visible text rows that set the initial height of the textarea. Does not limit content length; the user can scroll or resize beyond this height. @default 4 */
   rows: number;
   /** Prevents user interaction and applies a muted visual treatment at 40% opacity. The field value is excluded from form submission when disabled. @default false */
   disabled: boolean;
@@ -2993,7 +3029,7 @@ export declare class ArcTextarea extends LitElement {
   autoResize: boolean;
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -3013,7 +3049,7 @@ export declare class ArcTextarea extends LitElement {
  * Events: arc-change
  */
 export declare class ArcThemeToggle extends LitElement {
-  /** The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees. @default 'auto' */
+  /** The current theme mode. Synced in both directions: changing it (by click, by key, or by assigning the property) writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees. @default 'auto' */
   theme: 'dark' | 'light' | 'auto';
   /** Prevents cycling and reduces opacity to 40%. @default false */
   disabled: boolean;
@@ -3064,7 +3100,7 @@ export declare class ArcTimePicker extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -3116,15 +3152,15 @@ export declare class ArcToast extends LitElement {
   dedupe: boolean;
   /** Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count. @default 20 */
   queueLimit: number;
-  /** Show a toast, or coalesce it into an identical one that is already showing. Passing `progress` puts the toast in progress mode, absorbed from arc-progress-toast in 4.2: it renders a track beneath the message, exempts itself from dedupe and from the auto-dismiss timer, and — given `onCancel` — offers a cancel button that fires `arc-cancel`. Move the bar with `updateToast(id, { progress })` and end it with `complete(id)`, which fires `arc-complete`. The mode is chosen here and is not switchable afterwards: a track appearing mid-life would relayout a notification the reader is already reading. `action` and `actionLabel` arrive from arc-snackbar the same way. The label renders a ghost button; a click runs the callback and fires `arc-action` before the toast dismisses. */
+  /** Show a toast, or coalesce it into an identical one that is already showing. Passing `progress` puts the toast in progress mode, absorbed from arc-progress-toast in 4.2: it renders a track beneath the message, exempts itself from dedupe and from the auto-dismiss timer, and, given `onCancel`, offers a cancel button that fires `arc-cancel`. Move the bar with `updateToast(id, { progress })` and end it with `complete(id)`, which fires `arc-complete`. The mode is chosen here and is not switchable afterwards: a track appearing mid-life would relayout a notification the reader is already reading. `action` and `actionLabel` arrive from arc-snackbar the same way. The label renders a ghost button; a click runs the callback and fires `arc-action` before the toast dismisses. */
   show(options?: { id?: number|string, message?: string, variant?: 'info' | 'success' | 'warning' | 'error', duration?: number, persistent?: boolean, progress?: number, action?: () => void, actionLabel?: string, onCancel?: () => void }): number|string;
   /** Dismiss a toast by the id show() returned, whether it is visible or still queued. Unknown ids are ignored. */
   dismiss(id: number|string): void;
   /** Dismiss everything on screen and discard the queue. */
   clear(): void;
-  /** Move a progress toast's bar, its message, or both. Unknown ids are ignored, matching dismiss(). Named `updateToast` rather than `update` because `update` is Lit's — the name arc-progress-toast used, and the reason it also carried a do-nothing `update(changedProps) { super.update(changedProps); }` override that read as if it meant something. */
+  /** Move a progress toast's bar, its message, or both. Unknown ids are ignored, matching dismiss(). Named `updateToast` rather than `update` because `update` is Lit's. It is the name arc-progress-toast used, and the reason that component carried a do-nothing `update(changedProps) { super.update(changedProps); }` override that read as if it meant something. */
   updateToast(id: number|string, changes: { progress?: number, message?: string }): void;
-  /** Finish a progress toast: dismiss it and fire `arc-complete`. Distinct from `dismiss()` on purpose — the operation finishing and the user closing the toast are different events, and a consumer waiting on the first should not be woken by the second. */
+  /** Finish a progress toast: dismiss it and fire `arc-complete`. Distinct from `dismiss()` on purpose: the operation finishing and the user closing the toast are different events, and a consumer waiting on the first should not be woken by the second. */
   complete(id: number|string): void;
 }
 
@@ -3145,7 +3181,7 @@ export declare class ArcToggle extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -3181,7 +3217,7 @@ export declare class ArcToolbar extends LitElement {
  * `<arc-tooltip>`
  */
 export declare class ArcTooltip extends LitElement {
-  /** The plain-text string displayed inside the tooltip popup. Keep this concise — one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for rich content, use the Popover component instead. @default '' */
+  /** The plain-text string displayed inside the tooltip popup. Keep this concise: one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for formatted content, use the Popover component instead. @default '' */
   content: string;
   /** Time in milliseconds to wait after mouseenter or focusin before the tooltip becomes visible. The default of 200 ms prevents accidental activation during casual pointer movement. Increase to 400-600 ms in dense toolbars; avoid setting to 0 as it creates a jittery experience. @default 200 */
   delay: number;
@@ -3200,11 +3236,11 @@ export declare class ArcTopBar extends LitElement {
   homeHref: string;
   /** Sets a max-width containment on the top bar content area. Accepts any CSS length or named size. @default null */
   contained: string;
-  /** Controls the mobile menu behavior. When set to a value like "nav", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle. @default 'sidebar' */
-  mobileMenu: string;
+  /** What the hamburger does below the nav-collapse breakpoint. `sidebar` (the default) fires `arc-sidebar-toggle` for an app shell's drawer; `nav` fires `arc-mobile-menu-toggle` for your own panel; `none` renders no hamburger, for a site with nothing to open. @default 'sidebar' */
+  mobileMenu: 'sidebar' | 'nav' | 'none';
   /** Position of the mobile menu panel when mobile-menu is active. @default 'left' */
   menuPosition: string;
-  /** Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`. @default false */
+  /** Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you. Read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`. @default false */
   scrolled: boolean;
   /** Renders the bar with no background, blur or border until the page is scrolled, so a hero shows through it. Requires `fixed`. Suits marketing pages whose first screen is one composed image; leave it off in an application layout, where the bar should be a fixed edge among the other panels rather than something that appears and disappears. @default false */
   immersive: boolean;
@@ -3214,6 +3250,8 @@ export declare class ArcTopBar extends LitElement {
   menuOpen: boolean;
   /** Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM. @default 'center' */
   navAlign: 'left' | 'center' | 'right';
+  /** Where the center slot goes below the nav-collapse breakpoint. `center` (the default) keeps it centered; `end` moves it to the right, next to the actions and the menu button; `hidden` removes it, for a center whose content the mobile menu already carries. @default 'center' */
+  mobileCenter: 'center' | 'end' | 'hidden';
 }
 
 /**
@@ -3241,7 +3279,7 @@ export declare class ArcTransferList extends LitElement {
   size: 'sm' | 'md' | 'lg';
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -3298,7 +3336,7 @@ export declare class ArcTreeSelect extends LitElement {
   open: boolean;
   /** @default true */
   formAssociated: boolean;
-  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped — // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers — so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
+  /** Lit merges static properties up the prototype chain, so every consumer gets these without declaring them. `required` participates in constraint validation below; `readonly` reflects for styling and is enforced by each component's interaction handlers (the mixin can't know which gestures mutate state). @default { // flag(), unlike `disabled`. The exclusion in props.js is specifically // about form-associated *platform* semantics: a `disabled` content // attribute that is merely present makes the element actually disabled // per the HTML spec, and formDisabledCallback assigns the property back, // so no converter can win. Neither of these is platform-mapped: // `required` is enforced by _computeValidity() below and `readonly` by // each component's own interaction handlers, so the stock converter buys // nothing here and costs the usual bug: `required="false"` read as true, // blocking submission of a form the author meant to leave optional. // Finding #48's shape, across all 26 form controls at once. required: flag(false), readonly: flag(false), } */
   properties: Record<string, unknown>;
   /** Components that run their own constraint-validation logic (pattern checks, range checks) opt out of the automatic required sync by overriding this to false, and own the whole validity flag set instead. @default true */
   autoValidates: boolean;
@@ -3397,7 +3435,7 @@ export declare class ArcVideo extends LitElement {
   label: string;
   /** Shows the custom control bar once playback has started, and enables the player keyboard shortcuts. Defaults to true; set `controls="false"` for ambient or presentation video. @default true */
   controls: boolean;
-  /** Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay simply remains and the user starts playback themselves. @default false */
+  /** Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay remains and the user starts playback themselves. @default false */
   autoplay: boolean;
   /** Restarts playback from the beginning when the video ends. @default false */
   loop: boolean;
@@ -3416,7 +3454,7 @@ export declare class ArcVirtualList extends LitElement {
   visibleRange: unknown;
   /** `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used. @default null */
   renderItem: Function;
-  /** Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation. @default 40 */
+  /** Height in pixels of each row. Must match what actually renders, and must be at least 1: it is a divisor, so a zero would put NaN through every window calculation. @default 40 */
   itemHeight: number;
   /** Rows rendered above and below the visible window to cover fast scrolling. Never negative. @default 5 */
   overscan: number;
@@ -3483,6 +3521,7 @@ declare global {
     'arc-chip': ArcChip;
     'arc-clock': ArcClock;
     'arc-code-block': ArcCodeBlock;
+    'arc-code-group': ArcCodeGroup;
     'arc-collapsible': ArcCollapsible;
     'arc-color-picker': ArcColorPicker;
     'arc-color-swatch': ArcColorSwatch;

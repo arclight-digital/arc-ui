@@ -14,31 +14,31 @@ export const imageCompare: ComponentDef = {
 
 The divider carries a circular grab handle that is also the keyboard control: a focusable \`role="slider"\` that moves by 1 with the arrow keys, by 10 with Shift held, and jumps to either extreme with Home and End. Dragging emits \`arc-input\` continuously and \`arc-change\` once on release, so live readouts and expensive persistence can subscribe separately.
 
-\`orientation\` is named for the axis the divider moves along: \`horizontal\` (the default) slides a vertical divider line left and right, while \`vertical\` slides a horizontal line up and down. The horizontal axis is logical — position 0 is the inline-start edge, so the whole control mirrors in right-to-left documents along with the reading order. Optional \`before-label\` and \`after-label\` props float muted caption chips over the corners of each region.`,
+\`orientation\` is named for the axis the divider moves along: \`horizontal\` (the default) slides a vertical divider line left and right, while \`vertical\` slides a horizontal line up and down. The horizontal axis is logical. Position 0 is the inline-start edge, so the whole control mirrors in right-to-left documents along with the reading order. Optional \`before-label\` and \`after-label\` props float muted caption chips over the corners of each region.`,
 
   features: [
-    'Two named slots — `before` and `after` — accepting `<img>` or `arc-image`',
+    'Two named slots, `before` and `after`, that accept `<img>` or `arc-image`',
     'CSS clip-path reveal driven by `position` (0–100), so it server-renders at the initial split',
     'Pointer dragging anywhere on the frame, with `arc-input` while moving and `arc-change` on release',
     'Focusable divider handle with `role="slider"`: arrows step by 1, Shift+arrows by 10, Home/End to the extremes',
     'Orientation named for the motion axis: `horizontal` (default) or `vertical`',
     'Optional floating caption chips via `before-label` and `after-label`',
-    'Logical horizontal axis — the control mirrors automatically in RTL documents',
+    'Logical horizontal axis. The control mirrors automatically in RTL documents',
     'Exposed CSS parts: container, before, after, divider, handle, label-before, label-after',
   ],
 
   guidelines: {
     do: [
-      'Slot two images of the same subject and aspect ratio — the point is the difference between them',
+      'Slot two images of the same subject and aspect ratio. The point is the difference between them',
       'Set `before-label` and `after-label` when the direction of the edit is not obvious from the images alone',
       'Give the handle a descriptive `label` so screen reader users know what the slider compares',
       'Use `arc-input` for cheap live readouts and `arc-change` for anything expensive or persisted',
     ],
     dont: [
-      'Do not use it as a gallery for unrelated images — that is a job for arc-carousel',
-      'Do not compare text or code revisions with it — a rendered diff communicates changes precisely; sliding pixels does not',
-      'Do not slot images with different aspect ratios — the top layer is cropped to cover and the comparison stops being honest',
-      'Do not preset `position` near 0 or 100 — a nearly hidden layer defeats the invitation to drag',
+      'Do not use it as a gallery for unrelated images. That is a job for arc-carousel',
+      'Do not compare text or code revisions with it. A rendered diff communicates changes precisely; sliding pixels does not',
+      'Do not slot images with different aspect ratios. The top layer is cropped to cover and the comparison stops being honest',
+      'Do not preset `position` near 0 or 100. A nearly hidden layer defeats the invitation to drag',
     ],
   },
 

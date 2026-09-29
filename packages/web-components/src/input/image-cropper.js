@@ -14,7 +14,7 @@ const ARROW_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'];
  *
  * Crop-before-upload for avatar/media flows. The crop rect lives in stage coordinates; zoom scales
  * the letterboxed image around its center underneath. `getCroppedBlob()`/`getCroppedDataUrl()`
- * require `src` to be same-origin or CORS-enabled — a tainted canvas throws with a clear message.
+ * require `src` to be same-origin or CORS-enabled; a tainted canvas throws with a clear message.
  *
  * @tag arc-image-cropper
  * @status beta
@@ -39,7 +39,7 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
     height: { type: Number, reflect: true },
     aspect: num({ default: 0, min: 0, clamp: 'toRange', reflect: true }),
     /**
-     * The docs said "clamped to 1-4" and nothing clamped — finding #47. The
+     * The docs said "clamped to 1-4" and nothing clamped (finding #47). The
      * only bound was `min`/`max` on the range input, which constrains the
      * *widget* and not the property, so `el.zoom = 10` stuck and so did
      * `el.zoom = -3`; the render then quietly used a different number than the
@@ -277,7 +277,7 @@ export class ArcImageCropper extends DeclaredPropsMixin(LitElement) {
     super();
     this.src = '';
     this.height = 320;
-    // `zoom` is seeded from its declaration — see DeclaredPropsMixin.
+    // `zoom` is seeded from its declaration; see DeclaredPropsMixin.
     this._loaded = false;
     this._errored = false;
     this._rect = null;

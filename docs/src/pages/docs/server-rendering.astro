@@ -25,7 +25,7 @@ const headings = [
     <section id="overview">
       <p>
         ARC UI components server-render through <code>@lit-labs/ssr</code> into
-        <strong>declarative shadow DOM</strong> — a <code>&lt;template shadowrootmode="open"&gt;</code>
+        <strong>declarative shadow DOM</strong>: a <code>&lt;template shadowrootmode="open"&gt;</code>
         the browser turns into a real shadow root while parsing, before any JavaScript runs.
       </p>
       <p>
@@ -40,7 +40,7 @@ const headings = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
         Most ARC components take their content from properties rather than slots. Before
-        JavaScript loads — or without it — this is an empty unknown tag: no heading, no
+        JavaScript loads (or without it), this is an empty unknown tag: no heading, no
         description, nothing for a crawler to read.
       </p>
       <arc-code-block language="html" code={`<arc-feature-card
@@ -48,7 +48,7 @@ const headings = [
   description="Ships 40% less JavaScript"
 ></arc-feature-card>`}></arc-code-block>
       <p>
-        The same tag through the server renderer (Lit's hydration markers elided) — the
+        The same tag through the server renderer (Lit's hydration markers elided). The
         content is in the HTML response itself:
       </p>
       <arc-code-block language="html" code={`<arc-feature-card
@@ -70,7 +70,7 @@ const headings = [
   </template>
 </arc-feature-card>`}></arc-code-block>
       <p>
-        <strong>65 of {elementCount} components</strong> are shaped like this — no default slot,
+        <strong>65 of {elementCount} components</strong> are shaped like this: no default slot,
         no markup to fall back to. Server rendering is the only thing that puts their content in
         the payload. Slot-driven components already degrade gracefully, and gain less from it.
       </p>
@@ -97,7 +97,7 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
 
       <p>
         Without it, the moment an element upgrades Lit renders its template from scratch into
-        the shadow root the server already filled — discarding identical DOM and producing the
+        the shadow root the server already filled, discarding identical DOM and producing the
         exact flash server rendering exists to avoid. With it, Lit <em>adopts</em> the existing
         nodes and renders nothing. Order matters because hydration support patches
         <code>LitElement</code>'s update path: a component class defined before the patch never
@@ -111,7 +111,7 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
       <p>
         <code>base.css</code> hides ARC elements until they upgrade, so a page never flashes
         unstyled custom elements. A server-rendered element is un-upgraded but <em>finished</em>,
-        so that rule would hide completed content for the whole hydration window — turning server
+        so that rule would hide completed content for the whole hydration window, which turns server
         rendering into a longer blank screen rather than a shorter one.
       </p>
       <p>Opt the page out at the root:</p>
@@ -129,13 +129,13 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
       <p>
         <code>pnpm check ssr</code> renders every component in Node and fails on any that
         throws; it runs in CI. Server-side, Lit runs the constructor, <code>willUpdate</code>
-        and <code>render</code> — and none of <code>connectedCallback</code>,
+        and <code>render</code>, and none of <code>connectedCallback</code>,
         <code>firstUpdated</code>, <code>updated</code>, or a reactive controller's
         <code>hostConnected</code>. Browser work belongs in those.
       </p>
       <p>
         All {elementCount} pass; none are client-only. There is no per-component support table
-        to consult — you opt in per page, not per component.
+        to consult. You opt in per page, not per component.
       </p>
     </section>
 
@@ -156,20 +156,20 @@ const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
       <ul>
         <li>
           <strong>Nuxt, SvelteKit, Angular Universal, Next, Astro, or a string you built by
-          hand</strong> — pipe the rendered HTML through it. This is the code that renders this
+          hand</strong>: pipe the rendered HTML through it. This is the code that renders this
           site: 177 pages, 43,620 shadow roots, every build.
         </li>
         <li>
-          <strong>React</strong> — <code>@lit-labs/ssr-react</code> also works, if you would rather
+          <strong>React</strong>: <code>@lit-labs/ssr-react</code> also works, if you would rather
           render through the component graph.
         </li>
       </ul>
       <p>
-        It needs <code>@lit-labs/ssr</code>, an optional peer dependency — install it in the
+        It needs <code>@lit-labs/ssr</code>, an optional peer dependency. Install it in the
         project that server-renders. Two things are on the caller: serve the returned
         stylesheets from the path they were linked with, and import
         <code>@arclux/arc-ui/hydrate</code> on the client <em>before any component is
-        defined</em> — on a bundler that usually means forcing it into its own chunk, since an
+        defined</em>. On a bundler that usually means forcing it into its own chunk, since an
         import statement alone does not control evaluation order.
       </p>
     </section>

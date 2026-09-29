@@ -6,13 +6,13 @@ export const colorSwatch: ComponentDef = {
   tag: 'arc-color-swatch',
   tier: 'content',
   interactivity: 'static',
-  description: 'Color sample square with label — useful for token docs.',
+  description: 'Color sample square with a label, for token docs.',
 
-  overview: `ColorSwatch renders a color sample square with a label underneath, making it the go-to component for design token documentation, palette displays, and theme previews. The color is set via the \`color\` property and applied directly as a \`background-color\` inline style, so it accepts any valid CSS color value — hex, rgb, hsl, or named colors.
+  overview: `ColorSwatch renders a color sample square with a label underneath, for design token documentation, palette displays, and theme previews. The color is set via the \`color\` property and applied directly as a \`background-color\` inline style, so it accepts any valid CSS color value: hex, rgb, hsl, or named colors.
 
-The label defaults to displaying the color value itself when no explicit label is provided, which is convenient for token reference tables. The label is rendered in monospace (\`--font-mono\`) at 11px with text overflow ellipsis, keeping the layout tidy even with long color names or values. The swatch box includes a subtle border and a hover effect that brightens the border and adds a blue glow shadow.
+The label defaults to displaying the color value itself when no explicit label is provided, which suits token reference tables. The label is rendered in monospace (\`--font-mono\`) at 11px with text overflow ellipsis, so long color names or values do not break the layout. The swatch box includes a subtle border and a hover effect that brightens the border and adds a blue glow shadow.
 
-Three size presets (\`sm\`, \`md\`, \`lg\`) control the swatch dimensions: 32px, 48px, and 64px respectively. The border radius also scales with size — \`--radius-sm\` for small, \`--radius-md\` for medium, and \`--radius-lg\` for large — maintaining visual consistency at each scale. The color box includes \`role="img"\` with an \`aria-label\` for accessibility.`,
+Three size presets (\`sm\`, \`md\`, \`lg\`) control the swatch dimensions: 32px, 48px, and 64px respectively. The border radius also scales with size: \`--radius-sm\` for small, \`--radius-md\` for medium, and \`--radius-lg\` for large. The color box includes \`role="img"\` with an \`aria-label\` for accessibility.`,
 
   features: [
     'Accepts any CSS color value (hex, rgb, hsl, named) via the color property',
@@ -29,15 +29,15 @@ Three size presets (\`sm\`, \`md\`, \`lg\`) control the swatch dimensions: 32px,
       'Use in a flex or grid row to display a palette of related colors',
       'Provide a human-readable label for design token documentation (e.g. "Primary Blue")',
       'Use the lg size for hero palette displays and sm for inline token tables',
-      'Group swatches by category — accent colors, neutrals, semantic colors',
+      'Group swatches by category: accent colors, neutrals, semantic colors',
       'Use hex values for consistency in token reference docs',
     ],
     dont: [
-      'Do not use color swatches for interactive color picking — this is a display-only component',
+      'Do not use color swatches for interactive color picking; this is a display-only component',
       'Do not set transparent or semi-transparent colors without a visible background behind the swatch',
-      'Do not mix different swatch sizes in the same row — keep sizes consistent within a group',
-      'Do not use very long labels that will be truncated — keep labels under 10 characters',
-      'Do not rely solely on color to convey meaning — always pair with a label',
+      'Do not mix different swatch sizes in the same row; keep sizes consistent within a group',
+      'Do not use very long labels that will be truncated. Keep labels under 10 characters',
+      'Do not rely solely on color to convey meaning. Always pair with a label',
     ],
   },
 

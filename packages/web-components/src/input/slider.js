@@ -80,7 +80,7 @@ export class ArcSlider extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         font-size: var(--code-size);
         color: var(--interactive);
         font-weight: var(--font-label-weight, 600);
-        /* Updates on every pointermove — proportional digits would change its
+        /* Updates on every pointermove; proportional digits would change its
            width each frame and shift the label beside it. */
         font-variant-numeric: tabular-nums;
       }
@@ -141,7 +141,7 @@ export class ArcSlider extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         box-shadow: var(--glow-xs);
       }
 
-      /* Sizes — the track thickness and the thumb, since a slider has no text
+      /* Sizes: the track thickness and the thumb, since a slider has no text
          to scale. md is the base rule above. The two thumb pseudo-elements
          cannot be combined into one selector: a browser that doesn't recognize
          one drops the whole rule. */

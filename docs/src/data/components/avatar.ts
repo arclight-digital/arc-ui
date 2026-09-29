@@ -9,11 +9,11 @@ export const avatar: ComponentDef = {
   searchKeywords: ['profile picture'],
   description: 'User avatar with image or initials fallback.',
 
-  overview: `Avatar displays a user's profile image inside a circular, bordered container with a hover glow effect. When an image \`src\` is provided, it renders a fully covered \`<img>\` element with object-fit: cover and full border-radius. When no image is available, the component automatically falls back to rendering the first character of the \`name\` property as an uppercase initial inside the circle, using the Tomorrow accent font at weight 600.
+  overview: `Avatar displays a user's profile image inside a circular, bordered container with a hover glow. When an image \`src\` is provided, it renders an \`<img>\` element with object-fit: cover and full border-radius. When no image is available, the component falls back to rendering the first character of the \`name\` property as an uppercase initial inside the circle, using the Tomorrow accent font at weight 600.
 
-Three size presets — sm (32px), md (40px), and lg (56px) — control both the container dimensions and the initials font-size (12px, 14px, and 20px respectively). The container uses a subtle \`--border-default\` ring that transitions to \`--border-bright\` on hover, paired with a blue-tinted box-shadow glow for an interactive feel even though the component is primarily presentational.
+Three size presets (sm 32px, md 40px, lg 56px) control both the container dimensions and the initials font-size (12px, 14px, and 20px respectively). The container uses a subtle \`--border-default\` ring that transitions to \`--border-bright\` on hover, paired with a blue-tinted box-shadow glow, even though the component is presentational.
 
-The component sets \`role="img"\` and \`aria-label\` on the container, using the \`name\` property as the accessible label. This ensures screen readers announce the avatar as an image with the person's name. The exposed CSS parts — "avatar", "img", and "initials" — let you override the border, background, or typography for specific contexts like admin badges or status indicators.`,
+The component sets \`role="img"\` and \`aria-label\` on the container, using the \`name\` property as the accessible label, so screen readers announce an image with the person's name. The exposed CSS parts ("avatar", "img", and "initials") let you override the border, background, or typography for specific contexts like admin badges or status indicators.`,
 
   features: [
     'Image display with object-fit: cover for consistent circular cropping',
@@ -22,7 +22,7 @@ The component sets \`role="img"\` and \`aria-label\` on the container, using the
     'Hover glow effect with border-color transition and blue box-shadow',
     'Accessible `role="img"` with `aria-label` derived from the name property',
     'Exposed CSS parts: avatar, img, initials for per-instance customization',
-    'Uppercase Tomorrow-font initials at weight 600 for visual consistency',
+    'Uppercase Tomorrow-font initials at weight 600',
   ],
 
   guidelines: {
@@ -34,10 +34,10 @@ The component sets \`role="img"\` and \`aria-label\` on the container, using the
       'Provide a fallback-friendly name so the initial letter is meaningful (e.g. full name, not email)',
     ],
     dont: [
-      'Do not omit the name prop — the initial fallback and aria-label both depend on it',
+      'Do not omit the name prop; the initial fallback and aria-label both depend on it',
       'Do not use Avatar for non-person images like logos or product icons; it is semantically a user avatar',
       'Do not set src to a very large image without server-side resizing; the component does not resize images',
-      'Do not override border-radius on the avatar — the circular shape is core to the component identity',
+      'Do not override border-radius on the avatar; the circular shape is part of the component identity',
       'Do not rely on the hover glow as a click affordance; Avatar is presentational, not interactive',
     ],
   },

@@ -1,5 +1,5 @@
 /**
- * Anchor adoption — progressive enhancement for link-bearing components.
+ * Anchor adoption: progressive enhancement for link-bearing components.
  *
  * An `href` on the host cannot produce a working link without JavaScript: the
  * attribute lives on the custom element and the real `<a>` only exists in a
@@ -10,14 +10,14 @@
  *     <arc-button variant="primary"><a href="/start">Get started</a></arc-button>
  *
  * On upgrade the component adopts that anchor as its control rather than
- * rendering a second one — nesting `<a>` inside `<a>` is invalid and would put
+ * rendering a second one: nesting `<a>` inside `<a>` is invalid and would put
  * nested links in the accessibility tree.
  *
  * Nothing here mutates light DOM. Framework wrappers re-render their children,
  * and a component that rewrote them would fight the reconciler.
  */
 
-/** Nodes that carry meaning — everything but whitespace-only text. */
+/** Nodes that carry meaning: everything but whitespace-only text. */
 function meaningfulNodes(nodes) {
   return nodes.filter((n) => n.nodeType !== Node.TEXT_NODE || n.textContent.trim() !== '');
 }
@@ -25,10 +25,10 @@ function meaningfulNodes(nodes) {
 /**
  * True when a slot's only meaningful content is a single `<a>`.
  *
- * Deliberately strict: `<arc-button>Read <a href="/x">this</a></arc-button>` is
+ * Strict on purpose: `<arc-button>Read <a href="/x">this</a></arc-button>` is
  * an incidental inline link, not a link button, and must stay on the normal
  * render path. Checking assigned *nodes* rather than assigned elements is what
- * makes that distinction — `assignedElements()` drops the surrounding text and
+ * makes that distinction: `assignedElements()` drops the surrounding text and
  * would report a lone anchor.
  *
  * @param {HTMLSlotElement} slot
@@ -64,7 +64,7 @@ export function loneAnchorChild(host) {
  * Resolve a carrier's destination, preferring the explicit attribute.
  *
  * Returns the anchor's literal `href` attribute rather than the resolved
- * `.href` property, so a relative path stays relative — the parent renders it
+ * `.href` property, so a relative path stays relative: the parent renders it
  * back into an `<a>` and the browser resolves it there.
  *
  * @param {Element} host

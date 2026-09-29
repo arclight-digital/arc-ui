@@ -3,7 +3,7 @@ import { DeclaredPropsMixin, flag, list } from '../shared/props.js';
 
 /**
  * Data-holder child element that defines a single column in the comparison grid. Renders nothing
- * visible — it provides heading, highlight, and values data to the parent.
+ * visible; it provides heading, highlight, and values data to the parent.
  *
  * @tag arc-comparison-column
  * @arc-group marketing

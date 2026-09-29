@@ -9,9 +9,9 @@ export const numberInput: ComponentDef = {
   description:
     'A numeric stepper input with decrement and increment buttons flanking a central text field, supporting min/max clamping, step increments, and keyboard shortcuts.',
 
-  overview: `NumberInput combines a native numeric text field with decrement and increment buttons to create a precise, user-friendly numeric stepper. The three elements are presented as a unified control with a shared border and rounded corners, where the buttons sit on either side of the input field separated by subtle inner borders. When the control receives focus, the entire border shifts to accent-primary with a focus ring, providing clear visual feedback.
+  overview: `NumberInput combines a native numeric text field with decrement and increment buttons to make a numeric stepper. The three elements are presented as a unified control with a shared border and rounded corners, where the buttons sit on either side of the input field separated by subtle inner borders. When the control receives focus, the entire border shifts to accent-primary with a focus ring, which gives clear visual feedback.
 
-The component enforces value boundaries through automatic clamping. When \`min\` or \`max\` props are set, the value is clamped to stay within range, and the corresponding button becomes disabled and visually dimmed when the limit is reached. The \`step\` prop controls the increment granularity for both button clicks and keyboard interactions. Holding Shift while pressing arrow keys multiplies the step by 10, enabling quick large adjustments without repeated clicks.
+The component enforces value boundaries through automatic clamping. When \`min\` or \`max\` props are set, the value is clamped to stay within range, and the corresponding button becomes disabled and visually dimmed when the limit is reached. The \`step\` prop controls the increment granularity for both button clicks and keyboard interactions. Holding Shift while pressing arrow keys multiplies the step by 10, for quick large adjustments without repeated clicks.
 
 When a \`label\` is provided, it renders as an uppercase accent-font label above the control, connected to the input via a generated \`id\` and \`for\` attribute for accessibility. The events mirror the native control: typing fires \`arc-input\` alone on each keystroke, and the value commits with \`arc-change\` on blur or Enter. A stepper button click or an arrow key fires both, because each of those is an edit and a commit in one gesture. Every event carries the new value in its detail.`,
 
@@ -22,7 +22,7 @@ When a \`label\` is provided, it renders as an uppercase accent-font label above
     'Focus-within styling applies accent-primary border and ring to the entire control group',
     'Label rendered as uppercase accent-font text above the control with proper `for` association',
     'Native `spinbutton` ARIA role with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`',
-    'Hides browser-native spin buttons for a clean cross-platform appearance',
+    'Hides browser-native spin buttons so the control looks the same across platforms',
     'Disabled state at 40% opacity with pointer events blocked',
   ],
 
@@ -30,16 +30,16 @@ When a \`label\` is provided, it renders as an uppercase accent-font label above
     do: [
       'Use NumberInput when the user needs to enter or adjust an exact numeric value',
       'Set `min` and `max` to prevent invalid values and provide clear boundary feedback',
-      'Choose a `step` that matches your data precision — 1 for integers, 0.1 for decimals',
+      'Choose a `step` that matches your data precision: 1 for integers, 0.1 for decimals',
       'Provide a `label` so the input is properly announced by screen readers',
       'Use the Shift+Arrow shortcut tip in help text for power users who need fast adjustments',
     ],
     dont: [
-      'Do not use NumberInput for approximate values or large ranges — use Slider instead',
+      'Do not use NumberInput for approximate values or large ranges; use Slider instead',
       'Do not omit `min` and `max` when there are logical boundaries for the value',
-      'Do not set a `step` of 0 — it prevents the buttons from changing the value',
-      'Do not use NumberInput for non-numeric data like phone numbers — use a standard Input with a pattern',
-      'Avoid stacking many number inputs without labels — each one needs context for usability',
+      'Do not set a `step` of 0: it prevents the buttons from changing the value',
+      'Do not use NumberInput for non-numeric data like phone numbers; use a standard Input with a pattern',
+      'Avoid stacking many number inputs without labels: each one needs context for usability',
     ],
   },
 

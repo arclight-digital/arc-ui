@@ -2,8 +2,8 @@
 
 Phosphor and Lucide, packaged for [ARC UI](https://arcui.dev).
 
-Two libraries, 3,408 glyphs, one module each — so a page downloads the icons it
-renders and nothing else.
+Two libraries, 3,408 glyphs, one module each, so a page downloads only the icons it
+renders.
 
 ```bash
 npm i @arclux/arc-ui @arclux/arc-ui-icons lit
@@ -43,7 +43,7 @@ or declaratively, anywhere in the document:
 
 ## Or skip the pack
 
-A `*.register.js` module carries a resolver with an entry per glyph — 1,896 for
+A `*.register.js` module carries a resolver with an entry per glyph: 1,896 for
 Lucide, 1,512 for Phosphor. Each entry is a static `import()` specifier, which is
 what lets a bundler split them into one chunk per icon, but it also means the
 bundler has to walk all of them.
@@ -60,11 +60,11 @@ iconRegistry.set({ check, x });
 ```
 
 Icons registered this way are library-independent: they answer to their name
-whatever `use()` points at, and they win over a registered pack — which is also
+whatever `use()` points at, and they win over a registered pack, which is also
 how you override one glyph without replacing the set.
 
-If you want a whole library as a single value — an icon picker is the usual
-reason — that is one import, and it loads every glyph:
+If you want a whole library as a single value (an icon picker is the usual
+reason), that is one import, and it loads every glyph:
 
 ```js
 import phosphor from '@arclux/arc-ui-icons/phosphor'; // { 'check': '<svg…>', … }
@@ -93,7 +93,7 @@ if you want them code-split the way the built-in packs are.
 ## Names
 
 Phosphor and Lucide disagree about what common glyphs are called, and for the
-carets they disagree completely — Phosphor has `caret-right` and no
+carets they disagree completely: Phosphor has `caret-right` and no
 `chevron-right`, Lucide the reverse. ARC UI's own components use the Lucide
 spelling and each pack ships an alias table, exported as
 `@arclux/arc-ui-icons/aliases`, so built-in components resolve under either.
@@ -103,7 +103,7 @@ Browse both sets at [arcui.dev/docs/components/icon](https://arcui.dev/docs/comp
 ## Licence
 
 `MIT AND ISC`. The packaging is ARC UI's, under MIT; the artwork is not ours to
-relicense and is redistributed under its own terms — **Phosphor Icons** under MIT
+relicense and is redistributed under its own terms: **Phosphor Icons** under MIT
 ([phosphoricons.com](https://phosphoricons.com)) and **Lucide** under ISC, with
 portions derived from Feather under MIT ([lucide.dev](https://lucide.dev)). Both
 permit commercial use, modification and redistribution.

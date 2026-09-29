@@ -7,38 +7,38 @@ export const comparison: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'A two-column or multi-column comparison table for pricing tiers, feature breakdowns, or before/after comparisons. Each column is defined with an arc-comparison-column child element.',
+    'A comparison table for pricing tiers, feature breakdowns, or before/after comparisons. Each column is defined with an arc-comparison-column child element.',
 
-  overview: `Comparison renders a structured grid of feature rows and value columns, ideal for pricing tables, plan comparisons, and feature matrices. The parent \`arc-comparison\` element accepts a JSON array of feature labels, while each slotted \`arc-comparison-column\` child provides a heading and a matching JSON array of values.
+  overview: `Comparison renders a structured grid of feature rows and value columns, for pricing tables, plan comparisons, and feature matrices. The parent \`arc-comparison\` element accepts a JSON array of feature labels, while each slotted \`arc-comparison-column\` child provides a heading and a matching JSON array of values.
 
-Boolean values are rendered automatically as check marks or crosses — pass \`"true"\` or \`"false"\` as string values and the component renders accessible SVG icons in success/ghost colors. Any other string value is displayed as-is, making it flexible for mixed comparison data (e.g. "5 GB", "Unlimited", "true").
+Boolean values render as check marks or crosses: pass \`"true"\` or \`"false"\` as string values and the component renders accessible SVG icons in success/ghost colors. Any other string value is displayed as-is, so you can mix comparison data (e.g. "5 GB", "Unlimited", "true").
 
-The \`highlight\` attribute on a column adds a subtle accent background to both the header and all cells in that column, drawing the user's eye to the recommended or featured tier. The entire component uses CSS Grid for automatic column sizing and includes row hover states for scanability.`,
+The \`highlight\` attribute on a column adds a subtle accent background to both the header and all cells in that column, to draw the eye to the recommended tier. The component uses CSS Grid for column sizing and has row hover states.`,
 
   features: [
     'CSS Grid layout with automatic column count based on slotted children',
-    'JSON-driven features and values — no complex DOM nesting required',
+    'JSON-driven features and values, with no complex DOM nesting',
     'Boolean rendering: "true" becomes a green check, "false" becomes a ghost X',
     'Column highlighting with accent background for featured/recommended tiers',
-    'Row hover states for easy horizontal scanning',
+    'Row hover states for horizontal scanning',
     'Accessible table roles (table, row, rowheader, columnheader, cell)',
-    'CSS parts for deep customization: table, header, cell, feature',
+    'CSS parts for customization: table, header, cell, feature',
     'Respects `prefers-reduced-motion` for transitions',
   ],
 
   guidelines: {
     do: [
       'Use for pricing tables, feature matrices, and plan comparisons',
-      'Keep feature labels concise — long labels compress the value columns',
+      'Keep feature labels concise; long labels compress the value columns',
       'Highlight at most one column (the recommended tier) to guide user attention',
       'Use boolean values ("true"/"false") for feature presence to get automatic check/cross icons',
       "Ensure the features array and each column's values array have the same length",
     ],
     dont: [
-      'Do not use for arbitrary data tables — use data-table instead for sortable/filterable data',
-      'Do not add more than 4-5 columns — the grid becomes too compressed on smaller screens',
-      'Do not mix boolean and text values in the same row — pick one format per feature',
-      'Do not forget to provide the features prop — without it, no rows will render',
+      'Do not use for arbitrary data tables. Use data-table for sortable/filterable data',
+      'Do not add more than 4-5 columns; the grid gets too compressed on smaller screens',
+      'Do not mix boolean and text values in the same row. Pick one format per feature',
+      'Do not forget to provide the features prop; without it, no rows will render',
     ],
   },
 
@@ -53,7 +53,7 @@ The \`highlight\` attribute on a column adds a subtle accent background to both 
       name: 'ComparisonColumn',
       tag: 'arc-comparison-column',
       description:
-        'Data-holder child element that defines a single column in the comparison grid. Renders nothing visible — it provides heading, highlight, and values data to the parent.',
+        'Data-holder child element that defines a single column in the comparison grid. Renders nothing visible; it provides heading, highlight, and values data to the parent.',
     },
   ],
 

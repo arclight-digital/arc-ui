@@ -9,19 +9,19 @@ export const combobox: ComponentDef = {
   searchKeywords: ['autocomplete', 'typeahead'],
   description: 'Searchable dropdown with type-ahead filtering.',
 
-  overview: `Combobox combines a text input with a filterable dropdown list, giving users the speed of typing with the certainty of selecting from a known set of options. As the user types into the input, the listbox narrows to show only options whose labels match the query string. This makes Combobox ideal for fields where the option set is too large for a plain Select but still needs to be constrained to predefined values — country selectors, tag pickers, and user-mention fields are common examples.
+  overview: `Combobox combines a text input with a filterable dropdown list, so users can type and still pick from a known set of options. As the user types, the listbox narrows to options whose labels match the query. Use it where the option set is too large for a plain Select but must stay constrained to predefined values, such as country selectors, tag pickers, and user-mention fields.
 
-Options are provided declaratively via \`<arc-option>\` children, each carrying a \`value\` and a visible \`label\`. The component reads these from the default slot on connect and rebuilds the filtered list on every keystroke. When the user selects an option — by clicking it or pressing Enter on the highlighted item — the combobox closes, the input displays the chosen label, and an \`arc-change\` event fires with the selected value.
+Options are provided declaratively via \`<arc-option>\` children, each carrying a \`value\` and a visible \`label\`. The component reads these from the default slot on connect and rebuilds the filtered list on every keystroke. When the user selects an option (by clicking it or pressing Enter on the highlighted item), the combobox closes, the input displays the chosen label, and an \`arc-change\` event fires with the selected value.
 
-Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move the active highlight through the filtered list, Enter confirms the selection, and Escape dismisses the popup. The input carries \`role="combobox"\`, \`aria-expanded\`, \`aria-controls\`, and \`aria-activedescendant\` attributes so screen readers can announce the interaction accurately. Clicking outside the component closes the listbox via a document-level click listener.`,
+Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move the active highlight through the filtered list, Enter confirms the selection, and Escape dismisses the popup. The input carries \`role="combobox"\`, \`aria-expanded\`, \`aria-controls\`, and \`aria-activedescendant\` attributes so screen readers can announce the interaction. Clicking outside the component closes the listbox via a document-level click listener.`,
 
   features: [
     'Type-ahead filtering that narrows options as the user types',
     'Declarative option list via `<arc-option>` children with value and label attributes',
-    'Full keyboard navigation: ArrowDown, ArrowUp, Enter to select, Escape to dismiss',
+    'Keyboard navigation: ArrowDown, ArrowUp, Enter to select, Escape to dismiss',
     'WAI-ARIA combobox pattern with role, `aria-expanded`, `aria-controls`, and `aria-activedescendant`',
     'Visual active highlight and selected-state accent color on the current option',
-    'Automatic close on outside click via a document-level event listener',
+    'Closes on outside click via a document-level event listener',
     'Configurable label, placeholder, and disabled state',
     '"No results found" empty state when the query matches zero options',
   ],
@@ -31,14 +31,14 @@ Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move th
       'Use Combobox when the option list exceeds 7-10 items and users benefit from filtering by typing',
       'Provide clear, distinct labels on every <arc-option> so filtering produces meaningful results',
       'Set a descriptive placeholder like "Search countries..." to indicate the field is searchable',
-      'Include a label attribute for accessibility — it renders a visible label above the input',
+      'Include a label attribute for accessibility; it renders a visible label above the input',
       'Listen to arc-change to capture the selected value and sync it with your application state',
     ],
     dont: [
       'Do not use Combobox for short lists (under 5 items) where a simple Select is faster',
-      'Do not omit the value attribute on <arc-option> — the component needs it to track selection',
+      'Do not omit the value attribute on <arc-option>; the component needs it to track selection',
       'Do not place non-<arc-option> elements in the default slot; they will be ignored by the filter logic',
-      'Do not rely on Combobox for free-text entry — it only accepts values from the predefined option set',
+      'Do not rely on Combobox for free-text entry; it only accepts values from the predefined option set',
       'Do not disable the component without providing a visual explanation of why it is unavailable',
     ],
   },

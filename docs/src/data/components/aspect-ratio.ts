@@ -7,13 +7,13 @@ export const aspectRatio: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Container that enforces a consistent width-to-height ratio on its content, ideal for images, videos, and embedded media.',
+    'Container that enforces a width-to-height ratio on its content, for images, videos, and embedded media.',
 
-  overview: `AspectRatio is a layout primitive that constrains its children to a specified width-to-height proportion using the CSS \`aspect-ratio\` property. Pass a ratio string like \`"16/9"\`, \`"4/3"\`, or \`"1/1"\` and the container will maintain that shape regardless of the available width. Slotted children (images, videos, iframes) are automatically sized to fill the container with \`object-fit: cover\`, ensuring no letterboxing or stretching.
+  overview: `AspectRatio is a layout primitive that constrains its children to a specified width-to-height proportion using the CSS \`aspect-ratio\` property. Pass a ratio string like \`"16/9"\`, \`"4/3"\`, or \`"1/1"\` and the container keeps that shape at any width. Slotted children (images, videos, iframes) are sized to fill the container with \`object-fit: cover\`, so there is no letterboxing or stretching.
 
-This component solves the common problem of content layout shift (CLS) caused by media loading. By reserving the exact space an image or video will occupy before it loads, AspectRatio prevents the jarring page reflows that hurt both user experience and Core Web Vitals scores. The container's width is always 100% of its parent, and the height is derived from the ratio, so it works seamlessly in fluid grid layouts.
+AspectRatio prevents layout shift (CLS) caused by media loading. It reserves the exact space an image or video will occupy before it loads, which avoids page reflows that hurt user experience and Core Web Vitals scores. The container's width is always 100% of its parent and the height is derived from the ratio, so it works in fluid grid layouts.
 
-The ratio prop accepts any valid \`W/H\` format including decimal values like \`"2.35/1"\` for cinematic widescreen. If an invalid format is provided, the component falls back to \`16/9\`. The container applies the theme's medium border radius and clips overflow, so rounded corners on media come free without additional styling.`,
+The ratio prop accepts any valid \`W/H\` format including decimal values like \`"2.35/1"\` for cinematic widescreen. If an invalid format is provided, the component falls back to \`16/9\`. The container applies the theme's medium border radius and clips overflow, so media gets rounded corners without extra styling.`,
 
   features: [
     'Enforces a consistent aspect ratio using the CSS `aspect-ratio` property with a `W/H` string prop',
@@ -22,8 +22,8 @@ The ratio prop accepts any valid \`W/H\` format including decimal values like \`
     'Supports any valid ratio including standard formats (`16/9`, `4/3`, `1/1`) and decimals (`2.35/1`)',
     'Falls back to `16/9` if the ratio string is invalid or malformed',
     'Applies `border-radius: var(--radius-md)` with overflow clipping for rounded media corners',
-    'Full-width container that fills its parent, making it ideal for responsive grid cells',
-    'Lightweight wrapper with no JavaScript interaction — purely CSS-driven layout',
+    'Full-width container that fills its parent, which suits responsive grid cells',
+    'Wrapper with no JavaScript interaction; layout is pure CSS',
   ],
 
   guidelines: {
@@ -32,14 +32,14 @@ The ratio prop accepts any valid \`W/H\` format including decimal values like \`
       'Choose standard ratios that match your media: `16/9` for video, `4/3` for photos, `1/1` for avatars or thumbnails',
       'Place AspectRatio inside grid or flex containers where the width is determined by the layout',
       'Use decimal ratios like `2.35/1` for cinematic or ultrawide content when needed',
-      'Combine with lazy loading on images for optimal performance — the space is reserved before the image loads',
+      'Combine with lazy loading on images; the space is reserved before the image loads',
     ],
     dont: [
       'Do not use AspectRatio when the content has its own intrinsic dimensions and layout shift is not a concern',
-      'Do not place text-heavy content inside AspectRatio — it clips overflow and does not scroll',
-      'Do not set both a fixed height and AspectRatio on the same element — they will conflict',
-      'Do not use ratio values with zero in the denominator (e.g. `16/0`) — the component falls back to 16/9',
-      'Avoid nesting multiple AspectRatio components — the inner one will be constrained by both ratios unpredictably',
+      'Do not place text-heavy content inside AspectRatio; it clips overflow and does not scroll',
+      'Do not set both a fixed height and AspectRatio on the same element; they will conflict',
+      'Do not use ratio values with zero in the denominator (e.g. `16/0`); the component falls back to 16/9',
+      'Avoid nesting multiple AspectRatio components; the inner one is constrained by both ratios unpredictably',
     ],
   },
 

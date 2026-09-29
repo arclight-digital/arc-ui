@@ -8,14 +8,14 @@ export const scrollSpy: ComponentDef = {
   interactivity: 'interactive',
   description: 'Tracks scroll position and highlights the active navigation link.',
 
-  overview: `ScrollSpy is a sticky table-of-contents component that watches the viewport and highlights whichever navigation link corresponds to the currently visible section. It uses an IntersectionObserver under the hood, so tracking is efficient and does not block the main thread even on long pages with dozens of sections. Place it in a sidebar column next to your content and it handles the rest.
+  overview: `ScrollSpy is a sticky table-of-contents component that watches the viewport and highlights whichever navigation link corresponds to the currently visible section. It uses an IntersectionObserver, so tracking does not block the main thread even on long pages with dozens of sections. Place it in a sidebar column next to your content.
 
 Each entry in the table of contents is declared with an \`<arc-spy-link>\` child element whose \`target\` attribute matches the \`id\` of a section on the page. ScrollSpy reads these declarative links from its slot, builds the IntersectionObserver, and renders a compact navigation list in its shadow DOM with an "On this page" heading. When the user scrolls a target section into view, the corresponding link receives an \`aria-current="true"\` attribute and a blue accent background highlight.
 
-Clicking a link triggers a smooth scroll to the target element and immediately updates the active state. The component dispatches an \`arc-change\` custom event with the active section ID whenever the highlighted link changes, so you can synchronize other UI (like a progress bar or breadcrumb) with the current reading position. The \`offset\` prop lets you fine-tune the scroll detection threshold to account for sticky headers of varying heights.`,
+Clicking a link smooth-scrolls to the target element and updates the active state immediately. The component dispatches an \`arc-change\` custom event with the active section ID whenever the highlighted link changes, so you can synchronize other UI (like a progress bar or breadcrumb) with the current reading position. The \`offset\` prop adjusts the scroll detection threshold to account for sticky headers of different heights.`,
 
   features: [
-    'IntersectionObserver-based scroll tracking with zero scroll-event overhead',
+    'IntersectionObserver-based scroll tracking with no scroll-event overhead',
     'Declarative link registration via <arc-spy-link target="id"> children',
     'Sticky positioning with automatic height capping to prevent overflow',
     'Smooth-scroll click navigation to target sections',
@@ -31,14 +31,14 @@ Clicking a link triggers a smooth scroll to the target element and immediately u
       'Give every target section a unique id attribute that matches the spy-link target',
       'Set the offset prop to match the height of your sticky header or TopBar',
       'Listen for the arc-change event to synchronize breadcrumbs, analytics, or URL hash updates',
-      'Keep spy-link labels short — they should match or abbreviate section headings',
+      'Keep spy-link labels short: they should match or abbreviate section headings',
     ],
     dont: [
-      'Do not use ScrollSpy for primary site navigation — it is for in-page section tracking only',
+      'Do not use ScrollSpy for primary site navigation: it is for in-page section tracking only',
       'Do not forget to import arc-spy-link; ScrollSpy depends on it to collect its link definitions',
-      'Do not place ScrollSpy inside a scrollable container other than the document — the observer watches document-level intersections',
+      'Do not place ScrollSpy inside a scrollable container other than the document: the observer watches document-level intersections',
       'Do not add dozens of spy-links to a single ScrollSpy; more than 10-12 links make the list hard to scan',
-      'Do not omit the target attribute on spy-links — they will be silently ignored by the observer',
+      'Do not omit the target attribute on spy-links: they will be silently ignored by the observer',
     ],
   },
 

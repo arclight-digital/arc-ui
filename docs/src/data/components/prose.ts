@@ -9,18 +9,18 @@ export const prose: ComponentDef = {
   description:
     'Long-form content container that applies typographic rhythm and styling to slotted HTML elements.',
 
-  overview: `Prose is a wrapper component that brings consistent typographic styling to long-form content. Instead of manually styling each heading, paragraph, list, and code block, wrap your content in arc-prose and every child element receives proper spacing, font sizing, and color treatment automatically.
+  overview: `Prose is a wrapper that applies consistent typography to long-form content. Instead of styling each heading, paragraph, list, and code block yourself, wrap the content in arc-prose and every child element gets spacing, font sizing, and color.
 
-The component styles slotted HTML elements — headings (h1–h4), paragraphs, links, lists, blockquotes, code blocks, images, tables, horizontal rules, and inline elements like strong and code — using the ARC UI design token system. This ensures your long-form content harmonizes with the rest of your application without any additional CSS.
+The component styles slotted HTML elements: headings (h1–h4), paragraphs, links, lists, blockquotes, code blocks, images, tables, horizontal rules, and inline elements like strong and code. It uses the ARC UI design tokens, so your long-form content matches the rest of your application with no extra CSS.
 
-The \`size\` property controls the base font size of the container, with "sm", "md", and "lg" variants. Headings, code blocks, and other elements scale relative to the chosen size. This makes it easy to render the same content at different densities — compact sidebar documentation, standard article views, or large-format reading modes.`,
+The \`size\` property controls the base font size of the container, with "sm", "md", and "lg" variants. Headings, code blocks, and other elements scale relative to the chosen size. The same content can render at different densities: compact sidebar documentation, standard article views, or large-format reading.`,
 
   features: [
     'Automatic typographic styling for all common HTML elements via ::slotted()',
     'Three size variants (sm, md, lg) for different content density needs',
     'Heading hierarchy with distinct sizes, weights, and spacing for h1–h4',
     'Pretty text wrapping on paragraphs for improved readability',
-    'Styled links with accent-colored underlines and smooth hover transitions',
+    'Styled links with accent-colored underlines and hover transitions',
     'Blockquotes with subtle accent background and italic treatment',
     'Code and pre-formatted blocks with monospace font and surface backgrounds',
     'Responsive images with max-width containment and border radius',
@@ -32,17 +32,17 @@ The \`size\` property controls the base font size of the container, with "sm", "
   guidelines: {
     do: [
       'Use Prose for article content, documentation pages, blog posts, and rendered Markdown',
-      'Choose the size variant based on reading context — sm for sidebars, md for main content, lg for focused reading',
+      'Choose the size variant based on reading context: sm for sidebars, md for main content, lg for focused reading',
       'Place semantic HTML directly inside arc-prose as slotted children',
       'Combine with the Markdown component to style rendered Markdown output',
       'Use for any long-form content that includes mixed heading levels, paragraphs, and lists',
     ],
     dont: [
-      'Do not nest arc-prose inside another arc-prose — a single wrapper is sufficient',
-      'Do not use Prose for UI chrome like navigation, forms, or dashboards — it is designed for reading content',
-      'Do not wrap individual short text snippets in Prose — use the Text component instead',
+      'Do not nest arc-prose inside another arc-prose: a single wrapper is sufficient',
+      'Do not use Prose for UI chrome like navigation, forms, or dashboards: it is designed for reading content',
+      'Do not wrap individual short text snippets in Prose; use the Text component instead',
       'Do not override slotted element styles with inline styles when token-level customization is available',
-      'Do not use Prose as a substitute for a CSS reset — it specifically targets content typography',
+      'Do not use Prose as a substitute for a CSS reset: it specifically targets content typography',
     ],
   },
 

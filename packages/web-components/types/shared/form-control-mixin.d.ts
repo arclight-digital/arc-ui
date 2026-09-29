@@ -33,8 +33,8 @@ export declare const FormControlMixin: (superClass: any) => {
          * exist yet at connect time.
          *
          * connectedCallback captures the baseline before the first slotchange, so
-         * a control that derives its initial value from slotted children — the
-         * segmented control auto-selecting its first option — captures the empty
+         * a control that derives its initial value from slotted children (the
+         * segmented control auto-selecting its first option) captures the empty
          * pre-slot state, and form.reset() then *clears* it instead of restoring
          * it. Call this immediately after assigning such a derived initial value.
          */

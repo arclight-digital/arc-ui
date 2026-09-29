@@ -9,20 +9,20 @@ export const sticky: ComponentDef = {
   description:
     'Wrapper that goes sticky at a configurable offset and emits a stuck attribute/event for visual state changes.',
 
-  overview: `Sticky is a layout wrapper that applies \`position: sticky\` to its children and uses an IntersectionObserver to detect when the element has actually become stuck to the viewport edge. When the stuck state changes, the component sets a \`stuck\` attribute on the host element and fires an \`arc-stuck\` event, enabling downstream visual changes — such as adding a shadow, changing the background, or toggling a border — without any manual scroll-listener wiring.
+  overview: `Sticky is a layout wrapper that applies \`position: sticky\` to its children and uses an IntersectionObserver to detect when the element has actually become stuck to the viewport edge. When the stuck state changes, the component sets a \`stuck\` attribute on the host element and fires an \`arc-stuck\` event, so you can change visuals downstream (add a shadow, change the background, toggle a border) without wiring a scroll listener.
 
-The \`offset\` prop controls the \`top\` value for the sticky positioning (e.g. "0px" for flush with the viewport top, "64px" to account for a fixed top bar). The IntersectionObserver sentinel technique ensures the stuck detection is performant and does not rely on scroll events, making it safe for complex pages with many sticky elements.
+The \`offset\` prop controls the \`top\` value for the sticky positioning (e.g. "0px" for flush with the viewport top, "64px" to account for a fixed top bar). The IntersectionObserver sentinel technique does not rely on scroll events, so stuck detection stays cheap on complex pages with many sticky elements.
 
 Common use cases include section headers that stick as the user scrolls through a long list, toolbar rows that become fixed under a top bar, and table column headers in scrollable data regions. Sticky handles the positioning and detection; your styles respond to the \`[stuck]\` attribute for visual feedback.`,
 
   features: [
     'CSS `position: sticky` with configurable `top` offset via the `offset` prop',
-    'IntersectionObserver-based stuck detection — no scroll event listeners',
+    'IntersectionObserver-based stuck detection: no scroll event listeners',
     'Sets a `stuck` boolean attribute on the host when the element is stuck',
     'Fires `arc-stuck` custom event with `{ stuck: boolean }` detail for state synchronization',
-    'Performant sentinel technique works with many sticky elements on the same page',
+    'Sentinel technique that works with many sticky elements on the same page',
     'CSS part: `sticky` for targeted ::part() styling',
-    'Works inside any scrollable container, not just the viewport',
+    'Works inside any scrollable container as well as the viewport',
   ],
 
   guidelines: {
@@ -34,11 +34,11 @@ Common use cases include section headers that stick as the user scrolls through 
       'Set offset to match any fixed headers above the sticky element to avoid overlap',
     ],
     dont: [
-      'Do not use Sticky for elements that should be `position: fixed` — Sticky respects scroll context',
+      'Do not use Sticky for elements that should be `position: fixed`: Sticky respects scroll context',
       'Do not nest Sticky inside another Sticky in the same scroll container',
-      'Do not rely on Sticky for critical layout structure — it is a progressive enhancement',
-      'Do not set offset to a negative value — the element will stick above the viewport edge',
-      'Do not use Sticky when the parent container does not have overflow scroll — sticky has no effect without a scrollable ancestor',
+      'Do not rely on Sticky for critical layout structure: it is a progressive enhancement',
+      'Do not set offset to a negative value: the element will stick above the viewport edge',
+      'Do not use Sticky when the parent container does not have overflow scroll: sticky has no effect without a scrollable ancestor',
     ],
   },
 

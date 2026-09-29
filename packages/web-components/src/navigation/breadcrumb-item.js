@@ -8,7 +8,7 @@ import { resolveCarrierHref } from '../shared/anchor-adoption.js';
  *
  * @tag arc-breadcrumb-item
  * @status stable
- * @prop {string} href - Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page -- it will receive `aria-current="page"` and the primary text color automatically.
+ * @prop {string} href - Navigation URL for this crumb. When provided, the crumb renders as a clickable link styled in muted text that brightens on hover. Omit this property on the final item to mark it as the current page; it will receive `aria-current="page"` and the primary text color automatically.
  * @slot - Default content.
  */
 export class ArcBreadcrumbItem extends LitElement {
@@ -28,7 +28,7 @@ export class ArcBreadcrumbItem extends LitElement {
   /**
    * Destination, preferring the explicit attribute over an anchor child.
    * Authoring `<arc-breadcrumb-item><a href="/docs">Docs</a></arc-breadcrumb-item>`
-   * leaves a working trail in the pre-upgrade markup — arc-breadcrumb hides this
+   * leaves a working trail in the pre-upgrade markup; arc-breadcrumb hides this
    * light DOM only once it has re-rendered it into shadow DOM.
    */
   get resolvedHref() {

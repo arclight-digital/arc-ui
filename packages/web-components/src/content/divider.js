@@ -31,7 +31,7 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
       'line-primary',
       'line-gradient',
       // Absorbed from arc-separator (4.2). A merge that dropped them would be
-      // deleting three visual capabilities and calling it consolidation —
+      // deleting three visual capabilities and calling it consolidation.
       // arc-divider had no dashed or dotted rule of any kind.
       'dashed',
       'dotted',
@@ -101,7 +101,7 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
         box-shadow: var(--glow-md);
       }
 
-      /* Alignment — rewrite gradients to originate from one edge */
+      /* Alignment: rewrite gradients to originate from one edge */
       :host([align="left"]) .divider { margin-inline: 0; }
       :host([align="right"]) .divider { margin-inline-start: auto; margin-inline-end: 0; }
 
@@ -148,7 +148,7 @@ export class ArcDivider extends DeclaredPropsMixin(LitElement) {
         width: auto;
         height: 100%;
         /* One declaration turns every lobe below on its side. It has to sit on
-           :host — see the lobe note in shared/tokens.js. */
+           :host; see the lobe note in shared/tokens.js. */
         --lobe-axis: 180deg;
       }
       :host([vertical]) .divider { width: 1px; height: 100%; }

@@ -7,7 +7,7 @@ import type { ArcLightbox } from '@arclux/arc-ui/lightbox';
 @Component({
   selector: 'arc-lightbox',
   standalone: true,
-  template: ``,
+  template: `<ng-content />`,
   host: {
     '(arc-change)': '_onArcChange($event)',
   },
@@ -39,6 +39,20 @@ export class Lightbox {
   }
   get open(): boolean {
     return this._el.open;
+  }
+
+  @Input() set gallery(value: string) {
+    this._el.gallery = value;
+  }
+  get gallery(): string {
+    return this._el.gallery;
+  }
+
+  @Input() set thumbnails(value: boolean) {
+    this._el.thumbnails = value;
+  }
+  get thumbnails(): boolean {
+    return this._el.thumbnails;
   }
 
   @Output() indexChange = new EventEmitter<number>();

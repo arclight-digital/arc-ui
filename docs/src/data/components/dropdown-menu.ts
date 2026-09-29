@@ -12,7 +12,7 @@ export const dropdownMenu: ComponentDef = {
 
 Menu items display a label and an optional keyboard shortcut hint in monospace. Dividers between groups of items are added with \`<arc-menu-divider>\`. When the panel is open, ArrowDown and ArrowUp cycle focus through selectable items (dividers are skipped), and Enter activates the focused item. The component dispatches an \`arc-select\` event with the item's label and shortcut on selection, then closes the panel and fires an \`arc-close\` event.
 
-DropdownMenu is designed for action menus attached to buttons — file menus, "more actions" dots, profile menus, and similar patterns. It differs from ContextMenu (which is triggered by right-click on a parent region) and from Select (which is a form control that captures a value). The trigger slot accepts any element, so you can use an \`<arc-button>\`, a plain \`<button>\`, or an icon as the toggle.`,
+DropdownMenu is designed for action menus attached to buttons: file menus, "more actions" dots, profile menus, and similar patterns. It differs from ContextMenu (which is triggered by right-click on a parent region) and from Select (which is a form control that captures a value). The trigger slot accepts any element, so you can use an \`<arc-button>\`, a plain \`<button>\`, or an icon as the toggle.`,
 
   features: [
     'Click-triggered panel anchored below a customizable trigger slot',
@@ -29,17 +29,17 @@ DropdownMenu is designed for action menus attached to buttons — file menus, "m
 
   guidelines: {
     do: [
-      'Provide a clear, descriptive trigger element — a button with text like "Actions" or a recognizable icon',
+      'Provide a clear, descriptive trigger element. A button with text like "Actions" or a recognizable icon',
       'Group related items with <arc-menu-divider>, and name a group with <arc-menu-label> rather than a disabled item',
       'Include shortcut hints on items that have associated keyboard bindings for user education',
       'Listen to arc-select to execute the chosen action; the event contains the item label and shortcut',
       'Keep the item count under 10; for larger command sets, use CommandPalette instead',
     ],
     dont: [
-      'Do not use DropdownMenu as a form Select replacement — it does not track a selected value',
+      'Do not use DropdownMenu as a form Select replacement. It does not track a selected value',
       'Do not place the trigger element outside the <arc-dropdown-menu> component; it must be in the trigger slot',
       'Do not nest another DropdownMenu inside a menu item; use a flat list or CommandPalette for complex hierarchies',
-      'Do not forget to add role="menu" semantics — the component handles this automatically',
+      'Do not add role="menu" or role="menuitem" yourself. The component sets both',
       'Do not override the z-index of the panel without testing stacking context conflicts with other overlays',
     ],
   },

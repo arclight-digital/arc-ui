@@ -11,36 +11,36 @@ export const loadingOverlay: ComponentDef = {
 
   overview: `LoadingOverlay provides a blocking loading state for containers or the entire page. It renders a semi-transparent surface-overlay with backdrop blur that covers its parent element (or the full viewport in global mode), centering a spinner with an optional progress message.
 
-Use loading-overlay when a section of the UI is temporarily unavailable — fetching data, processing a submission, or waiting for an external service. Unlike spinner (which is a small inline indicator), loading-overlay communicates that the entire region is blocked and prevents user interaction until loading completes.
+Use loading-overlay when a section of the UI is temporarily unavailable: fetching data, processing a submission, or waiting for an external service. Unlike spinner (which is a small inline indicator), loading-overlay communicates that the entire region is blocked and prevents user interaction until loading completes.
 
 In container mode, the overlay is positioned absolutely within its parent and covers only that element. In global mode, it uses fixed positioning to cover the entire viewport, blocking all interaction across the page. The overlay includes a focus trap in global mode to prevent keyboard users from tabbing behind it.`,
 
   features: [
     'Semi-transparent overlay with backdrop blur effect',
     'Centered spinner with configurable progress message',
-    'Container mode — covers the parent element with position: absolute',
-    'Global mode — covers the full viewport with position: fixed and focus trap',
+    'Container mode: covers the parent element with position: absolute',
+    'Global mode: covers the full viewport with position: fixed and a focus trap',
     'Prevents pointer events and keyboard interaction behind the overlay',
     'Smooth fade-in and fade-out transitions',
-    'Accessible — aria-busy="true" on the overlay container',
-    'Respects `prefers-reduced-motion` — disables blur and fade when set',
-    'Composable — uses spinner internally',
+    'Accessible: aria-busy="true" on the overlay container',
+    'Respects `prefers-reduced-motion`: disables blur and fade when set',
+    'Composable: uses spinner internally',
   ],
 
   guidelines: {
     do: [
       'Use loading-overlay for operations that block the entire container or page',
       'Provide a descriptive message like "Saving changes..." to set user expectations',
-      'Use global mode sparingly — only for full-page blocking operations like initial data load',
-      'Remove the overlay immediately when loading completes — avoid artificial delays',
+      'Use global mode sparingly, only for full-page blocking operations like an initial data load',
+      'Remove the overlay immediately when loading completes. Avoid artificial delays',
       'Set the parent container to position: relative when using container mode',
     ],
     dont: [
-      "Do not use loading-overlay for background operations that don't block the UI — use spinner instead",
-      'Do not leave the overlay active indefinitely — always include error handling and timeouts',
-      'Do not Stack multiple loading overlays on the same page',
-      'Do not use loading-overlay when the content shape is known — prefer skeleton placeholders',
-      'Do not use global mode for section-level loading — it blocks the entire application unnecessarily',
+      "Do not use loading-overlay for background operations that don't block the UI. Use spinner instead",
+      'Do not leave the overlay active indefinitely. Always include error handling and timeouts',
+      'Do not stack multiple loading overlays on the same page',
+      'Do not use loading-overlay when the content shape is known. Prefer skeleton placeholders',
+      'Do not use global mode for section-level loading. It blocks the entire application unnecessarily',
     ],
   },
 

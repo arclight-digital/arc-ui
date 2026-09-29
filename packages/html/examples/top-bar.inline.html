@@ -7,6 +7,26 @@
   @media (max-width: 900px) {
     .arc-top-bar .topbar__menu-btn { display: flex; }
   }
+  @media (max-width: 900px) {
+    .arc-top-bar[data-mobile-center="end"] .topbar__content .topbar__brand { flex: 1 1 auto; }
+  }
+  @media (max-width: 900px) {
+    .arc-top-bar[data-mobile-center="end"] .topbar__content .topbar__center { flex: 0 1 auto;
+          justify-content: flex-end;
+          --nav-justify: flex-end; }
+  }
+  @media (max-width: 900px) {
+    .arc-top-bar[data-mobile-center="end"] .topbar__content .topbar__actions { flex: 0 0 auto; }
+  }
+  @media (max-width: 900px) {
+    .arc-top-bar[data-mobile-center="hidden"] .topbar__center { display: none; }
+  }
+  @media (max-width: 480px) {
+    .arc-top-bar:not([data-contained]) .topbar__content { padding-inline: inherit; }
+  }
+  @media (max-width: 480px) {
+    .arc-top-bar arc-container::part(container) { padding-inline: inherit; }
+  }
   .arc-top-bar .topbar__menu-btn:hover { background: rgba(55, 105, 235, 0.04);
         box-shadow: 0 0 8px rgba(39, 86, 215, 0.42); }
   .arc-top-bar .topbar__menu-btn:focus-visible { outline: none;

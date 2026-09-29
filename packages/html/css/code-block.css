@@ -13,32 +13,69 @@
         overflow: hidden;
       }
 
+      /* ── Header chrome ──────────────────────────────────────────────────
+         A 36px bar: the title in the body font, the filename in mono, the
+         language as a quiet mono tag at the end, and an icon-only copy. */
       .arc-code-block .code-block__header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: var(--space-xs) var(--space-md);
+        gap: var(--space-sm);
+        min-height: 36px;
+        box-sizing: border-box;
+        padding-block: 0;
+        padding-inline: var(--space-md) 4px;
         border-bottom: 1px solid var(--divider);
         background: var(--surface-raised);
+      }
+
+      .arc-code-block .code-block__title {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-sm);
+        min-width: 0;
+      }
+
+      .arc-code-block .code-block__label {
+        font-family: var(--font-body);
+        font-size: var(--_text-sm);
+        font-weight: var(--font-body-weight, 500);
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .arc-code-block .code-block__filename {
         font-family: var(--font-mono);
         font-size: var(--_text-sm);
         color: var(--text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      .arc-code-block .code-block__header .code-block__lang {
-        margin-inline-start: auto;
+      .arc-code-block .code-block__filename:empty {
+        display: none;
       }
 
       .arc-code-block .code-block__lang {
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
         color: var(--text-ghost);
-        text-transform: uppercase;
-        letter-spacing: var(--label-spacing);
       }
+
+      /* The language, or the copy button when there is no language, takes
+         the free space so both sit at the end. */
+      .arc-code-block .code-block__header > .code-block__lang,
+      .arc-code-block .code-block__header > .code-block__copy.code-block__copy--bar {
+        margin-inline-start: auto;
+      }
+
+      .arc-code-block .code-block__header > .code-block__lang ~ .code-block__copy.code-block__copy--bar {
+        margin-inline-start: 0;
+      }
+
+      /* ── end header chrome ── */
 
       .arc-code-block .code-block__body-wrap {
         position: relative;
@@ -56,7 +93,7 @@
         overflow-y: hidden;
       }
 
-      /* Shiki CSS-variables theme — map --shiki-* to design tokens.
+      /* Shiki CSS-variables theme: map --shiki-* to design tokens.
          Consumers override --accent-primary, --color-success, etc. and
          syntax colors follow automatically. */
       .arc-code-block .code-block {
@@ -71,6 +108,18 @@
         --shiki-token-string-expression: var(--color-success);
         --shiki-token-punctuation: var(--text-muted);
         --shiki-token-link: var(--accent-primary);
+        /* Shell: a wrapper such as sudo, the command, its subcommand, plain
+           arguments, flags, variables, operators, a trailing backslash, and
+           arguments that name a path, URL or image. */
+        --shiki-token-prefix: var(--text-muted);
+        --shiki-token-command: var(--text-primary);
+        --shiki-token-subcommand: var(--accent-primary);
+        --shiki-token-argument: var(--text-secondary);
+        --shiki-token-flag: var(--accent-secondary);
+        --shiki-token-variable: var(--color-warning);
+        --shiki-token-operator: var(--text-muted);
+        --shiki-token-continuation: var(--text-ghost);
+        --shiki-token-path: var(--color-success);
       }
 
       .arc-code-block .code-block__copy {
@@ -89,7 +138,7 @@
       /* Only where it can actually get in the way: once the code overflows, a
            line can scroll under the button, so it drops back to a hint of
            itself and returns on presence. Tuning the transparency alone could
-           never work for both cases at once — this picks per block. */
+           never work for both cases at once; this picks per block. */
       .arc-code-block .code-block__copy--quiet {
         opacity: 0.25;
       }
@@ -120,31 +169,160 @@
         transform: translateY(-50%);
       }
 
-
-      .arc-code-block .code-block__body pre {
-        margin: 0;
-        background: transparent !important;
-        font-family: var(--font-mono);
-        font-size: var(--code-size);
-        line-height: var(--code-lh);
-        white-space: pre;
-        tab-size: 2;
-      }
-
-      .arc-code-block .code-block__body pre code {
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-      }
-
+      /* One pre for both the plain and the highlighted render, so the colors
+         arriving change no box and nothing reflows. It is as wide as its
+         longest line, so line backgrounds reach the end of a scrolled line. */
       .arc-code-block .code-block__pre {
         margin: 0;
+        min-width: 100%;
+        width: max-content;
+        box-sizing: border-box;
         font-family: var(--font-mono);
         font-size: var(--code-size);
         line-height: var(--code-lh);
-        color: var(--text-primary);
+        color: var(--shiki-foreground);
         white-space: pre;
         tab-size: 2;
+      }
+
+      /* A block with no language is never highlighted: full-strength text. */
+      .arc-code-block .code-block__pre--plain {
+        color: var(--text-primary);
+      }
+
+      .arc-code-block .code-block__pre code {
+        display: block;
+        font: inherit;
+      }
+
+      .arc-code-block .code-block__line {
+        display: flex;
+        min-height: 1lh;
+      }
+
+      .arc-code-block .code-block__text {
+        flex: 1 0 auto;
+      }
+
+      .arc-code-block .code-block__tok {
+        transition: color var(--transition-fast);
+      }
+
+      .arc-code-block .code-block__tok--command {
+        font-weight: var(--font-label-weight, 600);
+      }
+
+      /* Colors fade in from the plain text color as the highlighter lands. */
+      @starting-style {
+        .arc-code-block .code-block__tok { color: var(--shiki-foreground); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-code-block .code-block__tok { transition: none; }
+      }
+
+      .arc-code-block .code-block__gutter,
+      .arc-code-block .code-block__prompt {
+        flex: none;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      .arc-code-block .code-block__gutter {
+        min-width: calc(var(--_gutter-ch, 1) * 1ch);
+        margin-inline-end: var(--space-md);
+        text-align: end;
+        color: var(--text-ghost);
+      }
+
+      .arc-code-block .code-block__gutter::before {
+        content: attr(data-n);
+      }
+
+      .arc-code-block .code-block__prompt {
+        min-width: calc(var(--_prompt-ch, 1) * 1ch + 1ch);
+        color: var(--text-ghost);
+      }
+
+      .arc-code-block .code-block__prompt::before {
+        content: attr(data-prompt);
+      }
+
+      /* Emphasis and diff tints run edge to edge, across the body padding. */
+      .arc-code-block .code-block__line--highlight,
+      .arc-code-block .code-block__line--add,
+      .arc-code-block .code-block__line--remove {
+        margin-inline: calc(-1 * var(--space-md));
+        padding-inline: calc(var(--space-md) - 2px) var(--space-md);
+        border-inline-start: 2px solid transparent;
+      }
+
+      .arc-code-block .code-block__line--highlight {
+        background: rgba(var(--accent-primary-rgb), 0.1);
+        border-inline-start-color: var(--accent-primary);
+      }
+
+      .arc-code-block .code-block__line--add {
+        background: rgba(var(--color-success-rgb), 0.1);
+        border-inline-start-color: rgba(var(--color-success-rgb), 0.6);
+      }
+
+      .arc-code-block .code-block__line--remove {
+        background: rgba(var(--color-error-rgb), 0.1);
+        border-inline-start-color: rgba(var(--color-error-rgb), 0.6);
+      }
+
+      /* Wrap: the pre takes the body's width and the text column wraps inside
+         its own flex item, so a wrapped line stays clear of the gutter and
+         the prompt. */
+      .arc-code-block[wrap] .code-block__pre {
+        width: auto;
+        white-space: pre-wrap;
+      }
+
+      .arc-code-block[wrap] .code-block__text {
+        flex: 1 1 0;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      /* Collapsed: the pre stops at max-lines and fades out over its last
+         two. overflow-y: clip leaves the horizontal scroll alone. */
+      /* The pre widens by the body padding here, because the mask clips to
+         its box and would otherwise cut the edge-to-edge line tints. */
+      .arc-code-block .code-block__pre--collapsed {
+        margin-inline: calc(-1 * var(--space-md));
+        padding-inline: var(--space-md);
+        min-width: calc(100% + 2 * var(--space-md));
+        max-height: calc(var(--_max-lines) * 1lh);
+        overflow-y: clip;
+        -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 2lh), rgba(0, 0, 0, 0));
+        mask-image: linear-gradient(to bottom, #000 calc(100% - 2lh), rgba(0, 0, 0, 0));
+      }
+
+      .arc-code-block .code-block__expand {
+        display: block;
+        width: 100%;
+        padding: var(--space-xs) var(--space-md);
+        border: 0;
+        border-top: 1px solid var(--divider);
+        background: transparent;
+        color: var(--text-muted);
+        font-family: var(--font-body);
+        font-size: var(--_text-xs);
+        text-align: center;
+        cursor: pointer;
+        transition: color var(--transition-fast), background var(--transition-fast);
+      }
+
+      .arc-code-block .code-block__expand:hover {
+        color: var(--text-primary);
+        background: var(--surface-hover);
+      }
+
+      .arc-code-block .code-block__expand:focus-visible {
+        outline: none;
+        box-shadow: inset var(--interactive-focus);
       }
 
       .arc-code-block arc-status-bar {
@@ -155,7 +333,7 @@
         border-top-color: var(--divider);
       }
 
-      /* — Window variant — */
+      /* Window variant */
       .arc-code-block[data-variant="window"] .code-block {
         box-shadow: var(--shadow-overlay);
       }
@@ -193,7 +371,12 @@
         color: var(--text-muted);
       }
 
-      /* — Basic variant — */
+      .arc-code-block .code-block__titlebar-filename.code-block__label {
+        font-family: var(--font-body);
+        color: var(--text-primary);
+      }
+
+      /* Basic variant */
       .arc-code-block[data-variant="basic"] .code-block__body-wrap {
         display: flex;
         align-items: center;
@@ -234,4 +417,25 @@
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
         color: var(--text-ghost);
+      }
+
+      /* Inside arc-code-group, which draws the frame, the tabs and the one copy
+         button. The block keeps its template (so a server render hydrates the
+         same) and hides its own chrome. */
+      .arc-code-block[data-grouped] .code-block {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+      }
+
+      .arc-code-block[data-grouped] .code-block__header,
+      .arc-code-block[data-grouped] .code-block__titlebar,
+      .arc-code-block[data-grouped] arc-status-bar,
+      .arc-code-block[data-grouped] .code-block__copy {
+        display: none;
+      }
+
+      .arc-code-block[data-grouped] .code-block__body {
+        padding-inline-end: var(--space-md);
       }

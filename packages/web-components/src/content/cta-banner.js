@@ -36,8 +36,8 @@ export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
     tokenStyles,
     css`
       /* Not clipped. A banner whose light stops dead on its own top edge reads
-         as a pasted-in box on a dark page — the straight line where the wash
-         ends is the giveaway — so the wash below reaches above the host and
+         as a pasted-in box on a dark page (the straight line where the wash
+         ends is the giveaway), so the wash below reaches above the host and
          needs to be allowed out. Nothing else here overflows: the wash is
          absolutely positioned and inert. */
       :host { display: block; position: relative; }
@@ -49,7 +49,7 @@ export class ArcCtaBanner extends DeclaredPropsMixin(LitElement) {
 
       /* One wash, not two. It starts above the host and runs to the bottom of
          the banner, so the light entering the section and the light under the
-         headline are the same gradient — a second box stacked above this one
+         headline are the same gradient. A second box stacked above this one
          met it at a different brightness and drew a straight line across the
          page at the seam. Negative inset-block-start rather than a taller box:
          the ellipses stay anchored to the content, at 72% of a box that now

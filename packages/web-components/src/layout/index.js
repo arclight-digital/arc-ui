@@ -1,4 +1,4 @@
-// ARC UI — Layout tier
+// ARC UI: Layout tier
 // Application structure and page layout components
 
 export { ArcAppShell } from './app-shell.register.js';

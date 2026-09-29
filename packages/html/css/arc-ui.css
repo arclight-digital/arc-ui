@@ -528,7 +528,7 @@
       }
 
       /* Anchor-adoption form: the slotted <a> fills the content box, so the
-         padded surface is the click target — see shared/anchor-adoption.js.
+         padded surface is the click target; see shared/anchor-adoption.js.
          It stays inside .card__inner rather than replacing .card, which keeps
          the 1px gradient-border trick in card-styles.js intact. */
       .arc-card a {
@@ -625,8 +625,8 @@
 
 /* arc-cta-banner */
 /* Not clipped. A banner whose light stops dead on its own top edge reads
-         as a pasted-in box on a dark page — the straight line where the wash
-         ends is the giveaway — so the wash below reaches above the host and
+         as a pasted-in box on a dark page (the straight line where the wash
+         ends is the giveaway), so the wash below reaches above the host and
          needs to be allowed out. Nothing else here overflows: the wash is
          absolutely positioned and inert. */
       .arc-cta-banner { display: block; position: relative; }
@@ -638,7 +638,7 @@
 
       /* One wash, not two. It starts above the host and runs to the bottom of
          the banner, so the light entering the section and the light under the
-         headline are the same gradient — a second box stacked above this one
+         headline are the same gradient. A second box stacked above this one
          met it at a different brightness and drew a straight line across the
          page at the seam. Negative inset-block-start rather than a taller box:
          the ellipses stay anchored to the content, at 72% of a box that now
@@ -765,7 +765,7 @@
         box-shadow: var(--glow-md);
       }
 
-      /* Alignment — rewrite gradients to originate from one edge */
+      /* Alignment: rewrite gradients to originate from one edge */
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
       .arc-divider[data-align="right"] .divider { margin-inline-start: auto; margin-inline-end: 0; }
 
@@ -812,7 +812,7 @@
         width: auto;
         height: 100%;
         /* One declaration turns every lobe below on its side. It has to sit on
-           .arc-divider — see the lobe note in shared/tokens.js. */
+           .arc-divider; see the lobe note in shared/tokens.js. */
         --lobe-axis: 180deg;
       }
       .arc-divider[vertical] .divider { width: 1px; height: 100%; }
@@ -1272,7 +1272,7 @@
         height: 100%;
         background: var(--accent-primary);
         transform-origin: left;
-        /* Deliberately not a motion token: this bar maps to scroll position, so
+        /* Not a motion token: this bar maps to scroll position, so
            it has to track the finger linearly. An eased curve would make it lag
            the scroll and then catch up, and any token duration is long enough to
            read as drift. */
@@ -1469,8 +1469,8 @@
 
       /* One hover rule for every variant: --glow-status takes its color from
          the --_status-rgb that statusVars sets on the host. This was six rules
-         saying the same thing in six colors. The border is deliberately left
-         alone — hover adds light, it does not move the edge. */
+         saying the same thing in six colors. The border is left
+         alone, hover adds light, it does not move the edge. */
       .arc-badge:hover .badge { box-shadow: var(--glow-status); }
 
       /* Sizes */
@@ -1778,7 +1778,7 @@
 
       /* Stacked by default; a parent arc-description-list[layout="horizontal"]
          sets these four properties to put the term beside the detail. They are
-         read with fallbacks so an item used on its own still lays out — the
+         read with fallbacks so an item used on its own still lays out; the
          parent is the only writer, and it may not be there. */
       .arc-description-item .item {
         display: grid;
@@ -1830,7 +1830,7 @@
 
       /* Item layout is set as a custom property rather than a selector, because
          the thing that has to change is *inside* arc-description-item's shadow
-         root — ::slotted() reaches the host, and the host's only child is the
+         root, ::slotted() reaches the host, and the host's only child is the
          item's own wrapper. Custom properties cross the boundary; selectors do
          not. (arc-key-value could style ::slotted(arc-kv-pair) directly only
          because arc-kv-pair renders its two halves as bare children of .arc-description-list.)
@@ -2562,7 +2562,7 @@
       }
 
       /* Absorbed from arc-badge, and copied from it verbatim including the flat
-         color — the other five mix toward --text-primary, info does not, and
+         color: the other five mix toward --text-primary, info does not, and
          a merge is the wrong moment to quietly restyle the thing being merged. */
       .arc-tag[data-variant="info"] .tag {
         border-color: rgba(var(--color-info-rgb), 0.2);
@@ -2570,7 +2570,7 @@
         background: rgba(var(--color-info-rgb), 0.06);
       }
 
-      /* One hover rule for every variant — see arc-badge. */
+      /* One hover rule for every variant; see arc-badge. */
       .arc-tag .tag:hover { box-shadow: var(--glow-status); }
 
       /* Sizes */
@@ -2842,32 +2842,69 @@
         overflow: hidden;
       }
 
+      /* ── Header chrome ──────────────────────────────────────────────────
+         A 36px bar: the title in the body font, the filename in mono, the
+         language as a quiet mono tag at the end, and an icon-only copy. */
       .arc-code-block .code-block__header {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        padding: var(--space-xs) var(--space-md);
+        gap: var(--space-sm);
+        min-height: 36px;
+        box-sizing: border-box;
+        padding-block: 0;
+        padding-inline: var(--space-md) 4px;
         border-bottom: 1px solid var(--divider);
         background: var(--surface-raised);
+      }
+
+      .arc-code-block .code-block__title {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-sm);
+        min-width: 0;
+      }
+
+      .arc-code-block .code-block__label {
+        font-family: var(--font-body);
+        font-size: var(--_text-sm);
+        font-weight: var(--font-body-weight, 500);
+        color: var(--text-secondary);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .arc-code-block .code-block__filename {
         font-family: var(--font-mono);
         font-size: var(--_text-sm);
         color: var(--text-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      .arc-code-block .code-block__header .code-block__lang {
-        margin-inline-start: auto;
+      .arc-code-block .code-block__filename:empty {
+        display: none;
       }
 
       .arc-code-block .code-block__lang {
         font-family: var(--font-mono);
         font-size: var(--_text-xs);
         color: var(--text-ghost);
-        text-transform: uppercase;
-        letter-spacing: var(--label-spacing);
       }
+
+      /* The language, or the copy button when there is no language, takes
+         the free space so both sit at the end. */
+      .arc-code-block .code-block__header > .code-block__lang,
+      .arc-code-block .code-block__header > .code-block__copy.code-block__copy--bar {
+        margin-inline-start: auto;
+      }
+
+      .arc-code-block .code-block__header > .code-block__lang ~ .code-block__copy.code-block__copy--bar {
+        margin-inline-start: 0;
+      }
+
+      /* ── end header chrome ── */
 
       .arc-code-block .code-block__body-wrap {
         position: relative;
@@ -2885,7 +2922,7 @@
         overflow-y: hidden;
       }
 
-      /* Shiki CSS-variables theme — map --shiki-* to design tokens.
+      /* Shiki CSS-variables theme: map --shiki-* to design tokens.
          Consumers override --accent-primary, --color-success, etc. and
          syntax colors follow automatically. */
       .arc-code-block .code-block {
@@ -2900,6 +2937,18 @@
         --shiki-token-string-expression: var(--color-success);
         --shiki-token-punctuation: var(--text-muted);
         --shiki-token-link: var(--accent-primary);
+        /* Shell: a wrapper such as sudo, the command, its subcommand, plain
+           arguments, flags, variables, operators, a trailing backslash, and
+           arguments that name a path, URL or image. */
+        --shiki-token-prefix: var(--text-muted);
+        --shiki-token-command: var(--text-primary);
+        --shiki-token-subcommand: var(--accent-primary);
+        --shiki-token-argument: var(--text-secondary);
+        --shiki-token-flag: var(--accent-secondary);
+        --shiki-token-variable: var(--color-warning);
+        --shiki-token-operator: var(--text-muted);
+        --shiki-token-continuation: var(--text-ghost);
+        --shiki-token-path: var(--color-success);
       }
 
       .arc-code-block .code-block__copy {
@@ -2918,7 +2967,7 @@
       /* Only where it can actually get in the way: once the code overflows, a
            line can scroll under the button, so it drops back to a hint of
            itself and returns on presence. Tuning the transparency alone could
-           never work for both cases at once — this picks per block. */
+           never work for both cases at once; this picks per block. */
       .arc-code-block .code-block__copy--quiet {
         opacity: 0.25;
       }
@@ -2949,31 +2998,160 @@
         transform: translateY(-50%);
       }
 
-
-      .arc-code-block .code-block__body pre {
-        margin: 0;
-        background: transparent !important;
-        font-family: var(--font-mono);
-        font-size: var(--code-size);
-        line-height: var(--code-lh);
-        white-space: pre;
-        tab-size: 2;
-      }
-
-      .arc-code-block .code-block__body pre code {
-        font-family: inherit;
-        font-size: inherit;
-        line-height: inherit;
-      }
-
+      /* One pre for both the plain and the highlighted render, so the colors
+         arriving change no box and nothing reflows. It is as wide as its
+         longest line, so line backgrounds reach the end of a scrolled line. */
       .arc-code-block .code-block__pre {
         margin: 0;
+        min-width: 100%;
+        width: max-content;
+        box-sizing: border-box;
         font-family: var(--font-mono);
         font-size: var(--code-size);
         line-height: var(--code-lh);
-        color: var(--text-primary);
+        color: var(--shiki-foreground);
         white-space: pre;
         tab-size: 2;
+      }
+
+      /* A block with no language is never highlighted: full-strength text. */
+      .arc-code-block .code-block__pre--plain {
+        color: var(--text-primary);
+      }
+
+      .arc-code-block .code-block__pre code {
+        display: block;
+        font: inherit;
+      }
+
+      .arc-code-block .code-block__line {
+        display: flex;
+        min-height: 1lh;
+      }
+
+      .arc-code-block .code-block__text {
+        flex: 1 0 auto;
+      }
+
+      .arc-code-block .code-block__tok {
+        transition: color var(--transition-fast);
+      }
+
+      .arc-code-block .code-block__tok--command {
+        font-weight: var(--font-label-weight, 600);
+      }
+
+      /* Colors fade in from the plain text color as the highlighter lands. */
+      @starting-style {
+        .arc-code-block .code-block__tok { color: var(--shiki-foreground); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .arc-code-block .code-block__tok { transition: none; }
+      }
+
+      .arc-code-block .code-block__gutter,
+      .arc-code-block .code-block__prompt {
+        flex: none;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      .arc-code-block .code-block__gutter {
+        min-width: calc(var(--_gutter-ch, 1) * 1ch);
+        margin-inline-end: var(--space-md);
+        text-align: end;
+        color: var(--text-ghost);
+      }
+
+      .arc-code-block .code-block__gutter::before {
+        content: attr(data-n);
+      }
+
+      .arc-code-block .code-block__prompt {
+        min-width: calc(var(--_prompt-ch, 1) * 1ch + 1ch);
+        color: var(--text-ghost);
+      }
+
+      .arc-code-block .code-block__prompt::before {
+        content: attr(data-prompt);
+      }
+
+      /* Emphasis and diff tints run edge to edge, across the body padding. */
+      .arc-code-block .code-block__line--highlight,
+      .arc-code-block .code-block__line--add,
+      .arc-code-block .code-block__line--remove {
+        margin-inline: calc(-1 * var(--space-md));
+        padding-inline: calc(var(--space-md) - 2px) var(--space-md);
+        border-inline-start: 2px solid transparent;
+      }
+
+      .arc-code-block .code-block__line--highlight {
+        background: rgba(var(--accent-primary-rgb), 0.1);
+        border-inline-start-color: var(--accent-primary);
+      }
+
+      .arc-code-block .code-block__line--add {
+        background: rgba(var(--color-success-rgb), 0.1);
+        border-inline-start-color: rgba(var(--color-success-rgb), 0.6);
+      }
+
+      .arc-code-block .code-block__line--remove {
+        background: rgba(var(--color-error-rgb), 0.1);
+        border-inline-start-color: rgba(var(--color-error-rgb), 0.6);
+      }
+
+      /* Wrap: the pre takes the body's width and the text column wraps inside
+         its own flex item, so a wrapped line stays clear of the gutter and
+         the prompt. */
+      .arc-code-block[wrap] .code-block__pre {
+        width: auto;
+        white-space: pre-wrap;
+      }
+
+      .arc-code-block[wrap] .code-block__text {
+        flex: 1 1 0;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      /* Collapsed: the pre stops at max-lines and fades out over its last
+         two. overflow-y: clip leaves the horizontal scroll alone. */
+      /* The pre widens by the body padding here, because the mask clips to
+         its box and would otherwise cut the edge-to-edge line tints. */
+      .arc-code-block .code-block__pre--collapsed {
+        margin-inline: calc(-1 * var(--space-md));
+        padding-inline: var(--space-md);
+        min-width: calc(100% + 2 * var(--space-md));
+        max-height: calc(var(--_max-lines) * 1lh);
+        overflow-y: clip;
+        -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 2lh), rgba(0, 0, 0, 0));
+        mask-image: linear-gradient(to bottom, #000 calc(100% - 2lh), rgba(0, 0, 0, 0));
+      }
+
+      .arc-code-block .code-block__expand {
+        display: block;
+        width: 100%;
+        padding: var(--space-xs) var(--space-md);
+        border: 0;
+        border-top: 1px solid var(--divider);
+        background: transparent;
+        color: var(--text-muted);
+        font-family: var(--font-body);
+        font-size: var(--_text-xs);
+        text-align: center;
+        cursor: pointer;
+        transition: color var(--transition-fast), background var(--transition-fast);
+      }
+
+      .arc-code-block .code-block__expand:hover {
+        color: var(--text-primary);
+        background: var(--surface-hover);
+      }
+
+      .arc-code-block .code-block__expand:focus-visible {
+        outline: none;
+        box-shadow: inset var(--interactive-focus);
       }
 
       .arc-code-block arc-status-bar {
@@ -2984,7 +3162,7 @@
         border-top-color: var(--divider);
       }
 
-      /* — Window variant — */
+      /* Window variant */
       .arc-code-block[data-variant="window"] .code-block {
         box-shadow: var(--shadow-overlay);
       }
@@ -3022,7 +3200,12 @@
         color: var(--text-muted);
       }
 
-      /* — Basic variant — */
+      .arc-code-block .code-block__titlebar-filename.code-block__label {
+        font-family: var(--font-body);
+        color: var(--text-primary);
+      }
+
+      /* Basic variant */
       .arc-code-block[data-variant="basic"] .code-block__body-wrap {
         display: flex;
         align-items: center;
@@ -3065,6 +3248,27 @@
         color: var(--text-ghost);
       }
 
+      /* Inside arc-code-group, which draws the frame, the tabs and the one copy
+         button. The block keeps its template (so a server render hydrates the
+         same) and hides its own chrome. */
+      .arc-code-block[data-grouped] .code-block {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+      }
+
+      .arc-code-block[data-grouped] .code-block__header,
+      .arc-code-block[data-grouped] .code-block__titlebar,
+      .arc-code-block[data-grouped] arc-status-bar,
+      .arc-code-block[data-grouped] .code-block__copy {
+        display: none;
+      }
+
+      .arc-code-block[data-grouped] .code-block__body {
+        padding-inline-end: var(--space-md);
+      }
+
 /* arc-gradient-text */
 .arc-gradient-text {
         display: inline;
@@ -3076,7 +3280,7 @@
         background-clip: text;
         background-size: 100% 100%;
         filter: drop-shadow(0 0 12px rgba(var(--accent-primary-rgb), 0.2));
-        /* Clipped text paints glyphs only where the box is — under a tight
+        /* Clipped text paints glyphs only where the box is. Under a tight
            inherited line-height the descenders leave the box and get chopped.
            Extend the paint box in em so it scales with the type; the margin
            gives it back so block layouts don't move. */
@@ -3215,7 +3419,7 @@
           box-shadow var(--transition-fast);
       }
 
-      /* The house state marking: tint, glow, accent text — never an edge. */
+      /* The house state marking: tint, glow, accent text, never an edge. */
       .arc-keyboard-map .key--hit {
         color: var(--accent-primary);
         background: rgba(var(--accent-primary-rgb), 0.16);
@@ -3567,7 +3771,7 @@
         flex-direction: column;
       }
 
-      /* Remove inner radii — connected borders */
+      /* Remove inner radii: connected borders */
       .arc-button-group * {
         --radius-md: 0;
         --radius-sm: 0;
@@ -3621,7 +3825,7 @@
          same box styling as .btn. The slot itself is display:contents (UA
          default), so the anchor becomes the host's flex item directly. Rules
          below pair .btn with .btn-slot::slotted(a) rather than duplicating
-         declarations — keep the two in step when editing either. */
+         declarations; keep the two in step when editing either. */
 
       .arc-button .btn__spinner {
         display: none;
@@ -3651,7 +3855,7 @@
         text-transform: uppercase;
         letter-spacing: var(--label-spacing);
         border: 1px solid transparent;
-        /* Pill. Circles are the house shape — the library is called ARC — and
+        /* Pill. Circles are the house shape (the library is called ARC) and
            the round icon-only controls, the tags, the badges and the toggles
            already read that way; a rounded rectangle here was the odd one out
            on a row that contains all of them. Breaking, and deliberately so:
@@ -3768,8 +3972,8 @@
       }
 
       /* Press feedback, matching the rest of the button family. Copying gives
-         no other physical signal — the clipboard write is silent and the label
-         change lands a beat later — so the press itself was the one moment with
+         no other physical signal: the clipboard write is silent and the label
+         change lands a beat later, so the press itself was the one moment with
          nothing to confirm the click registered. */
       .arc-copy-button .copy-btn:active {
         transform: scale(0.97);
@@ -3804,6 +4008,31 @@
 
       .arc-copy-button .copy-btn__label {
         user-select: none;
+      }
+
+      /* Icon only: a quiet round button that sits in a bar without a frame.
+         The check turning green is the whole confirmation, so no fill. */
+      .arc-copy-button[icon-only] .copy-btn {
+        width: 30px;
+        height: 30px;
+        min-height: 0;
+        padding: 0;
+        border-color: transparent;
+        background: transparent;
+      }
+
+      .arc-copy-button[icon-only] .copy-btn:hover {
+        box-shadow: none;
+        background: var(--surface-hover);
+      }
+
+      .arc-copy-button[icon-only] .copy-btn:focus-visible {
+        box-shadow: var(--interactive-focus);
+      }
+
+      .arc-copy-button[icon-only] .copy-btn.is-copied {
+        border-color: transparent;
+        background: transparent;
       }
 
 /* arc-fieldset */
@@ -3844,7 +4073,7 @@
 
       /* The <legend> renders unconditionally so its slots exist for slotchange
          to fire on; this hides it when it would be empty. Making the whole
-         block conditional on _hasLegend was circular — the flag is set by the
+         block conditional on _hasLegend was circular; the flag is set by the
          slotchange of a slot that only existed once the flag was set, so a
          slotted legend never appeared at all. */
       .arc-fieldset .fieldset__legend--empty { display: none; }
@@ -3892,7 +4121,7 @@
       .arc-icon-button[disabled] { pointer-events: none; }
 
       /* Anchor-adoption form: a lone slotted <a> becomes the control and takes
-         the same box styling as .btn — see shared/anchor-adoption.js. The
+         the same box styling as .btn; see shared/anchor-adoption.js. The
          adopted anchor is always treated as icon-only, since any text the
          consumer wants lives inside their own anchor. */
       .arc-icon-button .btn,
@@ -3928,7 +4157,7 @@
       .arc-icon-button .btn__text {
         line-height: var(--glyph-lh);
         /* letter-spacing also lands after the final letter, and that trailing
-           space is inside the box being centered — so the word rendered half of
+           space is inside the box being centered, so the word rendered half of
            it, 0.75px, to the left of centre. Pulled back off the end here, at
            the cause: the box then matches the ink and every size centres
            correctly, where compensating with padding would have meant patching
@@ -3939,10 +4168,10 @@
         margin-inline-end: calc(var(--_ls) * -1);
       }
 
-      /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
+      /* Sizes, icon-only: see iconBoxStyles in ../button-styles.js, shared with
          arc-theme-toggle so the two cannot drift apart in a top bar. */
 
-      /* Sizes — with text */
+      /* Sizes: with text */
       .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-xs); }
       .arc-icon-button[data-size="sm"] .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--_text-xs); }
@@ -4215,7 +4444,7 @@
         font-size: var(--code-size);
         color: var(--interactive);
         font-weight: var(--font-label-weight, 600);
-        /* Updates on every pointermove — proportional digits would change its
+        /* Updates on every pointermove; proportional digits would change its
            width each frame and shift the label beside it. */
         font-variant-numeric: tabular-nums;
       }
@@ -4276,7 +4505,7 @@
         box-shadow: var(--glow-xs);
       }
 
-      /* Sizes — the track thickness and the thumb, since a slider has no text
+      /* Sizes: the track thickness and the thumb, since a slider has no text
          to scale. md is the base rule above. The two thumb pseudo-elements
          cannot be combined into one selector: a browser that doesn't recognize
          one drops the whole rule. */
@@ -4516,7 +4745,7 @@
       .arc-breadcrumb .breadcrumb__current {
         /* Emphasis is the color lift alone. This trail is one label-context
            run, and the weight override it used to carry was a body-context
-           token — the label face is not guaranteed to load at that weight, so
+           token; the label face is not guaranteed to load at that weight, so
            the browser's nearest-match rendered the current page *lighter*
            than its links (500 → 400 while the links sat on 600), which read
            as a different font entirely. */
@@ -4619,7 +4848,7 @@
 .arc-link { display: inline; }
 
       /* Anchor-adoption form: a lone slotted <a> becomes the link itself and
-         takes the same styling as .link — see shared/anchor-adoption.js.
+         takes the same styling as .link. See shared/anchor-adoption.js.
          Keep each .link rule paired with its .link-slot::slotted(a) form. */
       .arc-link .link,
       .arc-link a {
@@ -4781,12 +5010,12 @@
         /* grid, not block: the one visible child is .sidebar, and a grid item
            stretches to the host box. It used to reach full height through
            .sidebar { min-height: 100% }, which resolves against the host's
-           *height* — definite when the sidebar stands alone, auto inside
+           *height*: definite when the sidebar stands alone, auto inside
            arc-app-shell, whose ::slotted rule forces it. So the rail filled the
            page everywhere except the layout it ships with. Finding #91. */
         display: grid;
         /* The ambient wash behind the rail. Inputs on .arc-sidebar because that is
-           where the shape token is declared — see shared/tokens.js. */
+           where the shape token is declared; see shared/tokens.js. */
         --lobe-rgb: var(--accent-primary-rgb);
         --lobe-alpha: 0.03;
         --lobe-extent: 60%;
@@ -4817,7 +5046,7 @@
         box-sizing: border-box;
       }
 
-      /* Ambient glow — faint accent bleed from the right edge */
+      /* Ambient glow: faint accent bleed from the right edge */
       .arc-sidebar[glow] .sidebar::before {
         content: '';
         position: absolute;
@@ -4829,7 +5058,7 @@
         pointer-events: none;
       }
 
-      /* Border line — solid default (right edge) */
+      /* Border line: solid default (right edge) */
       .arc-sidebar .sidebar::after {
         content: '';
         position: absolute;
@@ -4840,14 +5069,14 @@
         background: var(--divider);
       }
 
-      /* Right position — border on left edge */
+      /* Right position: border on left edge */
       .arc-sidebar[data-position="right"] .sidebar::after {
         right: auto;
         left: 0;
       }
 
       /* Mirrored: the wash comes from the edge the rail is docked to. On .arc-sidebar
-         with the other inputs — see shared/tokens.js. */
+         with the other inputs; see shared/tokens.js. */
       .arc-sidebar[data-position="right"] { --lobe-shape: ellipse at 0% 10%; }
       .arc-sidebar[data-position="right"][glow] .sidebar::before {
         right: auto;
@@ -4962,7 +5191,7 @@
       /* The links sit a step inside their heading, and the rail marks the group
          they belong to. Structural and neutral by rule: one flat --divider that
          never takes a color, a weight or a state from whichever link is
-         active. A left edge that tracks the current item is banned outright —
+         active. A left edge that tracks the current item is banned outright:
          the active row says "here" with tint and accent text, as everywhere
          else in the system. */
       .arc-sidebar .sidebar__links {
@@ -5118,7 +5347,7 @@
         font-size: var(--_text-sm);
         font-weight: var(--font-label-weight, 600);
         text-decoration: none;
-        transition: transform var(--transition-fast) var(--ease-out-expo);
+        transition: transform var(--duration-fast) var(--ease-out-expo);
         white-space: nowrap;
       }
 
@@ -5158,7 +5387,7 @@
       /* A pinned region has to be one color, not two.
          arc-footer paints --surface-base flat, while this bar mixes it 85% with
          transparent. When the region's scheme matches the page that costs
-         nothing — 15% of a near-black page bleeds through as near-black. When
+         nothing: 15% of a near-black page bleeds through as near-black. When
          it doesn't, the 15% is 15% of the opposite ground, so the identical
          token renders one color up here and another down there, and two regions
          pinned to the same scheme visibly disagree. Opaque when the region is
@@ -5177,13 +5406,13 @@
          and takes on the blur, the fill and the border only once content is
          actually passing underneath and the boundary starts doing work.
          Opt-in, because it suits a page whose first screen is one designed
-         image — a hero, a landing page — and actively hurts an application
+         image (a hero, a landing page) and actively hurts an application
          layout, where the bar is one panel among several defined panels and is
          expected to be a fixed edge rather than something that comes and goes.
          Also gated on [fixed]: a bar in the flow scrolls away with the page and
          never overlays anything, so it has nothing to earn. */
       /* :not([menu-open]) because an open mobile panel is content passing
-         underneath in every sense that matters — it is a filled, blurred sheet
+         underneath in every sense that matters: it is a filled, blurred sheet
          hanging directly below a bar that is still showing the hero through
          itself, so the panel reads as floating loose under nothing. The bar
          earns its chrome the moment it has something to sit on top of. */
@@ -5252,6 +5481,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        /* safe: content wider than a squeezed center overflows toward the
+           actions only, not back over the brand. */
+        justify-content: safe center;
         min-width: 0;
       }
 
@@ -5265,7 +5497,7 @@
       /* Centered nav means centered in the *bar*, not in whatever space the brand
          and the actions happen to leave over. With the flex row alone the nav
          sits at the midpoint of the gap between them, which is the middle of
-         the viewport only when those two are identically wide — they never are.
+         the viewport only when those two are identically wide, and they never are.
          Giving both sides an equal flex basis of zero makes them claim the same
          width whatever they contain, so the middle column's centre is the bar's
          centre. Only for nav-align=center: left and right alignment want the
@@ -5273,15 +5505,20 @@
 
          Keyed on "not the other two" as well as on the value itself: nav-align
          defaults to center in the constructor and is not reflected, so
-         .arc-top-bar[data-nav-align="center"] alone matches nothing in the default case —
+         .arc-top-bar[data-nav-align="center"] alone matches nothing in the default case,
          the very failure check-enum-fallbacks.js exists to catch. The explicit
-         selector stays beside it so prism can still infer the union. */
+         selector stays beside it so prism can still infer the union.
+
+         The sides never go below their content width. When the row is short,
+         the center column shrinks first and centering gives way, instead of
+         the brand or the actions collapsing and the center's content drawing
+         over them. */
       .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__brand,
       .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__actions,
       .arc-top-bar[data-nav-align="center"] .topbar__brand,
       .arc-top-bar[data-nav-align="center"] .topbar__actions {
         flex: 1 1 0;
-        min-width: 0;
+        min-width: max-content;
       }
 
       .arc-top-bar:not([data-data-nav-align="left"]):not([data-data-nav-align="right"]) .topbar__actions,
@@ -5290,7 +5527,7 @@
       }
 
       /* The nav stretches to fill this wrapper (its query container is
-         inline-size-contained, so it cannot shrink-to-fit — see the .arc-top-bar
+         inline-size-contained, so it cannot shrink-to-fit; see the .arc-top-bar
          comment in navigation-menu.js), which makes wrapper-level centering
          inert. flex: 1 1 0 keeps the middle column's centre on the bar's
          centre against the equalised sides, and --nav-justify carries the
@@ -5316,7 +5553,7 @@
         background: none;
         /* Circular and border-less, like the icon buttons it shares the bar
            with. It was a --radius-sm square with a visible edge, which the
-           round-icon-button pass left behind — the one square control in a row
+           round-icon-button pass left behind: the one square control in a row
            of circles, and the only one outlined. The open state still takes an
            accent border, so the affordance is kept where it means something. */
         border: 1px solid transparent;
@@ -5384,28 +5621,46 @@
          interpolation; doing it here compiled fine and dropped this query from
          arc-ui.css entirely. The JS side reads the token directly, and
          check-breakpoint-drift.js asserts this number still matches it.
-         Separately, and the reason this comment is worth reading: a comment
-         sitting directly above an at-rule used to make prism scope it, emitting
-         the component selector in front of the @media — invalid CSS, so the
-         rule stopped applying in the standalone package the moment this note
+         Separately: a comment sitting directly above an at-rule used to make
+         prism scope it, emitting the component selector in front of the
+         @media. That is invalid CSS, so the rule stopped applying in the standalone package the moment this note
          was added. Fixed in prism (v3, "don't scope an at-rule whose prelude a
          comment precedes"); if a media query ever goes missing from arc-ui.css
          again, check the emitted CSS before trusting that it compiled. */
       @media (max-width: 900px) {
         .arc-top-bar .topbar__menu-btn { display: flex; }
+
+        /* mobile-center="end": the brand takes the slack and the center sits
+           against the actions. Beats the equal-thirds rule above on
+           specificity, so it holds for every nav-align. */
+        .arc-top-bar[data-mobile-center="end"] .topbar__content .topbar__brand { flex: 1 1 auto; }
+        .arc-top-bar[data-mobile-center="end"] .topbar__content .topbar__center {
+          flex: 0 1 auto;
+          justify-content: flex-end;
+          --nav-justify: flex-end;
+        }
+        .arc-top-bar[data-mobile-center="end"] .topbar__content .topbar__actions { flex: 0 0 auto; }
+        .arc-top-bar[data-mobile-center="hidden"] .topbar__center { display: none; }
+      }
+
+      /* A phone gutter: 16px instead of 24px, contained or not. xs
+         breakpoint, a literal for the same reason as the query above. */
+      @media (max-width: 480px) {
+        .arc-top-bar:not([data-contained]) .topbar__content { padding-inline: var(--space-md); }
+        .arc-top-bar arc-container::part(container) { padding-inline: var(--space-md); }
       }
 
 /* arc-app-shell */
 .arc-app-shell {
         display: block;
         /* A page layout's height is the viewport, and the page is what scrolls.
-           See .arc-app-shell[embedded] below for the other half — the same layout
+           See .arc-app-shell[embedded] below for the other half: the same layout
            sized by its container, scrolling inside itself. A CSS-only version
            of that was tried first (a --shell-height token) and reverted: the
            rail's own viewport height forced the shell past any smaller box
            whatever .arc-app-shell declared, so the token was honoured everywhere except
            the case it existed for. Which half you are in is a real difference
-           in behaviour — what scrolls, and what sticky means — so it is a
+           in behaviour (what scrolls, and what sticky means), so it is a
            declared prop rather than a token that has to guess. */
         min-height: 100vh;
         background: var(--surface-base);
@@ -5422,7 +5677,7 @@
          Everything here is the same layout measured against the host box
          instead of the screen. The host takes its container's height, .shell
          fills the host, and the body becomes the scroll context that the page
-         was — which is why min-height: 0 appears on the flex items: without
+         was, which is why min-height: 0 appears on the flex items: without
          it a flex item refuses to shrink below its content and the inner
          scrollers never engage.
 
@@ -5489,7 +5744,7 @@
       .arc-app-shell .shell__sidebar {
         /* grid, so the slotted rail fills the full height of this box rather
            than stopping at its own content. It matters to anything that draws
-           an edge — arc-sidebar's divider, or a plain <nav> with a
+           an edge: arc-sidebar's divider, or a plain <nav> with a
            border-right, which is what the docs preview slots and what a
            consumer reaches for first. Finding #91 was the arc-sidebar case of
            this and was fixed with a ::slotted rule naming that one tag; the box
@@ -5501,7 +5756,7 @@
            which the ::slotted block below forces to 100% of it. --sidebar-width
            is the one handle that moves both: set it on the shell (or anywhere
            above it) and the wrapper and its contents follow. arc-sidebar's own
-           width prop is for a standalone rail — see navigation/sidebar.js. */
+           width prop is for a standalone rail; see navigation/sidebar.js. */
         width: var(--sidebar-width, 280px);
         position: sticky;
         top: var(--nav-height);
@@ -5576,7 +5831,7 @@
         transform: translateX(-100%);
         /* visibility, not transform alone. Translated off-screen the drawer is
            still visible to the browser, so its links stay in the tab order and
-           in the accessibility tree — 176 of them on a docs page, all invisible,
+           in the accessibility tree: 176 of them on a docs page, all invisible,
            every one of them ahead of the content on a mobile keyboard.
            Transitioned rather than set flat so the discrete flip lands at the
            *end* of the slide out and at the start of the slide in, which is the
@@ -5593,7 +5848,7 @@
         scrollbar-color: var(--border-default) transparent;
       }
 
-      /* Override arc-sidebar's own sticky/height — the shell wrapper handles it */
+      /* Override arc-sidebar's own sticky/height; the shell wrapper handles it */
       .arc-app-shell arc-sidebar {
         position: static !important;
         height: auto !important;
@@ -5897,16 +6152,14 @@
         border-bottom: 1px solid var(--divider);
       }
 
-      /* Each of the three wrappers carries a margin, and each used to carry it
-         whether or not its slot had anything in it: a header with just a
-         heading and a description reserved --space-sm + --space-md + --space-md
-         of empty room below itself, about 48px that nothing on the page
-         accounted for. The first attempt at a layout under one of these was
-         always slightly wrong, and invisible from the outside.
+      /* Each of the three wrappers carries a margin, which applies only when
+         its slot has something in it. Otherwise a header with just a heading
+         and a description reserves --space-sm + --space-md + --space-md (about
+         48px) of empty room below itself that nothing on the page accounts for.
 
-         The wrappers still render — a slot removed from the shadow tree can
+         The wrappers still render. A slot removed from the shadow tree can
          never be filled again, because slotchange only fires on assignment
-         changes to a slot that exists — so what the empty state drops is the
+         changes to a slot that exists, so what the empty state drops is the
          margin. */
       .arc-page-header .page-header__above {
         margin-bottom: var(--space-sm);
@@ -6341,8 +6594,8 @@
         top: calc(100% + var(--space-xs));
         inset-inline-end: 0;
         /* Sizes to its widest collapsed action rather than to the width available
-           from a narrow positioned ancestor — a toolbar in a sidebar is exactly
-           the case that squeezed it. See the note in navigation/menubar.js. */
+           from a narrow positioned ancestor (a toolbar in a sidebar is exactly
+           the case that squeezed it). See the note in navigation/menubar.js. */
         width: max-content;
         min-width: 200px;
         max-width: var(--menu-max-width, min(420px, calc(100vw - 2 * var(--space-md))));
@@ -6399,7 +6652,7 @@
 /* arc-alert */
 /* Lobe inputs on .arc-alert: a custom property substitutes its own var()s at
          the element that declares the property, and the shape is declared on
-         .arc-alert — see shared/tokens.js. */
+         .arc-alert; see shared/tokens.js. */
       .arc-alert {
         display: block;
         --lobe-rgb: var(--_status-rgb);
@@ -6626,7 +6879,7 @@
 
       /* The typing indicator. The keyword curve is deliberate: loops are
          exempt from the entrance and exit curves in the token tree, and
-         ease-in-out is the symmetric shape a pulse wants — see the loop note
+         ease-in-out is the symmetric shape a pulse wants; see the loop note
          in scripts/checks/motion-tokens.js and the arc-hotspot halo this
          follows. Opacity and transform only, so it stays off the layout path.
          The shared reduced-motion guard shortens it to nothing; the explicit
@@ -6834,7 +7087,7 @@
         transform: rotate(45deg);
       }
 
-      /* Positions — the resting fallback, for a popup PositionController has
+      /* Positions: the resting fallback, for a popup PositionController has
          not adopted: the static HTML export and anything pre-upgrade. Scoped
          off managed popups because the controller writes fixed viewport
          coordinates, which the translateX(-50%) centring here would shift the
@@ -6893,8 +7146,8 @@
         border-right: none;
       }
 
-      /* Arrow for a managed popup. Keyed on data-placement — the side the
-         popup actually landed on — so the arrow follows a flip instead of
+      /* Arrow for a managed popup. Keyed on data-placement (the side the
+         popup actually landed on), so the arrow follows a flip instead of
          pointing at nothing. */
       .arc-tooltip .tooltip__popup[data-managed][data-placement="top"] .tooltip__arrow {
         bottom: -5px;

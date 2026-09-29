@@ -10,11 +10,11 @@ export const terminal: ComponentDef = {
   description: 'Animated terminal window that types commands and prints their output line by line.',
   searchKeywords: ['console', 'shell', 'cli', 'command line', 'prompt'],
 
-  overview: `Terminal renders a chrome'd window — orbs, an optional centered title, a monospace body — and plays a transcript through it. Command lines get an accent-colored prompt glyph and type character-by-character; output lines appear whole after a short beat, like a process answering; comment lines render muted. A blinking block cursor follows the typing and settles on a fresh prompt when the sequence ends, at which point the component fires \`arc-complete\`.
+  overview: `Terminal renders a chrome'd window (orbs, an optional centered title, a monospace body) and plays a transcript through it. Command lines get an accent-colored prompt glyph and type character-by-character; output lines appear whole after a short beat, like a process answering; comment lines render muted. A blinking block cursor follows the typing and settles on a fresh prompt when the sequence ends, at which point the component fires \`arc-complete\`.
 
-The transcript is supplied through the \`lines\` property as an array of \`{ type, text, delay? }\` objects, where \`type\` is \`command\`, \`output\`, or \`comment\`. Arrays do not survive an attribute, so \`lines\` is property-only — set it from JavaScript or pass it through a framework wrapper. The \`speed\` prop is milliseconds per typed character (the same cadence prop Typewriter exposes), and each line's optional \`delay\` overrides the default pause before it starts: 500ms before a command, 150ms before output.
+The transcript is supplied through the \`lines\` property as an array of \`{ type, text, delay? }\` objects, where \`type\` is \`command\`, \`output\`, or \`comment\`. Arrays do not survive an attribute, so \`lines\` is property-only: set it from JavaScript or pass it through a framework wrapper. The \`speed\` prop is milliseconds per typed character (the same cadence prop Typewriter exposes), and each line's optional \`delay\` overrides the default pause before it starts: 500ms before a command, 150ms before output.
 
-By default the animation starts when the element scrolls into view, so a terminal halfway down a landing page types on arrival rather than replaying scrolls nobody saw. Set the \`autoplay\` property to \`false\` to take manual control with \`play()\` and \`reset()\`, and set \`loop\` to replay the transcript indefinitely. Before playback starts — including during server rendering — the full completed transcript is shown, so the content never depends on JavaScript running. Under \`prefers-reduced-motion\` nothing animates: the finished transcript renders immediately, the cursor holds steady instead of blinking, and \`arc-complete\` still fires.`,
+By default the animation starts when the element scrolls into view, so a terminal halfway down a landing page types on arrival rather than replaying scrolls nobody saw. Set the \`autoplay\` property to \`false\` to take manual control with \`play()\` and \`reset()\`, and set \`loop\` to replay the transcript indefinitely. Before playback starts, including during server rendering, the full completed transcript is shown, so the content never depends on JavaScript running. Under \`prefers-reduced-motion\` nothing animates: the finished transcript renders immediately, the cursor holds steady instead of blinking, and \`arc-complete\` still fires.`,
 
   features: [
     'Commands type character-by-character behind an accent-colored prompt glyph',
@@ -32,17 +32,17 @@ By default the animation starts when the element scrolls into view, so a termina
   guidelines: {
     do: [
       'Use Terminal for install-and-run sequences on landing and getting-started pages, where the payoff is watching the tool work',
-      'Use arc-code-block when the reader needs to copy the commands — Terminal animates, CodeBlock has the copy button and syntax highlighting',
-      'Use arc-typewriter for a single line of prose, like a headline — Terminal is for multi-line command-and-response transcripts',
+      'Use arc-code-block when the reader needs to copy the commands. Terminal animates; CodeBlock has the copy button and syntax highlighting',
+      'Use arc-typewriter for a single line of prose, like a headline. Terminal is for multi-line command-and-response transcripts',
       'Keep transcripts short: five to eight lines reads as a demo, thirty reads as a log file',
-      'Tune per-line delay to fake realistic latency — a build step that "runs" for a beat before its output lands sells the effect',
+      'Tune per-line delay to fake realistic latency: a build step that "runs" for a beat before its output lands sells the effect',
     ],
     dont: [
-      'Do not make Terminal the only place a required command appears — pair it with a copyable code block in documentation',
+      'Do not make Terminal the only place a required command appears. Pair it with a copyable code block in documentation',
       'Do not put critical instructions behind the animation on autoplay pages; readers scrolling fast should not have to wait for typing',
-      'Do not run several terminals animating in the same viewport — one window typing is a demo, three is noise',
-      'Do not use loop on long transcripts — the clear-and-replay is distracting past a few lines',
-      'Do not pass the transcript as an attribute — `lines` is a property, and an attribute string will not parse into an array',
+      'Do not run several terminals animating in the same viewport. One window typing is a demo, three is noise',
+      'Do not use loop on long transcripts. The clear-and-replay is distracting past a few lines',
+      'Do not pass the transcript as an attribute. `lines` is a property, and an attribute string will not parse into an array',
     ],
   },
 

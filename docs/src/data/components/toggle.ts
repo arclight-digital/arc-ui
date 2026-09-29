@@ -6,9 +6,9 @@ export const toggle: ComponentDef = {
   tag: 'arc-toggle',
   tier: 'input',
   interactivity: 'hybrid',
-  description: 'On/off switch with smooth animation, glow effect, and ARIA switch role.',
+  description: 'On/off switch with animation, glow effect, and ARIA switch role.',
 
-  overview: `The Toggle component provides a binary on/off control that mirrors the behavior of a physical switch. It is the preferred choice whenever you need a setting that takes immediate effect — toggling a feature on or off, enabling a preference, or activating a mode. Unlike a checkbox, which typically submits with a form, a toggle communicates instant state change to the user.
+  overview: `The Toggle component provides a binary on/off control that mirrors the behavior of a physical switch. Use it for a setting that takes immediate effect: turning a feature on or off, enabling a preference, activating a mode. Unlike a checkbox, which typically submits with a form, a toggle communicates instant state change to the user.
 
 Internally, Toggle renders with \`role="switch"\` and manages \`aria-checked\` automatically, giving assistive technology a clear picture of the current state. The thumb slides between positions with a spring-timed CSS transition, and the active state lights up with a subtle glow drawn from the current theme's accent color. Both the track and the thumb inherit design tokens so the component stays consistent across light, dark, and high-contrast modes.
 
@@ -17,7 +17,7 @@ Toggle works equally well as an uncontrolled element (set \`checked\` once and l
   features: [
     'Binary on/off state with animated thumb slide and glow transition',
     'Built-in `role="switch"` and automatic `aria-checked` management',
-    'Keyboard accessible — Space and Enter keys toggle state',
+    'Keyboard accessible: Space and Enter keys toggle state',
     'Paired label rendered inline, with click-to-toggle support',
     'Disabled state with reduced opacity and blocked pointer events',
     'Participates in native `<form>` submission when `name` is set',
@@ -34,11 +34,11 @@ Toggle works equally well as an uncontrolled element (set \`checked\` once and l
       'Pair with descriptive helper text when the label alone may be ambiguous',
     ],
     dont: [
-      'Do not use a toggle when the change requires an explicit "Save" action — use a checkbox instead',
-      'Avoid wrapping a toggle inside a clickable card or button — the double-action confuses users',
+      'Do not use a toggle when the change requires an explicit "Save" action. Use a checkbox instead',
+      'Avoid wrapping a toggle inside a clickable card or button. The double action confuses users',
       'Do not disable a toggle without explaining why the option is unavailable',
-      'Avoid placing more than 8-10 toggles in a single group — consider grouping into sections',
-      'Do not use a toggle for mutually exclusive options — use a radio group instead',
+      'Avoid placing more than 8-10 toggles in a single group. Consider grouping into sections',
+      'Do not use a toggle for mutually exclusive options. Use a radio group instead',
     ],
   },
 

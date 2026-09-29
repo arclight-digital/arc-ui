@@ -10,3 +10,4 @@ export { default as Truncate } from './Truncate.vue';
 export { default as Text } from './Text.vue';
 export { default as Terminal } from './Terminal.vue';
 export { default as KeyboardMap } from './KeyboardMap.vue';
+export { default as CodeGroup } from './CodeGroup.vue';

@@ -10,24 +10,24 @@ export const waveform: ComponentDef = {
     'Audio waveform visualization that doubles as a scrubber. Renders a consumer-computed peaks array as an SVG waveform with an accent played region and glowing playhead, and becomes a full seek control when interactive.',
   searchKeywords: ['audio', 'scrubber', 'seek', 'peaks', 'player', 'sound', 'playhead'],
 
-  overview: `Waveform draws an audio clip's shape from a plain array of peak amplitudes — one number per bar, 0 to 1 — and marks playback progress on it: the played region renders in accent with a soft glow, the unplayed region stays muted, and a thin glowing playhead line sits at the current position. Set \`interactive\` and the same element becomes a scrubber, with pointer dragging, keyboard seeking, and full slider semantics for assistive technology.
+  overview: `Waveform draws an audio clip's shape from a plain array of peak amplitudes (one number per bar, 0 to 1) and marks playback progress on it: the played region renders in accent with a soft glow, the unplayed region stays muted, and a thin glowing playhead line sits at the current position. Set \`interactive\` and the same element becomes a scrubber, with pointer dragging, keyboard seeking, and full slider semantics for assistive technology.
 
-The component never touches audio. There is no AudioContext, no decoding, no fetching — the consumer computes peaks however it likes (from a decoded buffer, a server-side analysis pass, or a cached sidecar file) and hands them over as the \`peaks\` property. That split keeps the component a pure function of its props, so it server-renders, and keeps it cheap enough to repeat down a lane of clips in a DAW timeline or a list of voice memos.
+The component never touches audio: no AudioContext, no decoding, no fetching. The consumer computes peaks however it likes (from a decoded buffer, a server-side analysis pass, or a cached sidecar file) and hands them over as the \`peaks\` property. That split keeps the component a pure function of its props, so it server-renders, and keeps it cheap enough to repeat down a lane of clips in a DAW timeline or a list of voice memos.
 
-\`position\` is a fraction of the total (0 to 1), not seconds. If your player thinks in seconds, divide by the duration on the way in and multiply on the way out — the \`time\` field on both event details does the multiplication for you whenever \`duration\` is set. Setting \`duration\` also renders a monospaced time readout below the track and switches the slider's spoken value from a percentage to elapsed and total time.
+\`position\` is a fraction of the total (0 to 1), not seconds. If your player thinks in seconds, divide by the duration on the way in and multiply on the way out. The \`time\` field on both event details does the multiplication for you whenever \`duration\` is set. Setting \`duration\` also renders a monospaced time readout below the track and switches the slider's spoken value from a percentage to elapsed and total time.
 
-While scrubbing, \`arc-input\` fires on every pointer move with the live position, and \`arc-change\` fires once on release with the committed one — the standard ARC edit/commit contract. Wire the actual seek of your audio source to \`arc-change\`, and use \`arc-input\` for live feedback such as a time display or audible scrubbing. Two variants cover the common looks: \`bars\` draws discrete bar pairs mirrored around the center line, and \`mirror\` draws a filled min/max envelope.`,
+While scrubbing, \`arc-input\` fires on every pointer move with the live position, and \`arc-change\` fires once on release with the committed one. This is the standard ARC edit/commit contract. Wire the actual seek of your audio source to \`arc-change\`, and use \`arc-input\` for live feedback such as a time display or audible scrubbing. Two variants cover the common looks: \`bars\` draws discrete bar pairs mirrored around the center line, and \`mirror\` draws a filled min/max envelope.`,
 
   features: [
     '`steps` for a timeline of discrete frames (arrow keys move one step), and `value-text` for your own screen-reader wording',
-    'Renders from a consumer-computed peaks array — no AudioContext, no decoding, no audio dependencies',
+    'Renders from a consumer-computed peaks array: no AudioContext, no decoding, no audio dependencies',
     'Two variants: `bars` (mirrored bar pairs) and `mirror` (filled min/max envelope)',
     'Played region in accent with a soft glow; unplayed region muted; thin glowing playhead line',
     'Interactive mode adds pointer scrubbing and keyboard seeking (arrows, PageUp/PageDown, Home/End)',
     'Standard edit/commit events: `arc-input` continuously while scrubbing, `arc-change` once on release',
     'Optional `duration` enables monospaced elapsed/total time readouts and spoken time values',
     'Full slider ARIA when interactive; labeled image semantics otherwise',
-    'Resizes by viewBox scaling — no ResizeObserver, no measuring, fluid at any width',
+    'Resizes by viewBox scaling: no ResizeObserver, no measuring, fluid at any width',
     'Playhead motion uses the motion tokens and honors prefers-reduced-motion',
     'Server-renders: the SVG is a pure function of props',
     'Empty or missing peaks render an empty track rather than an error',
@@ -35,19 +35,19 @@ While scrubbing, \`arc-input\` fires on every pointer move with the live positio
 
   guidelines: {
     do: [
-      'Compute peaks once per clip and cache them — a few dozen to a few hundred values is plenty; the component clamps each to 0-1',
+      'Compute peaks once per clip and cache them. A few dozen to a few hundred values is plenty; the component clamps each to 0-1',
       'Wire the actual seek of your audio source to arc-change, and keep arc-input for cheap live feedback like a time display',
       'Set duration whenever you know it, so users get time readouts and screen readers hear times instead of percentages',
-      'Give every waveform a label — it names the slider for assistive technology, or describes the image when not interactive',
+      'Give every waveform a label. It names the slider for assistive technology, or describes the image when not interactive',
       'Use the bars variant for scrubbers and player UI, and the mirror variant for dense timeline lanes where discrete bars would shimmer',
       'Set the height with the --waveform-height custom property when the default is too short or too tall for its row',
     ],
     dont: [
-      'Do not use Waveform for generic trend data — that is Sparkline’s job; Waveform’s shape language says "audio" and its center-mirrored geometry distorts ordinary series',
-      'Do not use it as a level indicator or progress bar — Meter shows a single current value against a range; Waveform shows amplitude over time',
-      'Do not feed it raw sample data — downsample to peaks first; tens of thousands of bars help no one and cost real DOM',
-      'Do not track position in seconds — the position property is a 0-1 fraction; convert at the edges or read the time field on event details',
-      'Do not seek your audio source on arc-input — that fires on every pointer move; the committed value arrives once, on arc-change',
+      'Do not use Waveform for generic trend data. That is Sparkline’s job; Waveform’s shape says "audio" and its center-mirrored geometry distorts ordinary series',
+      'Do not use it as a level indicator or progress bar. Meter shows a single current value against a range; Waveform shows amplitude over time',
+      'Do not feed it raw sample data. Downsample to peaks first; tens of thousands of bars help no one and cost real DOM',
+      'Do not track position in seconds. The position property is a 0-1 fraction; convert at the edges or read the time field on event details',
+      'Do not seek your audio source on arc-input. That fires on every pointer move; the committed value arrives once, on arc-change',
     ],
   },
 

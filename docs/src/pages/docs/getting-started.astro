@@ -95,7 +95,7 @@ await page.getByRole('radio', { name: 'Weekly' }).click();
       </arc-tabs>
 
       <p class="docs-text">
-        One runtime dependency — Lit. The CDN tab needs no build step at all.
+        One runtime dependency: Lit. The CDN tab needs no build step at all.
       </p>
     </section>
 
@@ -148,7 +148,7 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
 
         <li class="step">
           <div class="step__content">
-            <strong class="step__title">That is it — this is that markup, live</strong>
+            <strong class="step__title">That is it. This is that markup, live</strong>
             <p class="docs-text">
               Rendered by this page from the snippet above, not a screenshot of it.
             </p>
@@ -179,7 +179,7 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
         </div>
         <div class="import-row">
           <code class="import-row__code">@arclux/arc-ui/button</code>
-          <span class="import-row__note">One component and its dependencies. Tree-shakeable — what a production app should use.</span>
+          <span class="import-row__note">One component and its dependencies. Tree-shakeable, and what a production app should use.</span>
         </div>
         <div class="import-row">
           <code class="import-row__code">{`{ ArcButton } from '@arclux/arc-ui'`}</code>
@@ -199,7 +199,7 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        Prism reads the Lit source and generates a native wrapper package per framework — typed
+        Prism reads the Lit source and generates a native wrapper package per framework: typed
         props, idiomatic events, tree-shakeable imports. Same components, different import:
       </p>
       <arc-code-block language="js" code={`import { Button, Card } from '@arclux/arc-ui-react';   // React
@@ -228,7 +228,7 @@ import { Button, Card } from '@arclux/arc-ui-preact';  // Preact`}></arc-code-bl
 <html data-theme="auto">   <!-- follows OS preference -->`}></arc-code-block>
 
       <p class="docs-text">
-        The toggle in this site's top bar sets exactly that attribute — try it. For a theme of
+        The toggle in this site's top bar sets exactly that attribute. Try it. For a theme of
         your own, override the tokens (see <a href="/docs/theming">Theming</a>) or build one
         visually in the <a href="/synth">Theme Synthesizer</a> and export it.
       </p>
@@ -361,13 +361,12 @@ import { Button, Card } from '@arclux/arc-ui-preact';  // Preact`}></arc-code-bl
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        Nothing here is needed to build with ARC UI — it is what to do once you are shipping it.
+        Nothing here is needed to build with ARC UI. It covers what to do once you are shipping it.
       </p>
 
       <p class="docs-text">
         A custom element renders its fallback content until JavaScript registers it.
-        <code>base.css</code> ships the guard for that — <code>:not(:defined) {'{'} opacity: 0 {'}'}</code>
-        — so unregistered components stay hidden and fade in as their definitions land. On a
+        <code>base.css</code> ships the guard for that (<code>:not(:defined) {'{'} opacity: 0 {'}'}</code>), so unregistered components stay hidden and fade in as their definitions land. On a
         page registering many of them, two additions make the upgrade invisible.
       </p>
 
@@ -401,7 +400,7 @@ arc-button:not(:defined) {
 }`}></arc-code-block>
 
       <p class="docs-text">
-        This site does exactly that — the visible frame upgrades from a chunk roughly an eighth
+        This site does exactly that: the visible frame upgrades from a chunk roughly an eighth
         the size of the full registry. If you server-render, see
         <a href="/docs/server-rendering">Server Rendering</a>: every component emits declarative
         shadow DOM, so the markup arrives styled before any of this matters.
@@ -417,7 +416,7 @@ arc-button:not(:defined) {
         <arc-feature-card heading="Browse Components" description={`Explore all ${componentCount} components with live demos and API docs.`} href="/docs/components">
           <arc-icon slot="icon" name="squares-four" size="md"></arc-icon>
         </arc-feature-card>
-        <arc-feature-card heading="Frameworks" description="Full install and usage per framework — React through Preact." href="/docs/frameworks">
+        <arc-feature-card heading="Frameworks" description="Full install and usage per framework, React through Preact." href="/docs/frameworks">
           <arc-icon slot="icon" name="stack" size="md"></arc-icon>
         </arc-feature-card>
         <arc-feature-card heading="Design Tokens" description="Full reference for colors, spacing, typography, shadows, and more." href="/docs/tokens">
@@ -444,7 +443,7 @@ arc-button:not(:defined) {
 
   /* Install: one command at a time. Three stacked panels spent most of a
      screen restating the same line for package managers a reader has already
-     chosen between — and the tabs come with the copy button the raw snippets
+     chosen between, and the tabs come with the copy button the raw snippets
      never had. */
   .install-tabs {
     margin-bottom: var(--space-sm);

@@ -18,18 +18,18 @@ export const pageHeader: ComponentDef = {
   description:
     'Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content around a heading and description.',
 
-  overview: `PageHeader is the topmost landmark on any content page. It anchors the user by combining a prominent heading, an optional description, and four positional slots into a single, predictable layout. Every settings screen, detail view, and dashboard in your application should use PageHeader so users always know where they are and what they can do.
+  overview: `PageHeader is the topmost landmark on a content page. It combines a heading, an optional description, and four positional slots into one layout. Use it on every settings screen, detail view, and dashboard so users always know where they are and what they can do.
 
-The component exposes four positional slots — \`above\` (renders above the heading row), \`aside\` (renders to the right of the heading), \`below\` (renders between the description and default content), and the default slot (renders at the bottom). This design is intentionally unopinionated: put breadcrumbs in \`above\`, action buttons in \`aside\`, a tab strip in \`below\`, or use them for anything else your layout requires.
+The component exposes four positional slots: \`above\` (renders above the heading row), \`aside\` (renders to the right of the heading), \`below\` (renders between the description and default content), and the default slot (renders at the bottom). The slots don't dictate content: put breadcrumbs in \`above\`, action buttons in \`aside\`, a tab strip in \`below\`, or use them for anything else your layout requires.
 
-Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes the document outline automatically. The \`border\` prop adds a clean bottom border when you want a visual separator from the page body below.`,
+Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes the document outline automatically. The \`border\` prop adds a bottom border when you want a visual separator from the page body below.`,
 
   features: [
     'Semantic <h1> heading that establishes the document outline',
     'Four positional slots: above, aside, below, and default content',
     'Optional description text for additional page context',
     'Border prop for optional bottom border separator',
-    'Responsive title row that wraps gracefully on narrow viewports',
+    'Responsive title row that wraps on narrow viewports',
     'CSS custom property theming via design tokens',
     'Shadow DOM parts (base, above, title-row, heading, aside, description, below, content) for targeted styling',
   ],
@@ -37,17 +37,17 @@ Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes t
   guidelines: {
     do: [
       'Use one PageHeader per page to maintain a single <h1> document landmark',
-      'Always populate the heading prop — it is the primary orientation cue for the page',
+      'Always populate the heading prop: it is the primary orientation cue for the page',
       'Place breadcrumbs in the above slot on pages more than one level deep',
       'Put the primary page-level action in the aside slot (e.g. "Invite Member", "Create Report")',
       'Keep the description to one or two short sentences that clarify what the page contains',
       'Use the below slot for tab strips or secondary controls between the heading and main content',
     ],
     dont: [
-      'Do not nest multiple PageHeaders on the same page — this creates duplicate <h1> elements and confuses assistive technology',
+      'Do not nest multiple PageHeaders on the same page: this creates duplicate <h1> elements and confuses assistive technology',
       'Do not use PageHeader as a section divider inside a scrolling page; use Section or Divider instead',
-      'Do not overload the aside slot with more than two or three buttons — move overflow actions into a DropdownMenu',
-      'Do not place lengthy paragraph text in the description — keep it concise and scannable',
+      'Do not overload the aside slot with more than two or three buttons; move overflow actions into a DropdownMenu',
+      'Do not place lengthy paragraph text in the description; keep it concise and scannable',
       'Do not hard-code colors or font sizes on slotted children; rely on the token system for consistency',
     ],
   },

@@ -9,11 +9,11 @@ export const slider: ComponentDef = {
   description:
     'Range input slider with a label, live numeric value display, accent-primary fill track, and customisable min/max/step.',
 
-  overview: `Slider provides a familiar range input for selecting a numeric value within a defined range. When a \`label\` is provided, the component renders a header row with the label on the left and the current numeric value on the right in monospace font, giving users immediate feedback as they drag the thumb. The track uses a gradient fill from accent-primary to the default border color, visually indicating the selected proportion.
+  overview: `Slider is a range input for selecting a numeric value within a defined range. When a \`label\` is provided, the component renders a header row with the label on the left and the current numeric value on the right in monospace font, updating as the user drags the thumb. The track uses a gradient fill from accent-primary to the default border color to show the selected proportion.
 
-The component wraps a native \`<input type="range">\` element, ensuring built-in browser accessibility including keyboard control (arrow keys for stepping) and screen reader announcement of the current value via \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\`. The \`step\` prop controls the increment granularity, making it suitable for both coarse controls (volume 0-100) and fine-grained settings (opacity 0.00-1.00).
+The component wraps a native \`<input type="range">\` element, so it keeps the browser's built-in accessibility: keyboard control (arrow keys for stepping) and screen reader announcement of the current value via \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\`. The \`step\` prop controls the increment granularity, which suits both coarse controls (volume 0-100) and fine-grained settings (opacity 0.00-1.00).
 
-Slider fires \`arc-input\` on every movement for real-time UI updates and \`arc-change\` when the user releases the thumb, mirroring the native input/change event distinction. The thumb scales up and gains a blue glow on hover or focus, providing clear interactive feedback consistent with ARC UI's design language.`,
+Slider fires \`arc-input\` on every movement for real-time UI updates and \`arc-change\` when the user releases the thumb, mirroring the native input/change event distinction. The thumb scales up and gains a blue glow on hover or focus, which signals that it is interactive.`,
 
   features: [
     'Visual fill track using a CSS gradient from accent-primary to the border color, proportional to the current value',
@@ -22,23 +22,23 @@ Slider fires \`arc-input\` on every movement for real-time UI updates and \`arc-
     'Thumb hover and focus effects with scale-up and accent-primary glow shadow',
     'Native keyboard support via arrow keys, Page Up/Down, and Home/End from the underlying range input',
     'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release',
-    'Full ARIA value attributes: `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
+    'ARIA value attributes: `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
     'Disabled state at 40% opacity with pointer events blocked',
   ],
 
   guidelines: {
     do: [
       'Provide a `label` so users can see both the purpose and the current value at a glance',
-      'Choose a `step` that matches your data precision — use 1 for integers, 0.01 for percentages',
+      'Choose a `step` that matches your data precision; use 1 for integers, 0.01 for percentages',
       'Use `arc-input` for real-time preview (e.g. adjusting a visual property) and `arc-change` for committing the final value',
       'Set meaningful `min` and `max` values that reflect the actual valid range for your use case',
-      'Place Slider in a container wide enough for comfortable thumb dragging — at least 200px',
+      'Place Slider in a container wide enough for comfortable thumb dragging: at least 200px',
     ],
     dont: [
-      'Do not use Slider for exact numeric entry where the user needs to type a specific number — use Input with `type="number"` instead',
-      'Do not set a `step` so small that the slider has thousands of positions — it becomes imprecise with mouse input',
-      'Do not omit `label` when the slider is standalone — without context the value readout is meaningless',
-      'Do not use Slider for binary on/off choices — use Toggle instead',
+      'Do not use Slider for exact numeric entry where the user needs to type a specific number; use Input with `type="number"` instead',
+      'Do not set a `step` so small that the slider has thousands of positions: it becomes imprecise with mouse input',
+      'Do not omit `label` when the slider is standalone: without context the value readout is meaningless',
+      'Do not use Slider for binary on/off choices; use Toggle instead',
       'Avoid placing multiple sliders in a narrow column without sufficient vertical spacing between them',
     ],
   },

@@ -10,7 +10,7 @@
  * component that would throw the moment a page containing it is rendered.
  *
  * `arc-markdown` was the last entry. Its sanitiser was DOMParser-based and its
- * render used an `.innerHTML` property binding — which the server has nothing
+ * render used an `.innerHTML` property binding, which the server has nothing
  * to serialize, so it emitted an empty div. Both are fixed; see
  * src/shared/sanitize-markup.js.
  *

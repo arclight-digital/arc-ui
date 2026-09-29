@@ -3,7 +3,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
  * ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen
- * readers. Zero visual footprint — pure accessibility utility.
+ * readers.
  *
  * @tag arc-announcement
  * @status stable

@@ -87,7 +87,7 @@ export class ArcConnectionStatus extends LitElement {
   constructor() {
     super();
     // Optimistic default rather than `navigator.onLine`, because the
-    // constructor also runs on the server, where there is no navigator — it
+    // constructor also runs on the server, where there is no navigator; it
     // was the one place in the library that threw under SSR. connectedCallback
     // reads the real value, and does so on the first client render, which is
     // the earliest moment the answer exists.

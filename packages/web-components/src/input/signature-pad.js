@@ -14,21 +14,21 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * Signing by hand is inherently a pointer gesture: the pad itself offers no keyboard path to
  * produce a signature (the clear button is keyboard-reachable, the canvas is focusable so its
  * signed/empty state is announced). A consumer collecting signatures must offer keyboard users an
- * equivalent — a type-to-sign field, an upload — alongside this control; the pad does not
+ * equivalent (a type-to-sign field, an upload) alongside this control; the pad does not
  * simulate one.
  *
  * @tag arc-signature-pad
  * @status stable
  * @requires arc-icon-button
- * @prop {string} value - The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected — a data-URL is far too large to live in an attribute.
+ * @prop {string} value - The signature as a PNG data-URL, empty string while the pad is blank. Updated after every completed stroke. Setting it from script draws the image onto the canvas (client-side only). Not reflected: a data-URL is far too large to live in an attribute.
  * @prop {string} name - Form field name the data-URL submits under.
  * @prop {string} label - Label text displayed above the pad in the label typography role. Also feeds the canvas's accessible name.
  * @prop {boolean} disabled - Disables interaction, reducing opacity and blocking pointer events. The pad leaves the tab order.
  * @prop {boolean} readonly - Prevents drawing and hides the clear button while the pad stays focusable and the value still submits.
  * @prop {boolean} required - When true and the pad is blank, the control is invalid with `valueMissing`.
  * @prop {string} penColor - Pen color as any CSS color, including a `var()` expression, resolved against the canvas at stroke time. Attribute: `pen-color`. Defaults to the resolved value of `--text-primary`.
- * @prop {number} penWidth - Base pen width in CSS pixels. The drawn line scales with stroke velocity — up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.
- * @fires {CustomEvent<{ value: string }>} arc-input - Fired once per completed stroke with the serialized data-URL. A stroke is the edit unit — nothing fires per point while the pen is down.
+ * @prop {number} penWidth - Base pen width in CSS pixels. The drawn line scales with stroke velocity, up to 40% thicker on slow, deliberate movement and 40% thinner on fast flicks. Attribute: `pen-width`. Default 2.
+ * @fires {CustomEvent<{ value: string }>} arc-input - Fired once per completed stroke with the serialized data-URL. A stroke is the edit unit: nothing fires per point while the pen is down.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired when the pointer session ends and the value serializes. A stroke is a discrete gesture, so each stroke end fires arc-input then arc-change together.
  * @fires {CustomEvent<void>} arc-clear - Fired when the pad is cleared, via the clear button or the clear() method.
  * @slot none
@@ -162,7 +162,7 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
     this.disabled = false;
     this.penColor = '';
     this._hasInk = false;
-    // Canvas state lives here, never touched before firstUpdated — the
+    // Canvas state lives here, never touched before firstUpdated; the
     // component must construct and render in Node, where no 2D context exists.
     this._ctx = null;
     this._cssW = 0;
@@ -206,7 +206,7 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
 
   willUpdate(changed) {
     super.willUpdate?.(changed);
-    // Pure derived state — no canvas here. Deriving the signed flag in
+    // Pure derived state: no canvas here. Deriving the signed flag in
     // willUpdate lets the placeholder toggle ride the same update instead of
     // scheduling a second one from updated(). Stroke and clear() set the flag
     // themselves before touching `value` (that path arms _skipDraw).
@@ -247,7 +247,7 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
     this._drawing = false;
     this._hasInk = false;
     if (this.value !== '') {
-      // Only arm the skip when `value` will actually change — an unchanged
+      // Only arm the skip when `value` will actually change; an unchanged
       // value never reaches updated(), and a stuck flag would swallow the
       // next programmatic draw.
       this._skipDraw = true;
@@ -366,7 +366,7 @@ export class ArcSignaturePad extends DeclaredPropsMixin(FormControlMixin(LitElem
 
     const ctx = this._ctx;
     ctx.strokeStyle = ctx.fillStyle = this._resolvedPenColor();
-    // A tap with no movement still marks the page — a dot, like a real pen.
+    // A tap with no movement still marks the page, a dot, like a real pen.
     ctx.beginPath();
     ctx.arc(p.x, p.y, this._lineWidth / 2, 0, Math.PI * 2);
     ctx.fill();

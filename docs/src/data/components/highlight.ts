@@ -8,18 +8,18 @@ export const highlight: ComponentDef = {
   interactivity: 'static',
   description: 'Text highlighting with search query match markers.',
 
-  overview: `Highlight renders text with matching portions wrapped in \`<mark>\` tags, styled with the accent color for instant visual identification. Pass the full text via the \`text\` attribute and the search query via \`query\` — the component splits the text at each match boundary and wraps matching segments in styled marks.
+  overview: `Highlight renders text with matching portions wrapped in \`<mark>\` tags, styled with the accent color. Pass the full text via the \`text\` attribute and the search query via \`query\`. The component splits the text at each match boundary and wraps matching segments in styled marks.
 
 The matching is case-insensitive by default, which suits most search UIs. Set \`case-sensitive\` for exact-case matching in technical contexts like code search or regex patterns. The query string is escaped for regex safety, so special characters like \`.\`, \`(\`, and \`*\` are matched literally rather than interpreted as regex operators.
 
-Highlight is designed to pair with Search, DataGrid, CommandPalette, and any component that displays filtered results. The mark styling uses \`var(--accent-primary)\` with low opacity for the background and a stronger underline, ensuring matches are visible without overwhelming the surrounding text.`,
+Highlight is designed to pair with Search, DataGrid, CommandPalette, and any component that displays filtered results. The mark styling uses \`var(--accent-primary)\` with low opacity for the background and a stronger underline, so matches stand out without overwhelming the surrounding text.`,
 
   features: [
     'Automatic text splitting and mark wrapping at match boundaries',
     'Case-insensitive matching by default, with case-sensitive option',
-    'Regex-safe query escaping — special characters matched literally',
+    'Regex-safe query escaping: special characters match literally',
     'Themed mark styling with accent color background and underline',
-    'Zero-overhead for non-matching text — renders plain text without marks',
+    'Zero overhead for non-matching text: renders plain text without marks',
     'CSS parts for mark and text segments for custom styling',
   ],
 
@@ -31,10 +31,10 @@ Highlight is designed to pair with Search, DataGrid, CommandPalette, and any com
       'Update the query prop reactively as the user types for live highlighting',
     ],
     dont: [
-      'Do not use Highlight for static emphasis — use <strong> or Text variant="label" instead',
-      'Do not pass HTML content as the text prop — it expects plain text only',
+      'Do not use Highlight for static emphasis. Use <strong> or Text variant="label" instead',
+      'Do not pass HTML content as the text prop. It expects plain text only',
       'Do not use Highlight on very long text (>10KB) without debouncing the query updates',
-      'Do not set both text and slot content — text prop takes precedence',
+      'Do not set both text and slot content. The `text` prop takes precedence',
     ],
   },
 

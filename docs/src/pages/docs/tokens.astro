@@ -22,7 +22,7 @@ const headings = [
 ];
 
 /* Read from the token source rather than restated here. The hand-copied
-   version of this table had drifted — it listed text-secondary as
+   version of this table had drifted: it listed text-secondary as
    rgb(138, 138, 150) against an actual rgb(150, 152, 162), and would have
    drifted again the moment the contrast contract moved a value. */
 const chartTokens = ([1, 2, 3, 4, 5, 6] as const).map((n) => ({
@@ -106,7 +106,7 @@ const spacingTokens = [
       <p class="docs-text docs-text--footnote">
         Accents also ship <code>-rgb</code> channel triplets (<code>--accent-primary-rgb</code>,
         <code>--accent-secondary-rgb</code>) that glows, gradients, and focus rings compose via
-        <code>var()</code> — override the base pair and the rest follows. See <a href="/docs/theming">Theming</a>.
+        <code>var()</code>. Override the base pair and the rest follows. See <a href="/docs/theming">Theming</a>.
       </p>
     </section>
 
@@ -115,7 +115,7 @@ const spacingTokens = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
         Categorical series palette for <code>arc-chart</code> and data visualization. Assign hues
-        in fixed order by series position — never cycle or reshuffle them. The set is validated
+        in fixed order by series position. Never cycle or reshuffle them. The set is validated
         for color-vision-deficiency separation and contrast against <code>--bg-card</code> in both
         themes (series 1, 4, and 6 shift automatically in light mode). Status colors are reserved
         for state and are not part of this palette.
@@ -157,7 +157,7 @@ const spacingTokens = [
       <h2 class="docs-heading">Typography</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI ships no font files — only role slots. Assign a face to each role via
+        ARC UI ships no font files, only role slots. Assign a face to each role via
         <code>--font-&lt;role&gt;-family</code> and every component follows. The samples below
         render live from the slots; <code>--font-accent</code> is a back-compat alias of
         <code>--font-label</code>.
@@ -322,7 +322,7 @@ const spacingTokens = [
       <h2 class="docs-heading">Motion</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Motion is two base scales — four curves and five durations — that the
+        Motion is two base scales (four curves and five durations) that the
         <code>--transition-*</code> tokens compose. The curve carries the meaning:
         pick it by what the element is doing, not by taste.
       </p>
@@ -332,10 +332,10 @@ const spacingTokens = [
             <tr><th>Token</th><th>Value</th><th>Usage</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--ease-standard</code></td><td>cubic-bezier(0.4, 0, 0.2, 1)</td><td>A state change on an element that stays put — hover recolor, border shift</td></tr>
+            <tr><td><code>--ease-standard</code></td><td>cubic-bezier(0.4, 0, 0.2, 1)</td><td>A state change on an element that stays put: hover recolor, border shift</td></tr>
             <tr><td><code>--ease-out</code></td><td>cubic-bezier(0.16, 1, 0.3, 1)</td><td>Something entering or expanding</td></tr>
-            <tr><td><code>--ease-in</code></td><td>cubic-bezier(0.7, 0, 0.84, 0)</td><td>Something leaving — paired with a shorter duration</td></tr>
-            <tr><td><code>--ease-spring</code></td><td>cubic-bezier(0.34, 1.56, 0.64, 1)</td><td>A control confirming a discrete action — toggle landing, checkbox filling</td></tr>
+            <tr><td><code>--ease-in</code></td><td>cubic-bezier(0.7, 0, 0.84, 0)</td><td>Something leaving, paired with a shorter duration</td></tr>
+            <tr><td><code>--ease-spring</code></td><td>cubic-bezier(0.34, 1.56, 0.64, 1)</td><td>A control confirming a discrete action: toggle landing, checkbox filling</td></tr>
             <tr><td><code>--duration-fast</code></td><td>120ms</td><td>Micro state changes</td></tr>
             <tr><td><code>--duration-base</code></td><td>200ms</td><td>Default for most transitions</td></tr>
             <tr><td><code>--duration-slow</code></td><td>400ms</td><td>Large surfaces</td></tr>
@@ -525,8 +525,8 @@ const spacingTokens = [
       <h2 class="docs-heading">See Also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/theming">Theming</a> — dark/light mode and custom themes</li>
-        <li><a href="/synth">Theme Synthesizer</a> — visually build a custom theme</li>
+        <li><a href="/docs/theming">Theming</a>: dark/light mode and custom themes</li>
+        <li><a href="/synth">Theme Synthesizer</a>: visually build a custom theme</li>
       </ul>
     </section>
   </div>

@@ -123,7 +123,7 @@ export class ArcMarquee extends DeclaredPropsMixin(LitElement) {
 
   /**
    * Clone slotted light-DOM children into the shadow-DOM duplicate group
-   * for seamless looping. The duplicate is aria-hidden since it's decorative.
+   * for looping without a visible seam. The duplicate is aria-hidden since it's decorative.
    */
   _updateDuplicate() {
     const dupGroup = this.shadowRoot.querySelector('.marquee__group--duplicate');

@@ -1,4 +1,4 @@
-// ARC UI — Content tier
+// ARC UI: Content tier
 // Presentational and content display components
 
 export { ArcAccordion } from './accordion.register.js';

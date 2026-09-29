@@ -19,6 +19,13 @@ export class CodeBlock {
     return this._el.language;
   }
 
+  @Input() set label(value: string) {
+    this._el.label = value;
+  }
+  get label(): string {
+    return this._el.label;
+  }
+
   @Input() set filename(value: string) {
     this._el.filename = value;
   }
@@ -38,5 +45,47 @@ export class CodeBlock {
   }
   get variant(): 'default' | 'window' | 'basic' {
     return this._el.variant;
+  }
+
+  @Input() set prompt(value: string) {
+    this._el.prompt = value;
+  }
+  get prompt(): string {
+    return this._el.prompt;
+  }
+
+  @Input() set lineNumbers(value: boolean) {
+    this._el.lineNumbers = value;
+  }
+  get lineNumbers(): boolean {
+    return this._el.lineNumbers;
+  }
+
+  @Input() set highlight(value: string) {
+    this._el.highlight = value;
+  }
+  get highlight(): string {
+    return this._el.highlight;
+  }
+
+  @Input() set diff(value: boolean) {
+    this._el.diff = value;
+  }
+  get diff(): boolean {
+    return this._el.diff;
+  }
+
+  @Input() set wrap(value: boolean) {
+    this._el.wrap = value;
+  }
+  get wrap(): boolean {
+    return this._el.wrap;
+  }
+
+  @Input() set maxLines(value: number) {
+    this._el.maxLines = value;
+  }
+  get maxLines(): number {
+    return this._el.maxLines;
   }
 }

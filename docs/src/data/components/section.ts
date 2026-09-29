@@ -8,11 +8,11 @@ export const section: ComponentDef = {
   interactivity: 'static',
   description: 'Page section with optional uppercase label, consistent spacing.',
 
-  overview: `Section is a vertical spacing and labeling primitive that wraps a block of page content in consistent padding and an optional uppercase label. It renders a semantic \`<section>\` element, centers its children at \`--max-width\`, and applies generous top and bottom padding (\`--space-3xl\`) that automatically tightens on screens narrower than 768px. Use it to divide a long page into visually distinct bands without manually managing padding or breakpoints.
+  overview: `Section is a vertical spacing and labeling primitive that wraps a block of page content in consistent padding and an optional uppercase label. It renders a semantic \`<section>\` element, centers its children at \`--max-width\`, and applies top and bottom padding (\`--space-3xl\`) that automatically tightens on screens narrower than 768px. Use it to divide a long page into visually distinct bands without manually managing padding or breakpoints.
 
-The optional \`label\` prop renders a small, uppercase, accent-font heading above the slot content. This label uses the \`--section-title-weight\`, \`--section-title-size\`, and \`--section-title-spacing\` tokens, so it stays consistent with every other section label in your application. It is deliberately muted (\`--text-muted\`) and typeset with \`--font-accent\` to serve as an orienting waypoint rather than a competing heading.
+The optional \`label\` prop renders a small, uppercase, accent-font heading above the slot content. This label uses the \`--section-title-weight\`, \`--section-title-size\`, and \`--section-title-spacing\` tokens, so it stays consistent with every other section label in your application. It is muted (\`--text-muted\`) and typeset with \`--font-accent\` so it orients the reader without competing with a heading.
 
-Section sets \`scroll-margin-top: var(--space-md)\` on its inner wrapper, which means when you link to a section by ID (or pair it with ScrollSpy), the browser scrolls to the right position with breathing room above the sticky nav bar. Combine Section with Container for width-constrained pages, or use it inside full-bleed layouts where the section itself handles horizontal centering.`,
+Section sets \`scroll-margin-top: var(--space-md)\` on its inner wrapper, so when you link to a section by ID (or pair it with ScrollSpy), the browser scrolls to the right position, leaving room above the sticky nav bar. Combine Section with Container for width-constrained pages, or use it inside full-bleed layouts where the section itself handles horizontal centering.`,
 
   features: [
     'Semantic <section> element for accessible document structure',
@@ -27,16 +27,16 @@ Section sets \`scroll-margin-top: var(--space-md)\` on its inner wrapper, which 
   guidelines: {
     do: [
       'Use Section to divide landing pages into logical content bands (features, pricing, testimonials)',
-      'Set the label prop for orientation — it helps users scan the page structure at a glance',
+      'Set the label prop for orientation: it helps users scan the page structure at a glance',
       'Give each Section an id attribute so ScrollSpy and anchor links work correctly',
       'Pair Section with Container when you need an additional width constraint inside a full-bleed band',
-      'Keep label text short — one or two words is ideal for uppercase labels',
+      'Keep label text short: one or two words is ideal for uppercase labels',
     ],
     dont: [
-      'Do not nest Section inside Section — use a heading or Divider for sub-grouping instead',
+      'Do not nest Section inside Section; use a heading or Divider for sub-grouping instead',
       'Do not use Section as a generic flex container; it is a vertical spacing and labeling wrapper only',
       'Do not override the responsive padding without testing on mobile screens',
-      'Do not rely on Section for navigation structure — use PageLayout or SettingsLayout instead',
+      'Do not rely on Section for navigation structure; use PageLayout or SettingsLayout instead',
       'Do not place form elements directly inside Section without a Container for width constraint',
     ],
   },

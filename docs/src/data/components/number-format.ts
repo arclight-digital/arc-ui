@@ -9,20 +9,20 @@ export const numberFormat: ComponentDef = {
   description:
     'Locale-aware number, currency, percentage, and compact formatter using Intl.NumberFormat.',
 
-  overview: `NumberFormat renders a formatted number using the browser's built-in \`Intl.NumberFormat\` API, providing locale-aware formatting for numbers, currencies, percentages, and compact notation out of the box. Pass a raw numeric \`value\` and a \`type\` — the component handles thousands separators, currency symbols, percent signs, and compact suffixes like "12.3K" or "1.2M" automatically.
+  overview: `NumberFormat renders a formatted number using the browser's built-in \`Intl.NumberFormat\` API, providing locale-aware formatting for numbers, currencies, percentages, and compact notation. Pass a raw numeric \`value\` and a \`type\`, and the component handles thousands separators, currency symbols, percent signs, and compact suffixes like "12.3K" or "1.2M".
 
-The component uses \`font-variant-numeric: tabular-nums\` and the monospace font stack so that formatted numbers align vertically in tables, stat grids, and dashboards. Because formatting is handled entirely via \`Intl.NumberFormat\`, it respects the user's locale conventions — decimal commas in Germany, lakh grouping in India, yen symbol placement in Japan — without any manual configuration beyond setting the \`locale\` prop.
+The component uses \`font-variant-numeric: tabular-nums\` and the monospace font stack so that formatted numbers align vertically in tables, stat grids, and dashboards. Because formatting is handled entirely via \`Intl.NumberFormat\`, it respects the user's locale conventions (decimal commas in Germany, lakh grouping in India, yen symbol placement in Japan) with no configuration beyond the \`locale\` prop.
 
-For the \`percent\` type, values are treated as the actual percentage: pass \`50\` to display "50%", not \`0.5\`. This matches human intuition and avoids the common Intl.NumberFormat footgun where percent style multiplies by 100.`,
+For the \`percent\` type, values are treated as the actual percentage: pass \`50\` to display "50%", not \`0.5\`. This avoids the Intl.NumberFormat footgun where the percent style multiplies by 100.`,
 
   features: [
     'Locale-aware formatting via Intl.NumberFormat for numbers, currency, percent, and compact notation',
     'Tabular nums and monospace font for vertical alignment in grids and tables',
     'Compact notation renders "12.3K", "1.2M", "4.5B" for large numbers',
-    'Percent type treats values as actual percentages (50 = 50%) for intuitive usage',
-    'Configurable decimal places with sensible defaults per type',
+    'Percent type treats values as actual percentages (50 = 50%)',
+    'Configurable decimal places, with defaults per type',
     'Supports any BCP 47 locale and ISO 4217 currency code',
-    'Minimal styling — inherits size and color from parent context',
+    'Minimal styling: inherits size and color from parent context',
   ],
 
   guidelines: {
@@ -34,9 +34,9 @@ For the \`percent\` type, values are treated as the actual percentage: pass \`50
       'Set locale explicitly when building multi-language applications',
     ],
     dont: [
-      'Do not use for animated counting effects — use AnimatedNumber instead',
-      'Do not wrap in additional monospace styling — the component already uses tabular-nums',
-      'Do not pass 0.5 for 50% — the percent type expects the actual percentage value (50)',
+      'Do not use for animated counting effects; use AnimatedNumber instead',
+      'Do not wrap in additional monospace styling: the component already uses tabular-nums',
+      'Do not pass 0.5 for 50%: the percent type expects the actual percentage value (50)',
       'Do not forget to set the currency prop when using type="currency" in non-USD contexts',
     ],
   },

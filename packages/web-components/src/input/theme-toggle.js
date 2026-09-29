@@ -10,7 +10,7 @@ import { observeAttributes } from '../shared/subscriptions.js';
  *
  * @tag arc-theme-toggle
  * @status stable
- * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Synced in both directions: changing it — by click, by key, or by assigning the property — writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.
+ * @prop {'dark' | 'light' | 'auto'} theme - The current theme mode. Synced in both directions: changing it (by click, by key, or by assigning the property) writes the document root's `data-theme` and localStorage, and a change to that attribute from anywhere else is adopted back, so every toggle on the page agrees.
  * @prop {boolean} disabled - Prevents cycling and reduces opacity to 40%.
  * @prop {boolean} iconOnly - Renders the button as a compact square without the theme name label, matching an icon-only arc-icon-button of the same size. Attribute name is `icon-only`.
  * @prop {'xs' | 'sm' | 'md' | 'lg'} size - Box size when `icon-only`, on the same scale as arc-icon-button: xs=28px, sm=32px, md=36px, lg=44px. Set both controls to the same value when they sit side by side. Ignored by the labeled form, which is sized by its text.
@@ -27,7 +27,7 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
     disabled: flag(false),
     iconOnly: flag(false, { attribute: 'icon-only' }),
     // Canon first, extension after (V4-PLAN 4.3). `xs` moved behind `lg` rather
-    // than being dropped — arc-signature-pad renders an icon button at that
+    // than being dropped: arc-signature-pad renders an icon button at that
     // size, so it is load-bearing. The explicit `default` means the reorder
     // changes nothing at runtime; it is the declaration that now reads the way
     // every other size does.
@@ -36,10 +36,9 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
 
   static styles = [
     tokenStyles,
-    /* The square box, shared with arc-icon-button. The icon-only form used to
-       carry its own 36px/radius-full/1px-border rules, which put it beside a
-       ghost arc-icon-button in a top bar as a different size, a different
-       radius and the only one of the two with a visible edge. */
+    /* The square box, shared with arc-icon-button, so the icon-only form
+       matches a ghost arc-icon-button beside it in a top bar: same size, same
+       radius, no visible edge. */
     iconBoxStyles,
     css`
       :host { display: inline-flex; }
@@ -140,7 +139,7 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
     super();
     // The page is the single source of truth, and this component is one of
     // possibly several views onto it. Following the root attribute is what
-    // makes a second toggle agree with the first (finding #15) — each used to
+    // makes a second toggle agree with the first (finding #15); each used to
     // sample global state once, on connect, so the one that was not clicked
     // kept rendering the previous theme while the page had already moved.
     observeAttributes(
@@ -187,12 +186,12 @@ export class ArcThemeToggle extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * The "automatically synced" half of the documented contract — finding #14.
+   * The "automatically synced" half of the documented contract (finding #14).
    *
-   * The sync used to live inside `_cycle()` and nowhere else, so it happened on
-   * a click and not on `el.theme = 'dark'`, which is the documented way to
-   * drive the component from application state and the only way to restore a
-   * saved preference. The button repainted and the page kept its old theme.
+   * The sync runs on `el.theme = 'dark'` as well as on a click. Assignment is
+   * the documented way to drive the component from application state and the
+   * only way to restore a saved preference; syncing inside `_cycle()` alone
+   * repainted the button and left the page on its old theme.
    *
    * Guarded against the *initial* value rather than against every render:
    * merely putting a toggle on a page must not stamp the document with a theme

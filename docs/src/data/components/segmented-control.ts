@@ -9,11 +9,11 @@ export const segmentedControl: ComponentDef = {
   description:
     'A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually exclusive buttons with an active highlight.',
 
-  overview: `SegmentedControl provides a compact, horizontal set of mutually exclusive options rendered as a pill-shaped button group. It reads \`<arc-option>\` children from its default slot and mirrors them as styled buttons inside a bordered container with rounded corners. The currently selected option receives an accent-primary background with a subtle glow, while unselected options appear in muted text that brightens on hover.
+  overview: `SegmentedControl is a compact, horizontal set of mutually exclusive options rendered as a pill-shaped button group. It reads \`<arc-option>\` children from its default slot and mirrors them as styled buttons inside a bordered container with rounded corners. The currently selected option receives an accent-primary background with a glow, while unselected options appear in muted text that brightens on hover.
 
 The component uses a \`radiogroup\` ARIA role with individual \`radio\` roles on each option button, following the WAI-ARIA radio group pattern. Keyboard navigation supports arrow keys for cycling through options (with wrapping), Home/End for jumping to the first or last option, and Enter/Space for confirming a selection. Focus management automatically moves focus to the newly selected button after keyboard navigation.
 
-SegmentedControl auto-selects the first option when no initial \`value\` is provided, ensuring the control always has a valid selection. It fires a single \`arc-change\` event with the selected value whenever the user makes a new choice, making it straightforward to wire into form state or reactive frameworks.`,
+SegmentedControl auto-selects the first option when no initial \`value\` is provided, so the control always has a valid selection. It fires a single \`arc-change\` event with the selected value whenever the user makes a new choice.`,
 
   features: [
     'Renders slotted `<arc-option>` elements as styled toggle buttons in a horizontal pill container',
@@ -29,16 +29,16 @@ SegmentedControl auto-selects the first option when no initial \`value\` is prov
   guidelines: {
     do: [
       'Use SegmentedControl for 2-5 options where the user must pick exactly one',
-      'Keep option labels short — ideally one or two words — to prevent overflow',
+      'Keep option labels short, ideally one or two words, to prevent overflow',
       'Provide a `value` attribute if you need to pre-select an option other than the first',
       'Listen to `arc-change` to react to selection changes in your application logic',
       'Place the control within a form context or a settings panel where space is limited',
     ],
     dont: [
-      'Do not use for more than 5 options — use Select or RadioGroup instead for longer lists',
-      'Do not nest interactive elements inside `<arc-option>` children — labels should be plain text',
-      'Do not use SegmentedControl for navigation between views — use Tabs instead',
-      'Do not rely solely on the glow color to indicate selection — the component also uses aria-checked for accessibility',
+      'Do not use for more than 5 options; use Select or RadioGroup instead for longer lists',
+      'Do not nest interactive elements inside `<arc-option>` children: labels should be plain text',
+      'Do not use SegmentedControl for navigation between views; use Tabs instead',
+      'Do not rely solely on the glow color to indicate selection: the component also uses aria-checked for accessibility',
       'Avoid using it for binary toggles where a Toggle switch would be more semantically appropriate',
     ],
   },

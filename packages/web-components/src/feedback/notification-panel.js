@@ -65,7 +65,7 @@ export class ArcNotificationPanel extends DeclaredPropsMixin(LitElement) {
         transform-origin: top right;
         pointer-events: none;
 
-        /* closing transition — slightly faster.
+        /* closing transition, slightly faster.
            display and overlay ride along with allow-discrete so the panel keeps
            painting through the close once PositionController has promoted it to
            the top layer, where "closed" means display:none. */
@@ -85,7 +85,7 @@ export class ArcNotificationPanel extends DeclaredPropsMixin(LitElement) {
         transform: translateY(0) scale(1);
         pointer-events: auto;
 
-        /* opening transition — cubic overshoot for a pop feel */
+        /* opening transition, cubic overshoot for a pop feel */
         transition:
           opacity 180ms var(--ease-standard),
           transform 250ms var(--ease-spring),

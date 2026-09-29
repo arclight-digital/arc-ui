@@ -176,3 +176,4 @@ export { BarList } from './data/BarList';
 export { FieldList } from './input/FieldList';
 export { FieldRow } from './input/FieldRow';
 export { SettingsNavItem } from './layout/SettingsNavItem';
+export { CodeGroup } from './typography/CodeGroup';

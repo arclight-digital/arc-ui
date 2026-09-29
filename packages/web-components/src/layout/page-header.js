@@ -9,10 +9,10 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-page-header
  * @status stable
- * @prop {string} heading - The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. "Team Settings", "Order #4021"). Keep it concise — two to five words is ideal.
+ * @prop {string} heading - The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. "Team Settings", "Order #4021"). Keep it concise: two to five words is ideal.
  * @prop {string} description - Optional supporting text displayed below the title row. Use it to provide a one-line summary of what the page contains or what action the user should take. When empty, the description paragraph is not rendered.
  * @prop {boolean} border - When set, renders a subtle bottom border below the header to visually separate it from page content.
- * @slot above - Content above the title row — breadcrumbs, a back link, a status chip. The space it occupies is reserved only when something is in it.
+ * @slot above - Content above the title row: breadcrumbs, a back link, a status chip. The space it occupies is reserved only when something is in it.
  * @slot heading
  * @slot aside
  * @slot description
@@ -51,16 +51,14 @@ export class ArcPageHeader extends DeclaredPropsMixin(LitElement) {
         border-bottom: 1px solid var(--divider);
       }
 
-      /* Each of the three wrappers carries a margin, and each used to carry it
-         whether or not its slot had anything in it: a header with just a
-         heading and a description reserved --space-sm + --space-md + --space-md
-         of empty room below itself, about 48px that nothing on the page
-         accounted for. The first attempt at a layout under one of these was
-         always slightly wrong, and invisible from the outside.
+      /* Each of the three wrappers carries a margin, which applies only when
+         its slot has something in it. Otherwise a header with just a heading
+         and a description reserves --space-sm + --space-md + --space-md (about
+         48px) of empty room below itself that nothing on the page accounts for.
 
-         The wrappers still render — a slot removed from the shadow tree can
+         The wrappers still render. A slot removed from the shadow tree can
          never be filled again, because slotchange only fires on assignment
-         changes to a slot that exists — so what the empty state drops is the
+         changes to a slot that exists, so what the empty state drops is the
          margin. */
       .page-header__above {
         margin-bottom: var(--space-sm);
@@ -130,7 +128,7 @@ export class ArcPageHeader extends DeclaredPropsMixin(LitElement) {
     this._filled = { above: false, below: false, content: false };
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

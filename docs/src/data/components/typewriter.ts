@@ -9,23 +9,23 @@ export const typewriter: ComponentDef = {
   replayable: true,
   description: 'Character-by-character text reveal animation with blinking cursor.',
 
-  overview: `Typewriter reveals text one character at a time, recreating the classic typewriter effect used in hero headlines, onboarding sequences, and conversational UI. The animation is driven by a simple \`setTimeout\` chain — no frame-sync overhead — making it lightweight and easy to reason about.
+  overview: `Typewriter reveals text one character at a time, recreating the classic typewriter effect used in hero headlines, onboarding sequences, and conversational UI. The animation is driven by a \`setTimeout\` chain, with no frame-sync overhead.
 
 The \`speed\` prop controls milliseconds per character (default 50ms, roughly 20 characters per second), and an optional \`delay\` defers the start for staggered or sequenced reveals. When \`loop\` is enabled, the text clears after a configurable \`pause-end\` duration (default 2s) and replays indefinitely, useful for rotating taglines or feature highlights.
 
 \`replay()\` restarts the animation from the beginning, which is the method behind a "watch again" control and the way to re-trigger a one-shot reveal after the content around it changes. It restarts the same sequence rather than queueing a second one, so calling it mid-type is safe.
 
-A blinking cursor (the classic \`|\` caret) appears by default and automatically fades out once typing completes. The cursor color follows \`--accent-primary\`, so it adapts to any theme. When \`prefers-reduced-motion\` is active, the full text is shown immediately with no animation — the content is never hidden from users who need reduced motion.`,
+A blinking cursor (the classic \`|\` caret) appears by default and automatically fades out once typing completes. The cursor color follows \`--accent-primary\`, so it adapts to any theme. When \`prefers-reduced-motion\` is active, the full text is shown immediately with no animation, so content is never hidden from users who need reduced motion.`,
 
   features: [
     'Character-by-character text reveal with configurable speed',
     'Optional initial delay for sequenced or staggered animations',
     'Blinking cursor that fades out on completion',
     'Loop mode with configurable pause between cycles',
-    'Respects `prefers-reduced-motion` — shows full text immediately',
+    'Respects `prefers-reduced-motion`: shows full text immediately',
     '`replay()` restarts the animation from the beginning, safe to call mid-type',
     'Fires `arc-complete` event when typing finishes',
-    'Inherits font from parent — works with any typography',
+    'Inherits font from parent, so it works with any typography',
   ],
 
   guidelines: {
@@ -34,14 +34,14 @@ A blinking cursor (the classic \`|\` caret) appears by default and automatically
       'Set speed between 30-80ms for natural-feeling typing',
       'Use delay to stagger multiple typewriters in sequence',
       'Enable loop for rotating taglines or feature highlights',
-      'Pair with a static heading — typewriter text should be supplementary, not the only content',
+      'Pair with a static heading. Typewriter text should be supplementary, not the only content',
     ],
     dont: [
-      'Do not use for critical content that users need to read immediately — the delay hides information',
-      'Do not run more than 2-3 typewriters simultaneously — it becomes chaotic',
-      'Do not set speed below 20ms — it looks like a flash, not typing',
-      'Do not use loop on long paragraphs — the constant reset is distracting',
-      'Do not rely on the typewriter for the only instance of important text — screen readers see it all at once',
+      'Do not use for critical content that users need to read immediately. The delay hides information',
+      'Do not run more than 2-3 typewriters simultaneously. It becomes chaotic',
+      'Do not set speed below 20ms. It looks like a flash, not typing',
+      'Do not use loop on long paragraphs. The constant reset is distracting',
+      'Do not rely on the typewriter for the only instance of important text. Screen readers see it all at once',
     ],
   },
 

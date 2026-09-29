@@ -19,7 +19,7 @@
 
       /* Item layout is set as a custom property rather than a selector, because
          the thing that has to change is *inside* arc-description-item's shadow
-         root — ::slotted() reaches the host, and the host's only child is the
+         root, ::slotted() reaches the host, and the host's only child is the
          item's own wrapper. Custom properties cross the boundary; selectors do
          not. (arc-key-value could style ::slotted(arc-kv-pair) directly only
          because arc-kv-pair renders its two halves as bare children of .arc-description-list.)

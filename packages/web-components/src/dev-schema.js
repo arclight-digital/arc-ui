@@ -288,7 +288,9 @@ export default {
   "attrs": [
    "images",
    "index",
-   "open"
+   "open",
+   "gallery",
+   "thumbnails"
   ],
   "slug": "lightbox"
  },
@@ -1466,7 +1468,9 @@ export default {
  "arc-copy-button": {
   "attrs": [
    "value",
-   "disabled"
+   "disabled",
+   "iconOnly",
+   "label"
   ],
   "slug": "copy-button"
  },
@@ -2894,9 +2898,20 @@ export default {
    "menuOpen",
    "mobile-menu",
    "menu-position",
+   "mobileCenter",
    "navAlign"
   ],
   "enums": {
+   "mobile-menu": [
+    "sidebar",
+    "nav",
+    "none"
+   ],
+   "mobileCenter": [
+    "center",
+    "end",
+    "hidden"
+   ],
    "navAlign": [
     "left",
     "center",
@@ -2904,6 +2919,8 @@ export default {
    ]
   },
   "fallbacks": {
+   "mobile-menu": "sidebar",
+   "mobileCenter": "center",
    "navAlign": "center"
   },
   "slug": "top-bar"
@@ -2967,9 +2984,16 @@ export default {
  "arc-code-block": {
   "attrs": [
    "language",
+   "label",
    "filename",
    "code",
-   "variant"
+   "variant",
+   "prompt",
+   "lineNumbers",
+   "highlight",
+   "diff",
+   "wrap",
+   "maxLines"
   ],
   "enums": {
    "variant": [
@@ -2982,6 +3006,14 @@ export default {
    "variant": "default"
   },
   "slug": "code-block"
+ },
+ "arc-code-group": {
+  "attrs": [
+   "selected",
+   "sync-key",
+   "label"
+  ],
+  "slug": "code-group"
  },
  "arc-gradient-text": {
   "attrs": [

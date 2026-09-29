@@ -88,6 +88,7 @@ export {
   ArcTruncate,
   ArcTerminal,
   ArcKeyboardMap,
+  ArcCodeGroup,
 } from './typography/index.js';
 export {
   ArcButtonGroup,

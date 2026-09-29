@@ -16,7 +16,7 @@
       }
 
       /* Anchor-adoption form: the slotted <a> fills the content box, so the
-         padded surface is the click target — see shared/anchor-adoption.js.
+         padded surface is the click target; see shared/anchor-adoption.js.
          It stays inside .card__inner rather than replacing .card, which keeps
          the 1px gradient-border trick in card-styles.js intact. */
       .arc-card a {

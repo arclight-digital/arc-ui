@@ -12,8 +12,9 @@ export interface TopBarProps {
   fixed?: boolean;
   contained?: string;
   menuOpen?: boolean;
-  mobileMenu?: string;
+  mobileMenu?: 'sidebar' | 'nav' | 'none';
   menuPosition?: string;
+  mobileCenter?: 'center' | 'end' | 'hidden';
   navAlign?: 'left' | 'center' | 'right';
   onArcSidebarToggle?: (e: CustomEvent) => void;
   onArcMobileMenuToggle?: (e: CustomEvent) => void;
@@ -45,7 +46,7 @@ export interface TopBarProps {
   [key: `on${string}`]: unknown;
 }
 
-export const TopBar: FunctionComponent<TopBarProps> = ({ heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, onArcSidebarToggle, onArcMobileMenuToggle, children, ...rest }) => {
+export const TopBar: FunctionComponent<TopBarProps> = ({ heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, mobileCenter, navAlign, onArcSidebarToggle, onArcMobileMenuToggle, children, ...rest }) => {
   const ref = useRef<HTMLElement>(null);
   useLayoutEffect(() => {
     const el = ref.current;
@@ -63,5 +64,5 @@ export const TopBar: FunctionComponent<TopBarProps> = ({ heading, homeHref, scro
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcSidebarToggle, onArcMobileMenuToggle]);
-  return h('arc-top-bar', { ref, heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, navAlign, ...rest }, children);
+  return h('arc-top-bar', { ref, heading, homeHref, scrolled, immersive, fixed, contained, menuOpen, mobileMenu, menuPosition, mobileCenter, navAlign, ...rest }, children);
 };

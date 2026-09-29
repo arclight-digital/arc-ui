@@ -86,7 +86,7 @@ export class ArcAnimatedNumber extends DeclaredPropsMixin(LitElement) {
    *
    * Guarded on `window` rather than assuming it: this is reachable from
    * willUpdate, which Lit also runs on the server. Treating the server as
-   * "reduced motion" is the right default anyway — there is no animation to
+   * "reduced motion" is the right default anyway; there is no animation to
    * run there, only a final value to render.
    */
   _prefersReducedMotion() {
@@ -146,7 +146,7 @@ export class ArcAnimatedNumber extends DeclaredPropsMixin(LitElement) {
       }
     } else if (this.format === 'percent') {
       // Intl percent expects 0.5 for 50%, but we treat value as 50 for 50%.
-      // So we format manually to keep the API intuitive.
+      // So we format manually.
     }
 
     let formatted;

@@ -7,7 +7,7 @@ import { getApi } from '../../../data/manifest';
 import { removedComponents, type RemovedComponent } from '../../../data/removed';
 
 /**
- * Live components and tombstones share this route because they share the URL —
+ * Live components and tombstones share this route because they share the URL:
  * a cut component keeps `/docs/components/<slug>` and renders an explanation of
  * where it went, rather than 404ing at a link that is already in bookmarks and
  * search indexes. See data/removed.ts.
@@ -40,7 +40,7 @@ export function getStaticPaths() {
 
 const { component, removed } = Astro.props as { component: any; removed: RemovedComponent | null };
 
-// API surface from custom-elements.json (single source of truth) — the docs
+// API surface from custom-elements.json (single source of truth); the docs
 // data layer only carries prose, examples, and page metadata.
 //
 // A removed component is not in the manifest, and `getApi` throws on an unknown
@@ -69,14 +69,14 @@ const interactivityColors: Record<string, string> = {
 };
 
 const interactivityNotes: Record<string, string> = {
-  interactive: 'This component requires JavaScript. No pure HTML/CSS version is available — use the Web Component directly or a framework wrapper.',
+  interactive: 'This component requires JavaScript. No pure HTML/CSS version is available. Use the Web Component directly or a framework wrapper.',
   hybrid: 'Layout and styling work without JavaScript via the HTML/CSS versions. Interactive features like events and state management require the Web Component or a framework wrapper.',
 };
 
 // Resolve seeAlso slugs to component data or guide links
 const seeAlsoItems = (component.seeAlso ?? []).map((ref: string) => {
   if (ref.startsWith('/')) {
-    // Guide path — extract label from last segment
+    // Guide path: extract label from last segment
     const label = ref.split('/').pop()!.replace(/-/g, ' ').replace(/\b\w/g, (c: string) => c.toUpperCase());
     return { type: 'guide' as const, href: ref, label };
   }
@@ -104,7 +104,7 @@ const pageUrl = new URL(`/docs/components/${component.slug}`, Astro.site).href;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
-  headline: `${component.name} — ARC UI`,
+  headline: `${component.name} | ARC UI`,
   name: component.name,
   description: component.description,
   url: pageUrl,
@@ -137,7 +137,7 @@ const headings = removed
 
 <DocsLayout
   title={component.name}
-  htmlTitle={`${component.name} — Web Component | ARC UI`}
+  htmlTitle={`${component.name}: Web Component | ARC UI`}
   description={component.description}
   activeSlug={component.slug}
   headings={headings}
@@ -162,7 +162,7 @@ const headings = removed
         ) : (
           <>
             <arc-tag color={interactivityColors[component.interactivity]}>{component.interactivity}</arc-tag>
-            {/* From the manifest, not the page data — `status` was a docs-only
+            {/* From the manifest, not the page data. `status` was a docs-only
                 optional field until 4.1 and is now declared on the component.
                 `stable` is unbadged: it is 192 of 202, so a badge for it would
                 mean "component" rather than anything about maturity. */}
@@ -174,14 +174,14 @@ const headings = removed
       <code class="component-page__tag">&lt;{component.tag}&gt;</code>
     </arc-page-header>
 
-    {/* Still documented in full — it works and is supported for this whole
+    {/* Still documented in full: it works and is supported for this whole
         major. The notice goes first because someone landing here from an
         existing codebase needs the survivor before they need the API table. */}
     {!removed && api.status === 'deprecated' && api.mergedInto && (
       <section id="deprecated" class="deprecation">
         <p>
           <strong>{component.name} is deprecated.</strong> It still works, is still published, and is
-          still exported from <code>@arclux/arc-ui</code> for all of v4 — nothing about it changed.
+          still exported from <code>@arclux/arc-ui</code> for all of v4. Nothing about it changed.
           It is removed in v5. Use{' '}
           <a href={`/docs/components/${api.mergedInto.replace(/^arc-/, '')}`}>
             <code>&lt;{api.mergedInto}&gt;</code>
@@ -192,7 +192,7 @@ const headings = removed
       </section>
     )}
 
-    {/* Tombstone — everything below this is skipped for a removed component. */}
+    {/* Tombstone: everything below this is skipped for a removed component. */}
     {removed && (
       <section id="removed" class="tombstone">
         <p class="tombstone__lede">
@@ -317,10 +317,10 @@ const headings = removed
         <div class="interactivity-note" data-level="group">
           <p>
             <strong>{component.name}</strong> is in the <code>{api.group}</code> domain group, so it is
-            deliberately absent from the default <code>@arclux/arc-ui</code> barrel. Import it from
+            absent from the default <code>@arclux/arc-ui</code> barrel. Import it from
             <code>@arclux/arc-ui/{api.group}</code>, or from its own subpath
-            <code>@arclux/arc-ui/{component.slug}</code>. Everything else — the element, the CSS, the
-            framework wrappers, the support it gets — is unchanged.
+            <code>@arclux/arc-ui/{component.slug}</code>. Everything else (the element, the CSS, the
+            framework wrappers, the support it gets) is unchanged.
           </p>
         </div>
       )}
@@ -344,7 +344,7 @@ const headings = removed
       </section>
     )}
 
-    {/* Methods — between the props and the events on purpose: the imperative
+    {/* Methods sit between the props and the events on purpose: the imperative
         surface is what a consumer reaches for after the declarative one, and
         several events (arc-toast's arc-complete) only make sense once the
         method that fires them has been read. */}
@@ -445,7 +445,7 @@ const headings = removed
 <!-- Client-side: register WCs and populate live previews -->
 <script>
   import { iconRegistry } from '@arclux/arc-ui';
-  // Both icon packs are registered by BaseLayout — the shell shows named
+  // Both icon packs are registered by BaseLayout; the shell shows named
   // glyphs on every page, not just this one.
 
   // Expose to previewSetup scripts (which run via new Function, outside module scope)
@@ -456,11 +456,11 @@ const headings = removed
   }
 
   function runPreviewSetup() {
-    // Run any previewSetup scripts embedded as data attributes — but only
+    // Run any previewSetup scripts embedded as data attributes, but only
     // once every arc-* element in the preview has upgraded. The register
     // barrel loads lazily (BaseLayout), so running the setup immediately
     // assigns data as *pre-upgrade* properties, which Lit applies at the top
-    // of the element's first update — the hydrating one that must match the
+    // of the element's first update, the hydrating one that must match the
     // server's attribute-only render. That mismatch aborted hydration on
     // every property-driven preview (terminal, waveform, chart, …).
     document.querySelectorAll('.live-preview[data-setup]').forEach(async (el) => {
@@ -475,7 +475,7 @@ const headings = removed
     });
   }
 
-  /* populatePreviews removed — all components define previewHtml in data */
+  /* populatePreviews removed; all components define previewHtml in data */
 
   function initReplay() {
     document.querySelectorAll<HTMLButtonElement>('[data-preview-replay]').forEach((btn) => {
@@ -641,7 +641,7 @@ const headings = removed
   }
 
   /* Default: centered flex, overflow VISIBLE so popups/dropdowns aren't
-     clipped. (overflow-x:auto + overflow-y:visible is an invalid combo — the
+     clipped. (overflow-x:auto + overflow-y:visible is an invalid combo: the
      browser forces both axes to auto, which turned every preview into a
      scroll container and clipped every select/date-picker/menu panel.) */
   .component-page__preview .live-preview {
@@ -663,7 +663,7 @@ const headings = removed
   }
 
   /* Wide content (grids, boards, tables) scrolls horizontally inside the
-     preview instead of widening the page. Clips overlays — use only for
+     preview instead of widening the page. Clips overlays; use only for
      components that don't open panels past their bounds. */
   .component-page__preview .live-preview--scroll {
     display: block;
@@ -735,7 +735,7 @@ const headings = removed
     border-radius: var(--radius-lg);
     /* No overflow-x. Capping the panel at the prose measure turned a box that
        had never scrolled into one that did, on every page with a long union
-       type — and a scroll region containing nothing focusable is an axe
+       type, and a scroll region containing nothing focusable is an axe
        serious violation (scrollable-region-focusable), which is what broke CI
        on 13 component pages. The signature wraps instead; see ApiList. */
     position: relative;
@@ -907,7 +907,7 @@ const headings = removed
      block of prose has to be distinguishable without relying on colour, and
      these two notices are the only prose on the site with inline links in them.
      Landed 4.1 and 4.2 with colour alone, which took the a11y audit from 0
-     violations to 15 — one per deprecated component and one per tombstone. */
+     violations to 15, one per deprecated component and one per tombstone. */
   .deprecation a {
     color: var(--accent-secondary);
     text-decoration: underline;
@@ -980,7 +980,7 @@ const headings = removed
   }
 
   /* An alternative that does not exist yet has to say so on the page, not only
-     in MIGRATION.md — a reader who follows a tombstone to a 404 is worse off
+     in MIGRATION.md. A reader who follows a tombstone to a 404 is worse off
      than one who was told to wait. */
   .tombstone__forthcoming {
     font-family: var(--font-accent);
@@ -1007,7 +1007,7 @@ const headings = removed
     text-underline-offset: 0.2em;
   }
 
-  /* ── Icon Browser (global — dynamically injected) ── */
+  /* ── Icon Browser (global, dynamically injected) ── */
   :global(.icon-browser) {
     display: flex;
     flex-direction: column;

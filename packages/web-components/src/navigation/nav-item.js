@@ -12,7 +12,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @child arc-nav-item
  * @prop {string} href - Destination URL for the nav item. Required for leaf items that navigate. Omit on parent items that serve only as dropdown triggers.
  * @prop {boolean} active - Highlights the item with an accent-colored bottom border to indicate the current route. Set this on the top-level NavItem that corresponds to the active page.
- * @prop {'default' | 'primary' | 'muted'} variant - Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text — ideal for secondary links like "Blog" or "Changelog".
+ * @prop {'default' | 'primary' | 'muted'} variant - Visual style variant. `default` shows a subtle border and muted text with accent glow on active. `primary` uses accent-colored text and border in the resting state with a stronger glow on hover/active. `muted` renders a subdued style with no border and lighter text, ideal for secondary links like "Blog" or "Changelog".
  * @prop {string} description - Secondary text displayed below the item label inside a dropdown. Use this to add context like "Real-time dashboards and metrics" so users can scan the mega-menu without clicking through.
  * @slot - Nested `arc-nav-item` elements, forming a submenu.
  */
@@ -39,7 +39,7 @@ export class ArcNavItem extends DeclaredPropsMixin(LitElement) {
    *
    * Authoring `<arc-nav-item><a href="/docs">Docs</a></arc-nav-item>` makes the
    * pre-upgrade markup a working link list, which is what no-JS visitors and
-   * anyone on a slow connection actually see — arc-navigation-menu hides this
+   * anyone on a slow connection actually see; arc-navigation-menu hides this
    * light DOM only once it has upgraded and re-rendered it into shadow DOM.
    */
   get resolvedHref() {

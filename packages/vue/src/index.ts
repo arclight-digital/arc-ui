@@ -176,3 +176,4 @@ export { default as BarList } from './data/BarList.vue';
 export { default as FieldList } from './input/FieldList.vue';
 export { default as FieldRow } from './input/FieldRow.vue';
 export { default as SettingsNavItem } from './layout/SettingsNavItem.vue';
+export { default as CodeGroup } from './typography/CodeGroup.vue';

@@ -11,17 +11,17 @@ export const floatBar: ComponentDef = {
 
   overview: `FloatBar is a floating action bar that appears at the bottom (or top) of the viewport to present contextual actions in response to a user selection or state change. It slides into view with spring easing, overlaying page content with a surface-overlay background and backdrop blur that keeps it visually distinct without fully obscuring the page beneath.
 
-The most common pattern is a bulk-action bar that appears when one or more items are selected in a data table or list: "3 items selected — Delete | Archive | Export." FloatBar also works well as an unsaved-changes prompt ("You have unsaved changes — Save | Discard") or a cookie consent banner. The bar fires arc-open and arc-close events so your application can track its visibility state.
+The most common pattern is a bulk-action bar that appears when one or more items are selected in a data table or list: "3 items selected, Delete | Archive | Export." FloatBar also works well as an unsaved-changes prompt ("You have unsaved changes, Save | Discard") or a cookie consent banner. The bar fires arc-open and arc-close events so your application can track its visibility state.
 
-FloatBar is explicitly controlled via the \`open\` prop — it appears in response to application state (e.g. items selected, form dirty) and disappears when the triggering condition resolves. That makes it the right choice for a transient contextual toolbar. For a bar that is always there, use Toolbar; for a panel the user opens and closes, use Drawer.`,
+FloatBar is explicitly controlled via the \`open\` prop. It appears in response to application state (e.g. items selected, form dirty) and disappears when the triggering condition resolves. That makes it the right choice for a transient contextual toolbar. For a bar that is always there, use Toolbar; for a panel the user opens and closes, use Drawer.`,
 
   features: [
     'Viewport-fixed floating bar with spring easing slide-in animation',
     'Surface-overlay background with backdrop-filter blur for visual layering',
     'Configurable position: bottom (default) or top of the viewport',
-    'Controlled via `open` prop — appears in response to application state changes',
+    'Controlled via the `open` prop; appears in response to application state changes',
     'Fires `arc-open` and `arc-close` events for state synchronization',
-    'Non-blocking overlay — does not lock body scroll or trap focus',
+    'Non-blocking overlay. Does not lock body scroll or trap focus',
     'Rounded corners and subtle shadow for floating appearance',
     'CSS part: `bar` for targeted ::part() styling',
   ],
@@ -36,12 +36,12 @@ FloatBar is explicitly controlled via the \`open\` prop — it appears in respon
       'Use position="bottom" for most cases; position="top" for cookie/consent banners',
     ],
     dont: [
-      'Do not use FloatBar for permanent toolbars — use Toolbar instead',
-      'Do not put navigation links in a FloatBar — use TopBar or Sidebar',
-      'Do not leave the FloatBar open indefinitely — it should be transient and context-dependent',
+      'Do not use FloatBar for permanent toolbars. Use Toolbar instead',
+      'Do not put navigation links in a FloatBar. Use TopBar or Sidebar',
+      'Do not leave the FloatBar open indefinitely. It should be transient and context-dependent',
       'Do not place complex forms or multi-step flows inside a FloatBar',
       'Do not show multiple Float Bars simultaneously at the same position',
-      'Do not use as a toast replacement — FloatBar is for actions, Toast is for notifications',
+      'Do not use it as a toast replacement. FloatBar is for actions; Toast is for notifications',
     ],
   },
 

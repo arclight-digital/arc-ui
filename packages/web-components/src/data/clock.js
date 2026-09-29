@@ -34,7 +34,7 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
     showSeconds: flag(false, { attribute: 'show-seconds' }),
     // A documented tri-state: true forces 12-hour, false forces 24-hour, and
     // *unset* lets the viewer's locale decide. `nullable` is what lets the
-    // vocabulary say that — it was this prop's exemption from
+    // vocabulary say that; it was this prop's exemption from
     // boolean-defaults.js until V4-PLAN 2.3 found thirteen more of the same
     // shape and gave them all a term. Not reflected: a nullable flag has no
     // attribute spelling that distinguishes false from unset.
@@ -151,12 +151,12 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.timezone = '';
     this.label = '';
     // Left undefined so the locale decides; a boolean (either way) forces it.
-    // Null until the first tick, which is taken after the first render — see
-    // _start(). The server render (constructor, willUpdate, render only — no
+    // Null until the first tick, which is taken after the first render; see
+    // _start(). The server render (constructor, willUpdate, render only; no
     // connectedCallback) therefore shows the static placeholder face and never
     // touches Date or Intl, and so does the client's hydrating render.
     this._now = null;
@@ -180,8 +180,8 @@ export class ArcClock extends DeclaredPropsMixin(LitElement) {
    * Wall-clock time is the one thing this component renders that the server
    * cannot agree with, so it must not exist during the first render: hydration
    * adopts the server's DOM by rendering the same template against the same
-   * state, and a `_now` set in connectedCallback — which runs before that
-   * render — puts the viewer's time where the server wrote 12:00 / --:--, which
+   * state, and a `_now` set in connectedCallback, which runs before that
+   * render, puts the viewer's time where the server wrote 12:00 / --:--, which
    * throws instead of adopting. firstUpdated() is the first moment after the
    * comparison is over, so the face is live one frame later and hydration never
    * sees a value the server could not have had.

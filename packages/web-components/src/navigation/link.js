@@ -11,10 +11,10 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @status stable
  * @prop {string} href - URL destination for the link.
  * @prop {'default' | 'muted' | 'nav'} variant - Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout.
- * @prop {boolean} active - Active state — applies accent-primary color for navigation highlighting.
+ * @prop {boolean} active - Active state: applies accent-primary color for navigation highlighting.
  * @prop {boolean} external - When true, adds `target="_blank"` and `rel="noopener noreferrer"`, and renders an external link icon after the text.
  * @prop {'hover' | 'always' | 'never'} underline - Controls underline behavior: 'hover' underlines on hover, 'always' keeps it visible, 'never' omits it.
- * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the link — the recommended form for links that must work before hydration or without JavaScript. In this form `external` contributes the marker icon only; put `target`/`rel` on your own anchor, and note that `::part(link)` does not apply.
+ * @slot - Default content. Slotting a single `<a>` as the only child adopts it as the link: the recommended form for links that must work before hydration or without JavaScript. In this form `external` contributes the marker icon only; put `target`/`rel` on your own anchor, and `::part(link)` does not apply.
  * @csspart base - The root element.
  * @csspart link
  */
@@ -34,7 +34,7 @@ export class ArcLink extends DeclaredPropsMixin(LitElement) {
       :host { display: inline; }
 
       /* Anchor-adoption form: a lone slotted <a> becomes the link itself and
-         takes the same styling as .link — see shared/anchor-adoption.js.
+         takes the same styling as .link. See shared/anchor-adoption.js.
          Keep each .link rule paired with its .link-slot::slotted(a) form. */
       .link,
       .link-slot::slotted(a) {
@@ -136,13 +136,13 @@ export class ArcLink extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
 
   render() {
-    // An explicit href always wins — established API, unchanged behavior.
+    // An explicit href always wins: established API, unchanged behavior.
     if (!this.href && this._slottedAnchor) {
       // The icon sits beside the adopted anchor rather than inside it; light DOM
       // is the consumer's to own, so `external` contributes the marker only and

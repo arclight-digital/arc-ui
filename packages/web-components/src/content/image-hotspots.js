@@ -5,7 +5,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
 /**
  * An annotated image: glowing pins positioned over a slotted picture, each opening a small
  * popover of detail content. Built for product-feature callouts, annotated screenshots, and
- * simple maps. Slot the image and the arc-hotspot pins together as children — the pins position
+ * simple maps. Slot the image and the arc-hotspot pins together as children. The pins position
  * themselves by percentage coordinates, so source order never matters. The parent keeps one
  * popover open at a time; open and close activity arrives as the arc-open and arc-close events
  * bubbling up from each arc-hotspot child, with detail.value naming the hotspot.
@@ -67,8 +67,8 @@ export class ArcImageHotspots extends LitElement {
   }
 
   /**
-   * One popover at a time. The pointer path mostly handles itself — opening
-   * pin B is an outside click for pin A — but a keyboard open never fires a
+   * One popover at a time. The pointer path mostly handles itself (opening
+   * pin B is an outside click for pin A), but a keyboard open never fires a
    * pointerdown, so the rule is enforced here on every child arc-open. Closing
    * goes through the child's close() so its cancelable arc-close still fires.
    */
@@ -80,7 +80,7 @@ export class ArcImageHotspots extends LitElement {
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

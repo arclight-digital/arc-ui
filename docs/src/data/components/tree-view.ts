@@ -11,7 +11,7 @@ export const treeView: ComponentDef = {
 
   overview: `TreeView renders a nested, collapsible tree structure ideal for file browsers, navigation menus, documentation outlines, and any hierarchical data. Nodes are defined declaratively using \`<arc-tree-item>\` child elements, which can be nested to arbitrary depth. Each item can have a label, an optional icon (emoji or text), and an \`expanded\` attribute to control its initial open state.
 
-Clicking a parent node both selects it and toggles its expanded state, revealing or hiding its children. Leaf nodes (those without children) are simply selected on click. The currently selected node receives an accent-primary highlight, and vertical guide lines appear alongside nested groups to visually communicate the tree's depth structure. Chevron indicators rotate smoothly when branches expand or collapse.
+Clicking a parent node both selects it and toggles its expanded state, revealing or hiding its children. Leaf nodes (those without children) are selected on click. The currently selected node receives an accent-primary highlight, and vertical guide lines appear alongside nested groups to visually communicate the tree's depth structure. Chevron indicators rotate when branches expand or collapse.
 
 TreeView supports full keyboard navigation following the WAI-ARIA tree pattern. ArrowDown/ArrowUp move focus between visible rows, ArrowRight expands a collapsed branch, ArrowLeft collapses an expanded one, and Enter or Space selects the focused node. The component fires \`arc-select\` with the item details and its full path array, and \`arc-toggle\` when a branch is expanded or collapsed.`,
 
@@ -30,16 +30,16 @@ TreeView supports full keyboard navigation following the WAI-ARIA tree pattern. 
     do: [
       'Use `<arc-tree-item>` elements with descriptive `label` attributes for each node',
       'Set `expanded` on top-level branches that should be visible by default for discoverability',
-      'Provide meaningful icons to help users scan the tree — e.g. folder/file emojis for file browsers',
+      'Provide meaningful icons to help users scan the tree, e.g. folder/file emojis for file browsers',
       'Listen to `arc-select` to update the main content area when a tree node is chosen',
-      'Keep tree depth to 3-4 levels maximum for usability — deeper nesting becomes hard to scan',
+      'Keep tree depth to 3-4 levels maximum for usability. Deeper nesting becomes hard to scan',
     ],
     dont: [
-      'Do not use TreeView for flat lists — use a simple list or navigation menu instead',
+      'Do not use TreeView for flat lists. Use a simple list or navigation menu instead',
       'Do not populate the tree with hundreds of top-level nodes without virtualisation or lazy loading',
-      'Do not use TreeView for selection of multiple items simultaneously — it tracks a single selection',
-      'Do not rely solely on icons for meaning — always include a text label on each tree item',
-      'Avoid extremely long label text — it truncates with text-overflow ellipsis but is then unreadable',
+      'Do not use TreeView for selection of multiple items simultaneously. It tracks a single selection',
+      'Do not rely solely on icons for meaning. Always include a text label on each tree item',
+      'Avoid extremely long label text. It truncates with text-overflow ellipsis but is then unreadable',
     ],
   },
 

@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-vue",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "Vue 3 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -267,6 +267,10 @@
     "./CodeBlock": {
       "types": "./dist/typography/CodeBlock.vue.d.ts",
       "default": "./dist/typography/CodeBlock.vue.js"
+    },
+    "./CodeGroup": {
+      "types": "./dist/typography/CodeGroup.vue.d.ts",
+      "default": "./dist/typography/CodeGroup.vue.js"
     },
     "./GradientText": {
       "types": "./dist/typography/GradientText.vue.d.ts",

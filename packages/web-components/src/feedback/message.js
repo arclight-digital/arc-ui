@@ -10,7 +10,7 @@ const ROLES = new Set(['user', 'assistant', 'system']);
  * One message in a conversation transcript. The speaker attribute decides the voice: user messages
  * sit at the inline end on a faint accent tint, assistant messages sit at the inline start on a
  * neutral surface, and system messages run centered, muted and small. The default slot is the
- * message body — append text to it to stream a reply in — and with the markdown attribute set,
+ * message body. Append text to it to stream a reply in; with the markdown attribute set,
  * that slotted text renders through arc-markdown, re-rendering as the text grows. A pending
  * message shows the typing indicator in place of its body. Slot an avatar for either speaker if
  * the product wants faces; none is built in.
@@ -22,7 +22,7 @@ const ROLES = new Set(['user', 'assistant', 'system']);
  * @prop {'user' | 'assistant' | 'system'} speaker - Whose message this is. "user" aligns to the inline end on an accent-tinted surface, "assistant" to the inline start on a neutral surface, and "system" runs centered and muted for notices in the transcript's own voice. An unrecognized value renders as "user".
  * @prop {string} author - Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set.
  * @prop {string} timestamp - When the message was sent, as an ISO 8601 string. Rendered as house relative time ("3 minutes ago") through arc-time-ago, with the absolute date on its title.
- * @prop {boolean} pending - Renders the typing indicator — three pulsing dots — in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.
+ * @prop {boolean} pending - Renders the typing indicator (three pulsing dots) in place of the body while a reply is being produced. Under prefers-reduced-motion the dots give way to a static ellipsis.
  * @prop {boolean} markdown - Render the slotted text through the house markdown renderer. The slot's text content is the source; it re-parses whenever the slot changes, so streaming into the slot streams through the renderer. When false, slotted content renders as-is.
  * @slot - The message body. Text when markdown is set; any markup otherwise.
  * @slot avatar - An optional avatar beside the bubble; the component ships none of its own.
@@ -39,7 +39,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
     pending: flag(false),
     markdown: flag(false),
     _source: { state: true },
-    // What the meta line actually renders — see willUpdate.
+    // What the meta line actually renders; see willUpdate.
     _author: { state: true },
     _timestamp: { state: true },
   };
@@ -124,7 +124,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
 
       /* The typing indicator. The keyword curve is deliberate: loops are
          exempt from the entrance and exit curves in the token tree, and
-         ease-in-out is the symmetric shape a pulse wants — see the loop note
+         ease-in-out is the symmetric shape a pulse wants; see the loop note
          in scripts/checks/motion-tokens.js and the arc-hotspot halo this
          follows. Opacity and transform only, so it stays off the layout path.
          The shared reduced-motion guard shortens it to nothing; the explicit
@@ -180,14 +180,14 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
    * attributes rather than from the properties.
    *
    * The server renders from markup alone, so an author or timestamp assigned as
-   * a *property* — how a transcript assembled at runtime carries them, and how
-   * the docs page stamps its messages — is a value the server never had. Lit
+   * a *property* (how a transcript assembled at runtime carries them, and how
+   * the docs page stamps its messages) is a value the server never had. Lit
    * re-applies a property set before upgrade during the first update, which is
    * before this, so rendering it here would open the meta line, or the
    * arc-time-ago inside it, in the client's first render where the server
    * opened neither. That is a part changing shape under hydration, which is the
    * one thing it cannot adopt. updated() takes the properties one render later,
-   * after the server DOM has been adopted — the same shape as _source.
+   * after the server DOM has been adopted. Same shape as _source.
    */
   willUpdate(changed) {
     super.willUpdate?.(changed);
@@ -209,7 +209,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
    * `slotchange` alone is not enough under declarative shadow DOM: the parser
    * attaches the shadow root and assigns the slot before Lit adopts the tree,
    * so the assignment has already happened by the time this component's
-   * listener exists and the event never arrives. `hydrateSlots` delivers it —
+   * listener exists and the event never arrives. `hydrateSlots` delivers it,
    * that is the whole of its job, and the reader below runs from the same
    * handler a real slotchange reaches.
    *
@@ -263,7 +263,7 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
 
   render() {
     // Server-side, _source is empty (firstUpdated does not run), so the raw
-    // slotted text stays visible and hydration swaps in the rendered form —
+    // slotted text stays visible and hydration swaps in the rendered form,
     // the transcript is never blank while the markdown path waits for JS.
     const rendersMarkdown = this.markdown && !this.pending && this._source;
     return html`

@@ -2,22 +2,22 @@
  * Fixed-height row windowing, in one place.
  *
  * Three components implemented this: `arc-virtual-list`, `arc-data-table` and
- * `arc-data-grid`. The arithmetic is the same five lines in all three — floor
+ * `arc-data-grid`. The arithmetic is the same five lines in all three: floor
  * the scroll offset by row height, ceil the viewport by row height, pad both
- * ends by an overscan, clamp to the row count — and it had drifted in three
+ * ends by an overscan, clamp to the row count, and it had drifted in three
  * ways, each of which is a decision one copy made and the others never saw:
  *
  *  1. **`arc-data-table` could produce a negative count.** It wrote
  *     `this._visibleCount = endIndex - this._startIndex` with no floor, where
  *     the other two clamped at zero. `end` is `min(total, …)` and `start` is
  *     `max(0, …)`, so any state where the row set shrinks below the current
- *     scroll offset — a filter applied, rows removed, `rows` reassigned —
+ *     scroll offset (a filter applied, rows removed, `rows` reassigned)
  *     inverts them, and the slice that follows renders nothing under a
  *     full-height top spacer. A blank table that scrolls.
  *  2. **`overscan` was public on one of the three and hardcoded to 5 in the
  *     other two.** Same default, no way to change it on a grid.
  *  3. **Only `arc-virtual-list` announced the window**, and only when it
- *     actually moved — which is the part that matters, since a scroll handler
+ *     actually moved, which is the part that matters, since a scroll handler
  *     fires every frame of a drag and a consumer re-rendering rows on each one
  *     rebuilds an unchanged window sixty times a second.
  *
@@ -50,7 +50,7 @@ export class VirtualController {
     this.opts = { getViewport, getTotal, getRowHeight, getOverscan, onChange };
     /** First rendered row index. */
     this.start = 0;
-    /** How many rows are rendered. Never negative — see (1) above. */
+    /** How many rows are rendered. Never negative; see (1) above. */
     this.count = 0;
     host.addController(this);
   }
@@ -85,7 +85,7 @@ export class VirtualController {
    * Recompute the window. Returns true when it moved.
    *
    * Returning the movement rather than only firing `onChange` is what lets a
-   * host skip its own `requestUpdate` on a scroll frame that changed nothing —
+   * host skip its own `requestUpdate` on a scroll frame that changed nothing:
    * the notification and the re-render are different decisions, and a host that
    * re-renders unconditionally is the cost this replaces.
    */
@@ -128,7 +128,7 @@ export class VirtualController {
   }
 
   /**
-   * Both halves, because a controller with only a teardown is a one-way door —
+   * Both halves, because a controller with only a teardown is a one-way door:
    * a host that is disconnected and reconnected (a list moved in the DOM, a
    * table inside a re-parented panel) would come back with no pending frame and
    * no way to schedule one. See HANDOFF.

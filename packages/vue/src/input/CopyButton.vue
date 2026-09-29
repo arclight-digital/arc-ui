@@ -7,9 +7,13 @@ defineOptions({ name: 'CopyButton' });
 const props = withDefaults(defineProps<{
   value?: string;
   disabled?: boolean;
+  iconOnly?: boolean;
+  label?: string;
 }>(), {
   value: '',
   disabled: false,
+  iconOnly: false,
+  label: '',
 });
 
 const emit = defineEmits<{
@@ -21,6 +25,8 @@ const emit = defineEmits<{
   <arc-copy-button
     :value="props.value"
     :disabled="props.disabled"
+    :iconOnly="props.iconOnly"
+    :label="props.label"
     @arc-copy="(payload: CustomEvent) => emit('arc-copy', payload)"
   >
   </arc-copy-button>

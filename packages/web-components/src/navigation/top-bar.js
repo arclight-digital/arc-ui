@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { breakpoints } from '../generated/breakpoints.js';
 import '../layout/container.register.js';
@@ -13,14 +13,15 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @requires arc-container
  * @prop {string} heading - Brand text displayed in the top-left corner next to the optional logo slot. Rendered uppercase with wide letter-spacing at the wordmark size. Keep this to one or two words that identify the application.
  * @prop {string} homeHref - Destination of the brand link. Defaults to `/`; set it when the app is mounted under a sub-path, or to an empty string to render the brand as plain text with no link at all.
- * @prop {boolean} scrolled - Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you — read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.
+ * @prop {boolean} scrolled - Reflects whether the page has scrolled past the bar's threshold. Set by the component, not by you. Read it to style a scrolled state from outside, via `arc-top-bar[scrolled]`.
  * @prop {boolean} immersive - Renders the bar with no background, blur or border until the page is scrolled, so a hero shows through it. Requires `fixed`. Suits marketing pages whose first screen is one composed image; leave it off in an application layout, where the bar should be a fixed edge among the other panels rather than something that appears and disappears.
  * @prop {boolean} fixed - When true, the bar uses position: fixed so it stays at the top of the viewport while content scrolls underneath. Automatically applied when TopBar is placed inside an AppShell. Be sure to add matching top padding to the content below to prevent overlap.
  * @prop {boolean} menuOpen - Reflects whether the mobile hamburger menu is open. Toggling this value updates the aria-expanded attribute on the menu button. Typically managed by AppShell in response to the arc-sidebar-toggle event rather than set directly.
  * @prop {'left' | 'center' | 'right'} navAlign - Controls the alignment of content in the center slot. Pulls nav toward the brand or actions without reordering DOM.
  * @prop {string} contained - Sets a max-width containment on the top bar content area. Accepts any CSS length or named size.
- * @prop {string} mobileMenu - Controls the mobile menu behavior. When set to a value like "nav", the hamburger toggles an inline navigation panel instead of triggering sidebar toggle.
+ * @prop {'sidebar' | 'nav' | 'none'} mobileMenu - What the hamburger does below the nav-collapse breakpoint. `sidebar` (the default) fires `arc-sidebar-toggle` for an app shell's drawer; `nav` fires `arc-mobile-menu-toggle` for your own panel; `none` renders no hamburger, for a site with nothing to open.
  * @prop {string} menuPosition - Position of the mobile menu panel when mobile-menu is active.
+ * @prop {'center' | 'end' | 'hidden'} mobileCenter - Where the center slot goes below the nav-collapse breakpoint. `center` (the default) keeps it centered; `end` moves it to the right, next to the actions and the menu button; `hidden` removes it, for a center whose content the mobile menu already carries.
  * @fires arc-sidebar-toggle - Fired when the mobile menu toggle is clicked (sidebar mode)
  * @fires arc-mobile-menu-toggle - Fired when the mobile hamburger button is clicked and mobile-menu mode is active. Use this to toggle your own mobile navigation panel.
  * @slot logo
@@ -41,9 +42,9 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     homeHref: { type: String, attribute: 'home-href' },
     /* Declared, not just toggled onto the host: it was written with
        toggleAttribute alone, so it styled correctly but appeared in no
-       manifest, no wrapper type and no documentation — API that exists and
+       manifest, no wrapper type and no documentation: API that exists and
        cannot be found. */
-    // Output, not input — see the @prop note above: the component sets this.
+    // Output, not input (see the @prop note above): the component sets this.
     scrolled: flag(false, { derived: true }),
     immersive: flag(false),
     fixed: flag(false),
@@ -51,6 +52,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     menuOpen: flag(false, { attribute: 'menu-open' }),
     mobileMenu: { type: String, attribute: 'mobile-menu' },
     menuPosition: { type: String, attribute: 'menu-position' },
+    mobileCenter: oneOf(['center', 'end', 'hidden'], { default: 'center', attribute: 'mobile-center', reflect: true }),
     navAlign: oneOf(['left', 'center', 'right'], {
       default: 'center',
       attribute: 'nav-align',
@@ -90,7 +92,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
       /* A pinned region has to be one color, not two.
          arc-footer paints --surface-base flat, while this bar mixes it 85% with
          transparent. When the region's scheme matches the page that costs
-         nothing — 15% of a near-black page bleeds through as near-black. When
+         nothing: 15% of a near-black page bleeds through as near-black. When
          it doesn't, the 15% is 15% of the opposite ground, so the identical
          token renders one color up here and another down there, and two regions
          pinned to the same scheme visibly disagree. Opaque when the region is
@@ -109,13 +111,13 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
          and takes on the blur, the fill and the border only once content is
          actually passing underneath and the boundary starts doing work.
          Opt-in, because it suits a page whose first screen is one designed
-         image — a hero, a landing page — and actively hurts an application
+         image (a hero, a landing page) and actively hurts an application
          layout, where the bar is one panel among several defined panels and is
          expected to be a fixed edge rather than something that comes and goes.
          Also gated on [fixed]: a bar in the flow scrolls away with the page and
          never overlays anything, so it has nothing to earn. */
       /* :not([menu-open]) because an open mobile panel is content passing
-         underneath in every sense that matters — it is a filled, blurred sheet
+         underneath in every sense that matters: it is a filled, blurred sheet
          hanging directly below a bar that is still showing the hero through
          itself, so the panel reads as floating loose under nothing. The bar
          earns its chrome the moment it has something to sit on top of. */
@@ -184,6 +186,9 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
         display: flex;
         align-items: center;
         justify-content: center;
+        /* safe: content wider than a squeezed center overflows toward the
+           actions only, not back over the brand. */
+        justify-content: safe center;
         min-width: 0;
       }
 
@@ -197,7 +202,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
       /* Centered nav means centered in the *bar*, not in whatever space the brand
          and the actions happen to leave over. With the flex row alone the nav
          sits at the midpoint of the gap between them, which is the middle of
-         the viewport only when those two are identically wide — they never are.
+         the viewport only when those two are identically wide, and they never are.
          Giving both sides an equal flex basis of zero makes them claim the same
          width whatever they contain, so the middle column's centre is the bar's
          centre. Only for nav-align=center: left and right alignment want the
@@ -205,15 +210,20 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
 
          Keyed on "not the other two" as well as on the value itself: nav-align
          defaults to center in the constructor and is not reflected, so
-         :host([nav-align="center"]) alone matches nothing in the default case —
+         :host([nav-align="center"]) alone matches nothing in the default case,
          the very failure check-enum-fallbacks.js exists to catch. The explicit
-         selector stays beside it so prism can still infer the union. */
+         selector stays beside it so prism can still infer the union.
+
+         The sides never go below their content width. When the row is short,
+         the center column shrinks first and centering gives way, instead of
+         the brand or the actions collapsing and the center's content drawing
+         over them. */
       :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__brand,
       :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__actions,
       :host([nav-align="center"]) .topbar__brand,
       :host([nav-align="center"]) .topbar__actions {
         flex: 1 1 0;
-        min-width: 0;
+        min-width: max-content;
       }
 
       :host(:not([nav-align="left"]):not([nav-align="right"])) .topbar__actions,
@@ -222,7 +232,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
       }
 
       /* The nav stretches to fill this wrapper (its query container is
-         inline-size-contained, so it cannot shrink-to-fit — see the :host
+         inline-size-contained, so it cannot shrink-to-fit; see the :host
          comment in navigation-menu.js), which makes wrapper-level centering
          inert. flex: 1 1 0 keeps the middle column's centre on the bar's
          centre against the equalised sides, and --nav-justify carries the
@@ -248,7 +258,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
         background: none;
         /* Circular and border-less, like the icon buttons it shares the bar
            with. It was a --radius-sm square with a visible edge, which the
-           round-icon-button pass left behind — the one square control in a row
+           round-icon-button pass left behind: the one square control in a row
            of circles, and the only one outlined. The open state still takes an
            accent border, so the affordance is kept where it means something. */
         border: 1px solid transparent;
@@ -316,15 +326,33 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
          interpolation; doing it here compiled fine and dropped this query from
          arc-ui.css entirely. The JS side reads the token directly, and
          check-breakpoint-drift.js asserts this number still matches it.
-         Separately, and the reason this comment is worth reading: a comment
-         sitting directly above an at-rule used to make prism scope it, emitting
-         the component selector in front of the @media — invalid CSS, so the
-         rule stopped applying in the standalone package the moment this note
+         Separately: a comment sitting directly above an at-rule used to make
+         prism scope it, emitting the component selector in front of the
+         @media. That is invalid CSS, so the rule stopped applying in the standalone package the moment this note
          was added. Fixed in prism (v3, "don't scope an at-rule whose prelude a
          comment precedes"); if a media query ever goes missing from arc-ui.css
          again, check the emitted CSS before trusting that it compiled. */
       @media (max-width: 900px) {
         .topbar__menu-btn { display: flex; }
+
+        /* mobile-center="end": the brand takes the slack and the center sits
+           against the actions. Beats the equal-thirds rule above on
+           specificity, so it holds for every nav-align. */
+        :host([mobile-center="end"]) .topbar__content .topbar__brand { flex: 1 1 auto; }
+        :host([mobile-center="end"]) .topbar__content .topbar__center {
+          flex: 0 1 auto;
+          justify-content: flex-end;
+          --nav-justify: flex-end;
+        }
+        :host([mobile-center="end"]) .topbar__content .topbar__actions { flex: 0 0 auto; }
+        :host([mobile-center="hidden"]) .topbar__center { display: none; }
+      }
+
+      /* A phone gutter: 16px instead of 24px, contained or not. xs
+         breakpoint, a literal for the same reason as the query above. */
+      @media (max-width: 480px) {
+        :host(:not([contained])) .topbar__content { padding-inline: var(--space-md); }
+        arc-container::part(container) { padding-inline: var(--space-md); }
       }
     `,
   ];
@@ -347,7 +375,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     document.addEventListener('arc-sidebar-toggle', this._onExternalToggle);
     // Capture phase on the document, not the window: an app that scrolls a
     // container rather than the page never fires a window scroll event, and the
-    // bar simply never learned it had been scrolled past.
+    // bar never learned it had been scrolled past.
     document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
     this._measure();
   }
@@ -380,7 +408,7 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
    *
    * Both modes need this, and only the nav one had it. In sidebar mode the
    * drawer belongs to arc-app-shell, which also closes it on Escape, on a
-   * backdrop click and on navigation — none of which came back here, so the
+   * backdrop click and on navigation, and none of that came back here, so the
    * hamburger went on reporting aria-expanded="true" and showing its close icon
    * for a drawer that had already slid away.
    */
@@ -391,10 +419,11 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     this.menuOpen = e.detail?.value ?? !this.menuOpen;
   }
 
+  /** Inline for left and right; center is the stylesheet's default. */
   get _navJustify() {
-    if (this.navAlign === 'left') return 'flex-start';
-    if (this.navAlign === 'right') return 'flex-end';
-    return 'center';
+    if (this.navAlign === 'left') return 'justify-content:flex-start';
+    if (this.navAlign === 'right') return 'justify-content:flex-end';
+    return '';
   }
 
   _toggleMenu() {
@@ -443,9 +472,10 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
   }
 
   _renderContent(menuLeft) {
+    const menu = this.mobileMenu !== 'none';
     return html`
       <div class="topbar__content" part="content">
-        ${menuLeft ? this._renderMenuButton() : ''}
+        ${menu && menuLeft ? this._renderMenuButton() : ''}
         ${
           this.homeHref
             ? html`
@@ -454,13 +484,13 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
             </a>`
             : html`<div class="topbar__brand" part="brand">${this._renderBrand()}</div>`
         }
-        <div class="topbar__center" part="center" style="justify-content:${this._navJustify}">
+        <div class="topbar__center" part="center" style=${this._navJustify || nothing}>
           <slot name="center"></slot>
         </div>
         <div class="topbar__actions" part="actions">
           <slot name="actions"></slot>
         </div>
-        ${!menuLeft ? this._renderMenuButton() : ''}
+        ${menu && !menuLeft ? this._renderMenuButton() : ''}
       </div>
     `;
   }

@@ -7,16 +7,16 @@ export const buttonGroup: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Connects multiple buttons into a single visual unit with shared borders and collapsed radii. Supports horizontal and vertical orientations.',
+    'Joins multiple buttons into one visual unit with shared borders and collapsed radii. Supports horizontal and vertical orientations.',
 
-  overview: `ButtonGroup joins adjacent buttons into a connected strip where inner border radii are removed and outer buttons retain rounded corners. This creates a unified control that reads as a single element while each button remains independently clickable.
+  overview: `ButtonGroup joins adjacent buttons into a connected strip where inner border radii are removed and outer buttons retain rounded corners. The group reads as a single control while each button stays independently clickable.
 
-The component automatically overrides the border-radius CSS custom properties on slotted children, giving the first and last child outer radii while removing inner radii. Margins between items are collapsed by -1px to prevent double borders. Both horizontal (default) and vertical orientations are supported.
+The component overrides the border-radius CSS custom properties on slotted children, giving the first and last child outer radii while removing inner radii. Margins between items are collapsed by -1px to prevent double borders. Both horizontal (default) and vertical orientations are supported.
 
-The \`size\` and \`variant\` props cascade to all child buttons, ensuring consistent sizing and style across the group without setting them individually. This makes it easy to swap the entire group between ghost, outline, and solid styles by changing a single prop.`,
+The \`size\` and \`variant\` props cascade to all child buttons, so you don't set them individually. Changing one prop swaps the whole group between ghost, outline, and solid styles.`,
 
   features: [
-    'Automatic border radius management — outer corners rounded, inner corners flat',
+    'Border radius management: outer corners rounded, inner corners flat',
     'Collapsed -1px margins to prevent double borders between items',
     'Horizontal and vertical orientations',
     'Cascades `size` and `variant` props to all child buttons',
@@ -27,14 +27,14 @@ The \`size\` and \`variant\` props cascade to all child buttons, ensuring consis
 
   guidelines: {
     do: [
-      'Use for related actions that belong together — e.g. text alignment (Left, Center, Right)',
+      'Use for related actions that belong together, such as text alignment (Left, Center, Right)',
       'Keep button groups to 2-5 items for readability',
       'Use the vertical orientation for stacked toolbar controls',
       'Set variant on the group instead of individual buttons for consistency',
     ],
     dont: [
-      'Do not mix different button sizes inside a group — use the group `size` prop',
-      'Do not use button groups for navigation — use tabs or segmented control instead',
+      'Do not mix different button sizes inside a group. Use the group `size` prop',
+      'Do not use button groups for navigation. Use tabs or segmented control instead',
       'Do not put destructive actions in the same group as constructive ones without clear visual separation',
     ],
   },

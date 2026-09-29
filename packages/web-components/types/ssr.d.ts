@@ -4,29 +4,27 @@
  * The OverlayController set: everything rendered into the top layer and invisible
  * until asked for. Nothing inside one can appear in a first paint, so rendering
  * their contents spends bytes on markup no reader and no metric ever sees. On
- * arcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette.
+ * arcui.dev that was 174 of a page's 427 roots (the whole ⌘K palette).
  *
- * arc-lightbox was absent from its own set from 3.0 to 4.2: this renderer
- * shipped the day before the component did, and nothing since went back for it.
- * A gallery passed as a property renders empty anyway, which is what made the
- * gap look deliberate — but the documented static form is a JSON `images`
- * attribute, and the server can read that. Those pages shipped a full figure,
- * four icon-button roots and an eager fetch of a full-size photograph, inside a
- * display:none dialog, on a paint that could never show any of it. display:none
- * does not stop an image from downloading.
+ * arc-lightbox belongs here too. A gallery passed as a property renders empty
+ * anyway, but the documented static form is a JSON `images` attribute, which
+ * the server can read. Left out of this list (3.0 to 4.2), those pages shipped
+ * a full figure, four icon-button roots and an eager fetch of a full-size
+ * photograph inside a display:none dialog, on a paint that could never show
+ * any of it. display:none does not stop an image from downloading.
  */
 export declare const CLOSED_OVERLAYS: string[];
 /**
  * Long repeated lists, and how many of each to render.
  *
- * A navigation sidebar listing every page is real, visible content — unlike a
- * closed overlay — but only the first screenful of it can be in a first paint,
+ * A navigation sidebar listing every page is real, visible content (unlike a
+ * closed overlay), but only the first screenful of it can be in a first paint,
  * and the rest scrolls inside its own container. On arcui.dev the sidebar is
  * 175 `arc-sidebar-link` roots and 30K of the 99K of shadow markup a component
  * page carries; the twenty-odd that are actually visible carry the paint.
  *
  * The remainder are marked `data-arc-defer`, which keeps the FOUC guard's
- * `opacity: 0` — layout is held, so nothing shifts when they upgrade; they fade
+ * `opacity: 0`. Layout is held, so nothing shifts when they upgrade; they fade
  * in. That is the opposite treatment from a closed overlay, which must occupy
  * nothing, and getting the two confused is measurable: marking deferred
  * elements `display: none` would collapse a sidebar mid-paint.

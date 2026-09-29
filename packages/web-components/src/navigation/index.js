@@ -1,4 +1,4 @@
-// ARC UI — Navigation tier
+// ARC UI: Navigation tier
 // Navigation, routing, and menu components
 
 export { ArcBreadcrumb } from './breadcrumb.register.js';

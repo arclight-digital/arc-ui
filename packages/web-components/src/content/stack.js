@@ -7,7 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-stack
  * @status stable
- * @prop {'vertical' | 'horizontal'} direction - Flex direction — vertical is column, horizontal is row
+ * @prop {'vertical' | 'horizontal'} direction - Flex direction: vertical is column, horizontal is row
  * @prop {'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'} gap - Gap between children, maps to --space-* tokens
  * @prop {'start' | 'center' | 'end' | 'stretch'} align - Cross-axis alignment (align-items)
  * @prop {'start' | 'center' | 'end' | 'between' | 'around'} justify - Main-axis alignment (justify-content)

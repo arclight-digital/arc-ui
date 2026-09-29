@@ -9,11 +9,11 @@ export const pageLayout: ComponentDef = {
   description:
     'Page structure primitive that arranges content into sidebar-left, sidebar-right, centered, or wide layouts using CSS Grid. Handles responsive collapse, configurable gap and max-width, and exposes named slots for sidebar, main, and aside regions.',
 
-  overview: `PageLayout is the structural foundation for every page in your application. Rather than hand-coding grid columns and responsive breakpoints, you set a single \`layout\` attribute and the component handles the rest: sidebar-left places a 240px navigation rail to the left of the main content, sidebar-right adds a 300px aside on the right for contextual panels, centered constrains content to a max-width with auto margins, and wide lets content stretch full-bleed.
+  overview: `PageLayout sets the page structure. Instead of hand-coding grid columns and responsive breakpoints, you set one \`layout\` attribute and the component handles the rest: sidebar-left places a 240px navigation rail to the left of the main content, sidebar-right adds a 300px aside on the right for contextual panels, centered constrains content to a max-width with auto margins, and wide lets content stretch full-bleed.
 
-The component is deliberately unopinionated about what goes inside each region. Drop a navigation menu, filter panel, or table of contents into the sidebar slot; place your primary content in the default slot; and optionally fill the aside slot with supplementary widgets. This separation of structure and content means you can swap layouts without touching the content itself — switch from sidebar-left to centered by changing one attribute.
+The component doesn't care what goes inside each region. Drop a navigation menu, filter panel, or table of contents into the sidebar slot; place your primary content in the default slot; and optionally fill the aside slot with supplementary widgets. This separation of structure and content means you can swap layouts without touching the content itself. Switching from sidebar-left to centered takes one attribute.
 
-PageLayout collapses gracefully on mobile. At 768px and below, sidebar-left and sidebar-right layouts flatten to a single stacked column so content remains readable on small screens. The \`gap\` and \`maxWidth\` properties let you fine-tune spacing and width constraints at the page level, keeping your layout tokens consistent with the rest of the design system.`,
+PageLayout collapses on mobile. At 768px and below, sidebar-left and sidebar-right layouts flatten to a single stacked column so content remains readable on small screens. The \`gap\` and \`maxWidth\` properties let you fine-tune spacing and width constraints at the page level, which keeps layout tokens consistent with the rest of the design system.`,
 
   features: [
     'Four layout modes: sidebar-left, sidebar-right, centered, and wide',
@@ -38,11 +38,11 @@ PageLayout collapses gracefully on mobile. At 768px and below, sidebar-left and 
       'Use the gap property to match the spacing scale defined in your design tokens',
     ],
     dont: [
-      'Do not nest multiple PageLayouts — one per page is sufficient; use Container or Section for inner structure',
+      'Do not nest multiple PageLayouts: one per page is sufficient; use Container or Section for inner structure',
       'Do not hard-code column widths with inline styles when the layout prop covers your use case',
-      'Do not place critical navigation in the aside slot — it is hidden in non-sidebar-right layouts',
+      'Do not place critical navigation in the aside slot: it is hidden in non-sidebar-right layouts',
       'Do not forget to provide meaningful content in the sidebar slot when using sidebar-left or sidebar-right',
-      'Do not use wide layout without any internal max-width constraints — text becomes unreadable at large viewports',
+      'Do not use wide layout without any internal max-width constraints: text becomes unreadable at large viewports',
       'Do not override the responsive breakpoint without testing on real mobile devices',
     ],
   },

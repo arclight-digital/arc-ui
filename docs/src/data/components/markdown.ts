@@ -9,9 +9,9 @@ export const markdown: ComponentDef = {
   description:
     'Renders markdown content as styled HTML with zero dependencies. Supports headings, lists, code blocks, blockquotes, links, images, and inline formatting.',
 
-  overview: `Markdown parses a markdown string into styled HTML using a lightweight built-in parser with zero external dependencies. Pass content via the \`content\` attribute or as slotted text, and the component renders it with full design-token styling — headings, code blocks, blockquotes, lists, links, and inline formatting all match the rest of the ARC UI theme.
+  overview: `Markdown parses a markdown string into styled HTML using a small built-in parser with zero external dependencies. Pass content via the \`content\` attribute or as slotted text, and the component renders it with design-token styling, so headings, code blocks, blockquotes, lists, links, and inline formatting match the rest of the ARC UI theme.
 
-The parser handles the most common markdown patterns: ATX headings (\`#\` through \`######\`), bold, italic, inline code, fenced code blocks with optional language hints, ordered and unordered lists, blockquotes, links, images, horizontal rules, and paragraph separation. It is intentionally lightweight — designed for documentation, changelogs, README rendering, and component descriptions rather than full CommonMark compliance.
+The parser handles the most common markdown patterns: ATX headings (\`#\` through \`######\`), bold, italic, inline code, fenced code blocks with optional language hints, ordered and unordered lists, blockquotes, links, images, horizontal rules, and paragraph separation. It is small, built for documentation, changelogs, README rendering, and component descriptions rather than full CommonMark compliance.
 
 All output is sanitized through a DOMParser pipeline that strips \`<script>\` elements and \`on*\` event handler attributes, making it safe to render user-provided markdown. The rendered HTML is injected into a styled shadow DOM container with proper spacing, typography, and color tokens applied to every element type.`,
 
@@ -33,9 +33,9 @@ All output is sanitized through a DOMParser pipeline that strips \`<script>\` el
       'Use for README rendering, changelogs, documentation, and component descriptions',
     ],
     dont: [
-      'Do not rely on it for full CommonMark or GFM compliance — it covers common patterns only',
-      'Do not render untrusted HTML directly — always go through the markdown parser',
-      'Do not use for rich text editing — pair with a dedicated editor component instead',
+      'Do not rely on it for full CommonMark or GFM compliance. It covers common patterns only',
+      'Do not render untrusted HTML directly. Always go through the markdown parser',
+      'Do not use it for rich text editing. Pair it with a dedicated editor component instead',
       'Do not nest Markdown components inside each other',
     ],
   },

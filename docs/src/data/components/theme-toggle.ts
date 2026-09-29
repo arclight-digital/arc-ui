@@ -9,9 +9,9 @@ export const themeToggle: ComponentDef = {
   description:
     'Three-state theme toggle cycling through dark, light, and auto modes with animated icon transitions and localStorage persistence.',
 
-  overview: `ThemeToggle is a single-button control that cycles through the three ARC UI theme modes: dark, light, and auto (system preference). Each mode is represented by a distinct icon — a moon for dark, a sun for light, and a monitor for auto — with smooth scale-and-rotate transitions between them. The component writes the selected theme to both \`document.documentElement.dataset.theme\` and \`localStorage\`, so the choice persists across page loads without any external state management.
+  overview: `ThemeToggle is a single-button control that cycles through the three ARC UI theme modes: dark, light, and auto (system preference). Each mode is represented by a distinct icon (a moon for dark, a sun for light, a monitor for auto), with scale-and-rotate transitions between them. The component writes the selected theme to both \`document.documentElement.dataset.theme\` and \`localStorage\`, so the choice persists across page loads with no external state management.
 
-On first mount, ThemeToggle reads the stored preference from \`localStorage\` under the key \`arc-theme\`, falling back to the \`data-theme\` attribute on the HTML element, and then to \`auto\` if neither is set. This makes it a drop-in solution for theme switching in any ARC UI application — just place the component in your top bar or settings panel and it handles the rest.
+On first mount, ThemeToggle reads the stored preference from \`localStorage\` under the key \`arc-theme\`, falling back to the \`data-theme\` attribute on the HTML element, and then to \`auto\` if neither is set. Place the component in your top bar or settings panel and it handles the rest.
 
 An \`icon-only\` mode is available for compact layouts like toolbars, rendering the button as a small circle without the text label. The standard mode displays the current theme name next to the icon, capitalised, giving less experienced users a clear indication of the active state.`,
 
@@ -35,10 +35,10 @@ An \`icon-only\` mode is available for compact layouts like toolbars, rendering 
       'Set an initial `data-theme` on the HTML element during SSR to prevent flash-of-wrong-theme',
     ],
     dont: [
-      'Do not place multiple ThemeToggle instances on the same page — they will compete for localStorage and document attributes',
+      'Do not place multiple ThemeToggle instances on the same page. They will compete for localStorage and document attributes',
       'Do not override the localStorage key `arc-theme` from external code without also updating the component',
-      'Do not use ThemeToggle for toggling features unrelated to visual theme — use Toggle for binary settings',
-      'Do not hide the component behind a menu — theme switching should be easily discoverable',
+      'Do not use ThemeToggle for toggling features unrelated to visual theme. Use Toggle for binary settings',
+      'Do not hide the component behind a menu. Theme switching should be easy to find',
       'Avoid using ThemeToggle in iframes without ensuring the parent document also applies the theme attribute',
     ],
   },

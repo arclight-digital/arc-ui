@@ -9,11 +9,11 @@ export const skipLink: ComponentDef = {
   description:
     'Accessible skip-to-content link, invisible until focused. On focus shows as accent-primary filled pill with glow ring above the page.',
 
-  overview: `SkipLink is an accessibility-first navigation aid that remains invisible during normal browsing but reveals itself the moment a keyboard user presses Tab at the top of the page. When focused, it appears as an accent-primary filled pill with a glow ring, positioned above all other content so the user can immediately jump past repetitive navigation and land on the main content area.
+  overview: `SkipLink is invisible during normal browsing and appears when a keyboard user presses Tab at the top of the page. When focused, it shows as an accent-primary filled pill with a glow ring above all other content, so the user can jump past repetitive navigation to the main content.
 
-This pattern is a WCAG 2.1 Level A requirement (Success Criterion 2.4.1) and benefits keyboard users, screen-reader users, and anyone navigating with assistive technology. By providing a single keystroke shortcut to the primary content landmark, SkipLink dramatically reduces the number of Tab presses needed to reach the page's meaningful content.
+This pattern is a WCAG 2.1 Level A requirement (Success Criterion 2.4.1) and helps keyboard users, screen-reader users, and anyone navigating with assistive technology. One keystroke takes them to the primary content landmark instead of many Tab presses.
 
-The component accepts a \`target\` prop — typically an ID selector like \`#main\` — that controls where focus moves when the link is activated. Place SkipLink as the very first focusable element inside your \`<body>\` or AppShell so it is the first thing a Tab keypress reveals. It automatically hides itself once focus moves away, keeping the visual interface clean for mouse users.`,
+The component accepts a \`target\` prop, typically an ID selector like \`#main\`, that controls where focus moves when the link is activated. Place SkipLink as the very first focusable element inside your \`<body>\` or AppShell so it is the first thing a Tab keypress reveals. It automatically hides itself once focus moves away, so mouse users never see it.`,
 
   features: [
     'Invisible by default, revealed only on keyboard focus',
@@ -35,11 +35,11 @@ The component accepts a \`target\` prop — typically an ID selector like \`#mai
       'Include SkipLink on every page for consistent keyboard navigation',
     ],
     dont: [
-      'Do not hide SkipLink with display:none or visibility:hidden — it must remain focusable',
-      'Do not place SkipLink after other interactive elements — it must be first',
+      'Do not hide SkipLink with display:none or visibility:hidden: it must remain focusable',
+      'Do not place SkipLink after other interactive elements: it must be first',
       'Do not use a target that does not exist on the page',
       'Do not add multiple SkipLinks unless the page has distinct content regions',
-      'Do not remove SkipLink to "simplify" the UI — it is a WCAG requirement',
+      'Do not remove SkipLink to "simplify" the UI: it is a WCAG requirement',
     ],
   },
 

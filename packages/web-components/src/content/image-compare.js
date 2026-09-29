@@ -16,7 +16,7 @@ import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
  *
  * The position axis is logical: 0 is the inline-start edge (left in LTR, right in RTL) for
  * horizontal orientation, and the block-start edge (top) for vertical. Before/after has no
- * inherent screen direction — unlike an audio timeline there is no convention fixing it — so the
+ * inherent screen direction (unlike an audio timeline there is no convention fixing it), so the
  * control mirrors with the document like the rest of the reading order. Arrow keys follow the
  * divider's visible motion.
  *

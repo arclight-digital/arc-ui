@@ -4,7 +4,7 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, list, oneOf, num } from '../shared/props.js';
 
 /**
- * Rotary knob input for continuous parameters — the control a slider can't be when the panel
+ * Rotary knob input for continuous parameters: the control a slider can't be when the panel
  * is a rack of channel strips. A 270-degree arc track fills from min to the current value with
  * a glowing indicator line, a monospace readout below, and synth-style interaction: vertical
  * drag to turn (Shift for fine adjustment), mouse wheel and arrow keys to step, optional
@@ -23,7 +23,7 @@ import { DeclaredPropsMixin, flag, list, oneOf, num } from '../shared/props.js';
  * @prop {boolean} disabled - Disables interaction, reducing opacity and blocking pointer events.
  * @prop {boolean} readonly - Prevents dragging, wheel, and key changes while the dial stays focusable and the value still submits.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the dial.
- * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously while the knob is turning — every drag movement, wheel notch, or key step. Use for real-time preview such as a filter cutoff or gain applied live.
+ * @fires {CustomEvent<{ value: number }>} arc-input - Fired continuously while the knob is turning: every drag movement, wheel notch, or key step. Use for real-time preview such as a filter cutoff or gain applied live.
  * @fires {CustomEvent<{ value: number }>} arc-change - Fired once when a turn commits: on drag release, and after each discrete wheel or key step. Use for persisting the value or triggering an expensive operation.
  * @slot none
  * @csspart base - The root element.
@@ -52,7 +52,7 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
     // shared/props.js.
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
-    // `of: Number` is what keeps `detents="0,25,50,100"` — a knob's detents
+    // `of: Number` is what keeps `detents="0,25,50,100"`, a knob's detents
     // read better as the comma list a patch file would carry than as JSON.
     // This was the library's last hand-rolled array converter, and it was one
     // because the vocabulary could not say "comma list" until V4-PLAN 4.3.
@@ -103,7 +103,7 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
         box-shadow: var(--interactive-focus);
       }
 
-      /* Sizes — the dial diameter, since the readout and label type already sit
+      /* Sizes: the dial diameter, since the readout and label type already sit
          on the shared scale. md is the base rule above, so an unrecognized
          value lands on it. */
       :host([size="sm"]) .knob__dial { width: 48px; height: 48px; }
@@ -159,7 +159,7 @@ export class ArcKnob extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
         font-size: var(--code-size);
         color: var(--interactive);
         font-weight: var(--font-label-weight, 600);
-        /* Updates on every pointermove — proportional digits would change its
+        /* Updates on every pointermove; proportional digits would change its
            width each frame and make the whole control breathe while turning. */
         font-variant-numeric: tabular-nums;
         user-select: none;

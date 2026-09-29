@@ -9,11 +9,11 @@ export const stack: ComponentDef = {
   description:
     'Flexbox layout component for vertical or horizontal stacking with token-based spacing.',
 
-  overview: `Stack is a pure layout primitive that arranges child elements in a vertical or horizontal flex container with consistent, token-based spacing. Rather than writing ad-hoc flexbox CSS for every layout, Stack provides a declarative API where \`direction\`, \`gap\`, \`align\`, and \`justify\` attributes map directly to the design system's spacing scale.
+  overview: `Stack is a layout primitive that arranges child elements in a vertical or horizontal flex container with token-based spacing. Instead of writing flexbox CSS for every layout, you set \`direction\`, \`gap\`, \`align\`, and \`justify\` attributes, which map to the design system's spacing scale.
 
-The component renders no inner wrapper — the \`:host\` element itself is the flex container, and \`render()\` returns a bare \`<slot>\`. This zero-overhead design means Stack adds no extra DOM nodes. Gap values (\`xs\` through \`2xl\`) map to \`var(--space-*)\` tokens, ensuring consistent spacing across the application without magic numbers.
+The component renders no inner wrapper. The \`:host\` element is the flex container, and \`render()\` returns a bare \`<slot>\`, so Stack adds no extra DOM nodes. Gap values (\`xs\` through \`2xl\`) map to \`var(--space-*)\` tokens, so spacing stays consistent without magic numbers.
 
-Stack is especially useful for form layouts, card groups, button rows, and any composition where items need uniform spacing. The \`wrap\` attribute enables flex wrapping for responsive grids, and combining \`direction="horizontal"\` with \`justify="between"\` creates common toolbar-style layouts.`,
+Stack suits form layouts, card groups, button rows, and any composition where items need uniform spacing. The \`wrap\` attribute enables flex wrapping for responsive grids, and combining \`direction="horizontal"\` with \`justify="between"\` creates common toolbar-style layouts.`,
 
   features: [
     'Vertical and horizontal flex direction via attribute',
@@ -21,7 +21,7 @@ Stack is especially useful for form layouts, card groups, button rows, and any c
     'Alignment control with start, center, end, and stretch options',
     'Justification control including space-between and space-around',
     'Flex wrap support for responsive layouts',
-    'Zero inner DOM — host element is the flex container directly',
+    'Zero inner DOM: host element is the flex container directly',
   ],
 
   guidelines: {
@@ -34,9 +34,9 @@ Stack is especially useful for form layouts, card groups, button rows, and any c
     ],
     dont: [
       'Do not use Stack when CSS Grid is more appropriate (2D layouts with column alignment)',
-      'Do not add margin to Stack children — use gap instead',
-      'Do not use gap="xs" for major layout sections — reserve xs for tight clusters like icon+text',
-      'Do not nest more than 3 levels deep — consider a dedicated layout component instead',
+      'Do not add margin to Stack children; use gap instead',
+      'Do not use gap="xs" for major layout sections; reserve xs for tight clusters like icon+text',
+      'Do not nest more than 3 levels deep; consider a dedicated layout component instead',
     ],
   },
 

@@ -10,3 +10,4 @@ export { default as Truncate } from './Truncate.svelte';
 export { default as Text } from './Text.svelte';
 export { default as Terminal } from './Terminal.svelte';
 export { default as KeyboardMap } from './KeyboardMap.svelte';
+export { default as CodeGroup } from './CodeGroup.svelte';

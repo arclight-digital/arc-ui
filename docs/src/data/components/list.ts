@@ -13,13 +13,13 @@ export const list: ComponentDef = {
 
 When \`selectable\` is set, the list renders with \`role="listbox"\` and manages \`aria-selected\` states across its child \`arc-list-item\` elements. Selection state is tracked via a comma-separated \`value\` string, making it easy to bind in any framework. The \`arc-change\` event fires on each selection change with the current value in \`event.detail\`.
 
-Three visual variants — default (plain), bordered (outlined container), and separated (bottom borders between items) — cover the most common list presentation patterns. A size prop controls the base font size for the entire list, cascading down to child items.`,
+Three visual variants cover the common list presentations: default (plain), bordered (outlined container), and separated (bottom borders between items). A size prop controls the base font size for the entire list, cascading down to child items.`,
 
   features: [
     'Full keyboard navigation with Arrow Up/Down, Home, End, Enter, and Space',
     'Single and multi-select modes with `value` binding and `arc-change` events',
     'Three visual variants: default, bordered, separated',
-    'Three size presets: sm, md, lg — cascades to child items',
+    'Three size presets (sm, md, lg) that cascade to child items',
     'Semantic `role="listbox"` when selectable, `role="list"` otherwise',
     'Automatic `aria-multiselectable` when `multiple` is set',
     'Row actions: an `actions` slot on arc-list-item, revealed on hover or focus and always shown without hover, that never selects the row',
@@ -36,9 +36,9 @@ Three visual variants — default (plain), bordered (outlined container), and se
       'Use the separated variant for long lists where row boundaries improve scannability',
     ],
     dont: [
-      'Do not use List for navigation menus — use `arc-navigation-menu` or `arc-dropdown-menu` instead',
+      'Do not use List for navigation menus. Use `arc-navigation-menu` or `arc-dropdown-menu` instead',
       'Do not mix arc-list-item with raw HTML elements inside a selectable list',
-      'Do not nest lists more than one level deep — consider a tree view for hierarchical data',
+      'Do not nest lists more than one level deep. Consider a tree view for hierarchical data',
     ],
   },
 

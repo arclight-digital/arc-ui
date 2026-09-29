@@ -14,6 +14,8 @@ declare module 'solid-js/jsx-runtime' {
 export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;
+  iconOnly?: boolean;
+  label?: string;
   onArcCopy?: (e: CustomEvent) => void;
   class?: string;
   id?: string;
@@ -43,9 +45,9 @@ export interface CopyButtonProps {
 }
 
 export const CopyButton: Component<CopyButtonProps> = (props) => {
-  const [local, rest] = splitProps(props, ['value', 'disabled', 'onArcCopy']);
+  const [local, rest] = splitProps(props, ['value', 'disabled', 'iconOnly', 'label', 'onArcCopy']);
   return (
-    <arc-copy-button value={local.value} disabled={local.disabled} on:arc-copy={local.onArcCopy} {...rest}>
+    <arc-copy-button value={local.value} disabled={local.disabled} prop:iconOnly={local.iconOnly} label={local.label} on:arc-copy={local.onArcCopy} {...rest}>
     </arc-copy-button>
   );
 };

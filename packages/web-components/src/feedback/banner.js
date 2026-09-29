@@ -35,7 +35,7 @@ export class ArcBanner extends DeclaredPropsMixin(LitElement) {
     css`
       /* The lobe inputs sit on :host because that is where the shape token is
          declared, and a custom property substitutes its own var()s at the
-         element that declares it — see shared/tokens.js. */
+         element that declares it; see shared/tokens.js. */
       :host {
         display: block;
         --lobe-rgb: var(--_status-rgb);

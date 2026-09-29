@@ -9,17 +9,17 @@ export const countdownTimer: ComponentDef = {
   description:
     'Live countdown to a target date/time with days, hours, minutes, and seconds segments.',
 
-  overview: `CountdownTimer renders a live, self-updating countdown to a target date or time. The display is split into four card-like segments — days, hours, minutes, and seconds — each showing a large mono-spaced number with a gradient accent fill and an uppercase label beneath. Segments are separated by ghost-colored colons to reinforce the time-display metaphor.
+  overview: `CountdownTimer renders a live countdown to a target date or time. The display is split into four card-like segments (days, hours, minutes, and seconds), each showing a large mono-spaced number with a gradient accent fill and an uppercase label beneath. Segments are separated by ghost-colored colons.
 
-The component parses any valid ISO 8601 string or JavaScript-parseable date via the \`target\` attribute and recalculates the remaining time every second using \`setInterval\`. When the countdown reaches zero, an \`arc-expired\` event is dispatched and the display switches to a configurable expired message (default: "Expired"). The interval is automatically cleaned up in \`disconnectedCallback\` to prevent memory leaks.
+The component parses any valid ISO 8601 string or JavaScript-parseable date via the \`target\` attribute and recalculates the remaining time every second using \`setInterval\`. When the countdown reaches zero, an \`arc-expired\` event is dispatched and the display switches to a configurable expired message (default: "Expired"). The interval is cleared in \`disconnectedCallback\`.
 
-Numbers use \`font-variant-numeric: tabular-nums\` so digits maintain consistent width as they tick down, preventing layout shift. The segment cards gain a subtle glow on hover via \`box-shadow: var(--glow-hover)\`, and all transitions respect \`prefers-reduced-motion\`. An optional \`label\` attribute renders gradient-accent text above the countdown for context like "Launch In" or "Sale Ends".
+Numbers use \`font-variant-numeric: tabular-nums\` so digits keep a constant width as they tick down and the layout does not shift. The segment cards gain a subtle glow on hover via \`box-shadow: var(--glow-hover)\`, and all transitions respect \`prefers-reduced-motion\`. An optional \`label\` attribute renders gradient-accent text above the countdown for context like "Launch In" or "Sale Ends".
 
-The \`hide-zero-segments\` attribute suppresses leading zero-value segments — useful when the countdown is under 24 hours and showing "00 Days" adds no value.`,
+The \`hide-zero-segments\` attribute suppresses leading zero-value segments, which helps when the countdown is under 24 hours and "00 Days" adds nothing.`,
 
   features: [
     'Live countdown updating every second via setInterval',
-    'Automatic cleanup of interval timer in disconnectedCallback',
+    'Interval timer cleared in disconnectedCallback',
     'Gradient-accent number text with tabular-nums for stable layout',
     'Card-style segments with hover glow effect',
     'Fires `arc-expired` custom event when countdown reaches zero',
@@ -39,11 +39,11 @@ The \`hide-zero-segments\` attribute suppresses leading zero-value segments — 
       'Place inside a Section or Card for visual context',
     ],
     dont: [
-      'Do not use for elapsed time or stopwatch functionality — this counts down only',
+      'Do not use for elapsed time or stopwatch functionality; this counts down only',
       'Do not set a target date in the past unless you want the expired state immediately',
-      'Do not place more than one or two countdowns on a single page — they compete for attention',
-      'Do not rely solely on the visual countdown for critical deadlines — provide server-side enforcement',
-      'Do not use extremely short countdowns (under 10 seconds) as primary UI — the urgency feels manipulative',
+      'Do not place more than one or two countdowns on a single page; they compete for attention',
+      'Do not rely solely on the visual countdown for critical deadlines. Enforce them server-side',
+      'Do not use extremely short countdowns (under 10 seconds) as primary UI; the urgency feels manipulative',
     ],
   },
 

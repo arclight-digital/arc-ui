@@ -1,4 +1,4 @@
-// ARC UI — Shared child elements
+// ARC UI: Shared child elements
 // Reusable data-holder elements used by multiple parent components
 
 export { ArcOption } from './option.register.js';

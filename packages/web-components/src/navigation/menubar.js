@@ -100,7 +100,7 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
         /* 320px was too narrow for an ordinary label+shortcut row: labels are
            flex: 1 with text-overflow: ellipsis, so anything longer than the
            panel is truncated, and "Ask for a change  ⌘K" is not a long label.
-           The cap is now both larger and overridable — it was a hard-coded
+           The cap is now both larger and overridable: it was a hard-coded
            number with no token behind it, so a consumer could only reach it
            through ::part(menu).
 
@@ -108,8 +108,8 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
            than to whatever shrink-to-fit resolves against its containing block.
            An absolutely positioned box is sized
              min(max(min-content, available), max-content)
-           where "available" comes from the nearest positioned ancestor — here
-           the trigger — so the panel's width was a function of what it happened
+           where "available" comes from the nearest positioned ancestor (here
+           the trigger), so the panel's width was a function of what it happened
            to be nested in rather than of what it contains. The viewport-relative
            max-width keeps it from overflowing a genuinely narrow screen. */
         width: max-content;
@@ -123,7 +123,7 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
         animation: menu-in 120ms var(--ease-out-expo);
       }
 
-      /* Resting positions, for menus PositionController hasn't adopted — the
+      /* Resting positions, for menus PositionController hasn't adopted: the
          static HTML export and anything pre-upgrade. Once managed, the panels
          are in the top layer at fixed coordinates and PositionController owns
          the flip that .menu--flipped used to encode. */
@@ -221,7 +221,7 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
         background: var(--border-subtle);
       }
     `,
-    // animate: false — menus are created and destroyed rather than toggled, and
+    // animate: false: menus are created and destroyed rather than toggled, and
     // they have their own menu-in keyframes.
     managedPanelStyles('menu', { animate: false }),
   ];
@@ -275,19 +275,16 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
   /**
    * Position every open menu, and retire the controllers of menus that closed.
    *
-   * A menubar has several panels open at once — the top-level menu plus one
-   * submenu per level of the expanded path — so it keeps one PositionController
+   * A menubar has several panels open at once (the top-level menu plus one
+   * submenu per level of the expanded path), so it keeps one PositionController
    * per menu key rather than the single controller every other floating
    * component needs. Each is anchored to its own parent: a top-level menu to the
    * `.top` cell holding its trigger, a submenu to the `.item-wrap` row that
    * opened it.
    *
-   * This replaces a hand-rolled two-pass measure: menus used to render
-   * visibility:hidden, get measured for a right-edge overflow, then re-render
-   * with a `menu--flipped` class. The controller writes coordinates before the
-   * browser paints, so there is no invisible first pass to hide and no extra
-   * render to schedule — and submenus now flip on the vertical axis too, which
-   * the old logic never did.
+   * The controller writes coordinates before the browser paints, so there is
+   * no hidden first pass to measure and no extra render to schedule, and
+   * submenus flip on the vertical axis as well as the horizontal one.
    */
   _positionOpenMenus() {
     const live = new Set();
@@ -671,7 +668,7 @@ export class ArcMenubar extends DeclaredPropsMixin(LitElement) {
   _onFocusOut(e) {
     const rt = e.relatedTarget;
     // Null relatedTarget also happens when a collapsing submenu removes the
-    // focused node (focus falls to body before we restore it) — ignore it;
+    // focused node (focus falls to body before we restore it); ignore it;
     // outside clicks are handled by DismissController.
     if (!rt || this.contains(rt) || this.shadowRoot.contains(rt)) return;
     this._closeAll(false);

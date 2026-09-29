@@ -17,8 +17,8 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @fires {CustomEvent<void>} arc-close - Fired when the drawer closes via backdrop click or escape key
  * @slot - Default content.
  * @csspart base - The root element.
- * @csspart panel - The sliding panel. Same element as `base`; the scrim is `::backdrop`,
- *   which is not an element and so cannot be a part — style it with the
+ * @csspart panel - The sliding panel. Same element as `base`. The scrim is `::backdrop`,
+ *   which is not an element and so cannot be a part; style it with the
  *   `--drawer-backdrop` custom property.
  * @csspart header
  * @csspart title
@@ -39,7 +39,7 @@ export class ArcDrawer extends DeclaredPropsMixin(LitElement) {
     css`
       :host { display: contents; }
 
-      /* The panel is the dialog, and the scrim is its ::backdrop — there is no
+      /* The panel is the dialog, and the scrim is its ::backdrop. There is no
          backdrop element left to carry a z-index, because the top layer has no
          ladder to climb. Its two properties come through custom properties so
          a consumer can still reach them: ::backdrop inherits from the element
@@ -59,7 +59,7 @@ export class ArcDrawer extends DeclaredPropsMixin(LitElement) {
         background: var(--surface-primary);
         flex-direction: column;
         transition:
-          transform var(--transition-base) var(--ease-out-expo),
+          transform var(--duration-base) var(--ease-out-expo),
           overlay var(--transition-base) allow-discrete,
           display var(--transition-base) allow-discrete;
       }

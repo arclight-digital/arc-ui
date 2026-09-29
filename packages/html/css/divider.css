@@ -56,7 +56,7 @@
         box-shadow: var(--glow-md);
       }
 
-      /* Alignment — rewrite gradients to originate from one edge */
+      /* Alignment: rewrite gradients to originate from one edge */
       .arc-divider[data-align="left"] .divider { margin-inline: 0; }
       .arc-divider[data-align="right"] .divider { margin-inline-start: auto; margin-inline-end: 0; }
 
@@ -103,7 +103,7 @@
         width: auto;
         height: 100%;
         /* One declaration turns every lobe below on its side. It has to sit on
-           .arc-divider — see the lobe note in shared/tokens.js. */
+           .arc-divider; see the lobe note in shared/tokens.js. */
         --lobe-axis: 180deg;
       }
       .arc-divider[vertical] .divider { width: 1px; height: 100%; }

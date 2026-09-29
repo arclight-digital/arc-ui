@@ -8,13 +8,13 @@ export const stat: ComponentDef = {
   interactivity: 'static',
   description: 'Numeric statistic display with gradient value and label.',
 
-  overview: `Stat renders a single key metric as a vertically stacked, center-aligned block. The value is displayed in a large, lightweight font (weight 200) with a blue-to-violet gradient fill and a dual-layer drop-shadow glow, making numbers visually striking against dark backgrounds. A thin gradient rule sits between the value and its uppercase label, providing a subtle decorative separator.
+  overview: `Stat renders a single key metric as a vertically stacked, center-aligned block. The value is displayed in a large, lightweight font (weight 200) with a blue-to-violet gradient fill and a dual-layer drop-shadow glow, which makes numbers stand out against dark backgrounds. A thin gradient rule sits between the value and its uppercase label.
 
-The value font-size uses \`clamp(32px, 4.5vw, 48px)\` to scale responsively between breakpoints, ensuring readability from mobile to desktop without manual media queries. The label uses the Tomorrow accent font at a small uppercase size with wide letter-spacing, following the system's standard labeling pattern.
+The value font-size uses \`clamp(32px, 4.5vw, 48px)\` to scale responsively between breakpoints, so it stays readable from mobile to desktop without media queries. The label uses the Tomorrow accent font at a small uppercase size with wide letter-spacing, following the system's standard labeling pattern.
 
-Stat also supports an optional trend indicator via the \`trend\` and \`change\` props. Setting \`trend\` to "up", "down", or "neutral" renders a colored arrow below the label, and the \`change\` prop displays accompanying text (typically a percentage like "+12%"). Up trends render in green, down trends in red, and neutral in muted grey, giving users an immediate sense of direction alongside the headline number.
+Stat also supports an optional trend indicator via the \`trend\` and \`change\` props. Setting \`trend\` to "up", "down", or "neutral" renders a colored arrow below the label, and the \`change\` prop displays accompanying text (typically a percentage like "+12%"). Up trends render in green, down trends in red, and neutral in muted grey, so direction is clear alongside the headline number.
 
-Stat is designed for landing-page metrics, dashboard KPI rows, and pricing comparison grids. Place multiple Stats side by side in a flex or grid container to create a metrics row. The exposed CSS parts — "stat", "value", "label", and "trend" — allow per-instance styling when you need to customize colors or sizes beyond the defaults.`,
+Stat fits landing-page metrics, dashboard KPI rows, and pricing comparison grids. Place several Stats side by side in a flex or grid container to make a metrics row. The exposed CSS parts ("stat", "value", "label", and "trend") allow per-instance styling of colors or sizes.`,
 
   features: [
     '`size` (sm, md, lg) and `plain` for a quiet stat in a dense strip of vitals',
@@ -24,22 +24,22 @@ Stat is designed for landing-page metrics, dashboard KPI rows, and pricing compa
     'Uppercase Tomorrow-font label with wide letter-spacing',
     'Four exposed CSS parts (stat, value, label, trend) for external style overrides',
     'Optional trend indicator (up/down/neutral arrow with change text) for at-a-glance direction',
-    'Lightweight font-weight 200 for an elegant numeric display',
+    'Light font weight (200) for the numeric display',
     'Center-aligned vertical layout with configurable padding via design tokens',
   ],
 
   guidelines: {
     do: [
-      'Place Stats in a row of three or four to create a balanced metrics section',
-      'Use short, punchy values like "99.9%", "<50ms", or "24/7" for maximum impact',
-      'Keep labels to one or two words — they are designed for terse descriptions',
+      'Place Stats in a row of three or four for a metrics section',
+      'Use short values like "99.9%", "<50ms", or "24/7"',
+      'Keep labels to one or two words: they are designed for terse descriptions',
       'Pair with arc-section or a flex container to create structured stat rows',
       'Use the ::part(value) selector to apply custom gradients for branded metric colors',
     ],
     dont: [
-      'Do not use Stat for long text content — it is optimized for short numeric values',
+      'Do not use Stat for long text content: it is optimized for short numeric values',
       'Do not place a single Stat in isolation; they work best in groups that invite comparison',
-      'Do not override the font-weight to bold — the lightweight 200 weight is intentional for the design aesthetic',
+      'Do not override the font-weight to bold: the light 200 weight is part of the design',
       'Do not embed interactive elements inside the value or label props; they render as plain text spans',
     ],
   },

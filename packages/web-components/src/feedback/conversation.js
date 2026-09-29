@@ -8,7 +8,7 @@ const NEAR_BOTTOM_PX = 100;
 
 /**
  * A chat transcript: the scrollable column that holds arc-message children. Built for AI
- * assistant panels — the layout, the role alignment, and the scroll behavior all assume messages
+ * assistant panels: the layout, the role alignment, and the scroll behavior all assume messages
  * arrive while the user is reading. While the reader sits near the bottom, new or growing
  * messages keep the view pinned to the latest; once they scroll up to re-read, the transcript
  * never yanks them back down. The arc-scroll-away and arc-scroll-return events report those
@@ -137,7 +137,7 @@ export class ArcConversation extends DeclaredPropsMixin(LitElement) {
    * The standard chat rule: stick to the bottom only if the reader was already
    * there. _nearEnd is sampled from scroll events rather than recomputed here,
    * because a tall message landing at the bottom instantly puts the *old*
-   * position outside the threshold — the reader did not move, so their intent
+   * position outside the threshold; the reader did not move, so their intent
    * to follow stands.
    */
   _onContentChanged() {

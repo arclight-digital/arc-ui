@@ -11,13 +11,13 @@ export const fieldset: ComponentDef = {
 
   overview: `Fieldset wraps a group of related form controls inside a native \`<fieldset>\` element with a styled legend, optional description text, and error messaging. It provides the semantic grouping that screen readers use to announce related fields as a unit.
 
-Two variants control the visual treatment: the default variant renders a bordered container with rounded corners, while the card variant adds a surface background and subtle shadow for elevated form sections. The \`error\` prop renders a red alert message below the content area, useful for group-level validation like "At least one option must be selected."
+Two variants control the visual treatment: the default variant renders a bordered container with rounded corners, while the card variant adds a surface background and subtle shadow for raised form sections. The \`error\` prop renders a red alert message below the content area, useful for group-level validation like "At least one option must be selected."
 
 An \`actions\` slot in the legend area lets you place buttons or links (like "Select all" or "Reset") inline with the group heading. The \`disabled\` prop cascades to all child controls via the native fieldset disabled behavior, dimming the entire group at once.`,
 
   features: [
     'Native `<fieldset>` and `<legend>` elements for proper form semantics',
-    'Two variants: default (bordered) and card (elevated surface)',
+    'Two variants: default (bordered) and card (raised surface)',
     'Legend text via prop or slot for flexible heading content',
     'Description text for group-level helper context',
     'Error message with `role="alert"` for group validation feedback',
@@ -28,15 +28,15 @@ An \`actions\` slot in the legend area lets you place buttons or links (like "Se
 
   guidelines: {
     do: [
-      'Group related inputs that share a common label — e.g. "Shipping Address" fields',
+      'Group related inputs that share a common label, e.g. "Shipping Address" fields',
       'Use the card variant for visually distinct form sections in settings pages',
       'Use the error prop for group-level validation like "Select at least one option"',
-      'Provide a legend for every fieldset — it is the accessible group label',
+      'Provide a legend for every fieldset. It is the accessible group label',
     ],
     dont: [
-      'Do not nest fieldsets more than one level deep — it creates confusing screen reader announcements',
-      'Do not use Fieldset for visual-only grouping — use a `div` or `arc-card` instead',
-      'Do not put field-level errors in the fieldset error slot — attach those to individual inputs',
+      'Do not nest fieldsets more than one level deep. It creates confusing screen reader announcements',
+      'Do not use Fieldset for visual-only grouping. Use a `div` or `arc-card` instead',
+      'Do not put field-level errors in the fieldset error slot. Attach those to individual inputs',
     ],
   },
 

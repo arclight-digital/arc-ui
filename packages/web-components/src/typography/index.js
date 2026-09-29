@@ -1,4 +1,4 @@
-// ARC UI — Typography tier
+// ARC UI: Typography tier
 // Text rendering and formatting components
 
 export { ArcHighlight } from './highlight.register.js';
@@ -12,3 +12,4 @@ export { ArcProse } from './prose.js';
 export { ArcTimeAgo } from './time-ago.js';
 export { ArcTerminal } from './terminal.js';
 export { ArcKeyboardMap } from './keyboard-map.js';
+export { ArcCodeGroup } from './code-group.js';

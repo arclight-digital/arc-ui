@@ -3,14 +3,14 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf, num, int } from '../shared/props.js';
 
 /**
- * Segmented audio level meter with peak-hold — the live vertical sibling of arc-meter,
+ * Segmented audio level meter with peak-hold. It is the live vertical sibling of arc-meter,
  * built for signal-rate updates (audio levels, buffer fill, realtime telemetry).
  * Segments below the warn threshold render success-tinted, between warn and clip
  * warning-tinted, and above clip error-tinted, with the house glow on lit segments.
  * A thin peak-hold line rides the highest recent level and decays toward the
  * current value; feed the `peak` property to drive it yourself instead.
  *
- * One element is one channel. There is deliberately no stereo mode — compose two
+ * One element is one channel. There is no stereo mode; compose two
  * meters side by side for a stereo pair, one per channel, so channel count is the
  * consumer's decision rather than a prop fork.
  *
@@ -25,7 +25,7 @@ import { DeclaredPropsMixin, oneOf, num, int } from '../shared/props.js';
  * @prop {number} segments - Number of discrete segments. Defaults to 20. Set 0 for a continuous, unsegmented bar.
  * @prop {number} warn - Fraction of the range (0..1) where the warning zone begins, regardless of units. Defaults to 0.75.
  * @prop {number} clip - Fraction of the range (0..1) where the clip (error) zone begins. Defaults to 0.9.
- * @prop {string} label - Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get — use something like "Master left" rather than "Level".
+ * @prop {string} label - Accessible name applied as aria-label on the meter. The component renders no visible text, so this is the only name screen readers get; use something like "Master left" rather than "Level".
  * @slot none
  * @csspart base - The root element.
  * @csspart meter - The outer wrapper carrying role="meter".
@@ -153,7 +153,7 @@ export class ArcLevelMeter extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.label = '';
 
     /** @private Self-tracked peak, as a fraction of the range. */
@@ -174,8 +174,8 @@ export class ArcLevelMeter extends DeclaredPropsMixin(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    // The decay loop is the only browser-global consumer, and it starts here —
-    // never at module scope or in the constructor — so the module stays
+    // The decay loop is the only browser-global consumer, and it starts here,
+    // never at module scope or in the constructor, so the module stays
     // importable and renderable in Node for SSR.
     if (typeof requestAnimationFrame === 'function') {
       this._reduceMotion =

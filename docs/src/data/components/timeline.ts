@@ -27,18 +27,18 @@ The dot marker uses \`--accent-primary\` with a double-ring effect (2px \`--bg-c
 
   guidelines: {
     do: [
-      'Use for chronologically ordered events — changelogs, activity logs, project history',
+      'Use for chronologically ordered events: changelogs, activity logs, project history',
       'Include dates for every item when the timeline represents real events',
-      'Order items chronologically — most recent first or earliest first, but be consistent',
+      'Order items chronologically (most recent first or earliest first) and stay consistent',
       'Keep headings concise and event descriptions to one or two sentences',
       'Use inside a card or sidebar for contextual activity feeds',
     ],
     dont: [
-      'Do not use timeline for non-sequential content — it implies chronological ordering',
-      'Do not mix items with and without dates randomly — be consistent across all items',
+      'Do not use timeline for non-sequential content. It implies chronological ordering',
+      'Do not mix items with and without dates randomly. Be consistent across all items',
       'Do not use more than 10-15 items without pagination or a "show more" pattern',
-      'Do not use timeline as a stepper — stepper is for workflow progress, timeline is for history',
-      'Do not put interactive elements (buttons, forms) inside timeline items — keep them read-only',
+      'Do not use timeline as a stepper. Stepper is for workflow progress, timeline is for history',
+      'Do not put interactive elements (buttons, forms) inside timeline items. Keep them read-only',
     ],
   },
 

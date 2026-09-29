@@ -1,4 +1,4 @@
-// ARC UI — Input tier
+// ARC UI: Input tier
 // Form controls and user input components
 
 export { ArcButton } from './button.register.js';

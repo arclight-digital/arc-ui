@@ -10,7 +10,7 @@ export const datePicker: ComponentDef = {
 
   overview: `DatePicker provides a calendar-based date selection interface that combines a read-only text input with a dropdown calendar grid. Clicking the input toggles a 6-row calendar showing the current month with previous/next month navigation arrows. The selected date is displayed in a human-readable format (e.g. "Jan 15, 2026") inside the input, while the underlying \`value\` property stores the date as an ISO string (YYYY-MM-DD).
 
-The calendar grid highlights today's date with an inset ring, the currently selected date with a filled accent-primary circle, and outside-month dates with reduced opacity. The \`min\` and \`max\` properties constrain the selectable range — dates outside this range appear dimmed and are non-interactive. Previous and next month buttons in the calendar header allow quick navigation without changing the selected value.
+The calendar grid highlights today's date with an inset ring, the currently selected date with a filled accent-primary circle, and outside-month dates with reduced opacity. The \`min\` and \`max\` properties constrain the selectable range: dates outside it appear dimmed and are non-interactive. Previous and next month buttons in the calendar header allow quick navigation without changing the selected value.
 
 When a date is selected, the component dispatches an \`arc-change\` event with the ISO date string in the detail. Clicking outside the component or pressing Escape closes the dropdown and returns focus to the input. The dropdown uses a slide-down entrance animation that respects \`prefers-reduced-motion\`. A configurable \`label\` renders above the input as an uppercase accent-font heading, consistent with other ARC UI form controls.`,
 
@@ -34,10 +34,10 @@ When a date is selected, the component dispatches an \`arc-change\` event with t
       'Set the initial value property when editing an existing record so the calendar opens to the correct month',
     ],
     dont: [
-      'Do not use DatePicker for date ranges — use two DatePicker instances with coordinated min/max instead',
+      'Do not use DatePicker for date ranges. Use two DatePicker instances with coordinated min/max instead',
       'Do not allow the user to type directly into the input; it is read-only by design to ensure valid date formats',
       'Do not set min greater than max, as this will disable all dates and make the picker unusable',
-      'Do not forget to handle the arc-change event — without it, the selected date is not captured',
+      'Do not forget to handle the arc-change event. Without it, the selected date is not captured',
       'Do not place DatePicker inside a container with overflow: hidden, as the calendar dropdown will be clipped',
     ],
   },

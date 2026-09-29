@@ -16,10 +16,10 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
  * @status stable
  * @prop {number} x - Horizontal position of the pin as a percentage of the image width, from 0 (left edge) to 100 (right edge). Values outside the range are clamped; a non-numeric value falls back to 50.
  * @prop {number} y - Vertical position of the pin as a percentage of the image height, from 0 (top edge) to 100 (bottom edge). Values outside the range are clamped; a non-numeric value falls back to 50.
- * @prop {string} label - Accessible name for the pin button, repeated as the heading of the popover. Always set it — without a label the pin announces nothing useful to a screen reader.
+ * @prop {string} label - Accessible name for the pin button, repeated as the heading of the popover. Always set it: without a label the pin announces nothing useful to a screen reader.
  * @prop {boolean} open - Whether the pin's popover is currently visible. Reflected as an attribute. Opens on click; closes on Escape, outside click, or a second click on the pin.
  * @fires {CustomEvent<{value: string | number}>} arc-open - Fired when the popover opens. detail.value carries the label, or the pin's index within its parent when no label is set.
- * @fires {CustomEvent<{value: string | number}>} arc-close - Fired before the popover closes and cancelable — preventDefault() vetoes the close. detail.value matches arc-open.
+ * @fires {CustomEvent<{value: string | number}>} arc-close - Fired before the popover closes and cancelable: preventDefault() vetoes the close. detail.value matches arc-open.
  * @slot - Default content.
  * @csspart base - The root element.
  * @csspart pin
@@ -28,7 +28,7 @@ import { DeclaredPropsMixin, flag, num } from '../shared/props.js';
 export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
   static properties = {
     // "Values outside the range are clamped; a non-numeric value falls back
-    // to 50" — which `_pct()` did at render time only, so the property kept
+    // to 50". `_pct()` did that at render time only, so the property kept
     // the out-of-range number a consumer read back (finding #70).
     x: num({ default: 50, min: 0, max: 100, clamp: 'toRange', reflect: true }),
     y: num({ default: 50, min: 0, max: 100, clamp: 'toRange', reflect: true }),
@@ -51,7 +51,7 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
         pointer-events: none;
       }
 
-      /* Zero-size anchor at the pin's coordinates. Deliberately untransformed:
+      /* Zero-size anchor at the pin's coordinates. Untransformed:
          a transform here would become the containing block for the panel, and
          in a browser without top-layer popover support the controller's fixed
          viewport coordinates would resolve against it instead of the viewport.
@@ -93,7 +93,7 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
 
       /* The breathing halo. The keyword curve is deliberate: loops are exempt
          from the entrance and exit curves in the token tree, and ease-in-out is
-         the symmetric shape a pulse wants — see the loop note in
+         the symmetric shape a pulse wants; see the loop note in
          scripts/checks/motion-tokens.js and the arc-avatar status pulse this
          follows. Opacity and transform only, so it stays off the layout path.
          The shared reduced-motion guard in tokenStyles shortens it to nothing;
@@ -182,7 +182,7 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
         pointer-events: auto;
       }
 
-      /* Resting fallback placement, above the pin — for the static export,
+      /* Resting fallback placement, above the pin, for the static export,
          pre-upgrade, and anywhere PositionController has not adopted the
          panel. The centring rides on the translate property rather than on
          transform, which stays free to carry the open/closed scale. */
@@ -283,7 +283,7 @@ export class ArcHotspot extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * Close the popover, firing the cancelable `arc-close` first — so a listener
+   * Close the popover, firing the cancelable `arc-close` first, so a listener
    * that calls `preventDefault()` keeps it open, whoever asked for the close.
    *
    * arc-image-hotspots calls this to enforce one-open-at-a-time, which is why

@@ -12,10 +12,10 @@ export const timePicker: ComponentDef = {
 
 The selected time is displayed in the input in the chosen format (e.g. "2:30 PM" in 12h mode or "14:30" in 24h mode), while the underlying \`value\` property always stores the time in 24-hour "HH:MM" format for consistent data handling. The \`step\` property controls the minute increment (1, 5, 15, or 30) to reduce the number of options when fine-grained selection is unnecessary.
 
-The \`min\` and \`max\` properties constrain the selectable range — time options outside this range appear dimmed and are non-interactive. When a complete time is selected (both hour and minute), the component dispatches an \`arc-change\` event with the 24-hour time string in the detail. Clicking outside the component or pressing Escape closes the dropdown and returns focus to the input. The dropdown uses a slide-down entrance animation that respects \`prefers-reduced-motion\`. Arrow keys navigate within columns, Tab moves between columns, and Enter confirms a selection.`,
+The \`min\` and \`max\` properties constrain the selectable range: time options outside this range appear dimmed and are non-interactive. When a complete time is selected (both hour and minute), the component dispatches an \`arc-change\` event with the 24-hour time string in the detail. Clicking outside the component or pressing Escape closes the dropdown and returns focus to the input. The dropdown uses a slide-down entrance animation that respects \`prefers-reduced-motion\`. Arrow keys navigate within columns, Tab moves between columns, and Enter confirms a selection.`,
 
   features: [
-    'Scrollable hour and minute columns for intuitive time selection',
+    'Scrollable hour and minute columns for picking a time',
     '12-hour and 24-hour display format with automatic AM/PM column in 12h mode',
     'Value always stored in 24-hour "HH:MM" format regardless of display format',
     'Configurable minute step increment (1, 5, 15, 30) to control granularity',
@@ -35,10 +35,10 @@ The \`min\` and \`max\` properties constrain the selectable range — time optio
       'Set the initial value property when editing an existing record so the columns open to the correct selection',
     ],
     dont: [
-      'Do not use TimePicker for duration input — use a number input with minutes or a dedicated duration component instead',
+      'Do not use TimePicker for duration input. Use a number input with minutes or a dedicated duration component instead',
       'Do not allow the user to type directly into the input; it is read-only by design to ensure valid time formats',
       'Do not set min greater than max, as this will disable all options and make the picker unusable',
-      'Do not forget to handle the arc-change event — without it, the selected time is not captured',
+      'Do not forget to handle the arc-change event. Without it, the selected time is not captured',
       'Do not place TimePicker inside a container with overflow: hidden, as the dropdown will be clipped',
     ],
   },

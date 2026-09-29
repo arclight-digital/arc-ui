@@ -8,11 +8,11 @@ export const container: ComponentDef = {
   interactivity: 'static',
   description: 'Max-width wrapper for page sections.',
 
-  overview: `Container is the fundamental width-constraining primitive in your layout toolkit. It centers its children horizontally with \`margin-inline: auto\` and caps their width at the \`--max-width\` design token (1120px by default), while adding consistent inline padding via \`--space-lg\`. Every landing page hero, documentation section, and dashboard content area should be wrapped in a Container to maintain readable line lengths and a uniform horizontal rhythm.
+  overview: `Container constrains width. It centers its children horizontally with \`margin-inline: auto\` and caps their width at the \`--max-width\` design token (1120px by default), and adds inline padding via \`--space-lg\`. Wrap every landing page hero, documentation section, and dashboard content area in a Container to keep line lengths readable and horizontal spacing uniform.
 
-The \`narrow\` boolean prop switches the max-width constraint to \`--max-width-sm\` (typically 720px), which is ideal for article-style content, blog posts, and focused forms where shorter line lengths improve readability. This single toggle covers the two most common content widths without requiring custom CSS overrides.
+The \`narrow\` boolean prop switches the max-width constraint to \`--max-width-sm\` (typically 720px), which suits article-style content, blog posts, and focused forms where shorter lines read better. That one toggle covers the two most common content widths without custom CSS.
 
-Container exposes a \`container\` CSS part on the inner wrapper, so you can target it with \`::part(container)\` for one-off adjustments. Because the component uses \`padding-inline\` rather than fixed margins, it handles RTL layouts automatically and leaves vertical spacing to the parent or sibling components like Section.`,
+Container exposes a \`container\` CSS part on the inner wrapper, so you can target it with \`::part(container)\` for one-off adjustments. Because the component uses \`padding-inline\` rather than fixed margins, it works in RTL layouts and leaves vertical spacing to the parent or sibling components like Section.`,
 
   features: [
     'Centers content with margin-inline: auto and respects the `--max-width` token',
@@ -20,8 +20,8 @@ Container exposes a \`container\` CSS part on the inner wrapper, so you can targ
     'Consistent inline padding via `--space-lg` design token',
     'RTL-safe layout using logical properties (padding-inline, margin-inline)',
     'Exposes a container CSS part for targeted ::part() styling',
-    'Zero vertical opinion — leaves block spacing to parent layout components',
-    'Lightweight wrapper with no JavaScript interactivity overhead',
+    'Leaves block spacing to parent layout components',
+    'Wrapper with no JavaScript',
   ],
 
   guidelines: {
@@ -33,11 +33,11 @@ Container exposes a \`container\` CSS part on the inner wrapper, so you can targ
       'Combine with DashboardGrid or other grid components for structured inner layouts',
     ],
     dont: [
-      'Do not nest Containers inside other Containers — a single wrapper per content band is sufficient',
+      'Do not nest Containers inside other Containers; a single wrapper per content band is enough',
       'Do not override padding-inline with fixed pixel values; adjust the --space-lg token instead',
-      'Do not use Container as a flex or grid parent — it is a block-level width constraint only',
+      'Do not use Container as a flex or grid parent; it is a block-level width constraint only',
       'Do not apply background colors directly to Container; wrap it in a full-bleed div for colored bands',
-      'Do not confuse Container with PageLayout — Container constrains width, PageLayout manages column structure',
+      'Do not confuse Container with PageLayout. Container constrains width; PageLayout manages column structure',
     ],
   },
 

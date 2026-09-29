@@ -84,7 +84,7 @@ export class ArcBreadcrumb extends LitElement {
       .breadcrumb__current {
         /* Emphasis is the color lift alone. This trail is one label-context
            run, and the weight override it used to carry was a body-context
-           token — the label face is not guaranteed to load at that weight, so
+           token; the label face is not guaranteed to load at that weight, so
            the browser's nearest-match rendered the current page *lighter*
            than its links (500 → 400 while the links sat on 600), which read
            as a different font entirely. */
@@ -128,7 +128,7 @@ export class ArcBreadcrumb extends LitElement {
     );
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

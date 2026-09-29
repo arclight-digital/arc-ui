@@ -33,7 +33,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
      * Whether this item sits in a selection list, which decides its role
      * (finding #28). Pushed by the parent arc-list rather than read from the
      * DOM: the parent's `role="listbox"` lives in *its* shadow root, so
-     * `closest('[role="listbox"]')` — arc-chip's test for the same question —
+     * `closest('[role="listbox"]')`, arc-chip's test for the same question,
      * cannot see it from out here.
      */
     _selectable: { state: true },
@@ -300,7 +300,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
@@ -318,7 +318,7 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
   get _role() {
     if (this._selectable) return 'option';
     // Lit's server-side element shim has no `closest`, and neither of the two
-    // paths that set `_selectable` runs there — the parent sets it from
+    // paths that set `_selectable` runs there; the parent sets it from
     // `updated()` and from its slotchange, and the server runs neither. So a
     // server-rendered item is a `listitem` and becomes an `option` on
     // hydration if its list is selectable. That is the right way round: plain

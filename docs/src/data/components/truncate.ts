@@ -8,15 +8,15 @@ export const truncate: ComponentDef = {
   interactivity: 'interactive',
   description: 'Multi-line text clamping with expandable show-more toggle.',
 
-  overview: `Truncate clamps long text to a specified number of lines and provides a "Show more" / "Show less" toggle to expand and collapse the content. It uses CSS \`-webkit-line-clamp\` for native multi-line truncation, which is widely supported across all modern browsers and provides smooth, reliable clamping without JavaScript text measurement.
+  overview: `Truncate clamps long text to a specified number of lines and provides a "Show more" / "Show less" toggle to expand and collapse the content. It uses CSS \`-webkit-line-clamp\` for native multi-line truncation, which is widely supported across current browsers and clamps reliably without JavaScript text measurement.
 
-A \`ResizeObserver\` monitors the content container and automatically detects whether the text actually overflows the clamp limit. The toggle button only appears when overflow is detected — short text that fits within the line limit will not show a toggle at all. When expanded, the component temporarily re-applies the clamp to measure whether the toggle should remain visible.
+A \`ResizeObserver\` monitors the content container and detects whether the text actually overflows the clamp limit. The toggle button only appears when overflow is detected, so short text that fits within the line limit shows no toggle. When expanded, the component temporarily re-applies the clamp to measure whether the toggle should remain visible.
 
 The component fires an \`arc-toggle\` event with \`{ expanded }\` detail when toggled, and the \`expanded\` attribute is reflected for CSS targeting. The toggle link is styled with \`var(--accent-primary)\` and uppercase lettering consistent with the design system's action links.`,
 
   features: [
     'CSS-native multi-line text clamping via -webkit-line-clamp',
-    'Automatic overflow detection — toggle only appears when text exceeds line limit',
+    'Automatic overflow detection: toggle only appears when text exceeds line limit',
     'ResizeObserver for responsive re-measurement on container resize',
     'Configurable line count via lines attribute',
     'Reflected expanded attribute for CSS-based conditional styling',
@@ -31,10 +31,10 @@ The component fires an \`arc-toggle\` event with \`{ expanded }\` detail when to
       'Test with varying content lengths to ensure the toggle appears correctly',
     ],
     dont: [
-      'Do not use Truncate for single-line text — use CSS text-overflow: ellipsis instead',
-      'Do not set lines to 1 — the clamping behavior is designed for multi-line content',
-      'Do not Truncate interactive content like forms or buttons — only use for text',
-      'Do not nest Truncate components — expanding one inside another creates confusing behavior',
+      'Do not use Truncate for single-line text. Use CSS text-overflow: ellipsis instead',
+      'Do not set lines to 1. The clamping behavior is designed for multi-line content',
+      'Do not Truncate interactive content like forms or buttons. Use it for text only',
+      'Do not nest Truncate components. Expanding one inside another creates confusing behavior',
     ],
   },
 

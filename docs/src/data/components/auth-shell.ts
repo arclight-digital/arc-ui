@@ -7,23 +7,23 @@ export const authShell: ComponentDef = {
   tier: 'layout',
   interactivity: 'hybrid',
   description:
-    'Authentication page layout with centered and split variants for sign-in, sign-up, password-reset, and other credential flows. Provides logo, form card, footer, and optional aside slots out of the box.',
+    'Authentication page layout with centered and split variants for sign-in, sign-up, password-reset, and other credential flows. Provides logo, form card, footer, and optional aside slots.',
 
-  overview: `AuthShell is a purpose-built page layout for authentication flows. Rather than assembling a centered card with manual CSS every time you need a login page, AuthShell gives you a semantically clear structure with dedicated slots for your logo, form content, footer links, and an optional marketing aside panel. The result is a consistent, polished auth experience that takes minutes to wire up instead of hours.
+  overview: `AuthShell is a page layout for authentication flows. Instead of assembling a centered card with manual CSS every time you need a login page, you get dedicated slots for your logo, form content, footer links, and an optional marketing aside panel.
 
-Two layout variants cover the most common patterns. The \`centered\` variant places a single card in the middle of the viewport — ideal for minimal sign-in pages, password-reset screens, and invite-acceptance flows where you want the user's full attention on the form. The \`split\` variant divides the viewport into a form side and an aside panel, giving you space for a product illustration, testimonial, or feature highlights alongside the credentials form.
+Two layout variants cover the most common patterns. The \`centered\` variant places a single card in the middle of the viewport, which suits minimal sign-in pages, password-reset screens, and invite-acceptance flows. The \`split\` variant divides the viewport into a form side and an aside panel, with room for a product illustration, testimonial, or feature highlights alongside the credentials form.
 
-Both variants are fully responsive. On mobile, the split layout collapses to a single column and hides the aside panel automatically, so users on small screens still get a clean, focused form without any extra media-query work on your part. The card region enforces a comfortable max-width of 420px, preventing overly wide inputs on large monitors while remaining spacious enough for multi-field forms, social login buttons, and terms-of-service links.`,
+Both variants are responsive. On mobile, the split layout collapses to a single column and hides the aside panel, with no media-query work on your part. The card region has a max-width of 420px, which stops inputs getting too wide on large monitors and still leaves room for multi-field forms, social login buttons, and terms-of-service links.`,
 
   features: [
     'Two layout variants: centered (single card) and split (form + aside panel)',
     'Dedicated slots for logo, default content (form), footer, and aside',
     'Responsive split layout collapses to single column on mobile',
-    'Card region enforces 420px max-width for comfortable form widths',
+    'Card region has a 420px max-width',
     'CSS custom property theming via ARC UI design tokens',
     'Aside panel auto-hides on narrow viewports to keep forms uncluttered',
     'Exposed CSS parts (shell, logo, card, footer, form-side, aside) for deep customization',
-    'Works seamlessly with Input, Button, Toggle, and other ARC UI form components',
+    'Works with Input, Button, Toggle, and other ARC UI form components',
   ],
 
   guidelines: {
@@ -33,12 +33,12 @@ Both variants are fully responsive. On mobile, the split layout collapses to a s
       'Place your brand logo in the logo slot so it appears above the form card consistently',
       'Include a footer slot with links to terms of service, privacy policy, and support',
       'Pair with ARC UI Input, Select, and Button components for consistent form styling',
-      'Keep the form concise — ask only for credentials and one optional remember-me toggle',
+      'Keep the form short: ask only for credentials and one optional remember-me toggle',
     ],
     dont: [
-      'Do not nest AuthShell inside AppShell — auth pages should be standalone, outside the main app chrome',
+      'Do not nest AuthShell inside AppShell; auth pages should be standalone, outside the main app chrome',
       'Do not use the split variant for mobile-only apps where the aside will never be visible',
-      'Do not put navigation bars or sidebars inside AuthShell — it is designed as a single-purpose layout',
+      'Do not put navigation bars or sidebars inside AuthShell; it is a single-purpose layout',
       'Do not overload the form card with too many fields; split long registration forms into multi-step flows instead',
       'Do not forget to provide a way back to the marketing site or a "sign up" link in the footer',
     ],

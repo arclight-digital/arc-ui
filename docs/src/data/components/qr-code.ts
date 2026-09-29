@@ -9,40 +9,40 @@ export const qrCode: ComponentDef = {
   description:
     'Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes automatically via currentColor, with an optional contrast card for guaranteed scanability on dark backgrounds.',
 
-  overview: `QRCode encodes a URL, Wi-Fi credential, 2FA provisioning URI, or any other string entirely on the client and renders it as a single-path inline SVG — no canvas, no image requests, no server round-trip. All dark modules are combined into one \`<path>\` with crisp edges, so even large codes stay lightweight and scale cleanly at any size.
+  overview: `QRCode encodes a URL, Wi-Fi credential, 2FA provisioning URI, or any other string entirely on the client and renders it as a single-path inline SVG. There is no canvas, no image request, and no server round-trip. All dark modules are combined into one \`<path>\` with crisp edges, so even large codes stay lightweight and scale cleanly.
 
-By default the modules inherit \`currentColor\` (falling back to \`var(--text-primary)\`) over a transparent background, so the code themes automatically alongside your text. Consumers can override the two custom properties \`--qr-fg\` (module color) and \`--qr-bg\` (background) for full control.
+By default the modules inherit \`currentColor\` (falling back to \`var(--text-primary)\`) over a transparent background, so the code follows your text color. Override the two custom properties \`--qr-fg\` (module color) and \`--qr-bg\` (background) to change it.
 
-One important caveat: QR scanners are built for dark modules on a light background. On ARC's dark theme, the default rendering produces light modules on a dark surface — an "inverted" code that most modern scanners handle, but less reliably than a standard one. When scanability matters (payment links, ticket check-in, device pairing), set the \`contrast\` attribute: it renders the code as forced-black modules on a white rounded card, guaranteeing reliable scanning in both themes.
+QR scanners expect dark modules on a light background. On ARC's dark theme, the default rendering produces light modules on a dark surface, an "inverted" code that most scanners handle but less reliably than a standard one. When scanability matters (payment links, ticket check-in, device pairing), set the \`contrast\` attribute. It renders the code as black modules on a white rounded card, which scans reliably in both themes.
 
-The component re-encodes automatically whenever \`value\` or \`level\` changes, and renders nothing when \`value\` is empty or exceeds QR capacity. The raw value is never exposed to assistive technology — set a meaningful \`label\` describing what the code does, especially since values are often secrets (2FA URIs, tokens).`,
+The component re-encodes automatically whenever \`value\` or \`level\` changes, and renders nothing when \`value\` is empty or exceeds QR capacity. The raw value is never exposed to assistive technology, so set a \`label\` describing what the code does. Values are often secrets (2FA URIs, tokens).`,
 
   features: [
-    'Fully client-side encoding via the battle-tested qrcode-generator library (MIT, zero dependencies)',
-    'Single-path SVG output with run-length-combined modules — small DOM, crisp at any size',
+    'Fully client-side encoding via the qrcode-generator library (MIT, zero dependencies)',
+    'Single-path SVG output with run-length-combined modules: small DOM, crisp at any size',
     'Themes automatically: modules use var(`--qr-fg`, currentColor), background var(`--qr-bg`, transparent)',
-    'Contrast mode renders a white rounded card with forced dark modules for guaranteed scanability in both themes',
+    'Contrast mode renders a white rounded card with forced dark modules so it scans in both themes',
     'Four error-correction levels (L / M / Q / H) with automatic version (size) selection',
     'Configurable quiet zone (border of empty modules) around the code',
-    '`role="img"` with a consumer-provided accessible label — the raw value is never exposed by default',
+    '`role="img"` with a consumer-provided accessible label: the raw value is never exposed by default',
     'Re-encodes reactively when value or level changes; renders nothing for empty values',
     'CSS parts (svg, card) for external style overrides',
   ],
 
   guidelines: {
     do: [
-      'Set the contrast attribute whenever reliable scanning matters (payments, tickets, pairing) — inverted light-on-dark codes are less reliable with some scanners',
+      'Set the contrast attribute whenever reliable scanning matters (payments, tickets, pairing): inverted light-on-dark codes are less reliable with some scanners',
       'Provide a meaningful label describing what the code does ("Scan to open the event page"), not the encoded value itself',
       'Use level "M" (the default) for most content; step up to "Q" or "H" only when the code may be partially obscured (e.g. a logo overlay or print wear)',
-      'Keep encoded values short — shorter strings produce fewer modules and scan faster from further away',
+      'Keep encoded values short: shorter strings produce fewer modules and scan faster from further away',
       'Render at 160px or larger for codes meant to be scanned from another device across a desk',
       'Pair with visible text or a copy button showing the same link, for users who cannot scan',
     ],
     dont: [
-      'Do not rely on the default transparent rendering for scan-critical codes on the dark theme — use contrast mode instead',
-      'Do not put the raw encoded value in the label — it is exposed to assistive technology and may be a secret (2FA URI, token)',
-      'Do not encode very long strings (over ~1KB) — capacity runs out and density makes scanning unreliable at typical sizes',
-      'Do not override --qr-fg/--qr-bg with low-contrast or same-lightness colors — scanners need strong dark-on-light contrast',
+      'Do not rely on the default transparent rendering for scan-critical codes on the dark theme; use contrast mode instead',
+      'Do not put the raw encoded value in the label: it is exposed to assistive technology and may be a secret (2FA URI, token)',
+      'Do not encode very long strings (over ~1KB): capacity runs out and density makes scanning unreliable at typical sizes',
+      'Do not override --qr-fg/--qr-bg with low-contrast or same-lightness colors: scanners need strong dark-on-light contrast',
       'Do not shrink the quiet zone below 2 modules when the code sits against busy surrounding content',
     ],
   },

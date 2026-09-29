@@ -24,7 +24,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
     _items: { state: true },
     /**
      * What the live region says. Removing `aria-grabbed` (finding #42) left the
-     * keyboard reorder protocol announced by nothing at all — the attribute was
+     * keyboard reorder protocol announced by nothing at all; the attribute was
      * dead, but it was the only ARIA state the rows carried. arc-kanban is the
      * library's reference for this exact protocol and announces every step, so
      * this component does now too.
@@ -161,21 +161,18 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
   /* ---- Slot management ---- */
 
   /**
-   * Adopt children into per-row slots, and stop discarding their markup.
+   * Adopt children into per-row slots so their markup renders.
    *
-   * The rows used to render `item.node.textContent`, so everything inside an
-   * item — an avatar, a badge, a link, a nested arc-* component — arrived as a
-   * bare string (finding #41). The original markup was never lost, since the
-   * light DOM kept it behind a hidden slot host; it simply never reached the
-   * screen. `arc-virtual-list` already renders per-index slots, so the shape
-   * was established; the difference is that its consumer writes the
-   * `slot="item-N"` attribute and here the component assigns it, because the
-   * consumer authors an ordinary list and this component is what reorders it.
+   * Rendering `item.node.textContent` flattened everything inside an item (an
+   * avatar, a badge, a link, a nested arc-* component) to a bare string
+   * (finding #41). The per-index slots follow `arc-virtual-list`, except that
+   * there the consumer writes `slot="item-N"` and here the component assigns
+   * it, because the consumer authors an ordinary list and this component is
+   * what reorders it.
    *
-   * That makes the handler **additive** rather than a replace. Naming a child
-   * takes it out of the default slot, so the very next `slotchange` reports an
-   * empty assignment — rebuilding `_items` from it, as the old version did,
-   * would empty the list one frame after filling it.
+   * That makes the handler **additive**. Naming a child takes it out of the
+   * default slot, so the very next `slotchange` reports an empty assignment;
+   * rebuilding `_items` from it would empty the list one frame after filling it.
    */
   _onSlotChange(e) {
     const incoming = e.target.assignedElements({ flatten: true });
@@ -296,7 +293,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
 
       case 'Escape':
         e.preventDefault();
-        // Deliberately silent about *where* it landed: Escape abandons the move
+        // Silent about *where* it landed: Escape abandons the move
         // and the original order is restored, so there is nothing to report.
         if (this._kbMoving || this._kbSelected >= 0) this._announce('Move cancelled.');
         this._kbMoving = false;
@@ -382,7 +379,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

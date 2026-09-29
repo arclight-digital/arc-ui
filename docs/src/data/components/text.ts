@@ -34,9 +34,9 @@ The \`as\` property controls the rendered HTML element (h1 through h6, span, or 
       'Use the code variant for inline code references within body text',
     ],
     dont: [
-      'Do not render display or heading variants inside a <span> — they are block-level content',
-      'Skip heading levels (e.g. h1 to h3) just to get a particular visual size; use "as" and "variant" independently',
-      'Do not use the accent variant for large blocks of text — the gradient and glow are meant for short highlights',
+      'Do not render display or heading variants inside a <span>. They are block-level content',
+      'Skip heading levels (e.g. h1 to h3) only to get a particular visual size; use "as" and "variant" independently',
+      'Do not use the accent variant for large blocks of text. The gradient and glow are meant for short highlights',
       'Do not apply the wordmark variant outside of branding contexts; it is specifically designed for product names',
       'Do not nest multiple Text components when a single one with the right variant suffices',
     ],

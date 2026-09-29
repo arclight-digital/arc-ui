@@ -26,6 +26,7 @@ import { avatarGroup } from './avatar-group';
 import { breadcrumb } from './breadcrumb';
 import { calendar } from './calendar';
 import { codeBlock } from './code-block';
+import { codeGroup } from './code-group';
 import { colorSwatch } from './color-swatch';
 import { combobox } from './combobox';
 import { commandPalette } from './command-palette';
@@ -199,6 +200,7 @@ export const components: ComponentDef[] = [
   breadcrumb,
   calendar,
   codeBlock,
+  codeGroup,
   colorSwatch,
   combobox,
   commandPalette,

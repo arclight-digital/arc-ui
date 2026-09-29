@@ -19,7 +19,7 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * @prop {boolean} readonly - Prevents entering, deleting, or pasting characters while the boxes stay focusable and the value still submits.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the digit boxes.
  * @fires arc-input - Fired on every character entry or deletion. `event.detail.value` contains the current partial value.
- * @fires arc-change - Fired when the pin is complete — every box filled. That is the commit for a fixed-length value.
+ * @fires arc-change - Fired when the pin is complete: every box filled. That is the commit for a fixed-length value.
  * @fires arc-complete - Fired alongside arc-change when all boxes are filled. The more specific name, kept for consumers that auto-submit.
  * @slot none
  * @csspart base - The root element.

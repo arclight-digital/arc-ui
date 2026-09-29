@@ -6,15 +6,15 @@ import { getCollection } from 'astro:content';
 import { components } from '../data/components/index';
 import {
   buildSteps, tokenCount, testCount, utilityClassCount, elementCount, version,
-  generatedFileCount, generatedLineCount, prismVersion,
+  generatedFileCount, generatedLineCount, prismVersion, frameworkCount,
 } from '../data/site-stats';
 import fs from 'node:fs';
 import { anchorFor, compareVersionsDesc } from '../lib/releases';
 import { armSnippet } from '@arclux/glint/full';
 import { tokens } from '../../../shared/tokens.js';
 
-// The "what changed" chapter is the newest entry in the releases collection —
-// the same source /docs/changelog renders — so it can never claim a version
+// The "what changed" chapter is the newest entry in the releases collection,
+// the same source /docs/changelog renders, so it can never claim a version
 // the changelog doesn't have, and it rewrites itself the moment the next
 // release note lands. The lead is the note's own first paragraph with inline
 // markdown flattened to prose; the topics are its section headings.
@@ -49,7 +49,7 @@ const releaseDate = new Date(`${latestRelease.data.date}T00:00:00Z`).toLocaleDat
 
 // The console's first swatch IS the shipped theme, read from the token source
 // so it can never drift from what the page is actually wearing. Clicking it
-// removes the override entirely (see initAccentSwatches) — a real reset.
+// removes the override entirely (see initAccentSwatches), a real reset.
 const rgbToHex = (rgb: string) =>
   '#' + (rgb.match(/\d+/g) ?? []).map((n) => (+n).toString(16).padStart(2, '0')).join('');
 const defaultAccent = {
@@ -172,11 +172,11 @@ const jsonLd = {
 <BaseLayout description={jsonLd.description}>
   {/* Glint's pre-hide, inlined before any data-reveal element is parsed: the
       reveal-on-scroll elements otherwise paint for a frame before the runtime
-      hides them, which reads as a blip — worst on reload, where scroll
-      restoration can drop the visitor straight onto the CTA banner. The rule
+      hides them, which reads as a blip (worst on reload, where scroll
+      restoration can drop the visitor straight onto the CTA banner). The rule
       self-expires, so a failed script leaves the page readable. */}
   <script is:inline set:html={armSnippet()} />
-  <!-- Top Bar — shared with DocsLayout via SiteTopBar; immersive makes it
+  <!-- Top Bar: shared with DocsLayout via SiteTopBar; immersive makes it
        transparent over the hero and (inside the component) theme-following
        instead of theme-fixed, so light mode stays readable. -->
   <SiteTopBar immersive mobileMenu="nav" />
@@ -184,7 +184,7 @@ const jsonLd = {
   <!-- Hero -->
   <header class="hero">
     <!-- The whole light system is one WebGL canvas: plasma filaments and
-         caustic shimmer, chromatic fringes, per-pixel film grain — all in
+         caustic shimmer, chromatic fringes, per-pixel film grain, all in
          arc-lightplay.js. It reads the two accent tokens live and re-reads
          them whenever <html>'s data-theme/class/style mutate, so the swatch
          demo and the theme toggle recolor it with zero wiring here. -->
@@ -205,7 +205,7 @@ const jsonLd = {
         </h1>
         <p class="hero__body">
           {components.length} components for the screens people actually use: tables, forms, settings,
-          the fourth modal. Seven frameworks, two colors, glow included.
+          the fourth modal. {frameworkCount} framework targets, two colors, glow included.
         </p>
         <arc-code-block variant="basic" language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block>
         <div class="hero__actions">
@@ -649,7 +649,7 @@ const jsonLd = {
       </div>
     </section>
 
-    <!-- Rigor — the actual CI pipeline, under its real gate names -->
+    <!-- Rigor: the actual CI pipeline, under its real gate names -->
     <section class="gauntlet">
       <div class="gauntlet__inner">
         <div class="gauntlet__header" data-reveal="blur-in">
@@ -724,7 +724,7 @@ const jsonLd = {
     </section>
 
     <!-- What changed: the newest release note, derived at build time from the
-         same collection /docs/changelog renders — when the next release note
+         same collection /docs/changelog renders, so when the next release note
          lands this chapter rewrites itself. -->
     <section class="changed">
       <div class="changed__inner">
@@ -756,7 +756,7 @@ const jsonLd = {
     </section>
 
     <!-- CTA. data-reveal sits on a wrapper, not the element: glint's reveal
-         is a WAAPI animation, which composites over author CSS — so on the
+         is a WAAPI animation, which composites over author CSS, so on the
          element itself it briefly defeated base.css's :not(:defined) opacity
          guard, fading in the un-upgraded banner and handing it back to the
          guard when the animation ended: visible, invisible, visible. A plain
@@ -764,7 +764,7 @@ const jsonLd = {
     <div data-reveal="fade-up">
     <arc-cta-banner headline="Build something that glows.">
       <p>
-        One package for plain HTML, a native one for each of seven frameworks. MIT licensed.
+        A native package for each of {frameworkCount} targets, plain HTML included. MIT licensed.
       </p>
       <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">
         Get Started
@@ -788,7 +788,7 @@ const jsonLd = {
   import '@arclux/glint/glint.css';
   import '@arclux/arc-ui/utilities.css';
   // arc-code-block is opt-in only (it lazy-loads a syntax highlighter), so
-  // the register barrel deliberately skips it — without this import the
+  // the register barrel skips it. Without this import the
   // framework switcher's window never upgrades and the FOUC guard hides it.
   import '@arclux/arc-ui/code-block';
   import { initLightplay } from '../scripts/arc-lightplay.js';
@@ -796,8 +796,8 @@ const jsonLd = {
   /* ── Lightplay hero ──
      One WebGL pass (scripts/arc-lightplay.js) draws the whole hero light
      system. It owns its own resize, visibility pause, reduced-motion still
-     frame, and theme sync — including re-reading the accent tokens when the
-     swatch demo writes them onto <html>'s style attribute — so all this page
+     frame, and theme sync, including re-reading the accent tokens when the
+     swatch demo writes them onto <html>'s style attribute, so all this page
      does is start it, reveal the hero behind the first frame, and dispose on
      navigation. */
   function initHero() {
@@ -919,7 +919,7 @@ const jsonLd = {
      --ease-out) via glint.css. */
   /* One controller per page view. astro:page-load fires on the initial load
      too, so without the guard this ran twice and the second init re-hid the
-     elements the first had just revealed — the CTA banner faded in, blinked
+     elements the first had just revealed: the CTA banner faded in, blinked
      out, and faded back. The guard clears on before-swap so a soft
      navigation still gets a fresh controller. */
   let glint: ReturnType<typeof glintInit> | null = null;
@@ -936,7 +936,7 @@ const jsonLd = {
   }
 
   /* ── Utilities demo: one token moves everything. Spacing and radius scope
-     to the stage — a scoped override is exactly how a consumer would use
+     to the stage; a scoped override is exactly how a consumer would use
      them, unlike the accents, whose compounds only recompose at :root ── */
   function initTokensDemo() {
     const stage = document.getElementById('tokens-demo-stage');
@@ -983,7 +983,7 @@ const jsonLd = {
   }
 
   /* ── Accent swatches: the theme.css panel rewrites itself, and the
-     override applies at :root — the real consumer recipe, applied for real.
+     override applies at :root, the real consumer recipe, applied for real.
      Compound tokens compose on :root, so a scoped override would recolor
      direct var() uses and quietly skip every gradient, glow and focus ring;
      applying to documentElement is the demo that cannot lie. The lightplay
@@ -1065,8 +1065,8 @@ const jsonLd = {
 
   /* ── App: the issue tracker ──
      One array is the source of truth. The list was rendered by the server;
-     everything after load — the board, the sheet, a moved card, a new issue,
-     the cycle's progress and the rail's load chart — is written from it. */
+     everything after load (the board, the sheet, a moved card, a new issue,
+     the cycle's progress and the rail's load chart) is written from it. */
   type Issue = { id: string; title: string; who: string; status: string; priority: string; points: number; body: string };
   type Status = { id: string; label: string; variant: string };
   function initApp() {
@@ -1392,7 +1392,7 @@ const jsonLd = {
      plasma filaments and caustic shimmer, chromatic fringes, per-pixel
      film grain. It
      composites premultiplied alpha over the page, so the body's own
-     --bg-deep is the darkness the light plays in — there is no second
+     --bg-deep is the darkness the light plays in; there is no second
      background to keep in sync. */
   .hero__lightplay {
     position: absolute;
@@ -1488,7 +1488,7 @@ const jsonLd = {
   }
 
   /* The word the page is named for actually emits: the twin behind it is a
-     layered bloom — hot white core, accent halo, wide secondary falloff —
+     layered bloom (hot white core, accent halo, wide secondary falloff)
      breathing on the hero's own glow knob so light mode stays calm. */
   .hero__headline-glow-shadow {
     position: absolute;
@@ -1554,7 +1554,7 @@ const jsonLd = {
 
   /* ── Chapter type ──
      Every chapter opens the same way: eyebrow, a two-line statement with one
-     lit line, one sentence. The statement is the section header now — there
+     lit line, one sentence. The statement is the section header now. There
      are no card grids to carry the argument, the artifact below it does. */
   .statement {
     display: flex;
@@ -1580,7 +1580,7 @@ const jsonLd = {
     filter: drop-shadow(0 0 28px rgba(var(--accent-primary-rgb), 0.28));
   }
 
-  /* background-clip: text paints glyphs only where the element's box is —
+  /* background-clip: text paints glyphs only where the element's box is;
      any line-height tighter than the glyph extents chops descenders. Every
      clipped element gets its paint box extended in em (so it scales with
      the type) and pulled back with margin so layout doesn't move. */
@@ -2408,7 +2408,7 @@ const jsonLd = {
       radial-gradient(ellipse 45% 45% at 90% 60%, rgba(var(--accent-primary-rgb), 0.05), transparent 70%);
   }
 
-  /* Every chapter after the hero opens on the same lit hairline — the one
+  /* Every chapter after the hero opens on the same lit hairline, the one
      house separator (.yours and .gauntlet already carry it). */
   .changed::before {
     content: '';
@@ -2519,7 +2519,7 @@ const jsonLd = {
   }
 
   /* One console: every customization control in a single labeled bar, the
-     two live outputs — the stylesheet and the components — beneath it */
+     two live outputs (the stylesheet and the components) beneath it */
   .yours__console {
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-subtle);
@@ -2613,7 +2613,7 @@ const jsonLd = {
   }
 
   .theme-file__code {
-    /* The console panel is the frame — strip the global pre box chrome so the
+    /* The console panel is the frame: strip the global pre box chrome so the
        code doesn't render as a second rounded card inside it. */
     background: none;
     border: 0;
@@ -2643,7 +2643,7 @@ const jsonLd = {
   .tk-s { color: var(--color-success, #7bd88f); }
   .tk-c { color: var(--text-ghost); }
 
-  /* The swatch repaints these live — a value swap, not an emphasis */
+  /* The swatch repaints these live: a value swap, not an emphasis */
   .theme-file__code em[data-theme-val],
   .theme-file__code [data-theme-val] {
     font-style: normal;
@@ -2904,7 +2904,7 @@ const jsonLd = {
       border-top: 1px solid var(--border-subtle);
     }
     /* Slider rows re-stack: label and readout share the top line, the
-       slider takes the full width below — nothing clips, and the touch
+       slider takes the full width below, so nothing clips, and the touch
        target runs the whole row. */
     .ctl--slider {
       display: grid;

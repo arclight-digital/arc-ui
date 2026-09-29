@@ -9,7 +9,7 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  * @tag arc-progress
  * @status stable
  * @prop {number} value - Current completion percentage from 0 to 100. Only meaningful in determinate mode. The bar fills proportionally and aria-valuenow updates to match, giving screen readers a live reading.
- * @prop {'bar' | 'spinner'} variant - Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right — best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.
+ * @prop {'bar' | 'spinner'} variant - Selects the visual shape. Bar renders a horizontal track with a fill that grows from left to right, best for wide containers and known percentages. Spinner renders a circular indicator suited to compact inline or button contexts.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the thickness of the bar track or the diameter of the spinner. Small (sm) fits inside table cells and tight layouts. Medium (md) is the standard default. Large (lg) is appropriate for page-level or hero loading states.
  * @prop {boolean} indeterminate - When true, the bar pulses or the spinner loops without a fixed endpoint. Use this when the total work is unknown. Switch to determinate (indeterminate=false) and set a value as soon as real progress data becomes available.
  * @prop {string} label - Accessible label text applied as aria-label on the underlying progressbar role element. This is the only way screen readers can convey the purpose of the indicator. Always provide a meaningful label such as "Uploading report.pdf" rather than a generic "Loading".

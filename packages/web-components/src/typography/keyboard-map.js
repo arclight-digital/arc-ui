@@ -12,7 +12,7 @@ import { tokenStyles } from '../shared-styles.js';
 
 /** A key of `w` quarter-units. */
 const k = (id, w = 4) => ({ id, w });
-/** A spacer of `w` quarter-units — advances the cursor, renders nothing. */
+/** A spacer of `w` quarter-units: advances the cursor, renders nothing. */
 const g = (w) => ({ gap: w });
 
 const F_ROW = [
@@ -141,7 +141,7 @@ function bottomRow(platform) {
 }
 
 /* Nav cluster (ansi only): absolute placements right of the 2-column
-   gutter. Rows follow the physical board — Ins/Home/PgUp beside the number
+   gutter. Rows follow the physical board: Ins/Home/PgUp beside the number
    row, Del/End/PgDn beside the top row, arrows in the last two rows. */
 const NAV_CLUSTER = [
   { id: 'insert', row: 2, col: 63, span: 4 },
@@ -182,7 +182,7 @@ function buildBoard(layout, platform) {
 /* ── Chord parsing ──
    Mirrors arc-hotkey's normalization (hotkey keeps its parser private, so
    the aliases are restated here rather than imported): ctrl/control,
-   meta/cmd/command, alt/option, shift — plus `mod`, which resolves to meta
+   meta/cmd/command, alt/option, shift, plus `mod`, which resolves to meta
    on mac and ctrl elsewhere, so one chord string documents both platforms. */
 
 const MODIFIER_IDS = {
@@ -327,7 +327,7 @@ function legendFor(id, platform) {
 
 /* ── Accessible chord names ──
    Words rather than glyphs, spelled the way shortcut docs spell them:
-   the primary modifier first (Ctrl or Cmd), then Alt, then Shift — so a
+   the primary modifier first (Ctrl or Cmd), then Alt, then Shift, so a
    screen reader hears "Cmd+Shift+P", not the glyph order "Shift+Cmd+P". */
 
 const MOD_NAMES = {
@@ -374,19 +374,19 @@ function chordName({ mods, key }, platform) {
 }
 
 /**
- * A rendered keyboard with highlighted keys and chords — the visual big
+ * A rendered keyboard with highlighted keys and chords, the visual big
  * sibling of arc-kbd and arc-hotkey, for shortcut documentation and editor
  * cheat sheets. Every key named in `highlight` lights up with the house
  * state marking: accent tint, glow, accent legend text.
  *
  * The board is a stylised diagram, not a keyboard configurator: `compact`
- * (the default) is a 60%-style block without nav cluster or numpad — enough
- * for almost all shortcut documentation — and `ansi` adds the F-row and nav
- * cluster. There is deliberately no ISO/JIS machinery; a diagram that
+ * (the default) is a 60%-style block without nav cluster or numpad (enough
+ * for almost all shortcut documentation), and `ansi` adds the F-row and nav
+ * cluster. There is no ISO/JIS machinery; a diagram that
  * chased physical-layout fidelity would trade its one job (making a chord
  * legible at a glance) for configuration surface.
  *
- * It is pure display typography — no slots, no click events, nothing
+ * It is pure display typography: no slots, no click events, nothing
  * focusable. A shortcut diagram that responded to clicks would imply the
  * keys do something; wiring real shortcuts is arc-hotkey's job.
  *
@@ -395,7 +395,7 @@ function chordName({ mods, key }, platform) {
  * @prop {'compact' | 'ansi'} layout - Board shape: "compact" (default, a 60%-style block) or "ansi" (adds the F-row and nav cluster). Unknown values fall back to compact.
  * @prop {string|string[]} highlight - Key chords to light up: an array property (e.g. ["mod+z", "mod+shift+z"]) or a comma- or space-separated attribute string. Each chord joins keys with "+" ("mod+shift+p"); `mod` resolves to Cmd on mac and Ctrl on win, mirroring arc-hotkey's aliases (cmd/command → meta, option → alt, control → ctrl). Single keys are fine ("g", "escape"). Unknown key names are ignored.
  * @prop {boolean} labels - Whether keys render their legends. Default true; disable from markup with either `no-labels` or `labels="false"`.
- * @prop {'auto' | 'mac' | 'win'} platform - Which platform's modifier legends and `mod` resolution to use: "auto" (default — detected in the browser, mac on the server), "mac", or "win".
+ * @prop {'auto' | 'mac' | 'win'} platform - Which platform's modifier legends and `mod` resolution to use: "auto" (default, detected in the browser, mac on the server), "mac", or "win".
  * @prop {string} caption - Optional caption rendered below the board in muted text.
  * @slot none
  * @csspart base - The root element.
@@ -466,7 +466,7 @@ export class ArcKeyboardMap extends DeclaredPropsMixin(LitElement) {
           box-shadow var(--transition-fast);
       }
 
-      /* The house state marking: tint, glow, accent text — never an edge. */
+      /* The house state marking: tint, glow, accent text, never an edge. */
       .key--hit {
         color: var(--accent-primary);
         background: rgba(var(--accent-primary-rgb), 0.16);
@@ -510,12 +510,12 @@ export class ArcKeyboardMap extends DeclaredPropsMixin(LitElement) {
    * Detection lands here, not in connectedCallback, because navigator is the
    * one input the server does not have. A server-rendered board is always the
    * mac board; connectedCallback runs before the client's first render, so
-   * detecting there made that first render the win board instead — a different
+   * detecting there made that first render the win board instead, a different
    * bottom row, and `mod` lighting Ctrl where the server lit Cmd. Those keys
    * swap between the hit and the plain template, which is a part changing shape
    * under hydration and the one thing it cannot adopt. By firstUpdated the
    * server DOM has been adopted, and the re-render this schedules corrects the
-   * board within the same frame — before paint on a client-only page too.
+   * board within the same frame, before paint on a client-only page too.
    */
   firstUpdated() {
     if (typeof navigator !== 'undefined') {

@@ -7,19 +7,19 @@ export const jsonTree: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   description:
-    'Collapsible JSON explorer with house syntax coloring — the dev-tools inspector for API payloads, configuration objects, and structured state.',
+    'Collapsible JSON explorer with syntax coloring, like a dev-tools inspector, for API payloads, configuration objects, and structured state.',
   searchKeywords: ['json', 'inspector', 'devtools', 'object', 'payload', 'viewer', 'explorer'],
 
-  overview: `JsonTree renders any JSON value as a collapsible tree, the way a browser's dev-tools inspector does. Objects and arrays become expandable branches with a rotating chevron, primitives render inline with per-type syntax coloring, and neutral guide rails trace the nesting depth. The coloring follows the same token mapping as CodeBlock — keys in the secondary accent, strings in the success hue, numbers in the primary accent, booleans and null in the warning hue — so a theme that overrides the base tokens recolors the tree along with everything else. Unlike CodeBlock, JsonTree loads no highlighter and has zero dependencies, so it registers with the rest of the library at no extra cost.
+  overview: `JsonTree renders any JSON value as a collapsible tree, the way a browser's dev-tools inspector does. Objects and arrays become expandable branches with a rotating chevron, primitives render inline with per-type syntax coloring, and neutral guide rails trace the nesting depth. The coloring follows the same token mapping as CodeBlock (keys in the secondary accent, strings in the success hue, numbers in the primary accent, booleans and null in the warning hue), so a theme that overrides the base tokens recolors the tree along with everything else. Unlike CodeBlock, JsonTree loads no highlighter and has zero dependencies, so it registers with the rest of the library at no extra cost.
 
 Data arrives one of two ways. Pass the \`data\` property for objects and arrays you already hold in JavaScript, or set the \`json\` attribute to a JSON string for markup-only use. The string is parsed defensively: invalid input renders a small inline error state with the parser's message instead of throwing. When both are set, the property wins.
 
-The \`expanded\` prop controls how many levels open initially — the default of 1 shows the root's immediate children. As a bare boolean attribute it opens every level. Collapsed branches show a muted summary preview of what is inside, such as three keys or twelve items, and long strings truncate in the row with the full value available on hover via the title attribute.
+The \`expanded\` prop controls how many levels open initially. The default of 1 shows the root's immediate children. As a bare boolean attribute it opens every level. Collapsed branches show a muted summary preview of what is inside, such as three keys or twelve items, and long strings truncate in the row with the full value available on hover via the title attribute.
 
-The component follows the WAI-ARIA tree pattern with the same keymap as TreeView: ArrowDown and ArrowUp move between visible rows, ArrowRight expands a collapsed branch, ArrowLeft collapses an expanded one, and Enter or Space toggles the focused node. Objects and arrays with more than 100 children render the first 100 plus a "show N more" expander node rather than flooding the DOM — JsonTree is built for inspection, not for scale. When the data itself is large-scale, VirtualList is the right component.`,
+The component follows the WAI-ARIA tree pattern with the same keymap as TreeView: ArrowDown and ArrowUp move between visible rows, ArrowRight expands a collapsed branch, ArrowLeft collapses an expanded one, and Enter or Space toggles the focused node. Objects and arrays with more than 100 children render the first 100 plus a "show N more" expander node rather than flooding the DOM. JsonTree is built for inspection; when the data itself is large-scale, use VirtualList.`,
 
   features: [
-    'Renders any JSON value — objects, arrays, strings, numbers, booleans, and null — as a collapsible tree',
+    'Renders any JSON value (objects, arrays, strings, numbers, booleans, and null) as a collapsible tree',
     'House syntax coloring from design tokens: keys in accent-secondary, strings in the success hue, numbers in accent-primary, booleans and null in the warning hue',
     'Accepts data as a JavaScript property or as a `json` string attribute, with a graceful inline error state for invalid JSON',
     'Configurable initial depth via `expanded`, from fully collapsed (0) to fully open (bare attribute)',
@@ -28,22 +28,22 @@ The component follows the WAI-ARIA tree pattern with the same keymap as TreeView
     'Neutral depth guide rails drawn with the divider token, never tinted by value type or state',
     'Full WAI-ARIA tree pattern with the TreeView keymap: arrows to navigate and toggle, Enter or Space to activate',
     'A 100-child page boundary with a "show N more" expander keeps huge payloads from flooding the DOM',
-    'Zero dependencies — no highlighter, no lazy chunks — so it ships in the standard register barrel',
+    'Zero dependencies, no highlighter, no lazy chunks: it ships in the standard register barrel',
   ],
 
   guidelines: {
     do: [
-      'Use JsonTree to inspect structured data — API responses, configuration objects, event payloads, and application state',
+      'Use JsonTree to inspect structured data: API responses, configuration objects, event payloads, and application state',
       'Set `expanded="2"` or deeper when the interesting values live below the first level',
       'Pass objects and arrays through the `data` property; reserve the `json` attribute for static markup',
       'Use `keys-quoted` when the output should read as strict JSON rather than devtools-style bare keys',
-      'Reach for VirtualList instead when the data is genuinely large-scale — JsonTree pages children at 100 per branch by design',
+      'Reach for VirtualList instead when the data is genuinely large-scale. JsonTree pages children at 100 per branch by design',
     ],
     dont: [
-      'Do not use JsonTree to display source code — CodeBlock highlights whole files in any language, while JsonTree explores one structured value',
-      'Do not use JsonTree for navigation hierarchies like file browsers or menus — TreeView handles selection and custom labels',
-      'Do not feed it multi-megabyte payloads expecting virtualization — the show-more boundary caps the DOM but everything revealed stays rendered',
-      'Do not rely on hover-only title text to communicate essential string content — truncated values should also be reachable another way',
+      'Do not use JsonTree to display source code. CodeBlock highlights whole files in any language; JsonTree explores one structured value',
+      'Do not use JsonTree for navigation hierarchies like file browsers or menus. TreeView handles selection and custom labels',
+      'Do not feed it multi-megabyte payloads expecting virtualization. The show-more boundary caps the DOM but everything revealed stays rendered',
+      'Do not rely on hover-only title text to communicate essential string content. Truncated values should also be reachable another way',
     ],
   },
 

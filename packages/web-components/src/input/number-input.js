@@ -128,7 +128,7 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
       }
 
       /* The bordered control is a block-level flex child, so it takes the host's
-         full width. The field grows to absorb whatever that is — without this
+         full width. The field grows to absorb whatever that is, without this
          the buttons and field total 128px and everything past that is empty
          bordered box, which is what any form column wider than 128px produced.
          56px stays the flex basis so the control keeps its natural size when
@@ -184,7 +184,7 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.value = 0;
     this.step = 1;
     this.label = '';
@@ -253,7 +253,7 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
     this._setValue(this.value + this.step);
   }
 
-  /** The field's `change` — blur or Enter. A commit. */
+  /** The field's `change`: blur or Enter. A commit. */
   _handleInput(e) {
     const parsed = parseFloat(e.target.value);
     if (!isNaN(parsed)) {
@@ -261,7 +261,7 @@ export class ArcNumberInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
     }
   }
 
-  /** The field's `input` — every keystroke. Not a commit. */
+  /** The field's `input`: every keystroke. Not a commit. */
   _handleTyping(e) {
     if (this.readonly) return;
     const parsed = parseFloat(e.target.value);

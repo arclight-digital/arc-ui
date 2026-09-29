@@ -10,3 +10,4 @@ export { TimeAgo } from './TimeAgo';
 export { Truncate } from './Truncate';
 export { Terminal } from './Terminal';
 export { KeyboardMap } from './KeyboardMap';
+export { CodeGroup } from './CodeGroup';

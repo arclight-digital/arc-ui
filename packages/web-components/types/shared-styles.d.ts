@@ -7,9 +7,9 @@
  *
  * Only static tokens (typography, spacing, radii, transitions, layout) live here
  * as fallback defaults, and they are GENERATED from shared/tokens.js rather than
- * written here — see generated/host-tokens.js. This block used to be a second,
- * hand-maintained copy of values that also live in the token tree, and nineteen
- * of the eighty-one had drifted apart, two of them visibly. Edit the tree.
+ * written here; see generated/host-tokens.js. A hand-maintained copy here
+ * drifted from the token tree (nineteen of eighty-one values, two of them
+ * visibly). Edit the tree.
  */
 /**
  * Just the box-sizing reset, for components an application writes itself.

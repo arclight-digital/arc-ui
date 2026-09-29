@@ -9,11 +9,11 @@ export const switchGroup: ComponentDef = {
   description:
     'Groups multiple toggle switches under a shared label with consistent sizing and disabled state. Supports vertical and horizontal layouts.',
 
-  overview: `SwitchGroup wraps multiple \`arc-toggle\` components inside a semantic \`<fieldset>\` with an optional legend label. It cascades the \`size\` and \`disabled\` props down to all child toggles, ensuring visual consistency without manually setting props on each one.
+  overview: `SwitchGroup wraps multiple \`arc-toggle\` components inside a semantic \`<fieldset>\` with an optional legend label. It cascades the \`size\` and \`disabled\` props down to all child toggles, so you don't set props on each one.
 
 Two orientation modes control the layout: vertical (default) stacks toggles in a column with compact spacing, while horizontal arranges them in a wrapping row with wider gaps. The vertical layout works well in settings panels, while horizontal suits toolbar-style option rows.
 
-The component renders a native \`<fieldset>\` for proper form semantics and sets \`role="group"\` with \`aria-label\` on the inner container, making the group relationship clear to assistive technology.`,
+The component renders a native \`<fieldset>\` for proper form semantics and sets \`role="group"\` with \`aria-label\` on the inner container, which tells assistive technology the toggles are a group.`,
 
   features: [
     'Groups `arc-toggle` children under a shared label and fieldset',
@@ -32,8 +32,8 @@ The component renders a native \`<fieldset>\` for proper form semantics and sets
       'Use horizontal orientation for compact toolbar-style layouts',
     ],
     dont: [
-      'Do not mix toggle and non-toggle children — the component only cascades props to arc-toggle',
-      'Do not use for mutually exclusive options — use a radio group instead',
+      'Do not mix toggle and non-toggle children: the component only cascades props to arc-toggle',
+      'Do not use for mutually exclusive options; use a radio group instead',
       'Do not nest switch groups inside each other',
     ],
   },

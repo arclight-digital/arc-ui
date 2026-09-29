@@ -13,7 +13,7 @@ import { DeclaredPropsMixin, flag, int, oneOf } from '../shared/props.js';
  * @prop {'stacked' | 'horizontal'} layout - How each item arranges its own term and detail. `stacked`
  *   (the default) puts the term above the detail; `horizontal` puts them side by side on a shared
  *   two-column grid, so terms align down the list. This composes with `columns`, which is about how
- *   many *items* sit across — one item can be horizontal inside a three-column list.
+ *   many *items* sit across. One item can be horizontal inside a three-column list.
  * @prop {boolean} dividers - Show horizontal dividers between rows and vertical dividers between columns.
  * @slot - Default content.
  * @csspart base - The root element.
@@ -24,7 +24,7 @@ export class ArcDescriptionList extends DeclaredPropsMixin(LitElement) {
     columns: int({ default: 1, min: 1, clamp: 'toRange', reflect: true }),
     // Absorbed from arc-key-value (4.2), whose `layout` was its whole reason to
     // exist as a separate component. `stacked` first, so it is the default and
-    // arc-description-list renders exactly as it did before this merge —
+    // arc-description-list renders exactly as it did before this merge,
     // arc-key-value defaulted the other way, which is a MIGRATION line, not a
     // reason to change what the survivor does.
     layout: oneOf(['stacked', 'horizontal']),
@@ -52,7 +52,7 @@ export class ArcDescriptionList extends DeclaredPropsMixin(LitElement) {
 
       /* Item layout is set as a custom property rather than a selector, because
          the thing that has to change is *inside* arc-description-item's shadow
-         root — ::slotted() reaches the host, and the host's only child is the
+         root, ::slotted() reaches the host, and the host's only child is the
          item's own wrapper. Custom properties cross the boundary; selectors do
          not. (arc-key-value could style ::slotted(arc-kv-pair) directly only
          because arc-kv-pair renders its two halves as bare children of :host.)
@@ -131,7 +131,7 @@ export class ArcDescriptionList extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

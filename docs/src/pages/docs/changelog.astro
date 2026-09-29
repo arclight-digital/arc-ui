@@ -3,7 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { anchorFor, compareVersionsDesc, majorOf } from '../../lib/releases';
 
-// One markdown file per release in src/content/releases/ — frontmatter carries
+// One markdown file per release in src/content/releases/. Frontmatter carries
 // version/date/title, the body carries plain-markdown notes. The chrome (h2,
 // divider, body styling) all comes from this template.
 const sorted = (await getCollection('releases')).sort((a, b) =>
@@ -31,7 +31,7 @@ const archives = archivedMajors.map((major) => {
     major,
     entries,
     id: `v${major}-archive`,
-    summary: `v${major}.x archive — ${entries.length} releases, v${entries[entries.length - 1].version} through v${entries[0].version}`,
+    summary: `v${major}.x archive: ${entries.length} releases, v${entries[entries.length - 1].version} through v${entries[0].version}`,
   };
 });
 
@@ -56,7 +56,7 @@ const headings = [
 
     {inline.map(({ version, title, Content }) => (
       <section id={anchorFor(version)} class="release-body">
-        <h2 class="docs-heading">v{version} — {title}</h2>
+        <h2 class="docs-heading">v{version}: {title}</h2>
         <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
         <Content />
       </section>
@@ -68,7 +68,7 @@ const headings = [
 
         {archive.entries.map(({ version, title, Content }) => (
           <section id={anchorFor(version)} class="release-body">
-            <h2 class="docs-heading">v{version} — {title}</h2>
+            <h2 class="docs-heading">v{version}: {title}</h2>
             <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
             <Content />
           </section>
@@ -80,7 +80,7 @@ const headings = [
 
 <style>
   /* House styling for the rendered markdown bodies. The release files are
-     plain markdown — these rules map their output onto the same look the
+     plain markdown; these rules map their output onto the same look the
      hand-written sections had (docs-heading/docs-text/docs-list/tier-heading
      in docs.css), so the files themselves stay free of house markup. */
 
@@ -88,7 +88,7 @@ const headings = [
      gap. Each already opens with the house h2 + arc-divider; separation is
      whitespace's job, not a second rule's. */
   /* The generic docs chrome gives adjacent sections a hairline ::before and
-     24px of padding — a second rule on a page whose own comment above says the
+     24px of padding, which is a second rule on a page whose own comment above says the
      release divider stays the only one. Strip it, and count the docs column's
      40px flex gap toward the break: 3xl + that gap lands the visual distance
      at the 4xl this declared before the strays were noticed. */
@@ -102,7 +102,7 @@ const headings = [
   }
 
   /* Fenced code blocks. The global reset zeroes the UA's pre margins, and
-     nothing here restored them — prose sat flush against the block's border.
+     nothing here restored them, so prose sat flush against the block's border.
      Wider than the 640px prose measure on purpose: code wraps badly. */
   .release-body :global(pre) {
     margin-block: var(--space-sm) var(--space-lg);
@@ -113,11 +113,11 @@ const headings = [
      These carried the tier-heading eyebrow: --text-xs at --text-muted, with no
      top margin. Both parts worked against it. Muted sits *below* the
      --text-secondary body it introduces, so the heading read as the quietest
-     thing in its own section — hierarchy inverted rather than established. And
+     thing in its own section, so the hierarchy was inverted rather than established. And
      with no top margin, a release of eight sections arrived as one unbroken
      column. Lifting to --text-primary is the house move (hierarchy comes from
      lifting, not from stepping down the gray ramp), and the gap does the
-     breaking — the release's own divider stays the only rule on the page.
+     breaking. The release's own divider stays the only rule on the page.
      Uppercase at the label role is kept: it's what distinguishes this level
      from the sentence-case h2 above it now that both sit at primary. */
   .release-body :global(h3) {
@@ -207,7 +207,7 @@ const headings = [
     border-radius: var(--radius-md);
     padding: 0 var(--space-lg);
     /* No margin of its own: .changelog-page is a flex column with a 40px gap,
-       where margins don't collapse — a vertical margin here triple-counted
+       where margins don't collapse, so a vertical margin here triple-counted
        the separation (gap + two margins = 120px between closed archives). */
     margin: 0;
   }
@@ -240,7 +240,7 @@ const headings = [
 <script is:inline>
   (function () {
     // RSS items and old links target #v1-* anchors that now live inside the
-    // collapsed archive — open it before the browser scrolls to them.
+    // collapsed archive, so open it before the browser scrolls to them.
     var openArchiveForHash = function () {
       var hash = location.hash;
       if (!hash) return;

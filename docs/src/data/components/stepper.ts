@@ -8,16 +8,16 @@ export const stepper: ComponentDef = {
   interactivity: 'static',
   description: 'Step indicator for multi-step workflows.',
 
-  overview: `Stepper is a horizontal progress indicator for multi-step workflows like onboarding flows, checkout processes, and setup wizards. It renders numbered circles connected by horizontal lines, with each step in one of three visual states: completed (filled blue with a checkmark), active (blue outlined ring with glow), or upcoming (muted grey). The \`active\` property (zero-indexed) controls which step is current, and all steps before it are automatically marked as completed.
+  overview: `Stepper is a horizontal progress indicator for multi-step workflows such as onboarding, checkout, and setup wizards. It renders numbered circles connected by horizontal lines, with each step in one of three visual states: completed (filled blue with a checkmark), active (blue outlined ring with glow), or upcoming (muted grey). The \`active\` property (zero-indexed) controls which step is current, and all steps before it are automatically marked as completed.
 
-The component uses a declarative child-element API: nest \`<arc-step>\` elements inside the stepper, each with a \`label\` property. The stepper collects these children via slotchange events and renders the visual step indicators. This pattern keeps the markup readable and makes it easy to add or remove steps without managing array data. Each step circle is 36px with the label centered below.
+The component uses a declarative child-element API: nest \`<arc-step>\` elements inside the stepper, each with a \`label\` property. The stepper collects these children via slotchange events and renders the visual step indicators. This keeps the markup readable and lets you add or remove steps without managing array data. Each step circle is 36px with the label centered below.
 
-Connecting lines between steps change color based on completion state — blue lines indicate completed transitions, while default-colored lines indicate upcoming transitions. The active step circle has a \`box-shadow\` glow effect using \`--accent-primary-rgb\` to draw the user's eye. The component uses \`role="list"\` with \`role="listitem"\` on each step and \`aria-current="step"\` on the active step for accessibility.`,
+Connecting lines between steps change color based on completion state: blue lines mark completed transitions, and default-colored lines mark upcoming ones. The active step circle has a \`box-shadow\` glow effect using \`--accent-primary-rgb\` to draw the eye. The component uses \`role="list"\` with \`role="listitem"\` on each step and \`aria-current="step"\` on the active step for accessibility.`,
 
   features: [
     'Three visual step states: completed (checkmark), active (glowing ring), upcoming (muted)',
     'Declarative `<arc-step>` child elements with label property for readable markup',
-    'Zero-indexed active property — all steps before active are auto-completed',
+    'Zero-indexed active property: all steps before active are auto-completed',
     'Horizontal connecting lines that change color based on completion state',
     'Active step glow effect using box-shadow with `--accent-primary-rgb`',
     'Accessible `role="list"` and aria-current="step" attributes',
@@ -27,18 +27,18 @@ Connecting lines between steps change color based on completion state — blue l
 
   guidelines: {
     do: [
-      'Use 3-5 steps for a clear, manageable workflow — more than 6 gets cramped',
+      'Use 3-5 steps for a clear, manageable workflow: more than 6 gets cramped',
       'Keep step labels to 1-2 words so they fit under the 32px circles',
       'Update the active property as the user progresses through the workflow',
       'Place the stepper at the top of a form or wizard for persistent progress context',
-      'Use alongside form validation — only advance active when the current step is valid',
+      'Use alongside form validation: only advance active when the current step is valid',
     ],
     dont: [
-      'Do not use stepper for navigation menus — it is a progress indicator, not a nav component',
-      'Do not allow users to skip ahead by clicking steps — enforce linear progression',
-      'Do not use more than 7 steps — if the workflow is that long, group steps into phases',
-      'Do not change step labels mid-flow — it confuses users about where they are',
-      'Do not use stepper for a single step — it needs at least 2 steps to be meaningful',
+      'Do not use stepper for navigation menus: it is a progress indicator, not a nav component',
+      'Do not allow users to skip ahead by clicking steps: enforce linear progression',
+      'Do not use more than 7 steps: if the workflow is that long, group steps into phases',
+      'Do not change step labels mid-flow: it confuses users about where they are',
+      'Do not use stepper for a single step: it needs at least 2 steps to be meaningful',
     ],
   },
 

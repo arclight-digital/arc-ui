@@ -10,11 +10,11 @@ export const tooltip: ComponentDef = {
   description:
     'Contextual hint that appears on hover or focus, providing supplementary information without cluttering the UI. Supports four placement positions and a configurable show delay.',
 
-  overview: `Tooltip is a non-intrusive disclosure component that surfaces contextual information when a user hovers over or focuses on an element. It is the right choice whenever a control's purpose is not immediately obvious from its visual alone — icon-only buttons, truncated labels, abbreviated values, and keyboard shortcuts all benefit from a tooltip that fills in the gap without adding permanent visual noise.
+  overview: `Tooltip is a non-intrusive disclosure component that surfaces contextual information when a user hovers over or focuses on an element. Use it when a control's purpose is not obvious from its visual alone: icon-only buttons, truncated labels, abbreviated values, and keyboard shortcuts.
 
-The component supports four placement positions — top, bottom, left, and right — so you can anchor the tooltip wherever there is available space relative to its trigger. A configurable delay (defaulting to 200 ms) prevents tooltips from firing on casual mouse movement, keeping the experience calm during rapid pointer traversal across a dense toolbar or action bar.
+The component supports four placements (top, bottom, left, right), so the tooltip can sit wherever there is space around its trigger. A configurable delay (defaulting to 200 ms) prevents tooltips from firing on casual mouse movement, such as a pointer sweeping across a dense toolbar.
 
-Tooltip is fully accessible out of the box. It links the popup to its trigger via \`aria-describedby\`, uses the \`role="tooltip"\` semantic, and dismisses on Escape so keyboard and screen-reader users receive the same contextual hints as mouse users. Because the popup is pointer-events-none, it never blocks interaction with surrounding elements.`,
+Tooltip links the popup to its trigger via \`aria-describedby\`, uses the \`role="tooltip"\` semantic, and dismisses on Escape so keyboard and screen-reader users receive the same contextual hints as mouse users. Because the popup is pointer-events-none, it never blocks interaction with surrounding elements.`,
 
   features: [
     'Four placement positions (top, bottom, left, right)',
@@ -22,7 +22,7 @@ Tooltip is fully accessible out of the box. It links the popup to its trigger vi
     'Accessible by default with `aria-describedby` and `role="tooltip"`',
     'Escape key dismissal for keyboard users',
     'Automatic show on hover (mouseenter) and focus (focusin)',
-    'Smooth opacity transition using design-token timing',
+    'Opacity transition using design-token timing',
     'Directional arrow that points toward the trigger element',
     'Pointer-events-none popup that never blocks surrounding UI',
   ],
@@ -30,16 +30,16 @@ Tooltip is fully accessible out of the box. It links the popup to its trigger vi
   guidelines: {
     do: [
       'Use tooltips on icon-only buttons to describe the action (e.g. "Edit", "Delete")',
-      'Keep tooltip text short — one line, ideally under eight words',
+      'Keep tooltip text short: one line, ideally under eight words',
       'Prefer top position as the default; switch only when clipped by viewport edges',
       'Set a longer delay (400-600 ms) in dense toolbars to reduce visual noise',
       'Pair with aria-label on the trigger when the tooltip is the only accessible name',
     ],
     dont: [
-      'Do not put interactive content (links, buttons) inside a tooltip — use Popover instead',
+      'Do not put interactive content (links, buttons) inside a tooltip. Use Popover instead',
       'Do not duplicate information already visible in the trigger label',
       'Do not use tooltips for essential information that the user must see to complete a task',
-      'Do not set delay to 0 — instant tooltips are distracting during normal pointer movement',
+      'Do not set delay to 0. Instant tooltips are distracting during normal pointer movement',
       'Do not rely on tooltips for touch-only users; they have no hover event to trigger them',
     ],
   },

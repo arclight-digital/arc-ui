@@ -27,7 +27,7 @@ import { DeclaredPropsMixin, flag, num, oneOf } from '../shared/props.js';
  * @csspart base - The root element.
  * @csspart close
  * @csspart panel - The sliding panel. The scrim is `::backdrop`, which is not an
- *   element and so cannot be a part — style it with the `--sheet-backdrop` and
+ *   element and so cannot be a part; style it with the `--sheet-backdrop` and
  *   `--sheet-backdrop-filter` custom properties. Size the panel with
  *   `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than
  *   through this part.
@@ -58,7 +58,7 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
       /* The panel is the dialog; the scrim is its ::backdrop. No backdrop
          element and no z-index: the top layer has no ladder to climb. Both
          scrim properties come through custom properties so a consumer can
-         still reach them — ::backdrop inherits from its originating element. */
+         still reach them, ::backdrop inherits from its originating element. */
       .sheet__panel {
         position: fixed;
         margin: 0;
@@ -94,16 +94,20 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
           display var(--transition-exit) allow-discrete;
       }
 
+      /* Entering, the scrim takes the panel's curve as well as its duration,
+         so the two arrive together. With the exit's ease-in it barely moved
+         for the first half and faded in after the panel had landed. */
       .sheet__panel:is([open], :popover-open)::backdrop {
         opacity: 1;
         transition-duration: var(--duration-enter);
+        transition-timing-function: var(--ease-out-expo);
       }
 
       @starting-style {
         .sheet__panel:is([open], :popover-open)::backdrop { opacity: 0; }
       }
 
-      /* Bottom sheet. The off-screen transform is now stated twice — once for
+      /* Bottom sheet. The off-screen transform is now stated twice: once for
          the entry (@starting-style, the frame the dialog enters the top layer)
          and once for the exit (:not([open]), which the overlay transition keeps
          visible long enough to run). The old single translateY(100%) base rule
@@ -182,6 +186,11 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
           display var(--duration-exit) allow-discrete;
       }
 
+      /* As specific as the snap-points rule above, and after it, so it wins.
+         Plain .sheet__panel.is-dragging lost to that rule: the height kept
+         easing behind the pointer for the whole drag, and the release read a
+         height the panel had not reached yet. */
+      :host([snap-points]) .sheet__panel.is-dragging,
       .sheet__panel.is-dragging { transition: none; }
 
       :host([snap-points]:not([side="right"])) .sheet__handle {
@@ -415,7 +424,7 @@ export class ArcSheet extends DeclaredPropsMixin(LitElement) {
       this.dispatchEvent(new CustomEvent('arc-open', { bubbles: true, composed: true }));
     }
     // The close button used to be focused by hand here. `showModal()` places
-    // initial focus per spec, which lands on the same button — and unlike the
+    // initial focus per spec, which lands on the same button, and unlike the
     // manual call it yields to an `autofocus` on the consumer's own slotted
     // content, which the manual call silently overrode.
   }

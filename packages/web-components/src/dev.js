@@ -12,7 +12,7 @@
  *   - attribute-name typos one edit away from a known attribute
  *     (`vairant`, `laoding`)
  *
- * Import it in development only — it costs a document-wide MutationObserver
+ * Import it in development only: it costs a document-wide MutationObserver
  * and ships no warnings logic in your production bundle if you gate the
  * import (e.g. `if (import.meta.env.DEV) import('@arclux/arc-ui/dev')`).
  * Elements inside shadow roots are not observed, so ARC UI's own internal
@@ -95,7 +95,7 @@ function checkAttr(el, entry, name) {
   if (entry.enums && name in entry.enums && value !== null && !entry.enums[name].includes(value)) {
     // Say what it is rendering as, not only what it should have been. An
     // unrecognised value is coerced to the declared default rather than
-    // ignored, so the component is showing something — and a wrong variant that
+    // ignored, so the component is showing something, and a wrong variant that
     // still looks like a variant is exactly the failure that goes unnoticed:
     // four `variant="danger"` alerts rendered as neutral `info` notices for
     // months in a consumer's app, because nothing said which one they got.
@@ -136,8 +136,8 @@ function checkElement(el) {
   //
   // This is the only signal a consumer gets. A deprecated component is
   // unchanged and stays in the barrel for the whole major it is deprecated in
-  // — deliberately, since removing it there is the break the deprecation
-  // postpones — so nothing in a normal build, test run or type-check mentions
+  // (removing it there is the break the deprecation
+  // postpones), so nothing in a normal build, test run or type-check mentions
   // it, and the next news would be the major that deletes it.
   if (entry.mergedInto) {
     warn(

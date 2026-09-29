@@ -30,13 +30,13 @@ const dowOf = (epochDay) => ((epochDay % 7) + 7 + 4) % 7;
  * GitHub-style contribution calendar: a year of day cells laid out as one
  * column per week, each cell tinted by that day's activity on a five-step
  * accent ramp. Hovering or arrow-keying a cell raises it with the house glow
- * and shows its detail — the date and the day's label or value — in the same
+ * and shows its detail (the date and the day's label or value) in the same
  * built-in bubble arc-uptime carries. Month labels run along the top, sparse
  * weekday labels down the side, and a Less→More legend sits below.
  *
  * The grid is a pure function of its props. When `end-date` is unset the
- * anchor is today, adopted in the browser one render after the first; before
- * that — the server render, and the client render that hydrates it — the
+ * anchor is today, adopted in the browser one render after the first. Before
+ * that (the server render, and the client render that hydrates it) the
  * anchor is derived from the newest date present in `data`, so both are
  * deterministic and identical. Pin `end-date` explicitly whenever server and
  * client must agree exactly.
@@ -100,7 +100,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
       /* The five intensity steps. Step 0 is the empty-day tint; 1-4 compose
          from the accent channels, alpha only, so a consumer overriding
          --accent-primary-rgb recolors the whole ramp. Each step also carries
-         the rgb its glow reads — the uptime statusVars pattern — so an empty
+         the rgb its glow reads (the uptime statusVars pattern), so an empty
          cell raises with a faint neutral breath instead of an accent halo. */
       .level-0 {
         --_cell-rgb: var(--text-primary-rgb);
@@ -189,7 +189,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
       }
 
       /* The resting position, for the panel PositionController hasn't adopted
-         yet — pre-upgrade and in prism's static export. Once managed it moves
+         yet: pre-upgrade and in prism's static export. Once managed it moves
          to the top layer, which is what lets it escape the scroll container a
          year-wide heatmap is usually placed in: anchored to the grid it was
          clipped to a sliver by the wrapper's overflow. */
@@ -276,13 +276,13 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.endDate = '';
     this.weeks = 52;
     this.weekStart = 'sunday';
     this.legend = true;
     this._activeIndex = null;
-    // Null until firstUpdated — the clock is off limits until then. See
+    // Null until firstUpdated; the clock is off limits until then. See
     // _resolveEndEpoch.
     this._today = null;
     // The anchor is the hovered cell, not the grid: the detail should sit over
@@ -315,14 +315,14 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
 
   /**
    * The anchor day. An explicit end-date wins; otherwise today once the browser
-   * has handed it over, and before that the newest date in the data — the one
-   * derivation that keeps the render a pure function of props. Null when
+   * has handed it over, and before that the newest date in the data. That is
+   * the one derivation that keeps the render a pure function of props. Null when
    * nothing can anchor the grid (no end-date, no data, not yet ticked).
    *
-   * Today is deliberately unavailable during the first render, `_today` being
+   * Today is unavailable during the first render, `_today` being
    * set no earlier than firstUpdated(). The server renders at build time and
    * the client at view time, so "today" is the one value the two cannot be
-   * relied on to agree about — and the whole grid is sized from it, so a client
+   * relied on to agree about, and the whole grid is sized from it, so a client
    * that anchored on its own date would render a different number of cells into
    * the DOM hydration is adopting and throw. Reading it a render later leaves
    * the first client render reproducible from props alone.
@@ -349,7 +349,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
    */
   _layout() {
     // `weeks` and `weekStart` are declared, so both arrive here already
-    // normalised — the floor-and-fallback that used to live on these two lines
+    // normalised; the floor-and-fallback that used to live on these two lines
     // is the declaration now (V4-PLAN 2.2).
     const weeks = this.weeks;
     const ws = this.weekStart === 'monday' ? 1 : 0;
@@ -429,7 +429,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
   /**
    * Month labels along the top: one per column where the month of the
    * column's first day changes, plus the first column. Two labels closer
-   * than three columns would collide, so the earlier of the pair yields —
+   * than three columns would collide, so the earlier of the pair yields,
    * that is always the partial month, and the real month start wins.
    */
   _monthLabels(layout) {
@@ -490,7 +490,7 @@ export class ArcActivityHeatmap extends DeclaredPropsMixin(LitElement) {
   /**
    * One tab stop, grid semantics: up/down step a day (a row), left/right a
    * week (a column), Home/End the first/last day. The first press lands on
-   * an end of the grid instead of applying its delta — arriving fresh and
+   * an end of the grid instead of applying its delta, arriving fresh and
    * jumping a week into the middle would disorient.
    */
   _onKeyDown(e) {

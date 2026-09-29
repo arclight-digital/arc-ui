@@ -4,13 +4,13 @@
 .arc-app-shell {
         display: block;
         /* A page layout's height is the viewport, and the page is what scrolls.
-           See .arc-app-shell[embedded] below for the other half — the same layout
+           See .arc-app-shell[embedded] below for the other half: the same layout
            sized by its container, scrolling inside itself. A CSS-only version
            of that was tried first (a --shell-height token) and reverted: the
            rail's own viewport height forced the shell past any smaller box
            whatever .arc-app-shell declared, so the token was honoured everywhere except
            the case it existed for. Which half you are in is a real difference
-           in behaviour — what scrolls, and what sticky means — so it is a
+           in behaviour (what scrolls, and what sticky means), so it is a
            declared prop rather than a token that has to guess. */
         min-height: 100vh;
         background: var(--surface-base);
@@ -27,7 +27,7 @@
          Everything here is the same layout measured against the host box
          instead of the screen. The host takes its container's height, .shell
          fills the host, and the body becomes the scroll context that the page
-         was — which is why min-height: 0 appears on the flex items: without
+         was, which is why min-height: 0 appears on the flex items: without
          it a flex item refuses to shrink below its content and the inner
          scrollers never engage.
 
@@ -94,7 +94,7 @@
       .arc-app-shell .shell__sidebar {
         /* grid, so the slotted rail fills the full height of this box rather
            than stopping at its own content. It matters to anything that draws
-           an edge — arc-sidebar's divider, or a plain <nav> with a
+           an edge: arc-sidebar's divider, or a plain <nav> with a
            border-right, which is what the docs preview slots and what a
            consumer reaches for first. Finding #91 was the arc-sidebar case of
            this and was fixed with a ::slotted rule naming that one tag; the box
@@ -106,7 +106,7 @@
            which the ::slotted block below forces to 100% of it. --sidebar-width
            is the one handle that moves both: set it on the shell (or anywhere
            above it) and the wrapper and its contents follow. arc-sidebar's own
-           width prop is for a standalone rail — see navigation/sidebar.js. */
+           width prop is for a standalone rail; see navigation/sidebar.js. */
         width: var(--sidebar-width, 280px);
         position: sticky;
         top: var(--nav-height);
@@ -181,7 +181,7 @@
         transform: translateX(-100%);
         /* visibility, not transform alone. Translated off-screen the drawer is
            still visible to the browser, so its links stay in the tab order and
-           in the accessibility tree — 176 of them on a docs page, all invisible,
+           in the accessibility tree: 176 of them on a docs page, all invisible,
            every one of them ahead of the content on a mobile keyboard.
            Transitioned rather than set flat so the discrete flip lands at the
            *end* of the slide out and at the start of the slide in, which is the
@@ -198,7 +198,7 @@
         scrollbar-color: var(--border-default) transparent;
       }
 
-      /* Override arc-sidebar's own sticky/height — the shell wrapper handles it */
+      /* Override arc-sidebar's own sticky/height; the shell wrapper handles it */
       .arc-app-shell arc-sidebar {
         position: static !important;
         height: auto !important;

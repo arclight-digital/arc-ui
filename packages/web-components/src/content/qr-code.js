@@ -13,12 +13,12 @@ import { DeclaredPropsMixin, flag, oneOf, int } from '../shared/props.js';
  * @prop {string} value - The content to encode (URL, text, Wi-Fi string, 2FA URI, …). Empty values render nothing. Values exceeding QR capacity for the chosen level also render nothing.
  * @prop {number} size - Rendered width and height of the SVG in pixels. The code is vector-based and stays crisp at any size.
  * @prop {'L' | 'M' | 'Q' | 'H'} level - Error-correction level: L (~7% recovery), M (~15%), Q (~25%), H (~30%). Higher levels tolerate more damage/occlusion but produce denser codes.
- * @prop {string} label - Accessible description announced to screen readers (falls back to "QR code"). Describe the purpose, not the encoded value — the value is never exposed by default since it may be a secret.
+ * @prop {string} label - Accessible description announced to screen readers (falls back to "QR code"). Describe the purpose, not the encoded value. The value is never exposed by default since it may be a secret.
  * @prop {number} quietZone - Width of the empty border around the code, measured in modules. Scanners rely on this margin to find the code; keep at least 2 against busy backgrounds.
  * @prop {boolean} contrast - Renders the code on a white rounded card with forced dark modules, guaranteeing dark-on-light scanability in both themes. Overrides --qr-fg/--qr-bg. Recommended for scan-critical codes.
  * @slot none
  * @csspart base - The root element. Which element that is depends on `contrast`:
- *   the card wrapper when it is set, the svg otherwise — which is the case `base`
+ *   the card wrapper when it is set, the svg otherwise, which is the case `base`
  *   exists for.
  * @csspart svg
  * @csspart card
@@ -119,7 +119,7 @@ export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
       this._path = d;
       this._count = count;
     } catch {
-      // Value exceeds QR capacity for the chosen level — render nothing.
+      // Value exceeds QR capacity for the chosen level: render nothing.
     }
   }
 
@@ -129,7 +129,7 @@ export class ArcQrCode extends DeclaredPropsMixin(LitElement) {
     const qz = this.quietZone;
     const total = this._count + qz * 2;
 
-    // aria-label never falls back to `value` — it may be a secret (2FA URI etc.).
+    // aria-label never falls back to `value`, since it may be a secret (2FA URI etc.).
     const code = html`
       <svg
         part="base svg"

@@ -9,7 +9,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-fieldset
  * @status stable
- * @prop {string} legend - Text displayed in the `<legend>` element. Also available via the `legend` slot for rich content.
+ * @prop {string} legend - Text displayed in the `<legend>` element. Also available via the `legend` slot for markup.
  * @prop {string} description - Helper text displayed below the legend.
  * @prop {boolean} disabled - Disables all child controls and dims the fieldset.
  * @prop {string} error - Error message displayed below the content with `role="alert"`.
@@ -75,7 +75,7 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
 
       /* The <legend> renders unconditionally so its slots exist for slotchange
          to fire on; this hides it when it would be empty. Making the whole
-         block conditional on _hasLegend was circular — the flag is set by the
+         block conditional on _hasLegend was circular; the flag is set by the
          slotchange of a slot that only existed once the flag was set, so a
          slotted legend never appeared at all. */
       .fieldset__legend--empty { display: none; }
@@ -137,7 +137,7 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
     this._hasActions = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

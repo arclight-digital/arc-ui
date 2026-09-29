@@ -326,13 +326,13 @@ export class ArcMarkdown extends LitElement {
     return this.textContent || '';
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
 
   render() {
-    // On the server, `this.textContent` is empty — streaming SSR renders this
+    // On the server, `this.textContent` is empty: streaming SSR renders this
     // shadow root before the light-DOM children are parsed. ssr.js hoists the
     // light-DOM text into the `content` attribute (TEXT_CONTENT_PROPS) so the
     // server parses the real source and the client's hydrating first render,

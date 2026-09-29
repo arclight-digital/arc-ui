@@ -7,29 +7,29 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
- * Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a
- * cohesive application frame. Handles responsive collapse, sidebar toggling, and optional
- * table-of-contents rail out of the box.
+ * Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into
+ * an application frame. Handles responsive collapse, sidebar toggling, and optional
+ * table-of-contents rail.
  *
- * A slotted `arc-top-bar` is put out of flow for you — the body already
- * reserves `--nav-height` of padding for it — and whatever is slotted into the
- * sidebar is stretched to the full height of the rail, `arc-sidebar` or a plain
- * `<nav>` alike, so anything drawing an edge draws it the whole way down. The
+ * A slotted `arc-top-bar` is put out of flow for you: the body already
+ * reserves `--nav-height` of padding for it, and whatever is slotted into the
+ * sidebar is stretched to the full height of the rail (`arc-sidebar` or a plain
+ * `<nav>` alike), so anything drawing an edge draws it the whole way down. The
  * rail is 280px wide; set `--sidebar-width` on the shell to change it, which
  * moves the wrapper and the sidebar inside it together.
  *
  * By default the shell is a page layout: at least `100vh` tall, with the page
  * as the scroll context and a sticky sidebar rail. Set `embedded` to put the
- * same layout inside a box — a card, a dashboard cell, a split pane, a preview
- * — where it takes its height from the container you give it and scrolls
+ * same layout inside a box (a card, a dashboard cell, a split pane, a preview)
+ * where it takes its height from the container you give it and scrolls
  * inside itself instead of moving the page.
  *
  * @tag arc-app-shell
  * @status stable
  * @prop {boolean} sidebarOpen - Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation.
- * @prop {boolean} embedded - Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen — a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for.
+ * @prop {boolean} embedded - Fills the container instead of the viewport. The shell takes the height you give it (`height: 100%` of a bounded parent, or any length), its content area becomes the scroll context rather than the page, and the sidebar rail is stretched by the body rather than sized from the screen, since a sticky rail has nothing to stick against once the page is not what scrolls. Use it for a shell inside a card, a dashboard cell, a split pane, or a documentation preview; leave it off for the full-page layout, which is what the component is for.
  * @prop {number} breakpoint - Viewport width in pixels at which the layout switches between mobile and desktop modes.
- * @fires {CustomEvent<{ value: boolean }>} arc-sidebar-toggle - Fired when the shell itself opens or closes the mobile sidebar — on a backdrop click, on Escape, on navigation, or when the viewport widens past the breakpoint and the drawer stops existing. Listened to by arc-top-bar so its hamburger stays in step, and by any wrapper binding `sidebarOpen`. Not fired for a toggle the shell merely received, so the two cannot echo each other.
+ * @fires {CustomEvent<{ value: boolean }>} arc-sidebar-toggle - Fired when the shell itself opens or closes the mobile sidebar: on a backdrop click, on Escape, on navigation, or when the viewport widens past the breakpoint and the drawer stops existing. Listened to by arc-top-bar so its hamburger stays in step, and by any wrapper binding `sidebarOpen`. Not fired for a toggle the shell merely received, so the two cannot echo each other.
  * @slot topbar
  * @slot sidebar
  * @slot - Default content.
@@ -57,13 +57,13 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
       :host {
         display: block;
         /* A page layout's height is the viewport, and the page is what scrolls.
-           See :host([embedded]) below for the other half — the same layout
+           See :host([embedded]) below for the other half: the same layout
            sized by its container, scrolling inside itself. A CSS-only version
            of that was tried first (a --shell-height token) and reverted: the
            rail's own viewport height forced the shell past any smaller box
            whatever :host declared, so the token was honoured everywhere except
            the case it existed for. Which half you are in is a real difference
-           in behaviour — what scrolls, and what sticky means — so it is a
+           in behaviour (what scrolls, and what sticky means), so it is a
            declared prop rather than a token that has to guess. */
         min-height: 100vh;
         background: var(--surface-base);
@@ -80,7 +80,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
          Everything here is the same layout measured against the host box
          instead of the screen. The host takes its container's height, .shell
          fills the host, and the body becomes the scroll context that the page
-         was — which is why min-height: 0 appears on the flex items: without
+         was, which is why min-height: 0 appears on the flex items: without
          it a flex item refuses to shrink below its content and the inner
          scrollers never engage.
 
@@ -147,7 +147,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
       .shell__sidebar {
         /* grid, so the slotted rail fills the full height of this box rather
            than stopping at its own content. It matters to anything that draws
-           an edge — arc-sidebar's divider, or a plain <nav> with a
+           an edge: arc-sidebar's divider, or a plain <nav> with a
            border-right, which is what the docs preview slots and what a
            consumer reaches for first. Finding #91 was the arc-sidebar case of
            this and was fixed with a ::slotted rule naming that one tag; the box
@@ -159,7 +159,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
            which the ::slotted block below forces to 100% of it. --sidebar-width
            is the one handle that moves both: set it on the shell (or anywhere
            above it) and the wrapper and its contents follow. arc-sidebar's own
-           width prop is for a standalone rail — see navigation/sidebar.js. */
+           width prop is for a standalone rail; see navigation/sidebar.js. */
         width: var(--sidebar-width, 280px);
         position: sticky;
         top: var(--nav-height);
@@ -234,7 +234,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
         transform: translateX(-100%);
         /* visibility, not transform alone. Translated off-screen the drawer is
            still visible to the browser, so its links stay in the tab order and
-           in the accessibility tree — 176 of them on a docs page, all invisible,
+           in the accessibility tree: 176 of them on a docs page, all invisible,
            every one of them ahead of the content on a mobile keyboard.
            Transitioned rather than set flat so the discrete flip lands at the
            *end* of the slide out and at the start of the slide in, which is the
@@ -251,7 +251,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
         scrollbar-color: var(--border-default) transparent;
       }
 
-      /* Override arc-sidebar's own sticky/height — the shell wrapper handles it */
+      /* Override arc-sidebar's own sticky/height; the shell wrapper handles it */
       ::slotted(arc-sidebar) {
         position: static !important;
         height: auto !important;
@@ -305,7 +305,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     // The same width the top bar reveals its hamburger at, and the nav menu
-    // collapses at — this shell's sidebar has to switch to its drawer on the
+    // collapses at. This shell's sidebar has to switch to its drawer on the
     // same line, or the button is there with nothing to open.
     this.breakpoint = breakpoints.navCollapse;
     this._mobile = false;
@@ -363,18 +363,16 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
     const mobile = window.innerWidth <= this.breakpoint;
     // The drawer is a mobile affordance; on the way back to desktop it stops
     // existing and the state that says it is open has to go with it. Closed
-    // here rather than in `updated()`, where it used to be: a state write from
-    // inside the update is Lit's change-in-update warning, and this transition
-    // is detected out here anyway — on connect and on resize, both outside the
-    // cycle. The same shape as the slot readers in shared/hydrate-slots.js.
+    // here rather than in `updated()`: a state write from inside the update is
+    // Lit's change-in-update warning, and this transition is detected out here
+    // anyway, on connect and on resize, both outside the cycle. The same shape
+    // as the slot readers in shared/hydrate-slots.js.
     //
-    // Through _setOpen, so it is announced. This is the fourth way the drawer
-    // closes without the consumer asking, and it used to be the one that said
-    // nothing — a plain assignment. That was invisible while the wrappers held
-    // `sidebarOpen` one-way; now that they bind it (prism 3.1's rule keys off
-    // "assigns to it and announces it"), a silent close is precisely the drift
-    // the binding exists to prevent: the consumer's copy would stay `true`
-    // against a shell that had closed.
+    // Through _setOpen, so it is announced: this is the fourth way the drawer
+    // closes without the consumer asking. The wrappers bind `sidebarOpen`
+    // (prism 3.1's rule keys off "assigns to it and announces it"), so a
+    // silent close would leave the consumer's copy `true` against a shell that
+    // had closed.
     if (!mobile && this.sidebarOpen) this._setOpen(false);
     this._mobile = mobile;
   }
@@ -384,7 +382,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
   }
 
   _onToggle(e) {
-    // Fired by arc-top-bar's hamburger — and, on the way back out, by us. The
+    // Fired by arc-top-bar's hamburger and, on the way back out, by us. The
     // guard is what stops _setOpen's notification from re-entering here.
     if (e.target === this) return;
     this.sidebarOpen = e.detail?.value ?? !this.sidebarOpen;
@@ -393,8 +391,8 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
   /**
    * Close (or open) and say so.
    *
-   * The drawer can be dismissed four ways — the hamburger, the backdrop,
-   * Escape, following a link — and only the first of them used to be visible to
+   * The drawer can be dismissed four ways (the hamburger, the backdrop,
+   * Escape, following a link) and only the first of them used to be visible to
    * arc-top-bar. Dismiss it any other way and the button kept `menu-open`: it
    * reported aria-expanded="true" with nothing expanded, and sat there showing
    * a close icon for a drawer that had already gone.
@@ -443,12 +441,12 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
    *
    * `.shell__body` carries `padding-top: var(--nav-height)` on the assumption
    * that the bar above it is `position: fixed`. arc-top-bar only becomes fixed
-   * under `:host([fixed])`, and nothing set it — so the default composition
+   * under `:host([fixed])`, and nothing set it, so the default composition
    * rendered the bar in normal flow *and* the padding reserving room for it: a
    * 128px gap at the top of every page, with no error and nothing in the
    * console. arc-top-bar's own JSDoc has always described the behaviour that
-   * was missing — "Automatically applied when TopBar is placed inside an
-   * AppShell" — which is what makes this a defect rather than a gotcha.
+   * was missing ("Automatically applied when TopBar is placed inside an
+   * AppShell"), which is what makes this a defect rather than a gotcha.
    * Finding #90.
    *
    * The attribute rather than the property, so it also lands on a bar that has
@@ -467,7 +465,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
    * must be fixed. An embedded shell has no such claim on the viewport: a fixed
    * bar leaves the container entirely and pins itself to the top of the screen,
    * which is a bar floating over the page from a component in a card. Embedded
-   * therefore takes the attribute back off — and takes the reserved padding
+   * therefore takes the attribute back off and takes the reserved padding
    * with it, since an in-flow bar occupies its own space.
    */
   _syncTopbar() {
@@ -483,7 +481,7 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
     this._hasToc = nodes.some((n) => n.children.length > 0 || n.textContent.trim());
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

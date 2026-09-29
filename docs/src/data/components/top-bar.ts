@@ -9,7 +9,7 @@ export const topBar: ComponentDef = {
   description:
     'Fixed header bar that anchors every page with a brand slot on the left, an optional center navigation area, and a right-aligned actions region for user controls, search, and settings.',
 
-  overview: `TopBar is the persistent horizontal header that sits at the top of every page in an ARC UI application. It provides three clearly defined regions — brand, center, and actions — that map to the universal header pattern found in virtually every modern web app: logo on the left, navigation in the middle, and user controls on the right.
+  overview: `TopBar is the persistent horizontal header that sits at the top of every page in an ARC UI application. It has three regions, brand, center and actions: logo on the left, navigation in the middle, user controls on the right.
 
 The component is designed to work hand-in-hand with AppShell and Sidebar. When nested inside an AppShell via the \`top-bar\` slot, it automatically spans the full viewport width and stays fixed at the top of the page while the content below scrolls. On mobile viewports, a hamburger menu button appears automatically, dispatching an \`arc-sidebar-toggle\` event that AppShell listens for to open or close the Sidebar overlay.
 
@@ -18,10 +18,11 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
   features: [
     'Three named slots (logo, center, actions) for flexible header composition',
     'Fixed positioning mode that pins the bar to the top of the viewport',
-    'Built-in responsive hamburger menu button that appears on mobile breakpoints',
+    'A hamburger button below 900px; `mobile-menu="none"` turns it off for a site with nothing to open',
+    'On phones the center column gives way before the brand or actions shrink; `mobile-center="end"` moves it next to the actions, `"hidden"` drops it',
     'Fires `arc-sidebar-toggle` custom event for Sidebar integration',
     'Brand region with accent typography, letter-spacing, and uppercase treatment',
-    'Seamless integration with AppShell via the top-bar slot',
+    'Works with AppShell through its top-bar slot',
     'CSS custom property theming through design tokens (`--bg-deep`, `--border-subtle`, `--nav-height`)',
     'Shadow DOM part attributes (topbar, brand, center, menu-btn) for external styling',
     'Accessible `aria-label` and `aria-expanded` on the mobile menu toggle',
@@ -30,7 +31,7 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
   guidelines: {
     do: [
       'Place TopBar inside an AppShell top-bar slot for automatic fixed positioning and sidebar coordination',
-      'Keep the heading short — one or two words that identify the application',
+      'Keep the heading short: one or two words that identify the application',
       'Use the logo slot to place an SVG or image mark next to the heading text',
       'Put primary navigation links in the center slot for desktop layouts',
       'Reserve the actions slot for user-facing controls: avatar, settings, notifications, sign-in',
@@ -38,12 +39,12 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
       'Listen for the arc-sidebar-toggle event to synchronize sidebar open/close state',
     ],
     dont: [
-      'Do not Stack multiple TopBars on the same page — use one per application shell',
+      'Do not stack TopBars on one page. Use one per application shell',
       'Do not put long text or paragraphs in the heading prop; it is meant for a brand name only',
       'Do not place form elements or search inputs in the brand area; use the center or actions slot instead',
-      'Do not rely solely on the hamburger button for primary navigation on desktop — it is hidden above 768px',
+      'Do not rely on the hamburger for primary navigation on desktop. It is hidden above 900px',
       'Do not override the z-index without checking that modals and drawers still layer correctly',
-      'Do not omit the heading entirely without providing a logo slot — the brand region should never be empty',
+      'Do not leave out both the heading and the logo slot. The brand region should never be empty',
     ],
   },
 

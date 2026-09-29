@@ -166,7 +166,7 @@ export class ArcGauge extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.label = '';
     this.unit = '';
   }

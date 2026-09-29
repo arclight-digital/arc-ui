@@ -127,7 +127,7 @@ export class ArcBreadcrumbMenu extends DeclaredPropsMixin(LitElement) {
         color: var(--text-primary);
       }
     `,
-    // animate: false — the dropdown is created and destroyed per open crumb
+    // animate: false: the dropdown is created and destroyed per open crumb
     // rather than toggled, so there is no open state for an enter transition to
     // key on. Asking for one would leave the panel stuck at opacity 0.
     managedPanelStyles('breadcrumb-menu__dropdown', { animate: false }),

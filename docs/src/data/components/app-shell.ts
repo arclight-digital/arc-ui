@@ -7,13 +7,13 @@ export const appShell: ComponentDef = {
   tier: 'layout',
   interactivity: 'hybrid',
   description:
-    'Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into a cohesive application frame. Handles responsive collapse, sidebar toggling, and optional table-of-contents rail out of the box.',
+    'Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into an application frame. Handles responsive collapse, sidebar toggling, and an optional table-of-contents rail.',
 
-  overview: `AppShell is the outermost structural component for any ARC UI application. It establishes the canonical three-zone layout — a fixed top bar, a collapsible sidebar, and a flexible main content area — so that every page in your app shares a consistent chrome without duplicating layout logic.
+  overview: `AppShell is the outermost structural component for any ARC UI application. It establishes the three-zone layout (a fixed top bar, a collapsible sidebar, and a flexible main content area) so every page in your app shares the same chrome without duplicating layout logic.
 
-The component manages responsive behavior automatically. On screens narrower than 768 px the sidebar collapses out of view and can be toggled back with the \`sidebar-open\` attribute, making it suitable for both desktop dashboards and mobile-first admin panels. A fourth optional slot, \`toc\`, provides a right-hand rail for table-of-contents or contextual widgets; it hides below 1280 px to keep the content area readable.
+The component manages responsive behavior automatically. On screens narrower than 768 px the sidebar collapses out of view and can be toggled back with the \`sidebar-open\` attribute, so it suits both desktop dashboards and mobile-first admin panels. A fourth optional slot, \`toc\`, provides a right-hand rail for table-of-contents or contextual widgets; it hides below 1280 px to keep the content area readable.
 
-Because AppShell is slot-based, it composes freely with other ARC UI primitives. Drop an \`arc-top-bar\` into the \`topbar\` slot, an \`arc-sidebar\` (or any nav markup) into \`sidebar\`, and your page content into the default slot. The shell handles all the flex math, scroll containment, and z-index layering so you can focus on what goes inside each zone rather than how the zones relate to each other.`,
+Because AppShell is slot-based, it composes with other ARC UI primitives. Put an \`arc-top-bar\` into the \`topbar\` slot, an \`arc-sidebar\` (or any nav markup) into \`sidebar\`, and your page content into the default slot. The shell handles the flex math, scroll containment, and z-index layering, so you only decide what goes inside each zone.`,
 
   features: [
     'Three-zone layout: fixed top bar, collapsible sidebar, scrollable main content',
@@ -21,7 +21,7 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
     'Responsive sidebar collapse at 768 px with toggle via sidebar-open attribute',
     'Table-of-contents rail auto-hides below 1280 px',
     'Slot-based composition works with any TopBar, Sidebar, or custom markup',
-    'Full-viewport min-height ensures the shell always fills the screen',
+    'Full-viewport min-height so the shell always fills the screen',
     'CSS custom property integration for consistent spacing and color tokens',
     'Exposed CSS parts (shell, body, sidebar, main, content, toc) for deep style overrides',
   ],
@@ -35,9 +35,9 @@ Because AppShell is slot-based, it composes freely with other ARC UI primitives.
       'Combine with Container or Section components inside the default slot for consistent content widths',
     ],
     dont: [
-      'Do not nest one AppShell inside another — it is designed as a singleton page frame',
+      'Do not nest one AppShell inside another; it is a singleton page frame',
       'Do not put scrollable content directly in the sidebar slot without its own overflow handling',
-      'Do not rely on the toc slot for critical navigation — it hides on narrower viewports',
+      'Do not rely on the toc slot for critical navigation; it hides on narrower viewports',
       'Do not override min-height: 100vh on the host unless you are embedding a preview or iframe',
       'Do not use AppShell for simple marketing pages that do not need a persistent sidebar or top bar',
     ],

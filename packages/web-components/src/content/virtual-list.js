@@ -10,15 +10,15 @@ import { tokenStyles } from '../shared-styles.js';
  * Two ways to supply rows, because "render a row" means something different
  * inside a framework than it does outside one:
  *
- *   - `renderItem` — a callback returning the row's content. The component
+ *   - `renderItem`: a callback returning the row's content. The component
  *     mounts only the visible rows, so a million-row array puts a screenful of
  *     nodes in the DOM. This is the direct path: plain JS, HTML, Lit.
- *   - windowed slots — the component renders an `item-N` slot for each index in
+ *   - windowed slots: the component renders an `item-N` slot for each index in
  *     the visible range only, and announces that range as it scrolls. (Spelled
  *     without the tag on purpose: prism scans this whole file for slot markup,
  *     and a literal one in a comment invents a slot named `item-N`.)
  *     Whoever owns
- *     the light DOM supplies just those rows. This is how the framework
+ *     the light DOM supplies only those rows. This is how the framework
  *     wrappers do it, so a React consumer writes JSX and a Svelte consumer
  *     writes markup, rather than a callback returning nodes their framework
  *     didn't create.
@@ -30,7 +30,7 @@ import { tokenStyles } from '../shared-styles.js';
  * @status stable
  * @prop {Array} items - The full data array. Only the visible slice is rendered at any given time.
  * @prop {Function} renderItem - `(item, index) => unknown` returning one row's content. Anything Lit can render: a template, a DOM node, a string. When set, rows come from here and the slots are not used.
- * @prop {number} itemHeight - Height in pixels of each row. Must match what actually renders, and must be at least 1 — it is a divisor, so a zero would put NaN through every window calculation.
+ * @prop {number} itemHeight - Height in pixels of each row. Must match what actually renders, and must be at least 1: it is a divisor, so a zero would put NaN through every window calculation.
  * @prop {number} overscan - Rows rendered above and below the visible window to cover fast scrolling. Never negative.
  * @fires {CustomEvent<{value: {start: number, end: number}, start: number, end: number}>} arc-range-change - Fired when the visible range changes. `end` is exclusive.
  * @slot item-${index}
@@ -109,7 +109,7 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
 
   connectedCallback() {
     super.connectedCallback();
-    // The host is the scrollable region — it must be keyboard-focusable
+    // The host is the scrollable region, so it must be keyboard-focusable
     if (!this.hasAttribute('tabindex')) this.setAttribute('tabindex', '0');
     this.addEventListener('scroll', this._onScroll, { passive: true });
   }
@@ -142,7 +142,7 @@ export class ArcVirtualList extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * The window is `VirtualController`'s since 4.2 — the same five lines lived
+   * The window is `VirtualController`'s since 4.2. The same five lines lived
    * here, in arc-data-table and in arc-data-grid, having drifted three ways.
    * `_startIndex` and `_visibleCount` stay as reactive state mirroring it: they
    * are what `render()` reads and what a re-render has to be keyed on.

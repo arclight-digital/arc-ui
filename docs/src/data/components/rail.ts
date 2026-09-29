@@ -9,11 +9,11 @@ export const rail: ComponentDef = {
   description:
     "Ultra-narrow icon-only vertical navigation like VS Code's activity bar. Icons use text-muted at rest, accent-primary glow on active. Expands on hover.",
 
-  overview: `Rail is an ultra-narrow vertical navigation strip — typically 48 to 56 pixels wide — that displays icon-only items in a single column. Inspired by the activity bar in VS Code and similar IDE layouts, it provides top-level section switching without consuming the horizontal space that a full Sidebar requires. Icons render in text-muted at rest and light up with an accent-primary glow when active, giving immediate visual feedback about the current section.
+  overview: `Rail is an ultra-narrow vertical navigation strip, typically 48 to 56 pixels wide, that displays icon-only items in a single column. It is modeled on the activity bar in VS Code and similar IDEs, and switches top-level sections without the horizontal space a full Sidebar needs. Icons render in text-muted at rest and light up with an accent-primary glow when active.
 
-On hover, the Rail can optionally expand to reveal text labels beside each icon, bridging the gap between compact icon-only navigation and a full labeled sidebar. This expand-on-hover behavior is controlled by the \`expanded\` prop and can also be toggled programmatically for accessibility — some users prefer the labels to remain visible at all times.
+On hover, the Rail can optionally expand to reveal text labels beside each icon, sitting between icon-only navigation and a full labeled sidebar. The \`expanded\` prop controls this and can also be toggled programmatically, since some users prefer the labels visible at all times.
 
-Rail is designed to sit at the far-left edge of an AppShell, occupying a fixed vertical strip from top to bottom. It works well alongside a contextual Sidebar: the Rail handles top-level section switching (e.g. Explorer, Search, Source Control) while the Sidebar shows the detail panel for the active section. The component dispatches \`arc-change\` on item selection so your application can swap the adjacent content area accordingly.`,
+Rail sits at the far-left edge of an AppShell as a fixed vertical strip from top to bottom. It works alongside a contextual Sidebar: the Rail handles top-level section switching (e.g. Explorer, Search, Source Control) while the Sidebar shows the detail panel for the active section. The component dispatches \`arc-change\` on item selection so your application can swap the adjacent content area accordingly.`,
 
   features: [
     'Ultra-narrow icon-only vertical navigation strip',
@@ -30,17 +30,17 @@ Rail is designed to sit at the far-left edge of an AppShell, occupying a fixed v
   guidelines: {
     do: [
       'Limit items to four to seven for a scannable icon column',
-      'Use universally recognizable icons — Rail has no visible labels by default',
+      'Use universally recognizable icons: Rail has no visible labels by default',
       'Place Rail at the far-left edge of the viewport inside an AppShell',
       'Pair with a Sidebar to show detail content for the active Rail section',
       'Provide aria-label on the Rail for screen-reader context',
     ],
     dont: [
-      'Do not use Rail as the only navigation on a content-heavy site — it is too compact',
-      'Do not add more than seven items — vertical overflow will be confusing',
-      'Do not rely solely on icon recognition — ensure tooltips or expand-on-hover labels are available',
-      'Do not use Rail on mobile viewports — switch to BottomNav instead',
-      'Do not nest a Rail inside a Sidebar — Rail replaces the sidebar for top-level switching',
+      'Do not use Rail as the only navigation on a content-heavy site: it is too compact',
+      'Do not add more than seven items: vertical overflow will be confusing',
+      'Do not rely solely on icon recognition; ensure tooltips or expand-on-hover labels are available',
+      'Do not use Rail on mobile viewports; switch to BottomNav instead',
+      'Do not nest a Rail inside a Sidebar: Rail replaces the sidebar for top-level switching',
     ],
   },
 

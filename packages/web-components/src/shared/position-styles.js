@@ -1,7 +1,7 @@
 import { css, unsafeCSS } from 'lit';
 
 /**
- * Managed-panel CSS — the half of a floating panel's styling that applies once
+ * Managed-panel CSS: the half of a floating panel's styling that applies once
  * PositionController has adopted it.
  *
  * The controller marks a panel `data-managed` and writes `position: fixed` plus
@@ -11,7 +11,7 @@ import { css, unsafeCSS } from 'lit';
  * centring. So `transform` here carries the open/closed scale animation and
  * nothing else.
  *
- * Both halves ship together — a panel is styled for whichever state it is in,
+ * Both halves ship together: a panel is styled for whichever state it is in,
  * and which state that is depends on whether JS ran. See position-controller.js
  * for why that matters to prism's static HTML export.
  *
@@ -26,7 +26,7 @@ import { css, unsafeCSS } from 'lit';
  * @param {string} [opts.duration='var(--duration-base)'] - Animation duration.
  *   Must be a bare <duration> (--duration-*), never a --transition-* shorthand:
  *   this feeds `transition-duration`, where a `<time> <curve>` pair is invalid
- *   and computes to 0s — the panel would snap instead of animating.
+ *   and computes to 0s, the panel would snap instead of animating.
  * @param {string} [opts.closedTransform] - Closed-state transform, replacing the
  *   scale. Lets a panel keep the entrance it already had (the menus slide down
  *   rather than scale) instead of every panel being normalized to one.
@@ -48,8 +48,8 @@ export function managedPanelStyles(
     ? css`.${c}[data-managed].${unsafeCSS(openCls)}`
     : css`:host([open]) .${c}[data-managed]`;
 
-  // A top-layer panel is display:none while closed — that comes from the UA's
-  // `[popover]:not(:popover-open)` rule, not from us — and a property cannot
+  // A top-layer panel is display:none while closed (that comes from the UA's
+  // `[popover]:not(:popover-open)` rule, not from us), and a property cannot
   // transition out of a display:none box. Left alone, every managed panel would
   // snap open and snap shut where it used to fade.
   //
@@ -62,7 +62,7 @@ export function managedPanelStyles(
   //
   // The open state is keyed on the host/modifier class rather than
   // :popover-open, because a browser without popover support still gets a
-  // data-managed panel — keying on :popover-open would leave it stuck at
+  // data-managed panel; keying on :popover-open would leave it stuck at
   // opacity 0 there.
   //
   // The curves follow the motion scale's rule (see shared/tokens.js): --ease-out
@@ -144,7 +144,7 @@ export function positionStyles(cls, { offset = 'var(--space-sm)', scale = 0.95, 
   // closed rule for *every* value the closed rule matches. Both use the same
   // shape, so :host([open]…) is one attribute selector more specific than
   // :host(…) in each branch. Widening only the closed rule would silently invert
-  // that for the values the widening adds — the panel would keep its closed
+  // that for the values the widening adds: the panel would keep its closed
   // transform while open. Covered by the positionStyles cases in
   // test/enum-fallback-sweep.test.js, which read the stylesheet directly because
   // the components animate `transform` and a post-open read returns an

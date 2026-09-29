@@ -5,7 +5,7 @@ import { getApi } from '../../../data/manifest';
 
 /**
  * Group and status per component, read from the manifest rather than the page
- * data — both are source facts (`@arc-group`, `@status`). A card that claimed
+ * data; both are source facts (`@arc-group`, `@status`). A card that claimed
  * the wrong import path would be wrong in the one place a reader copies from,
  * and status was a docs-only optional field until 4.1, set on 14 pages of 184,
  * which is why 170 cards could not show a maturity they in fact had.
@@ -18,7 +18,7 @@ const groupLabels: Record<string, string> = {
   media: 'media',
 };
 
-// `stable` is the overwhelming majority and carries no information on a card —
+// `stable` is the overwhelming majority and carries no information on a card:
 // badging all 192 of them would make the badge mean "component". Only the two
 // that qualify a reader's expectations get one.
 const statusLabels: Record<string, string> = {
@@ -30,15 +30,15 @@ const tiers = [
   { key: 'layout', label: 'Layout', desc: 'Page scaffolding, structural containers, and shells' },
   { key: 'navigation', label: 'Navigation', desc: 'Wayfinding, menus, and page-level navigation' },
   { key: 'content', label: 'Content', desc: 'Presentational atoms and display components' },
-  { key: 'data', label: 'Data', desc: 'Structured data display — tables, lists, meters, and stats' },
+  { key: 'data', label: 'Data', desc: 'Structured data display: tables, lists, meters, and stats' },
   { key: 'typography', label: 'Typography', desc: 'Text rendering and formatting components' },
   { key: 'input', label: 'Input', desc: 'Form controls, buttons, and user data entry' },
   { key: 'feedback', label: 'Feedback', desc: 'Alerts, overlays, and responses to user actions' },
 ] as const;
 
 /**
- * A deprecated component keeps its page — it still works, and someone using it
- * needs to be able to read about it and find the survivor — but it leaves the
+ * A deprecated component keeps its page (it still works, and someone using it
+ * needs to be able to read about it and find the survivor), but it leaves the
  * catalog grid. The grid answers "what should I reach for", and the answer is
  * never a component that is removed next major.
  */
@@ -327,7 +327,7 @@ const jsonLd = {
     flex-shrink: 0;
   }
 
-  /* Maturity. Beta and experimental only — see statusLabels above. */
+  /* Maturity. Beta and experimental only; see statusLabels above. */
   .component-card__status {
     font-family: var(--font-accent);
     font-size: var(--text-xs);
@@ -347,7 +347,7 @@ const jsonLd = {
     border: 1px solid rgba(var(--color-error-rgb), 0.3);
   }
 
-  /* Domain group — the import path is the whole message, so it is set in the
+  /* Domain group: the import path is the whole message, so it is set in the
      mono face the import statement is, not in the accent face the tier and
      interactivity labels share. */
   .component-card__group {

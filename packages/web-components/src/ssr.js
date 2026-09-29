@@ -18,7 +18,7 @@
  * framework's server render produces HTML; every `<arc-*>` in it can be
  * rendered to a declarative shadow root by reading the markup alone.
  *
- * So this is HTML in, HTML out, and it does not care what produced the input —
+ * So this is HTML in, HTML out, and it does not care what produced the input:
  * Nuxt, SvelteKit, Angular Universal, Next, Astro, or a string you assembled by
  * hand. It is the same code that server-renders arcui.dev, where it runs over
  * 177 pages and 43,620 shadow roots on every build.
@@ -26,7 +26,7 @@
  * ## What it does
  *
  * 1. Defines every component in this process, once.
- * 2. Resolves the icons the markup names — arc-icon can only render a glyph
+ * 2. Resolves the icons the markup names: arc-icon can only render a glyph
  *    already in memory, since the icon sets are code-split per glyph.
  * 3. Renders the whole document through `@lit-labs/ssr`, giving each element a
  *    `<template shadowrootmode>` holding its rendered shadow tree.
@@ -37,7 +37,7 @@
  * ## Two things the caller must do
  *
  * Write the returned `stylesheets` to disk (or serve them) under the same
- * `stylesheetPath` they were linked with — the shadow roots reference them by
+ * `stylesheetPath` they were linked with; the shadow roots reference them by
  * URL. And import `@arclux/arc-ui/hydrate` on the client *before any component
  * is defined*, or Lit renders over this markup instead of adopting it. On a
  * bundler that usually means forcing hydration support into its own chunk;
@@ -52,16 +52,14 @@ import { CLIENT_ONLY } from './ssr-client-only.js';
  * The OverlayController set: everything rendered into the top layer and invisible
  * until asked for. Nothing inside one can appear in a first paint, so rendering
  * their contents spends bytes on markup no reader and no metric ever sees. On
- * arcui.dev that was 174 of a page's 427 roots — the whole ⌘K palette.
+ * arcui.dev that was 174 of a page's 427 roots (the whole ⌘K palette).
  *
- * arc-lightbox was absent from its own set from 3.0 to 4.2: this renderer
- * shipped the day before the component did, and nothing since went back for it.
- * A gallery passed as a property renders empty anyway, which is what made the
- * gap look deliberate — but the documented static form is a JSON `images`
- * attribute, and the server can read that. Those pages shipped a full figure,
- * four icon-button roots and an eager fetch of a full-size photograph, inside a
- * display:none dialog, on a paint that could never show any of it. display:none
- * does not stop an image from downloading.
+ * arc-lightbox belongs here too. A gallery passed as a property renders empty
+ * anyway, but the documented static form is a JSON `images` attribute, which
+ * the server can read. Left out of this list (3.0 to 4.2), those pages shipped
+ * a full figure, four icon-button roots and an eager fetch of a full-size
+ * photograph inside a display:none dialog, on a paint that could never show
+ * any of it. display:none does not stop an image from downloading.
  */
 export const CLOSED_OVERLAYS = [
   'arc-command-palette',
@@ -74,14 +72,14 @@ export const CLOSED_OVERLAYS = [
 /**
  * Long repeated lists, and how many of each to render.
  *
- * A navigation sidebar listing every page is real, visible content — unlike a
- * closed overlay — but only the first screenful of it can be in a first paint,
+ * A navigation sidebar listing every page is real, visible content (unlike a
+ * closed overlay), but only the first screenful of it can be in a first paint,
  * and the rest scrolls inside its own container. On arcui.dev the sidebar is
  * 175 `arc-sidebar-link` roots and 30K of the 99K of shadow markup a component
  * page carries; the twenty-odd that are actually visible carry the paint.
  *
  * The remainder are marked `data-arc-defer`, which keeps the FOUC guard's
- * `opacity: 0` — layout is held, so nothing shifts when they upgrade; they fade
+ * `opacity: 0`. Layout is held, so nothing shifts when they upgrade; they fade
  * in. That is the opposite treatment from a closed overlay, which must occupy
  * nothing, and getting the two confused is measurable: marking deferred
  * elements `display: none` would collapse a sidebar mid-paint.
@@ -95,14 +93,14 @@ export const LIST_BUDGETS = {
  * property that carries it.
  *
  * Streaming SSR renders a host's shadow root before its children have been
- * parsed, so `this.textContent` is empty on the server — the one input the
+ * parsed, so `this.textContent` is empty on the server, the one input the
  * client has that the server does not. Left alone, arc-markdown served an
  * empty prose block *and* threw on hydration, because the client's first
  * render parses the real text into a template the server never produced.
  * Hoisting the text into the component's own attribute before rendering gives
  * both sides the same source: the server renders the parsed content, and the
  * element upgrades with the attribute already set, so the client's first
- * render matches it. Same principle as the icon payload below — hydration is
+ * render matches it. Same principle as the icon payload below: hydration is
  * only clean when the client's first render needs nothing the server had
  * exclusively.
  *
@@ -146,7 +144,7 @@ async function prepare() {
   }
   if (!registered) {
     // The barrel is all-or-nothing, so a client-only component would be defined
-    // here and then throw on the first page that contains it — while check-ssr,
+    // here and then throw on the first page that contains it, while check-ssr,
     // which honours the same list, reported the build as clean. Failing loudly
     // is the only version of this that cannot drift quietly.
     const names = Object.keys(CLIENT_ONLY);
@@ -159,7 +157,7 @@ async function prepare() {
       );
     }
     // @lit-labs/ssr installs the DOM shim on import, so it has to be loaded
-    // before any component class is defined — which the order here guarantees.
+    // before any component class is defined, which the order here guarantees.
     await import('./register.js');
     registered = true;
   }
@@ -206,7 +204,7 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
   }
 
   // Resolves against whatever the rendering process has registered, and since
-  // 4.7 that is nobody by default — core ships no icon packs. A server build
+  // 4.7 that is nobody by default. Core ships no icon packs. A server build
   // that wants glyphs in its HTML imports one first:
   //
   //     import '@arclux/arc-ui-icons/phosphor';
@@ -214,7 +212,7 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
   // Without it every name misses, the registry says so once, and each icon
   // renders its empty-slot fallback. That fallback is the *same* tree the
   // client produces under the same conditions, so the page still hydrates
-  // cleanly — it is a page with no icons, not a broken one.
+  // cleanly: it is a page with no icons, not a broken one.
   await iconRegistry.preload([...source.matchAll(ICON_NAME)].map((m) => m[1]));
 
   source = hoistTextContent(source);
@@ -222,7 +220,7 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
   let out = await lit.collectResult(lit.render(lit.html`${lit.unsafeStatic(source)}`));
 
   // lit wraps its output in a part marker, and the opening one lands *before*
-  // the doctype — enough to put the document in quirks mode.
+  // the doctype, enough to put the document in quirks mode.
   out = out.replace(/^\s*<!--lit-part [^>]*-->/, '').replace(/<!--\/lit-part-->\s*$/, '');
 
   const capped = closeOverlays(out, closedOverlays);
@@ -286,7 +284,7 @@ function trimLists(page, budgets) {
 /**
  * Hoist plain-text light DOM into the attribute a component reads it from.
  *
- * The light DOM stays in place — the attribute takes precedence on both
+ * The light DOM stays in place: the attribute takes precedence on both
  * sides, and removing markup is a bigger intervention than adding to it. An
  * element that already carries the attribute is left alone: the author has
  * said what the content is. Light DOM containing markup is skipped rather
@@ -371,9 +369,9 @@ function elementSpans(page, tag) {
  * Drop the shadow roots inside closed overlays, marking each overlay host.
  *
  * Only the hosts are marked, never the elements beneath them, and that
- * distinction is the whole point. The FOUC guard's `opacity: 0` keeps an
+ * distinction is what matters. The FOUC guard's `opacity: 0` keeps an
  * element in layout, so marking descendants held 174 un-upgraded command items
- * in the page until JS collapsed them — LCP 784ms to 2540ms, three times worse
+ * in the page until JS collapsed them: LCP 784ms to 2540ms, three times worse
  * than rendering the lot. `[data-arc-closed]:not(:defined)` is `display: none`,
  * because closed means occupying nothing.
  */
@@ -438,7 +436,7 @@ function liftStylesheets(page, sheets, used, prefix) {
  * Without this the lift trades one problem for another: the links sit inside
  * `<template>` elements, which the browser's preload scanner does not read, so
  * nothing would start fetching until the parser reached each shadow root.
- * `as="style"` rather than a stylesheet link — these must warm the cache, not
+ * `as="style"` rather than a stylesheet link; these must warm the cache, not
  * apply to the document.
  */
 function preloadStylesheets(page, used, prefix) {
@@ -468,7 +466,7 @@ function markServerRendered(page) {
  *
  * Without it a server-rendered icon hydrates wrong: the server resolves the
  * glyph and paints it, while the client's first render happens before any
- * dynamic import can finish and returns the empty-slot fallback instead — a
+ * dynamic import can finish and returns the empty-slot fallback instead, a
  * different tree from the one hydration is adopting.
  */
 function embedIcons(page, iconRegistry) {

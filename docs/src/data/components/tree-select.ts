@@ -8,11 +8,11 @@ export const treeSelect: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['dropdown', 'hierarchy', 'folder picker', 'nested', 'category'],
   description:
-    'Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder pickers. Group nodes expand and collapse; only leaf nodes are selectable.',
+    'Dropdown select whose panel is a hierarchical tree: categories, instrument banks, folder pickers. Group nodes expand and collapse; only leaf nodes are selectable.',
 
   overview: `Tree Select combines the trigger anatomy of Select with a hierarchical tree panel. Instead of a flat list of options, the dropdown presents expandable groups whose leaves are the actual choices: an instrument bank organized by family, a category taxonomy, a folder structure. The trigger shows the chosen leaf together with a muted breadcrumb of its ancestor path, so "Violin" reads as "Strings / Violin" and never loses its context.
 
-Selection is leaf-only by design. Nodes with children act as group headers — they expand and collapse but can never be chosen — which keeps single-select semantics clean: the submitted value is always one unambiguous leaf, never a branch that might mean "everything under it". Branches containing the current value expand automatically when the panel opens, so the selection is always visible without hunting.
+Selection is leaf-only. Nodes with children act as group headers: they expand and collapse but can never be chosen. That keeps single-select semantics clean, since the submitted value is always one unambiguous leaf, never a branch that might mean "everything under it". Branches containing the current value expand automatically when the panel opens, so the selection is always visible without hunting.
 
 Tree Select implements the ARIA combobox pattern with a tree popup. Keyboard users open the panel with Enter, Space, or an arrow key, walk rows with Arrow Up and Down, expand and collapse groups with Arrow Right and Left, confirm a leaf with Enter, and dismiss with Escape. Typing jumps to the row starting with those letters, exactly as in Select. The component participates in native forms through ElementInternals, submitting the selected leaf value under its \`name\`.`,
 
@@ -31,19 +31,19 @@ Tree Select implements the ARIA combobox pattern with a tree popup. Keyboard use
 
   guidelines: {
     do: [
-      'Use Tree Select when the options have a real hierarchy the user thinks in — instrument families, product categories, folder trees',
-      'Give every node a stable value, including group headers — group values drive expanded-values and appear in the arc-change path detail',
+      'Use Tree Select when the options have a real hierarchy the user thinks in: instrument families, product categories, folder trees',
+      'Give every node a stable value, including group headers. Group values drive expanded-values and appear in the arc-change path detail',
       'Keep the tree shallow; two or three levels is comfortable inside a dropdown panel',
       'Pre-expand the branches users need most via expanded-values instead of making them dig',
       'Always provide a visible label so users understand what they are choosing',
       'Use disabled nodes for temporarily unavailable choices rather than removing them, so the structure stays recognizable',
     ],
     dont: [
-      'Do not use Tree Select for a flat list — use Select, which is simpler for both hands and screen readers',
-      'Do not use it when users need to type to filter a large set — use Combobox, whose text field owns the keystrokes',
-      'Do not use it for browsing or navigation outside a form — use Tree View, which is a standalone tree without a trigger or form value',
-      'Do not expect group headers to be selectable — if a branch itself must be a valid choice, add an explicit leaf such as "All Strings" inside it',
-      'Do not nest deeper than three levels — a dropdown panel is the wrong home for a deep tree; consider a dedicated picker dialog instead',
+      'Do not use Tree Select for a flat list. Use Select, which is simpler for both hands and screen readers',
+      'Do not use it when users need to type to filter a large set. Use Combobox, whose text field owns the keystrokes',
+      'Do not use it for browsing or navigation outside a form. Use Tree View, which is a standalone tree without a trigger or form value',
+      'Do not expect group headers to be selectable. If a branch itself must be a valid choice, add an explicit leaf such as "All Strings" inside it',
+      'Do not nest deeper than three levels. A dropdown panel is the wrong home for a deep tree; consider a dedicated picker dialog instead',
     ],
   },
 

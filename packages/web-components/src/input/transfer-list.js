@@ -20,7 +20,7 @@ import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
  * @prop {boolean} disabled - Disables the whole control, preventing interaction and reducing opacity.
  * @prop {boolean} readonly - Prevents moving items between panes while the lists stay focusable and filterable; the selected values still submit with the form.
  * @prop {'sm' | 'md' | 'lg'} size - Control size. `md` is the default; `sm` and `lg` scale the row height and list panels.
- * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired after every move with `{ value }` -- the current array of selected values.
+ * @fires {CustomEvent<{ value: string[] }>} arc-change - Fired after every move with `{ value }`: the current array of selected values.
  * @slot none
  * @csspart base - The root element.
  * @csspart pane
@@ -143,7 +143,7 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
         padding: var(--space-xs);
       }
 
-      /* Sizes — the row height and how much list is visible, which is what
+      /* Sizes: the row height and how much list is visible, which is what
          "smaller" means for a two-pane picker. md is the base rule below, so an
          unrecognized value lands on it. */
       :host([size="sm"]) .tl__listbox { height: 170px; }
@@ -239,7 +239,7 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
       }
 
       /* Grouped by scope, not by direction.
-         Direction-grouped — move-one beside move-all, pointing the same way —
+         Direction-grouped: move-one beside move-all, pointing the same way,
          puts a single item and the entire list one pixel apart, and those two
          mistakes are not equally cheap. Grouped by scope, a slip inside a group
          moves the same amount of content the other way, which is one click to
@@ -549,7 +549,7 @@ export class ArcTransferList extends DeclaredPropsMixin(FormControlMixin(LitElem
    *
    * Server rendering is what surfaced this. `items` is a property rather than
    * an attribute, so an un-hydrated pane is genuinely empty in the delivered
-   * HTML — a state that previously existed only between two client renders and
+   * HTML, a state that previously existed only between two client renders and
    * so was never in the DOM long enough to audit.
    */
   _renderPane(pane) {

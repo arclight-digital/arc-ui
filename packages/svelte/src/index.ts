@@ -176,3 +176,4 @@ export { default as BarList } from './data/BarList.svelte';
 export { default as FieldList } from './input/FieldList.svelte';
 export { default as FieldRow } from './input/FieldRow.svelte';
 export { default as SettingsNavItem } from './layout/SettingsNavItem.svelte';
+export { default as CodeGroup } from './typography/CodeGroup.svelte';

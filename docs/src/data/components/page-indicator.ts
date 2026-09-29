@@ -9,11 +9,11 @@ export const pageIndicator: ComponentDef = {
   description:
     'Dot-based position indicator for page-level navigation or onboarding flows. Active dot fills with accent-primary and scales up.',
 
-  overview: `PageIndicator renders a horizontal row of dots that communicate the user's position within a paged sequence — carousels, onboarding flows, slideshow presentations, or any content split into discrete steps. The active dot fills with accent-primary and scales up slightly, providing an immediate visual cue for the current position without requiring labels or numbers.
+  overview: `PageIndicator renders a horizontal row of dots that communicate the user's position within a paged sequence: carousels, onboarding flows, slideshow presentations, or any content split into discrete steps. The active dot fills with accent-primary and scales up slightly, so the current position is clear without labels or numbers.
 
 The component supports both passive and interactive modes. In passive mode (\`clickable\` is false), the dots serve as read-only indicators driven by an external controller like a Carousel or swipe gesture handler. In interactive mode (\`clickable\` is true), each dot becomes a tap target that dispatches \`arc-change\` with the selected index, letting users jump directly to any page.
 
-PageIndicator is intentionally minimal — it handles position communication and optional direct navigation while leaving content transitions to the parent component. Pair it with Carousel for image galleries, StepperNav for wizard flows, or your own custom swipe container. The \`count\` prop sets the total number of dots and \`value\` controls which one is active, making it straightforward to synchronize with any paging state.`,
+PageIndicator is minimal. It shows position and, optionally, lets users jump to a page. Content transitions belong to the parent component. Pair it with Carousel for image galleries, StepperNav for wizard flows, or your own custom swipe container. The \`count\` prop sets the total number of dots and \`value\` controls which one is active, so it syncs with any paging state.`,
 
   features: [
     'Horizontal dot row for position indication',
@@ -30,15 +30,15 @@ PageIndicator is intentionally minimal — it handles position communication and
     do: [
       'Use PageIndicator alongside a Carousel or swipe container for visual context',
       'Enable clickable mode when users should be able to jump to any page directly',
-      'Keep the count reasonable — five to seven dots maximum for quick scanning',
+      'Keep the count reasonable: five to seven dots maximum for quick scanning',
       'Position the indicator below or overlaid on the paged content',
       "Synchronise the value prop with the parent component's active page state",
     ],
     dont: [
-      'Do not use PageIndicator for progress — use Progress or Stepper instead',
-      'Do not display more than ten dots — the pattern breaks down at high counts',
+      'Do not use PageIndicator for progress; use Progress or Stepper instead',
+      'Do not display more than ten dots: the pattern breaks down at high counts',
       'Do not use PageIndicator without a corresponding paged content area',
-      'Do not rely on PageIndicator as the only navigation mechanism — pair with swipe or buttons',
+      'Do not rely on PageIndicator as the only navigation mechanism; pair with swipe or buttons',
       'Do not place multiple PageIndicators for the same content sequence',
     ],
   },

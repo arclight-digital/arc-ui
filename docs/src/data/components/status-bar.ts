@@ -8,11 +8,11 @@ export const statusBar: ComponentDef = {
   interactivity: 'static',
   description: 'Bottom status bar with prefix, center, and suffix slots.',
 
-  overview: `StatusBar is a compact informational strip designed to sit at the bottom of an application window, mirroring the pattern found in code editors, terminals, and desktop applications. It renders at a fixed 28px height with a monospace font (\`--font-mono\`) and muted text color, providing an unobtrusive surface for status indicators, cursor positions, encoding info, and connection states.
+  overview: `StatusBar is a compact informational strip for the bottom of an application window, as in code editors, terminals, and desktop applications. It renders at a fixed 28px height with a monospace font (\`--font-mono\`) and muted text color, for status indicators, cursor positions, encoding info, and connection states.
 
-The component uses a three-region flexbox layout with named slots: \`start\` (flex-shrink: 0, anchored to the leading edge), default (centered, flex: 1), and \`end\` (flex-shrink: 0, anchored to the trailing edge via margin-left: auto). This pattern ensures the left and right indicators stay pinned to their edges while center content fills the remaining space.
+The component uses a three-region flexbox layout with named slots: \`start\` (flex-shrink: 0, anchored to the leading edge), default (centered, flex: 1), and \`end\` (flex-shrink: 0, anchored to the trailing edge via margin-left: auto). The start and end indicators stay pinned to their edges while center content fills the remaining space.
 
-The \`position\` prop controls whether the status bar flows with the page layout (\`static\`, the default) or sticks to the bottom of the viewport (\`fixed\`). Fixed positioning sets \`bottom: 0\`, \`left: 0\`, \`right: 0\` with a z-index of 100, making the bar persistent across scrolling. The bar renders with \`role="status"\` for screen reader announcements of dynamic content changes.`,
+The \`position\` prop controls whether the status bar flows with the page layout (\`static\`, the default) or sticks to the bottom of the viewport (\`fixed\`). Fixed positioning sets \`bottom: 0\`, \`left: 0\`, \`right: 0\` with a z-index of 100, so the bar stays put while scrolling. The bar renders with \`role="status"\` for screen reader announcements of dynamic content changes.`,
 
   features: [
     'Compact 28px height with monospace font for data-dense status information',
@@ -20,7 +20,7 @@ The \`position\` prop controls whether the status bar flows with the page layout
     'Static or fixed positioning via the position prop',
     'Fixed mode pins to viewport bottom with z-index: 100',
     '`role="status"` for accessible live-region announcements',
-    'Dark background (`--bg-deep`) with subtle top border for visual separation',
+    'Dark background (`--bg-deep`) with a top border',
     'Exposed CSS parts (base, prefix, center, suffix) for targeted styling',
     'Muted 11px text that stays out of the way of primary content',
   ],
@@ -34,11 +34,11 @@ The \`position\` prop controls whether the status bar flows with the page layout
       'Set position="fixed" when the status bar should persist during scrolling',
     ],
     dont: [
-      'Do not use StatusBar as a primary navigation bar — use TopBar or Toolbar instead',
-      'Do not place interactive buttons or form controls in the status bar — keep it informational',
+      'Do not use StatusBar as a primary navigation bar; use TopBar or Toolbar instead',
+      'Do not place interactive buttons or form controls in the status bar; keep it informational',
       'Do not set position="fixed" in layouts where AppShell already manages the bottom edge',
-      'Do not override the 28px height — the compact size is intentional for information density',
-      'Do not use StatusBar for toast-style notifications — use Toast or Alert for user-facing messages',
+      'Do not override the 28px height: the compact size is intentional for information density',
+      'Do not use StatusBar for toast-style notifications; use Toast or Alert for user-facing messages',
     ],
   },
 

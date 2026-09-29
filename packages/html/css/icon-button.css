@@ -5,7 +5,7 @@
       .arc-icon-button[disabled] { pointer-events: none; }
 
       /* Anchor-adoption form: a lone slotted <a> becomes the control and takes
-         the same box styling as .btn — see shared/anchor-adoption.js. The
+         the same box styling as .btn; see shared/anchor-adoption.js. The
          adopted anchor is always treated as icon-only, since any text the
          consumer wants lives inside their own anchor. */
       .arc-icon-button .btn,
@@ -41,7 +41,7 @@
       .arc-icon-button .btn__text {
         line-height: var(--glyph-lh);
         /* letter-spacing also lands after the final letter, and that trailing
-           space is inside the box being centered — so the word rendered half of
+           space is inside the box being centered, so the word rendered half of
            it, 0.75px, to the left of centre. Pulled back off the end here, at
            the cause: the box then matches the ink and every size centres
            correctly, where compensating with padding would have meant patching
@@ -52,10 +52,10 @@
         margin-inline-end: calc(var(--_ls) * -1);
       }
 
-      /* Sizes — icon-only: see iconBoxStyles in ../button-styles.js, shared with
+      /* Sizes, icon-only: see iconBoxStyles in ../button-styles.js, shared with
          arc-theme-toggle so the two cannot drift apart in a top bar. */
 
-      /* Sizes — with text */
+      /* Sizes: with text */
       .arc-icon-button .btn--has-text { min-height: var(--touch-min); }
       .arc-icon-button[data-size="xs"] .btn--has-text { padding: var(--space-xs) var(--space-sm); font-size: var(--_text-xs); }
       .arc-icon-button[data-size="sm"] .btn--has-text { padding: calc(var(--space-xs) + 2px) calc(var(--space-sm) + 2px); font-size: var(--_text-xs); }

@@ -13,9 +13,9 @@ import { listen } from '../shared/subscriptions.js';
  * @tag arc-data-grid
  * @status beta
  * @prop {Array<{key:string,label:string,sortable?:boolean,editable?:boolean,pinned?:boolean,width?:string,align?:string}>} columns - Column definitions. Each entry maps a `key` in your row objects to a rendered column with a `label` header. Optional flags enable sorting, inline editing, and inline-start-edge pinning per column; `width` sets a fixed CSS width (required for accurate pinned offsets) and `align` controls text alignment. Pinned columns are always displayed first. Set via JavaScript property.
- * @prop {Array<Record<string, any>>} rows - The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy — sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor.
+ * @prop {Array<Record<string, any>>} rows - The data array. Each object becomes a row keyed by column `key`. The grid works on an internal shallow copy; sorting and inline edits never mutate the array you pass in. Set via JavaScript property; reassigning it resets selection and any open editor.
  * @prop {Array<{key:string,direction:'asc'|'desc'}>} sort - Multi-sort state in priority order. Clicking a sortable header cycles it asc → desc → none; Shift+click appends it as a secondary sort. When more than one sort is active, headers show a direction arrow plus priority number. Set this property to pre-sort the grid.
- * @prop {boolean} manualSort - Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort` — use this to implement server-side sorting.
+ * @prop {boolean} manualSort - Skips internal sorting. Rows render in the order given, while headers still cycle the `sort` state and emit `arc-sort`; use this to implement server-side sorting.
  * @prop {boolean} selectable - Adds a checkbox column with a select-all header checkbox (indeterminate when partially selected). Space toggles selection from the keyboard. Emits `arc-select` with the selected row indices.
  * @prop {boolean} virtual - Enables virtual scrolling for large datasets. Only visible rows plus an overscan buffer are rendered, keeping performance constant regardless of row count.
  * @prop {number} rowHeight - Height in pixels of each row when virtual scrolling is enabled. Must match the actual rendered row height for correct scroll calculations.
@@ -23,8 +23,8 @@ import { listen } from '../shared/subscriptions.js';
  * @prop {'default' | 'compact'} density - Row density. `compact` reduces cell padding for dense data displays. Absorbed from `arc-table`.
  * @prop {boolean} striped - Alternating row backgrounds. On by default, which is what this grid has always drawn; `no-striped` turns them off, which is what an unstriped `arc-table` looked like.
  * @fires arc-sort - Fired when the user changes sorting. detail: { sort } with the full multi-sort array in priority order
- * @fires arc-cell-change - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row } — rowIndex refers to the original rows array
- * @fires arc-select - Fired when row selection changes. detail: { value, selectedIndices } — sorted indices into the original rows array
+ * @fires arc-cell-change - Fired when an inline cell edit is committed. detail: { rowIndex, key, value, row }; rowIndex refers to the original rows array
+ * @fires arc-select - Fired when row selection changes. detail: { value, selectedIndices }, where selectedIndices are sorted indices into the original rows array
  * @slot none
  * @csspart base - The root element.
  * @csspart header-cell
@@ -51,8 +51,8 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     // the merged grid; arc-data-table gets it for free from the same change.
     overscan: int({ default: 5, min: 0, clamp: 'toRange' }),
     // Absorbed from arc-table (4.2). Its `striped` was opt-in and this grid has
-    // always striped unconditionally, so the flag defaults true — a merge is not
-    // the place to restyle the survivor — and `no-striped` is the migration path
+    // always striped unconditionally, so the flag defaults true. A merge is not
+    // the place to restyle the survivor, and `no-striped` is the migration path
     // for a plain arc-table.
     density: oneOf(['default', 'compact']),
     striped: flag(true, { negative: 'no-striped' }),
@@ -188,7 +188,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
 
       /* Cast away from the pinned edge, so it has to follow the inline axis.
          box-shadow takes no logical offset, so the sign flips under :dir(rtl)
-         — the one physical value column pinning still needs. */
+         the one physical value column pinning still needs. */
       .scrolled-x th.cell--pinned-last,
       .scrolled-x td.cell--pinned-last {
         box-shadow: 6px 0 12px -6px rgba(var(--black-rgb), 0.45);
@@ -261,7 +261,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
         background: var(--text-primary);
       }
 
-      /* Inline cell editor — matches arc-input's field look */
+      /* Inline cell editor, matches arc-input's field look */
       .editor {
         width: 100%;
         box-sizing: border-box;
@@ -296,7 +296,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
     this._selected = new Set();
     this._window = new VirtualController(this, {
       // Null until the first render, which is the case the controller is
-      // written to tolerate — a scroll cannot happen before there is something
+      // written to tolerate; a scroll cannot happen before there is something
       // to scroll, and `measure()` is a no-op until there is.
       getViewport: () => this.shadowRoot?.querySelector('.grid-wrapper'),
       getTotal: () => this._rows.length,
@@ -351,7 +351,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
       this._rafId = null;
       const wrapper = this.shadowRoot?.querySelector('.grid-wrapper');
       if (!wrapper) return;
-      // Signed under RTL — scrollLeft starts at 0 and goes negative — so the
+      // Signed under RTL, scrollLeft starts at 0 and goes negative, so the
       // magnitude is what says "scrolled away from the pinned edge".
       this._scrolledX = Math.abs(wrapper.scrollLeft) > 0;
       if (this.virtual) this._recalcVirtual();
@@ -359,8 +359,8 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * The window is `VirtualController`'s since 4.2. This file used to carry its
-   * own copy of the arithmetic, and so did arc-data-table and arc-virtual-list.
+   * The window arithmetic is `VirtualController`'s (since 4.2), shared with
+   * arc-data-table and arc-virtual-list.
    */
   _recalcVirtual() {
     this._window.measure();
@@ -577,7 +577,7 @@ export class ArcDataGrid extends DeclaredPropsMixin(LitElement) {
         if (!this.selectable) return;
         // "Select all" is a specific control and it lives in the header's
         // checkbox cell. This branch checked only `r === 0`, so Space on *any*
-        // header cell toggled every row — including on a column with nothing to
+        // header cell toggled every row, including on a column with nothing to
         // do with selection. `_activateCell`, which Enter goes through, always
         // had the `c === 0` guard; the two disagreed about the same gesture on
         // the same cell. Selecting a row is different: it is about the row you

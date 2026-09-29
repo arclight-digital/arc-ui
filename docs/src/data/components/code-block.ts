@@ -6,13 +6,16 @@ export const codeBlock: ComponentDef = {
   tag: 'arc-code-block',
   tier: 'typography',
   interactivity: 'hybrid',
-  description: 'Syntax-highlighted code display with optional filename and copy button.',
+  description:
+    'Syntax-highlighted code with a title, a copy button, line numbers, line emphasis, diff tints, a shell prompt and a collapsed height.',
 
-  overview: `CodeBlock displays source code in a styled container with a header bar, optional filename, language badge, and a one-click copy button. The header renders the filename in monospace font on the left, the language identifier as an uppercase Tomorrow badge on the right, and a "Copy" button that writes the code content to the clipboard via the Clipboard API. After a successful copy, the button text and border color switch to a green "Copied" state for two seconds before reverting.
+  overview: `CodeBlock shows source code in a framed block. A slim header carries a title (\`label\`, in the body font), an optional \`filename\` in monospace, the \`language\` as a quiet tag, and an icon-only copy button that writes the code to the clipboard and turns into a green check for a moment. Code goes in through the \`code\` property; there is no default slot.
 
-The code body renders inside a \`<pre>\` element with the monospace font stack (JetBrains Mono), a line-height of 1.8, and horizontal overflow scrolling for long lines. Code content is provided via the \`code\` property — there is no default slot, so content placed between the tags is not rendered. The tab-size is set to 2 for compact indentation.
+Code renders line by line whether or not it is highlighted, so every reading aid works without the highlighter: \`line-numbers\` adds a gutter, \`highlight="2,4-6"\` emphasizes lines, \`diff\` (or \`language="diff"\`) tints added and removed lines, \`wrap\` soft-wraps long lines instead of scrolling them, and \`max-lines\` collapses a tall block behind a "Show all" button. None of this reaches the clipboard: the copy button copies \`code\` exactly as given.
 
-**Highlighting is opt-in.** CodeBlock is the one component in ARC UI with a heavy dependency: shiki and its grammars are around 13.6 MB, which no other component touches. So shiki is an *optional peer dependency*, and CodeBlock is the one component the main barrel does not re-export — a bundler resolves the dynamic imports of everything it can reach, so being in the barrel would have made shiki everyone's install. Import it by its own subpath and install shiki alongside:
+**Shell blocks.** Set \`prompt\` to put a \`$\` (or your own prompt, such as \`#\`) before each command. Continuation lines after a trailing backslash and blank lines get none, and the prompt can't be selected or copied. Shell highlighting separates the parts of a command: a wrapper like \`sudo\` is muted, the command is bold, its subcommand takes the accent, and paths, URLs and image references read as values. For variants of the same command (npm, pnpm and yarn, or two editions of a product), put the blocks in an [arc-code-group](/docs/components/code-group) for one block with tabs.
+
+**Highlighting is opt-in.** CodeBlock is the one component in ARC UI with a heavy dependency: shiki and its grammars are around 13.6 MB, which no other component touches. So shiki is an *optional peer dependency*, and CodeBlock is the one component the main barrel does not re-export. A bundler resolves the dynamic imports of everything it can reach, so being in the barrel would have made shiki everyone's install. Import it by its own subpath and install shiki alongside:
 
 \`\`\`
 npm install shiki @shikijs/langs
@@ -22,54 +25,62 @@ npm install shiki @shikijs/langs
 import '@arclux/arc-ui/code-block';
 \`\`\`
 
-Without shiki, CodeBlock still renders: the layout, the header, the copy button, and the code itself all work — the code is simply not colored, and the console says so once. \`@arclux/arc-ui/register\` does not register CodeBlock for the same reason; import the subpath.
+Without shiki, CodeBlock still renders: the header, the copy button, the reading aids and the code itself all work. The code is not colored, and the console says so once. With shiki, the colors fade in when the grammar loads and no line moves. \`@arclux/arc-ui/register\` does not register CodeBlock for the same reason; import the subpath.
 
-CodeBlock is marked as a hybrid component: the code display works without JavaScript (the layout and styling are pure CSS), but the copy-to-clipboard functionality requires JS and a secure context (HTTPS). The component gracefully handles copy failures with a silent try-catch, so it degrades without errors on HTTP or restricted environments.`,
+CodeBlock is a hybrid component: the code display works without JavaScript, but copying needs JS and a secure context (HTTPS). Copy failures are caught, so it degrades without errors on HTTP or in restricted environments.`,
 
   features: [
-    'One-click copy-to-clipboard via the Clipboard API with a 2-second "Copied" confirmation',
-    'Header bar with filename (monospace), language badge (uppercase Tomorrow), and copy button',
-    'Horizontal scroll overflow for long code lines without wrapping',
-    'Syntax highlighting via shiki — an optional peer dependency, imported only by this component',
-    'Renders uncolored but fully functional when shiki is not installed',
-    'Code content via the "code" prop (this component has no default slot)',
-    'JetBrains Mono font stack with 1.8 line-height and tab-size of 2',
-    'Graceful degradation: copy fails silently on insecure contexts without breaking the UI',
-    'Six exposed CSS parts: code-block, header, filename, lang, copy, body, pre, code',
-    'Surface and card background tokens for seamless integration with dark themes',
+    'Slim header: a `label` title in the body font, an optional `filename` in mono, the language as a quiet tag, and an icon-only copy',
+    'Copies `code` exactly: prompts and line numbers are never selected or copied',
+    'Shell prompt with `prompt`, skipping continuation and blank lines',
+    'Shell colors that separate the wrapper, command, subcommand, flags, variables, operators and values',
+    '`line-numbers`, `highlight="2,4-6"` line emphasis, and `diff` tints for added and removed lines',
+    '`wrap` for soft-wrapped lines, aligned after the gutter and prompt',
+    '`max-lines` collapses a tall block with a fade and a "Show all N lines" button',
+    'Syntax highlighting via shiki, an optional peer dependency imported only by this component; colors fade in without moving a line',
+    'Every reading aid works without shiki installed',
+    'Window variant with a title bar and a line count; basic variant with no chrome',
   ],
 
   guidelines: {
     do: [
-      'Set the language prop to help users identify the code syntax at a glance',
-      'Provide a filename when showing code from a specific file for context',
-      'Install shiki and @shikijs/langs when you want highlighting — the component works without them, just uncolored',
-      'Import `@arclux/arc-ui/code-block` directly; the main barrel and `/register` deliberately exclude it',
-      'Place CodeBlock in documentation pages, API references, and tutorial content',
-      'Test copy functionality on HTTPS — the Clipboard API requires a secure context',
+      'Give a block a `label` when it is one of several on a page, so a reader can tell them apart',
+      'Use `prompt` for commands a reader will paste into a terminal, and leave it off for scripts and output',
+      'Use arc-code-group for variants of the same command instead of stacking near-identical blocks',
+      'Use `highlight` to point at the lines the surrounding text talks about',
+      'Set `max-lines` on long samples in running text, so the page keeps its shape',
+      'Install shiki and @shikijs/langs when you want highlighting; the component works without them, uncolored',
+      'Import `@arclux/arc-ui/code-block` directly; the main barrel and `/register` exclude it',
     ],
     dont: [
-      'Do not pass content between the tags — there is no default slot; use the `code` prop',
-      'Do not expect highlighting without shiki installed — check the console if code renders uncolored',
+      'Do not pass content between the tags. There is no default slot; use the `code` prop',
+      'Do not type a `$` into the code itself. It ends up in the reader\'s clipboard; use `prompt`',
+      'Do not use `wrap` for code where indentation matters to the reader, such as Python or YAML, unless the lines are short',
       'Do not use CodeBlock for single-line inline code; use arc-text variant="code" instead',
-      'Do not omit the language prop when the syntax is not obvious from context',
-      'Do not override the font-family unless you are intentionally switching to a different monospace font',
-      'Do not assume copy will always work — it requires HTTPS and a user gesture in modern browsers',
+      'Do not assume copy will always work; it requires HTTPS and a user gesture in modern browsers',
     ],
   },
 
   previewHtml: `<div style="display: flex; flex-direction: column; gap: 24px;">
   <div>
-    <arc-text variant="label" style="margin-bottom: 8px; display: block;">Default</arc-text>
-    <arc-code-block language="js" filename="app.js" code="import { Button, Card } from '@arclux/arc-ui';\n\nfunction init(config = {}) {\n  const app = document.querySelector('#app');\n  const { theme = 'dark', debug = false } = config;\n\n  if (debug) {\n    console.log('ARC UI loaded', { theme });\n  }\n\n  return app;\n}"></arc-code-block>
+    <arc-text variant="label" style="margin-bottom: 8px; display: block;">Shell, with a prompt</arc-text>
+    <arc-code-block language="bash" label="Pulsar" prompt code="sudo bootc switch \\\n  ghcr.io/arclight-digital/pulsar:latest"></arc-code-block>
+  </div>
+  <div>
+    <arc-text variant="label" style="margin-bottom: 8px; display: block;">Line numbers and emphasis</arc-text>
+    <arc-code-block language="js" filename="app.js" line-numbers highlight="4-6" code="import { Button, Card } from '@arclux/arc-ui';\n\nfunction init(config = {}) {\n  const app = document.querySelector('#app');\n  const { theme = 'dark', debug = false } = config;\n  if (debug) console.log('ARC UI loaded', { theme });\n  return app;\n}"></arc-code-block>
+  </div>
+  <div>
+    <arc-text variant="label" style="margin-bottom: 8px; display: block;">Diff, collapsed to five lines</arc-text>
+    <arc-code-block language="diff" label="theme.css" max-lines="5" code="--- a/theme.css\n+++ b/theme.css\n :root {\n-  --accent-primary: #4d7ef7;\n+  --accent-primary: #7c5cff;\n   --radius-md: 8px;\n-  --radius-lg: 12px;\n+  --radius-lg: 14px;\n }"></arc-code-block>
   </div>
   <div>
     <arc-text variant="label" style="margin-bottom: 8px; display: block;">Window</arc-text>
-    <arc-code-block variant="window" language="js" filename="app.js" code="import { Button, Card } from '@arclux/arc-ui';\n\nfunction init(config = {}) {\n  const app = document.querySelector('#app');\n  const { theme = 'dark', debug = false } = config;\n\n  if (debug) {\n    console.log('ARC UI loaded', { theme });\n  }\n\n  return app;\n}"></arc-code-block>
+    <arc-code-block variant="window" language="js" filename="app.js" code="import { Button, Card } from '@arclux/arc-ui';\n\nexport const app = document.querySelector('#app');"></arc-code-block>
   </div>
   <div>
     <arc-text variant="label" style="margin-bottom: 8px; display: block;">Basic</arc-text>
-    <arc-code-block variant="basic" language="js" code="npm install @arclux/arc-ui"></arc-code-block>
+    <arc-code-block variant="basic" language="bash" prompt code="npm install @arclux/arc-ui"></arc-code-block>
   </div>
 </div>`,
 
@@ -77,9 +88,15 @@ CodeBlock is marked as a hybrid component: the code display works without JavaSc
     {
       label: 'Web Component',
       lang: 'html',
-      code: `<arc-code-block language="js" filename="example.js">
-import { Button } from '@arclux/arc-ui';
-</arc-code-block>`,
+      code: `<arc-code-block language="bash" label="Install" prompt></arc-code-block>
+<arc-code-block language="js" filename="app.js" line-numbers highlight="2"></arc-code-block>
+
+<script type="module">
+  import '@arclux/arc-ui/code-block';
+  const [install, app] = document.querySelectorAll('arc-code-block');
+  install.code = 'npm install @arclux/arc-ui';
+  app.code = "import '@arclux/arc-ui/register';\\ndocument.body.classList.add('ready');";
+</script>`,
     },
     {
       label: 'React',
@@ -213,5 +230,5 @@ export default function Example() {
     },
   ],
 
-  seeAlso: ['copy-button', 'kbd', 'highlight'],
+  seeAlso: ['code-group', 'copy-button', 'kbd', 'highlight'],
 };

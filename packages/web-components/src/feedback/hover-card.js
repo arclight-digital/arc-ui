@@ -52,7 +52,7 @@ export class ArcHoverCard extends DeclaredPropsMixin(LitElement) {
         box-shadow: var(--shadow-overlay);
         min-width: 200px;
         max-width: 360px;
-        /* Out of layout while closed, not merely invisible — a
+        /* Out of layout while closed, not merely invisible: a
            visibility:hidden box still contributes scrollable overflow, and a
            panel anchored inside a trigger at the page's inline-end edge turns
            its min-width into a permanent horizontal scrollbar. Finding #95; the
@@ -169,7 +169,7 @@ export class ArcHoverCard extends DeclaredPropsMixin(LitElement) {
     this._visible = false;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

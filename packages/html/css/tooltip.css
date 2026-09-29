@@ -61,7 +61,7 @@
         transform: rotate(45deg);
       }
 
-      /* Positions — the resting fallback, for a popup PositionController has
+      /* Positions: the resting fallback, for a popup PositionController has
          not adopted: the static HTML export and anything pre-upgrade. Scoped
          off managed popups because the controller writes fixed viewport
          coordinates, which the translateX(-50%) centring here would shift the
@@ -120,8 +120,8 @@
         border-right: none;
       }
 
-      /* Arrow for a managed popup. Keyed on data-placement — the side the
-         popup actually landed on — so the arrow follows a flip instead of
+      /* Arrow for a managed popup. Keyed on data-placement (the side the
+         popup actually landed on), so the arrow follows a flip instead of
          pointing at nothing. */
       .arc-tooltip .tooltip__popup[data-managed][data-placement="top"] .tooltip__arrow {
         bottom: -5px;

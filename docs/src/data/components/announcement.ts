@@ -7,9 +7,9 @@ export const announcement: ComponentDef = {
   tier: 'feedback',
   interactivity: 'static',
   description:
-    'ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen readers. Zero visual footprint — pure accessibility utility.',
+    'ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen readers.',
 
-  overview: `Announcement is a pure accessibility utility that creates an ARIA live region for announcing dynamic content changes to screen readers. It has absolutely no visual output — zero width, zero height, and no visible rendering — making it a behind-the-scenes component that exists solely for assistive technology users.
+  overview: `Announcement is an accessibility utility that creates an ARIA live region for announcing dynamic content changes to screen readers. It has no visual output (zero width, zero height) and exists only for assistive technology users.
 
 When you set the \`message\` property, the component updates its internal live region and the screen reader announces the new content. The \`politeness\` prop controls the interruption level: \`polite\` waits for the screen reader to finish its current announcement before speaking the new message, while \`assertive\` interrupts immediately for urgent updates.
 
@@ -17,12 +17,12 @@ Use announcement for any dynamic state change that sighted users can perceive vi
 
   features: [
     'ARIA live region with configurable politeness (polite or assertive)',
-    'Zero visual footprint — no width, height, or visible rendering',
+    'No visual footprint: no width, height, or visible rendering',
     'Set the message property to trigger a screen-reader announcement',
     'Polite mode waits for current speech to finish before announcing',
     'Assertive mode interrupts current speech for urgent updates',
-    'Supports dynamic message updates — each change triggers a new announcement',
-    'Lightweight — renders a single visually-hidden element',
+    'Each message change triggers a new announcement',
+    'Renders a single visually-hidden element',
     'Works with all major screen readers (NVDA, JAWS, VoiceOver, TalkBack)',
   ],
 
@@ -32,12 +32,12 @@ Use announcement for any dynamic state change that sighted users can perceive vi
       'Use polite for non-urgent updates like search result counts or status changes',
       'Use assertive for critical updates like errors, timeouts, or session expiration warnings',
       'Place a single <arc-announcement> in your layout and reuse it for all announcements',
-      'Keep messages concise — screen reader users cannot skim long announcements',
+      'Keep messages concise; screen reader users cannot skim long announcements',
     ],
     dont: [
       'Do not use announcement for content that is already in an ARIA live region (like toast or alert)',
-      'Do not fire rapid successive announcements — screen readers may drop intermediate messages',
-      'Do not use assertive for routine updates — it interrupts the user and should be reserved for urgency',
+      'Do not fire rapid successive announcements; screen readers may drop intermediate messages',
+      'Do not use assertive for routine updates. It interrupts the user and should be reserved for urgency',
       'Do not duplicate announcements that are already handled by native ARIA roles',
       'Do not use announcement as a substitute for proper labeling and semantic HTML',
     ],

@@ -15,7 +15,7 @@
         flex-direction: column;
       }
 
-      /* Remove inner radii — connected borders */
+      /* Remove inner radii: connected borders */
       .arc-button-group * {
         --radius-md: 0;
         --radius-sm: 0;

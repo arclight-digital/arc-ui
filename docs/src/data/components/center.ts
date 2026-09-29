@@ -9,11 +9,11 @@ export const center: ComponentDef = {
   description:
     'Content centering primitive with max-width, intrinsic centering, and text-center options.',
 
-  overview: `Center is a layout primitive that horizontally centers its children within the available space. By default it applies \`margin-inline: auto\` with a configurable \`max-width\`, which is the standard block-level centering pattern for constraining content to a readable width. This covers the most common centering use case: a content column centered on the page.
+  overview: `Center is a layout primitive that horizontally centers its children within the available space. By default it applies \`margin-inline: auto\` with a configurable \`max-width\`, the standard block-level pattern for keeping a content column centered at a readable width.
 
-The \`intrinsic\` prop switches to intrinsic centering mode, which uses \`display: flex\` with \`align-items: center\` and \`justify-content: center\` to center children based on their natural (intrinsic) size rather than stretching them to the max-width. This is ideal for centering buttons, icons, or short labels that should not stretch to fill a column.
+The \`intrinsic\` prop switches to intrinsic centering mode, which uses \`display: flex\` with \`align-items: center\` and \`justify-content: center\` to center children based on their natural (intrinsic) size rather than stretching them to the max-width. Use it for buttons, icons, or short labels that should not stretch to fill a column.
 
-The \`text\` prop adds \`text-align: center\` for centering inline text content within the block. These three modes — block centering, intrinsic centering, and text centering — can be combined to cover virtually any centering pattern without writing custom CSS.`,
+The \`text\` prop adds \`text-align: center\` for centering inline text content within the block. The three modes (block, intrinsic, and text centering) can be combined, which covers most centering cases without custom CSS.`,
 
   features: [
     'Block-level centering with `margin-inline: auto` and configurable `max-width`',
@@ -21,7 +21,7 @@ The \`text\` prop adds \`text-align: center\` for centering inline text content 
     'Text centering mode with `text-align: center` for inline content',
     'Configurable max-width via the `max-width` prop (defaults to --max-width token)',
     'Modes can be combined: intrinsic + text for centered buttons with centered labels',
-    'Pure CSS — no JavaScript overhead',
+    'Pure CSS, with no JavaScript',
     'CSS part: `center` for targeted ::part() styling',
   ],
 
@@ -34,11 +34,11 @@ The \`text\` prop adds \`text-align: center\` for centering inline text content 
       'Override max-width to match your layout needs (e.g. "480px" for narrow forms)',
     ],
     dont: [
-      'Do not use Center as a substitute for Container — Container adds padding, Center only centers',
-      'Do not use Center for vertical centering — it handles horizontal centering only',
+      'Do not use Center as a substitute for Container. Container adds padding; Center only centers',
+      'Do not use Center for vertical centering; it handles horizontal centering only',
       'Do not apply Center to elements that should be full-width (like navigation bars)',
-      'Do not set max-width to 100% — it makes the centering constraint meaningless',
-      'Do not nest multiple Centers — a single Center wrapper is sufficient',
+      'Do not set max-width to 100%, which makes the centering constraint meaningless',
+      'Do not nest multiple Centers; a single Center wrapper is enough',
     ],
   },
 

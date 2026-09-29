@@ -9,11 +9,11 @@ export const transferList: ComponentDef = {
   description:
     'Dual-listbox for moving items between an available and a selected pane, ideal for permissions and settings UIs.',
 
-  overview: `TransferList presents the full universe of options split across two panes — everything not yet chosen on the left ("Available") and the current value on the right ("Selected"). Users mark items with a checkbox-style highlight, then move them across with the center controls, or move a single item instantly with a double-click or the Enter key. Pane titles are customisable via \`sourceLabel\` and \`targetLabel\`, and each pane header shows a live "checked of total" count.
+  overview: `TransferList presents the full universe of options split across two panes: everything not yet chosen on the left ("Available") and the current value on the right ("Selected"). Users mark items with a checkbox-style highlight, then move them across with the center controls, or move a single item instantly with a double-click or the Enter key. Pane titles are customisable via \`sourceLabel\` and \`targetLabel\`, and each pane header shows a live "checked of total" count.
 
 Options are supplied as an array of \`{ value, label, disabled? }\` objects and the component's \`value\` is the array of values currently in the Selected pane, kept in options order. With the \`searchable\` flag each pane gains its own case-insensitive filter input that narrows only that pane, and the move-all buttons respect the active filter. Disabled options render dimmed and can never be moved.
 
-The component is form-associated: give it a \`name\` and it submits one form entry per selected value, participates in \`form.reset()\`, and honours \`<fieldset disabled>\`. Both listboxes follow the WAI-ARIA multi-select listbox pattern — one tab stop each with a roving tabindex, arrow-key navigation, Space to toggle, and Ctrl+A to check every visible item — and moves are announced through a polite live region.`,
+The component is form-associated: give it a \`name\` and it submits one form entry per selected value, participates in \`form.reset()\`, and honours \`<fieldset disabled>\`. Both listboxes follow the WAI-ARIA multi-select listbox pattern (one tab stop each with a roving tabindex, arrow-key navigation, Space to toggle, Ctrl+A to check every visible item), and moves are announced through a polite live region.`,
 
   features: [
     'Two labeled panes with live "checked of total" counts and customisable titles',
@@ -32,14 +32,14 @@ The component is form-associated: give it a \`name\` and it submits one form ent
     do: [
       'Use for medium-sized sets (roughly 5-100 items) where users assign a subset, such as role permissions or report columns',
       'Enable `searchable` whenever a pane can hold more than a dozen items',
-      'Keep option labels short — one line each — so they do not truncate in narrow panes',
+      'Keep option labels short, one line each, so they do not truncate in narrow panes',
       'Override `sourceLabel`/`targetLabel` with domain terms ("All permissions" / "Granted") for clearer context',
       'Listen to `arc-change` to persist the selection; the detail carries the full value array after every move',
     ],
     dont: [
-      'Do not use for a handful of options — a checkbox group or multi-select is lighter',
+      'Do not use for a handful of options. A checkbox group or multi-select is lighter',
       'Do not use for thousands of items without server-side narrowing; all options render in the panes',
-      'Do not repurpose the checked highlight as the selection itself — only items in the right pane are the value',
+      'Do not repurpose the checked highlight as the selection itself. Only items in the right pane are the value',
       'Do not disable options without conveying elsewhere why they cannot be moved',
       'Avoid placing two transfer lists side by side; each already spans two panes and needs the width',
     ],

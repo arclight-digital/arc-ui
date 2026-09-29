@@ -11,8 +11,9 @@
     fixed?: boolean;
     contained?: string;
     menuOpen?: boolean;
-    mobileMenu?: string;
+    mobileMenu?: 'sidebar' | 'nav' | 'none';
     menuPosition?: string;
+    mobileCenter?: 'center' | 'end' | 'hidden';
     navAlign?: 'left' | 'center' | 'right';
     /** <slot name="logo"> — put slot="logo" on the element inside. */
     logo?: Snippet;
@@ -49,7 +50,7 @@
     [key: `on${string}`]: unknown;
   }
 
-  let { heading = '', homeHref = '/', scrolled = false, immersive = false, fixed = false, contained, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', navAlign = 'center', logo, subtitle, center, actions, ...rest }: Props = $props();
+  let { heading = '', homeHref = '/', scrolled = false, immersive = false, fixed = false, contained, menuOpen = false, mobileMenu = 'sidebar', menuPosition = 'left', mobileCenter = 'center', navAlign = 'center', logo, subtitle, center, actions, ...rest }: Props = $props();
 
   let __el: HTMLElement | undefined = $state();
   $effect(() => {
@@ -59,6 +60,7 @@
     if (menuOpen !== undefined) el.menuOpen = menuOpen;
     if (mobileMenu !== undefined) el.mobileMenu = mobileMenu;
     if (menuPosition !== undefined) el.menuPosition = menuPosition;
+    if (mobileCenter !== undefined) el.mobileCenter = mobileCenter;
     if (navAlign !== undefined) el.navAlign = navAlign;
   });
 </script>

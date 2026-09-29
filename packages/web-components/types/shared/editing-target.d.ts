@@ -4,7 +4,7 @@
  * Anything binding a bare-character keyboard shortcut needs to answer this, and
  * inside shadow DOM the obvious answer is wrong. A keypress in the `<textarea>`
  * of an `<arc-textarea>` is retargeted on the way out of the shadow root, so a
- * document-level listener sees `event.target` as `<arc-textarea>` — tag name
+ * document-level listener sees `event.target` as `<arc-textarea>`: tag name
  * `ARC-TEXTAREA`, not `TEXTAREA`. The usual guard,
  *
  *   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
@@ -14,8 +14,8 @@
  * that reaches across a shadow boundary, and no attribute on the host says
  * "there is a text field in here".
  *
- * `event.composedPath()[0]` is the real originating node — it is the one thing
- * that survives retargeting — so that is what this checks.
+ * `event.composedPath()[0]` is the real originating node: it is the one thing
+ * that survives retargeting, so that is what this checks.
  *
  *   import { isEditingTarget } from '@arclux/arc-ui/shared/editing-target';
  *

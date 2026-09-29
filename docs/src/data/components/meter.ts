@@ -11,7 +11,7 @@ export const meter: ComponentDef = {
 
   overview: `Meter is a visual gauge that represents a scalar value within a known range, similar to the native HTML \`<meter>\` element but with ARC UI styling and full theme integration. The component renders a rounded track with an animated fill bar whose color changes based on the value's relationship to configurable thresholds. When a \`label\` is provided, a header row displays the label on the left and the current percentage on the right in monospace font.
 
-The color logic mirrors the HTML meter algorithm using three thresholds: \`low\`, \`high\`, and \`optimum\`. When the optimum is in the high segment (e.g. battery level), values above \`high\` render in green (success), values between \`low\` and \`high\` in yellow (warning), and values below \`low\` in red (error). When the optimum is in the low segment (e.g. error count), the logic inverts — low values are green and high values are red. If thresholds are not explicitly set, the component divides the range into sensible thirds.
+The color logic mirrors the HTML meter algorithm using three thresholds: \`low\`, \`high\`, and \`optimum\`. When the optimum is in the high segment (e.g. battery level), values above \`high\` render in green (success), values between \`low\` and \`high\` in yellow (warning), and values below \`low\` in red (error). When the optimum is in the low segment (e.g. error count), the logic inverts. Low values are green and high values are red. If thresholds are not set, the component divides the range into thirds.
 
 Meter uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\` for full accessibility. The fill width and color transitions are animated using the theme's base transition timing, creating smooth visual updates when the value changes programmatically.`,
 
@@ -21,10 +21,10 @@ Meter uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`ari
     'Configurable `low`, `high`, and `optimum` thresholds mirroring the HTML `<meter>` algorithm',
     'Header row showing label text and current percentage in monospace font when `label` is set',
     'Animated fill width and color transitions using the theme base timing function',
-    'Automatic zone calculation with sensible third-based defaults when thresholds are omitted',
+    'Automatic zone calculation with third-based defaults when thresholds are omitted',
     'Semantic `role="meter"` with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`',
     'Rounded 8px track with `bg-elevated` background matching the design system surface palette',
-    'Value clamped between `min` and `max` — out-of-range values are handled gracefully',
+    'Value clamped between `min` and `max`, so out-of-range values are safe',
   ],
 
   guidelines: {
@@ -36,11 +36,11 @@ Meter uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`ari
       'Pair Meter with adjacent text or tooltips to explain what the color zones mean in your context',
     ],
     dont: [
-      'Do not use Meter for indeterminate progress — use Progress with an indeterminate state instead',
-      'Do not use Meter for task completion tracking — use Progress for sequential step-based workflows',
-      'Do not set `min` equal to or greater than `max` — the fill calculation returns 0% in that case',
-      'Do not rely on color alone to convey the zone meaning — always include a label or supplementary text',
-      'Avoid using Meter for binary states (pass/fail) — use a Badge or status indicator instead',
+      'Do not use Meter for indeterminate progress. Use Progress with an indeterminate state instead',
+      'Do not use Meter for task completion tracking. Use Progress for sequential step-based workflows',
+      'Do not set `min` equal to or greater than `max`. The fill calculation returns 0% in that case',
+      'Do not rely on color alone to convey the zone meaning. Always include a label or supplementary text',
+      'Avoid using Meter for binary states (pass/fail). Use a Badge or status indicator instead',
     ],
   },
 

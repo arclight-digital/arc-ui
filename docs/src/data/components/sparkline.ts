@@ -9,43 +9,43 @@ export const sparkline: ComponentDef = {
   description:
     'Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat cards, and dashboards. Renders from a simple comma-separated data string with no external charting dependencies.',
 
-  overview: `Sparkline is a miniature, inline chart designed to show a trend at a glance without the overhead of a full charting library. Drop it into a table cell next to a metric, pair it with a stat card, or tuck it into a dashboard grid — wherever a compact visual summary beats a wall of numbers.
+  overview: `Sparkline is a miniature inline chart that shows a trend at a glance without a full charting library. Put it in a table cell next to a metric, pair it with a stat card, or place it in a dashboard grid, wherever a compact visual summary beats a wall of numbers.
 
-The component accepts data as a plain comma-separated string, parses it into a normalized SVG path, and renders either a smooth line or a series of bars depending on the \`type\` prop. Line mode draws a polyline with rounded joins and an optional filled area beneath the curve; bar mode renders evenly spaced rectangles that respond to hover with a subtle fill transition.
+The component accepts data as a plain comma-separated string, parses it into a normalized SVG path, and renders either a line or a series of bars depending on the \`type\` prop. Line mode draws a polyline with rounded joins and an optional filled area beneath the curve; bar mode renders evenly spaced rectangles that respond to hover with a fill transition.
 
-A draw-in animation on the line type plays once on mount (respecting \`prefers-reduced-motion\`), giving dashboards a polished feel without requiring JavaScript animation libraries. The component uses only CSS custom properties and SVG primitives, keeping the DOM lightweight and the render path fast even when dozens of sparklines appear on a single page.
+A draw-in animation on the line type plays once on mount (respecting \`prefers-reduced-motion\`), with no JavaScript animation library. The component uses only CSS custom properties and SVG primitives, so the DOM stays light even when dozens of sparklines appear on a page.
 
-Color defaults to \`var(--accent-primary)\` so the chart harmonizes with the rest of the design system out of the box. Override the \`color\` prop to use a custom CSS color value when you need a specific semantic color (e.g. green for revenue, red for error rate).`,
+Color defaults to \`var(--accent-primary)\` so the chart matches the rest of the design system. Override the \`color\` prop to use a custom CSS color value when you need a specific semantic color (e.g. green for revenue, red for error rate).`,
 
   features: [
-    'Two chart types: smooth line and evenly spaced bars',
+    'Two chart types: line and evenly spaced bars',
     'Optional area fill beneath the line with semi-transparent accent color',
     'Draw-in stroke animation on mount (800ms, respects `prefers-reduced-motion`)',
-    'Bar hover state with smooth fill transition',
+    'Bar hover state with a fill transition',
     'Configurable width, height, and color via props',
-    'Subtle baseline rule using `--border-subtle` for visual grounding',
+    'Baseline rule using `--border-subtle`',
     'CSS parts (svg, line, area, bar) for external style overrides',
-    'Inline-block display with vertical-align: middle for seamless text-flow embedding',
-    'No external charting dependencies — pure SVG rendered by Lit',
-    'Aria-hidden SVG — decorative by design, pair with visible text for accessibility',
+    'Inline-block display with vertical-align: middle so it sits inline in text',
+    'No external charting dependencies: pure SVG rendered by Lit',
+    'Aria-hidden SVG: decorative by design, pair with visible text for accessibility',
   ],
 
   guidelines: {
     do: [
-      'Use sparklines alongside a numeric value to give context — "42 requests" with a trend line is more useful than either alone',
+      'Use sparklines alongside a numeric value to give context: "42 requests" with a trend line is more useful than either alone',
       'Keep data sets short (5-20 points) for clarity at small sizes',
       'Use the line type for continuous trends (revenue over time, request latency)',
       'Use the bar type for discrete comparisons (daily counts, category breakdowns)',
       'Set fill=true when you want to emphasize the magnitude of a trend, not just its direction',
       'Use the color prop to match semantic meaning (green for growth, red for errors) when context demands it',
-      'Pair with Stat, AnimatedNumber, or Badge for rich metric displays',
+      'Pair with Stat, AnimatedNumber, or Badge for metric displays',
     ],
     dont: [
-      'Do not use sparklines as the sole data representation for critical decisions — they lack axes, labels, and precision',
-      'Do not pass more than ~30 data points — the chart becomes an unreadable blob at small sizes',
+      'Do not use sparklines as the sole data representation for critical decisions: they lack axes, labels, and precision',
+      'Do not pass more than ~30 data points: the chart becomes an unreadable blob at small sizes',
       'Do not rely on sparkline color alone to convey meaning; always include a text label or value nearby',
-      'Do not animate sparklines in a long list or table — the draw-in effect becomes distracting at scale; consider disabling animation via CSS',
-      'Do not use sparklines for interactive data exploration — reach for a full chart component when users need tooltips, zoom, or click-to-drill-down',
+      'Do not animate sparklines in a long list or table: the draw-in effect becomes distracting at scale; consider disabling animation via CSS',
+      'Do not use sparklines for interactive data exploration; reach for a full chart component when users need tooltips, zoom, or click-to-drill-down',
     ],
   },
 

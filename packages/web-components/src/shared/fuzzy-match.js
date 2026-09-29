@@ -3,7 +3,7 @@
  *
  * The palette used `haystack.includes(query)`, which is a filter rather than a
  * search: it cannot find "Command Palette" from "cmdpal", it has no opinion
- * about whether a hit is good, and results come back in DOM order — so a query
+ * about whether a hit is good, and results come back in DOM order, so a query
  * matching thirty items shows them alphabetically and buries the one the user
  * meant. This returns a score and the matched character positions, which is
  * what ranking and highlighting both need.
@@ -32,7 +32,7 @@
  * ## Multi-term queries
  *
  * A query is split on whitespace and every term must match somewhere, in any
- * order — "palette command" finds "Command Palette". Terms are scored
+ * order: "palette command" finds "Command Palette". Terms are scored
  * independently and summed, so the ordering of what the user typed does not
  * decide the ranking.
  */
@@ -58,8 +58,8 @@ const SCORE = {
  * Score one term against one string.
  *
  * `prose` turns off subsequence matching, and it matters more than it sounds.
- * Subsequence is the right tool for a name — "cmdpal" should find "Command
- * Palette" — and actively wrong for a paragraph, because in 180 characters of
+ * Subsequence is the right tool for a name ("cmdpal" should find "Command
+ * Palette") and actively wrong for a paragraph, because in 180 characters of
  * English almost any four letters appear in order somewhere. Left on, the query
  * "override a token" matched 375 of 1,377 indexed sections, ranked prop tables
  * above the theming guide, and highlighted a scatter of single letters that
@@ -143,8 +143,8 @@ function subsequence(t, text, hay, brevity) {
 
   // Reject a match that is neither compact nor an acronym.
   //
-  // A real abbreviation is one of two shapes. Either it is dense — "cmdpal"
-  // covers eleven characters of "Command Palette" — or every character of it
+  // A real abbreviation is one of two shapes. Either it is dense ("cmdpal"
+  // covers eleven characters of "Command Palette") or every character of it
   // begins a word, which is what an acronym is: "cp" spans the whole of
   // "Command Palette" and is still exactly what someone means by it.
   //
@@ -172,7 +172,7 @@ const span = (start, length) => Array.from({ length }, (_, i) => start + i);
  *
  * Positions come back per rendered field, not as one list. Both the label and
  * the description are shown, and a result has to be able to say which of them
- * the query actually hit — a content result that lights up nothing has the same
+ * the query actually hit: a content result that lights up nothing has the same
  * problem as no highlight at all: the reader cannot see why it is in the list.
  * `keywords` gets no positions because it is never displayed.
  *
@@ -186,7 +186,7 @@ export function matchItem(query, fields) {
 
   // Drop single-character words from a multi-word query. Every term has to
   // match, so "override a token" would otherwise require the letter "a" to
-  // appear alongside the other two — a real constraint that carries no
+  // appear alongside the other two, a real constraint that carries no
   // intent. Only when there are other terms: a query that *is* "a" still
   // means it.
   if (terms.length > 1) {
@@ -222,7 +222,7 @@ export function matchItem(query, fields) {
 
     // Highlight wherever the term was found in a *rendered* field, not only in
     // the field that won the score. A term matching both the title and the body
-    // should light up in both — that is the reader's answer to "why this one".
+    // should light up in both: that is the reader's answer to "why this one".
     if (onLabel) labelHits.push(...onLabel.indices);
     if (onDescription) descriptionHits.push(...onDescription.indices);
   }
@@ -239,7 +239,7 @@ export function matchItem(query, fields) {
  * whose relevance is invisible. This centres the window on the first hit and
  * re-bases the positions onto the returned text, so highlighting still lines up.
  *
- * Cuts on word boundaries where there is one nearby — a snippet starting
+ * Cuts on word boundaries where there is one nearby: a snippet starting
  * mid-word reads as damaged rather than as trimmed.
  *
  * @returns {{text: string, indices: number[]}}
@@ -275,7 +275,7 @@ export function snippetAround(text, indices, width = 120) {
  * Split a string into alternating unmatched/matched runs for rendering.
  *
  * Returns `[{text, matched}]` rather than markup so the caller decides the
- * element — the palette wraps matches in <mark>, and a consumer templating this
+ * element: the palette wraps matches in <mark>, and a consumer templating this
  * differently is not forced through innerHTML.
  */
 export function highlightRuns(text, indices) {

@@ -203,14 +203,14 @@ export class ArcCarousel extends DeclaredPropsMixin(LitElement) {
     }
 
     // The no-op guard, and it used to be `next === this._current && index ===
-    // next` — so when clamping *changed* the index the second condition was
+    // next`, so when clamping *changed* the index the second condition was
     // false, the guard did not fire, and the component re-assigned the same
     // slide, scrolled to it again and announced a change that did not happen
     // (finding #19). The arrow buttons were safe because they carry ?disabled
     // at the rails; `_onKeydown` calls _prev()/_next() directly and reached it.
     //
     // Where the request pointed before clamping is not the component's
-    // business — only whether the slide moved is.
+    // business. Only whether the slide moved is.
     if (next === this._current) return;
     this._current = next;
 
@@ -291,7 +291,7 @@ export class ArcCarousel extends DeclaredPropsMixin(LitElement) {
 
   /* ---- Render ---- */
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

@@ -109,22 +109,22 @@ export class ArcDiff extends DeclaredPropsMixin(LitElement) {
     super();
     this.original = '';
     this.revised = '';
-    /** `{ original, revised, ops }` for the last pair diffed — see `_diffOps`. */
+    /** `{ original, revised, ops }` for the last pair diffed; see `_diffOps`. */
     this._diffMemo = null;
   }
 
   /**
    * The diff for the current `original`/`revised` pair, computed once per pair.
    *
-   * `_computeDiff` is O(m × n) in time *and* memory — it allocates the whole
-   * LCS table — and `render()` used to call it directly, so every re-render
+   * `_computeDiff` is O(m × n) in time *and* memory; it allocates the whole
+   * LCS table, and `render()` used to call it directly, so every re-render
    * paid for it again. A `mode` flip, a parent update, anything at all that
    * reached `requestUpdate` rebuilt a table for text that had not moved.
    *
    * Keyed on the two strings rather than on a dirty flag, so the memo is
    * correct whatever drives the update: reverting `revised` to a value it held
    * two renders ago is a cache miss, which is the only reading that cannot go
-   * stale. This is invisible to callers by construction — same inputs, same
+   * stale. This is invisible to callers by construction, same inputs, same
    * ops, and the ops array is never handed out or mutated.
    *
    * Not memoised across instances: the key would have to be the pair of full

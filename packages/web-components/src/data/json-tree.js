@@ -18,7 +18,7 @@ const STRING_MAX = 100;
 const SEP = '\u001F';
 
 /**
- * Collapsible JSON explorer with house syntax coloring — the dev-tools
+ * Collapsible JSON explorer with house syntax coloring: the dev-tools
  * inspector for API payloads, configuration objects, and structured state.
  * Pure recursive rendering with zero dependencies: unlike arc-code-block it
  * loads no highlighter, so it ships in the register barrel.
@@ -179,7 +179,7 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
 
       /* Value colors follow the shiki-variables mapping in arc-code-block:
          strings take the success hue, numbers the primary accent, keys the
-         secondary accent — booleans and null get the warning hue so absence
+         secondary accent, booleans and null get the warning hue so absence
          and flags read at a glance. All base tokens, so themes recolor them. */
       .json-tree__value--string {
         color: var(--color-success);
@@ -325,7 +325,7 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
 
   /* Keyboard mirrors the arc-tree-view keymap: Down/Up walk visible rows,
      Right opens a closed branch, Left closes an open one, Enter and Space
-     activate — which for json-tree means toggle. */
+     activate, which for json-tree means toggle. */
   _onKeyDown(e, node) {
     switch (e.key) {
       case 'ArrowRight':
@@ -460,7 +460,7 @@ export class ArcJsonTree extends DeclaredPropsMixin(LitElement) {
    * @param {WeakSet} ancestors - The objects between the root and this node.
    *   A value that appears among its own ancestors is a cycle: it renders as
    *   one non-expandable row and is not descended into. `JSON.parse` cannot
-   *   build one, so this only ever fires for the `data` property — but there
+   *   build one, so this only ever fires for the `data` property, but there
    *   it used to overflow the stack on first paint.
    *
    *   Ancestors rather than "everything seen this render", which is a

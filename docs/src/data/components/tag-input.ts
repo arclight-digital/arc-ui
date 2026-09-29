@@ -9,9 +9,9 @@ export const tagInput: ComponentDef = {
   description:
     'Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and duplicate rejection.',
 
-  overview: `TagInput lets users build a list of free-text values as removable tag chips. Typing a value and pressing Enter — or the configurable delimiter character (comma by default) — commits the trimmed text as a tag. Pasting text containing delimiters splits it into multiple tags at once, making it fast to import comma-separated lists.
+  overview: `TagInput lets users build a list of free-text values as removable tag chips. Typing a value and pressing Enter, or the configurable delimiter character (comma by default), commits the trimmed text as a tag. Pasting text containing delimiters splits it into multiple tags at once, which makes importing comma-separated lists fast.
 
-An optional \`suggestions\` array turns the field into a lightweight autocomplete: as the user types, matching suggestions appear in a dropdown listbox navigable with ArrowUp/ArrowDown and committed with Enter or a click. Free text is still allowed alongside suggestions unless \`allowCustom\` is set to false, in which case only values from the suggestion list can be added. Duplicate entries are rejected — the existing chip shakes briefly to show why nothing was added (the animation is suppressed under reduced-motion preferences).
+An optional \`suggestions\` array turns the field into a lightweight autocomplete: as the user types, matching suggestions appear in a dropdown listbox navigable with ArrowUp/ArrowDown and committed with Enter or a click. Free text is still allowed alongside suggestions unless \`allowCustom\` is set to false, in which case only values from the suggestion list can be added. Duplicate entries are rejected, and the existing chip shakes briefly to show why nothing was added (the animation is suppressed under reduced-motion preferences).
 
 TagInput is form-associated: it submits one FormData entry per tag under its \`name\`, so servers receive the values as a repeated field. A \`maxTags\` limit disables further entry with a "-- max reached" hint once reached. Keyboard editing mirrors MultiSelect: Backspace in an empty input removes the last tag, and ArrowLeft from the start of the input walks focus into the chips where arrows navigate and Backspace/Delete removes.`,
 
@@ -29,16 +29,16 @@ TagInput is form-associated: it submits one FormData entry per tag under its \`n
   guidelines: {
     do: [
       'Always provide a `label` so the field is accessible to screen readers',
-      'Provide `suggestions` when a known vocabulary exists — it speeds entry and reduces typos',
+      'Provide `suggestions` when a known vocabulary exists. It speeds entry and reduces typos',
       'Set `allowCustom` to false when values must come from a controlled vocabulary',
       'Use `maxTags` to cap entries when downstream systems limit how many values are accepted',
       'Listen to `arc-input` to fetch or refine suggestions from a server as the user types',
     ],
     dont: [
-      'Do not use TagInput when values must be chosen from a fixed list and casual browsing matters — use MultiSelect instead',
+      'Do not use TagInput when values must be chosen from a fixed list and casual browsing matters. Use MultiSelect instead',
       'Do not pick a delimiter character that legitimately appears inside your values',
-      'Do not use extremely long tag values — they will overflow the chips',
-      'Do not rely on the shake animation alone to explain rejected input in critical flows — pair with an `error` message where it matters',
+      'Do not use extremely long tag values. They will overflow the chips',
+      'Do not rely on the shake animation alone to explain rejected input in critical flows. Pair with an `error` message where it matters',
     ],
   },
 

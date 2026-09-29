@@ -7,7 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 let inputIdCounter = 0;
 
 /**
- * Versatile form control supporting single-line text, email, password, and multiline textarea
+ * Form control supporting single-line text, email, password, and multiline textarea
  * modes with built-in label, placeholder, and validation states. Pairs with Form for complete
  * data-entry workflows.
  *
@@ -16,7 +16,7 @@ let inputIdCounter = 0;
  * @prop {string} label - Visible label rendered above the input. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly.
  * @prop {string} name - The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation.
  * @prop {'text' | 'email' | 'tel' | 'url' | 'password'} type - The HTML input type. Controls browser validation behavior and which virtual keyboard appears on mobile devices. Ignored when `multiline` is true.
- * @prop {string} placeholder - Hint text displayed inside the field when it is empty. Use it to show an example value -- never as a substitute for the label.
+ * @prop {string} placeholder - Hint text displayed inside the field when it is empty. Use it to show an example value, never as a substitute for the label.
  * @prop {boolean} multiline - When true, renders a `<textarea>` instead of an `<input>`, allowing multi-row text entry. The textarea is vertically resizable by default.
  * @prop {boolean} disabled - Prevents user interaction and applies a muted visual treatment. The field value is excluded from form submission when disabled.
  * @prop {boolean} required - Marks the field as required. Displays a required indicator next to the label and triggers native constraint validation on form submission.
@@ -40,7 +40,7 @@ let inputIdCounter = 0;
  * @csspart error
  */
 export class ArcInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
-  /** Runs its own constraint logic — owns the whole validity flag set. */
+  /** Runs its own constraint logic and owns the whole validity flag set. */
   static autoValidates = false;
 
   static properties = {
@@ -239,7 +239,7 @@ export class ArcInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
     this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

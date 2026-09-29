@@ -10,11 +10,11 @@ export const progress: ComponentDef = {
   description:
     'Progress indicator as a bar or spinner, with determinate and indeterminate modes. Shows completion state for uploads, installations, and long-running operations.',
 
-  overview: `Progress communicates that work is happening and, when possible, how close it is to completion. It is the right component whenever a user triggers an operation whose duration is noticeable — file uploads, data imports, multi-step wizards, or background processing tasks. A clear progress signal reduces perceived wait time and reassures users that the application has not stalled.
+  overview: `Progress communicates that work is happening and, when possible, how close it is to completion. It is the right component whenever a user triggers an operation whose duration is noticeable: file uploads, data imports, multi-step wizards, or background processing. A clear progress signal reduces perceived wait time and shows users the application has not stalled.
 
-The component ships in two visual variants. The bar variant fills a horizontal track from left to right, making it ideal for operations where percentage complete is known — file transfers, form completion scores, or quota usage. The spinner variant renders a circular animation suited to compact spaces like buttons, table cells, or inline loading states where a full-width bar would feel out of proportion.
+The component has two variants. The bar variant fills a horizontal track from left to right, for operations where percentage complete is known, such as file transfers, form completion scores, or quota usage. The spinner variant renders a circular animation suited to compact spaces like buttons, table cells, or inline loading states where a full-width bar would feel out of proportion.
 
-Both variants support an indeterminate mode for operations whose total duration is unknown. In indeterminate mode the bar pulses or the spinner loops continuously, signaling activity without committing to a completion estimate. Switch from indeterminate to determinate as soon as the total is known — for example, once the server responds with a Content-Length header during an upload.`,
+Both variants support an indeterminate mode for operations whose total duration is unknown. In indeterminate mode the bar pulses or the spinner loops continuously, signaling activity without committing to a completion estimate. Switch from indeterminate to determinate as soon as the total is known, for example once the server responds with a Content-Length header during an upload.`,
 
   features: [
     'Bar variant with horizontal fill track for determinate completion',
@@ -24,7 +24,7 @@ Both variants support an indeterminate mode for operations whose total duration 
     'Accessible label text announced by screen readers via `aria-label`',
     'ARIA progressbar role with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`',
     'Respects `prefers-reduced-motion` by disabling animations',
-    'Smooth fill transition when value updates for determinate bar',
+    'Fill transition when the value updates on a determinate bar',
   ],
 
   guidelines: {
@@ -37,11 +37,11 @@ Both variants support an indeterminate mode for operations whose total duration 
       'Use the sm size for inline or table-cell indicators and lg for full-width page loaders',
     ],
     dont: [
-      'Do not show a determinate bar stuck at 0% — use indeterminate until real progress data is available',
+      'Do not show a determinate bar stuck at 0%; use indeterminate until real progress data is available',
       'Do not use a spinner when you have percentage data; bars are more informative for known-length tasks',
-      'Do not omit the label prop — without it the progress indicator is invisible to assistive technology',
+      'Do not omit the label prop: without it the progress indicator is invisible to assistive technology',
       'Do not animate progress backwards; if the total changes, reset to indeterminate rather than decreasing the value',
-      'Do not Stack multiple progress bars in view simultaneously — consolidate into a single indicator or use a stepper',
+      'Do not stack multiple progress bars in view simultaneously: consolidate into a single indicator or use a stepper',
       'Do not use progress for instant actions that complete in under 300ms; a brief delay feels faster without a loader',
     ],
   },

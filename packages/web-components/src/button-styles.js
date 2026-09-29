@@ -10,7 +10,7 @@ import { css } from 'lit';
  *
  * Every rule is paired with a `.btn-slot::slotted(a)` form. That covers the
  * anchor-adoption path, where a slotted `<a>` is the control instead of the
- * shadow `.btn` — see the slot detection in input/button.js. Consumers get the
+ * shadow `.btn`. See the slot detection in input/button.js. Consumers get the
  * same visual result whichever form they author, so keep the pairs in step.
  */
 export const buttonVariantStyles = css`
@@ -66,7 +66,7 @@ export const buttonVariantStyles = css`
  * The square icon-button box: one scale of sizes, shared.
  *
  * Split out of icon-button for the same reason buttonVariantStyles was split
- * out of button — a second component needs the identical box and had been
+ * out of button: a second component needs the identical box and had been
  * carrying its own copy of the numbers. arc-theme-toggle's icon-only form was
  * 36px at radius-full with a visible border while arc-icon-button at size="sm"
  * was 32px at radius-md with a transparent one; standing next to each other in
@@ -96,7 +96,7 @@ export const iconBoxStyles = css`
   .btn-slot::slotted(a) { min-width: var(--touch-min); min-height: var(--touch-min); }
 
   /* The default arm is keyed on "not the others" so an unrecognized size lands
-     on it rather than on no rule at all — see check-enum-fallbacks.js. The
+     on it rather than on no rule at all. See check-enum-fallbacks.js. The
      explicit [size="md"] selector stays so prism can infer the union. */
   :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn:not(.btn--has-text),
   :host(:not([size="lg"]):not([size="sm"]):not([size="xs"])) .btn-slot::slotted(a),

@@ -7,7 +7,7 @@
  * path, which is the line that kept 3,408 generated icon modules inside the core
  * package: 88% of its published files and 44% of its unpacked bytes, in every
  * install, whether or not a single icon was ever rendered. Worse than the
- * tarball, the resolver is 1,896 static `import()` specifiers — a bundler must
+ * tarball, the resolver is 1,896 static `import()` specifiers, and a bundler must
  * walk all of them and emit a chunk each, so the cost landed in every consumer's
  * build graph by default.
  *
@@ -17,7 +17,7 @@
  *     import '@arclux/arc-ui-icons/phosphor';
  *
  * and that is the whole contract. It is also what makes a *custom* library a
- * first-class citizen rather than a special case — Phosphor and Lucide now
+ * regular library rather than a special case: Phosphor and Lucide now
  * arrive through exactly the door a consumer's own set would.
  *
  * ── There is no default library any more ──
@@ -28,7 +28,7 @@
  * with nothing to say about why. Registration selects when nothing is selected,
  * so one import still needs no `use()` call.
  *
- * The failure this replaces is the one arc-transfer-list shipped — a blank box
+ * The failure this replaces is the one arc-transfer-list shipped: a blank box
  * and silence. `get()` warns once per unresolvable library, with the two lines
  * that fix it, so "I upgraded and my icons vanished" is a console message rather
  * than a bug report.
@@ -51,7 +51,7 @@ export declare const iconRegistry: {
      * Selects this library if nothing is selected yet, so a single
      * `import '@arclux/arc-ui-icons/phosphor'` is a complete setup.
      * Registering a second pack never takes the choice back from a page that has
-     * already made one — which does mean that importing both packs and calling
+     * already made one, which does mean that importing both packs and calling
      * neither `use()` nor `<arc-icon-library>` leaves the first-imported one
      * active. Say which you want.
      */
@@ -64,7 +64,7 @@ export declare const iconRegistry: {
     /** Names of every registered library, in registration order. */
     libraries(): any[];
     /**
-     * Whether the active library is registered — the question arc-icon asks
+     * Whether the active library is registered. This is the question arc-icon asks
      * before blaming a missing glyph on its name. False also means `get()` has
      * already said the useful thing about it.
      */
@@ -72,7 +72,7 @@ export declare const iconRegistry: {
     /**
      * Select which registered library names resolve against.
      *
-     * Takes any name, including one whose pack has not been imported yet — see
+     * Takes any name, including one whose pack has not been imported yet; see
      * `_libraryName` above for why this no longer throws.
      */
     use(library: any): void;
@@ -81,7 +81,7 @@ export declare const iconRegistry: {
     /** Look up an icon by kebab-case name. Returns a Promise<string|null>. */
     get(name: any): Promise<any>;
     /**
-     * Look up an icon without awaiting — the source string if it is already in
+     * Look up an icon without awaiting: the source string if it is already in
      * memory, otherwise null.
      *
      * `get()` is async because the icon packs are code-split one file per glyph,
@@ -92,7 +92,7 @@ export declare const iconRegistry: {
      *
      * So this reads the cache that `get()` fills, plus anything registered
      * through `set()`. Server-side, warm it with `preload()` first. Client-side
-     * it is a fast path — and, on a hydrated page whose icons were inlined at
+     * it is a fast path and, on a hydrated page whose icons were inlined at
      * build time, the thing that makes the client's first render match the
      * server's.
      *
@@ -111,7 +111,7 @@ export declare const iconRegistry: {
      * List all icon names in a library (defaults to active). Returns a
      * Promise<string[]>.
      *
-     * Async for compatibility rather than necessity — it used to import a
+     * Async for compatibility rather than necessity: it used to import a
      * generated manifest, and now reads keys off a registration that is already in
      * memory. Callers all `await` it and would keep working if it were made
      * synchronous, but nothing is gained by making them change.

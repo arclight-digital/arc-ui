@@ -4,7 +4,7 @@
 .arc-link { display: inline; }
 
       /* Anchor-adoption form: a lone slotted <a> becomes the link itself and
-         takes the same styling as .link — see shared/anchor-adoption.js.
+         takes the same styling as .link. See shared/anchor-adoption.js.
          Keep each .link rule paired with its .link-slot::slotted(a) form. */
       .arc-link .link,
       .arc-link a {

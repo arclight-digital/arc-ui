@@ -9,41 +9,41 @@ export const kanban: ComponentDef = {
   description:
     'A drag-and-drop kanban board driven by a `columns` data array. Cards can be dragged between and within columns with the pointer, or moved entirely from the keyboard with live screen-reader announcements. Column limits, tags, and descriptions are supported per card, and every move emits an `arc-card-move` event so the consumer can sync its source of truth.',
 
-  overview: `Kanban renders a horizontally scrolling row of columns from a single \`columns\` array — each column has an id, a title, an optional work-in-progress \`limit\`, and an \`items\` array of cards. Cards show a label, an optional two-line description, and an optional \`arc-tag\` chip. When a column has a limit, the header count renders as \`count/limit\` and switches to the error color when the column is over its limit.
+  overview: `Kanban renders a horizontally scrolling row of columns from a single \`columns\` array. Each column has an id, a title, an optional work-in-progress \`limit\`, and an \`items\` array of cards. Cards show a label, an optional two-line description, and an optional \`arc-tag\` chip. When a column has a limit, the header count renders as \`count/limit\` and switches to the error color when the column is over its limit.
 
-Dragging is pointer-based: press and move a card to lift it into a floating ghost that follows the cursor, with a horizontal indicator line showing exactly where the card will land. Dragging near the left or right edge of the board auto-scrolls it so long boards remain reachable. The component applies the move to its own internal copy immediately for instant feedback and emits \`arc-card-move\` with the card id, source column, target column, and final index — listen to that event to update your actual data store, then pass the new array back in.
+Dragging is pointer-based: press and move a card to lift it into a floating ghost that follows the cursor, with a horizontal indicator line showing exactly where the card will land. Dragging near the left or right edge of the board auto-scrolls it so long boards remain reachable. The component applies the move to its own internal copy immediately for instant feedback and emits \`arc-card-move\` with the card id, source column, target column, and final index. Listen to that event to update your actual data store, then pass the new array back in.
 
 The keyboard model follows the accepted accessible kanban pattern: each column's card list is a single tab stop (roving tabindex), ArrowUp/ArrowDown move focus between cards, and ArrowLeft/ArrowRight jump between columns. Enter or Space grabs the focused card, arrows then move it within and across columns, Enter drops it (emitting the same \`arc-card-move\` event), and Escape cancels and returns the card to where it started. Every grab, move, drop, and cancel is announced through a polite live region.`,
 
   features: [
-    'Data-driven: one columns array renders the whole board — no manual markup per card',
+    'Data-driven: one columns array renders the whole board. No manual markup per card',
     'Pointer drag between and within columns with a floating drag ghost',
     'Horizontal drop indicator line between cards shows the exact insertion point',
     'Automatic horizontal board scrolling when dragging near the edges',
     'Full keyboard move protocol: Enter/Space grabs, arrows move, Enter drops, Escape cancels',
-    'One tab stop per column (roving tabindex) — no tab-key marathons through every card',
+    'One tab stop per column (roving tabindex). No tab-key marathons through every card',
     '`aria-live` announcements for every grab, move, drop, and cancel',
     'Optional per-column WIP limit with count/limit badge that turns error-colored when exceeded',
     'Optional card description with a two-line clamp and an `arc-tag` chip per card',
     'Empty columns render a subtle dashed drop zone that highlights during drag',
     '`arc-card-move` and `arc-card-click` events for syncing external state',
-    'Styleable via ::part — board, column, column-header, card and more',
+    'Styleable via ::part (board, column, column-header, card, and more)',
   ],
 
   guidelines: {
     do: [
-      'Give every column and card a stable, unique id — moves and rendering are keyed on them',
+      'Give every column and card a stable, unique id. Moves and rendering are keyed on them',
       'Listen to arc-card-move and update your source-of-truth data, then pass the new array back into columns',
-      'Set a limit on columns where work-in-progress caps matter — the badge flags overruns automatically',
-      'Keep card labels short and put detail in the description — it clamps to two lines',
+      'Set a limit on columns where work-in-progress caps matter. The badge flags overruns automatically',
+      'Keep card labels short and put detail in the description. It clamps to two lines',
       'Use tag variants (primary, success, error, ...) to encode card category at a glance',
     ],
     dont: [
-      'Do not mutate the columns array in place and expect a re-render — assign a new array instead',
-      'Do not rely on the component as the source of truth — its internal copy is for immediate feedback only',
-      'Do not put interactive controls (buttons, links) inside card labels — the whole card is the drag/keyboard target',
-      'Do not use kanban for a single static list — arc-sortable-list or arc-list is a better fit',
-      'Do not exceed a handful of columns without expecting horizontal scrolling — columns have a fixed 280px width',
+      'Do not mutate the columns array in place and expect a re-render. Assign a new array instead',
+      'Do not rely on the component as the source of truth. Its internal copy is for immediate feedback only',
+      'Do not put interactive controls (buttons, links) inside card labels. The whole card is the drag/keyboard target',
+      'Do not use kanban for a single static list. arc-sortable-list or arc-list is a better fit',
+      'Do not exceed a handful of columns without expecting horizontal scrolling. Columns have a fixed 280px width',
     ],
   },
 

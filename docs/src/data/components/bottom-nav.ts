@@ -7,13 +7,13 @@ export const bottomNav: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Mobile bottom bar with icon + label items. Active item gets accent-primary glow underline with surface-overlay background and backdrop blur.',
+    'Mobile bottom bar with icon and label items. The active item gets an accent-primary glow underline on a surface-overlay background with backdrop blur.',
 
-  overview: `BottomNav is a fixed-position navigation bar anchored to the bottom of the viewport, purpose-built for mobile and touch-first interfaces. It renders a row of icon-and-label items where the active selection is highlighted with an accent-primary glow underline and a frosted surface-overlay background with backdrop blur, making the current section immediately obvious even at a glance.
+  overview: `BottomNav is a fixed-position navigation bar anchored to the bottom of the viewport, for mobile and touch-first interfaces. It renders a row of icon-and-label items, and the active one is highlighted with an accent-primary glow underline and a frosted surface-overlay background with backdrop blur.
 
-The component follows the well-established mobile navigation pattern used by native apps: three to five top-level destinations, each represented by an icon above a short label. Tapping an item dispatches an \`arc-change\` event so your application can update the active route. The \`value\` prop controls which item is currently selected, enabling both controlled and uncontrolled usage patterns.
+The component follows the mobile navigation pattern used by native apps: three to five top-level destinations, each represented by an icon above a short label. Tapping an item dispatches an \`arc-change\` event so your application can update the active route. The \`value\` prop controls which item is currently selected, for controlled or uncontrolled usage.
 
-BottomNav is designed to complement TopBar — use TopBar for desktop viewports and swap in BottomNav at mobile breakpoints. The backdrop blur effect ensures the bar remains legible even when content scrolls beneath it. For deeper hierarchical navigation on mobile, pair BottomNav with a Drawer or Sheet for secondary menu levels.`,
+BottomNav complements TopBar: use TopBar for desktop viewports and swap in BottomNav at mobile breakpoints. The backdrop blur keeps the bar legible when content scrolls beneath it. For deeper hierarchical navigation on mobile, pair BottomNav with a Drawer or Sheet for secondary menu levels.`,
 
   features: [
     'Fixed bottom positioning for mobile-first navigation',
@@ -29,18 +29,18 @@ BottomNav is designed to complement TopBar — use TopBar for desktop viewports 
 
   guidelines: {
     do: [
-      'Limit to three to five items — more will crowd the bar on small screens',
+      'Limit to three to five items; more will crowd the bar on small screens',
       'Use recognizable icons with short labels (one to two words)',
-      'Show BottomNav only on mobile breakpoints — use TopBar or Sidebar on desktop',
+      'Show BottomNav only on mobile breakpoints. Use TopBar or Sidebar on desktop',
       'Set the value prop to match the current route for correct highlighting',
       'Pair with a Drawer or Sheet for deeper navigation within a section',
     ],
     dont: [
       'Do not display BottomNav and TopBar navigation simultaneously on the same viewport',
-      'Do not use labels longer than two words — they will truncate on narrow screens',
-      'Do not add more than five items — prioritize the most important destinations',
-      'Do not use BottomNav for actions (like "Create" or "Delete") — it is for navigation only',
-      'Do not forget to provide icons — label-only items break the expected mobile pattern',
+      'Do not use labels longer than two words; they will truncate on narrow screens',
+      'Do not add more than five items. Prioritize the most important destinations',
+      'Do not use BottomNav for actions (like "Create" or "Delete"); it is for navigation only',
+      'Do not forget to provide icons; label-only items break the expected mobile pattern',
     ],
   },
 

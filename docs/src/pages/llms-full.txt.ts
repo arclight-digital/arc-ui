@@ -31,7 +31,7 @@ function renderApi(api: ComponentApi, h = '###'): string[] {
     lines.push(`${h} Methods`);
     lines.push('');
     for (const m of api.methods) {
-      lines.push(`- \`${m.name}\`${m.returns ? ` → \`${m.returns}\`` : ''} — ${mdEscape(m.description)}`);
+      lines.push(`- \`${m.name}\`${m.returns ? ` → \`${m.returns}\`` : ''}: ${mdEscape(m.description)}`);
       if (m.params) lines.push(`  - parameters: \`${mdEscape(m.params)}\``);
     }
   }
@@ -42,7 +42,7 @@ function renderApi(api: ComponentApi, h = '###'): string[] {
     lines.push('');
     for (const e of api.events) {
       const detail = e.detail ? ` (detail: \`${e.detail}\`)` : '';
-      lines.push(`- \`${e.name}\`${detail} — ${e.description}`);
+      lines.push(`- \`${e.name}\`${detail}: ${e.description}`);
     }
   }
 
@@ -51,7 +51,7 @@ function renderApi(api: ComponentApi, h = '###'): string[] {
     lines.push(`${h} Slots`);
     lines.push('');
     for (const s of api.slots) {
-      lines.push(`- ${s.name ? `\`${s.name}\`` : '_default_'}${s.description ? ` — ${s.description}` : ''}`);
+      lines.push(`- ${s.name ? `\`${s.name}\`` : '_default_'}${s.description ? `: ${s.description}` : ''}`);
     }
   }
 
@@ -93,7 +93,7 @@ function renderComponent(c: typeof components[number]): string {
     }
   }
 
-  // API surface — sourced from custom-elements.json via data/manifest.ts
+  // API surface, sourced from custom-elements.json via data/manifest.ts
   const api = getApi(c.tag);
   lines.push(...renderApi(api));
 
@@ -126,7 +126,7 @@ function renderComponent(c: typeof components[number]): string {
     }
   }
 
-  // Code examples — first WC tab and first React tab
+  // Code examples: first WC tab and first React tab
   const wcTab = c.tabs.find((t) => t.label === 'Web Component' || t.label === 'WC');
   const reactTab = c.tabs.find((t) => t.label === 'React');
 
@@ -156,7 +156,7 @@ function renderComponent(c: typeof components[number]): string {
 
 /**
  * One-line descriptions for token groups, keyed by the first name segment.
- * Groups without an entry still render — name and count only — so new
+ * Groups without an entry still render (name and count only), so new
  * prefixes in base.css are never dropped, just undescribed.
  */
 const tokenGroupDescriptions: Record<string, string> = {
@@ -218,7 +218,7 @@ export const GET: APIRoute = async () => {
   const sections: string[] = [];
 
   // Header
-  sections.push(`# ARC UI — Full Component & Token Reference`);
+  sections.push(`# ARC UI: Full Component & Token Reference`);
   sections.push('');
   sections.push(`> Version ${version} | ${components.length} components | ${frameworkCount} framework targets`);
   sections.push('');
@@ -247,7 +247,7 @@ export const GET: APIRoute = async () => {
   for (const [prefix, names] of tokenGroups) {
     const desc = tokenGroupDescriptions[prefix];
     sections.push('');
-    sections.push(`**\`--${prefix}-*\` (${names.length})**${desc ? ` — ${desc}` : ''}`);
+    sections.push(`**\`--${prefix}-*\` (${names.length})**${desc ? `: ${desc}` : ''}`);
     sections.push(names.map((t) => `\`${t}\``).join(', '));
   }
   sections.push('');

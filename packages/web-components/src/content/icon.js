@@ -6,13 +6,12 @@ import { sanitizeSvg } from './sanitize-svg.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
- * An unknown icon name used to render an empty box and say nothing, which is
- * how arc-transfer-list shipped four blank buttons: the names it asked for
- * exist in Lucide but not in the Phosphor library that was then the default,
- * and nothing anywhere reported it. A missing glyph is never intentional, so it
- * is worth one line in the console.
+ * Warn about an unknown icon name. Rendering an empty box in silence is how
+ * arc-transfer-list shipped four blank buttons (names that exist in Lucide but
+ * not in Phosphor, then the default). A missing glyph is never intentional, so
+ * it is worth one line in the console.
  *
- * Once per name, not per element — a table with fifty rows of the same broken
+ * Once per name, not per element: a table with fifty rows of the same broken
  * icon should not produce fifty lines.
  *
  * Suppressed entirely when no library is registered, because then the name was
@@ -35,8 +34,8 @@ function warnUnknownIcon(name) {
 }
 
 /**
- * Renders icons by name from any registered library — Phosphor (1,500+) and Lucide (1,900+) ship in
- * `@arclux/arc-ui-icons` — with one-line library switching and custom icon registration.
+ * Renders icons by name from any registered library. Phosphor (1,500+) and Lucide (1,900+) ship in
+ * `@arclux/arc-ui-icons`, with one-line library switching and custom icon registration.
  *
  * @tag arc-icon
  * @status stable
@@ -126,7 +125,7 @@ export class ArcIcon extends DeclaredPropsMixin(LitElement) {
       this._svgContent = null;
       return;
     }
-    // Already in memory — resolved earlier, registered by hand, or inlined into
+    // Already in memory: resolved earlier, registered by hand, or inlined into
     // the page by a server-side build. Taking the sync path keeps the first
     // client render identical to the server's, which is what hydration needs.
     const cached = iconRegistry.getSync(this.name);
@@ -145,7 +144,7 @@ export class ArcIcon extends DeclaredPropsMixin(LitElement) {
 
   render() {
     // `updated()` does not run on the server, so `_svgContent` is never
-    // populated there — the registry's synchronous cache is the only way a
+    // populated there. The registry's synchronous cache is the only way a
     // named icon reaches the server's HTML. Client-side the two agree.
     const source = this._svgContent ?? iconRegistry.getSync(this.name);
     const svg = source ? sanitizeSvg(source) : null;

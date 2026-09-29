@@ -5,7 +5,7 @@ import { observeIntersect } from '../shared/subscriptions.js';
 
 /*
  * Pacing between lines when a line carries no explicit delay. A command waits
- * longer — the pause reads as a person deciding what to type next — while
+ * longer (the pause reads as a person deciding what to type next) while
  * output follows its command quickly, like a process answering. Both are
  * per-line overridable via the line's `delay` field.
  */
@@ -19,14 +19,14 @@ const LOOP_PAUSE = 2000;
  * character-by-character and prints their output line by line.
  *
  * The typing machinery mirrors arc-typewriter's setTimeout chain rather than
- * importing it — typewriter animates one string, this sequences many lines
+ * importing it: typewriter animates one string, this sequences many lines
  * with three behaviors, and a shared chain would serve neither cleanly.
  *
  * Server-side the full completed transcript renders (no animation in Node);
  * on the client, autoplay blanks it before first paint and replays it when
  * the element scrolls into view. Under prefers-reduced-motion the transcript
- * renders complete immediately and nothing animates — the same policy
- * arc-typewriter follows.
+ * renders complete immediately and nothing animates, as arc-typewriter
+ * does.
  *
  * @tag arc-terminal
  * @status stable
@@ -78,7 +78,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
         box-shadow: var(--shadow-overlay);
       }
 
-      /* The house window chrome — same family as arc-code-block's window
+      /* The house window chrome: same family as arc-code-block's window
          variant: three orbs, hairline divider, centered mono title. */
       .terminal__titlebar {
         display: flex;
@@ -190,7 +190,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     // IntersectionObserver: attach/detach are keyed to the host's connection,
     // so a reparented terminal keeps (or regains) its watch without a second
     // teardown path to pair. `_watching` is how the watch is switched off for
-    // a *state* — armed becomes playing — rather than a lifecycle: play()
+    // a *state* (armed becomes playing) rather than a lifecycle: play()
     // clears it, the resolver returns null, the controller releases.
     observeIntersect(
       this,
@@ -225,7 +225,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
   /**
    * Blank the transcript and wait for the element to scroll into view.
    *
-   * Deliberately not called from the first connectedCallback — see the comment
+   * Not called from the first connectedCallback; see the comment
    * there. A blanked transcript is not what the server rendered, so it cannot
    * be the state the client's first render runs against.
    */
@@ -240,8 +240,8 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     // transcript must stay visible the whole time, so it is never blanked.
     if (!this._reducedMotion) this._started = true;
     this._watching = true;
-    // _watching is deliberately not reactive state, so guarantee the update
-    // that lets the controller's resolver see it — under reduced motion the
+    // _watching is not reactive state, so guarantee the update
+    // that lets the controller's resolver see it: under reduced motion the
     // blanking above schedules nothing.
     this.requestUpdate();
   }
@@ -256,7 +256,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
 
   updated(changed) {
     // A new transcript restarts a running animation. Before any playback the
-    // static full transcript simply re-renders from the new array.
+    // static full transcript re-renders from the new array.
     //
     // Running, not merely armed: while the watch is still waiting for the
     // element to scroll in, `_started` is true but nothing is playing, and
@@ -331,7 +331,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
     this._charIndex = 0;
     this._complete = true;
     this.dispatchEvent(new CustomEvent('arc-complete', { bubbles: true, composed: true }));
-    // The instant path (reduced motion, empty transcript) never loops — a
+    // The instant path (reduced motion, empty transcript) never loops: a
     // zero-length cycle repeating forever is a busy-loop, and under reduced
     // motion a clearing-and-reappearing transcript is exactly the motion the
     // preference asked not to see.
@@ -397,7 +397,7 @@ export class ArcTerminal extends DeclaredPropsMixin(LitElement) {
   render() {
     const lines = this._normalizedLines();
     // Before playback ever starts (server render, or autoplay off) the full
-    // completed transcript shows — the content is never hidden behind an
+    // completed transcript shows: the content is never hidden behind an
     // animation that might not run.
     const done = !this._started || this._complete;
 

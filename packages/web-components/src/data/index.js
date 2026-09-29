@@ -1,4 +1,4 @@
-// ARC UI — Data tier
+// ARC UI: Data tier
 // Structured data display components
 
 export { ArcAnimatedNumber } from './animated-number.register.js';

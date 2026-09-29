@@ -111,10 +111,10 @@ export class ArcCommandBar extends LitElement {
     if (e.key === 'Enter') {
       // Claim the key. Inside a <form>, Enter in a text input also triggers the
       // form's implicit submission, so one press produced both an arc-submit
-      // and a native submit — the form submitted underneath the component that
-      // had just handled the same keystroke (finding #30). arc-form settles the
-      // equivalent case deliberately for arc-input, so the intended behaviour
-      // was already decided; this component simply never claimed the key.
+      // and a native submit: the form submitted underneath the component that
+      // had just handled the same keystroke (finding #30). arc-form already
+      // settles the equivalent case for arc-input, so the intended behaviour
+      // was decided; this component never claimed the key.
       e.preventDefault();
       this.dispatchEvent(
         new CustomEvent('arc-submit', {

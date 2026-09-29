@@ -9,19 +9,19 @@ export const skeleton: ComponentDef = {
   searchKeywords: ['placeholder', 'loading'],
   description: 'Loading placeholder with shimmer animation.',
 
-  overview: `Skeleton is a loading placeholder that mimics the shape of content before it arrives, reducing perceived wait times and preventing layout shift. It uses a shimmer animation — a linear gradient that sweeps left to right at 1.8-second intervals — to signal that data is being loaded. This approach is less intrusive than a spinner and gives users a preview of the page structure.
+  overview: `Skeleton is a loading placeholder that mimics the shape of content before it arrives, reducing perceived wait times and preventing layout shift. It uses a shimmer animation (a linear gradient that sweeps left to right every 1.8 seconds) to signal that data is loading. It is less intrusive than a spinner and previews the page structure.
 
-Three variant shapes cover common content patterns: \`text\` renders a single-line bar (full width, 1em height) ideal for paragraph placeholders, \`circle\` produces a perfect circle for avatar placeholders (height auto-matches width when not explicitly set), and \`rect\` creates a rectangular block for images, cards, or media thumbnails. Custom \`width\` and \`height\` properties let you match the exact dimensions of the content being loaded.
+Three variant shapes cover common content patterns: \`text\` renders a single-line bar (full width, 1em height) for paragraph placeholders, \`circle\` produces a perfect circle for avatar placeholders (height auto-matches width when not explicitly set), and \`rect\` creates a rectangular block for images, cards, or media thumbnails. Custom \`width\` and \`height\` properties let you match the exact dimensions of the content being loaded.
 
-The shimmer gradient uses \`--bg-elevated\` and \`--border-subtle\` tokens to ensure the animation blends naturally with both light and dark themes. The component sets \`role="status"\`, \`aria-label="Loading"\`, and \`aria-busy="true"\` for screen reader users who cannot see the visual animation.`,
+The shimmer gradient uses \`--bg-elevated\` and \`--border-subtle\` tokens so the animation works in both light and dark themes. The component sets \`role="status"\`, \`aria-label="Loading"\`, and \`aria-busy="true"\` for screen reader users who cannot see the visual animation.`,
 
   features: [
     'Three shape variants: text (line), circle (avatar), and rect (block)',
-    'Smooth shimmer animation using a sweeping linear gradient at 1.8s intervals',
-    'Custom width and height properties for precise content-matching dimensions',
+    'Shimmer animation using a sweeping linear gradient at 1.8s intervals',
+    'Custom width and height properties to match the content being loaded',
     'Circle variant auto-matches height to width when height is not set',
     'Theme-aware shimmer using `--bg-elevated` and `--border-subtle` tokens',
-    'Built-in accessibility: `role="status"`, `aria-label`, and `aria-busy` attributes',
+    'Accessibility attributes built in: `role="status"`, `aria-label`, and `aria-busy`',
     'CSS part (skeleton) for external animation or style overrides',
   ],
 
@@ -31,14 +31,14 @@ The shimmer gradient uses \`--bg-elevated\` and \`--border-subtle\` tokens to en
       'Combine multiple skeletons to represent a full content layout (avatar + text lines)',
       'Use the text variant in a stack with varying widths for realistic paragraph placeholders',
       'Use the circle variant sized to match your avatar component dimensions',
-      'Remove skeletons immediately when content loads — do not add artificial delays',
+      'Remove skeletons immediately when content loads: do not add artificial delays',
     ],
     dont: [
-      'Do not use skeletons for actions that take under 200ms — the flash is more distracting than helpful',
-      'Do not Stack more than 5-6 skeleton lines — it looks like a broken page rather than a loading state',
-      'Do not use a rect skeleton without setting width and height — it will collapse to zero size',
-      'Do not mix skeletons with spinners on the same screen — choose one loading pattern',
-      'Do not animate skeleton opacity on top of the shimmer — the dual animation is visually noisy',
+      'Do not use skeletons for actions that take under 200ms: the flash is more distracting than helpful',
+      'Do not stack more than 5-6 skeleton lines: it looks like a broken page rather than a loading state',
+      'Do not use a rect skeleton without setting width and height: it will collapse to zero size',
+      'Do not mix skeletons with spinners on the same screen; choose one loading pattern',
+      'Do not animate skeleton opacity on top of the shimmer: the dual animation is visually noisy',
     ],
   },
 

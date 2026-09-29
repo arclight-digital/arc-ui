@@ -10,9 +10,9 @@ export const diff: ComponentDef = {
 
   overview: `Diff compares two blocks of text line by line and renders a color-coded visualization of the changes. Added lines appear with a green-tinted background and a \`+\` prefix, removed lines appear with a red-tinted background, strikethrough text, and a \`-\` prefix, and unchanged lines display in a muted secondary color with a blank prefix.
 
-The component uses a longest-common-subsequence algorithm to compute the minimal diff between the \`before\` and \`after\` text props. No external diff libraries are required — the algorithm runs entirely inside the component.
+The component uses a longest-common-subsequence algorithm to compute the minimal diff between the \`before\` and \`after\` text props. No external diff libraries are required. The algorithm runs entirely inside the component.
 
-Two display modes are available via the \`mode\` prop. The default \`inline\` mode renders all changes in a single scrollable column, interleaving additions and removals in reading order. The \`side-by-side\` mode splits the view into a CSS grid with two equal-width panes separated by a subtle border — the left pane shows the original text (with removals highlighted) and the right pane shows the modified text (with additions highlighted).
+Two display modes are available via the \`mode\` prop. The default \`inline\` mode renders all changes in a single scrollable column, interleaving additions and removals in reading order. The \`side-by-side\` mode splits the view into a CSS grid with two equal-width panes separated by a subtle border. The left pane shows the original text (with removals highlighted) and the right pane shows the modified text (with additions highlighted).
 
 Line numbers are displayed in a fixed-width gutter column. The entire viewer uses the monospace font stack and code-sized typography tokens for a terminal-like reading experience. The container supports horizontal scrolling for long lines with thin styled scrollbars.
 
@@ -33,7 +33,7 @@ Diff is designed for code review panels, changelog overlays, configuration compa
 
   guidelines: {
     do: [
-      'Use short, focused text snippets — diffs work best with fewer than 100 lines',
+      'Use short, focused text snippets. Diffs work best with fewer than 100 lines',
       'Set mode="side-by-side" when horizontal space allows for easier comparison',
       'Pair with a heading or label to describe what is being compared',
       'Use for code snippets, configuration files, or any line-oriented text',
@@ -41,7 +41,7 @@ Diff is designed for code review panels, changelog overlays, configuration compa
     ],
     dont: [
       'Do not pass binary or non-text content as before/after values',
-      'Do not use Diff for single-character or word-level highlighting — it operates on whole lines',
+      'Do not use Diff for single-character or word-level highlighting. It operates on whole lines',
       'Do not embed interactive elements inside the before or after strings',
       'Do not use side-by-side mode in narrow containers where columns would be too cramped',
     ],

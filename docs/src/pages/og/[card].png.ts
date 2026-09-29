@@ -1,5 +1,5 @@
 /**
- * /og/[card].png — per-page OG images.
+ * /og/[card].png: per-page OG images.
  *
  * One card per component (slug = component slug) plus one per docs page
  * (slug = "docs-<page>"). Card data lives in src/lib/og-pages.ts; DocsLayout
@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ params }) => {
   if (!card) return new Response('Not found', { status: 404 });
 
   const png = await pageCardPng(card);
-  // Prerendered to a static file — see the note in og-image.png.ts. Cache
+  // Prerendered to a static file; see the note in og-image.png.ts. Cache
   // busting is the ?v= release stamp on the og:image tag in BaseLayout.
   return new Response(png, {
     headers: { 'Content-Type': 'image/png' },

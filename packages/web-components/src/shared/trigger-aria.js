@@ -2,7 +2,7 @@
  * Helpers for forwarding ARIA state onto slotted (light-DOM) trigger elements.
  *
  * ARIA attributes placed on an inert shadow-DOM wrapper <div> are never seen
- * by assistive technology — the element users actually focus is the slotted
+ * by assistive technology: the element users actually focus is the slotted
  * light-DOM child. These helpers set/remove attributes directly on the first
  * assigned element of a trigger slot instead.
  */

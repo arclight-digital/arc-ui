@@ -1,23 +1,23 @@
 # ARC UI Design Language
 
-The rules that make ARC UI look like one thing instead of many. Read this before
+The rules that make ARC UI look like one thing. Read this before
 writing any component surface, docs page, or demo. If a rule here forces an ugly
-result, raise it — don't quietly invent an alternative, because a second pattern
+result, raise it. Don't quietly invent an alternative: a second pattern
 is how a design language dies.
 
 ## State
 
 - State is marked with **tint, glow, and accent text**. Never with a colored
-  left border — no border-left indicators, no active-state left edges, no
+  left border: no border-left indicators, no active-state left edges, no
   colored bar down the side of an alert or callout. This is the house's hardest
-  ban; do not propose exceptions.
+  ban, so do not propose exceptions.
 - A *neutral* left edge expressing structure alone (a nesting rail, an indent
   guide, one flat `--divider` that never changes color) is not state and is
-  allowed — but prefer plain indentation when only a link or two is nested.
+  allowed, but prefer plain indentation when only a link or two is nested.
 
 ## Color and hierarchy
 
-- Text hierarchy is built by **lifting to `--text-primary`, then by hue** — not
+- Text hierarchy is built by **lifting to `--text-primary`, then by hue**, not
   by stepping down the gray ramp. `--text-secondary`, `--text-muted`, and
   `--text-ghost` sit within 17 RGB points of each other; adjacent steps do not
   read as different levels.
@@ -27,8 +27,8 @@ is how a design language dies.
 This is the theming API. There is no other one.
 
 - **Two colors are the inputs**: `--accent-primary` and `--accent-secondary`,
-  each with its `-rgb` channel — four declarations for two decisions. (Four,
-  not two, because CSS cannot turn a color back into a bare channel list.)
+  each with its `-rgb` channel: four declarations for two decisions, because CSS cannot
+  turn a color back into a bare channel list.
   Thirty-five tokens follow them: every glow, focus ring, gradient, tint,
   interactive state and ground mix.
 - **Neutral, radius and density are optional preferences.** The surface and
@@ -39,12 +39,12 @@ This is the theming API. There is no other one.
   schemes and the AAA preset are solved against their own grounds. ARC is an
   opinionated design language: **adaptation means changing the inputs, never
   the formula.**
-- So a compound token must reference the inputs via `var()` — never a
+- So a compound token must reference the inputs via `var()`, never a
   hard-coded channel triplet. `scripts/checks/two-color-contract.js` fails the
   build on a token that spells the brand instead of referencing it, on one that
   follows the accents at `:root` and stops in another block, and on the count
   of accent-following tokens dropping. The failure mode it exists for is a
-  local rescue — a pinned literal for one region's contrast — which is correct
+  local rescue (a pinned literal for one region's contrast), which is correct
   where it is written and is a place the brand quietly stops.
 
 ## Tokens, not literals
@@ -54,14 +54,14 @@ This is the theming API. There is no other one.
   no theme override can reach.
 - Spacing comes from `--space-*`, which `[data-density]` restates. Never
   hard-code a gap: a compact region has to be able to tighten it. Touch targets
-  and type deliberately do not move with density — WCAG 2.2 sets a 24×24
+  and type do not move with density: WCAG 2.2 sets a 24×24
   minimum, and shrinking text is a different decision from tightening layout.
 - Typefaces are **roles**, never names: `var(--font-body)`, `--font-label`,
   `--font-mono`, `--font-display`, `--font-quote`. Writing a typeface name into
   a stylesheet escapes the role system. (`--font-accent` is a legacy alias of
   `--font-label`; don't use it in new work.)
 - Text is described by a **type context**, never spelled out. A context is a
-  complete treatment — `--<name>-size`, `-weight`, `-spacing`, `-lh` — and a
+  complete treatment (`--<name>-size`, `-weight`, `-spacing`, `-lh`), and a
   component picks one rather than assembling its own:
 
   | context | what wears it |
@@ -69,7 +69,7 @@ This is the theming API. There is no other one.
   | `display-xl`, `heading`, `wordmark` | display type |
   | `body` | prose |
   | `ui` (`--ui-lh`) | running text inside a control: a field, a row, a menu item, a cell |
-  | `glyph` (`--glyph-lh`) | a box whose whole content is one mark — an icon, a badge, a kbd cap |
+  | `glyph` (`--glyph-lh`) | a box whose whole content is one mark: an icon, a badge, a kbd cap |
   | `numeral` | the large figure a stat, clock, countdown or gauge displays |
   | `label` | the uppercase tracked label; `section-title` is its older name |
   | `label-inline` | the small label attached to a form field |
@@ -77,8 +77,8 @@ This is the theming API. There is no other one.
 
   `scripts/checks/type-roles.js` fails the build on a literal `font-size`,
   `font-weight`, `font-family`, `line-height` or `letter-spacing`, and on a
-  `var()` naming a token nothing declares. A value derived from a context —
-  `calc(var(--label-inline-size) - 1px)` — is using the scale and passes.
+  `var()` naming a token nothing declares. A value derived from a context,
+  `calc(var(--label-inline-size) - 1px)`, is using the scale and passes.
   Genuine one-offs go in that file's `EXEMPT` map **with a reason**.
 
 ## Illumination
@@ -89,11 +89,11 @@ This is the theming API. There is no other one.
   `--lobe-rgb`, `--lobe-alpha`, `--lobe-axis`, and for the wash `--lobe-shape`
   / `--lobe-extent`.
 - **Set the inputs on `:host`.** A custom property substitutes its own `var()`s
-  at the element that declares it, and the shapes are declared on `:host` — an
+  at the element that declares it, and the shapes are declared on `:host`, so an
   input on an inner node paints in the fallback color with nothing failing.
   `check gradient-stops` enforces it.
 - **Never `transparent` in a stop list.** It is `rgba(0, 0, 0, 0)`, so the fade
-  darkens on its way out and leaves a hard edge where it meets its box —
+  darkens on its way out and leaves a hard edge where it meets its box:
   invisible on a near-black page, a grey rectangle on a near-white one. Use the
   adjacent stop's color at zero alpha, or a lobe, which cannot be spelled wrong.
   Checked across the token file *and* the components.
@@ -106,7 +106,7 @@ This is the theming API. There is no other one.
 
 - Glow over definition: depth and emphasis come from light, not from outlines
   and hard shadows.
-- Motion must be motivated — it communicates a state change or directs
+- Motion must be motivated: it communicates a state change or directs
   attention, or it doesn't exist. Everything honors `prefers-reduced-motion`.
 - Every effect is checked in **both themes** before it ships; dark-first never
   means light-broken. Effects stay inside the performance budget: no per-frame
@@ -117,13 +117,13 @@ This is the theming API. There is no other one.
 - Section headings use the one house pattern:
   `<h2 class="docs-heading">` followed by
   `<arc-divider align="left" variant="line-gradient" style="max-width:48px;…">`.
-  No page rolls its own divider — a scoped `border-top` hairline on a heading
+  No page rolls its own divider. A scoped `border-top` hairline on a heading
   is the exact drift that motivated this file.
 - New pages start from an existing guide page's anatomy (`page-title`,
   `page-desc`, `section id=` matching the `headings` array), not from scratch.
 - Show, don't tell: the docs site loads the library, so a rendered `arc-*`
   element demonstrating a claim beats a paragraph asserting it. Cut redundancy,
-  not readability — complete sentences, no telegraphic fragments.
+  not readability: complete sentences, no telegraphic fragments.
 - Visual change comes from what a page or component fails at, never from a
   stock widget bolted alongside it.
 
@@ -132,4 +132,4 @@ This is the theming API. There is no other one.
 - `background-clip: text` with tight line-height chops descenders; pair it with
   em-based `padding-block`/`margin-block` (arc-gradient-text already does).
 - A token declared on `:host` in shared-styles.js beats a `:root` override and
-  silently breaks consumer theming — only the role slots may be inherited there.
+  silently breaks consumer theming. Only the role slots may be inherited there.

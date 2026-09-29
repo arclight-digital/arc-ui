@@ -58,7 +58,7 @@ export class ArcScrollIndicator extends DeclaredPropsMixin(LitElement) {
         height: 100%;
         background: var(--accent-primary);
         transform-origin: left;
-        /* Deliberately not a motion token: this bar maps to scroll position, so
+        /* Not a motion token: this bar maps to scroll position, so
            it has to track the finger linearly. An eased curve would make it lag
            the scroll and then catch up, and any token duration is long enough to
            read as drift. */
@@ -85,8 +85,8 @@ export class ArcScrollIndicator extends DeclaredPropsMixin(LitElement) {
     // `listen` remembers the element it attached to, which hand-rolled teardown
     // did not: `_detachListener` re-resolved the selector, so changing `target`
     // unsubscribed from the *new* container and left the old one listening for
-    // the life of the page (finding #68). Nothing on screen showed it —
-    // `_updateProgress` re-reads the current target either way — so the damage
+    // the life of the page (finding #68). Nothing on screen showed it:
+    // `_updateProgress` re-reads the current target either way, so the damage
     // was a retained reference to a detached container and wasted frames.
     listen(this, () => this._getTarget(), 'scroll', this._onScroll, { passive: true });
   }

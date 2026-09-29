@@ -10,7 +10,7 @@ export const textarea: ComponentDef = {
   description:
     'Multi-line text input with integrated label, placeholder, resize control, and live character count that turns red at the limit.',
 
-  overview: `Textarea is the dedicated multi-line text-entry component in ARC UI. It wraps a native \`<textarea>\` element with consistent styling, an integrated uppercase label, placeholder support, optional character counting, and validation feedback — all exposed through a declarative attribute API that works identically across every framework.
+  overview: `Textarea is the dedicated multi-line text-entry component in ARC UI. It wraps a native \`<textarea>\` element with consistent styling, an integrated uppercase label, placeholder support, optional character counting, and validation feedback, all exposed through a declarative attribute API that works identically across every framework.
 
 Use Textarea whenever you need to collect more than a single line of freeform text: support ticket descriptions, comments, feedback forms, bio fields, or any content where the user benefits from seeing multiple lines at once. The \`rows\` prop controls the initial visible height, while the \`resize\` prop determines whether the user can drag the handle to expand the field vertically, horizontally, both, or not at all.
 
@@ -40,12 +40,12 @@ When a \`maxlength\` is set, a live character counter appears below the field an
       'Use the `error` prop to surface server-side validation messages after submission',
     ],
     dont: [
-      'Do not use Textarea for single-line fields like names or emails — use Input instead',
-      'Do not use placeholder text as the only label — it disappears on focus and fails accessibility',
-      'Do not set both `disabled` and `error` at the same time — the user cannot act on the error',
-      'Do not set extremely low `maxlength` values (under ~20) — use Input for short values instead',
-      'Avoid overriding the built-in border and focus styles with custom CSS — use design tokens instead',
-      'Do not hide the character counter when a maxlength is enforced — users need that feedback',
+      'Do not use Textarea for single-line fields like names or emails. Use Input instead',
+      'Do not use placeholder text as the only label. It disappears on focus and fails accessibility',
+      'Do not set both `disabled` and `error` at the same time. The user cannot act on the error',
+      'Do not set extremely low `maxlength` values (under ~20). Use Input for short values instead',
+      'Avoid overriding the built-in border and focus styles with custom CSS. Use design tokens instead',
+      'Do not hide the character counter when a maxlength is enforced. Users need that feedback',
     ],
   },
 

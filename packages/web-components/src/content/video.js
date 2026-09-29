@@ -5,15 +5,15 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * House-styled video player. Before the first play it shows the poster with a large glowing
- * play button; once playback starts, a minimal custom control bar rides the native video —
+ * play button; once playback starts, a minimal custom control bar rides the native video:
  * play/pause, a mono time readout, a scrub bar that seeks directly, a mute toggle, and a
  * fullscreen button. During playback the bar dims after two seconds of idle rather than
- * leaving — it stays visible and clickable, and returns to full strength when the pointer is
+ * leaving. It stays visible and clickable, and returns to full strength when the pointer is
  * anywhere over the player or a control takes focus. Standard player
  * keys work on the focused player: Space or K toggles playback, the arrow keys seek five
  * seconds, M toggles mute, F toggles fullscreen.
  *
- * Takes a single `src` — there is no source-element fallback chain for multiple formats.
+ * Takes a single `src`. There is no source-element fallback chain for multiple formats.
  * Serve one broadly supported encoding (H.264/MP4 plays everywhere), or reach for the native
  * video element directly when you need format negotiation or adaptive streaming.
  *
@@ -23,7 +23,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @prop {string} src - Video source URL. A single source only; no multi-format machinery.
  * @prop {string} poster - Poster image URL shown before the first play.
  * @prop {string} label - Accessible name for the player region. Falls back to a generic label when empty.
- * @prop {boolean} autoplay - Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay simply remains and the user starts playback themselves.
+ * @prop {boolean} autoplay - Starts playback as soon as the browser allows. Browsers only honor autoplay when the video is muted, so pair it with `muted`; when autoplay is blocked, the play overlay remains and the user starts playback themselves.
  * @prop {boolean} loop - Restarts playback from the beginning when the video ends.
  * @prop {boolean} muted - Mutes the audio track. Toggled live by the mute button and the M key.
  * @prop {boolean} controls - Shows the custom control bar once playback has started, and enables the player keyboard shortcuts. Defaults to true; set `controls="false"` for ambient or presentation video.

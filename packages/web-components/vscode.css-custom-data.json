@@ -107,13 +107,26 @@
     { "name": "::part(figure)" },
     { "name": "::part(image)" },
     { "name": "::part(caption)" },
+    {
+      "name": "::part(loading)",
+      "description": "The spinner shown while a slow image loads."
+    },
+    {
+      "name": "::part(error)",
+      "description": "Shown in place of an image that failed to load."
+    },
+    { "name": "::part(thumbnails)", "description": "The filmstrip row." },
+    {
+      "name": "::part(thumbnail)",
+      "description": "Each button in the filmstrip."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(track)" },
     { "name": "::part(group)" },
     { "name": "::part(group-duplicate)" },
     {
       "name": "::part(base)",
-      "description": "The root element. Which element that is depends on `contrast`: the card wrapper when it is set, the svg otherwise — which is the case `base` exists for."
+      "description": "The root element. Which element that is depends on `contrast`: the card wrapper when it is set, the svg otherwise, which is the case `base` exists for."
     },
     { "name": "::part(svg)" },
     { "name": "::part(card)" },
@@ -390,7 +403,7 @@
     { "name": "::part(description)" },
     {
       "name": "::part(dialog)",
-      "description": "The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--palette-backdrop` custom property."
+      "description": "The palette panel. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--palette-backdrop` custom property."
     },
     { "name": "::part(search)" },
     { "name": "::part(input)" },
@@ -422,7 +435,7 @@
     { "name": "::part(base)", "description": "The root element." },
     {
       "name": "::part(dialog)",
-      "description": "The dialog panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties."
+      "description": "The dialog panel. Same element as `base`. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties."
     },
     { "name": "::part(header)" },
     { "name": "::part(close)" },
@@ -473,7 +486,7 @@
     { "name": "::part(close)" },
     {
       "name": "::part(panel)",
-      "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part."
+      "description": "The sliding panel. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--sheet-backdrop` and `--sheet-backdrop-filter` custom properties. Size the panel with `--sheet-max-height` (bottom) and `--sheet-width` (right) rather than through this part."
     },
     {
       "name": "::part(handle)",
@@ -851,7 +864,7 @@
     { "name": "::part(base)", "description": "The root element." },
     {
       "name": "::part(panel)",
-      "description": "The sliding panel. Same element as `base`; the scrim is `::backdrop`, which is not an element and so cannot be a part — style it with the `--drawer-backdrop` custom property."
+      "description": "The sliding panel. Same element as `base`. The scrim is `::backdrop`, which is not an element and so cannot be a part; style it with the `--drawer-backdrop` custom property."
     },
     { "name": "::part(header)" },
     { "name": "::part(title)" },
@@ -944,6 +957,7 @@
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(titlebar)" },
     { "name": "::part(orbs)" },
+    { "name": "::part(label)" },
     { "name": "::part(filename)" },
     { "name": "::part(header)" },
     { "name": "::part(lang)" },
@@ -954,6 +968,41 @@
     { "name": "::part(body)" },
     { "name": "::part(pre)" },
     { "name": "::part(code)" },
+    {
+      "name": "::part(line)",
+      "description": "One line of code. Emphasized lines add `line-highlight`, diff lines `line-add` or `line-remove`."
+    },
+    { "name": "::part(line-highlight)" },
+    { "name": "::part(line-add)" },
+    { "name": "::part(line-remove)" },
+    {
+      "name": "::part(gutter)",
+      "description": "The line number cell. The number is its `::before`."
+    },
+    {
+      "name": "::part(prompt)",
+      "description": "The prompt cell. The prompt is its `::before`."
+    },
+    {
+      "name": "::part(expand)",
+      "description": "The show-all / show-fewer button of a collapsed block."
+    },
+    { "name": "::part(base)", "description": "The root element: the frame." },
+    {
+      "name": "::part(bar)",
+      "description": "The strip holding the tabs and the copy button."
+    },
+    { "name": "::part(tabs)", "description": "The tab list." },
+    {
+      "name": "::part(tab)",
+      "description": "One tab. The selected one adds `tab-selected`."
+    },
+    { "name": "::part(tab-selected)" },
+    { "name": "::part(copy)", "description": "The copy button." },
+    {
+      "name": "::part(panel)",
+      "description": "The area holding the visible block."
+    },
     { "name": "::part(base)", "description": "The root element." },
     { "name": "::part(text)" },
     { "name": "::part(base)", "description": "The root element." },

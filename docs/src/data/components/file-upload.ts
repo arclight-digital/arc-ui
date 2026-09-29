@@ -10,9 +10,9 @@ export const fileUpload: ComponentDef = {
 
   overview: `FileUpload provides a drag-and-drop zone for selecting files, with a built-in file list that displays each selected file's name, size, and a remove button. Users can either drag files onto the dashed-border dropzone or click "browse" to open the native file picker. The component handles both interaction methods identically, validating files against the \`accept\` and \`max-size\` constraints before adding them to the list.
 
-When \`multiple\` is enabled, users can add several files across multiple interactions — each drop or browse appends to the existing list. In single-file mode (the default), selecting a new file replaces the previous one. Files that exceed the \`max-size\` limit are rejected with an inline error message below the dropzone, while accepted files are displayed in a styled list with their formatted size (B, KB, MB, GB). Each file item has a remove button that dispatches an \`arc-remove\` event and updates the file list.
+When \`multiple\` is enabled, users can add several files across multiple interactions. Each drop or browse appends to the existing list. In single-file mode (the default), selecting a new file replaces the previous one. Files that exceed the \`max-size\` limit are rejected with an inline error message below the dropzone, while accepted files are displayed in a styled list with their formatted size (B, KB, MB, GB). Each file item has a remove button that dispatches an \`arc-remove\` event and updates the file list.
 
-The component dispatches an \`arc-change\` event whenever the file list changes — on add or remove — with the current file array in the detail. The dropzone provides visual feedback during drag operations: the border color shifts to the accent blue and the background gains a subtle tint. The disabled state reduces opacity and blocks all pointer events. Keyboard users can activate the file picker by pressing Enter or Space while the dropzone is focused.`,
+The component dispatches an \`arc-change\` event whenever the file list changes, on add or remove, with the current file array in the detail. The dropzone provides visual feedback during drag operations: the border color shifts to the accent blue and the background gains a subtle tint. The disabled state reduces opacity and blocks all pointer events. Keyboard users can activate the file picker by pressing Enter or Space while the dropzone is focused.`,
 
   features: [
     'Drag-and-drop zone with visual feedback (border color and background change) during drag-over',
@@ -34,9 +34,9 @@ The component dispatches an \`arc-change\` event whenever the file list changes 
       'Display the upload zone at a reasonable width so the hint text and file list are readable',
     ],
     dont: [
-      'Do not use FileUpload as a general file manager — it handles selection, not uploading or progress',
+      'Do not use FileUpload as a general file manager. It handles selection, not uploading or progress',
       'Do not set max-size to 0 and expect it to enforce a limit; 0 means no limit',
-      'Do not forget to handle the arc-change event — without it, selected files are not captured by your application',
+      'Do not forget to handle the arc-change event. Without it, selected files are not captured by your application',
       'Do not place FileUpload inside a container with overflow: hidden, as the error message may be clipped',
       'Do not disable the component without explaining why uploads are unavailable',
     ],

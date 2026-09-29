@@ -7,22 +7,22 @@ export const chart: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   description:
-    'An SVG chart component for dashboards with line, area, bar, and donut types. Data-driven from a series array, with automatic nice-tick scales, a legend, hover crosshair and tooltips, and a visually-hidden data table for assistive technology.',
+    'An SVG chart for dashboards with line, area, bar, and donut types. Driven by a series array, with nice-tick scales, a legend, hover crosshair and tooltips, and a visually-hidden data table for assistive technology.',
 
-  overview: `Chart renders line, area, grouped/stacked bar, and donut charts from plain JavaScript data — no external charting library. Pass a \`series\` array of \`{ label, data }\` objects and a \`labels\` array of x-axis categories, and the component computes a nice 1/2/5-step y scale, recessive horizontal gridlines, abbreviated axis numbers (1.2k, 3.4M), and thin marks in the fixed ARC chart palette.
+  overview: `Chart renders line, area, grouped/stacked bar, and donut charts from plain JavaScript data, with no external charting library. Pass a \`series\` array of \`{ label, data }\` objects and a \`labels\` array of x-axis categories, and the component computes a nice 1/2/5-step y scale, recessive horizontal gridlines, abbreviated axis numbers (1.2k, 3.4M), and thin marks in the fixed ARC chart palette.
 
 Series colors are assigned in fixed order from \`--chart-1\` through \`--chart-6\` and are never cycled. When more than six series are provided, the extras are summed into an "Other" series and flagged in the legend, so identity stays readable. The legend renders automatically for two or more series and is omitted for a single series.
 
-A hover layer ships by default: line and area charts show a vertical crosshair with a tooltip listing every series value at the hovered category, while bar and donut charts show per-mark tooltips. Hit targets are invisible full-height columns per category, so users never have to hit a 2px line. Clicking a mark emits \`arc-mark-click\` with the series index, category index, and value. For assistive technology, the chart container carries a generated \`role="img"\` summary and a visually-hidden \`<table>\` exposes the real values.`,
+A hover layer is on by default: line and area charts show a vertical crosshair with a tooltip listing every series value at the hovered category, while bar and donut charts show per-mark tooltips. Hit targets are invisible full-height columns per category, so users do not have to hit a 2px line. Clicking a mark emits \`arc-mark-click\` with the series index, category index, and value. For assistive technology, the chart container carries a generated \`role="img"\` summary and a visually-hidden \`<table>\` exposes the real values.`,
 
   features: [
-    'Four chart types: line, area, grouped bar, stacked bar, and donut',
+    'Four chart types: line, area, bar (grouped or stacked), and donut',
     'Fixed-order series colors `--chart-1` through `--chart-6`, never cycled',
     'More than 6 series automatically fold into a summed "Other" series',
     'Nice-tick y scale (1/2/5 steps) with abbreviated axis numbers (1.2k, 3.4M)',
     'Single y-axis with recessive 1px horizontal gridlines only',
     'Hover crosshair + all-series tooltip on line/area; per-mark tooltips on bar/donut',
-    'Full-plot-height invisible hover columns — no pixel-hunting thin marks',
+    'Full-plot-height invisible hover columns, so thin marks are easy to hit',
     '`arc-mark-click` event with seriesIndex, index, and value',
     'Intl.NumberFormat value formatting: number, percent, or currency',
     'Legend with 8px color chips, rendered automatically for 2+ series',
@@ -33,19 +33,19 @@ A hover layer ships by default: line and area charts show a vertical crosshair w
 
   guidelines: {
     do: [
-      'Keep charts to 6 or fewer series — beyond that, pre-aggregate or split into small multiples',
+      'Keep charts to 6 or fewer series. Beyond that, pre-aggregate or split into small multiples',
       'Use type="area" for a single dominant series and type="line" when comparing trends',
       'Use stacked only when the total is meaningful; use grouped bars to compare series per category',
       'Set value-format="percent" with fractional data (0.24 renders as 24%)',
-      'Provide a label for every series — labels drive the legend, tooltip, and data table',
+      'Provide a label for every series; labels drive the legend, tooltip, and data table',
       'Listen to arc-mark-click to drive drill-down navigation or detail panels',
     ],
     dont: [
-      'Do not plot two measures of different scale on one chart — there is one y-axis, never dual axes',
-      'Do not use donut charts for more than ~6 segments or for precise comparisons — use bars instead',
+      'Do not plot two measures of different scale on one chart. There is one y-axis, never dual axes',
+      'Do not use donut charts for more than ~6 segments or for precise comparisons. Use bars instead',
       'Do not hide the legend on multi-series charts unless the series are directly labeled nearby',
-      'Do not encode meaning in custom mark colors — the fixed palette keeps series identity consistent',
-      'Do not use hide-axis on charts where readers need to look up values — it is for compact trend panels',
+      'Do not encode meaning in custom mark colors; the fixed palette keeps series identity consistent',
+      'Do not use hide-axis on charts where readers need to look up values; it is for compact trend panels',
       'Do not feed stacked bars negative values; stacking assumes non-negative data',
     ],
   },

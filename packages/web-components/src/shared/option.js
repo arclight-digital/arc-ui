@@ -6,7 +6,7 @@ import { notifyOwner } from './hydrate-slots.js';
  * Whether an `arc-option` element refuses selection.
  *
  * Shared because all four consumers need the same answer and all four had the
- * same wrong one — they read the *group's* `disabled` and never the option's
+ * same wrong one: they read the *group's* `disabled` and never the option's
  * (finding #6). Reads the attribute as well as the property: on the slotchange
  * that builds a listbox an arc-option may not have upgraded yet, and an
  * un-upgraded element has no `disabled` property at all.
@@ -54,8 +54,8 @@ export class ArcOption extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * Consumers render an arc-option's state into *their* shadow DOM — the option
-   * itself is `display: none` — so a change here is invisible until the owner
+   * Consumers render an arc-option's state into *their* shadow DOM (the option
+   * itself is `display: none`), so a change here is invisible until the owner
    * re-renders, and nothing else asks it to (finding #6).
    */
   updated(changed) {

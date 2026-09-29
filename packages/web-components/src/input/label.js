@@ -102,12 +102,12 @@ export class ArcLabel extends DeclaredPropsMixin(LitElement) {
 
   _onClick() {
     if (!this.for) return;
-    // getElementById, not `querySelector('#' + for)` — finding #77. HTML ids may
+    // getElementById, not `querySelector('#' + for)` (finding #77). HTML ids may
     // be almost anything (`2fa-code`, `user.email`, `field:1` are all legal and
     // all routine in generated forms) while a CSS id selector may not begin
     // with a digit or carry an unescaped `.` or `:`. querySelector threw
     // SyntaxError, the exception escaped this handler, and the document-level
-    // fallback on the same line — which would have worked — never ran.
+    // fallback on the same line (which would have worked) never ran.
     //
     // A shadow root and a document both implement getElementById; a *fragment*
     // that is neither does not, hence the guard rather than a bare call.
@@ -117,7 +117,7 @@ export class ArcLabel extends DeclaredPropsMixin(LitElement) {
     target?.focus?.();
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

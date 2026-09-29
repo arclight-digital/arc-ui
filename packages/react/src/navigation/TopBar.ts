@@ -12,8 +12,9 @@ export interface TopBarProps {
   fixed?: boolean;
   contained?: string;
   menuOpen?: boolean;
-  mobileMenu?: string;
+  mobileMenu?: 'sidebar' | 'nav' | 'none';
   menuPosition?: string;
+  mobileCenter?: 'center' | 'end' | 'hidden';
   navAlign?: 'left' | 'center' | 'right';
   className?: string;
   children?: React.ReactNode;

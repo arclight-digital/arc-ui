@@ -143,7 +143,7 @@ export class ArcAccordion extends DeclaredPropsMixin(LitElement) {
     this._openItems = next;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

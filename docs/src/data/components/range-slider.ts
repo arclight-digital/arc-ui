@@ -9,23 +9,23 @@ export const rangeSlider: ComponentDef = {
   description:
     'Dual-thumb range slider for selecting a numeric interval within a defined range, with accent-primary fill between the thumbs and live value display.',
 
-  overview: `RangeSlider lets users select a contiguous sub-range between two bounds by dragging two thumbs along a shared track. The filled region between the thumbs is rendered with accent-primary, giving an immediate visual cue of the selected interval.
+  overview: `RangeSlider lets users select a contiguous sub-range between two bounds by dragging two thumbs along a shared track. The filled region between the thumbs is rendered with accent-primary, which shows the selected interval.
 
 When a \`label\` is provided the component renders a header row with the label on the left and the current range values ("low – high") on the right in monospace font, matching the single Slider's visual pattern. The \`show-values\` attribute (on by default) controls whether the numeric readout appears.
 
-Rather than layering two native range inputs, this component implements a custom track with pointer capture-based dragging for reliable cross-browser behavior. Both thumbs are keyboard accessible with arrow keys, Home, and End, and each carries proper ARIA \`role="slider"\` attributes (\`aria-valuenow\`, \`aria-valuemin\`, \`aria-valuemax\`) so screen readers announce the current value and range constraints.
+Instead of layering two native range inputs, this component implements a custom track with pointer-capture dragging, so it behaves the same across browsers. Both thumbs are keyboard accessible with arrow keys, Home, and End, and each carries ARIA \`role="slider"\` attributes (\`aria-valuenow\`, \`aria-valuemin\`, \`aria-valuemax\`) so screen readers announce the current value and range constraints.
 
-RangeSlider fires \`arc-input\` continuously during drag for real-time previews and \`arc-change\` on thumb release for committing the final selection, with \`{ low, high }\` in the event detail. The low thumb is clamped to never exceed the high thumb and vice versa, preventing invalid crossover states.`,
+RangeSlider fires \`arc-input\` continuously during drag for real-time previews and \`arc-change\` on thumb release for committing the final selection, with \`{ low, high }\` in the event detail. The low thumb is clamped to never exceed the high thumb and vice versa, so the thumbs can't cross.`,
 
   features: [
-    'Custom dual-thumb track built with pointer capture for reliable cross-browser dragging',
+    'Custom dual-thumb track built with pointer capture for consistent cross-browser dragging',
     'Accent-primary filled region between the two thumbs visually indicates the selected range',
     'Header row displaying the label and "low – high" values in monospace font when `label` and `show-values` are set',
     'Configurable `min`, `max`, and `step` props for precise range and increment control',
     'Thumb hover and focus effects with scale-up and accent-primary glow shadow matching the single Slider',
     'Keyboard support: ArrowLeft/Right/Up/Down step by `step`, Home and End jump to limits',
     'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release, both with `{ low, high }` detail',
-    'Full ARIA slider roles on each thumb with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
+    'ARIA slider roles on each thumb with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
     'Clamping logic prevents thumbs from crossing each other, maintaining low ≤ high invariant',
     'Click-on-track moves the nearest thumb to the clicked position',
     'Disabled state at 50% opacity with pointer events blocked',
@@ -37,15 +37,15 @@ RangeSlider fires \`arc-input\` continuously during drag for real-time previews 
       'Provide a `label` so users understand what the range represents at a glance',
       'Use for selecting a sub-range within a larger set, such as a price filter, date range, or frequency band',
       'Use `arc-input` for real-time filtering or preview and `arc-change` for committing the selection to a server',
-      'Choose `step` values that match your data granularity — use 1 for integers, 0.01 for fine decimal values',
+      'Choose `step` values that match your data granularity; use 1 for integers, 0.01 for fine decimal values',
       'Place the RangeSlider in a container at least 250px wide for comfortable dual-thumb dragging',
       'Set `low` and `high` to sensible defaults that represent the most common range for your use case',
     ],
     dont: [
-      'Do not use RangeSlider when the user only needs to pick a single value — use Slider instead',
+      'Do not use RangeSlider when the user only needs to pick a single value; use Slider instead',
       'Do not set a `step` so small that the two thumbs become difficult to separate with a mouse',
-      'Do not omit `label` when the slider is standalone — without context the numeric readout is meaningless',
-      'Do not use for non-numeric selections — use a multi-select or checkbox group instead',
+      'Do not omit `label` when the slider is standalone: without context the numeric readout is meaningless',
+      'Do not use for non-numeric selections; use a multi-select or checkbox group instead',
       'Avoid placing multiple range sliders in a narrow column without sufficient vertical spacing',
     ],
   },

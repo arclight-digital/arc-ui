@@ -11,7 +11,7 @@ export const tag: ComponentDef = {
 
   overview: `Tag is a small, pill-shaped label component used to categorise, filter, or display metadata inline. It renders its content in uppercase with accent font styling and letter spacing, giving it a distinct visual weight that stands out against body text without overwhelming the layout. Tags are commonly seen in filter bars, resource cards, multi-select summaries, and anywhere compact labeling is needed.
 
-Seven color variants are available: \`default\` (neutral border and muted text), \`primary\` (accent-primary tint), \`secondary\` (accent-secondary tint), \`success\` (green), \`warning\` (yellow), \`error\` (red), and \`info\` (blue). The accent and status variants gain a colored glow on hover, making them effective for interactive filtering scenarios where the user needs to distinguish active categories at a glance. \`info\` arrived in 4.2 from arc-badge, which had it when Tag did not — every other status set in the library carries all four, and a badge migrating to a tag would otherwise have fallen through to \`default\`.
+Seven color variants are available: \`default\` (neutral border and muted text), \`primary\` (accent-primary tint), \`secondary\` (accent-secondary tint), \`success\` (green), \`warning\` (yellow), \`error\` (red), and \`info\` (blue). The accent and status variants gain a colored glow on hover, which helps in interactive filtering where users need to tell active categories apart at a glance. \`info\` arrived in 4.2 from arc-badge, which had it when Tag did not. Every other status set in the library carries all four, and a badge migrating to a tag would otherwise have fallen through to \`default\`.
 
 For cases where the built-in variants don't cover your color needs, the \`color\` prop accepts an RGB triplet (e.g. \`"77, 126, 247"\`) and applies it as the tag's border, text, background tint, and hover glow. This is useful for category-specific colors that come from data rather than design tokens.
 
@@ -34,16 +34,16 @@ When the \`removable\` prop is set, a small close button appears after the label
       'Use the `primary` or `secondary` variant to visually group related categories together',
       'Use the `color` prop when category colors come from data (e.g. project colors, label colors)',
       'Enable `removable` when the tag represents a user-applied filter that can be cleared',
-      'Keep tag labels to 1-3 words — the uppercase styling amplifies length visually',
+      'Keep tag labels to 1-3 words. Uppercase styling makes length more noticeable',
       'Listen to `arc-remove` on the parent container using event delegation for efficient handling',
       'Combine multiple tags in a flex-wrap container with a small gap for scannable filter displays',
     ],
     dont: [
-      'Do not use Tag for long descriptive text — it is designed for short categorical labels',
-      'Do not use the remove button for destructive actions (like deleting a resource) — it should only remove the tag itself',
-      'Do not mix more than two color variants in the same tag group — it creates visual noise',
+      'Do not use Tag for long descriptive text. It is designed for short categorical labels',
+      'Do not use the remove button for destructive actions (like deleting a resource). It should only remove the tag itself',
+      'Do not mix more than two color variants in the same tag group. It creates visual noise',
       'Do not set `disabled` on removable tags without also disabling the action that applied them',
-      'Avoid using Tag as a button replacement — it lacks the semantic role and focus handling of a button',
+      'Avoid using Tag as a button replacement. It lacks the semantic role and focus handling of a button',
     ],
   },
 

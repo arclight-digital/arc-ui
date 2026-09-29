@@ -30,7 +30,7 @@ const guideSections = [
     links: [
       { slug: 'tokens',            label: 'Design Tokens',     icon: 'swatches' },
       { slug: 'theming',           label: 'Theming',           icon: 'paint-brush' },
-      /* A tool that operates on the theming page's concepts, not a peer of them —
+      /* A tool that operates on the theming page's concepts, not a peer of them,
          and since v3 an application at its own route rather than a docs page,
          so it carries an explicit href out of the /docs tree. */
       { slug: 'theme-synthesizer', label: 'Theme Synthesizer', icon: 'sliders', level: 1, href: '/synth' },
@@ -114,7 +114,7 @@ const activeHref = activeSlug
   /**
    * Two bits of sidebar state the markup cannot carry.
    *
-   * The server renders only the active tier expanded — with 170-odd component
+   * The server renders only the active tier expanded. With 170-odd component
    * links, opening all seven turns the sidebar into a wall nobody scans. That
    * makes any section a reader opens a deliberate act, so it has to survive the
    * next navigation; otherwise every click re-collapses the thing they just
@@ -141,7 +141,7 @@ const activeHref = activeSlug
    *
    * The default cannot be expressed in the markup. `open` on arc-sidebar-section
    * defaults to true in the constructor, and an absent boolean attribute never
-   * runs a setter, so omitting it leaves the section open — which is why the
+   * runs a setter, so omitting it leaves the section open, which is why the
    * markup's `open={isActiveTier || undefined}` collapsed nothing at all. It
    * stays on the element for the no-JS case, where every section being open is
    * the right failure, and the real default is applied here.
@@ -160,7 +160,7 @@ const activeHref = activeSlug
       changed = true;
     }
     // arc-sidebar renders the links from its children's state, and nothing in
-    // that read is reactive — the host has to be told the state moved.
+    // that read is reactive, so the host has to be told the state moved.
     if (changed) sidebar.requestUpdate();
   }
 
@@ -170,7 +170,7 @@ const activeHref = activeSlug
     try {
       sessionStorage.setItem(STORE_KEY, JSON.stringify(store));
     } catch {
-      /* Private mode, quota — the sidebar just forgets. */
+      /* Private mode or quota: the sidebar just forgets. */
     }
   }
 
@@ -182,7 +182,7 @@ const activeHref = activeSlug
    * the link they clicked. Only someone who arrived by URL needs the list moved
    * under them.
    *
-   * scrollIntoView is unusable here — it walks every scrollable ancestor,
+   * scrollIntoView is unusable here. It walks every scrollable ancestor,
    * including the document, so centring the sidebar would also scroll the
    * article out from under the reader. Setting scrollTop on the one container
    * that actually scrolls is the whole fix.

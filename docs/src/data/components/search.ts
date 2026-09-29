@@ -9,11 +9,11 @@ export const search: ComponentDef = {
   description:
     'Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete suggestions dropdown.',
 
-  overview: `Search is a purpose-built input component for search and filter interactions. It wraps a text input with a leading magnifying glass icon, an optional clear button, and a loading spinner that can be toggled while results are being fetched. When \`<arc-suggestion>\` child elements are provided, the component displays a dropdown of autocomplete suggestions that the user can navigate with the keyboard or mouse.
+  overview: `Search is an input for search and filter interactions. It wraps a text input with a leading magnifying glass icon, an optional clear button, and a loading spinner that can be toggled while results are being fetched. When \`<arc-suggestion>\` child elements are provided, the component displays a dropdown of autocomplete suggestions that the user can navigate with the keyboard or mouse.
 
-The component fires three distinct events to cover the full search lifecycle: \`arc-input\` on every keystroke for live filtering, \`arc-change\` when the user presses Enter to submit, and \`arc-select\` when a suggestion is chosen. The clear button (visible when the input has content) resets the field and dispatches \`arc-clear\`, then returns focus to the input for a seamless editing flow.
+The component fires three events: \`arc-input\` on every keystroke for live filtering, \`arc-change\` when the user presses Enter to submit, and \`arc-select\` when a suggestion is chosen. The clear button (visible when the input has content) resets the field and dispatches \`arc-clear\`, then returns focus to the input so the user can keep editing.
 
-Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each carrying a \`value\` and a visible label. The dropdown opens on focus when suggestions exist and supports ArrowUp/ArrowDown navigation, Enter to select, and Escape to dismiss. The search input uses \`role="searchbox"\` and connects to the suggestion listbox with proper ARIA attributes for screen reader compatibility.`,
+Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each carrying a \`value\` and a visible label. The dropdown opens on focus when suggestions exist and supports ArrowUp/ArrowDown navigation, Enter to select, and Escape to dismiss. The search input uses \`role="searchbox"\` and connects to the suggestion listbox with ARIA attributes for screen readers.`,
 
   features: [
     'Built-in magnifying glass search icon positioned inside the input field',
@@ -35,10 +35,10 @@ Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each 
       'Listen to `arc-input` for debounced live search, and `arc-change` for explicit submission',
     ],
     dont: [
-      'Do not use Search for generic text input — use Input or Textarea for non-search fields',
-      'Do not populate suggestions with hundreds of items — keep the list to 8-10 for usability',
-      'Do not rely solely on the clear button for resetting — also handle programmatic value clearing',
-      'Do not use `loading` without actually fetching data — it misleads users about system activity',
+      'Do not use Search for generic text input; use Input or Textarea for non-search fields',
+      'Do not populate suggestions with hundreds of items; keep the list to 8-10 for usability',
+      'Do not rely solely on the clear button for resetting: also handle programmatic value clearing',
+      'Do not use `loading` without actually fetching data: it misleads users about system activity',
       'Avoid placing Search inside a container with `overflow: hidden` that would clip the suggestion dropdown',
     ],
   },

@@ -12,7 +12,7 @@
  * real comparison rather than stubbing it out.
  */
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup, settle, nextFrame, record, deepActive, pressKey } from './helpers.js';
+import { mount, cleanup, settle, nextFrame, until, record, deepActive, pressKey } from './helpers.js';
 
 import '../src/layout/app-shell.register.js';
 
@@ -59,10 +59,11 @@ async function openDrawer(el) {
    * condition and the one that cannot drift with machine speed. Bounded, so a
    * genuine failure to move still fails rather than hanging.
    */
-  for (let i = 0; i < 10 && el.contains(deepActive()) === false; i++) {
-    if (!el.hasAttribute('mobile') || !el.sidebarOpen) break;
-    await nextFrame();
-  }
+  // Bounded by time, not by a frame count: ten frames still lost the race on
+  // a loaded full-suite run.
+  await until(() => el.contains(deepActive()) || !el.hasAttribute('mobile') || !el.sidebarOpen, {
+    timeout: 1500,
+  });
 }
 
 describe('arc-app-shell rendering', () => {

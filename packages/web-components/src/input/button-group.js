@@ -40,7 +40,7 @@ export class ArcButtonGroup extends DeclaredPropsMixin(LitElement) {
         flex-direction: column;
       }
 
-      /* Remove inner radii — connected borders */
+      /* Remove inner radii: connected borders */
       ::slotted(*) {
         --radius-md: 0;
         --radius-sm: 0;
@@ -119,7 +119,7 @@ export class ArcButtonGroup extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

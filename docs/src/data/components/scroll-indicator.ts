@@ -9,20 +9,20 @@ export const scrollIndicator: ComponentDef = {
   description:
     'Thin progress bar that tracks scroll position of the page or a target container. Sticks to the top or bottom edge with accent or gradient fill.',
 
-  overview: `ScrollIndicator renders a slim progress bar that fills left-to-right as the user scrolls through content. It attaches to the nearest scroll container or the window, updating via \`requestAnimationFrame\`-throttled scroll events for smooth, jank-free rendering.
+  overview: `ScrollIndicator renders a slim progress bar that fills left-to-right as the user scrolls through content. It attaches to the nearest scroll container or the window, updating via \`requestAnimationFrame\`-throttled scroll events, so rendering stays smooth.
 
-The bar sticks to the top or bottom edge using \`position: sticky\` and stays out of the pointer-event flow so it never blocks clicks or text selection. Two color modes — solid accent and gradient (primary → secondary) — let you match the bar to your theme.
+The bar sticks to the top or bottom edge using \`position: sticky\` and stays out of the pointer-event flow so it never blocks clicks or text selection. Two color modes (solid accent, or a primary-to-secondary gradient) let you match the bar to your theme.
 
 Three size presets (sm: 2px, md: 3px, lg: 4px) keep the indicator unobtrusive at the default small size while offering slightly bolder options for reading-focused layouts like blog posts or documentation. The component sets \`role="progressbar"\` with \`aria-valuenow\` for accessibility.`,
 
   features: [
     'Tracks scroll progress of the window or a specific CSS-selector target',
-    'rAF-throttled scroll listener for smooth, jank-free updates',
+    'rAF-throttled scroll listener',
     'Sticky positioning at top or bottom edge',
     'Two color modes: solid accent and primary-to-secondary gradient',
     'Three size presets: sm (2px), md (3px), lg (4px)',
     'Accessible `role="progressbar"` with live `aria-valuenow`',
-    'Non-interactive — `pointer-events: none` so it never blocks content',
+    'Non-interactive: `pointer-events: none` so it never blocks content',
     'Respects `prefers-reduced-motion` by disabling transitions',
   ],
 
@@ -35,8 +35,8 @@ Three size presets (sm: 2px, md: 3px, lg: 4px) keep the indicator unobtrusive at
     ],
     dont: [
       'Do not use scroll indicator on short pages where scrolling is minimal',
-      'Do not Stack multiple scroll indicators — one per scroll context is sufficient',
-      'Do not use as a loading indicator — use `arc-progress` for async operations instead',
+      'Do not stack multiple scroll indicators: one per scroll context is sufficient',
+      'Do not use as a loading indicator; use `arc-progress` for async operations instead',
     ],
   },
 

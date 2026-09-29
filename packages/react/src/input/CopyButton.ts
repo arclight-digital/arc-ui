@@ -7,6 +7,8 @@ import { ArcCopyButton } from '@arclux/arc-ui/copy-button';
 export interface CopyButtonProps {
   value?: string;
   disabled?: boolean;
+  iconOnly?: boolean;
+  label?: string;
   className?: string;
   onArcCopy?: (e: CustomEvent) => void;
   onClick?: (e: Event) => void;

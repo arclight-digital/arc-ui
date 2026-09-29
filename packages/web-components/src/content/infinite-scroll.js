@@ -78,7 +78,7 @@ export class ArcInfiniteScroll extends DeclaredPropsMixin(LitElement) {
     this.threshold = 200;
 
     // Was created in firstUpdated and destroyed in disconnectedCallback, which
-    // do not pair — so the first reparenting stopped it loading more, silently
+    // do not pair, so the first reparenting stopped it loading more, silently
     // and for good (finding #64). `updated` re-created it only when `finished`
     // or `disabled` changed, which a reconnect does not.
     //

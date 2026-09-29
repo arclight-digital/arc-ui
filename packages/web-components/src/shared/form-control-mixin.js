@@ -1,5 +1,5 @@
 /**
- * FormControlMixin — standard ElementInternals form participation for input
+ * FormControlMixin: standard ElementInternals form participation for input
  * components. Gives every consumer:
  *
  *   - formAssociated + attachInternals (this._internals)
@@ -21,7 +21,7 @@
  * its shadow root holds focus. Retargeting means an outside listener sees
  * `<arc-textarea>` rather than the `<textarea>` inside it, and no selector
  * crosses a shadow boundary, so without the marker there is no way to tell from
- * the outside that a keypress landed in a text field — which is how a bare-key
+ * the outside that a keypress landed in a text field, which is how a bare-key
  * shortcut ends up firing mid-sentence. See shared/editing-target.js, whose
  * isEditingTarget() is the more reliable check where an event is available.
  */
@@ -44,9 +44,9 @@ export const FormControlMixin = (superClass) =>
       // about form-associated *platform* semantics: a `disabled` content
       // attribute that is merely present makes the element actually disabled
       // per the HTML spec, and formDisabledCallback assigns the property back,
-      // so no converter can win. Neither of these is platform-mapped —
+      // so no converter can win. Neither of these is platform-mapped:
       // `required` is enforced by _computeValidity() below and `readonly` by
-      // each component's own interaction handlers — so the stock converter buys
+      // each component's own interaction handlers, so the stock converter buys
       // nothing here and costs the usual bug: `required="false"` read as true,
       // blocking submission of a form the author meant to leave optional.
       // Finding #48's shape, across all 26 form controls at once.
@@ -76,7 +76,7 @@ export const FormControlMixin = (superClass) =>
       // focusin/focusout are composed, so they cross the shadow boundary and
       // arrive here with the real focused node still at the head of the path.
       // Focus moving between two elements inside fires focusout then focusin, so
-      // the marker is dropped and re-set within the same task — nothing can
+      // the marker is dropped and re-set within the same task, nothing can
       // observe the gap.
       this.addEventListener('focusin', this.__onEditingFocusIn);
       this.addEventListener('focusout', this.__onEditingFocusOut);
@@ -146,7 +146,7 @@ export const FormControlMixin = (superClass) =>
       // Programmatic value changes must reach the form: most controls only call
       // _updateFormValue() from their interaction handlers, so `el.value = x`
       // from script used to leave the submitted value and validity stale.
-      // Double-calling after an interaction handler is harmless — it's
+      // Double-calling after an interaction handler is harmless: it's
       // idempotent, and serialization always goes through the subclass's own
       // _formValue(). Subclasses that override updated() MUST call
       // super.updated(changed) first or they lose these hooks. Controls whose
@@ -171,8 +171,8 @@ export const FormControlMixin = (superClass) =>
      * exist yet at connect time.
      *
      * connectedCallback captures the baseline before the first slotchange, so
-     * a control that derives its initial value from slotted children — the
-     * segmented control auto-selecting its first option — captures the empty
+     * a control that derives its initial value from slotted children (the
+     * segmented control auto-selecting its first option) captures the empty
      * pre-slot state, and form.reset() then *clears* it instead of restoring
      * it. Call this immediately after assigning such a derived initial value.
      */

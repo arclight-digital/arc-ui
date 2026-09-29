@@ -53,7 +53,7 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
       <p>
         ARC UI components own everything inside their shadow boundary and nothing outside it.
         The space <em>between</em> components is yours, and in practice everyone writes the same
-        flex, gap and padding CSS to fill it — against {tokenCount} custom properties
+        flex, gap and padding CSS to fill it, against {tokenCount} custom properties
         <code>base.css</code> already publishes with no ergonomic way to use them.
       </p>
       <p>
@@ -74,7 +74,7 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
       <p>
         These classes are generated from the same <code>tokens.js</code> the components compile
         against, so <code>.arc-p-md</code> and a card's internal padding resolve to the same
-        value — and overriding one base token moves both:
+        value, and overriding one base token moves both:
       </p>
       <arc-code-block language="css" code={`:root { --space-md: 20px; }
 
@@ -92,7 +92,7 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
       <arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';       /* defines the tokens */
 import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       <p>
-        Opt-in and standalone — nobody who only wants tokens pays for it. Every class is
+        Opt-in and standalone: nobody who only wants tokens pays for it. Every class is
         <code>arc-</code> prefixed, because consumers run Tailwind or Bootstrap and an
         unprefixed <code>.flex</code> would collide catastrophically. It costs the terseness that
         makes utilities pleasant, and there is no way around it for a library.
@@ -107,7 +107,7 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
         logical, not physical: <code>x</code>/<code>y</code> for the inline and block axes,
         <code>s</code>/<code>e</code> for start and end, <code>t</code>/<code>b</code> for block
         start and end. A layout built from these mirrors under <code>dir="rtl"</code> without a
-        second stylesheet — the same class, both directions:
+        second stylesheet. The same class works in both directions:
       </p>
       <div class="demo-stack">
         <div class="demo-box arc-ps-xl arc-py-sm"><code>.arc-ps-xl</code></div>
@@ -142,24 +142,24 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       </div>
       <ul>
         <li>
-          <strong>Display</strong> — <code>.arc-flex</code>, <code>.arc-inline-flex</code>,
+          <strong>Display</strong>: <code>.arc-flex</code>, <code>.arc-inline-flex</code>,
           <code>.arc-grid</code>, <code>.arc-block</code>, <code>.arc-contents</code>,
           <code>.arc-hidden</code>.
         </li>
         <li>
-          <strong>Flex</strong> — <code>.arc-flex-col</code>, <code>.arc-flex-wrap</code>,
+          <strong>Flex</strong>: <code>.arc-flex-col</code>, <code>.arc-flex-wrap</code>,
           <code>.arc-flex-1</code>, <code>.arc-grow</code>, <code>.arc-shrink-0</code>.
         </li>
         <li>
-          <strong>Alignment</strong> — <code>.arc-items-center</code>,
+          <strong>Alignment</strong>: <code>.arc-items-center</code>,
           <code>.arc-justify-between</code>, <code>.arc-self-end</code>.
         </li>
         <li>
-          <strong>Grid</strong> — <code>.arc-grid-cols-1</code> through <code>-6</code>,
+          <strong>Grid</strong>: <code>.arc-grid-cols-1</code> through <code>-6</code>,
           <code>.arc-col-span-*</code>, <code>.arc-col-span-full</code>.
         </li>
         <li>
-          <strong>Size</strong> — <code>.arc-w-full</code>, <code>.arc-h-full</code>,
+          <strong>Size</strong>: <code>.arc-w-full</code>, <code>.arc-h-full</code>,
           <code>.arc-max-w-full</code>, and <code>.arc-min-w-0</code>, which is the fix for a
           flex child that refuses to shrink and text that refuses to ellipsis.
         </li>
@@ -183,7 +183,7 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       </table>
       <p>
         Colors use the token names directly, so <code>.arc-text-primary</code> is the foreground
-        color and <code>.arc-text-lg</code> is a type size — the same split
+        color and <code>.arc-text-lg</code> is a type size, the same split
         <code>--text-primary</code> and <code>--text-lg</code> already have. The generator fails
         the build if a future token ever makes those two collide.
       </p>
@@ -200,21 +200,21 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul>
         <li>
-          <strong>Light DOM only.</strong> A class cannot cross a shadow boundary — these style
+          <strong>Light DOM only.</strong> A class cannot cross a shadow boundary. These style
           the space around ARC components, never anything inside one. Use <code>::part()</code>
           and the CSS custom properties for that.
         </li>
         <li>
           <strong>No responsive or state variants.</strong> No <code>sm:</code>, no
           <code>hover:</code>. That is where a utility layer becomes a framework, and this one
-          is deliberately not that. Write a media query.
+          is not that. Write a media query.
         </li>
         <li>
-          <strong>No arbitrary values.</strong> The scale is the point — a class that resolves
+          <strong>No arbitrary values.</strong> The scale is the point: a class that resolves
           to an arbitrary pixel value is not tracking the token system.
         </li>
         <li>
-          <strong>Requires the tokens.</strong> Every class reads a <code>var()</code> — load
+          <strong>Requires the tokens.</strong> Every class reads a <code>var()</code>, so load
           <code>base.css</code>, or define the same variables yourself.
         </li>
       </ul>
@@ -251,7 +251,7 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
     vertical-align: top;
   }
 
-  /* Demo chrome — everything else the demos do is the utility classes themselves. */
+  /* Demo chrome: everything else the demos do is the utility classes themselves. */
   .demo-box {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);

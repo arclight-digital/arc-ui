@@ -7,7 +7,7 @@
  * path, which is the line that kept 3,408 generated icon modules inside the core
  * package: 88% of its published files and 44% of its unpacked bytes, in every
  * install, whether or not a single icon was ever rendered. Worse than the
- * tarball, the resolver is 1,896 static `import()` specifiers — a bundler must
+ * tarball, the resolver is 1,896 static `import()` specifiers, and a bundler must
  * walk all of them and emit a chunk each, so the cost landed in every consumer's
  * build graph by default.
  *
@@ -17,7 +17,7 @@
  *     import '@arclux/arc-ui-icons/phosphor';
  *
  * and that is the whole contract. It is also what makes a *custom* library a
- * first-class citizen rather than a special case — Phosphor and Lucide now
+ * regular library rather than a special case: Phosphor and Lucide now
  * arrive through exactly the door a consumer's own set would.
  *
  * ── There is no default library any more ──
@@ -28,7 +28,7 @@
  * with nothing to say about why. Registration selects when nothing is selected,
  * so one import still needs no `use()` call.
  *
- * The failure this replaces is the one arc-transfer-list shipped — a blank box
+ * The failure this replaces is the one arc-transfer-list shipped: a blank box
  * and silence. `get()` warns once per unresolvable library, with the two lines
  * that fix it, so "I upgraded and my icons vanished" is a console message rather
  * than a bug report.
@@ -44,14 +44,14 @@ const _custom = {};
  * `use()` records the name whether or not that library is registered, rather
  * than throwing on an unknown one as it did before v4. Registration is a module
  * side effect and selection is often a DOM attribute, so the two can arrive in
- * either order — and under a lazily-imported pack, `<arc-icon-library
+ * either order, and under a lazily-imported pack, `<arc-icon-library
  * name="lucide">` connects first as a matter of course. Throwing there was
  * finding #79: the call sits in `connectedCallback`, where a custom-element
  * reaction's exception is reported globally rather than propagated, so nothing
  * at the call site could catch it and the element's connect was abandoned
  * partway through.
  *
- * A typo is still loud, just one step later and from the place that can describe
+ * A typo is still loud, one step later and from the place that can describe
  * it: `get('star')` under `use('lucid')` warns that "lucid" is not registered
  * and lists what is.
  */
@@ -74,7 +74,7 @@ const _resolved = new Map();
  * Without it, a server-rendered icon hydrates wrong. The server resolves the
  * glyph and paints it; the client's first render happens before any dynamic
  * import can finish, finds nothing in the cache, and returns the empty-slot
- * fallback instead — a different tree from the one hydration is adopting.
+ * fallback instead: a different tree from the one hydration is adopting.
  * Reading a payload the page already carries makes the two identical, and
  * removes the icon round-trips from load as a side effect.
  *
@@ -84,7 +84,7 @@ const _resolved = new Map();
  * Keyed on the payload *element*, not on a read-once flag. Under a client-side
  * router the document is replaced without the module being re-evaluated, so a
  * flag would leave every page after the first reading the payload of the page
- * that happened to load first — and any icon only the new page uses resolves to
+ * that happened to load first, and any icon only the new page uses resolves to
  * null. On a server-rendered page that is not a missing glyph but a hydration
  * mismatch: the server painted the SVG and the client renders the empty-slot
  * fallback into the DOM being adopted. Comparing node identity re-reads exactly
@@ -121,7 +121,7 @@ function readInlinePayload() {
  *
  * A page that upgrades to v4 without installing the icons package renders every
  * glyph as an empty slot, and arc-icon's per-name warning would say the wrong
- * thing about it fifty times over — "check the spelling" is bad advice when the
+ * thing about it fifty times over. "check the spelling" is bad advice when the
  * spelling was never the problem. This fires once and carries the fix, and
  * arc-icon defers to it (see `hasLibrary`).
  *
@@ -131,7 +131,7 @@ function readInlinePayload() {
  * consults `_custom` *before* it asks for a library, so a page that registers
  * its own glyphs resolves every one of them and only reaches here for a name it
  * never registered. A consumer read that message as "hand-registration is
- * unsupported, install a pack" when their real gap was one missing glyph —
+ * unsupported, install a pack" when their real gap was one missing glyph,
  * `pencil`, which arc-inline-edit had been rendering as an empty slot since
  * they upgraded. Naming it would have pointed at the gap instead of at their
  * strategy.
@@ -172,7 +172,7 @@ function warnNoLibrary(library, icon) {
 }
 
 /**
- * The active library's entry, or null — warning once if it cannot be had.
+ * The active library's entry, or null, warning once if it cannot be had.
  *
  * Takes the icon name only to put it in that warning. The lookup does not use
  * it: which library is active has nothing to do with which glyph was asked for,
@@ -189,7 +189,7 @@ function registeredLibrary() {
 }
 
 /**
- * The built-in glyph for a name the active library cannot answer — because
+ * The built-in glyph for a name the active library cannot answer, because
  * there is no library, or because it has no such glyph. A library that has the
  * name always wins, loaded or not, so a registered pack restyles ARC's chrome
  * rather than being overruled by it. See icon-builtins.js.
@@ -218,7 +218,7 @@ export const iconRegistry = {
    * Selects this library if nothing is selected yet, so a single
    * `import '@arclux/arc-ui-icons/phosphor'` is a complete setup.
    * Registering a second pack never takes the choice back from a page that has
-   * already made one — which does mean that importing both packs and calling
+   * already made one, which does mean that importing both packs and calling
    * neither `use()` nor `<arc-icon-library>` leaves the first-imported one
    * active. Say which you want.
    */
@@ -242,7 +242,7 @@ export const iconRegistry = {
   },
 
   /**
-   * Whether the active library is registered — the question arc-icon asks
+   * Whether the active library is registered. This is the question arc-icon asks
    * before blaming a missing glyph on its name. False also means `get()` has
    * already said the useful thing about it.
    */
@@ -253,7 +253,7 @@ export const iconRegistry = {
   /**
    * Select which registered library names resolve against.
    *
-   * Takes any name, including one whose pack has not been imported yet — see
+   * Takes any name, including one whose pack has not been imported yet; see
    * `_libraryName` above for why this no longer throws.
    */
   use(library) {
@@ -281,7 +281,7 @@ export const iconRegistry = {
     //    whose icons are all registered by hand, or inlined by a server build,
     //    is a working page with no library at all.
     if (_custom[name]) return _custom[name];
-    // 2. A glyph ARC's own chrome renders, when no library can supply it —
+    // 2. A glyph ARC's own chrome renders, when no library can supply it,
     //    before the complaint too: a close button that draws is not a problem.
     const builtin = builtinFor(name);
     if (builtin) return builtin;
@@ -301,7 +301,7 @@ export const iconRegistry = {
   },
 
   /**
-   * Look up an icon without awaiting — the source string if it is already in
+   * Look up an icon without awaiting: the source string if it is already in
    * memory, otherwise null.
    *
    * `get()` is async because the icon packs are code-split one file per glyph,
@@ -312,7 +312,7 @@ export const iconRegistry = {
    *
    * So this reads the cache that `get()` fills, plus anything registered
    * through `set()`. Server-side, warm it with `preload()` first. Client-side
-   * it is a fast path — and, on a hydrated page whose icons were inlined at
+   * it is a fast path and, on a hydrated page whose icons were inlined at
    * build time, the thing that makes the client's first render match the
    * server's.
    *
@@ -340,7 +340,7 @@ export const iconRegistry = {
    * List all icon names in a library (defaults to active). Returns a
    * Promise<string[]>.
    *
-   * Async for compatibility rather than necessity — it used to import a
+   * Async for compatibility rather than necessity: it used to import a
    * generated manifest, and now reads keys off a registration that is already in
    * memory. Callers all `await` it and would keep working if it were made
    * synchronous, but nothing is gained by making them change.

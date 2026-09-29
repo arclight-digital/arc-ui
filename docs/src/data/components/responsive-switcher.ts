@@ -9,19 +9,19 @@ export const responsiveSwitcher: ComponentDef = {
   description:
     'Container-query-based layout that flips between horizontal and vertical at a threshold width. No media queries needed.',
 
-  overview: `ResponsiveSwitcher is a layout primitive that uses CSS container queries to automatically switch its children between a horizontal (row) and vertical (column) arrangement based on the component's own width — not the viewport width. When the container is wider than the threshold, children are laid out side by side; when it narrows below the threshold, they stack vertically.
+  overview: `ResponsiveSwitcher is a layout primitive that uses CSS container queries to automatically switch its children between a horizontal (row) and vertical (column) arrangement based on the component's own width, not the viewport width. When the container is wider than the threshold, children are laid out side by side; when it narrows below the threshold, they stack vertically.
 
-This approach is superior to media queries for component-level responsiveness because the same ResponsiveSwitcher works correctly whether it lives in a full-width page section, a narrow sidebar, or a resizable split pane. The breakpoint is intrinsic to the component's container, not the viewport, making it truly reusable across different layout contexts.
+Container queries beat media queries for component-level responsiveness because the same ResponsiveSwitcher works whether it lives in a full-width page section, a narrow sidebar, or a resizable split pane. The breakpoint depends on the component's container, not the viewport, so it can be reused across layouts.
 
 Common use cases include form layouts that go from two-column to single-column in narrow containers, card groups that stack when a sidebar is expanded, and hero sections with side-by-side text and image that stack on smaller screens. The \`threshold\` prop accepts any CSS length value (px, rem, ch), and the \`gap\` prop uses design system spacing tokens for consistent rhythm.`,
 
   features: [
-    'CSS container queries for intrinsic responsive behavior — no media queries',
+    'CSS container queries for intrinsic responsive behavior: no media queries',
     'Flips between horizontal (row) and vertical (column) layout at a configurable threshold',
     'Threshold prop accepts any CSS length value (px, rem, ch)',
     'Design-token-based gap spacing (sm, md, lg) for consistent rhythm',
     'Works correctly regardless of where the component is placed (sidebar, main, split pane)',
-    'Pure CSS — no JavaScript resize observers or breakpoint calculations',
+    'Pure CSS: no JavaScript resize observers or breakpoint calculations',
     'CSS part: `switcher` for targeted ::part() styling',
   ],
 
@@ -34,11 +34,11 @@ Common use cases include form layouts that go from two-column to single-column i
       'Use inside resizable panels or split panes where viewport media queries are unreliable',
     ],
     dont: [
-      'Do not use ResponsiveSwitcher for complex multi-breakpoint layouts — use CSS Grid directly',
-      'Do not set threshold too low — the horizontal layout becomes cramped',
-      'Do not nest Responsive Switchers deeply — one level of switching is usually sufficient',
-      'Do not confuse ResponsiveSwitcher with Stack — Stack is always vertical, Switcher is conditional',
-      'Do not use for navigation menus — use a dedicated responsive navigation component instead',
+      'Do not use ResponsiveSwitcher for complex multi-breakpoint layouts; use CSS Grid directly',
+      'Do not set threshold too low: the horizontal layout becomes cramped',
+      'Do not nest Responsive Switchers deeply: one level of switching is usually sufficient',
+      'Do not confuse ResponsiveSwitcher with Stack: Stack is always vertical, Switcher is conditional',
+      'Do not use for navigation menus; use a dedicated responsive navigation component instead',
     ],
   },
 

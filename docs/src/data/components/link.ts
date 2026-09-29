@@ -12,7 +12,7 @@ export const link: ComponentDef = {
 
 When the \`external\` property is set, Link automatically appends a small external-link SVG icon, sets \`target="_blank"\`, and applies \`rel="noopener noreferrer"\` for security. This eliminates the need to manually manage external link attributes across your application. The icon renders at 12px with 60% opacity to avoid visual clutter.
 
-The \`active\` boolean property highlights the current link in accent-primary, useful for indicating the active page in navigation contexts. All variants include a focus-visible ring using the system's \`--focus-ring\` token, ensuring keyboard navigation is clearly visible without affecting mouse users.`,
+The \`active\` boolean property highlights the current link in accent-primary, useful for indicating the active page in navigation contexts. All variants include a focus-visible ring using the system's \`--focus-ring\` token, which shows for keyboard users and not for mouse clicks.`,
 
   features: [
     'Three variants: default (accent blue), muted (subtle with hover reveal), and nav (compact navigation style)',
@@ -33,9 +33,9 @@ The \`active\` boolean property highlights the current link in accent-primary, u
       'Provide meaningful link text that describes the destination, not "click here"',
     ],
     dont: [
-      'Do not use Link as a button substitute — if the action does not navigate, use arc-button instead',
+      'Do not use Link as a button substitute. If the action does not navigate, use arc-button instead',
       'Do not apply the muted variant to primary navigation links; they are too subtle for main wayfinding',
-      'Do not omit the external prop for cross-origin links — users expect the external icon and new-tab behavior',
+      'Do not omit the external prop for cross-origin links. Users expect the external icon and new-tab behavior',
       'Do not nest block-level elements inside Link; it renders as inline by default',
       'Do not override the focus-visible ring without providing an equivalent alternative for keyboard users',
     ],

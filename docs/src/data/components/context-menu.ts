@@ -8,9 +8,9 @@ export const contextMenu: ComponentDef = {
   interactivity: 'interactive',
   description: 'Right-click context menu with keyboard shortcuts.',
 
-  overview: `ContextMenu replaces the browser's native right-click menu with a custom, styled menu that matches your application's design system. It automatically attaches a \`contextmenu\` event listener to its parent element, so any right-click within that parent opens the custom menu at the cursor position. The menu supports icons, labels, keyboard shortcut hints, disabled items, and visual dividers via \`<arc-menu-item>\` and \`<arc-menu-divider>\` children.
+  overview: `ContextMenu replaces the browser's native right-click menu with a styled menu that matches your application's design system. It attaches a \`contextmenu\` event listener to its parent element, so any right-click within that parent opens the custom menu at the cursor position. The menu supports icons, labels, keyboard shortcut hints, disabled items, and visual dividers via \`<arc-menu-item>\` and \`<arc-menu-divider>\` children.
 
-The menu appears with a subtle scale-in animation and positions itself intelligently, flipping away from viewport edges so it never renders off-screen. When an item is clicked or activated via keyboard, the component dispatches an \`arc-select\` event with the item's label, shortcut, and icon metadata, then closes itself. Clicking the transparent backdrop or pressing Escape also dismisses the menu.
+The menu appears with a scale-in animation and flips away from viewport edges so it never renders off-screen. When an item is clicked or activated via keyboard, the component dispatches an \`arc-select\` event with the item's label, shortcut, and icon metadata, then closes itself. Clicking the transparent backdrop or pressing Escape also dismisses the menu.
 
 Keyboard navigation follows the standard menu pattern: ArrowDown and ArrowUp move focus through selectable items (skipping dividers and disabled entries), Home and End jump to the first and last items, Enter or Space activate the focused item, and Escape closes the menu. The \`prefers-reduced-motion\` media query disables the entrance animation for users who request it.`,
 
@@ -18,11 +18,11 @@ Keyboard navigation follows the standard menu pattern: ArrowDown and ArrowUp mov
     'Automatically intercepts contextmenu events on the parent element',
     'Viewport-aware positioning that flips to avoid off-screen rendering',
     'Scale-in entrance animation with `prefers-reduced-motion` support',
-    'Full keyboard navigation: ArrowUp/Down, Home/End, Enter/Space to select, Escape to close',
+    'Keyboard navigation: ArrowUp/Down, Home/End, Enter/Space to select, Escape to close',
     'Support for icons, labels, shortcut hints, and disabled state on each menu item',
     'Visual dividers via `<arc-menu-divider>` to group related actions',
     '`arc-select` event with item metadata (label, shortcut, icon) on activation',
-    'Transparent backdrop click-to-close for intuitive dismissal',
+    'Transparent backdrop click-to-close',
   ],
 
   guidelines: {
@@ -34,11 +34,11 @@ Keyboard navigation follows the standard menu pattern: ArrowDown and ArrowUp mov
       'Keep the menu under 10 items; use submenus or a CommandPalette for larger action sets',
     ],
     dont: [
-      'Do not attach a ContextMenu to the entire document body — scope it to a specific interactive region',
+      'Do not attach a ContextMenu to the entire document body. Scope it to a specific interactive region',
       'Do not put complex UI (forms, multi-select lists) inside context menu items',
-      'Do not forget to handle the arc-select event — without it, selecting an item has no effect',
+      'Do not forget to handle the arc-select event; without it, selecting an item has no effect',
       'Do not mix ContextMenu with DropdownMenu on the same element; they serve different interaction models',
-      'Do not remove the default Escape-to-close behavior, as it is critical for keyboard accessibility',
+      'Do not remove the default Escape-to-close behavior, as keyboard users depend on it',
     ],
   },
 

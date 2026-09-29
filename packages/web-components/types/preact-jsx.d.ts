@@ -240,9 +240,24 @@ declare module 'preact' {
       };
       'arc-code-block': ArcBaseAttributes & {
         language?: string;
+        label?: string;
         filename?: string;
         code?: string;
         variant?: 'default' | 'window' | 'basic';
+        prompt?: string;
+        'line-numbers'?: boolean;
+        lineNumbers?: boolean;
+        highlight?: string;
+        diff?: boolean;
+        wrap?: boolean;
+        'max-lines'?: number | string;
+        maxLines?: number | string;
+      };
+      'arc-code-group': ArcBaseAttributes & {
+        selected?: number | string;
+        'sync-key'?: string;
+        syncKey?: string;
+        label?: string;
       };
       'arc-collapsible': ArcBaseAttributes & {
         open?: boolean;
@@ -329,6 +344,9 @@ declare module 'preact' {
       'arc-copy-button': ArcBaseAttributes & {
         value?: string;
         disabled?: boolean;
+        'icon-only'?: boolean;
+        iconOnly?: boolean;
+        label?: string;
       };
       'arc-countdown-timer': ArcBaseAttributes & {
         target?: string;
@@ -662,6 +680,8 @@ declare module 'preact' {
         images?: unknown[];
         index?: number | string;
         open?: boolean;
+        gallery?: string;
+        thumbnails?: boolean;
       };
       'arc-link': ArcBaseAttributes & {
         href?: string;
@@ -1261,10 +1281,12 @@ declare module 'preact' {
         contained?: string;
         'menu-open'?: boolean;
         menuOpen?: boolean;
-        'mobile-menu'?: string;
-        mobileMenu?: string;
+        'mobile-menu'?: 'sidebar' | 'nav' | 'none';
+        mobileMenu?: 'sidebar' | 'nav' | 'none';
         'menu-position'?: string;
         menuPosition?: string;
+        'mobile-center'?: 'center' | 'end' | 'hidden';
+        mobileCenter?: 'center' | 'end' | 'hidden';
         'nav-align'?: 'left' | 'center' | 'right';
         navAlign?: 'left' | 'center' | 'right';
       };

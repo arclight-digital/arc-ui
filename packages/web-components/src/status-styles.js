@@ -6,20 +6,20 @@ import { css } from 'lit';
  *
  * Covers the Alert/Toast names (info, success, warning, error) plus
  * Callout's tip, which renders on the success ramp. The v2 note/danger
- * aliases are retired — v3 speaks one name per state.
+ * aliases are retired; v3 speaks one name per state.
  */
 export const statusVars = css`
   /* Default, for a consumer that sets no variant at all. arc-alert and its
      siblings default to info in the constructor and never see this; arc-badge
      and arc-tag have no default variant, and without it their status glow
-     would resolve against an undefined --_status-rgb and simply not paint. */
+     would resolve against an undefined --_status-rgb and not paint. */
   :host {
     --_status-color: var(--accent-primary);
     --_status-rgb:   var(--accent-primary-rgb);
   }
 
-  /* info is the accent, not --color-info. The two were both in use — statusVars
-     said accent-primary, arc-badge and arc-tag said --color-info — which made
+  /* info is the accent, not --color-info. The two were both in use: statusVars
+     said accent-primary, arc-badge and arc-tag said --color-info, which made
      "info" mean two different blues depending on which component you asked.
      Settled here, since this is the shared mechanism. */
   :host([variant="info"]),

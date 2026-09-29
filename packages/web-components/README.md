@@ -1,6 +1,6 @@
 # @arclux/arc-ui
 
-Lit web components implementing the Arclight design system. This is the canonical source — every framework wrapper package is generated from these components by [Prism](https://www.npmjs.com/package/@arclux/prism).
+Lit web components implementing the Arclight design system. This is the canonical source, and every framework wrapper package is generated from these components by [Prism](https://www.npmjs.com/package/@arclux/prism).
 
 ## Installation
 
@@ -10,13 +10,13 @@ npm install @arclux/arc-ui lit
 
 ## Usage
 
-Register every component (simplest — one import defines all `<arc-*>` elements):
+Register every component (the simplest option: one import defines all `<arc-*>` elements):
 
 ```js
 import '@arclux/arc-ui/register';
 ```
 
-Or register only what you use for smaller bundles — each component subpath defines just that element and its required children:
+Or register only what you use for smaller bundles. Each component subpath defines just that element and its required children:
 
 ```js
 import '@arclux/arc-ui/button';
@@ -37,7 +37,7 @@ Then use the elements anywhere HTML works:
 <arc-input label="Email" type="email" placeholder="you@example.com"></arc-input>
 ```
 
-The bare entry point (`import { ArcButton } from '@arclux/arc-ui'`) exports the component **classes** without registering any custom elements — use it when you want to control registration yourself (custom tag names, scoped registries).
+The bare entry point (`import { ArcButton } from '@arclux/arc-ui'`) exports the component **classes** without registering any custom elements. Use it when you want to control registration yourself (custom tag names, scoped registries).
 
 ## Events
 
@@ -66,7 +66,7 @@ Dark theme is the default; set `data-theme="light"` (or `"auto"`) on the root el
 
 ## Icons
 
-Icons ship separately, in `@arclux/arc-ui-icons` — Phosphor (1,500+) and Lucide (1,900+). Core carries no icon data and selects no library, so register one:
+Icons ship separately, in `@arclux/arc-ui-icons`: Phosphor (1,500+) and Lucide (1,900+). Core carries no icon data and selects no library, so register one:
 
 ```bash
 npm i @arclux/arc-ui-icons
@@ -80,7 +80,7 @@ iconRegistry.use('lucide');                   // switch, once both are registere
 iconRegistry.set({ myLogo: '<svg>…</svg>' }); // or register your own icons
 ```
 
-`<arc-icon>` then lazy-loads one module per glyph (~500 bytes), so only the icons a page renders are ever fetched. For an app that uses a dozen, skip the pack and import them directly — `import check from '@arclux/arc-ui-icons/phosphor/check'` — then hand them to `set()`.
+`<arc-icon>` then lazy-loads one module per glyph (~500 bytes), so only the icons a page renders are ever fetched. For an app that uses a dozen, skip the pack and import them directly (`import check from '@arclux/arc-ui-icons/phosphor/check'`), then hand them to `set()`.
 
 ```html
 <arc-icon name="magnifying-glass" size="md"></arc-icon>
@@ -99,7 +99,7 @@ registered in `GlobalEventHandlersEventMap` with typed `detail` payloads, so
 
 ### Editor support
 
-**VS Code** — add the bundled custom data to `.vscode/settings.json` for tag,
+**VS Code**: add the bundled custom data to `.vscode/settings.json` for tag,
 attribute, and attribute-value completion (with hover docs) in plain HTML:
 
 ```json
@@ -109,7 +109,7 @@ attribute, and attribute-value completion (with hover docs) in plain HTML:
 }
 ```
 
-**JetBrains IDEs** (WebStorm, IntelliJ) — no setup needed; the bundled
+**JetBrains IDEs** (WebStorm, IntelliJ): no setup needed; the bundled
 `web-types.json` is picked up automatically.
 
 ### React 19 without the wrapper
@@ -128,13 +128,13 @@ opt into typed JSX for all `arc-*` tags:
 ### Development warnings
 
 For runtime feedback while building, import the dev module (development
-only — it installs a document-wide observer):
+only, since it installs a document-wide observer):
 
 ```js
 if (import.meta.env.DEV) import('@arclux/arc-ui/dev');
 ```
 
-It warns in the console — with a link to the right docs page — about invalid
+It warns in the console, with a link to the right docs page, about invalid
 attribute values (`variant="primry"`), camelCase property names used as
 attributes (`confirmLabel=` instead of `confirm-label=`), and attribute-name
 typos (`vairant`).

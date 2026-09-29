@@ -7,13 +7,13 @@ export const checkbox: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Multi-select form control supporting checked, indeterminate, and disabled states. Ideal for preferences, bulk-selection patterns, and consent forms where users need to toggle one or more independent options.',
+    'Multi-select form control with checked, indeterminate, and disabled states. For preferences, bulk selection, and consent forms where users toggle one or more independent options.',
 
-  overview: `Checkbox is the standard multi-select form control in ARC UI. Unlike radio groups and toggles, which enforce a single active choice, checkboxes let users select any combination of options independently. This makes them the correct element for settings pages, filter panels, consent agreements, and any context where selections are non-exclusive.
+  overview: `Checkbox is the multi-select form control in ARC UI. Unlike radio groups, which allow only one active choice, checkboxes let users select any combination of options independently. Use them for settings pages, filter panels, consent agreements, and any context where selections are not exclusive.
 
-The component ships with three visual states: unchecked, checked, and indeterminate. The indeterminate state is particularly useful for "select all" patterns where only some child items are checked, giving users a clear visual signal that the group is partially selected. Toggling an indeterminate checkbox resolves it to fully checked, which is the behavior users expect from file managers and data tables.
+The component has three visual states: unchecked, checked, and indeterminate. Indeterminate suits "select all" patterns where only some child items are checked, and shows that the group is partially selected. Toggling an indeterminate checkbox resolves it to checked, as in file managers and data tables.
 
-Every checkbox includes a built-in label, a form-compatible name/value pair, and full keyboard support. Pressing Space toggles the state, and focus-visible rings ensure keyboard users always know which control is active. The disabled state dims the checkbox and prevents interaction, which is useful for options that depend on a prerequisite being met first.`,
+Every checkbox includes a label, a form-compatible name/value pair, and keyboard support. Space toggles the state, and a focus-visible ring shows keyboard users which control is active. The disabled state dims the checkbox and prevents interaction, which suits options that depend on a prerequisite.`,
 
   features: [
     'Checked and unchecked toggle with a single click or Space press',
@@ -29,19 +29,19 @@ Every checkbox includes a built-in label, a form-compatible name/value pair, and
   guidelines: {
     do: [
       'Use checkboxes when users can select zero, one, or many options from a list',
-      'Provide a clear, concise label for every checkbox — never leave them unlabeled',
+      'Provide a clear, concise label for every checkbox, and never leave one unlabeled',
       'Use the indeterminate state for "select all" controls that govern a partially-checked group',
-      'Order checkbox lists logically — alphabetically, by frequency, or by importance',
+      'Order checkbox lists logically: alphabetically, by frequency, or by importance',
       'Group related checkboxes together with a visible heading or fieldset legend',
       'Set a default checked state for recommended or common options when appropriate',
     ],
     dont: [
-      'Do not use checkboxes for mutually exclusive choices — use a radio group instead',
-      'Do not use a checkbox as an on/off switch for instant actions — use a toggle for that pattern',
-      'Do not rely solely on color to communicate checked state; the checkmark icon is essential',
+      'Do not use checkboxes for mutually exclusive choices. Use a radio group instead',
+      'Do not use a checkbox as an on/off switch for instant actions. Use a toggle for that pattern',
+      'Do not rely solely on color to communicate checked state; the checkmark icon matters',
       'Do not disable checkboxes without a nearby explanation of why the option is unavailable',
-      'Do not nest checkboxes more than one level deep; flat lists are easier to scan and interact with',
-      'Do not use negative label phrasing like "Don\'t send emails" — prefer affirmative wording',
+      'Do not nest checkboxes more than one level deep; flat lists are easier to scan',
+      'Do not use negative label phrasing like "Don\'t send emails"; prefer affirmative wording',
     ],
   },
 

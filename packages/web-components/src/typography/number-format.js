@@ -11,8 +11,8 @@ import { DeclaredPropsMixin, oneOf, int, num } from '../shared/props.js';
  * @prop {'number' | 'currency' | 'percent' | 'compact'} type - Formatting style to apply
  * @prop {string} locale - BCP 47 locale tag for locale-aware formatting
  * @prop {string} currency - ISO 4217 currency code, used when type is "currency"
- * @prop {number} decimals - Number of decimal places, 0 to 20 — `Intl.NumberFormat`'s own range. Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.
- * @prop {'standard' | 'compact'} notation - Number notation — compact gives "12.3K", "1.2M"
+ * @prop {number} decimals - Number of decimal places, 0 to 20 (`Intl.NumberFormat`'s own range). Unset uses a per-format default: 0 for number, 2 for currency, 1 for percent.
+ * @prop {'standard' | 'compact'} notation - Number notation: compact gives "12.3K", "1.2M"
  * @slot none
  * @csspart base - The root element.
  * @csspart number
@@ -24,7 +24,7 @@ export class ArcNumberFormat extends DeclaredPropsMixin(LitElement) {
     locale: { type: String },
     currency: { type: String },
     // 0-20 is `Intl.NumberFormat`'s own range for minimum/maximumFractionDigits
-    // and it *throws* outside it — a RangeError from a getter the render calls,
+    // and it *throws* outside it: a RangeError from a getter the render calls,
     // so `<arc-number-format decimals="30">` took the whole component down.
     // Surfaced by V4-PLAN 2.3's survey: the prop was documented with no bound
     // at all, and the ceiling belonged to a library the component happens to
@@ -46,7 +46,7 @@ export class ArcNumberFormat extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.locale = 'en-US';
     this.currency = 'USD';
   }

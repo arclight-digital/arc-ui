@@ -9,8 +9,7 @@ import { DeclaredPropsMixin, num, oneOf } from '../shared/props.js';
  * @status stable
  * @prop {'horizontal' | 'vertical'} orientation - Controls the split direction. Horizontal places panes side by side with a vertical divider. Vertical stacks panes top and bottom with a horizontal divider.
  * @prop {number} ratio - The proportion of space allocated to the primary pane, clamped to
- *   `minRatio`..`maxRatio` on every path. The drag handle always honoured those bounds;
- *   assigning `ratio` from script used to bypass them entirely. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).
+ *   `minRatio`..`maxRatio` on every path, including assignment from script. From 0 to 1. A value of 0.4 gives the primary pane 40% of the available width (or height in vertical mode).
  * @prop {number} minRatio - Minimum allowed ratio. The divider cannot be dragged below this value, preventing the primary pane from collapsing.
  * @prop {number} maxRatio - Maximum allowed ratio. The divider cannot be dragged above this value, preventing the secondary pane from collapsing.
  * @prop {string} label - Accessible name for the divider, applied as `aria-label`. Defaults to "Resize panes".
@@ -31,7 +30,7 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
     label: { type: String },
   };
 
-  /** Keyboard step, and the larger Shift step — the same 5-and-20 as arc-resizable. */
+  /** Keyboard step, and the larger Shift step: the same 5-and-20 as arc-resizable. */
   static STEP = 0.05;
   static STEP_LARGE = 0.2;
 
@@ -78,7 +77,7 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
         background: var(--border-bright);
       }
 
-      /* The handle is a tab stop now (finding #33), so it needs a focus ring —
+      /* The handle is a tab stop now (finding #33), so it needs a focus ring:
          a 4px bar with no visible focus is a stop a keyboard user cannot see. */
       .split-pane__handle:focus-visible {
         outline: none;
@@ -130,7 +129,7 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
    * The drag, on pointer events (finding #34).
    *
    * It was wired to mousedown/mousemove/mouseup, which touch and pen never
-   * produce — so the divider could not be moved at all on a tablet. Every other
+   * produce, so the divider could not be moved at all on a tablet. Every other
    * draggable control in the library (arc-knob, arc-waveform, arc-image-compare,
    * arc-signature-pad, arc-resizable) was already on pointer events; this was
    * the only one that was not.
@@ -149,7 +148,7 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
     const onMove = (ev) => {
       if (!container) return;
       const rect = container.getBoundingClientRect();
-      // arc-resize fires from here, per move — its own docs say "fired during
+      // arc-resize fires from here, per move. Its own docs say "fired during
       // divider drag" and the dispatch used to sit in the mouseup handler, so a
       // consumer syncing a layout live got nothing until the user let go
       // (finding #35).
@@ -178,8 +177,8 @@ export class ArcSplitPane extends DeclaredPropsMixin(LitElement) {
   /**
    * Arrow keys move the divider (finding #33).
    *
-   * The handle was a bare `<div>` with a single `@mousedown` — no role, no tab
-   * stop, no aria-value*, and no keydown handler anywhere in the file — so a
+   * The handle was a bare `<div>` with a single `@mousedown`: no role, no tab
+   * stop, no aria-value*, and no keydown handler anywhere in the file, so a
    * keyboard user could not move it and a screen reader had nothing to
    * announce. `arc-resizable` solved all of it one file away.
    */

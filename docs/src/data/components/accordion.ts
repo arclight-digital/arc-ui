@@ -7,19 +7,19 @@ export const accordion: ComponentDef = {
   tier: 'content',
   interactivity: 'hybrid',
   description:
-    'Expandable content sections with smooth height animations. Ideal for FAQs, settings panels, and any UI that benefits from progressive disclosure.',
+    'Expandable content sections with animated height. Good for FAQs, settings panels, and any UI that uses progressive disclosure.',
 
-  overview: `The Accordion component organizes related content into collapsible sections, letting users focus on one topic at a time without leaving the page. Each section header acts as a toggle that smoothly reveals or hides its body content using a CSS grid animation — no JavaScript-driven height calculations required.
+  overview: `Accordion organizes related content into collapsible sections, so users can focus on one topic at a time without leaving the page. Each section header is a toggle that reveals or hides its body with a CSS grid animation, so no JavaScript height calculation is needed.
 
 Use Accordion when you have multiple blocks of content that are individually useful but would overwhelm the user if shown all at once. Common scenarios include FAQ pages, product feature breakdowns, configuration panels, and documentation side-notes. Because each item is a lightweight \`<arc-accordion-item>\` element, content is authored declaratively in markup rather than passed as a data array.
 
-The component is fully accessible out of the box: trigger buttons carry \`aria-expanded\` state, keyboard navigation works via standard focus management, and the chevron indicator rotates to reinforce visual state. Animations respect \`prefers-reduced-motion\` when set at the OS level.`,
+Trigger buttons carry \`aria-expanded\` state, keyboard navigation uses standard focus management, and the chevron rotates to show the state. Animations respect \`prefers-reduced-motion\` when set at the OS level.`,
 
   features: [
-    'Smooth CSS grid-based expand/collapse animation (no JS height calc)',
+    'CSS grid expand/collapse animation (no JS height calculation)',
     'Single-open by default (set multiple for multi-open)',
     'Declarative content via `<arc-accordion-item>` children with a question attribute',
-    'Slotted answer content supports rich HTML, not just plain text',
+    'Slotted answer content can be any HTML',
     'Accessible: `aria-expanded` on triggers, keyboard-focusable, visible focus ring',
     'Animated chevron rotates 180 degrees to indicate open/closed state',
     'Respects design tokens for colors, spacing, radii, and transitions',
@@ -29,17 +29,17 @@ The component is fully accessible out of the box: trigger buttons carry \`aria-e
   guidelines: {
     do: [
       'Use short, scannable headings so users can locate the right section quickly',
-      'Keep answer content concise — link out to full docs for lengthy topics',
+      'Keep answer content concise, and link out to full docs for lengthy topics',
       'Place the most frequently asked question first to reduce scrolling',
       'Wrap the accordion in a max-width container for comfortable line lengths',
       'Use Accordion for content that benefits from progressive disclosure, such as FAQs or settings',
     ],
     dont: [
-      'Do not nest an Accordion inside another Accordion — it harms scannability',
+      'Do not nest an Accordion inside another Accordion; it harms scannability',
       'Do not use Accordion as a replacement for Tabs when users need to compare sections side-by-side',
-      'Do not hide critical information (e.g. pricing, legal disclaimers) inside collapsed items — it may go unseen',
-      'Do not set every item to open by default — this defeats the purpose of progressive disclosure',
-      'Do not use Accordion for a single item — use a Disclosure or collapsible card instead',
+      'Do not hide critical information (e.g. pricing, legal disclaimers) inside collapsed items, where it may go unseen',
+      'Do not set every item to open by default; that defeats progressive disclosure',
+      'Do not use Accordion for a single item. Use a Disclosure or collapsible card instead',
     ],
   },
 

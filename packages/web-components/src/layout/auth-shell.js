@@ -5,7 +5,7 @@ import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 /**
  * Authentication page layout with centered and split variants for sign-in, sign-up,
  * password-reset, and other credential flows. Provides logo, form card, footer, and optional aside
- * slots out of the box.
+ * slots.
  *
  * @tag arc-auth-shell
  * @status stable

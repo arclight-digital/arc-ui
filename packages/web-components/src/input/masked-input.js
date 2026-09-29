@@ -24,7 +24,7 @@ const slotsOf = (mask) => [...mask].filter(isFillable);
 
 /**
  * Filter arbitrary text into the raw characters the mask accepts, in order.
- * Non-conforming characters are dropped, not blocking — pasting a card number
+ * Non-conforming characters are dropped, not blocking: pasting a card number
  * with dashes keeps the digits. Uppercase slots normalize their letter.
  */
 function conform(mask, text) {
@@ -46,7 +46,7 @@ function shapeOf(mask, placeholderChar) {
 /**
  * Format a raw value through a mask. Returns the typed portion (raw characters
  * interleaved with the literals that connect them, including literals directly
- * after the last raw character — the caret rides them) and the still-unfilled
+ * after the last raw character; the caret rides them) and the still-unfilled
  * remainder of the mask, for the hint overlay.
  */
 function format(mask, raw, placeholderChar) {
@@ -78,7 +78,7 @@ function rawIndexAt(mask, pos) {
 
 /**
  * The formatted caret position for a raw index: just before the raw index-th
- * fillable slot, which is also just after any literals that precede it — the
+ * fillable slot, which is also just after any literals that precede it: the
  * next position that can accept a character.
  */
 function caretForRaw(mask, formattedLength, rawIndex) {
@@ -93,7 +93,7 @@ function caretForRaw(mask, formattedLength, rawIndex) {
 }
 
 /**
- * Text field that enforces a character mask as you type — dates, card numbers,
+ * Text field that enforces a character mask as you type: dates, card numbers,
  * phone numbers, license keys. The mask's literals are typed for the user;
  * `value` holds only the raw characters, and the raw value is what forms
  * receive, so the mask stays presentation.
@@ -101,7 +101,7 @@ function caretForRaw(mask, formattedLength, rawIndex) {
  * @tag arc-masked-input
  * @status stable
  * @prop {string} mask - The mask pattern. `#` accepts a digit, `A` an uppercase letter (lowercase input is uppercased), `a` any letter, `*` a letter or digit; every other character is a literal typed for the user. Examples: `##/##/####`, `#### #### #### ####`, `AAA-###`.
- * @prop {string} value - The RAW accepted characters only, with no mask literals — `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts.
+ * @prop {string} value - The RAW accepted characters only, with no mask literals: `12042026`, never `12/04/2026`. The formatted string is presentation; read it from `formattedValue`. Programmatic values are conformed against the mask, so setting a formatted string keeps only the characters the mask accepts.
  * @prop {string} placeholderChar - Character rendered in unfilled positions of the in-field hint once typing starts (for example `12/__/____`). Before any input, the native placeholder shows the full mask shape. Defaults to `_`.
  * @prop {string} label - Visible label rendered above the field. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly.
  * @prop {string} name - The `name` attribute sent with form data on submission. The submitted value is the RAW value, without mask literals.
@@ -112,7 +112,7 @@ function caretForRaw(mask, formattedLength, rawIndex) {
  * @prop {string} error - Error message displayed below the input. When set, the input border turns red and the error text appears.
  * @prop {'sm' | 'md' | 'lg'} size - Controls the input size. Options: 'sm', 'md', 'lg'.
  * @fires {CustomEvent<{ value: string, formatted: string }>} arc-input - Fired on each accepted edit. `value` is the raw characters; `formatted` is the presentation string. A rejected character fires nothing.
- * @fires {CustomEvent<{ value: string, formatted: string }>} arc-change - Fired on blur or Enter when the value changed, and immediately when the last mask position fills — a complete mask is a committed value, the fixed-length precedent set by OTP Input.
+ * @fires {CustomEvent<{ value: string, formatted: string }>} arc-change - Fired on blur or Enter when the value changed, and immediately when the last mask position fills. A complete mask is a committed value (the fixed-length precedent set by OTP Input).
  * @slot prefix
  * @slot suffix
  * @csspart base - The root element.
@@ -125,7 +125,7 @@ function caretForRaw(mask, formattedLength, rawIndex) {
  * @csspart error
  */
 export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitElement)) {
-  /** Runs its own constraint logic — owns the whole validity flag set. */
+  /** Runs its own constraint logic and owns the whole validity flag set. */
   static autoValidates = false;
 
   static properties = {
@@ -218,7 +218,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
        * The field and the hint overlay must be the same text box: same font,
        * size, and padding, so the unfilled remainder of the mask lines up
        * exactly behind the caret. Mask values are tabular by nature, which is
-       * why the field uses the mono role — with a proportional face the
+       * why the field uses the mono role: with a proportional face the
        * overlay could never align.
        */
       .masked__field,
@@ -314,7 +314,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
   }
 
   /**
-   * The formatted presentation string — raw characters interleaved with mask
+   * The formatted presentation string: raw characters interleaved with mask
    * literals, e.g. raw 12042026 under a date mask reads 12/04/2026. Read-only:
    * it is derived from value and mask, never stored, and never submitted.
    */
@@ -328,7 +328,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   willUpdate(changed) {
     super.willUpdate?.(changed);
-    // The raw value must always conform to the mask, however it arrived —
+    // The raw value must always conform to the mask, however it arrived,
     // typed, pasted, or set from script. Conforming here also means a consumer
     // may assign a formatted string and keep only what the mask accepts.
     if (changed.has('value') || changed.has('mask')) {
@@ -359,7 +359,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
   /**
    * Apply an accepted edit: raw value, form value, native field text, and the
    * caret on the next fillable position. A no-op edit (every character
-   * rejected) changes nothing and fires nothing — rejection is silent.
+   * rejected) changes nothing and fires nothing; rejection is silent.
    */
   _applyEdit(newRaw, caretRaw) {
     const mask = this.mask || '';
@@ -380,7 +380,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
         composed: true,
       }),
     );
-    // A full mask is a committed value — the fixed-length commit that
+    // A full mask is a committed value: the fixed-length commit that
     // otp-input established. Blur will not repeat it for the same value.
     if (newRaw.length > 0 && newRaw.length === slotsOf(mask).length) this._commit();
   }
@@ -461,7 +461,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
       rawIndexAt(this.mask || '', field.selectionStart ?? field.value.length),
     );
     if (field.value !== expected && newRaw === (this.value || '')) {
-      // Every character was rejected — put the field text back.
+      // Every character was rejected: put the field text back.
       field.value = expected;
     }
   }
@@ -488,7 +488,7 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
     this._hasSuffix = e.target.assignedNodes({ flatten: true }).length > 0;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

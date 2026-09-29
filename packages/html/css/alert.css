@@ -3,7 +3,7 @@
 /* arc-alert */
 /* Lobe inputs on .arc-alert: a custom property substitutes its own var()s at
          the element that declares the property, and the shape is declared on
-         .arc-alert — see shared/tokens.js. */
+         .arc-alert; see shared/tokens.js. */
       .arc-alert {
         display: block;
         --lobe-rgb: var(--_status-rgb);

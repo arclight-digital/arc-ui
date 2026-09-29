@@ -11,13 +11,13 @@ const attrOf = (name) => name.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
  * inert background, Escape handling and top layer, with the library's sizing, header/body/footer
  * structure and cancelable close contract on top.
  *
- * Named `arc-modal` before v4. The rename is V4-SCOPE §2.4 — the element is a dialog, the platform
+ * Named `arc-modal` before v4. The rename is V4-SCOPE §2.4; the element is a dialog, the platform
  * calls it a dialog, and `modal` names one of its behaviours rather than what it is. `arc-modal`
  * stays as a deprecated alias for the whole of v4.
  *
  * **This is not the confirm prompt that used to be called `arc-dialog`.** That one is
  * `<arc-confirm>` now, and it absorbed both of its old spellings. The tag name is reused here for
- * a different component, so this one throws in dev when it is handed `message` or `confirmLabel` —
+ * a different component, so this one throws in dev when it is handed `message` or `confirmLabel`,
  * the two props that would otherwise be silently ignored, leaving an empty panel.
  *
  * @tag arc-dialog
@@ -26,7 +26,7 @@ const attrOf = (name) => name.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
  * @prop {boolean} open - Controls the visible state of the dialog. Set to `true` to open it and move focus inside; set to `false` to run the exit animation and restore focus to wherever it came from.
  * @prop {string} heading - Text displayed in the header bar, and the dialog's accessible name. Keep it short and action-oriented (e.g. "Delete Project" rather than "Are you sure?").
  * @prop {'sm' | 'md' | 'lg'} size - Controls the maximum width of the dialog panel. `sm` (400px) is ideal for simple confirmations, `md` (560px) for standard forms, and `lg` (720px) for content-heavy dialogs with tables or multi-column layouts.
- * @prop {boolean} dismissible - When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so — the name is the convention, the default belongs to the component.
+ * @prop {boolean} dismissible - When `true`, renders the built-in X close button and allows dismissal via Escape key and backdrop click. Set to `false` for critical decisions the user must resolve through the footer buttons. Note the default: a dialog is dismissible unless you say otherwise, where an alert is not dismissible unless you say so; the name is the convention, the default belongs to the component.
  * @prop {boolean} fullscreen - Makes the dialog fill the entire viewport. Useful for mobile forms or complex workflows.
  * @fires {CustomEvent<void>} arc-open - Fired when the dialog opens
  * @fires {CustomEvent<void>} arc-close - Fired when the dialog closes. Cancelable: `preventDefault()` vetoes the close.
@@ -34,8 +34,8 @@ const attrOf = (name) => name.replace(/[A-Z]/g, (ch) => `-${ch.toLowerCase()}`);
  * @slot - Default content.
  * @slot footer
  * @csspart base - The root element.
- * @csspart dialog - The dialog panel. Same element as `base`; the scrim is `::backdrop`,
- *   which is not an element and so cannot be a part — style it with the
+ * @csspart dialog - The dialog panel. Same element as `base`. The scrim is `::backdrop`,
+ *   which is not an element and so cannot be a part; style it with the
  *   `--dialog-backdrop` and `--dialog-backdrop-filter` custom properties.
  * @csspart header
  * @csspart close
@@ -52,15 +52,15 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
 
     /**
      * The canonical dismissal prop (V4-PLAN 4.3). `dismissible` won over
-     * `closable` on 3-to-1 usage — arc-alert, arc-banner and arc-callout — and
+     * `closable` on 3-to-1 usage (arc-alert, arc-banner and arc-callout), and
      * because `DismissController` and the central dismissal contract are the
      * architecture's word for it.
      *
      * **The two dialects differed in polarity as well as spelling, and only the
      * spelling converges.** A dialog is dismissible unless you say otherwise; an
      * alert is not dismissible unless you say so. Both defaults are right for
-     * their component — an inescapable dialog is the exception, an alert with an
-     * X is the exception — so forcing one default on both would trade a naming
+     * their component: an inescapable dialog is the exception, an alert with an
+     * X is the exception, so forcing one default on both would trade a naming
      * inconsistency for a behavioural one, which is the worse of the two.
      */
     dismissible: flag(true, { negative: 'no-dismissible' }),
@@ -71,7 +71,7 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
     css`
       :host { display: contents; }
 
-      /* The dialog is the panel. There is no backdrop element any more — the
+      /* The dialog is the panel. There is no backdrop element any more; the
          scrim is ::backdrop, which the browser paints in the top layer with no
          z-index and no stacking context to lose to. Its two properties come
          through custom properties so a consumer can still reach them;
@@ -222,11 +222,11 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
    * V4-SCOPE §3.3 requires this and says why: the old `arc-dialog` was a confirm
    * prompt with `heading`, `message` and `confirmLabel`, and it merged into
    * `arc-confirm`. Anyone still writing that markup upgrades into this
-   * primitive, which knows `heading` and would silently ignore the other two —
+   * primitive, which knows `heading` and would silently ignore the other two,
    * rendering an empty panel with a title. That is the quietest possible
    * failure, and a line in MIGRATION.md is not a fix for it.
    *
-   * `heading` is deliberately not in the list: it means the same thing in both
+   * `heading` is not in the list: it means the same thing in both
    * components, so its presence is not evidence of the mistake.
    */
   static REUSED_TAG_PROPS = ['message', 'confirmLabel', 'cancelLabel'];
@@ -269,7 +269,7 @@ export class ArcDialog extends DeclaredPropsMixin(LitElement) {
    *
    * OverlayController routes Escape and backdrop clicks here, and the X button
    * only renders when dismissible, so guarding once covers every path. A dialog
-   * with dismissible=false is genuinely undismissable — the caller has to
+   * with dismissible=false is genuinely undismissable; the caller has to
    * resolve it through its own footer actions.
    *
    * The Escape path is why the controller cancels the browser's own close

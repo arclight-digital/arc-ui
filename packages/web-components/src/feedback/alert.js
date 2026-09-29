@@ -12,8 +12,8 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @tag arc-alert
  * @status stable
  * @requires arc-icon-button
- * @prop {'info' | 'tip' | 'success' | 'warning' | 'error'} variant - Controls the semantic color palette, the icon, and — through the `ROLES` table — the ARIA role and whether the alert is announced. Use "info" for neutral guidance, "tip" for advice, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues.
- * @prop {'auto' | 'off' | 'polite' | 'assertive'} live - Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree — an `info` alert injected after a background save wants `polite`; a `warning` rendered in the initial page probably wants `off`.
+ * @prop {'info' | 'tip' | 'success' | 'warning' | 'error'} variant - Controls the semantic color palette, the icon, and, through the `ROLES` table, the ARIA role and whether the alert is announced. Use "info" for neutral guidance, "tip" for advice, "success" for confirmations, "warning" for caution states, and "error" for failures or blocking issues.
+ * @prop {'auto' | 'off' | 'polite' | 'assertive'} live - Announcement behaviour. `auto` (the default) derives it from `variant`: error and warning are assertive, success is polite, info and tip are not announced at all. Set it explicitly when severity and urgency disagree: an `info` alert injected after a background save wants `polite`, and a `warning` rendered in the initial page probably wants `off`.
  * @prop {boolean} dismissible - When true, renders a close button in the top-right corner. Clicking it removes the alert from the DOM and fires an "arc-close" event that parent components can listen to.
  * @prop {string} heading - Optional bold heading rendered above the body slot. Use it for a scannable one-line summary so users can quickly gauge the alert's importance before reading the full message.
  * @prop {'default' | 'compact'} density - Visual density. 'compact' reduces padding and font sizes for inline or space-constrained usage.
@@ -35,14 +35,14 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
    * ratification of what the component did. The exception is `info`, and it is
    * the reason the row needed a decision at all: `info` used to map to
    * `role="status"`, which *is* a polite live region. `arc-callout`'s default
-   * variant is `info` and it was a static `role="note"` box — so a naive merge
+   * variant is `info` and it was a static `role="note"` box, so a naive merge
    * would have upgraded every informational callout on every page into an
    * announcement, landing the regression on the single most common variant.
    *
    * **So `info` is `note` now, and that is a behaviour change for existing
    * `arc-alert` users too**, not only for callout's. The reasoning: `info` is
    * the variant most likely to be static page furniture, and an alert that
-   * genuinely needs announcing has two ways to say so — pick a severity that
+   * genuinely needs announcing has two ways to say so: pick a severity that
    * carries one, or set `live`.
    */
   static ROLES = {
@@ -72,7 +72,7 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
     css`
       /* Lobe inputs on :host: a custom property substitutes its own var()s at
          the element that declares the property, and the shape is declared on
-         :host — see shared/tokens.js. */
+         :host; see shared/tokens.js. */
       :host {
         display: block;
         --lobe-rgb: var(--_status-rgb);
@@ -161,8 +161,8 @@ export class ArcAlert extends DeclaredPropsMixin(LitElement) {
    * `aria-live`, or undefined to leave the role's implicit behaviour alone.
    *
    * Emitted only when `live` is not `auto`. In auto mode the role already
-   * carries the right implicit politeness — `alert` is assertive, `status` is
-   * polite, `note` is neither — and writing it out again would be a second
+   * carries the right implicit politeness: `alert` is assertive, `status` is
+   * polite, `note` is neither. Writing it out again would be a second
    * declaration of the same thing that could drift from the first.
    *
    * An explicit value overrides the implicit one in both directions, which is

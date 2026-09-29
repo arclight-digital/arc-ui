@@ -1,20 +1,20 @@
 ---
 /**
- * SiteSearch — ⌘K / Ctrl+K site-wide search built on arc-command-palette.
+ * SiteSearch: ⌘K / Ctrl+K site-wide search built on arc-command-palette.
  *
  * Two tiers, on purpose:
  *
- *   Titles — all ~175 guides and components, rendered statically at build time.
+ *   Titles: all ~175 guides and components, rendered statically at build time.
  *     They are the dominant query and they cost one HTML block that compresses
  *     to a few KB and caches identically on every page. No fetch, so ⌘K is
  *     usable the instant the page is interactive.
- *   Content — every `<section>` of every page, fetched once on first open from
+ *   Content: every `<section>` of every page, fetched once on first open from
  *     /search-index.json (built by integrations/search-index.mjs). Inlining it
  *     would put the whole site's prose into every page; fetching it eagerly
  *     would spend that on readers who never search.
  *
  * The palette matches fuzzily and ranks, and it searches an item's
- * `description` as well as its label — which is what makes the content tier
+ * `description` as well as its label, which is what makes the content tier
  * work at all. See shared/fuzzy-match.js.
  */
 import { components } from '../data/components/index';
@@ -86,7 +86,7 @@ const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
     var getPalette = function () { return document.getElementById('site-search'); };
 
     // The content tier, fetched once per session on first open. The palette
-    // watches its own light DOM, so appending items is all that is needed —
+    // watches its own light DOM, so appending items is all that is needed;
     // there is nothing to notify.
     var indexState = 'idle';
     function loadContentIndex() {
@@ -145,7 +145,7 @@ const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
 
     // detail.value is the item's href. This used to search back through the DOM
     // for an item whose label and shortcut matched the ones reported, because
-    // the palette carried no value — which picked the wrong item whenever two
+    // the palette carried no value, which picked the wrong item whenever two
     // shared a label, and content sections share headings constantly ("Usage"
     // appears on most component pages).
     document.addEventListener('arc-select', function (e) {

@@ -10,9 +10,9 @@ export const select: ComponentDef = {
   description:
     'Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics for accessible form inputs.',
 
-  overview: `The Select component replaces the native \`<select>\` element with a fully styled, accessible dropdown that integrates seamlessly with ARC UI's design tokens. It provides built-in type-ahead search filtering, allowing users to quickly locate options in long lists without scrolling.
+  overview: `The Select component replaces the native \`<select>\` element with a styled, accessible dropdown that uses ARC UI's design tokens. It includes type-ahead search filtering, so users can find options in long lists without scrolling.
 
-Select implements the ARIA listbox pattern, ensuring screen readers announce the current selection, available options, and navigation cues. Keyboard users can open the dropdown with Enter or Space, navigate with arrow keys, filter by typing, and confirm a choice with Enter — all without reaching for a mouse.
+Select implements the ARIA listbox pattern, so screen readers announce the current selection, available options, and navigation cues. Keyboard users can open the dropdown with Enter or Space, navigate with arrow keys, filter by typing, and confirm a choice with Enter, all without a mouse.
 
 Use Select any time you need a single-choice dropdown in a form: assigning a team member, choosing a category, picking a status, or selecting a locale. For multi-choice scenarios, reach for MultiSelect instead. For short lists of three or fewer visible options, consider RadioGroup for faster scanning.`,
 
@@ -24,7 +24,7 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
     'Controlled and uncontrolled value modes',
     'Disabled state prevents interaction and conveys unavailability visually',
     'Automatic scroll-into-view for the highlighted option in long lists',
-    'Works with dynamic option lists — update the options array at any time',
+    'Works with dynamic option lists: update the options array at any time',
     'Consistent styling across browsers via Shadow DOM encapsulation',
   ],
 
@@ -32,17 +32,17 @@ Use Select any time you need a single-choice dropdown in a form: assigning a tea
     do: [
       'Always provide a visible label so users understand what they are selecting',
       'Use a meaningful placeholder like "Choose a team member..." rather than generic "Select..."',
-      'Keep option labels concise — ideally under 40 characters',
+      'Keep option labels concise: ideally under 40 characters',
       'Order options logically (alphabetical, by frequency, or by workflow step)',
       'Pre-select a sensible default when one exists to reduce interaction cost',
       'Use the disabled state to indicate temporarily unavailable choices (e.g. permissions)',
     ],
     dont: [
-      'Do not use Select for fewer than 3 options — use RadioGroup for better scannability',
-      'Do not nest selects inside other selects — flatten the hierarchy or use a staged flow',
-      'Do not rely solely on placeholder text as a label — placeholders disappear once a value is chosen',
-      'Do not use Select for navigation — use NavigationMenu or tabs for moving between views',
-      'Do not disable the component without explaining why — pair disabled state with a tooltip or helper text',
+      'Do not use Select for fewer than 3 options; use RadioGroup for better scannability',
+      'Do not nest selects inside other selects: flatten the hierarchy or use a staged flow',
+      'Do not rely solely on placeholder text as a label: placeholders disappear once a value is chosen',
+      'Do not use Select for navigation; use NavigationMenu or tabs for moving between views',
+      'Do not disable the component without explaining why; pair disabled state with a tooltip or helper text',
     ],
   },
 

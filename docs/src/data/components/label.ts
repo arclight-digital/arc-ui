@@ -28,15 +28,15 @@ Three sizes (sm, md, lg) control the font size, and the disabled state reduces o
 
   guidelines: {
     do: [
-      'Always pair a label with its input — every form control needs an accessible label',
+      'Always pair a label with its input. Every form control needs an accessible label',
       "Set the `for` prop to match the target input's `id` attribute",
       'Use the description slot for format hints like "MM/DD/YYYY" or character limits',
       'Use the required indicator to clearly mark mandatory fields',
     ],
     dont: [
-      'Do not use Label as standalone text — it is a form element, not a heading or paragraph',
-      'Do not hide labels visually while keeping them only for screen readers — visible labels help all users',
-      'Do not put interactive elements inside the label text — use the tooltip slot instead',
+      'Do not use Label as standalone text. It is a form element, not a heading or paragraph',
+      'Do not hide labels visually while keeping them only for screen readers. Visible labels help all users',
+      'Do not put interactive elements inside the label text. Use the tooltip slot instead',
     ],
   },
 

@@ -112,7 +112,7 @@ export class ArcUptime extends DeclaredPropsMixin(LitElement) {
       }
 
       /* The resting position, for the panel PositionController hasn't adopted
-         yet — pre-upgrade and in prism's static export. Once managed it moves
+         yet: pre-upgrade and in prism's static export. Once managed it moves
          to the top layer, so a track inside a scrolling card no longer clips
          the bubble to a sliver. */
       .uptime__detail {

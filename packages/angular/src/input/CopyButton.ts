@@ -25,4 +25,18 @@ export class CopyButton {
   get disabled(): boolean {
     return this._el.disabled;
   }
+
+  @Input() set iconOnly(value: boolean) {
+    this._el.iconOnly = value;
+  }
+  get iconOnly(): boolean {
+    return this._el.iconOnly;
+  }
+
+  @Input() set label(value: string) {
+    this._el.label = value;
+  }
+  get label(): string {
+    return this._el.label;
+  }
 }

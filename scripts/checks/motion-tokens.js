@@ -7,7 +7,7 @@
  * tokens are only worth having if new work reaches for them, and a convention
  * nobody can see is one that decays. Hence a check rather than a note.
  *
- * Three things fail here:
+ * Four things fail here:
  *
  *   1. A bare timing keyword (`ease`, `ease-in`, `linear`, …) in a transition or
  *      animation. Every curve the library uses has a token; a keyword means
@@ -20,6 +20,9 @@
  *      CSS, so nothing warns, and the shorthand's first <time> is the duration,
  *      which is therefore 0s. The property silently never animates. Three sites
  *      shipped this way, including the accordion chevron.
+ *
+ *   4. A --transition-* shorthand followed by a curve token. The shorthand
+ *      already has a curve; two is invalid, so the declaration drops whole.
  *
  * Literal *durations* are allowed. A component tuning 80ms or 250ms against a
  * specific gesture is doing design work; a component picking its own curve is
@@ -117,6 +120,13 @@ function scanMotion(code, emit) {
       const beforeCurve = segment.slice(0, segment.indexOf('var(--ease-'));
       if (!/\d\s*m?s\b|var\(--(duration|transition)-/.test(beforeCurve)) {
         at('curve token where a duration belongs — the shorthand reads 0s, so this never animates');
+      }
+      // --transition-* already carries a curve, so a second one makes two
+      // timing functions. That is invalid at computed-value time, the whole
+      // declaration drops, and the property never animates. Seven sites shipped
+      // this way, the drawer panel and the rail among them.
+      if (/var\(--transition-(fast|base|slow|enter|exit)\)/.test(beforeCurve)) {
+        at('--transition-* already includes a curve; pair --duration-* with the --ease-* token instead');
       }
     }
   });

@@ -127,7 +127,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         margin-inline-start: var(--space-xs);
         font-size: var(--_text-xs);
         color: var(--text-muted);
-        transition: transform var(--transition-fast) var(--ease-out-expo);
+        transition: transform var(--duration-fast) var(--ease-out-expo);
       }
       :host([open]) .select__chevron { transform: rotate(180deg); }
 
@@ -192,7 +192,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
         outline: none;
       }
 
-      /* Per-option disabled (finding #6). It stays rendered and stays counted —
+      /* Per-option disabled (finding #6). It stays rendered and stays counted,
          hiding it would silently renumber the list under aria-activedescendant. */
       .select__option--disabled {
         opacity: 0.5;
@@ -228,7 +228,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
 
       .select__slot-host { display: none; }
     `,
-    // animate: false — the dropdown has its own dropdown-in keyframes, and a
+    // animate: false; the dropdown has its own dropdown-in keyframes, and a
     // declared transform beside them is redundant at best.
     managedPanelStyles('select__dropdown', { animate: false }),
   ];
@@ -254,7 +254,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       anchor: () => this.shadowRoot?.querySelector('.select__trigger'),
       floating: () => this.shadowRoot?.querySelector('.select__dropdown'),
       // The dropdown belongs directly under its trigger and spans its width, so
-      // there is no cross-axis alignment choice to make — only whether it has
+      // there is no cross-axis alignment choice to make: only whether it has
       // room below, which flip decides.
       matchWidth: true,
       offset: 4,
@@ -268,14 +268,14 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       onClose: () => {
         this.open = false;
         // Virtual focus means the trigger never lost real focus, so there is
-        // nothing to restore — but a click-opened select may not have had it.
+        // nothing to restore, but a click-opened select may not have had it.
         this.shadowRoot.querySelector('.select__trigger')?.focus();
       },
       onSelect: (i) => this._selectOption(this._options[i]),
       optionId: (i) => `${this._selectId}-opt-${i}`,
       scrollContainer: () => this.shadowRoot?.querySelector('.select__dropdown'),
       // A select has no text field of its own, so letter keys can mean
-      // "jump to the option starting with this" — as a native select does.
+      // "jump to the option starting with this", as a native select does.
       typeahead: true,
       getItemLabel: (i) => this._options[i]?.label ?? '',
       isItemDisabled: (i) => isOptionDisabled(this._options[i]),
@@ -328,7 +328,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
   }
 
   _selectOption(opt) {
-    // arc-option's own `disabled` — every path in has to read it, not just the
+    // arc-option's own `disabled`: every path in has to read it, not just the
     // keyboard one the controller covers (finding #6).
     if (isOptionDisabled(opt)) return;
     this.value = opt.value;
@@ -362,7 +362,7 @@ export class ArcSelect extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
     return selected ? selected.label : '';
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

@@ -7,14 +7,14 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Content container with subtle border styling and hover effects. Links the entire card surface
- * when an href is provided, creating a seamless clickable area with an animated gradient border.
+ * when an href is provided, making the whole card one clickable area with an animated gradient border.
  *
  * @tag arc-card
  * @status stable
  * @prop {string} href - When set, renders the card as an anchor element, making the entire card surface a clickable link. On hover, the border transitions to a blue-to-violet gradient and the inner surface gains a lift shadow.
  * @prop {'none' | 'sm' | 'md' | 'lg'} padding - Controls internal spacing. Options: 'none', 'sm', 'md', 'lg'.
  * @prop {boolean} interactive - Enables hover effects for clickable cards that trigger JS instead of navigating via href.
- * @slot - Default content. Wrapping the content in a single `<a>` adopts it as the card's link — the recommended form for cards that must work before hydration or without JavaScript. The anchor fills the padded surface; the `footer` slot stays outside it so footer actions remain separately clickable.
+ * @slot - Default content. Wrapping the content in a single `<a>` adopts it as the card's link. This is the recommended form for cards that must work before hydration or without JavaScript. The anchor fills the padded surface; the `footer` slot stays outside it so footer actions remain separately clickable.
  * @slot footer
  * @csspart base - The root element.
  * @csspart body
@@ -50,7 +50,7 @@ export class ArcCard extends DeclaredPropsMixin(LitElement) {
       }
 
       /* Anchor-adoption form: the slotted <a> fills the content box, so the
-         padded surface is the click target — see shared/anchor-adoption.js.
+         padded surface is the click target; see shared/anchor-adoption.js.
          It stays inside .card__inner rather than replacing .card, which keeps
          the 1px gradient-border trick in card-styles.js intact. */
       .card-slot::slotted(a) {
@@ -126,7 +126,7 @@ export class ArcCard extends DeclaredPropsMixin(LitElement) {
     this._slottedAnchor = isLoneSlottedAnchor(e.target);
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
@@ -141,7 +141,7 @@ export class ArcCard extends DeclaredPropsMixin(LitElement) {
       </div>
     `;
 
-    // An explicit href always wins — established API, unchanged behavior.
+    // An explicit href always wins (established API, unchanged behavior).
     if (this.href) {
       return html`<a class="card" href=${this.href} part="base card"><div class="card__inner" part="inner">${content}</div></a>`;
     }

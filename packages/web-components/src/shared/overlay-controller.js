@@ -2,14 +2,14 @@ import { lockScroll, unlockScroll } from './scroll-lock.js';
 import { deepActiveElement } from './focus-trap.js';
 
 /**
- * OverlayController — a modal overlay on the platform's `<dialog>`.
+ * OverlayController: a modal overlay on the platform's `<dialog>`.
  *
  * Replaces `OverlayMixin`, and V4-PLAN 4.4 makes the change for two separate
  * reasons that happen to have the same fix.
  *
  * ## The mechanism reason
  *
- * The mixin did its work in an `updated()` override — the exact pattern
+ * The mixin did its work in an `updated()` override: the exact pattern
  * `props.js`'s docstring rejects, and for the reason recorded there: a hook
  * only runs if every component overriding the same method remembers to call
  * `super`. It also could not see a reparent, because moving an element changes
@@ -25,8 +25,8 @@ import { deepActiveElement } from './focus-trap.js';
  *
  * | hand-rolled                        | what `showModal()` gives                |
  * | ---------------------------------- | --------------------------------------- |
- * | `trapTabKey` on a keydown listener | the background is genuinely inert — not |
- * |                                    | just untabbable, but unclickable and    |
+ * | `trapTabKey` on a keydown listener | the background is genuinely inert:      |
+ * |                                    | untabbable, and also unclickable and    |
  * |                                    | unreachable by a screen reader's own    |
  * |                                    | navigation, which a Tab trap never was  |
  * | `focusFirst(panel)`                | focus placed per spec, honouring        |
@@ -139,8 +139,8 @@ export class OverlayController {
   /**
    * Reopen after a reparent.
    *
-   * Moving an element in the DOM closes any `<dialog>` inside it — the top
-   * layer is a property of the connection, not of the element — and changes no
+   * Moving an element in the DOM closes any `<dialog>` inside it (the top
+   * layer is a property of the connection, not of the element) and changes no
    * property, so nothing would schedule the update that `hostUpdated` needs.
    * This is the same finding (#73) the mixin's `connectedCallback` was added
    * for, and it is still a real case; what changed is that the controller has a
@@ -154,7 +154,7 @@ export class OverlayController {
       if (!dialog) return;
       // Rebinding matters as much as reshowing, and is easy to miss: a reparent
       // runs `hostDisconnected`, which removes the listeners, and schedules no
-      // update — so without this the overlay came back on screen and in the top
+      // update, so without this the overlay came back on screen and in the top
       // layer while Escape and backdrop clicks did nothing. Same shape as the
       // finding that put this hook here in the first place.
       this._bind(dialog);
@@ -284,8 +284,8 @@ export class OverlayController {
 
   /** Escape. The browser would close it; the component decides instead. */
   _onCancel(e) {
-    // A `cancel` on a dialog that is not open cannot come from the user agent —
-    // it only fires Escape at a dialog in the top layer — so it is either a
+    // A `cancel` on a dialog that is not open cannot come from the user agent:
+    // it only fires Escape at a dialog in the top layer, so it is either a
     // stray dispatch or a race with a close already in flight. Either way there
     // is nothing to dismiss, and acting would close whatever opens next.
     if (!this._bound?.open) return;
@@ -294,7 +294,7 @@ export class OverlayController {
   }
 
   /**
-   * The dialog closed without going through the host — `dialog.close()` called
+   * The dialog closed without going through the host: `dialog.close()` called
    * directly, or a `<form method="dialog">` submission inside it.
    *
    * Reconciling the host's `open` rather than reopening: the dialog is already
@@ -310,7 +310,7 @@ export class OverlayController {
    * Backdrop click.
    *
    * A click on `::backdrop` is dispatched to the `<dialog>` element itself, so
-   * `target === dialog` is exactly "outside the content" — provided the dialog
+   * `target === dialog` is exactly "outside the content", provided the dialog
    * has no padding of its own, which is why every consumer puts its padding on
    * the sections inside. Cheaper and more reliable than comparing pointer
    * coordinates against `getBoundingClientRect()`, which reads the animated box

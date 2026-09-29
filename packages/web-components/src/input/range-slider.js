@@ -89,7 +89,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
         font-weight: var(--font-label-weight, 600);
         /* The readout changes on every pointermove. Proportional digits make it
            a different width each frame, which is visible as the label beside it
-           shifting — and, anywhere the control is sized to its content, as the
+           shifting and, anywhere the control is sized to its content, as the
            whole slider breathing while you drag. */
         font-variant-numeric: tabular-nums;
       }
@@ -134,7 +134,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
         z-index: 1;
       }
 
-      /* Sizes — the rail thickness and the thumbs, since a slider has no text
+      /* Sizes: the rail thickness and the thumbs, since a slider has no text
          to scale. md is the base rule above. The track keeps the thumb's height
          so the hit area never shrinks below it. */
       :host([size="sm"]) .range-slider__track { height: 16px; }
@@ -181,7 +181,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
   updated(changed) {
     super.updated(changed);
     // The submitted value tracks `low`/`high`, not `value`, so the mixin's
-    // value-watch never fires for this control — sync locally.
+    // value-watch never fires for this control; sync locally.
     if (changed.has('low') || changed.has('high')) {
       this._updateFormValue();
     }
@@ -329,7 +329,7 @@ export class ArcRangeSlider extends DeclaredPropsMixin(FormControlMixin(LitEleme
     }
     e.preventDefault();
 
-    // Clamp first, then compare, then announce — finding #38. This used to fire
+    // Clamp first, then compare, then announce (finding #38). This used to fire
     // an input *and* a change unconditionally, so holding a key against a rail
     // emitted a full edit-and-commit pair per repeat for a range that had not
     // moved. arc-change is the expensive half of the v3 contract by its own

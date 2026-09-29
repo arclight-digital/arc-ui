@@ -7,15 +7,15 @@ export const sidebar: ComponentDef = {
   tier: 'navigation',
   interactivity: 'hybrid',
   description:
-    'Collapsible navigation sidebar with grouped sections, heading labels, and active link highlighting. Ideal for documentation sites, admin panels, and any layout that needs persistent vertical navigation.',
+    'Collapsible navigation sidebar with grouped sections, heading labels, and active link highlighting. Suited to documentation sites, admin panels, and any layout that needs persistent vertical navigation.',
 
-  overview: `Sidebar provides a structured vertical navigation panel that organizes links into collapsible, headed sections. It is the standard way to present multi-level navigation in documentation sites, admin dashboards, settings panels, and any application where the user needs to move between many related pages without losing context.
+  overview: `Sidebar is a vertical navigation panel that organizes links into collapsible, headed sections. Use it for multi-level navigation in documentation sites, admin dashboards, settings panels, and any application where the user needs to move between many related pages without losing context.
 
-Each SidebarSection groups links under an optional heading, creating a clear visual hierarchy that mirrors your information architecture. The active prop on SidebarLink highlights the current page, giving users an immediate sense of where they are within the navigation tree. An \`icon\` on a section renders before its heading.
+Each SidebarSection groups links under an optional heading, which gives a visual hierarchy that mirrors your information architecture. The active prop on SidebarLink highlights the current page so users can see where they are in the navigation tree. An \`icon\` on a section renders before its heading.
 
-**Collapsing is opt-in and has an imperative half.** A section is a static group until you set \`collapsible\`, which turns its heading into a toggle button; \`open\` then controls whether the links are showing, and defaults to expanded (\`no-open\` starts it collapsed). Either state change fires \`arc-toggle\` with \`{ open }\` in the detail. You can drive it from script with \`section.toggle()\` — which is how you expand the section containing the current route on load, or collapse everything but one. It fires the same event the header does, so a listener sees both paths identically. Note that it is a deliberate no-op on a section without \`collapsible\`: a section whose header offers no way back would otherwise be collapsible from script into a state the user cannot undo.
+**Collapsing is opt-in and has an imperative half.** A section is a static group until you set \`collapsible\`, which turns its heading into a toggle button; \`open\` then controls whether the links are showing, and defaults to expanded (\`no-open\` starts it collapsed). Either state change fires \`arc-toggle\` with \`{ open }\` in the detail. You can drive it from script with \`section.toggle()\`, which is how you expand the section containing the current route on load, or collapse everything but one. It fires the same event the header does, so a listener sees both paths identically. It is a no-op on a section without \`collapsible\`: a section whose header offers no way back would otherwise be collapsible from script into a state the user cannot undo.
 
-Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying the left rail. It reads the full viewport height by default and scrolls independently of the main content area, so deep navigation trees remain accessible even on long pages. Pair it with TopBar for a complete application chrome.`,
+Sidebar sits inside an AppShell or PageLayout, typically in the left rail. It takes the full viewport height by default and scrolls independently of the main content area, so deep navigation trees stay reachable on long pages. Pair it with TopBar for a complete application chrome.`,
 
   features: [
     'Collapsible sections with heading labels for grouped navigation',
@@ -26,7 +26,7 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
     'Composable with SidebarSection and SidebarLink sub-components',
     'Keyboard navigable with focus-visible indicators on every link',
     'Designed to integrate with AppShell and PageLayout for full-page chrome',
-    'Responsive-ready — pairs with Drawer for mobile breakpoints',
+    'Responsive-ready: pairs with Drawer for mobile breakpoints',
     'Token-driven theming for background, border, and active-link colors',
   ],
 
@@ -35,19 +35,19 @@ Sidebar is designed to sit inside an AppShell or PageLayout, typically occupying
       'Group related links under a SidebarSection with a descriptive heading',
       'Set the active prop on the link that matches the current route',
       'Call `toggle()` on the section holding the active route at page load, so a deep link arrives with its group already open',
-      'Keep section headings short — one to three words that name the category',
+      'Keep section headings short: one to three words that name the category',
       'Place the Sidebar inside an AppShell or PageLayout for consistent layout',
       'Use a Drawer to present the Sidebar on narrow viewports',
       'Order sections by importance or frequency of use, most common first',
     ],
     dont: [
-      'Do not nest Sidebars inside each other — use sections and indentation instead',
+      'Do not nest Sidebars inside each other; use sections and indentation instead',
       'Do not mark more than one link as active at the same time',
-      'Do not expect `toggle()` to do anything on a section without `collapsible` — it deliberately no-ops rather than hiding links behind a header that cannot bring them back',
-      'Do not use Sidebar for top-level site-wide navigation — prefer TopBar for that role',
+      'Do not expect `toggle()` to do anything on a section without `collapsible`: it no-ops rather than hiding links behind a header that cannot bring them back',
+      'Do not use Sidebar for top-level site-wide navigation; prefer TopBar for that role',
       'Do not add more than eight to ten links per section; split large groups into sub-sections',
-      'Do not omit headings on sections — unlabeled groups make navigation harder to scan',
-      'Do not place actions (buttons, toggles) inside the Sidebar — it is for navigation links only',
+      'Do not omit headings on sections: unlabeled groups make navigation harder to scan',
+      'Do not place actions (buttons, toggles) inside the Sidebar: it is for navigation links only',
     ],
   },
 
@@ -250,13 +250,13 @@ export function DocsSidebar() {
       name: 'SidebarSection',
       tag: 'arc-sidebar-section',
       description:
-        'A collapsible group within a Sidebar. Each section renders an optional heading label above its child links, creating a visual and semantic grouping that mirrors your information architecture. Fires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.',
+        'A collapsible group within a Sidebar. Each section renders an optional heading label above its child links, which groups them visually and semantically, mirroring your information architecture. Fires an `arc-toggle` event with `{ open }` detail when the section is expanded or collapsed.',
     },
     {
       name: 'SidebarLink',
       tag: 'arc-sidebar-link',
       description:
-        'A navigation link rendered inside a SidebarSection. Supports an active state to indicate the current page and provides focus-visible styling for keyboard navigation.',
+        'A navigation link rendered inside a SidebarSection. Supports an active state to indicate the current page and has focus-visible styling for keyboard navigation.',
     },
   ],
 

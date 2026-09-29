@@ -7,18 +7,18 @@ export const animatedNumber: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   replayable: true,
-  description: 'Smooth count-up/down number animation with formatting options.',
+  description: 'Count-up/down number animation with formatting options.',
 
-  overview: `AnimatedNumber smoothly transitions between numeric values using \`requestAnimationFrame\` with an ease-out-expo curve, creating the classic "counting up" effect seen in dashboards, stat cards, and hero metrics. When the \`value\` attribute changes, the component interpolates from the current displayed number to the new target over the specified duration.
+  overview: `AnimatedNumber transitions between numeric values using \`requestAnimationFrame\` with an ease-out-expo curve, the "counting up" effect seen in dashboards, stat cards, and hero metrics. When the \`value\` attribute changes, the component interpolates from the current displayed number to the new target over the specified duration.
 
-The ease-out-expo easing produces a fast start that decelerates toward the target, which feels natural and draws attention to the final number. Duration defaults to 1000ms but can be adjusted for different contexts — 500ms for small increments in real-time dashboards, 2000ms for dramatic hero reveals on landing pages.
+The ease-out-expo easing produces a fast start that decelerates toward the target, which draws attention to the final number. Duration defaults to 1000ms. Use 500ms for small increments in real-time dashboards and 2000ms for hero reveals on landing pages.
 
-Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g. "$" and "K"), and \`decimals\` controls fixed decimal places. The \`format\` property switches between \`number\`, \`currency\`, and \`percent\` modes, each powered by \`Intl.NumberFormat\` for locale-aware formatting — thousands separators, decimal marks, and grouping all adapt to the configured \`locale\`. The default locale is \`en-US\`, but you can pass any BCP 47 tag (e.g. \`de-DE\`, \`ja-JP\`) for international formatting. The animation respects \`prefers-reduced-motion\` by snapping directly to the target value without animation.`,
+Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g. "$" and "K"), and \`decimals\` controls fixed decimal places. The \`format\` property switches between \`number\`, \`currency\`, and \`percent\` modes, each powered by \`Intl.NumberFormat\` for locale-aware formatting: thousands separators, decimal marks, and grouping all follow the configured \`locale\`. The default locale is \`en-US\`, but you can pass any BCP 47 tag (e.g. \`de-DE\`, \`ja-JP\`) for international formatting. The animation respects \`prefers-reduced-motion\` by snapping directly to the target value without animation.`,
 
   features: [
-    'Smooth count-up/down animation using requestAnimationFrame',
-    'Ease-out-expo easing for natural deceleration',
-    'Configurable duration from quick updates to dramatic reveals',
+    'Count-up/down animation using requestAnimationFrame',
+    'Ease-out-expo easing',
+    'Configurable duration',
     'Prefix and suffix strings for currency, units, and labels',
     'Fixed decimal place control via decimals attribute',
     'Intl.NumberFormat-powered formatting with currency, percent, and number modes',
@@ -28,18 +28,18 @@ Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g. 
 
   guidelines: {
     do: [
-      'Use in dashboard stat cards and hero metrics for visual impact',
+      'Use in dashboard stat cards and hero metrics',
       'Set decimals="2" for currency values and decimals="0" for counts',
       'Use prefix="$" or suffix="%" for contextual formatting',
-      'Keep duration under 2000ms — longer animations feel sluggish',
-      'Combine with ValueCard or Stat for complete metric displays',
+      'Keep duration under 2000ms; longer animations feel sluggish',
+      'Combine with ValueCard or Stat for metric displays',
     ],
     dont: [
-      'Do not animate more than 4-5 numbers simultaneously — it becomes distracting',
-      'Do not use for rapidly changing real-time values — the animations will queue and feel laggy',
-      'Do not set duration below 200ms — the animation becomes imperceptible',
-      'Do not animate between extremely different magnitudes (1 to 1,000,000) — the counting is meaningless',
-      'Do not use for static numbers that never change — add animation only when values update',
+      'Do not animate more than 4-5 numbers simultaneously; it becomes distracting',
+      'Do not use for rapidly changing real-time values, because the animations queue up and feel laggy',
+      'Do not set duration below 200ms, where the animation becomes imperceptible',
+      'Do not animate between extremely different magnitudes (1 to 1,000,000), where the counting is meaningless',
+      'Do not use for static numbers that never change. Add animation only when values update',
     ],
   },
 

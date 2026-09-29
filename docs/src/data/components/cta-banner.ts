@@ -13,13 +13,13 @@ export const ctaBanner: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Full-width call-to-action banner with gradient background, eyebrow text, headline, body copy, and action buttons. Ideal for landing page CTAs, marketing sections, and page closers.',
+    'Full-width call-to-action banner with gradient background, eyebrow text, headline, body copy, and action buttons. For landing page CTAs, marketing sections, and page closers.',
 
-  overview: `CtaBanner is a full-width promotional block designed for conversion-critical moments — page closers, hero-adjacent CTAs, and marketing sections. It combines an eyebrow label, a gradient-text headline, body copy, and an actions slot into a centered, vertically-stacked layout with a subtle radial gradient background.
+  overview: `CtaBanner is a full-width promotional block for page closers, hero-adjacent CTAs, and marketing sections. It combines an eyebrow label, a gradient-text headline, body copy, and an actions slot in a centered, vertically stacked layout with a subtle radial gradient background.
 
-The gradient background uses the same accent tokens as the rest of ARC UI, so it adapts automatically to custom themes. Set the \`nogradient\` attribute to disable the background effect for quieter contexts. Both the eyebrow and headline accept slot overrides for rich content beyond simple strings.
+The gradient background uses the same accent tokens as the rest of ARC UI, so it follows custom themes. Set the \`nogradient\` attribute to disable the background effect for quieter contexts. Both the eyebrow and headline accept slot overrides for rich content beyond simple strings.
 
-The component is fully responsive: on viewports below 768px, padding compresses and action buttons stack vertically. CSS parts are exposed on every semantic region so consumers can override styles without breaking encapsulation.`,
+On viewports below 768px, padding compresses and action buttons stack vertically. CSS parts are exposed on every semantic region so you can override styles without breaking encapsulation.`,
 
   features: [
     'Radial gradient background using accent-primary and accent-secondary tokens',
@@ -29,21 +29,21 @@ The component is fully responsive: on viewports below 768px, padding compresses 
     'nogradient attribute to disable the background effect',
     'Slot overrides for eyebrow and headline for rich custom content',
     'CSS parts on every region: container, background, inner, eyebrow, headline, body, actions',
-    'Automatic theme adaptation via design token system',
+    'Follows custom themes through the design token system',
   ],
 
   guidelines: {
     do: [
       'Use at the bottom of landing pages as a page-closing CTA',
-      'Keep the headline short and action-oriented — 6 words or fewer',
+      'Keep the headline short and action-oriented: 6 words or fewer',
       'Provide at most two action buttons: one primary, one secondary',
       'Use the eyebrow to set context before the headline',
     ],
     dont: [
-      'Do not Stack multiple CTA banners on the same page — one is enough',
-      'Do not use for informational content — use an Alert or Card instead',
-      'Do not omit both headline and eyebrow — the banner needs at least a headline',
-      'Do not add more than two action buttons — too many choices reduces conversion',
+      'Do not stack multiple CTA banners on the same page; one is enough',
+      'Do not use for informational content. Use an Alert or Card instead',
+      'Do not omit both headline and eyebrow; the banner needs at least a headline',
+      'Do not add more than two action buttons; too many choices reduce conversion',
     ],
   },
 

@@ -132,7 +132,7 @@ export class ArcToggle extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
       }
 
       /* focus-ring-exempt: a checked track is filled with the accent, so the
-         standard glow — the same hue at lower alpha — dissolves into it. This
+         standard glow (the same hue at lower alpha) dissolves into it. This
          is that glow with the alphas raised until it reads against its own
          fill. The only surface in the library that is its own focus color. */
       :host([checked]) .toggle__track:focus-visible {

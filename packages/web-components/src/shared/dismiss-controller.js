@@ -1,24 +1,22 @@
 /**
- * DismissController — shared reactive controller for "the user has left".
+ * DismissController: shared reactive controller for "the user has left".
  *
- * Was `ClickOutsideController`, and the rename is the point of finding #60. An
- * overlay is abandoned in two ways, not one:
+ * Formerly `ClickOutsideController`; the rename is finding #60. An overlay is
+ * abandoned in two ways:
  *
  *   - a pointer lands somewhere else
  *   - focus moves somewhere else
  *
- * The old controller answered only the first, by name and by design. Six
- * components built on it, and the three that *open on focus* — arc-multi-select,
- * arc-combobox, arc-tag-input — never closed for a keyboard user at all: tab
- * away and the dropdown stayed open over the rest of the page, with the control
- * still wearing its focus ring. Nobody noticed because the pointer path, the one
- * you test by hand, worked perfectly.
+ * The old controller answered only the first, so the three components that
+ * *open on focus* (arc-multi-select, arc-combobox, arc-tag-input) never closed
+ * for a keyboard user: tab away and the dropdown stayed open over the page,
+ * with the control still wearing its focus ring.
  *
- * That is the same shape as finding #55: a shared layer covering part of a
- * lifecycle, and every consumer inheriting the gap. So the fix is here rather
- * than an `@focusout` handler in each component — and both halves are on by
- * default, because the failure mode was precisely that a component *believed* it
- * had dismissal handled.
+ * Same shape as finding #55: a shared layer covering part of a lifecycle, and
+ * every consumer inheriting the gap. So the fix is here rather than an
+ * `@focusout` handler in each component, and both halves are on by default,
+ * because the failure mode was a component *believing* it had dismissal
+ * handled.
  *
  *   this._dismiss = new DismissController(this, {
  *     onDismiss: () => this._close(),
@@ -37,34 +35,33 @@
  * ## focusout has two cases, and only one of them is an answer
  *
  * When `relatedTarget` is a real element, focus genuinely moved and it says
- * exactly where — decide immediately.
+ * exactly where. Decide immediately.
  *
  * When it is **null**, nothing has been decided yet, and the naive reading of
  * that as "the user left" is wrong in both directions at once:
  *
  *   - **A re-render destroyed the focused node.** These panels rebuild their own
- *     contents constantly — arc-date-picker switching from days to months throws
- *     away the button you just clicked — so focus falls to `<body>` for an
+ *     contents constantly (arc-date-picker switching from days to months throws
+ *     away the button you just clicked), so focus falls to `<body>` for an
  *     instant before the component puts it back. Dismissing there closes the
- *     panel on its own navigation. This is not hypothetical: it broke 16 tests
- *     across date-picker, date-range-picker and menubar the first time this
- *     controller shipped with a synchronous null check.
+ *     panel on its own navigation; a synchronous null check broke 16 tests
+ *     across date-picker, date-range-picker and menubar.
  *   - **The window lost focus.** Alt-tab or devtools fires focusout with a null
  *     `relatedTarget` while `document.activeElement` stays put, so every open
  *     panel would collapse on blur and still be collapsed on return.
  *
- * Both were tried and rejected as guesses. Deferring a task and re-reading
+ * Deferring a task and re-reading
  * `document.activeElement` fixes the window-blur case and *not* the re-render
  * one, because a panel that orphans focus without restoring it leaves
- * `activeElement` on `<body>` indefinitely — arc-date-picker's mode switch does
+ * `activeElement` on `<body>` indefinitely: arc-date-picker's mode switch does
  * exactly that, and it stayed broken.
  *
- * So the focus half simply declines to answer when `relatedTarget` is null. It
+ * So the focus half declines to answer when `relatedTarget` is null. It
  * loses nothing: the only case it uniquely sees is focus moving to a real
  * element elsewhere on the page, which is the keyboard tab-away that started
  * finding #60, and `relatedTarget` names it precisely. Every other departure is
  * a pointer landing somewhere, which the pointer half already has. The cost is
- * that tabbing into browser chrome does not dismiss — which is arguably right,
+ * that tabbing into browser chrome does not dismiss, which is arguably right,
  * since coming back should find the panel where you left it.
  *
  * Shadow DOM needs no special handling: for a listener on the host,
@@ -88,7 +85,7 @@ export class DismissController {
    *   the same thing, and taking element references rather than selectors is
    *   the design change that makes it work through shadow roots. Kept rather
    *   than removed with its last consumer because the behaviour is pinned
-   *   directly — `dismiss-controller.test.js` "boundary()" covers inside,
+   *   directly: `dismiss-controller.test.js` "boundary()" covers inside,
    *   resolves-to-nothing on pointer, and resolves-to-nothing on focusout,
    *   against a purpose-built probe rather than through a component.
    * @param {boolean} [opts.pointer=true] - Dismiss when a pointer lands outside.
@@ -126,7 +123,7 @@ export class DismissController {
   }
 
   /**
-   * Re-arm after a reparent — finding #72, which is #55 and #64 a third time.
+   * Re-arm after a reparent: finding #72, which is #55 and #64 a third time.
    *
    * Every consumer activates from `updated()`, keyed on an open-state *change*.
    * Moving an element changes no state and schedules no update, so before this
@@ -135,7 +132,7 @@ export class DismissController {
    * permanently undismissable by pointer *and* focus.
    *
    * Activation is state, not structure, so this restores what was torn down
-   * rather than arming unconditionally — a closed panel must stay inert across
+   * rather than arming unconditionally: a closed panel must stay inert across
    * a move, or every reparent re-arms every dismissable component on the page.
    */
   hostConnected() {
@@ -157,7 +154,7 @@ export class DismissController {
     const inside = this._inside;
     // A boundary that resolves to nothing means there is no inside: every click
     // is outside. That is the right reading for a component whose highlighted
-    // target has gone away — the alternative, treating "no inside" as "nothing
+    // target has gone away. The alternative, treating "no inside" as "nothing
     // is outside", traps the page open with no way to dismiss it.
     if (inside && e.composedPath().includes(inside)) return;
     this._onDismiss();
@@ -174,7 +171,7 @@ export class DismissController {
     if (this._when && !this._when()) return;
     if (!this._inside) return this._onDismiss();
 
-    // A null relatedTarget is not an answer — see the header. Nothing is done
+    // A null relatedTarget is not an answer; see the header. Nothing is done
     // about it here on purpose: the pointer half already covers every case where
     // it means the user went elsewhere.
     if (!e.relatedTarget) return;

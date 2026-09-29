@@ -29,8 +29,8 @@ import { DeclaredPropsMixin, num, oneOf } from '../shared/props.js';
  */
 export class ArcMeter extends DeclaredPropsMixin(LitElement) {
   static properties = {
-    // Clamped to the declared bounds, which are themselves props — the whole
-    // reason `min`/`max` accept a property name. `aria-valuenow` read
+    // Clamped to the declared bounds, which are themselves props: that is the
+    // whole reason `min`/`max` accept a property name. `aria-valuenow` read
     // `this.value` directly, so an out-of-range value drew a full bar and
     // announced the raw number: the visual and the accessible value
     // disagreed (finding #70).
@@ -128,7 +128,7 @@ export class ArcMeter extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.label = '';
   }
 

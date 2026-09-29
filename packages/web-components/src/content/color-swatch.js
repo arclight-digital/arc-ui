@@ -3,7 +3,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
- * Color sample square with label — useful for token docs.
+ * Color sample square with label, useful for token docs.
  *
  * @tag arc-color-swatch
  * @status stable

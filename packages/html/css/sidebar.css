@@ -5,12 +5,12 @@
         /* grid, not block: the one visible child is .sidebar, and a grid item
            stretches to the host box. It used to reach full height through
            .sidebar { min-height: 100% }, which resolves against the host's
-           *height* — definite when the sidebar stands alone, auto inside
+           *height*: definite when the sidebar stands alone, auto inside
            arc-app-shell, whose ::slotted rule forces it. So the rail filled the
            page everywhere except the layout it ships with. Finding #91. */
         display: grid;
         /* The ambient wash behind the rail. Inputs on .arc-sidebar because that is
-           where the shape token is declared — see shared/tokens.js. */
+           where the shape token is declared; see shared/tokens.js. */
         --lobe-rgb: var(--accent-primary-rgb);
         --lobe-alpha: 0.03;
         --lobe-extent: 60%;
@@ -41,7 +41,7 @@
         box-sizing: border-box;
       }
 
-      /* Ambient glow — faint accent bleed from the right edge */
+      /* Ambient glow: faint accent bleed from the right edge */
       .arc-sidebar[glow] .sidebar::before {
         content: '';
         position: absolute;
@@ -53,7 +53,7 @@
         pointer-events: none;
       }
 
-      /* Border line — solid default (right edge) */
+      /* Border line: solid default (right edge) */
       .arc-sidebar .sidebar::after {
         content: '';
         position: absolute;
@@ -64,14 +64,14 @@
         background: var(--divider);
       }
 
-      /* Right position — border on left edge */
+      /* Right position: border on left edge */
       .arc-sidebar[data-position="right"] .sidebar::after {
         right: auto;
         left: 0;
       }
 
       /* Mirrored: the wash comes from the edge the rail is docked to. On .arc-sidebar
-         with the other inputs — see shared/tokens.js. */
+         with the other inputs; see shared/tokens.js. */
       .arc-sidebar[data-position="right"] { --lobe-shape: ellipse at 0% 10%; }
       .arc-sidebar[data-position="right"][glow] .sidebar::before {
         right: auto;
@@ -186,7 +186,7 @@
       /* The links sit a step inside their heading, and the rail marks the group
          they belong to. Structural and neutral by rule: one flat --divider that
          never takes a color, a weight or a state from whichever link is
-         active. A left edge that tracks the current item is banned outright —
+         active. A left edge that tracks the current item is banned outright:
          the active row says "here" with tint and accent text, as everywhere
          else in the system. */
       .arc-sidebar .sidebar__links {

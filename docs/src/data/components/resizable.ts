@@ -10,15 +10,15 @@ export const resizable: ComponentDef = {
 
   overview: `Resizable wraps a single content panel and exposes a drag handle on one edge that the user can pull to change the panel's width or height. It is the right building block for sidebars, property panels, console drawers, and any region where the user should be able to claim more or less screen space. The direction prop controls whether the handle appears on the right edge (horizontal) or bottom edge (vertical).
 
-Drag interaction uses the Pointer Events API with pointer capture, so it works seamlessly across mouse, touch, and pen inputs. As the user drags, the component clamps the new size between \`min-size\` and \`max-size\` and updates the \`--panel-size\` CSS custom property in real time for smooth, flicker-free resizing. An \`arc-resize\` custom event fires on every size change so you can persist the user's preference or synchronize adjacent layout regions.
+Drag interaction uses the Pointer Events API with pointer capture, so it works with mouse, touch, and pen. As the user drags, the component clamps the new size between \`min-size\` and \`max-size\` and updates the \`--panel-size\` CSS custom property in real time, so resizing doesn't flicker. An \`arc-resize\` custom event fires on every size change so you can persist the user's preference or synchronize adjacent layout regions.
 
-The handle is also fully keyboard-accessible. It renders with \`role="separator"\`, \`tabindex="0"\`, and ARIA value attributes (\`aria-valuenow\`, \`aria-valuemin\`, \`aria-valuemax\`). Arrow keys resize in 5px steps, or 20px steps when Shift is held. The handle highlights on hover and focus with the \`--accent-primary\` token, and an expanded invisible hit area (8px wider than the visible 4px bar) makes it easy to grab even on high-density displays.`,
+The handle is also keyboard-accessible. It renders with \`role="separator"\`, \`tabindex="0"\`, and ARIA value attributes (\`aria-valuenow\`, \`aria-valuemin\`, \`aria-valuemax\`). Arrow keys resize in 5px steps, or 20px steps when Shift is held. The handle highlights on hover and focus with the \`--accent-primary\` token, and an expanded invisible hit area (8px wider than the visible 4px bar) makes the handle easy to grab, even on high-density displays.`,
 
   features: [
     'Horizontal and vertical resize directions via the direction prop',
     'Pointer Events API with pointer capture for mouse, touch, and pen support',
     'Configurable min-size and max-size constraints to prevent over-shrinking or over-expanding',
-    'Real-time `--panel-size` CSS custom property updates for flicker-free resizing',
+    'Real-time `--panel-size` CSS custom property updates, so resizing does not flicker',
     '`arc-resize` custom event dispatched on every size change',
     'Keyboard-accessible handle with Arrow key steps (5px default, 20px with Shift)',
     'ARIA separator role with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`',
@@ -34,8 +34,8 @@ The handle is also fully keyboard-accessible. It renders with \`role="separator"
       'Pair with SplitPane when you need two resizable regions that share a single divider',
     ],
     dont: [
-      'Do not use Resizable for content that should never be resized — use a fixed-width Container instead',
-      'Do not set min-size and max-size to the same value — this effectively disables resizing',
+      'Do not use Resizable for content that should never be resized; use a fixed-width Container instead',
+      'Do not set min-size and max-size to the same value: this effectively disables resizing',
       'Do not forget to give the parent a defined height when using direction="vertical"',
       'Do not place the Resizable handle adjacent to a scrollbar; users may confuse the two controls',
       'Do not override the handle styles without preserving the expanded hit area pseudo-element',

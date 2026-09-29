@@ -5,7 +5,7 @@
  * date-picker, date-range-picker, calendar and event-calendar each carried their
  * own copy of `['January', …]` and `['Su', 'Mo', …]`. Beyond the duplication,
  * that hardcoded English into components whose entire job is displaying dates,
- * and it hardcoded Sunday as the first day of the week — which is wrong for most
+ * and it hardcoded Sunday as the first day of the week, which is wrong for most
  * of the world.
  *
  * `Intl.DateTimeFormat` already knows all of this and ships with the browser, so
@@ -13,8 +13,8 @@
  *
  * ## Scope
  *
- * Deliberately just dates. ARC ships no string table for its other UI text —
- * "No results found", "Close", and friends stay English — because a full locale
+ * Dates only. ARC ships no string table for its other UI text:
+ * "No results found", "Close", and friends stay English, because a full locale
  * layer is a much larger surface than the calendars needed. Dates are here
  * because they were actively wrong, not because this is the start of an i18n
  * framework.
@@ -26,7 +26,7 @@
  *
  * Only the regions that differ from Monday are listed; Monday is the majority
  * default and the ISO-8601 answer. Used when the browser has no
- * `getWeekInfo` — Firefox still lacks it — so this table is the fallback, not
+ * `getWeekInfo` (Firefox still lacks it), so this table is the fallback, not
  * the primary source.
  */
 const SUNDAY_FIRST = new Set([
@@ -88,7 +88,7 @@ const SATURDAY_FIRST = new Set([
   'YE',
 ]);
 
-/** Memoised formatters — constructing an Intl.DateTimeFormat is not cheap. */
+/** Memoised formatters: constructing an Intl.DateTimeFormat is not cheap. */
 const cache = new Map();
 
 function formatter(locale, options) {
@@ -114,7 +114,7 @@ export function defaultLocale() {
  *
  * @param {'long' | 'short' | 'narrow'} [style='long']
  * @param {string} [locale]
- * @returns {string[]} twelve names, January-first regardless of locale — callers
+ * @returns {string[]} twelve names, January-first regardless of locale: callers
  *   index by month number, so the order is calendrical rather than presentational.
  */
 export function monthNames(style = 'long', locale = defaultLocale()) {
@@ -167,7 +167,7 @@ export function firstDayOfWeek(locale = defaultLocale()) {
       if (SATURDAY_FIRST.has(region)) return 6;
     }
   } catch {
-    /* Unparseable locale — fall through to the ISO default. */
+    /* Unparseable locale, fall through to the ISO default. */
   }
   return 1;
 }

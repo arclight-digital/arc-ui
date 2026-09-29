@@ -39,7 +39,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
     _activeIndex: { state: true },
     _children: { state: true },
   };
-  // _x/_y are deliberately not reactive state: PositionController writes the
+  // _x/_y are not reactive state: PositionController writes the
   // menu's coordinates to its inline style, and a re-render driven by them would
   // rewrite the whole style attribute and wipe what the controller just wrote.
 
@@ -166,7 +166,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
       onDismiss: () => this._close(false),
     });
     this._position = new PositionController(this, {
-      // A context menu has no anchor element — it hangs off the pointer, so the
+      // A context menu has no anchor element; it hangs off the pointer, so the
       // anchor is a zero-size box at the click.
       anchor: () => ({ x: this._x, y: this._y }),
       floating: () => this.shadowRoot?.querySelector('.menu'),
@@ -200,7 +200,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
       // last `open`-declaring overlay with neither central contract: it caught
       // outside clicks with a full-viewport invisible `<div class="backdrop">`,
       // which is the third mechanism DismissController exists to replace. That
-      // div covered the page whenever the menu was open — so the click that
+      // div covered the page whenever the menu was open, so the click that
       // dismissed the menu never reached what it was aimed at, and a keyboard
       // user tabbing away was not covered at all, because a backdrop cannot
       // observe focus.
@@ -237,9 +237,9 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
     this.open = true;
 
     // A second right-click while the menu is already open changes nothing Lit
-    // can see: `open` is unchanged, and `_x`/`_y` are deliberately not reactive
+    // can see: `open` is unchanged, and `_x`/`_y` are not reactive
     // state (see the note by the property declarations), so `updated()` never
-    // ran and the menu stayed at the first click — now pointing at the wrong
+    // ran and the menu stayed at the first click, now pointing at the wrong
     // target (finding #31). Reposition explicitly; the menu is already
     // rendered, so there is nothing to wait for.
     if (wasOpen) this._position.show();
@@ -305,7 +305,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
   _handleKeydown(e) {
     // Escape first, and before the arrow-key guard below. That guard returns
     // early when there is nothing to move between, which also swallowed
-    // Escape — so an empty menu could be opened and not dismissed by the
+    // Escape, so an empty menu could be opened and not dismissed by the
     // keyboard at all (finding #85). Dismissal does not depend on there being
     // anything to select.
     if (e.key === 'Escape') {
@@ -378,7 +378,7 @@ export class ArcContextMenu extends DeclaredPropsMixin(LitElement) {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

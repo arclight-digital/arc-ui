@@ -11,13 +11,13 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * be visual noise.
  *
  * The display text inherits the surrounding typography (`font: inherit`) and
- * the edit field matches it, so the swap never changes the text's metrics —
+ * the edit field matches it, so the swap never changes the text's metrics:
  * an inline-edit inside a heading edits at heading size, one in a table cell
- * edits at cell size. This is why there is no `size` prop: sizing comes from
+ * at cell size. This is why there is no `size` prop: sizing comes from
  * context, and a fixed scale would fight it.
  *
- * While editing, keystrokes accumulate in an internal draft. `value` — and the
- * value a form submits — only changes on commit, so Escape can always revert
+ * While editing, keystrokes accumulate in an internal draft. `value` (and the
+ * value a form submits) only changes on commit, so Escape can always revert
  * and a half-typed rename is never submitted. Committing an unchanged value
  * fires no event at all.
  *
@@ -30,7 +30,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @prop {string} placeholder - Text shown in muted italic when `value` is empty, and as the field placeholder while editing. Defaults to "Empty".
  * @prop {boolean} multiline - When true, editing uses a `<textarea>`: Enter inserts a newline and Cmd/Ctrl+Enter commits. Single-line commits on plain Enter.
  * @prop {boolean} disabled - Prevents activation and applies a muted treatment. The value is excluded from form submission while disabled.
- * @prop {boolean} required - Marks the field as required. An empty committed value is invalid — including in display state, which shows a subtle error tint.
+ * @prop {boolean} required - Marks the field as required. An empty committed value is invalid, including in display state, which shows a subtle error tint.
  * @prop {boolean} readonly - Renders the display state only: the text remains focusable for reading order, but activation is inert and no pencil affordance appears.
  * @fires {CustomEvent<{ value: string }>} arc-input - Fired on each keystroke while editing, with the draft text in detail.value.
  * @fires {CustomEvent<{ value: string }>} arc-change - Fired once on commit when the value actually changed, with the new value in detail.value.
@@ -199,7 +199,7 @@ export class ArcInlineEdit extends DeclaredPropsMixin(FormControlMixin(LitElemen
    * editing, the display row otherwise.
    *
    * The host sets no `delegatesFocus` and everything focusable lives in the
-   * shadow root, so `el.focus()` used to do nothing at all — silently, which
+   * shadow root, so `el.focus()` used to do nothing at all, silently, which
    * cost a consumer a "Rename" menu item that appeared dead. `edit()` is the
    * way *into* editing and stays that way; this is only the obvious call
    * landing where a caller expects it.

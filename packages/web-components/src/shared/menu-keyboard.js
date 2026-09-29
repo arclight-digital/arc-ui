@@ -36,15 +36,15 @@ export class MenuKeyboardController {
   }
 
   /**
-   * Re-attach after a reparent — finding #72's shape a third time, alongside
+   * Re-attach after a reparent: finding #72's shape a third time, alongside
    * #73. All three consumers call attach()/detach() from `updated()` keyed on
    * an open-state *change* (dropdown-menu:184, command-palette:478,
    * toolbar:227); moving an element changes nothing, so `hostDisconnected` was
    * a one-way door and an open menu came back rendering normally while
    * answering no key at all.
    *
-   * The focused index is carried across deliberately. `detach()` clears it
-   * because closing a menu should forget where you were — but a reparent is
+   * The focused index is carried across on purpose. `detach()` clears it
+   * because closing a menu should forget where you were, but a reparent is
    * not a close, and losing your place mid-navigation is the visible half of
    * this bug.
    */
@@ -73,7 +73,7 @@ export class MenuKeyboardController {
 
   _onKeyDown(e) {
     // Escape must close even when there are no items (e.g. a search query
-    // with zero matches) — check it before the count guard.
+    // with zero matches); check it before the count guard.
     if (e.key === 'Escape') {
       e.preventDefault();
       this._onClose();

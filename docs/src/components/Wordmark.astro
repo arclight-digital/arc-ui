@@ -25,8 +25,8 @@
     font-weight: 600;
     letter-spacing: -0.5px;
     /* Tokens, not white literals: --text-primary is the "hottest" text the
-       local scheme owns — near-white on dark (and inside a theme-fixed-dark
-       bar, which pins the token set), near-ink on light — so the lit top
+       local scheme owns: near-white on dark (and inside a theme-fixed-dark
+       bar, which pins the token set), near-ink on light. So the lit top
        edge reads as emitted light on dark and as inked weight on light
        instead of vanishing into the bar. */
     background:
@@ -70,7 +70,7 @@
   /* The acronym only works if the capitals read as the brighter thing. At the
      accent's own value they don't: --accent-primary sits at luminance 0.232
      against --text-ghost's 0.241, so the three letters carrying the trick were
-     fractionally darker than the letters they pick out — and a saturated blue
+     fractionally darker than the letters they pick out, and a saturated blue
      at 12px on near-black loses more again to acuity. Lifted toward white
      rather than swapped for a lighter literal, so a consumer overriding
      --accent-primary still gets their own hue here. */

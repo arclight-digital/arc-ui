@@ -9,6 +9,8 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @status stable
  * @prop {string} value - The text string to copy to the clipboard when the button is clicked.
  * @prop {boolean} disabled - Disables the button, preventing clicks and reducing visual opacity.
+ * @prop {boolean} iconOnly - Shows the icon alone in a round, borderless 30px button, for a toolbar or a header bar. The icon turns into a check for 1.4 seconds after copying.
+ * @prop {string} label - Accessible name before copying, such as "Copy code". Defaults to "Copy to clipboard". After copying the name is "Copied".
  * @fires {CustomEvent<{ value: string }>} arc-copy - Fired when text is successfully copied to the clipboard. `event.detail.value` contains the copied string.
  * @slot none
  * @csspart base - The root element.
@@ -20,6 +22,8 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
   static properties = {
     value: { type: String },
     disabled: flag(false),
+    iconOnly: flag(false, { attribute: 'icon-only' }),
+    label: { type: String },
     _copied: { state: true },
   };
 
@@ -59,8 +63,8 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
       }
 
       /* Press feedback, matching the rest of the button family. Copying gives
-         no other physical signal — the clipboard write is silent and the label
-         change lands a beat later — so the press itself was the one moment with
+         no other physical signal: the clipboard write is silent and the label
+         change lands a beat later, so the press itself was the one moment with
          nothing to confirm the click registered. */
       .copy-btn:active {
         transform: scale(0.97);
@@ -96,12 +100,38 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
       .copy-btn__label {
         user-select: none;
       }
+
+      /* Icon only: a quiet round button that sits in a bar without a frame.
+         The check turning green is the whole confirmation, so no fill. */
+      :host([icon-only]) .copy-btn {
+        width: 30px;
+        height: 30px;
+        min-height: 0;
+        padding: 0;
+        border-color: transparent;
+        background: transparent;
+      }
+
+      :host([icon-only]) .copy-btn:hover {
+        box-shadow: none;
+        background: var(--surface-hover);
+      }
+
+      :host([icon-only]) .copy-btn:focus-visible {
+        box-shadow: var(--interactive-focus);
+      }
+
+      :host([icon-only]) .copy-btn.is-copied {
+        border-color: transparent;
+        background: transparent;
+      }
     `,
   ];
 
   constructor() {
     super();
     this.value = '';
+    this.label = '';
     this._copied = false;
     this._timeout = null;
   }
@@ -128,9 +158,12 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
         }),
       );
 
-      this._timeout = setTimeout(() => {
-        this._copied = false;
-      }, 2000);
+      this._timeout = setTimeout(
+        () => {
+          this._copied = false;
+        },
+        this.iconOnly ? 1400 : 2000,
+      );
     } catch {
       // Clipboard API may fail in non-secure contexts
     }
@@ -142,7 +175,7 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
         class="copy-btn ${this._copied ? 'is-copied' : ''}"
         @click=${this._copy}
         ?disabled=${this.disabled}
-        aria-label=${this._copied ? 'Copied' : 'Copy to clipboard'}
+        aria-label=${this._copied ? 'Copied' : this.label || 'Copy to clipboard'}
         part="base button"
       >
         <span class="copy-btn__icon" part="icon">
@@ -161,7 +194,11 @@ export class ArcCopyButton extends DeclaredPropsMixin(LitElement) {
           `
           }
         </span>
-        <span class="copy-btn__label" part="label">${this._copied ? 'Copied!' : 'Copy'}</span>
+        ${
+          this.iconOnly
+            ? ''
+            : html`<span class="copy-btn__label" part="label">${this._copied ? 'Copied!' : 'Copy'}</span>`
+        }
       </button>
     `;
   }

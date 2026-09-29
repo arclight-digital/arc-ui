@@ -1,13 +1,13 @@
 /**
- * contrast.js — tell a consumer when the color they passed cannot be read.
+ * contrast.js: tell a consumer when the color they passed cannot be read.
  *
  * The theme mixes accents toward the page's text color by a solved amount
- * (--accent-text-mix, see shared/color.js), and that amount is deliberately
- * only as large as our own palette needs. The alternative — enough mixing to
- * rescue any color at all — would repaint every accent that was already fine
+ * (--accent-text-mix, see shared/color.js), and that amount is only as large
+ * as our own palette needs. The alternative (enough mixing to
+ * rescue any color at all) would repaint every accent that was already fine
  * to save one that never was, so the library leaves a consumer's color as
- * given. Which is the right call, and silently shipping something unreadable
- * would not be.
+ * given. That is the right call; silently shipping something unreadable would
+ * not be.
  *
  * So it warns instead. Once, in the console, naming the element, the color and
  * the ratio, because a developer who passed `color="140, 140, 150"` cannot see
@@ -22,7 +22,7 @@
 
 const AA_NORMAL = 4.5;
 
-/** Warnings already issued, keyed by the pairing rather than the element —
+/** Warnings already issued, keyed by the pairing rather than the element:
  *  a table of fifty tags in one color is one mistake, not fifty. */
 const seen = new Set();
 

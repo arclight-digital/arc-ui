@@ -9,11 +9,11 @@ export const inset: ComponentDef = {
   description:
     'Padding primitive consuming spacing tokens with optional negative-margin bleed mode.',
 
-  overview: `Inset is a spacing primitive that applies consistent padding to its children using design system spacing tokens. It is the padding counterpart to Stack (which handles vertical spacing between siblings) — where Stack controls the gaps between elements, Inset controls the breathing room around a block of content.
+  overview: `Inset is a spacing primitive that applies consistent padding to its children using design system spacing tokens. It is the padding counterpart to Stack (which handles vertical spacing between siblings), where Stack controls the gaps between elements and Inset controls the space around a block of content.
 
-The \`space\` prop maps directly to spacing tokens (xs through 2xl), ensuring padding values stay in sync with the design system across all components. This eliminates ad-hoc padding values and guarantees visual consistency whether the Inset wraps a card body, a section interior, or a dialog content area.
+The \`space\` prop maps directly to spacing tokens (xs through 2xl), so padding stays in sync with the design system whether the Inset wraps a card body, a section interior, or a dialog content area.
 
-The \`bleed\` prop activates negative-margin mode, which allows the Inset's children to break out of a parent's existing padding. This is useful when you have a padded container but want a specific child — like a full-width image or a divider — to extend edge-to-edge. Bleed applies a negative margin equal to the space value, effectively canceling the parent's padding for that element.`,
+The \`bleed\` prop activates negative-margin mode, which allows the Inset's children to break out of a parent's existing padding. This is useful when you have a padded container but want a specific child, like a full-width image or a divider, to extend edge-to-edge. Bleed applies a negative margin equal to the space value, effectively canceling the parent's padding for that element.`,
 
   features: [
     'Consistent padding via design system spacing tokens (xs through 2xl)',
@@ -33,10 +33,10 @@ The \`bleed\` prop activates negative-margin mode, which allows the Inset's chil
       'Prefer Inset over custom padding styles to maintain token-based consistency',
     ],
     dont: [
-      'Do not use Inset as a substitute for Container — Container constrains width, Inset adds padding',
+      'Do not use Inset as a substitute for Container. Container constrains width; Inset adds padding',
       'Do not nest Inset inside Inset unless you intentionally want compound padding',
-      'Do not use bleed mode without a padded parent — negative margins will misalign content',
-      'Do not use Inset for spacing between sibling elements — use Stack or gap utilities instead',
+      'Do not use bleed mode without a padded parent. Negative margins will misalign content',
+      'Do not use Inset for spacing between sibling elements. Use Stack or gap utilities instead',
       'Do not hardcode pixel values; adjust the spacing tokens globally instead',
     ],
   },

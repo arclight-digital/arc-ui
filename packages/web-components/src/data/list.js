@@ -5,7 +5,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
  * Structured list container with optional selection, keyboard navigation, and multiple visual
- * variants. Pairs with arc-list-item for rich content rows.
+ * variants. Pairs with arc-list-item for content rows.
  *
  * @tag arc-list
  * @status stable
@@ -134,7 +134,7 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
   /**
    * Adopt a `value` assigned from outside.
    *
-   * Single-select does not split at all, so any value round-trips — including
+   * Single-select does not split at all, so any value round-trips, including
    * one with a comma. Multi-select splits, because the comma is the format's
    * separator; that limit is inherent to a string-valued multi-select and is
    * documented on the prop.
@@ -241,14 +241,14 @@ export class ArcList extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
 
   render() {
     // aria-multiselectable is defined for listbox/grid/tree/tablist and for
-    // nothing else, so a plain role="list" must not carry it at all — axe
+    // nothing else, so a plain role="list" must not carry it at all, axe
     // reports it as aria-allowed-attr (finding #27).
     return html`
       <div

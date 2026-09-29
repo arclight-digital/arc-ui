@@ -15,13 +15,13 @@ export const GET: APIRoute = async () => {
 
   const componentsByTier = tiers.map((tier) => {
     const items = components.filter((c) => c.tier === tier);
-    const list = items.map((c) => `  - ${c.name} (\`<${c.tag}>\`) — ${c.description.split('.')[0]}.`).join('\n');
+    const list = items.map((c) => `  - ${c.name} (\`<${c.tag}>\`): ${c.description.split('.')[0]}.`).join('\n');
     return `### ${tier.charAt(0).toUpperCase() + tier.slice(1)} (${items.length})\n${list}`;
   });
 
   const body = `# ARC UI
 
-> ARC Radiant Components — a dark-first Web Component library built with Lit. One Web Component source; identical component APIs across ${frameworkCount} targets.
+> ARC Radiant Components: a dark-first Web Component library built with Lit. One Web Component source; identical component APIs across ${frameworkCount} targets.
 
 - Version: ${version}
 - Components: ${components.length}
@@ -82,20 +82,20 @@ Registering components:
 
 Framework packages are generated from the Lit Web Component source. Practical consequences:
 
-- Props, events, slots, and CSS parts are identical in every target — anything documented for \`<arc-button>\` applies to React's \`<Button>\`, Vue's \`<Button>\`, etc.
+- Props, events, slots, and CSS parts are identical in every target. Anything documented for \`<arc-button>\` applies to React's \`<Button>\`, Vue's \`<Button>\`, etc.
 - Wrapper packages are generated output; the Web Component package (\`@arclux/arc-ui\`) is the source of truth. File issues against it.
 - \`@arclux/arc-ui-html\` is standalone HTML/CSS with no JavaScript.
 
 ### Tiers
 
 Components are organized into seven tiers by responsibility:
-- **Layout** — page structure (shells, grids, containers)
-- **Navigation** — wayfinding (tabs, menus, breadcrumbs)
-- **Content** — display (cards, avatars, icons, carousels)
-- **Data** — structured data (tables, lists, badges, meters, stats)
-- **Typography** — text rendering (code blocks, markdown, kbd)
-- **Input** — user interaction (buttons, forms, pickers)
-- **Feedback** — system response (alerts, modals, toasts)
+- **Layout**: page structure (shells, grids, containers)
+- **Navigation**: wayfinding (tabs, menus, breadcrumbs)
+- **Content**: display (cards, avatars, icons, carousels)
+- **Data**: structured data (tables, lists, badges, meters, stats)
+- **Typography**: text rendering (code blocks, markdown, kbd)
+- **Input**: user interaction (buttons, forms, pickers)
+- **Feedback**: system response (alerts, modals, toasts)
 
 ## Theming
 
@@ -114,7 +114,7 @@ Compound tokens (gradients, glows, focus rings, shadows) reference base tokens v
 
 ## Font Roles
 
-ARC UI ships no font files. Typography is five role slots — \`body\`, \`label\`, \`mono\`, \`display\`, \`quote\` — each exposed as \`--font-<role>\` (composed stack) plus \`--font-<role>-family\`, \`--font-<role>-fallback\`, and \`--font-<role>-weight\`. Components reference roles, never typefaces, so assigning a face is one override:
+ARC UI ships no font files. Typography is five role slots (\`body\`, \`label\`, \`mono\`, \`display\`, \`quote\`), each exposed as \`--font-<role>\` (composed stack) plus \`--font-<role>-family\`, \`--font-<role>-fallback\`, and \`--font-<role>-weight\`. Components reference roles, never typefaces, so assigning a face is one override:
 
 \`\`\`css
 :root {
@@ -122,15 +122,15 @@ ARC UI ships no font files. Typography is five role slots — \`body\`, \`label\
 }
 \`\`\`
 
-- \`body\` — used for prose, inputs, and headings; the default for everything.
-- \`label\` — used for form labels, table headers, and eyebrows (small, uppercase, tracked type).
-- \`mono\` — used for code, keyboard hints, and tabular numerics.
-- \`display\` — used for large headings; it follows \`body\` until assigned its own family.
-- \`quote\` — used for the decorative glyph on \`arc-blockquote\`.
+- \`body\`: used for prose, inputs, and headings; the default for everything.
+- \`label\`: used for form labels, table headers, and eyebrows (small, uppercase, tracked type).
+- \`mono\`: used for code, keyboard hints, and tabular numerics.
+- \`display\`: used for large headings; it follows \`body\` until assigned its own family.
+- \`quote\`: used for the decorative glyph on \`arc-blockquote\`.
 
 ## Server-Side Rendering
 
-\`@arclux/arc-ui/ssr\` exports \`renderDeclarativeShadowDOM(html)\` — HTML in, HTML out. Every \`<arc-*>\` in the input gets a declarative shadow root, regardless of what produced the markup (Next, Nuxt, SvelteKit, Astro, a hand-assembled string). All components server-render. Requires the optional peer \`@lit-labs/ssr\`. On the client, import \`@arclux/arc-ui/hydrate\` before any component is defined so Lit adopts the server markup instead of re-rendering it.
+\`@arclux/arc-ui/ssr\` exports \`renderDeclarativeShadowDOM(html)\`: HTML in, HTML out. Every \`<arc-*>\` in the input gets a declarative shadow root, regardless of what produced the markup (Next, Nuxt, SvelteKit, Astro, a hand-assembled string). All components server-render. Requires the optional peer \`@lit-labs/ssr\`. On the client, import \`@arclux/arc-ui/hydrate\` before any component is defined so Lit adopts the server markup instead of re-rendering it.
 
 ## Components (${components.length})
 

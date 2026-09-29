@@ -27,15 +27,15 @@ const headings = [
     <h1 class="page-title">Accessibility</h1>
     <p class="page-desc">
       ARC UI targets WCAG 2.1 Level AA. Components ship with semantic HTML,
-      keyboard support, and ARIA attributes built in — and this site is the test bed.
+      keyboard support, and ARIA attributes built in. This site is the test bed.
     </p>
 
     <section id="audit">
       <h2 class="docs-heading">Automated Audit</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Claims are cheap, so we audit. Every component documentation page — live demos
-        included — is checked with <a href="https://github.com/dequelabs/axe-core">axe-core</a>
+        Claims are cheap, so we audit. Every component documentation page, live demos
+        included, is checked with <a href="https://github.com/dequelabs/axe-core">axe-core</a>
         against the fully rendered DOM, shadow roots included, in both themes. CI fails on
         any serious or critical violation, color contrast included. No exclusions.
       </p>
@@ -90,14 +90,14 @@ const headings = [
       <h2 class="docs-heading">Keyboard Navigation</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Every interactive component is fully keyboard-driven. Don't take our word for it —
-        this one is live. <kbd>Tab</kbd> to it and drive it from the keyboard:
+        Every interactive component is fully keyboard-driven. Don't take our word for it.
+        This one is live. <kbd>Tab</kbd> to it and drive it from the keyboard:
       </p>
       <div class="kbd-demo">
         <arc-tabs>
           <arc-tab label="Arrows"><kbd>Arrow Left</kbd> and <kbd>Arrow Right</kbd> move between tabs; the panel follows focus.</arc-tab>
           <arc-tab label="Home / End"><kbd>Home</kbd> jumps to the first tab, <kbd>End</kbd> to the last.</arc-tab>
-          <arc-tab label="Tab"><kbd>Tab</kbd> leaves the tablist — one tab stop for the whole widget.</arc-tab>
+          <arc-tab label="Tab"><kbd>Tab</kbd> leaves the tablist: one tab stop for the whole widget.</arc-tab>
         </arc-tabs>
       </div>
       <div class="token-table-wrap">
@@ -141,7 +141,7 @@ const headings = [
       </div>
       <p class="docs-text">
         Focus shows only on keyboard navigation (<code>:focus-visible</code>), never on mouse
-        clicks — click the cards above and nothing appears. Overlays like <code>arc-dialog</code>
+        clicks. Click the cards above and nothing appears. Overlays like <code>arc-dialog</code>
         and <code>arc-drawer</code> trap focus while open.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Customize focus styles globally */
@@ -191,7 +191,7 @@ const headings = [
       <h2 class="docs-heading">Color & Contrast</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The audit above measures actual rendered ratios in both themes — these are results,
+        The audit above measures actual rendered ratios in both themes. These are results,
         not targets:
       </p>
       <ul class="docs-list">
@@ -201,8 +201,8 @@ const headings = [
           normal text in both themes.
         </li>
         <li>
-          The feedback colors — <code>--color-success</code>, <code>--color-warning</code>,
-          <code>--color-error</code>, <code>--color-info</code> — pass in both dark and
+          The feedback colors (<code>--color-success</code>, <code>--color-warning</code>,
+          <code>--color-error</code>, <code>--color-info</code>) pass in both dark and
           light modes.
         </li>
       </ul>
@@ -213,8 +213,8 @@ const headings = [
       <h2 class="docs-heading">Reduced Motion</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        With <code>prefers-reduced-motion</code> set, every transition and animation collapses —
-        functionality is unchanged, only the motion goes:
+        With <code>prefers-reduced-motion</code> set, every transition and animation collapses.
+        Functionality is unchanged; only the motion goes:
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Built into ARC UI components */
 @media (prefers-reduced-motion: reduce) {
@@ -233,7 +233,7 @@ const headings = [
         what a reduced-motion user sees. So put the resting state there, and let the keyframes
         move away from it. A two-frame sprite that swaps layers by opacity shows both frames
         stacked if both are visible by default. Hide the second frame in the base styles, and
-        the keyframes that reveal it simply never get time to:
+        the keyframes that reveal it never get time to:
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`.frame-b { opacity: 0; }            /* resting state: frame A only */
 .frame-a { animation: swap-a 800ms steps(1) infinite; }
@@ -247,8 +247,8 @@ const headings = [
       <h2 class="docs-heading">Without JavaScript</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Web Components need JavaScript to upgrade. Until that happens — a failed script, a
-        slow network, JS disabled — a custom element is an unknown tag rendering only its
+        Web Components need JavaScript to upgrade. Until that happens (a failed script, a
+        slow network, JS disabled), a custom element is an unknown tag rendering only its
         light DOM. What you put inside the element is what everyone sees first.
       </p>
       <p class="docs-text">
@@ -273,7 +273,7 @@ const headings = [
       <p class="docs-text">
         On upgrade the component adopts that anchor as its control rather than rendering a
         second one, so there is only ever one link in the accessibility tree. The
-        <code>href</code> form stays fully supported — prefer it inside app shells where
+        <code>href</code> form stays fully supported. Prefer it inside app shells where
         JavaScript is guaranteed, and the slotted form on anything public, indexed, or
         first-load critical. This applies to <code>arc-button</code>,
         <code>arc-icon-button</code>, <code>arc-link</code>, <code>arc-card</code>,
@@ -282,7 +282,7 @@ const headings = [
       </p>
       <p class="docs-text">
         The stylesheet hides components only until they upgrade, and that hide is gated on
-        scripting being available — so with JS disabled your content stays visible rather
+        scripting being available, so with JS disabled your content stays visible rather
         than being hidden forever waiting for an upgrade that never comes:
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Shipped in base.css */
@@ -290,9 +290,9 @@ const headings = [
   :is(arc-button, arc-link /* … */):not(:defined) { opacity: 0; }
 }`}></arc-code-block></div>
       <p class="docs-text">
-        Components whose content comes from properties rather than slots — such as
-        <code>arc-feature-card</code>, which renders from <code>heading</code> and
-        <code>description</code> — have no light DOM to fall back to and stay blank without
+        Components whose content comes from properties rather than slots, such as
+        <code>arc-feature-card</code> (which renders from <code>heading</code> and
+        <code>description</code>), have no light DOM to fall back to and stay blank without
         JavaScript. Author their content as slotted markup, treat them as enhancement-only,
         or <a href="/docs/server-rendering">server-render them</a>.
       </p>
@@ -302,8 +302,8 @@ const headings = [
       <h2 class="docs-heading">See Also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/server-rendering">Server Rendering</a> — content in the payload before JS runs</li>
-        <li><a href="/docs/getting-started">Getting Started</a> — installation and setup</li>
+        <li><a href="/docs/server-rendering">Server Rendering</a>: content in the payload before JS runs</li>
+        <li><a href="/docs/getting-started">Getting Started</a>: installation and setup</li>
       </ul>
     </section>
   </div>

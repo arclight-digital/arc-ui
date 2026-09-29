@@ -5,17 +5,17 @@ import { DeclaredPropsMixin, flag, num, oneOf, list } from '../shared/props.js';
 
 /**
  * Audio waveform visualization that doubles as a scrubber. Renders a peaks array as an SVG
- * waveform — the played region in accent with a soft glow, the unplayed region muted, and a
+ * waveform: the played region in accent with a soft glow, the unplayed region muted, and a
  * glowing playhead line at the current position. With `interactive` set it becomes a seek
  * control: pointer scrubbing and keyboard arrows move the playhead, emitting `arc-input`
  * while the gesture is in flight and `arc-change` when the value commits.
  *
- * The component never touches audio itself — no AudioContext, no decoding. The consumer
+ * The component never touches audio itself: no AudioContext, no decoding. The consumer
  * computes peak amplitudes (one number per bar, 0 to 1) however it likes and hands them
  * over as an array. This keeps the component a pure function of its props, so it
  * server-renders and stays cheap enough for a lane of clips in a DAW timeline.
  *
- * The time axis is deliberately direction-fixed: audio time flows left-to-right even in
+ * The time axis is direction-fixed: audio time flows left-to-right even in
  * RTL contexts, matching every DAW, player, and editor convention.
  *
  * @tag arc-waveform
@@ -29,7 +29,7 @@ import { DeclaredPropsMixin, flag, num, oneOf, list } from '../shared/props.js';
  * @prop {string} label - Accessible name for the waveform. Announced as the slider label when interactive, or as the image description otherwise.
  * @prop {number} steps - Divides the track into this many equal steps, for a timeline of discrete frames rather than continuous audio. The playhead snaps to a step from pointer and keyboard alike, arrow keys move one step, Page Up/Down a tenth of the track (at least one step), and the slider reports the step number rather than a percentage. Unset, the track is continuous.
  * @prop {string} valueText - What the slider announces for the current position, replacing the built-in percentage or time. Set it from your `arc-input` handler, which runs before the position renders, so the text and the value always arrive together (e.g. "85 of 200 ms").
- * @fires {CustomEvent<{ value: number, time: number | null }>} arc-input - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview — updating a time display or audibly scrubbing.
+ * @fires {CustomEvent<{ value: number, time: number | null }>} arc-input - Fired continuously while scrubbing (every pointer move and each keyboard nudge). `value` is the position fraction 0-1; `time` is seconds when `duration` is set, otherwise null. Use for live preview: updating a time display, or audibly scrubbing.
  * @fires {CustomEvent<{ value: number, time: number | null }>} arc-change - Fired once when the seek commits: on pointer release, or with each keyboard nudge. Use for the actual seek on your audio source.
  * @slot none
  * @csspart base - The root element.
@@ -44,7 +44,7 @@ import { DeclaredPropsMixin, flag, num, oneOf, list } from '../shared/props.js';
 export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
   static properties = {
     // A peaks list is long enough that nobody sensible writes one into markup,
-    // but "nobody should" is not a reason to make it impossible — a short
+    // but "nobody should" is not a reason to make it impossible; a short
     // envelope in server-rendered HTML is a real case, and the attribute costs
     // nothing while it goes unused.
     peaks: list(),
@@ -111,7 +111,7 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
          per-frame layout. Physical translateX on purpose - the time axis is
          direction-fixed.
 
-         Deliberately untransitioned. The played/unplayed boundary is an SVG
+         Untransitioned. The played/unplayed boundary is an SVG
          clip that snaps to the position, so easing the playhead toward the same
          value leaves it trailing the fill edge for the whole of every move -
          and against a playhead advancing each frame, that gap never closes. */
@@ -141,7 +141,7 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
         font-family: var(--font-mono);
         font-size: var(--code-size);
         color: var(--text-muted);
-        /* Updated on every scrub frame - proportional digits would jitter. */
+        /* Updated on every scrub frame; proportional digits would jitter. */
         font-variant-numeric: tabular-nums;
         user-select: none;
       }
@@ -155,7 +155,7 @@ export class ArcWaveform extends DeclaredPropsMixin(LitElement) {
 
   constructor() {
     super();
-    // Nullable declarations own their own "unset" default — see props.js.
+    // Nullable declarations own their own "unset" default; see props.js.
     this.label = '';
     this._onWindowPointerMove = this._onWindowPointerMove.bind(this);
     this._onWindowPointerUp = this._onWindowPointerUp.bind(this);

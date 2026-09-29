@@ -10,9 +10,12 @@ export interface LightboxProps {
   images?: unknown[];
   index?: number;
   open?: boolean;
+  gallery?: string;
+  thumbnails?: boolean;
   onArcChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;
+  children?: preact.ComponentChildren;
   class?: string;
   id?: string;
   style?: string;
@@ -41,7 +44,7 @@ export interface LightboxProps {
 }
 
 /** Driven by its methods: show(), close(), next() and prev(). A ref on it holds the element. */
-export const Lightbox = forwardRef<ArcLightbox, LightboxProps>(({ images, index, open, onArcChange, onArcClose, onArcOpen, ...rest }, forwarded) => {
+export const Lightbox = forwardRef<ArcLightbox, LightboxProps>(({ images, index, open, gallery, thumbnails, onArcChange, onArcClose, onArcOpen, children, ...rest }, forwarded) => {
   const ref = useRef<ArcLightbox>(null);
   useImperativeHandle(forwarded, () => ref.current as ArcLightbox, []);
   useLayoutEffect(() => {
@@ -65,5 +68,5 @@ export const Lightbox = forwardRef<ArcLightbox, LightboxProps>(({ images, index,
     }
     return () => listeners.forEach(([name, fn]) => el.removeEventListener(name, fn));
   }, [onArcChange, onArcClose, onArcOpen]);
-  return h('arc-lightbox', { ref, images, index, open, ...rest });
+  return h('arc-lightbox', { ref, images, index, open, gallery, thumbnails, ...rest }, children);
 });

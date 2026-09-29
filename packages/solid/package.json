@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-solid",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "Solid wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -332,6 +332,11 @@
       "types": "./dist/typography/CodeBlock.d.ts",
       "solid": "./src/typography/CodeBlock.tsx",
       "default": "./dist/typography/CodeBlock.js"
+    },
+    "./CodeGroup": {
+      "types": "./dist/typography/CodeGroup.d.ts",
+      "solid": "./src/typography/CodeGroup.tsx",
+      "default": "./dist/typography/CodeGroup.js"
     },
     "./GradientText": {
       "types": "./dist/typography/GradientText.d.ts",

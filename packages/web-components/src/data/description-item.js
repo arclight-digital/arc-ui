@@ -28,7 +28,7 @@ export class ArcDescriptionItem extends LitElement {
 
       /* Stacked by default; a parent arc-description-list[layout="horizontal"]
          sets these four properties to put the term beside the detail. They are
-         read with fallbacks so an item used on its own still lays out — the
+         read with fallbacks so an item used on its own still lays out; the
          parent is the only writer, and it may not be there. */
       .item {
         display: grid;

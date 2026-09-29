@@ -8,7 +8,7 @@ import { managedPanelStyles } from '../shared/position-styles.js';
 import { DeclaredPropsMixin, flag, oneOf, list } from '../shared/props.js';
 
 /**
- * Dropdown select whose panel is a hierarchical tree — categories, instrument banks, folder
+ * Dropdown select whose panel is a hierarchical tree: categories, instrument banks, folder
  * pickers. Group nodes expand and collapse; only leaf nodes are selectable, which keeps
  * single-select semantics clean.
  *
@@ -126,7 +126,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
         font-size: var(--_text-xs);
         color: var(--text-muted);
         flex-shrink: 0;
-        transition: transform var(--transition-fast) var(--ease-out-expo);
+        transition: transform var(--duration-fast) var(--ease-out-expo);
       }
       :host([open]) .tree-select__chevron { transform: rotate(180deg); }
 
@@ -262,7 +262,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
         margin-top: var(--space-xs);
       }
     `,
-    // animate: false — the panel has its own panel-in keyframes, and a declared
+    // animate: false; the panel has its own panel-in keyframes, and a declared
     // transform beside them is redundant at best.
     managedPanelStyles('tree-select__panel', { animate: false }),
   ];
@@ -292,7 +292,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
       anchor: () => this.shadowRoot?.querySelector('.tree-select__trigger'),
       floating: () => this.shadowRoot?.querySelector('.tree-select__panel'),
       // The panel belongs directly under its trigger and spans its width, so
-      // there is no cross-axis alignment choice to make — only whether it has
+      // there is no cross-axis alignment choice to make: only whether it has
       // room below, which flip decides.
       matchWidth: true,
       offset: 4,
@@ -306,7 +306,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
       onClose: () => {
         this.open = false;
         // Virtual focus means the trigger never lost real focus, so there is
-        // nothing to restore — but a click-opened panel may not have had it.
+        // nothing to restore, but a click-opened panel may not have had it.
         this.shadowRoot.querySelector('.tree-select__trigger')?.focus();
       },
       // Enter lands here for group headers too: activating a group toggles it
@@ -315,7 +315,7 @@ export class ArcTreeSelect extends DeclaredPropsMixin(FormControlMixin(LitElemen
       optionId: (i) => `${this._treeSelectId}-row-${i}`,
       scrollContainer: () => this.shadowRoot?.querySelector('.tree-select__panel'),
       // No text field of its own, so letter keys mean "jump to the row starting
-      // with this" — groups and leaves alike, as a native select would.
+      // with this", groups and leaves alike, as a native select would.
       typeahead: true,
       getItemLabel: (i) => this._navRows[i]?.node.label ?? '',
     });

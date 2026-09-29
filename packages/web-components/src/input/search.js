@@ -309,7 +309,7 @@ export class ArcSearch extends DeclaredPropsMixin(LitElement) {
     );
 
     // A suggestion pick commits the value just like Enter does, so it must
-    // also fire arc-change — same detail shape as _submit().
+    // also fire arc-change; same detail shape as _submit().
     this.dispatchEvent(
       new CustomEvent('arc-change', {
         detail: { value: this.value },
@@ -352,7 +352,7 @@ export class ArcSearch extends DeclaredPropsMixin(LitElement) {
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
@@ -172,6 +172,10 @@
     "./code-block": {
       "types": "./types/index.d.ts",
       "default": "./src/typography/code-block.register.js"
+    },
+    "./code-group": {
+      "types": "./types/index.d.ts",
+      "default": "./src/typography/code-group.register.js"
     },
     "./collapsible": {
       "types": "./types/index.d.ts",

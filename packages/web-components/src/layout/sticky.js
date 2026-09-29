@@ -19,7 +19,7 @@ export class ArcSticky extends DeclaredPropsMixin(LitElement) {
     offset: { type: String, reflect: true },
     // `state: true` used to sit here alongside `reflect: true`. In Lit, state
     // means *no attribute at all*, so the reflect was dead and `[stuck]` never
-    // appeared — which broke the component's own `:host([stuck])` rule below as
+    // appeared, which broke the component's own `:host([stuck])` rule below as
     // well as the selector its @prop documentation tells consumers to use. It
     // is an output, not an input: see `derived` in shared/props.js.
     stuck: flag(false, { derived: true }),

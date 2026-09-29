@@ -4,13 +4,13 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
  * Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input,
- * Textarea, and Button into a cohesive data-entry workflow.
+ * Textarea, and Button into one data-entry workflow.
  *
  * @tag arc-form
  * @status stable
  * @prop {string} action - Form action URL for native form submission. When set, the form submits to this URL using the browser's built-in mechanism.
  * @prop {string} method - HTTP method for native form submission (GET or POST). Only applies when action is set.
- * @prop {boolean} novalidate - When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still leveraging Form for data serialisation.
+ * @prop {boolean} novalidate - When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still using Form for data serialisation.
  * @prop {boolean} loading - Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.
  * @prop {boolean} disabled - Disables the entire form, propagating the disabled state to every child field. Useful for read-only previews or while awaiting permissions.
  * @prop {boolean} errorSummary - When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually.
@@ -155,7 +155,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
         }
         // Descend unconditionally. An element's `children` are its *light* DOM
         // whether or not it has a shadow root, so the old `!el.shadowRoot`
-        // guard didn't skip shadow content — it skipped the light content of
+        // guard didn't skip shadow content; it skipped the light content of
         // every wrapper that has a shadow root, which is every ARC layout
         // component. Controls inside <arc-fieldset>, <arc-card> or any grid
         // were invisible to the form: not validated, not serialized, not
@@ -208,7 +208,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
       // runs constraint validation through FormControlMixin (or owns the flags
       // itself via autoValidates = false), so its own validity is the answer.
       // The form used to re-implement `required` here with a string trim that
-      // only understood text and checkboxes — it called a date range with both
+      // only understood text and checkboxes; it called a date range with both
       // ends unset valid, and a multi-select's array `[]` truthy-non-empty.
       if (control.checkValidity && !control.checkValidity()) {
         const message = control.validationMessage || `${control.label || name} is required`;
@@ -218,8 +218,8 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
           this._flagged.add(control);
         }
       } else if (this._flagged.has(control)) {
-        // Only clear what this form put there. A consumer's own error string —
-        // a server-side rejection, say — survives a later submit.
+        // Only clear what this form put there. A consumer's own error string
+        // (a server-side rejection, say) survives a later submit.
         control.error = '';
         this._flagged.delete(control);
       }
@@ -251,7 +251,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
 
     this._errors = [];
 
-    // Native form submission — let the browser handle it
+    // Native form submission: let the browser handle it
     if (this.action) {
       this.dispatchEvent(
         new CustomEvent('arc-submit', {
@@ -260,11 +260,11 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
           composed: true,
         }),
       );
-      // Don't preventDefault — the form submits natively
+      // Don't preventDefault; the form submits natively
       return;
     }
 
-    // JS-only mode — prevent default and let the listener handle it
+    // JS-only mode: prevent default and let the listener handle it
     e.preventDefault();
     this.dispatchEvent(
       new CustomEvent('arc-submit', {
@@ -279,8 +279,8 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
    * Submit the form as though its submit button had been pressed: validation
    * runs, and `arc-submit` fires cancelably.
    *
-   * The path for a submit control the form cannot own — a wizard's "Next" in a
-   * parent toolbar, a keyboard shortcut — since a button outside the form does
+   * The path for a submit control the form cannot own: a wizard's "Next" in a
+   * parent toolbar, a keyboard shortcut, since a button outside the form does
    * not trigger it. Routed through the real `<form>` so action-mode submits
    * still navigate.
    *
@@ -302,7 +302,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
    * Reset every child control to the state it had when it first connected,
    * and clear error display.
    *
-   * Delegates to each control's formResetCallback — the same path a native
+   * Delegates to each control's formResetCallback: the same path a native
    * form.reset() takes, which never reaches these controls because they live
    * in this element's light DOM rather than inside the shadow <form>. The form
    * used to blank them instead (`value = ''`, `checked = false`), which is not

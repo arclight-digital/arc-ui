@@ -10,33 +10,33 @@ export const tabs: ComponentDef = {
 
   overview: `Tabs organize related content into separate panels that share the same page space. Only one panel is visible at a time, letting users switch context without navigating away. This makes Tabs ideal for grouping settings pages, documentation sections, or dashboard views where horizontal real estate is limited.
 
-The component follows the WAI-ARIA Tabs pattern out of the box. Each tab button carries \`role="tab"\` and its corresponding panel carries \`role="tabpanel"\`, linked via \`aria-controls\` and \`aria-labelledby\`. Focus management uses a roving tabindex so arrow keys move between tabs while Tab moves focus out of the tab list entirely, matching the behavior users expect from native OS tab controls.
+The component follows the WAI-ARIA Tabs pattern. Each tab button carries \`role="tab"\` and its corresponding panel carries \`role="tabpanel"\`, linked via \`aria-controls\` and \`aria-labelledby\`. Focus management uses a roving tabindex so arrow keys move between tabs while Tab moves focus out of the tab list entirely, matching the behavior users expect from native OS tab controls.
 
-Switching tabs moves one indicator between them — the underline in the default variant, the ground behind the selection in \`pills\` and in vertical bars — and the incoming panel rises into place rather than cutting. Both are CSS, both stop under \`prefers-reduced-motion\`, and a bar holding more tabs than room scrolls the selection into view without moving the page around it. Panels that are not active are removed from the accessibility tree and hidden with \`display: none\` so screen readers never encounter stale content.`,
+Switching tabs moves one indicator between them: the underline in the default variant, the ground behind the selection in \`pills\` and in vertical bars. The incoming panel rises into place rather than cutting. Both are CSS, both stop under \`prefers-reduced-motion\`, and a bar holding more tabs than room scrolls the selection into view without moving the page around it. Panels that are not active are removed from the accessibility tree and hidden with \`display: none\` so screen readers never encounter stale content.`,
 
   features: [
     'Arrow-key keyboard navigation between tabs (left/right for horizontal, up/down for vertical)',
     'Automatic WAI-ARIA roles: tab, tablist, and tabpanel with proper `aria-controls` linking',
     'One indicator that travels between tabs, and a panel that rises in behind it',
-    'Disabled tab support — individual tabs can be non-interactive while remaining visible',
+    'Disabled tab support: individual tabs can be non-interactive while remaining visible',
     'Programmatic selected index via the `selected` property',
     'Roving tabindex so only the active tab participates in the page Tab order',
-    'Supports rich HTML content inside each panel, not just plain text',
+    'Supports HTML content inside each panel',
   ],
 
   guidelines: {
     do: [
       'Use Tabs when content sections are closely related and users need to compare or switch between them frequently',
-      'Keep tab labels short — one or two words — so the entire tab bar fits without scrolling',
+      'Keep tab labels short (one or two words) so the entire tab bar fits without scrolling',
       'Set a sensible default `selected` index (usually 0) so the component is never empty on first render',
       'Provide meaningful panel content for every tab; avoid empty or placeholder panels in production',
       'Use the disabled state for tabs that are temporarily unavailable rather than hiding them entirely',
     ],
     dont: [
-      'Do not use Tabs for sequential steps — use a Stepper component instead',
+      'Do not use Tabs for sequential steps. Use a Stepper component instead',
       'Avoid nesting Tabs inside Tabs; the double tab bar creates confusion for keyboard and screen-reader users',
       'Do not place critical actions (like a Save button) inside a non-default tab where users may never see them',
-      'Avoid more than five or six tabs in a single group — consider a dropdown or sidebar navigation for larger sets',
+      'Avoid more than five or six tabs in a single group. Consider a dropdown or sidebar navigation for larger sets',
       'Do not rely on tab order to imply a workflow; tabs should be independently meaningful',
     ],
   },

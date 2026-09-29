@@ -1,11 +1,11 @@
 /**
- * ListboxController — shared keyboard and active-option behavior for the
+ * ListboxController: shared keyboard and active-option behavior for the
  * listbox-bearing inputs (select, combobox, multi-select, tag-input).
  *
  * All four grew the same `switch (e.key)` independently, and all four had the
  * same three defects:
  *
- *   1. ArrowUp did not open a closed listbox — only ArrowDown did — and it
+ *   1. ArrowUp did not open a closed listbox (only ArrowDown did) and it
  *      clamped at index 0 instead of wrapping, so there was no way to reach the
  *      last option with one key.
  *   2. Nothing scrolled the active option into view, so keyboard navigation
@@ -13,7 +13,7 @@
  *      (around the sixth).
  *   3. Both ARIA patterns were half-implemented at once: `aria-activedescendant`
  *      on the input *and* `role="option"` on focusable `<button>` elements. They
- *      are mutually exclusive — activedescendant means DOM focus never leaves
+ *      are mutually exclusive: activedescendant means DOM focus never leaves
  *      the input, so a focusable option puts a second, real tab stop inside a
  *      widget that claims focus is elsewhere.
  *
@@ -38,7 +38,7 @@
  *     // in the control's keydown handler, before any component-specific keys:
  *     if (this._listbox.handleKeydown(e)) return;
  *
- * `activeIndex` is the render-time source of truth — components read it rather
+ * `activeIndex` is the render-time source of truth: components read it rather
  * than keeping their own copy, and the controller requests a host update
  * whenever it changes.
  */
@@ -63,7 +63,7 @@ export class ListboxController {
    *   only when typeahead is enabled.
    * @param {(index: number) => boolean} [opts.isItemDisabled] - Whether an
    *   option refuses selection. Disabled options stay rendered and stay
-   *   counted — they are skipped by the arrow keys, Home, End and typeahead,
+   *   counted: they are skipped by the arrow keys, Home, End and typeahead,
    *   and Enter will not activate one. Omit it and nothing is disabled, which
    *   is the behaviour every consumer had before finding #6.
    * @param {boolean} [opts.typeahead=false] - Jump to an option by typing its
@@ -99,7 +99,7 @@ export class ListboxController {
    * or -1 when there is no selectable option that way.
    *
    * Bounded by the option count rather than written as a `while`, so a listbox
-   * whose options are all disabled terminates instead of spinning — the same
+   * whose options are all disabled terminates instead of spinning, the same
    * shape as `arc-tabs._seek`. Honours `wrap`: a non-wrapping listbox runs off
    * the end rather than round it, and -1 there means "stay where you are".
    */
@@ -124,7 +124,7 @@ export class ListboxController {
   /**
    * The value for `aria-activedescendant` on the focused control, or an empty
    * string when nothing is active. Empty rather than absent because a stale id
-   * pointing at a removed option is worse than none — assistive technology
+   * pointing at a removed option is worse than none: assistive technology
    * announces nothing at all.
    */
   get activeDescendantId() {
@@ -147,7 +147,7 @@ export class ListboxController {
     this.host.requestUpdate();
   }
 
-  /** Clear virtual focus — on close, or when the option set changes wholesale. */
+  /** Clear virtual focus: on close, or when the option set changes wholesale. */
   reset() {
     this._clearTypeahead();
     // Hosts call this from updated() whenever `open` changes, and on the first
@@ -161,7 +161,7 @@ export class ListboxController {
   /**
    * Keep the active index inside the current option set.
    *
-   * Call after the options change — filtering a combobox down to fewer items
+   * Call after the options change: filtering a combobox down to fewer items
    * than the active index would otherwise leave `aria-activedescendant` pointing
    * at an option that no longer exists.
    */
@@ -216,7 +216,7 @@ export class ListboxController {
       case 'Enter':
         if (!open || this._activeIndex < 0) return false;
         e.preventDefault();
-        // The key is consumed either way — a disabled active option must not
+        // The key is consumed either way: a disabled active option must not
         // fall through to a form submit just because it refused to select.
         if (!this.isDisabled(this._activeIndex)) this.opts.onSelect?.(this._activeIndex);
         return true;
@@ -254,12 +254,11 @@ export class ListboxController {
   /**
    * One step with wrapping, treating "nothing active" as before the start.
    *
-   * A non-wrapping listbox returns the out-of-range index *unclamped* — `_seek`
+   * A non-wrapping listbox returns the out-of-range index *unclamped*: `_seek`
    * is the one that decides what off-the-end means, and it already refuses an
-   * out-of-range index when `wrap` is false. Clamping here as well used to look
-   * like the bounds check and was in fact dead: every clamped index landed back
-   * on the option it started from, so both readings held position and the two
-   * guards were one guard written twice.
+   * out-of-range index when `wrap` is false. Clamping here as well would be
+   * dead code: every clamped index lands back on the option it started from,
+   * so it would only repeat `_seek`'s guard.
    */
   _step(delta, count) {
     if (count === 0) return -1;
@@ -272,7 +271,7 @@ export class ListboxController {
   /**
    * Jump to the first option starting with the typed characters.
    *
-   * Only for listboxes with no text field of their own — see the `typeahead`
+   * Only for listboxes with no text field of their own; see the `typeahead`
    * option. Repeated presses of the same letter cycle through the options that
    * start with it, which is how a native select behaves.
    */
@@ -334,7 +333,7 @@ export class ListboxController {
 
     // Manual arithmetic rather than scrollIntoView: the option is inside a panel
     // that may be in the top layer, and the native call is specified to scroll
-    // every scrollable ancestor — it would drag the page behind the panel.
+    // every scrollable ancestor; it would drag the page behind the panel.
     //
     // offsetTop/offsetHeight rather than rects, because these panels animate in
     // from scale(0.96): a rect read on the opening frame is 4% short, and a

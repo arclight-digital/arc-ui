@@ -131,7 +131,12 @@ function illegalFor(meta) {
   if (meta.kind === 'list') return '__not_a_list__';
   // A clamped number is probed out of range, which exercises the clamp wiring;
   // an unclamped one is probed with a non-number, which exercises the fallback.
-  return meta.clamp === 'toRange' ? 9999 : '__not_a_number__';
+  // Below the minimum where there is one: a count of 9999 made the heatmap
+  // render ~70,000 cells and the skeleton 9,999 rows, and both timed out.
+  if (meta.clamp !== 'toRange') return '__not_a_number__';
+  if (typeof meta.min === 'number') return meta.min - 1;
+  if (typeof meta.max === 'number') return meta.max + 1;
+  return 9999;
 }
 
 for (const tag of ADOPTED) {

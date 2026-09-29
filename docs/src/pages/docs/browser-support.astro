@@ -83,15 +83,15 @@ const headings = [
             <tr><td>CSS Custom Properties</td><td>49+</td><td>31+</td><td>9.1+</td><td>Design token system</td></tr>
             <tr><td>IntersectionObserver</td><td>51+</td><td>55+</td><td>12.1+</td><td>Infinite scroll, scroll spy</td></tr>
             <tr><td>Clipboard API</td><td>66+</td><td>63+</td><td>13.1+</td><td>Copy button (code blocks)</td></tr>
-            <tr><td><code>@media (scripting)</code></td><td>120+</td><td>113+</td><td>17+</td><td>Gates the pre-upgrade hide in base.css — degrades safely</td></tr>
+            <tr><td><code>@media (scripting)</code></td><td>120+</td><td>113+</td><td>17+</td><td>Gates the pre-upgrade hide in base.css; degrades safely</td></tr>
           </tbody>
         </table>
       </div>
 
       <p class="docs-text">
         The <code>scripting</code> media query is the one entry newer than the baseline, and
-        deliberately not a requirement. It gates the rule that hides components until they
-        upgrade; where unsupported, the query doesn't match and the hide switches <em>off</em> —
+        not a requirement. It gates the rule that hides components until they
+        upgrade; where unsupported, the query doesn't match and the hide switches <em>off</em>:
         older browsers get a brief flash of unstyled content, never hidden content. See
         <a href="/docs/accessibility#no-javascript">Without JavaScript</a>.
       </p>
@@ -110,7 +110,7 @@ const headings = [
         code='<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2/webcomponents-bundle.js"><\/script>'
       ></arc-code-block></div>
       <arc-alert variant="warning" style="margin-top:var(--space-sm)">
-        The polyfill costs ~15 KB (gzipped) and may degrade performance — prefer
+        The polyfill costs ~15 KB (gzipped) and may degrade performance. Prefer
         targeting evergreen browsers.
       </arc-alert>
     </section>
@@ -128,8 +128,8 @@ const headings = [
       <h2 class="docs-heading">See Also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/getting-started">Getting Started</a> — installation and setup</li>
-        <li><a href="/docs/frameworks">Frameworks</a> — framework-specific installation and usage</li>
+        <li><a href="/docs/getting-started">Getting Started</a>: installation and setup</li>
+        <li><a href="/docs/frameworks">Frameworks</a>: framework-specific installation and usage</li>
       </ul>
     </section>
   </div>

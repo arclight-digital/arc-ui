@@ -9,15 +9,15 @@ export const breadcrumbMenu: ComponentDef = {
   description:
     'Each breadcrumb segment doubles as a dropdown showing sibling pages at that hierarchy level. Dropdown panels match dropdown-menu styling.',
 
-  overview: `BreadcrumbMenu extends the standard breadcrumb pattern by turning each segment into a clickable dropdown trigger. When a user hovers or clicks a segment, a dropdown panel appears listing sibling pages at that hierarchy level — giving users the ability to navigate laterally within any tier of the information architecture without backtracking to a parent page first. The dropdown panels use the same styling as DropdownMenu for visual consistency across the design system.
+  overview: `BreadcrumbMenu extends the standard breadcrumb pattern by turning each segment into a clickable dropdown trigger. When a user hovers or clicks a segment, a dropdown panel appears listing sibling pages at that hierarchy level, so users can move sideways within any tier without going back to a parent page first. The dropdown panels use the same styling as DropdownMenu.
 
-This pattern is common in file managers, CMS interfaces, and documentation sites where the hierarchy is deep and users frequently need to switch between sibling items at the same depth. Instead of navigating up to a parent and then back down to a sibling, BreadcrumbMenu provides a direct shortcut that saves clicks and preserves context.
+This pattern is common in file managers, CMS interfaces, and documentation sites where the hierarchy is deep and users frequently need to switch between sibling items at the same depth. Instead of navigating up to a parent and then back down to a sibling, BreadcrumbMenu gives a direct shortcut that saves clicks and keeps context.
 
-Each item in the \`items\` array can optionally include a \`siblings\` array. When siblings are present, the segment renders a dropdown trigger with a subtle chevron indicator. When siblings are absent, the segment behaves as a standard breadcrumb link. The component dispatches \`arc-navigate\` with the selected href whenever a dropdown item or breadcrumb link is clicked, enabling client-side routing integration.`,
+Each item in the \`items\` array can optionally include a \`siblings\` array. When siblings are present, the segment renders a dropdown trigger with a subtle chevron indicator. When siblings are absent, the segment behaves as a standard breadcrumb link. The component dispatches \`arc-navigate\` with the selected href whenever a dropdown item or breadcrumb link is clicked, so you can hook it into client-side routing.`,
 
   features: [
     'Breadcrumb segments double as dropdown triggers for sibling navigation',
-    'Dropdown panels match DropdownMenu styling for consistency',
+    'Dropdown panels match DropdownMenu styling',
     'Optional siblings array per breadcrumb item',
     '`arc-navigate` event for client-side routing integration',
     'Hover and click trigger modes for mouse and touch devices',
@@ -36,11 +36,11 @@ Each item in the \`items\` array can optionally include a \`siblings\` array. Wh
       'Highlight the current page in the siblings list for orientation',
     ],
     dont: [
-      'Do not add siblings to every level — only include them where lateral navigation is meaningful',
-      'Do not use BreadcrumbMenu when the hierarchy is flat (two levels or fewer) — use Breadcrumb instead',
-      'Do not nest dropdown panels within dropdown panels — keep it to one level of expansion',
-      'Do not omit the href on the final breadcrumb segment — it should link to the current page',
-      'Do not replace primary navigation (TopBar, Sidebar) with BreadcrumbMenu — it is a secondary aid',
+      'Do not add siblings to every level. Only include them where lateral navigation is meaningful',
+      'Do not use BreadcrumbMenu when the hierarchy is flat (two levels or fewer). Use Breadcrumb instead',
+      'Do not nest dropdown panels within dropdown panels. Keep it to one level of expansion',
+      'Do not omit the href on the final breadcrumb segment; it should link to the current page',
+      'Do not replace primary navigation (TopBar, Sidebar) with BreadcrumbMenu; it is a secondary aid',
     ],
   },
 

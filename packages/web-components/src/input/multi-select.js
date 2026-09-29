@@ -95,7 +95,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
       }
 
       /* Sizes. The control wraps its chips, so height is a floor rather than a
-         fixed value — md is the base rule above. */
+         fixed value, md is the base rule above. */
       :host([size="sm"]) .ms__control { min-height: 32px; padding: 2px var(--space-xs); }
       :host([size="sm"]) .ms__input { font-size: var(--_text-sm); }
       :host([size="lg"]) .ms__input { font-size: var(--_text-md); }
@@ -225,7 +225,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
         background: rgba(var(--interactive-rgb), 0.1);
       }
 
-      /* Per-option disabled (finding #6). Still rendered and still counted —
+      /* Per-option disabled (finding #6). Still rendered and still counted,
          dropping it would renumber the list under aria-activedescendant. */
       .ms__option--disabled {
         opacity: 0.5;
@@ -252,7 +252,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
       .ms__slot-host { display: none; }
     `,
-    // animate: false — this panel has its own keyframe entrance.
+    // animate: false; this panel has its own keyframe entrance.
     managedPanelStyles('ms__dropdown', { animate: false }),
   ];
 
@@ -487,7 +487,7 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
     return item ? item.label : val;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

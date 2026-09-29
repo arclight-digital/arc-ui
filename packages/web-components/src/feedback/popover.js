@@ -53,7 +53,7 @@ export class ArcPopover extends DeclaredPropsMixin(LitElement) {
         border-radius: var(--radius-md);
         padding: var(--space-md);
         box-shadow: var(--shadow-overlay);
-        /* Out of layout while closed, not merely invisible — a
+        /* Out of layout while closed, not merely invisible: a
            visibility:hidden box still contributes scrollable overflow, and a
            panel anchored inside a trigger at the page's inline-end edge turns
            its min-width into a permanent horizontal scrollbar. Finding #95; the
@@ -169,7 +169,7 @@ export class ArcPopover extends DeclaredPropsMixin(LitElement) {
     this._openedFrom = null;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

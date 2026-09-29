@@ -5,7 +5,7 @@
  * worked but confined arc-icon to the browser: DOMParser does not exist in
  * Node, so any page that server-rendered an `<arc-icon name="…">` threw. That
  * was invisible for a long time because check-ssr renders bare tags, and a bare
- * `<arc-icon>` never reaches this code — only a named one does.
+ * `<arc-icon>` never reaches this code; only a named one does.
  *
  * The scanner itself lives in ../shared/sanitize-markup.js, which explains why
  * there is exactly one implementation rather than a browser and a server one.
@@ -36,7 +36,7 @@ const URL_ATTRIBUTES = new Set(['href', 'xlink:href', 'src', 'from', 'to', 'valu
  *
  * Only same-document references and scheme-less paths survive. A
  * `<use href="https://evil.example/#x">` pulls a remote document into the icon,
- * and `java\tscript:` is a scheme to a browser — so the check happens after
+ * and `java\tscript:` is a scheme to a browser, so the check happens after
  * stripping the characters browsers throw away.
  */
 function isSafeUrl(value) {

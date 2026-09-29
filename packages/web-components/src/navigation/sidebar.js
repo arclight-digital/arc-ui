@@ -16,8 +16,8 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @requires arc-icon
  * @prop {'left' | 'right'} position - Controls which side the sidebar appears on. Moves the border line to the opposite edge.
  * @prop {string} active - The href of the currently active sidebar link. Used to highlight the matching link with accent styling.
- * @prop {boolean} collapsed - When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail — the VS Code activity-bar shape — use `arc-rail`, which is a different component with its own labels and tooltips.
- * @prop {string} width - Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in — including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.
+ * @prop {boolean} collapsed - When true, collapses the sidebar away entirely: width 0 with its contents clipped, which is the right behaviour for a rail that slides out of the way but is not an icon-only mode. For a persistent icon rail (the VS Code activity-bar shape), use `arc-rail`, which is a different component with its own labels and tooltips.
+ * @prop {string} width - Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in, including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together.
  * @prop {boolean} glow - Enables an accent glow effect on the active sidebar link for enhanced visual emphasis.
  * @fires arc-navigate - Fired when a sidebar link is clicked
  * @slot - `arc-sidebar-section` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
@@ -49,12 +49,12 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         /* grid, not block: the one visible child is .sidebar, and a grid item
            stretches to the host box. It used to reach full height through
            .sidebar { min-height: 100% }, which resolves against the host's
-           *height* — definite when the sidebar stands alone, auto inside
+           *height*: definite when the sidebar stands alone, auto inside
            arc-app-shell, whose ::slotted rule forces it. So the rail filled the
            page everywhere except the layout it ships with. Finding #91. */
         display: grid;
         /* The ambient wash behind the rail. Inputs on :host because that is
-           where the shape token is declared — see shared/tokens.js. */
+           where the shape token is declared; see shared/tokens.js. */
         --lobe-rgb: var(--accent-primary-rgb);
         --lobe-alpha: 0.03;
         --lobe-extent: 60%;
@@ -85,7 +85,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         box-sizing: border-box;
       }
 
-      /* Ambient glow — faint accent bleed from the right edge */
+      /* Ambient glow: faint accent bleed from the right edge */
       :host([glow]) .sidebar::before {
         content: '';
         position: absolute;
@@ -97,7 +97,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         pointer-events: none;
       }
 
-      /* Border line — solid default (right edge) */
+      /* Border line: solid default (right edge) */
       .sidebar::after {
         content: '';
         position: absolute;
@@ -108,14 +108,14 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
         background: var(--divider);
       }
 
-      /* Right position — border on left edge */
+      /* Right position: border on left edge */
       :host([position="right"]) .sidebar::after {
         right: auto;
         left: 0;
       }
 
       /* Mirrored: the wash comes from the edge the rail is docked to. On :host
-         with the other inputs — see shared/tokens.js. */
+         with the other inputs; see shared/tokens.js. */
       :host([position="right"]) { --lobe-shape: ellipse at 0% 10%; }
       :host([position="right"][glow]) .sidebar::before {
         right: auto;
@@ -230,7 +230,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
       /* The links sit a step inside their heading, and the rail marks the group
          they belong to. Structural and neutral by rule: one flat --divider that
          never takes a color, a weight or a state from whichever link is
-         active. A left edge that tracks the current item is banned outright —
+         active. A left edge that tracks the current item is banned outright:
          the active row says "here" with tint and accent text, as everywhere
          else in the system. */
       .sidebar__links {
@@ -373,7 +373,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
     super();
     this.active = '';
     // Empty, not '280px'. The old default described the shell's rail rather
-    // than this component's own behaviour, which is to fill its container —
+    // than this component's own behaviour, which is to fill its container,
     // and a default nothing applied was indistinguishable from one that did.
     this.width = '';
     this.label = 'Sidebar navigation';
@@ -407,7 +407,7 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
     this.requestUpdate();
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   updated(changed) {
     if (changed.has('width')) {
       this.style.setProperty('--_width', this.width || 'auto');

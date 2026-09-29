@@ -9,11 +9,11 @@ export const stepperNav: ComponentDef = {
   description:
     'Wizard navigation with back/next/skip controls and step validation gates. Steps connected by gradient lines with interactive routing.',
 
-  overview: `StepperNav is a full wizard controller that pairs step indicators with built-in navigation buttons — Back, Next, and optional Skip. Unlike the display-only Stepper component, which simply visualises progress, StepperNav owns the routing logic: it tracks the active step, enforces linear or free-form progression, and dispatches events when the user advances, retreats, or completes the flow.
+  overview: `StepperNav is a full wizard controller that pairs step indicators with built-in navigation buttons: Back, Next, and optional Skip. Unlike the display-only Stepper component, which only shows progress, StepperNav owns the routing logic: it tracks the active step, enforces linear or free-form progression, and dispatches events when the user advances, retreats, or completes the flow.
 
-Each step is connected by gradient lines that fill as the user progresses, providing a clear visual trail of completed, active, and upcoming stages. The active step pulses with an accent-primary glow, while completed steps show a filled check indicator. When the \`linear\` prop is set, users cannot jump ahead without completing the current step — ideal for checkout flows or onboarding wizards where order matters.
+Each step is connected by gradient lines that fill as the user progresses, showing completed, active, and upcoming stages. The active step pulses with an accent-primary glow, while completed steps show a filled check indicator. When the \`linear\` prop is set, users cannot jump ahead without completing the current step, which suits checkout flows or onboarding wizards where order matters.
 
-The component dispatches \`arc-change\` on every step transition and \`arc-complete\` when the final step is confirmed, so your application can validate inputs, persist state, or redirect the user. StepperNav handles the navigation chrome while leaving step content entirely to your application — render whatever forms, media, or confirmation screens you need for each stage.`,
+The component dispatches \`arc-change\` on every step transition and \`arc-complete\` when the final step is confirmed, so your application can validate inputs, persist state, or redirect the user. StepperNav handles the navigation chrome and leaves step content to your application, so render whatever forms, media, or confirmation screens each stage needs.`,
 
   features: [
     'Built-in Back, Next, and Skip navigation buttons',
@@ -31,16 +31,16 @@ The component dispatches \`arc-change\` on every step transition and \`arc-compl
   guidelines: {
     do: [
       'Use linear mode for checkout, onboarding, or any flow where step order matters',
-      'Provide clear, concise labels for each step — two to three words maximum',
+      'Provide clear, concise labels for each step: two to three words maximum',
       'Validate the current step before allowing Next to proceed',
       'Listen for arc-complete to redirect or show a confirmation screen',
-      'Keep the total number of steps between three and six for best usability',
+      'Keep the total number of steps between three and six',
     ],
     dont: [
-      'Do not use StepperNav for display-only progress — use Stepper instead',
-      'Do not add more than seven steps — break long flows into grouped stages',
-      'Skip validation in linear mode — users expect gated progression',
-      'Do not mix StepperNav and Tabs for the same content — pick one navigation paradigm',
+      'Do not use StepperNav for display-only progress; use Stepper instead',
+      'Do not add more than seven steps: break long flows into grouped stages',
+      'Do not skip validation in linear mode: users expect gated progression',
+      'Do not mix StepperNav and Tabs for the same content; pick one navigation paradigm',
       'Do not nest StepperNav inside another StepperNav',
     ],
   },

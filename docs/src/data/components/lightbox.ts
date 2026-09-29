@@ -6,57 +6,86 @@ export const lightbox: ComponentDef = {
   tag: 'arc-lightbox',
   tier: 'content',
   interactivity: 'interactive',
-  searchKeywords: ['gallery', 'image viewer', 'zoom'],
+  searchKeywords: ['gallery', 'image viewer', 'zoom', 'photo', 'pinch'],
   description:
-    'Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery with wrapping prev/next navigation, zoom to 2x with drag-to-pan, and dismiss with Escape or a backdrop click.',
+    'Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery by arrow, key or swipe, zoom up to 4x with pinch, wheel or double-click, and dismiss with Escape, a backdrop click or a swipe down.',
 
-  overview: `Lightbox displays a gallery of images at full screen, above the page behind a blurred backdrop. It shares the overlay infrastructure with Dialog and Sheet: keyboard focus is trapped while open, page scroll is locked, Escape and a backdrop click dismiss, and focus returns to the trigger element on close. Open it from a thumbnail with \`show(index)\`, or set \`open\` and \`index\` directly.
+  overview: `Lightbox shows a gallery of images at full screen, above the page behind a blurred backdrop. It shares the overlay infrastructure with Dialog and Sheet: focus is trapped while open, page scroll is locked, Escape and a backdrop click dismiss, and focus returns to the trigger on close. Open it from a thumbnail with \`show(index)\`, or set \`open\` and \`index\` directly.
 
-The gallery is supplied through the \`images\` property rather than slotted children. Each entry is either a plain \`src\` string or a \`{ src, alt, caption }\` object, and the two forms mix freely — captions render below the image and alt text carries through to the rendered \`<img>\`. A monospace counter in the top bar shows the current position, and prev/next arrow buttons (or the arrow keys) step through the gallery, wrapping at both ends.
+There are two ways to give it pictures. Set the \`images\` property to an array of \`src\` strings or \`{ src, alt, caption, srcset, sizes, width, height }\` objects; the forms mix freely. Or set \`gallery\` to a selector for links already on the page, such as \`gallery="#photos a"\`. Each matched \`<a href>\` becomes an entry, with alt text from the image inside it and a caption from \`data-caption\`. A click on one opens the viewer on that picture. The links are read at click time, so ones added later are included, and without JavaScript they still open the full-size image.
 
-Zoom is deliberately a single level: press \`+\`, click the zoom button, or double-click the image to magnify to 2x, then drag to pan around it. Navigating to another image or closing the viewer resets the zoom. The component fires \`arc-change\` with the new index on every navigation, and \`arc-close\` is cancelable, so a consumer can veto a dismissal in progress.
+Navigation wraps at both ends: the arrow buttons, the arrow keys, Home and End, or a sideways swipe on touch. Each step fires \`arc-change\` with the new index, and the images either side of the current one are fetched ahead so a step shows at once. A slow image gets a quiet spinner after 150ms; one that fails shows a short message and its alt text instead of a broken picture.
 
-Every one of those interactions has a method behind it, which is what you need when the controls live outside the viewer — a filmstrip below it, a play/pause slideshow, a global keyboard map. \`next()\` and \`prev()\` step through the gallery and wrap at both ends, the same as the arrow buttons, firing \`arc-change\`. \`close()\` goes through the same cancelable \`arc-close\` contract as Escape and the backdrop, so a veto applies to a programmatic close too — there is no back door that skips the listener.`,
+Zoom runs from 1x to 4x. Pinch or Ctrl + wheel zooms toward the fingers or the pointer, a double-click or double-tap zooms to 2x at that spot, and \`+\`, \`-\` and \`0\` step and reset it. While zoomed, dragging and the arrow keys pan, and the image's edges never come inside the frame. Navigating or closing resets the zoom.
+
+Opened from a thumbnail, the picture grows out of it, and on close it shrinks back into the thumbnail of whichever image is showing. Each step slides the picture a short way in the direction of travel. Under reduced motion both become a plain fade. A gallery link is its own origin; for the \`images\` property, the element clicked or focused when \`show()\` ran is the origin for the image it opened on, and an entry's \`origin\` (an element or a selector) names one for any image.
+
+Add \`thumbnails\` for a filmstrip under the picture. It stays faint until you point at it or tab into it, marks the current image with a short glowing bar, and jumps on click. An entry's \`thumb\` gives it a small source; otherwise the strip uses \`src\`, loaded lazily.
+
+The top bar and the arrows fade after a few seconds without movement, and come back on any pointer movement, key press or tap. They stay while a keyboard user has focus in them. The \`actions\` slot adds your own buttons to the bar, for download or share.
+
+\`next()\`, \`prev()\` and \`close()\` drive the viewer from outside, with the same events as the built-in controls. \`arc-close\` is cancelable on every path, including a swipe down and a programmatic \`close()\`, so a veto always holds.`,
 
   features: [
     'Full-screen overlay with backdrop blur, sharing the focus-trap and scroll-lock infrastructure used by Dialog and Sheet',
-    'Accepts plain `src` strings or `{ src, alt, caption }` objects in the same `images` array',
-    'Prev/next arrow buttons and arrow-key navigation, wrapping at both ends',
-    'Single-level 2x zoom via the `+`/`-` keys, the zoom button, or a double-click, with drag-to-pan while zoomed',
-    'Monospace `3 / 12` position counter with a live region for screen readers',
-    'Caption rendered below the image when an entry provides one',
-    'Escape and backdrop click dismiss; `arc-close` is cancelable for veto',
-    '`show(index)`, `close()`, `next()` and `prev()` drive it from outside — same events, same veto, same wrapping',
-    'Fires `arc-change` with the new index on `detail.value` on every navigation',
+    'Accepts plain `src` strings or `{ src, alt, caption, srcset, sizes, width, height }` objects in the same `images` array',
+    '`gallery` builds the list from links already on the page and opens on click, with no script',
+    'Arrow buttons, arrow keys, Home/End and sideways swipes, wrapping at both ends',
+    'Zoom from 1x to 4x by pinch, Ctrl + wheel, double-click or double-tap, anchored where you point; pan by drag or arrow keys',
+    'Swipe down to close on touch',
+    'Neighbouring images preloaded; a delayed spinner for slow loads and an error state for failed ones',
+    'Controls carry their own backing so they read over bright photos, and fade when idle',
+    '`actions` slot for extra bar buttons such as download or share',
+    'Grows out of the thumbnail it was opened from and shrinks back into it on close; steps slide in the direction of travel',
+    'Optional `thumbnails` filmstrip with per-entry `thumb` sources, lazy-loaded',
+    'Monospace `3 / 12` counter; screen readers hear "3 of 12" and the alt text',
+    '`arc-close` is cancelable on every dismissal path; `arc-change` carries the new index on `detail.value`',
     'Focus is trapped while open and restored to the trigger element on close',
   ],
 
   guidelines: {
     do: [
       'Use Lightbox for photo galleries, screenshots, and any image worth inspecting at full size',
-      'Open it from a visible thumbnail with `show(index)` so the viewer starts on the image the user chose',
-      'Provide `alt` text for every entry — it also labels the dialog for screen readers',
+      'Prefer `gallery` when the thumbnails are already links to the full images; it keeps working without JavaScript',
+      'Open it from a visible thumbnail so the viewer starts on the image the user chose',
+      'Provide `alt` text for every entry. It also labels the dialog and is read out on each step',
+      'Add `thumbnails` for galleries longer than a handful of images, where the counter alone makes jumping around slow',
+      'Pass `width` and `height` when you know them, so the frame holds its shape while the image loads',
       'Use `caption` for attribution or context that should travel with the image',
       'Listen for `arc-change` when something outside the viewer should track the current image',
     ],
     dont: [
-      'Do not use Lightbox for non-image content — Dialog is the general-purpose overlay',
-      "Do not open it on page load; a full-screen takeover should always be the user's choice",
-      'Do not pass tiny thumbnails as the `src` — supply full-resolution sources, since the whole point is a closer look',
-      'Do not mix it with a second overlay at once; close one surface before opening another',
+      'Do not use Lightbox for non-image content. Dialog is the general-purpose overlay',
+      "Do not open it on page load; a full-screen takeover should be the user's choice",
+      'Do not pass small thumbnails as the `src`. Supply full-resolution sources, or a `srcset` that includes them',
+      'Do not put a second overlay on top of it; close one surface before opening another',
     ],
   },
 
-  previewHtml: `<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; max-width:480px;">
-  <arc-image id="lb-thumb-0" src="/demo/valley-300x200.jpg" alt="River between mountains" aspect="4/3" style="cursor:pointer;"></arc-image>
-  <arc-image id="lb-thumb-1" src="/demo/slope-300x200.jpg" alt="Mountain slope" aspect="4/3" style="cursor:pointer;"></arc-image>
-  <arc-image id="lb-thumb-2" src="/demo/canyon-300x200.jpg" alt="Canyon river" aspect="4/3" style="cursor:pointer;"></arc-image>
+  previewHtml: `<div id="lb-photos" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; max-width:480px;">
+  <a href="/demo/valley-1200x800.jpg" data-caption="A river valley in evening light"><img src="/demo/valley-300x200.jpg" alt="River between mountains" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:8px;"></a>
+  <a href="/demo/slope-1200x800.jpg" data-caption="The slope above the treeline"><img src="/demo/slope-300x200.jpg" alt="Mountain slope" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:8px;"></a>
+  <a href="/demo/canyon-1200x800.jpg"><img src="/demo/canyon-300x200.jpg" alt="Canyon river" style="display:block; width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:8px;"></a>
 </div>
-<arc-lightbox id="demo-lightbox"></arc-lightbox>`,
-
-  previewSetup: `const lb = el.querySelector('#demo-lightbox'); const images = [ { src: '/demo/valley-1200x800.jpg', alt: 'River between mountains', caption: 'A river valley in evening light' }, { src: '/demo/slope-1200x800.jpg', alt: 'Mountain slope', caption: 'The slope above the treeline' }, '/demo/canyon-1200x800.jpg' ]; if (lb) lb.images = images; images.forEach((img, i) => { el.querySelector('#lb-thumb-' + i)?.addEventListener('click', () => lb?.show(i)); });`,
+<arc-lightbox gallery="#lb-photos a" thumbnails></arc-lightbox>`,
 
   tabs: [
+    {
+      label: 'HTML gallery',
+      lang: 'html',
+      code: `<div id="photos">
+  <a href="/photos/valley.jpg" data-caption="A river valley in evening light">
+    <img src="/photos/valley-thumb.jpg" alt="River valley" />
+  </a>
+  <a href="/photos/slope.jpg">
+    <img src="/photos/slope-thumb.jpg" alt="Mountain slope" />
+  </a>
+</div>
+
+<arc-lightbox gallery="#photos a" thumbnails>
+  <arc-icon-button slot="actions" name="download-simple" label="Download" variant="ghost"></arc-icon-button>
+</arc-lightbox>`,
+    },
     {
       label: 'Web Component',
       lang: 'html',
@@ -65,8 +94,15 @@ Every one of those interactions has a method behind it, which is what you need w
 
 <script>
   const viewer = document.querySelector('#viewer');
+  viewer.thumbnails = true;
   viewer.images = [
-    { src: '/photos/valley.jpg', alt: 'River valley', caption: 'A river valley in evening light' },
+    {
+      src: '/photos/valley.jpg',
+      thumb: '/photos/valley-thumb.jpg',
+      alt: 'River valley',
+      caption: 'A river valley in evening light',
+      origin: '#thumb',
+    },
     { src: '/photos/slope.jpg', alt: 'Mountain slope' },
     '/photos/canyon.jpg',
   ];

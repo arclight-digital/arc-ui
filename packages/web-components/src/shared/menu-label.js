@@ -6,10 +6,9 @@ import { notifyOwner } from './hydrate-slots.js';
  *
  * The items after it, up to the next label, become one group, announced by
  * this text: the parent menu wraps them in `role="group"` labelled by it. It is
- * never focusable and never selected. It was reported missing (finding #115)
- * by a consumer titling each specialist's items in one menu, whose workaround
- * was a disabled `arc-menu-item`, which reads as a dead option rather than a
- * heading.
+ * never focusable and never selected. Use it instead of a disabled
+ * `arc-menu-item`, which reads as a dead option rather than a heading
+ * (finding #115).
  *
  * @tag arc-menu-label
  * @status stable
@@ -34,7 +33,7 @@ export class ArcMenuLabel extends LitElement {
     return this.label || this.textContent.trim();
   }
 
-  /** The menu draws this label from its own render — see notifyOwner. */
+  /** The menu draws this label from its own render; see notifyOwner. */
   updated(changed) {
     notifyOwner(this, changed, ['label']);
   }

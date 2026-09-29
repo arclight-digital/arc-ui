@@ -8,7 +8,7 @@ export const featureCard: ComponentDef = {
   interactivity: 'static',
   description: 'Card with icon, heading, description, and animated hover effects.',
 
-  overview: `FeatureCard is a promotional content block designed for landing pages, feature grids, and marketing sections. It presents an icon, heading, and description in a vertical layout with a polished gradient border hover effect that draws attention without overwhelming the content. The card's animated hover state includes an icon lift, a subtle glow from \`--glow-card-hover\`, and an expanding accent rule that creates a premium feel.
+  overview: `FeatureCard is a promotional content block designed for landing pages, feature grids, and marketing sections. It presents an icon, heading, and description in a vertical layout with a gradient border hover effect. The card's animated hover state includes an icon lift, a subtle glow from \`--glow-card-hover\`, and an expanding accent rule.
 
 When an \`href\` is provided, the entire card renders as an anchor element, making it a natural fit for feature grids that link to detail pages. Without an href, it renders as a static \`<div>\`, suitable for purely informational feature lists. The card uses a 1px padding trick with a gradient background to produce a border effect that transitions smoothly on hover.
 
@@ -27,7 +27,7 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
 
   guidelines: {
     do: [
-      'Use in a CSS grid for feature grids — the card fills its height via flex layout',
+      'Use in a CSS grid for feature grids. The card fills its height via flex layout',
       'Provide an href when the card should navigate to a detail or docs page',
       'Keep descriptions concise (one to two sentences) for scannable feature lists',
       'Use the icon slot for SVG icons when you need precise sizing and color control',
@@ -35,10 +35,10 @@ The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \
     ],
     dont: [
       'Do not nest interactive elements (buttons, links) inside a feature card that already has an href',
-      'Do not use long paragraph-length descriptions — the card is designed for brief summaries',
-      'Do not mix feature cards with value cards in the same grid — choose one style per section',
-      'Do not override the gradient border with a flat color — it loses the signature hover effect',
-      'Do not use feature cards for data display — use value cards or stat components instead',
+      'Do not use long paragraph-length descriptions. The card is designed for brief summaries',
+      'Do not mix feature cards with value cards in the same grid. Choose one style per section',
+      'Do not override the gradient border with a flat color. It loses the signature hover effect',
+      'Do not use feature cards for data display. Use value cards or stat components instead',
     ],
   },
 

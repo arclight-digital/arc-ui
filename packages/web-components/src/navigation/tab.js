@@ -9,8 +9,8 @@ import { notifyOwner } from '../shared/hydrate-slots.js';
  *
  * @tag arc-tab
  * @status stable
- * @prop {string} label - Text displayed on the tab button. Keep labels concise — one or two words — to prevent the tab bar from overflowing.
- * @prop {boolean} disabled - When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible — disabling is not a way to hide a panel.
+ * @prop {string} label - Text displayed on the tab button. Keep labels concise (one or two words) to prevent the tab bar from overflowing.
+ * @prop {boolean} disabled - When true, the tab button is dimmed, is skipped by the arrow keys and cannot be selected by click. A disabled tab that is already selected stays visible; disabling is not a way to hide a panel.
  * @slot - Default content.
  */
 export class ArcTab extends DeclaredPropsMixin(LitElement) {
@@ -31,7 +31,7 @@ export class ArcTab extends DeclaredPropsMixin(LitElement) {
 
   /**
    * The tab bar renders `label` and `disabled` off its arc-tab children, which
-   * are light-DOM siblings rather than reactive inputs of the group — so a
+   * are light-DOM siblings rather than reactive inputs of the group, so a
    * change here has to tell the group, or the button keeps the old text and
    * stays clickable after being disabled.
    */

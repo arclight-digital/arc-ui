@@ -313,7 +313,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
         .dropdown { animation: none; }
       }
     `,
-    // animate: false — this panel has its own keyframe entrance.
+    // animate: false; this panel has its own keyframe entrance.
     managedPanelStyles('dropdown', { animate: false }),
   ];
 
@@ -345,7 +345,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
       anchor: () => this.shadowRoot?.querySelector('.input-wrapper'),
       floating: () => this.shadowRoot?.querySelector('.dropdown'),
       // The calendar sizes to its own content (min-width: 280px) and hangs off
-      // the input's left edge — matching the input's width instead would squash
+      // the input's left edge; matching the input's width instead would squash
       // a narrow field's calendar or stretch a wide one's.
       align: () => 'start',
       offset: 4,
@@ -380,7 +380,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
   }
 
   /**
-   * Anchor the calendar whenever `open` changes — on *either* path.
+   * Anchor the calendar whenever `open` changes, on *either* path.
    *
    * This used to live in `_toggleDropdown`, which is only the click path, so
    * `el.open = true` (documented and supported) showed today's month rather
@@ -528,7 +528,7 @@ export class ArcDatePicker extends DeclaredPropsMixin(FormControlMixin(LitElemen
       });
     }
 
-    // Next month fill — fill to 42 cells (6 rows)
+    // Next month fill: fill to 42 cells (6 rows)
     const remaining = 42 - days.length;
     for (let d = 1; d <= remaining; d++) {
       const nextMonth = month === 11 ? 0 : month + 1;

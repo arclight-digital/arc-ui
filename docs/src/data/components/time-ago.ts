@@ -8,15 +8,15 @@ export const timeAgo: ComponentDef = {
   interactivity: 'interactive',
   description: 'Relative time display that auto-updates ("3 minutes ago", "yesterday").',
 
-  overview: `TimeAgo renders a human-readable relative timestamp from an ISO date string — "3 minutes ago", "yesterday", "in 2 hours" — and keeps it live by recalculating on an adaptive interval. Closer timestamps update more frequently (every 60 seconds within the first hour) while older ones settle to hourly checks, keeping the display accurate without unnecessary work.
+  overview: `TimeAgo renders a human-readable relative timestamp from an ISO date string ("3 minutes ago", "yesterday", "in 2 hours") and keeps it live by recalculating on an adaptive interval. Closer timestamps update more frequently (every 60 seconds within the first hour) while older ones settle to hourly checks.
 
-The component outputs a semantic \`<time>\` element with the machine-readable \`datetime\` attribute preserved, so search engines, screen readers, and browser extensions can parse the exact date. A \`title\` attribute provides the full formatted date on hover for users who need precision. Future dates are handled naturally — "in 5 minutes", "in 3 days" — making TimeAgo suitable for countdowns, scheduled events, and deploy timers.
+The component outputs a semantic \`<time>\` element with the machine-readable \`datetime\` attribute preserved, so search engines, screen readers, and browser extensions can parse the exact date. A \`title\` attribute provides the full formatted date on hover for users who need precision. Future dates work too ("in 5 minutes", "in 3 days"), so TimeAgo suits countdowns, scheduled events and deploy timers.
 
-Under the hood it uses \`Intl.RelativeTimeFormat\` for locale-aware formatting, so switching the \`locale\` prop from \`en-US\` to \`de-DE\` produces "vor 3 Minuten" without any extra configuration. The live update interval self-adjusts as time passes: sub-hour timestamps poll every minute, sub-day every 5 minutes, and everything else every hour. Set \`live="false"\` to disable auto-updates entirely for static snapshots.`,
+It uses \`Intl.RelativeTimeFormat\` for locale-aware formatting, so switching the \`locale\` prop from \`en-US\` to \`de-DE\` produces "vor 3 Minuten" without any extra configuration. The live update interval self-adjusts as time passes: sub-hour timestamps poll every minute, sub-day every 5 minutes, and everything else every hour. Set \`live="false"\` to disable auto-updates entirely for static snapshots.`,
 
   features: [
     'Semantic <time> element with machine-readable datetime attribute',
-    'Adaptive live updates — faster for recent timestamps, slower for old ones',
+    'Adaptive live updates: faster for recent timestamps, slower for old ones',
     'Intl.RelativeTimeFormat for locale-aware output (BCP 47 locale prop)',
     'Future date support ("in X minutes", "in X days")',
     'Full formatted date in title attribute for hover tooltip',
@@ -35,10 +35,10 @@ Under the hood it uses \`Intl.RelativeTimeFormat\` for locale-aware formatting, 
       'Set the locale prop to match your app locale for correct relative formatting',
     ],
     dont: [
-      'Do not use TimeAgo for countdown timers with second-level precision — use CountdownTimer instead',
-      'Do not pass unparseable date strings — the component renders empty for invalid dates',
+      'Do not use TimeAgo for countdown timers with second-level precision. Use CountdownTimer instead',
+      'Do not pass unparseable date strings. The component renders empty for invalid dates',
       'Do not rely on TimeAgo as the sole date display when exact timestamps are critical (e.g. legal, financial)',
-      'Do not use for dates that need a specific format like "Feb 16, 2026" — use a date formatter instead',
+      'Do not use for dates that need a specific format like "Feb 16, 2026". Use a date formatter instead',
     ],
   },
 

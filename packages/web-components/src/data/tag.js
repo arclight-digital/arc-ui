@@ -33,7 +33,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
       'error',
       // Absorbed from arc-badge (4.2), which is the only variant it had that
       // arc-tag did not. V4-SCOPE §3 read this row as "no new prop needed",
-      // which is true of the props and not of the enum behind one — a badge
+      // which is true of the props and not of the enum behind one; a badge
       // with variant="info" would have fallen through to `default` here.
       'info',
     ]),
@@ -100,7 +100,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
       }
 
       /* Absorbed from arc-badge, and copied from it verbatim including the flat
-         color — the other five mix toward --text-primary, info does not, and
+         color: the other five mix toward --text-primary, info does not, and
          a merge is the wrong moment to quietly restyle the thing being merged. */
       :host([variant="info"]) .tag {
         border-color: rgba(var(--color-info-rgb), 0.2);
@@ -108,7 +108,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
         background: rgba(var(--color-info-rgb), 0.06);
       }
 
-      /* One hover rule for every variant — see arc-badge. */
+      /* One hover rule for every variant; see arc-badge. */
       .tag:hover { box-shadow: var(--glow-status); }
 
       /* Sizes */
@@ -166,7 +166,7 @@ export class ArcTag extends DeclaredPropsMixin(LitElement) {
 
   /**
    * A custom color is the consumer's, and the theme will not repaint it to
-   * make it legible — so say so when it isn't. The mix the palette applies is
+   * make it legible, so say so when it isn't. The mix the palette applies is
    * solved for our own accents, and a grey passed for a category chip is
    * exactly the case it does not cover.
    */

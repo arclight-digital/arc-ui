@@ -6,7 +6,7 @@ import { DeclaredPropsMixin, oneOf, int } from '../shared/props.js';
 
 /**
  * The smallest scroll offset that puts `[start, start + size]` inside a port of
- * `port` currently at `offset` — the one-axis form of "nearest".
+ * `port` currently at `offset`; the one-axis form of "nearest".
  */
 function nearestScroll(offset, port, start, size) {
   if (start < offset) return start;
@@ -34,7 +34,7 @@ function nearestScroll(offset, port, start, size) {
 export class ArcTabs extends DeclaredPropsMixin(LitElement) {
   /**
    * `max` names a getter rather than a literal, so the bound tracks the tab
-   * count — this is what makes the "clamped to the nearest valid index" claim
+   * count: this is what makes the "clamped to the nearest valid index" claim
    * in the JSDoc above true rather than aspirational (finding #1).
    */
   static properties = {
@@ -56,7 +56,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
       :host {
         display: block;
         /* The indicator's light. A lobe shape substitutes its var()s at the
-           element that declares it, and the shapes are declared on :host — an
+           element that declares it, and the shapes are declared on :host: an
            input set on the indicator itself would paint in the fallback color
            with nothing failing. */
         --lobe-rgb: var(--interactive-rgb);
@@ -87,7 +87,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
       /* ── The indicator ──
          One element for every variant and orientation: the component hands it
          the selected button's box and CSS decides what to paint inside that
-         box. This is what makes a selection *travel* — the tab you left and
+         box. This is what makes a selection *travel*: the tab you left and
          the tab you chose are connected by the same piece of light moving
          between them, which is the one authored moment here. Everything else
          in the bar stays quiet so the move stays legible. */
@@ -109,7 +109,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
       }
 
       /* Measured for the first time, or re-measured after a resize. Neither is
-         a selection, so neither travels — without this the indicator flies in
+         a selection, so neither travels. Without this the indicator flies in
          from the list's origin on load and lurches on every reflow. */
       .tabs__ind.is-instant { transition: none; }
 
@@ -155,7 +155,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         padding: var(--touch-pad) var(--space-md);
         min-height: var(--touch-min);
         cursor: pointer;
-        /* Not a state — the gutter the indicator's line sits in, and the 1px
+        /* Not a state: the gutter the indicator's line sits in, and the 1px
            of overlap that puts it on top of the divider rather than above it. */
         border-bottom: 2px solid transparent;
         margin-bottom: -1px;
@@ -223,7 +223,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         line-height: var(--body-lh);
       }
 
-      /* The panel does not cut — it arrives, once, on the switch that caused
+      /* The panel does not cut; it arrives, once, on the switch that caused
          it. The docs have promised this transition since v2. */
       .tabs__panel.is-entering {
         animation: tabs-panel-in var(--duration-enter) var(--ease-out) both;
@@ -261,10 +261,10 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
         text-align: start;
       }
 
-      /* State is tint, glow and accent text. The colored edge this used to run
-         down the side of the selected tab is the house's hardest ban, and the
-         rail beside it is structure — one flat --divider that never changes
-         colour — so the selection has to be carried by light instead. */
+      /* State is tint, glow and accent text. A colored edge down the side of
+         the selected tab is the house's hardest ban, and the
+         rail beside it is structure (one flat --divider that never changes
+         colour), so the selection has to be carried by light instead. */
       :host([orientation="vertical"]) .tabs__ind::after { display: none; }
 
       :host([orientation="vertical"]) .tabs__ind::before {
@@ -301,7 +301,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
     super();
     this._tabs = [];
     // Re-measure when the bar's width changes. Wrapping, a font landing late, a
-    // pane being dragged — each of them moves every tab after the first, and an
+    // pane being dragged: each of them moves every tab after the first, and an
     // indicator that only measured on selection would be left behind by all
     // three. Connection-scoped, so reparenting the bar does not silently end it.
     observeResize(this, '.tabs__list', () => this._syncIndicator({ instant: true }));
@@ -309,8 +309,8 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
 
   /**
    * Give the indicator the selected button's box. `instant` suppresses the
-   * transition for the measurements that are not selections — the first one,
-   * and every resize — so the indicator appears where it belongs instead of
+   * transition for the measurements that are not selections: the first one,
+   * and every resize, so the indicator appears where it belongs instead of
    * travelling there from the list's origin.
    */
   _syncIndicator({ instant = false } = {}) {
@@ -343,7 +343,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * Bring the selected button inside the bar's own scrollport — because the
+   * Bring the selected button inside the bar's own scrollport, because the
    * arrow keys walked past the edge, or because the bar opened on a tab that
    * was never on screen, which is how a bar with more tabs than room used to
    * render with no visible selection at all.
@@ -450,7 +450,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
     else if (e.key === 'End') next = this._seek(tabs.length, -1);
     else return;
 
-    // The key is ours whether or not a target survives the disabled filter —
+    // The key is ours whether or not a target survives the disabled filter:
     // an all-disabled bar must not scroll the page instead.
     e.preventDefault();
     if (next === undefined) return;
@@ -472,7 +472,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
     if (switched && changed.get('selected') !== undefined) this._playPanelEnter();
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
     this._syncIndicator({ instant: true });
@@ -506,7 +506,7 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
 
         <!--
           One panel, one id. Every tab's aria-controls points at it because
-          every tab controls it — the panel does not swap elements, it swaps
+          every tab controls it. The panel does not swap elements, it swaps
           which arc-tab child is unhidden inside it. Per-tab ids were the
           defect: only the selected tab's reference resolved (finding #2).
         -->

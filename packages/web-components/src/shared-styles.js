@@ -10,9 +10,9 @@ import { hostTokens, hostTouchTokens } from './generated/host-tokens.js';
  *
  * Only static tokens (typography, spacing, radii, transitions, layout) live here
  * as fallback defaults, and they are GENERATED from shared/tokens.js rather than
- * written here — see generated/host-tokens.js. This block used to be a second,
- * hand-maintained copy of values that also live in the token tree, and nineteen
- * of the eighty-one had drifted apart, two of them visibly. Edit the tree.
+ * written here; see generated/host-tokens.js. A hand-maintained copy here
+ * drifted from the token tree (nineteen of eighty-one values, two of them
+ * visibly). Edit the tree.
  */
 /**
  * Just the box-sizing reset, for components an application writes itself.
@@ -39,7 +39,7 @@ export const tokenStyles = css`
 
   /* Neutralise the UA stylesheet for [popover]. PositionController promotes
      floating panels to the top layer, and the UA rules for a popover include
-     a solid border, padding, a canvas background and inset:0/margin:auto —
+     a solid border, padding, a canvas background and inset:0/margin:auto,
      enough to inflate a measured panel by 14px and to paint a border no
      component asked for. :where() keeps this at zero specificity so it beats
      the UA origin but loses to every rule a component writes for itself. */
@@ -76,14 +76,14 @@ export const tokenStyles = css`
   /* Reduced motion, once, for every component that adopts these styles.
 
      This was copy-pasted verbatim into sixty-nine component files while fifteen
-     animating components had no guard at all — which is the usual outcome when
+     animating components had no guard at all, which is the usual outcome when
      a cross-cutting rule is a convention rather than a place. Components keep
      their own blocks only for what this cannot express: scroll-behavior,
      animation-play-state, a transform that must be neutralised rather than
      shortened.
 
      0.01ms rather than "animation: none" on purpose. A component that removes
-     itself on animationend — the exiting toast and snackbar both do — would
+     itself on animationend (the exiting toast and snackbar both do) would
      wait forever for an event that a canceled animation never fires. A
      duration this short is imperceptible and still completes. */
   @media (prefers-reduced-motion: reduce) {

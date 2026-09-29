@@ -10,7 +10,7 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
  * @status stable
  * @child arc-tree-item
  * @requires arc-tree-item
- * @fires {CustomEvent<{ item: { label: string, icon: string }, path: string[], expanded: boolean }>} arc-toggle - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it — two nodes may share a label.
+ * @fires {CustomEvent<{ item: { label: string, icon: string }, path: string[], expanded: boolean }>} arc-toggle - Fired when a tree node is expanded or collapsed. `path` is the node's label chain from the root and is what identifies it: two nodes may share a label.
  * @fires {CustomEvent<{ value: string, item: { label: string, icon: string }, path: string[] }>} arc-select - Fired when a tree item is selected. `path` is the node's label chain from the root, matching `arc-toggle`.
  * @slot - `arc-tree-item` elements. Read as data: the component renders its own copy of each, and the elements you author stay hidden. Target the rendered copy, by role and text, in tests.
  * @csspart base - The root element.
@@ -150,8 +150,8 @@ export class ArcTreeView extends LitElement {
    * nodes called `index.js`, and "General" under two different sections is one
    * form. Keyed on the label, selecting one marked both, and expanding one
    * `assets` folder opened every other. The component already computed a path
-   * key for its roving focus — `_pathKey(path)` — so the identity existed and
-   * two of the three state maps simply were not using it.
+   * key for its roving focus (`_pathKey(path)`), so the identity existed and
+   * two of the three state maps were not using it.
    */
   _isExpanded(item, key) {
     if (this._expandedSet.has(key)) return true;
@@ -303,7 +303,7 @@ export class ArcTreeView extends LitElement {
     `;
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

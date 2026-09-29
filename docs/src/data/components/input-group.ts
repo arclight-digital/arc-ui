@@ -32,8 +32,8 @@ The focus-within pseudo-class triggers the accent border and glow on the outer c
       'Match the group `size` to the slotted input size for alignment',
     ],
     dont: [
-      'Do not put multiple inputs inside a single input group — use one input per group',
-      "Do not use input group for purely decorative icons — use the input's own icon slot if available",
+      'Do not put multiple inputs inside a single input group. Use one input per group',
+      "Do not use input group for purely decorative icons. Use the input's own icon slot if available",
       'Do not nest input groups inside each other',
     ],
   },

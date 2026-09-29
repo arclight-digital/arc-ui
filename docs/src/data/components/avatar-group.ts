@@ -8,15 +8,15 @@ export const avatarGroup: ComponentDef = {
   interactivity: 'static',
   description: 'Stack of avatars with overflow count badge.',
 
-  overview: `AvatarGroup arranges a collection of arc-avatar components in a horizontally overlapping stack, with a "+N" overflow counter that appears when the number of avatars exceeds the \`max\` threshold. The overlap is controlled by three presets — sm (-8px), md (-12px), and lg (-16px) — applied as negative margin-left on every child except the first, creating the characteristic fanned-card effect.
+  overview: `AvatarGroup arranges a collection of arc-avatar components in a horizontally overlapping stack, with a "+N" overflow counter that appears when the number of avatars exceeds the \`max\` threshold. The overlap is controlled by three presets (sm -8px, md -12px, lg -16px) applied as negative margin-left on every child except the first.
 
-When avatars are slotted in, the component listens for slotchange events and dynamically manages visibility. Avatars beyond the \`max\` count are hidden via \`display: none\`, and a circular overflow badge (styled to match the avatar aesthetic) shows the remaining count. Each visible avatar receives a descending z-index so earlier avatars stack on top, creating the correct visual overlap order.
+When avatars are slotted in, the component listens for slotchange events and manages visibility. Avatars beyond the \`max\` count are hidden via \`display: none\`, and a circular overflow badge (styled to match the avatar aesthetic) shows the remaining count. Each visible avatar gets a descending z-index so earlier avatars stack on top.
 
-AvatarGroup is marked as a hybrid component: the overlapping layout works in pure CSS, but the overflow counter logic — hiding excess avatars and computing the "+N" label — requires JavaScript. The group wrapper uses \`role="group"\` with \`aria-label="Avatar group"\` for assistive technology, and the overflow badge uses the same Tomorrow font and elevated background as the avatar initials fallback for visual cohesion.`,
+AvatarGroup is marked as a hybrid component: the overlapping layout works in pure CSS, but the overflow counter logic (hiding excess avatars and computing the "+N" label) requires JavaScript. The group wrapper uses \`role="group"\` with \`aria-label="Avatar group"\` for assistive technology, and the overflow badge uses the same Tomorrow font and elevated background as the avatar initials fallback.`,
 
   features: [
     'Automatic "+N" overflow counter when slotted avatars exceed the max threshold',
-    'Three overlap presets: sm (-8px), md (-12px), lg (-16px) for adjustable density',
+    'Three overlap presets: sm (-8px), md (-12px), lg (-16px)',
     'Dynamic slot management with slotchange listener for visibility toggling',
     'Descending z-index assignment for correct visual stacking order',
     'Overflow badge styled to match avatar aesthetics (Tomorrow font, elevated background, circular shape)',
@@ -28,16 +28,16 @@ AvatarGroup is marked as a hybrid component: the overlapping layout works in pur
     do: [
       'Set a reasonable max (3-5) to keep the group compact and scannable',
       'Use consistent avatar sizes within a group for uniform overlap alignment',
-      'Pair with arc-avatar components exclusively — the overlap styling targets slotted children',
+      'Pair with arc-avatar components exclusively; the overlap styling targets slotted children',
       'Use the md overlap preset for most contexts; sm for tight spaces, lg for larger avatars',
       'Place in team member sections, comment threads, or collaboration indicators',
     ],
     dont: [
-      'Do not mix different avatar sizes in the same group — overlap alignment will be inconsistent',
+      'Do not mix different avatar sizes in the same group; overlap alignment will be inconsistent',
       'Do not set max to a very high number and rely solely on the counter; limit visible avatars for clarity',
-      'Do not slot non-avatar elements — the overlap margin and z-index logic assumes arc-avatar children',
+      'Do not slot non-avatar elements; the overlap margin and z-index logic assumes arc-avatar children',
       'Do not remove the overflow badge styling; it provides critical information about hidden members',
-      'Do not use AvatarGroup for a single avatar — it adds unnecessary wrapper markup',
+      'Do not use AvatarGroup for a single avatar; it only adds wrapper markup',
     ],
   },
 

@@ -196,7 +196,7 @@ describe('arc-sheet snap points', () => {
   const handle = (el) => el.shadowRoot.querySelector('[part~="handle"]');
   const height = (el) => Math.round(panel(el).getBoundingClientRect().height);
   /** Wait out the height transition. */
-  const settledAt = (el, px) => until(() => Math.abs(height(el) - px) <= 1, { timeout: 1500 });
+  const settledAt = (el, px) => until(() => Math.abs(height(el) - px) <= 1, { timeout: 3000 });
   const changes = (el) => {
     const seen = [];
     el.addEventListener('arc-change', (e) => seen.push(e.detail.value));
@@ -279,9 +279,22 @@ describe('arc-sheet snap points', () => {
     expect(el.snap).to.equal(0);
   });
 
+  it('follows the pointer during a drag with no easing behind it', async () => {
+    const el = await sheet();
+    expect(await settledAt(el, 100), 'rests at 100px before the drag').to.equal(true);
+    const panel = el.shadowRoot.querySelector('.sheet__panel');
+    const h = handle(el);
+    const box = h.getBoundingClientRect();
+    h.dispatchEvent(new PointerEvent('pointerdown', pointer(box, box.top + 4)));
+    h.dispatchEvent(new PointerEvent('pointermove', pointer(box, box.top + 4 - 120)));
+    expect(getComputedStyle(panel).transitionDuration.split(',').every((d) => parseFloat(d) === 0)).to.equal(true);
+    expect(Math.round(panel.getBoundingClientRect().height)).to.equal(220);
+    h.dispatchEvent(new PointerEvent('pointerup', pointer(box, box.top + 4 - 120)));
+  });
+
   it('snaps a drag to the nearest height', async () => {
     const el = await sheet();
-    await settledAt(el, 100);
+    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
     const seen = changes(el);
     await drag(el, -150); // up to 250: nearer 300 than 100
     await settle(el);
@@ -291,7 +304,7 @@ describe('arc-sheet snap points', () => {
 
   it('settles back when a drag ends nearer where it started', async () => {
     const el = await sheet();
-    await settledAt(el, 100);
+    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
     const seen = changes(el);
     await drag(el, -40);
     await settle(el);
@@ -301,7 +314,7 @@ describe('arc-sheet snap points', () => {
 
   it('goes to the next height on a flick, however short', async () => {
     const el = await sheet();
-    await settledAt(el, 100);
+    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
     const seen = changes(el);
     await flick(el, -45); // 145: nearer 100, but moving up fast
     await settle(el);
@@ -310,7 +323,7 @@ describe('arc-sheet snap points', () => {
 
   it('requests a close when dragged well below the smallest height', async () => {
     const el = await sheet();
-    await settledAt(el, 100);
+    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
     let closes = 0;
     el.addEventListener('arc-close', () => closes++);
     await drag(el, 80); // to 20px, under 60% of 100

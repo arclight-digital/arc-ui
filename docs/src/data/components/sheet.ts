@@ -9,11 +9,11 @@ export const sheet: ComponentDef = {
   description:
     'A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a blurred backdrop, header, scrollable body, and footer slot.',
 
-  overview: `Sheet provides a modal-like surface that slides into view from the bottom or right edge of the screen, ideal for contextual actions, filters, or detail views that do not warrant a full-page navigation. When opened, a backdrop with a 4px blur covers the rest of the UI and clicking it dismisses the sheet. The bottom variant includes a drag-handle bar at the top for visual affordance, while the right variant omits it in favour of a clean sidebar aesthetic.
+  overview: `Sheet provides a modal-like surface that slides into view from the bottom or right edge of the screen, suited to contextual actions, filters, or detail views that do not warrant a full-page navigation. When opened, a backdrop with a 4px blur covers the rest of the UI and clicking it dismisses the sheet. The bottom variant includes a drag-handle bar at the top as an affordance, while the right variant omits it.
 
-The panel is structured into three zones: a header row with a heading and close button, a scrollable body for slotted content, and a sticky footer for action buttons. The header and footer slots allow full customisation — you can replace the default heading with any markup via the \`header\` named slot, and populate the footer with buttons via the \`footer\` slot. The body area uses \`overflow-y: auto\` so long content scrolls naturally within the panel.
+The panel is structured into three zones: a header row with a heading and close button, a scrollable body for slotted content, and a sticky footer for action buttons. You can replace the default heading with any markup via the \`header\` named slot, and put buttons in the \`footer\` slot. The body area uses \`overflow-y: auto\` so long content scrolls naturally within the panel.
 
-Sheet manages focus trapping and scroll locking automatically. When opened, it locks \`document.body\` overflow to prevent background scrolling, moves focus to the close button, and listens for the Escape key to dismiss. The \`arc-open\` event fires when the sheet becomes visible and \`arc-close\` fires on dismissal, allowing parent components to synchronize state or perform cleanup.`,
+Sheet manages focus trapping and scroll locking automatically. When opened, it locks \`document.body\` overflow to prevent background scrolling, moves focus to the close button, and listens for the Escape key to dismiss. The \`arc-open\` event fires when the sheet becomes visible and \`arc-close\` fires on dismissal, so parent components can sync state or clean up.`,
 
   features: [
     '`snap-points` for a bottom sheet that rests at several heights (a peek strip and a full view): drag the handle between them, or step with the arrow keys',
@@ -22,7 +22,7 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
     'Backdrop overlay with `backdrop-filter: blur(4px)` that dismisses the sheet on click',
     'Bottom variant includes a rounded drag-handle bar for mobile touch affordance',
     'Structured layout with header, scrollable body, and sticky footer zones',
-    'Named slots for `header` and `footer` allow full customisation of chrome areas',
+    'Named slots for `header` and `footer` to customise the chrome areas',
     'Automatic scroll locking on `document.body` when open, restored on close',
     'Escape key dismissal with focus auto-moved to the close button on open',
     'Fires `arc-open` and `arc-close` custom events for lifecycle synchronisation',
@@ -37,11 +37,11 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
       'Populate the `footer` slot with primary and secondary action buttons for task-oriented sheets',
     ],
     dont: [
-      'Do not nest a Sheet inside another Sheet — use a Dialog for layered overlays instead',
-      'Do not use Sheet for brief confirmations or alerts — use Confirm or Toast for those patterns',
-      'Do not set both `side="bottom"` and `side="right"` — only one placement is active at a time',
-      'Do not place critical navigation inside a Sheet — it is dismissible and should contain optional content',
-      'Avoid overloading the sheet body with too many form fields — consider a full page for complex forms',
+      'Do not nest a Sheet inside another Sheet; use a Dialog for layered overlays instead',
+      'Do not use Sheet for brief confirmations or alerts; use Confirm or Toast for those patterns',
+      'Do not set both `side="bottom"` and `side="right"`: only one placement is active at a time',
+      'Do not place critical navigation inside a Sheet: it is dismissible and should contain optional content',
+      'Avoid overloading the sheet body with too many form fields; consider a full page for complex forms',
     ],
   },
 

@@ -37,8 +37,8 @@ const headings = [
 cd arc-ui
 pnpm install"></arc-code-block></div>
       <p class="docs-text">
-        The repo pins its package manager via the <code>packageManager</code> field —
-        use <strong>pnpm</strong> for all repository commands.
+        The repo pins its package manager via the <code>packageManager</code> field.
+        Use <strong>pnpm</strong> for all repository commands.
       </p>
     </section>
 
@@ -51,7 +51,7 @@ pnpm install"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="bash" code="pnpm dev"></arc-code-block></div>
       <p class="docs-text">
         After editing Web Component source in <code>packages/web-components/src/</code> or tokens in
-        <code>shared/tokens.js</code>, regenerate everything — framework wrappers, HTML examples, and CSS:
+        <code>shared/tokens.js</code>, regenerate everything (framework wrappers, HTML examples, and CSS):
       </p>
       <div class="docs-code"><arc-code-block language="bash" code="pnpm generate"></arc-code-block></div>
       <arc-alert variant="warning">
@@ -60,7 +60,7 @@ pnpm install"></arc-code-block></div>
         by Prism and will be overwritten.
       </arc-alert>
       <p class="docs-text">
-        Version bumps go through a script that updates every package at once — never edit
+        Version bumps go through a script that updates every package at once. Never edit
         <code>package.json</code> versions by hand:
       </p>
       <div class="docs-code"><arc-code-block language="bash" code="pnpm bump-versions <version>"></arc-code-block></div>
@@ -75,16 +75,16 @@ pnpm install"></arc-code-block></div>
       </p>
       <p class="docs-text">Components are organized into seven tiers:</p>
       <ul class="docs-list">
-        <li><strong>Layout</strong> — Page scaffolding (AppShell, Container, PageLayout)</li>
-        <li><strong>Navigation</strong> — Menus, links, tabs, breadcrumbs</li>
-        <li><strong>Content</strong> — Cards, avatars, icons, carousels</li>
-        <li><strong>Data</strong> — Tables, lists, badges, meters, stats, timelines</li>
-        <li><strong>Typography</strong> — Code blocks, markdown, text, kbd</li>
-        <li><strong>Input</strong> — Buttons, forms, selects, sliders</li>
-        <li><strong>Feedback</strong> — Modals, dialogs, toasts, tooltips</li>
+        <li><strong>Layout</strong>: Page scaffolding (AppShell, Container, PageLayout)</li>
+        <li><strong>Navigation</strong>: Menus, links, tabs, breadcrumbs</li>
+        <li><strong>Content</strong>: Cards, avatars, icons, carousels</li>
+        <li><strong>Data</strong>: Tables, lists, badges, meters, stats, timelines</li>
+        <li><strong>Typography</strong>: Code blocks, markdown, text, kbd</li>
+        <li><strong>Input</strong>: Buttons, forms, selects, sliders</li>
+        <li><strong>Feedback</strong>: Modals, dialogs, toasts, tooltips</li>
       </ul>
       <p class="docs-text">
-        Design tokens live in <code>shared/tokens.js</code> — the single source of truth.
+        Design tokens live in <code>shared/tokens.js</code>, the single source of truth.
         <code>shared/base.css</code> is generated from it by <code>pnpm generate</code>.
         Compound tokens must use <code>var()</code> references so consumers can override
         just the base tokens.
@@ -139,9 +139,9 @@ pnpm install"></arc-code-block></div>
       <h2 class="docs-heading">See Also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/getting-started">Getting Started</a> — installation and setup</li>
-        <li><a href="/docs/accessibility">Accessibility</a> — accessibility principles and support</li>
-        <li><a href="/docs/tokens">Tokens</a> — design token reference</li>
+        <li><a href="/docs/getting-started">Getting Started</a>: installation and setup</li>
+        <li><a href="/docs/accessibility">Accessibility</a>: accessibility principles and support</li>
+        <li><a href="/docs/tokens">Tokens</a>: design token reference</li>
       </ul>
     </section>
   </div>

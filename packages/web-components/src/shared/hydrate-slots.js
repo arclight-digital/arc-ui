@@ -1,24 +1,24 @@
 /**
- * hydrate-slots.js — deliver the slotchange that declarative shadow DOM eats.
+ * hydrate-slots.js: deliver the slotchange that declarative shadow DOM eats.
  *
  * Under DSD the parser attaches the shadow root and assigns the light-DOM
  * children to their slots before any script runs. The element then upgrades
  * and Lit adopts that tree rather than constructing it, so no new slot element is
- * created and no assignment ever changes — and `slotchange`, which fires on
+ * created and no assignment ever changes, and `slotchange`, which fires on
  * assignment changes, never fires at all.
  *
  * Components that mirror their children into their own markup and hide the
  * originals depend on that event for their content. Client-side they build
- * their own shadow root, the slot is new, the event arrives, everything works
- * — which is also why no test caught it. Server-rendered, they upgrade with
+ * their own shadow root, the slot is new, the event arrives, everything works,
+ * which is also why no test caught it. Server-rendered, they upgrade with
  * nothing and render an empty mirror over hidden children: arc-segmented-control
  * as an 8px sliver, arc-navigation-menu as a top bar with no navigation.
  *
- * Dispatching the event the component was already listening for is deliberately
- * dumber than calling its reader directly: there is one contract here, not one
+ * Dispatching the event the component was already listening for is dumber, on
+ * purpose, than calling its reader directly: there is one contract here, not one
  * per component, and a handler that changes shape keeps working. Handlers must
- * be idempotent — they are read-and-store, and re-reading the same assignment
- * is a no-op — which they are, since a real slotchange can fire any number of
+ * be idempotent (they are read-and-store, and re-reading the same assignment
+ * is a no-op), which they are, since a real slotchange can fire any number of
  * times for reasons unrelated to hydration.
  *
  * Enforced by scripts/checks/slot-hydration.js: a component that hides its slot
@@ -37,8 +37,8 @@ export function hydrateSlots(host) {
 
   /*
    * Queued rather than called outright. `firstUpdated` runs inside the update,
-   * so a handler that stores what it read — every handler this reaches, since
-   * read-and-store is the contract — is writing reactive state after the update
+   * so a handler that stores what it read (every handler this reaches, since
+   * read-and-store is the contract) is writing reactive state after the update
    * completed, which is Lit's `change-in-update` warning. It fired for
    * arc-sidebar, arc-search, arc-segmented-control, arc-dropdown-menu,
    * arc-navigation-menu and arc-context-menu: one dev-mode warning per
@@ -57,7 +57,7 @@ export function hydrateSlots(host) {
    * And again once parsing finishes, because first render is not always after
    * the children exist. A component near the top of the document can upgrade
    * while the parser is still working its way down to the light-DOM content it
-   * is waiting for — arc-app-shell reached firstUpdated with its `toc` slot
+   * is waiting for: arc-app-shell reached firstUpdated with its `toc` slot
    * empty, decided it had no table of contents, and collapsed the rail to
    * display:none. The docs scroll spy was gone from every page while the
    * markup sat right there in the HTML, assigned correctly, one dispatch away.
@@ -76,7 +76,7 @@ export function hydrateSlots(host) {
  *
  * The other half of the same problem this file is about. A component that
  * mirrors its light-DOM children into its own markup reads their properties at
- * *its* render time — `arc-tabs` reads `label` and `disabled` off its arc-tab
+ * *its* render time: `arc-tabs` reads `label` and `disabled` off its arc-tab
  * children, `arc-segmented-control` reads `disabled` off its arc-options,
  * `arc-context-menu` reads `label` off its arc-menu-items. Those children are
  * light-DOM siblings, not reactive inputs of the owner, so changing one repaints
@@ -89,7 +89,7 @@ export function hydrateSlots(host) {
  * Guarded on the previous value being **defined**, which is the part that is
  * easy to get wrong: on an element's first update every entry's old value is
  * `undefined`, and asking the owner to re-render then would add a second render
- * per child on every mount — during the owner's own render, at that.
+ * per child on every mount, during the owner's own render, at that.
  *
  * @param {Element} child - The element whose state changed.
  * @param {Map<string, unknown>} changed - Lit's changed-properties map.

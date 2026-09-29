@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-svelte",
-  "version": "4.7.1",
+  "version": "4.8.0",
   "description": "Svelte 5 wrappers for ARC UI Web Components.",
   "sideEffects": false,
   "type": "module",
@@ -332,6 +332,11 @@
       "types": "./dist/typography/CodeBlock.svelte.d.ts",
       "svelte": "./dist/typography/CodeBlock.svelte",
       "default": "./dist/typography/CodeBlock.svelte"
+    },
+    "./CodeGroup": {
+      "types": "./dist/typography/CodeGroup.svelte.d.ts",
+      "svelte": "./dist/typography/CodeGroup.svelte",
+      "default": "./dist/typography/CodeGroup.svelte"
     },
     "./GradientText": {
       "types": "./dist/typography/GradientText.svelte.d.ts",

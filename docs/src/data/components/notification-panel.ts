@@ -8,21 +8,21 @@ export const notificationPanel: ComponentDef = {
   interactivity: 'interactive',
   description: 'Notification dropdown panel triggered by a button.',
 
-  overview: `NotificationPanel is a popover-style dropdown designed for displaying notifications, messages, and activity feeds. It pairs a trigger slot (typically a bell icon or button) with a floating panel that appears on click. The panel includes dedicated header, body, and footer regions, making it easy to compose a complete notification center with a title row, scrollable message list, and a "View all" action at the bottom.
+  overview: `NotificationPanel is a popover-style dropdown for notifications, messages, and activity feeds. It pairs a trigger slot (typically a bell icon or button) with a floating panel that appears on click. The panel includes dedicated header, body, and footer regions, so you can build a notification center with a title row, a scrollable message list, and a "View all" action at the bottom.
 
 The panel opens and closes via click on the trigger element, and automatically dismisses when the user clicks outside the component boundary. It dispatches \`arc-open\` and \`arc-close\` custom events on state changes so you can synchronize badge counts, mark notifications as read, or fetch fresh data when the panel becomes visible.
 
-Positioning is controlled by the \`position\` prop, which accepts \`top-right\` (default) or \`top-left\` to align the dropdown relative to the trigger. The \`max-height\` prop caps the scrollable body area so long notification lists do not overflow the viewport. The panel uses a smooth fade-and-slide transition on open and close for a polished feel.`,
+Positioning is controlled by the \`position\` prop, which accepts \`top-right\` (default) or \`top-left\` to align the dropdown relative to the trigger. The \`max-height\` prop caps the scrollable body area so long notification lists do not overflow the viewport. The panel fades and slides on open and close.`,
 
   features: [
     'Click-triggered popover with automatic outside-click dismissal',
     'Dedicated header, body (default slot), and footer regions for structured content',
     'Scrollable body with configurable max-height to prevent viewport overflow',
     'Position prop (top-right, top-left) for trigger-relative alignment',
-    'Smooth opacity and translateY transition on open and close',
+    'Opacity and translateY transition on open and close',
     '`arc-open` and `arc-close` custom events for state synchronization',
     'Shadow DOM parts (trigger, panel, header, body, footer) for targeted styling',
-    'z-index: 1000 overlay stacking for reliable layering above page content',
+    'z-index: 1000 overlay stacking to layer above page content',
   ],
 
   guidelines: {
@@ -34,11 +34,11 @@ Positioning is controlled by the \`position\` prop, which accepts \`top-right\` 
       'Listen for arc-open to lazy-load or refresh notification data',
     ],
     dont: [
-      'Do not use NotificationPanel for generic dropdown menus — use DropdownMenu or Select instead',
-      'Do not place complex interactive forms inside the panel — keep it to a list of actionable items',
+      'Do not use NotificationPanel for generic dropdown menus; use DropdownMenu or Select instead',
+      'Do not place complex interactive forms inside the panel; keep it to a list of actionable items',
       'Do not forget to handle the arc-close event if you need to clean up or reset scroll position',
-      'Do not set position to top-left when the trigger is on the left edge of the screen — the panel may overflow',
-      'Do not nest NotificationPanel inside another popover or modal — stacking contexts will conflict',
+      'Do not set position to top-left when the trigger is on the left edge of the screen: the panel may overflow',
+      'Do not nest NotificationPanel inside another popover or modal: stacking contexts will conflict',
     ],
   },
 

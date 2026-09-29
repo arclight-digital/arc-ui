@@ -61,10 +61,10 @@ export class TopBar {
     return this._el.menuOpen;
   }
 
-  @Input() set mobileMenu(value: string) {
+  @Input() set mobileMenu(value: 'sidebar' | 'nav' | 'none') {
     this._el.mobileMenu = value;
   }
-  get mobileMenu(): string {
+  get mobileMenu(): 'sidebar' | 'nav' | 'none' {
     return this._el.mobileMenu;
   }
 
@@ -73,6 +73,13 @@ export class TopBar {
   }
   get menuPosition(): string {
     return this._el.menuPosition;
+  }
+
+  @Input() set mobileCenter(value: 'center' | 'end' | 'hidden') {
+    this._el.mobileCenter = value;
+  }
+  get mobileCenter(): 'center' | 'end' | 'hidden' {
+    return this._el.mobileCenter;
   }
 
   @Input() set navAlign(value: 'left' | 'center' | 'right') {

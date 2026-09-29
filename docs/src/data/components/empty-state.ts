@@ -10,7 +10,7 @@ export const emptyState: ComponentDef = {
 
   overview: `EmptyState is a structured placeholder for screens, sections, or lists that have no content to display. It centralises an icon, heading, description, and action buttons into a clean, centered layout that guides users toward a next step rather than leaving them staring at a blank area. Common use cases include empty search results, first-run experiences, empty data tables, and zero-state dashboards.
 
-The component uses a dashed border and \`--bg-card\` background to visually distinguish itself from regular content cards. The icon slot (named \`icon\`) accepts any custom icon markup — SVG, emoji, or icon-font — displayed at 40px in \`--text-ghost\` color for a subtle, non-distracting appearance. The heading and description are set via string properties, keeping the API simple for the most common use cases.
+The component uses a dashed border and \`--bg-card\` background to visually distinguish itself from regular content cards. The icon slot (named \`icon\`) accepts any custom icon markup (SVG, emoji, or icon-font), displayed at 40px in \`--text-ghost\` color. The heading and description are set via string properties, keeping the API simple for the most common use cases.
 
 The action slot (named \`action\`) provides a flex container for one or more buttons, enabling patterns like "Create your first item" or "Try a different search". The description text is capped at 360px max-width for comfortable reading. The outer container uses \`role="status"\` so assistive technology announces the empty state to screen reader users.`,
 
@@ -35,11 +35,11 @@ The action slot (named \`action\`) provides a flex container for one or more but
       'Use empty state inside data tables, lists, and dashboards that can have zero items',
     ],
     dont: [
-      'Do not use empty state as a general-purpose card — it is specifically for zero-content scenarios',
-      'Do not leave out the action slot — an empty state without a next step is a dead end',
-      'Do not write vague descriptions like "Nothing here" — be specific about the cause and solution',
-      'Do not use more than two action buttons — keep the path forward simple and clear',
-      'Do not show an empty state while data is loading — use skeletons for loading, empty state for zero results',
+      'Do not use empty state as a general-purpose card. It is specifically for zero-content scenarios',
+      'Do not leave out the action slot. An empty state without a next step is a dead end',
+      'Do not write vague descriptions like "Nothing here". Be specific about the cause and solution',
+      'Do not use more than two action buttons. Keep the path forward simple and clear',
+      'Do not show an empty state while data is loading. Use skeletons for loading, empty state for zero results',
     ],
   },
 

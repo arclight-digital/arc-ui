@@ -151,7 +151,7 @@ export class ArcTimeline extends DeclaredPropsMixin(LitElement) {
       .filter((el) => el.tagName === 'ARC-TIMELINE-ITEM');
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

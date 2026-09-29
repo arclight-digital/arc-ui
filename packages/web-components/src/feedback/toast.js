@@ -23,12 +23,12 @@ function statusStyle(variant) {
  *
  * Queueing belongs here rather than in a wrapper. As a separate component it could only reach
  * arc-toast's public surface, so a duplicate of a *visible* toast had to be dismissed and re-shown
- * to gain its "(×N)" suffix — a visible flicker for what is conceptually a counter increment. Owning
+ * to gain its "(×N)" suffix: a visible flicker for what is conceptually a counter increment. Owning
  * the render state makes that an in-place update.
  *
  * Every method has a document-level event beside it, so a consumer who cannot
- * reach the element — a framework wrapper that exposes no handle, a module with
- * no reference to the page's toast host — can still drive it:
+ * reach the element (a framework wrapper that exposes no handle, a module with
+ * no reference to the page's toast host) can still drive it:
  * `arc-toast` (show), `arc-toast-update`, `arc-toast-complete`,
  * `arc-toast-dismiss` and `arc-toast-clear`. Pass `detail.id` to `arc-toast` to
  * name the toast yourself; the other four take that id back. A CustomEvent's
@@ -43,10 +43,10 @@ function statusStyle(variant) {
  * @prop {number} maxVisible - Maximum toasts on screen at once (attribute: max-visible). Further show() calls queue FIFO and release as visible toasts dismiss. Set to 0 for no cap.
  * @prop {boolean} dedupe - When true, a show() whose message and variant match a visible or queued toast is coalesced: the existing toast gains a "(×N)" counter and a fresh timer instead of a second toast appearing. Set the property to false from JS to disable.
  * @prop {number} queueLimit - Maximum queued (not visible) toasts (attribute: queue-limit). Beyond it the oldest queued entries are dropped and arc-queue-overflow fires with the drop count.
- * @fires arc-close - Fired when a toast notification is dismissed. detail: { id } — the id show() returned.
+ * @fires arc-close - Fired when a toast notification is dismissed. detail: { id }, the id show() returned.
  * @fires arc-queue-change - Fired whenever the visible or queued count changes. detail: { visible, queued }.
  * @fires arc-queue-overflow - Fired when the queue exceeds queueLimit and the oldest queued entries are dropped. detail: { dropped }.
- * @fires arc-action - Fired when the user clicks a toast's action button, before it dismisses. detail: { id }. Absorbed from arc-snackbar, whose action was reachable as an event as well as the `action` callback — a callback cannot be attached declaratively.
+ * @fires arc-action - Fired when the user clicks a toast's action button, before it dismisses. detail: { id }. Absorbed from arc-snackbar, whose action was reachable as an event as well as the `action` callback; a callback cannot be attached declaratively.
  * @fires arc-complete - Fired when a progress toast is completed with complete(id). detail: { id }.
  * @fires arc-cancel - Fired when the user clicks a progress toast's cancel button. detail: { id }.
  * @slot none
@@ -91,29 +91,30 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
         flex-direction: column;
         gap: var(--space-sm);
         pointer-events: none;
+        --_edge: var(--space-lg);
         max-width: 400px;
-        width: 100%;
+        width: calc(100% - 2 * var(--_edge));
       }
 
       /* Positions */
       :host([position="top-right"]) .toast-container,
       :host(:not([position="bottom-center"]):not([position="bottom-left"]):not([position="bottom-right"]):not([position="top-center"]):not([position="top-left"])) .toast-container {
-        top: var(--space-lg); right: var(--space-lg);
+        top: var(--_edge); right: var(--_edge);
       }
       :host([position="top-left"]) .toast-container {
-        top: var(--space-lg); left: var(--space-lg);
+        top: var(--_edge); left: var(--_edge);
       }
       :host([position="top-center"]) .toast-container {
-        top: var(--space-lg); left: 50%; transform: translateX(-50%);
+        top: var(--_edge); left: 50%; transform: translateX(-50%);
       }
       :host([position="bottom-right"]) .toast-container {
-        bottom: var(--space-lg); right: var(--space-lg);
+        bottom: var(--_edge); right: var(--_edge);
       }
       :host([position="bottom-left"]) .toast-container {
-        bottom: var(--space-lg); left: var(--space-lg);
+        bottom: var(--_edge); left: var(--_edge);
       }
       :host([position="bottom-center"]) .toast-container {
-        bottom: var(--space-lg); left: 50%; transform: translateX(-50%);
+        bottom: var(--_edge); left: 50%; transform: translateX(-50%);
       }
 
       .toast {
@@ -163,7 +164,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
       .toast__message { flex: 1; }
 
       /* Progress track, absorbed from arc-progress-toast (4.2). Copied rather
-         than reinterpreted — a merge that also restyles is two changes wearing
+         than reinterpreted; a merge that also restyles is two changes wearing
          one commit. */
       .toast__track {
         height: 4px;
@@ -203,9 +204,10 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
       }
 
       @media (max-width: 640px) { /* --breakpoint-sm */
+        /* Only the edge changes. Insets here would lose to the position
+           rules above, which are more specific. */
         .toast-container {
-          inset-inline-end: var(--space-sm);
-          inset-inline-start: var(--space-sm);
+          --_edge: var(--space-sm);
           max-width: none;
         }
       }
@@ -225,7 +227,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
      * The document route, and the whole of it.
      *
      * `arc-toast` has always let any component raise a toast without holding a
-     * reference to this one — the useful half of an imperative API made
+     * reference to this one: the useful half of an imperative API made
      * declarative, and the half that survives a framework wrapper that exposes
      * no element handle. The other three methods had no such route, so a
      * consumer who could raise a toast could not dismiss, complete or clear
@@ -274,8 +276,8 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    *
    * Passing `progress` puts the toast in progress mode, absorbed from
    * arc-progress-toast in 4.2: it renders a track beneath the message, exempts
-   * itself from dedupe and from the auto-dismiss timer, and — given `onCancel`
-   * — offers a cancel button that fires `arc-cancel`. Move the bar with
+   * itself from dedupe and from the auto-dismiss timer, and, given `onCancel`,
+   * offers a cancel button that fires `arc-cancel`. Move the bar with
    * `updateToast(id, { progress })` and end it with `complete(id)`, which fires
    * `arc-complete`. The mode is chosen here and is not switchable afterwards: a
    * track appearing mid-life would relayout a notification the reader is
@@ -299,7 +301,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    *   `persistent` pins it until something dismisses it; progress mode ignores
    *   both, being persistent by definition.
    * @returns {number|string} the toast's id, for a later dismiss(). A dedupe hit
-   *   returns the id of the toast it merged into — including over a supplied
+   *   returns the id of the toast it merged into, including over a supplied
    *   `id`, so a caller that tracks ids never ends up holding one that was
    *   never created.
    */
@@ -309,7 +311,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
 
     // A progress toast is never deduped and never auto-dismisses. Two uploads
     // of a file with the same name are two uploads, not one that happened
-    // twice — coalescing them would leave one bar tracking two operations. And
+    // twice, coalescing them would leave one bar tracking two operations. And
     // it persists by definition: it is finished by complete(), not by a timer.
     // Absorbed from arc-progress-toast (4.2), which had neither a queue nor a
     // dedupe to have to except itself from.
@@ -330,7 +332,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
 
     const entry = {
       // A caller-supplied id is the one case where this element is not the
-      // source of truth for a toast's identity — see the document route in the
+      // source of truth for a toast's identity; see the document route in the
       // constructor. Uniqueness is the caller's to keep; nothing here can check
       // it against ids that have already been dismissed.
       id: givenId ?? ++this._counter,
@@ -409,7 +411,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
   /**
    * (Re)start an entry's auto-dismiss timer.
    *
-   * The old timer is abandoned rather than cleared — _dismiss() is a no-op for an
+   * The old timer is abandoned rather than cleared, _dismiss() is a no-op for an
    * id that has already gone, so a stale timer firing is harmless, and tracking
    * one handle per entry to cancel it would be more state for no gain.
    */
@@ -454,8 +456,8 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
    * Move a progress toast's bar, its message, or both. Unknown ids are ignored,
    * matching dismiss().
    *
-   * Named `updateToast` rather than `update` because `update` is Lit's — the
-   * name arc-progress-toast used, and the reason it also carried a do-nothing
+   * Named `updateToast` rather than `update` because `update` is Lit's. It is
+   * the name arc-progress-toast used, and the reason that component carried a do-nothing
    * `update(changedProps) { super.update(changedProps); }` override that read
    * as if it meant something.
    *
@@ -485,7 +487,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
   /**
    * Finish a progress toast: dismiss it and fire `arc-complete`.
    *
-   * Distinct from `dismiss()` on purpose — the operation finishing and the user
+   * Distinct from `dismiss()` on purpose: the operation finishing and the user
    * closing the toast are different events, and a consumer waiting on the first
    * should not be woken by the second.
    *
@@ -588,8 +590,8 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
             ${
               /* `t.options.actionLabel`, not `t.actionLabel`.
 
-                  show() has only ever put the payload on `entry.options` —
-                  `const entry = { id, message, variant, count: 1, options }` —
+                  show() has only ever put the payload on `entry.options`,
+                  `const entry = { id, message, variant, count: 1, options }`,
                   so `t.actionLabel` was undefined for every toast that ever
                   rendered, and this button has never once appeared. The
                   documented `part="action"` was undeliverable, and
@@ -597,7 +599,7 @@ export class ArcToast extends DeclaredPropsMixin(LitElement) {
                   terms. Found while absorbing arc-snackbar, whose whole point
                   is an action button. Nothing caught it because a conditional
                   part is exempt from the derived part sweep by construction
-                  (conformance-surface.test.js:16-28) — it cannot tell a part
+                  (conformance-surface.test.js:16-28); it cannot tell a part
                   that is conditional from one that is unreachable. */
               t.options?.actionLabel
                 ? html`

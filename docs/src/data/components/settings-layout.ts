@@ -8,11 +8,11 @@ export const settingsLayout: ComponentDef = {
   interactivity: 'hybrid',
   description: 'Settings page with side navigation and content area.',
 
-  overview: `SettingsLayout is a two-region layout component designed specifically for settings and preference pages. It pairs a navigation panel (where you place section links like "Profile", "Security", "Billing") with a content area that displays the active settings form. The \`nav-position\` prop lets you choose between a left sidebar (the classic settings pattern) and a top tab-bar style layout.
+  overview: `SettingsLayout is a two-region layout for settings and preference pages. It pairs a navigation panel (where you place section links like "Profile", "Security", "Billing") with a content area that displays the active settings form. The \`nav-position\` prop lets you choose between a left sidebar (the classic settings pattern) and a top tab-bar style layout.
 
-In \`left\` mode, the navigation renders as a 220px sidebar with a card-colored background and a right border, creating a clear visual separation from the content. In \`top\` mode, the navigation appears as a horizontal bar above the content with a bottom border, which works well when there are only a few sections or when horizontal space is at a premium. Both modes use the same slot names, so switching between them requires changing a single attribute.
+In \`left\` mode, the navigation renders as a 220px sidebar with a card-colored background and a right border, which separates it from the content. In \`top\` mode, the navigation appears as a horizontal bar above the content with a bottom border, which suits a few sections or tight horizontal space. Both modes use the same slot names, so switching between them requires changing a single attribute.
 
-On screens narrower than 768px, the left sidebar layout automatically collapses to a stacked column — the nav moves above the content with a bottom border instead of a right border. This responsive behavior is built in and requires no additional configuration. The component exposes CSS parts for the layout container, nav region, and content region, allowing targeted style overrides when needed.`,
+On screens narrower than 768px, the left sidebar layout automatically collapses to a stacked column: the nav moves above the content with a bottom border instead of a right border. This needs no configuration. The component exposes CSS parts for the layout container, nav region, and content region.`,
 
   features: [
     '`arc-settings-nav-item` links with an active state that follows the URL hash, so a shared link or the back button lands on the right section',
@@ -37,11 +37,11 @@ On screens narrower than 768px, the left sidebar layout automatically collapses 
       'Nest individual settings forms or panels in the default content slot',
     ],
     dont: [
-      'Do not use SettingsLayout for general page layout — use PageLayout for dashboard and content pages',
+      'Do not use SettingsLayout for general page layout; use PageLayout for dashboard and content pages',
       'Do not place primary application navigation in the nav slot; it is for settings-section switching only',
       'Do not nest SettingsLayout inside another SettingsLayout or PageLayout with its own sidebar',
       'Do not override the responsive breakpoint without testing the stacked layout on real mobile devices',
-      'Do not put heavy interactive content (tables, charts) in the nav slot — keep it lightweight',
+      'Do not put heavy interactive content (tables, charts) in the nav slot; keep it lightweight',
     ],
   },
 

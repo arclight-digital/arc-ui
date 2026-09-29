@@ -7,7 +7,7 @@ export const conversation: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'An AI chat transcript: role-attributed messages in a scrollable column that follows new replies without ever yanking a reader who scrolled up. Built as the assist panel for AI products.',
+    'An AI chat transcript: role-attributed messages in a scrollable column that follows new replies without yanking a reader who scrolled up. For AI assistant panels.',
   searchKeywords: [
     'chat',
     'ai',
@@ -18,41 +18,41 @@ export const conversation: ComponentDef = {
     'messages',
   ],
 
-  overview: `Conversation is the transcript surface for an AI assistant panel. Slot \`<arc-message>\` children into it and each one takes a voice from its speaker attribute: user messages align to the inline end on a faint accent tint, assistant messages answer from the inline start on a neutral surface, and system messages run centered and muted for notices in the transcript's own voice. Because alignment is built on logical properties, the whole layout mirrors automatically in RTL.
+  overview: `Conversation is the transcript surface for an AI assistant panel. Slot \`<arc-message>\` children into it and each one takes a voice from its speaker attribute: user messages align to the inline end on a faint accent tint, assistant messages answer from the inline start on a neutral surface, and system messages run centered and muted for notices in the transcript's own voice. Because alignment is built on logical properties, the whole layout mirrors in RTL.
 
-The container is the scroll area, and it knows the one rule every chat interface lives by: while the reader is near the bottom, new or growing messages keep the view pinned to the latest; the moment they scroll up to re-read, the transcript stays put. The \`arc-scroll-away\` and \`arc-scroll-return\` events report those transitions with the distance from the bottom, so a consumer can float a "jump to latest" chip and wire it to the \`scrollToEnd()\` method.
+The container is the scroll area, and it follows one rule: while the reader is near the bottom, new or growing messages keep the view pinned to the latest; once they scroll up to re-read, the transcript stays put. The \`arc-scroll-away\` and \`arc-scroll-return\` events report those transitions with the distance from the bottom, so a consumer can float a "jump to latest" chip and wire it to the \`scrollToEnd()\` method.
 
-Streaming needs no API of its own — a message body is its default slot, so appending text to the slot streams the reply in. With the \`markdown\` attribute set, the slotted text renders through the house markdown renderer and re-parses as it grows, and a \`pending\` message shows the typing indicator until the first tokens arrive. The transcript server-renders in full, typing dots included.`,
+Streaming needs no API of its own: a message body is its default slot, so appending text to the slot streams the reply in. With the \`markdown\` attribute set, the slotted text renders through the markdown renderer and re-parses as it grows, and a \`pending\` message shows the typing indicator until the first tokens arrive. The transcript server-renders in full, typing dots included.`,
 
   features: [
     'Three message voices: user on an accent tint at the inline end, assistant on a neutral surface, system centered and muted',
-    'Auto-scroll follows new and growing messages — only while the reader is already near the bottom',
+    'Auto-scroll follows new and growing messages, but only while the reader is already near the bottom',
     '`arc-scroll-away` / `arc-scroll-return` events with the distance from the bottom, for a "jump to latest" chip',
     '`scrollToEnd()` method to jump the transcript to its newest message',
     'Streaming-friendly: append text to a message slot and the view keeps up',
     'Markdown rendering of message bodies through `arc-markdown`, re-parsed as streamed text grows',
     'Typing indicator on `pending` messages, replaced by a static ellipsis under `prefers-reduced-motion`',
     'Relative timestamps through `arc-time-ago`, with the absolute date on hover',
-    'An `avatar` slot on each message for products that want faces — none are built in',
+    'An `avatar` slot on each message for products that want faces; none are built in',
     'RTL mirrors automatically: alignment is logical-properties only',
     'Server-renders in full, pending dots included',
   ],
 
   guidelines: {
     do: [
-      'Use Conversation for a dialogue between the user and a responder — the role attribution and scroll behavior are the point',
+      'Use Conversation for a dialogue between the user and a responder, where role attribution and scroll behavior matter',
       "Stream a reply by appending to the message's slotted text (for example, updating textContent as tokens arrive); with markdown set it re-renders as it grows",
       'Show a pending assistant message the moment a request is sent, then fill its slot when tokens arrive',
-      'Give messages timestamps as ISO strings and let the house relative-time rendering do the rest',
+      'Give messages timestamps as ISO strings and let the relative-time rendering do the rest',
       'Listen for arc-scroll-away to float a "jump to latest" chip, and clear it on arc-scroll-return',
       'Size the transcript with the --conversation-height custom property, or let it fill a sized parent',
     ],
     dont: [
-      "Do not use Conversation for an activity feed or event history — that is Timeline's job, where entries mark moments rather than speakers",
-      'Do not use it as a general item column — a List handles collections that no one is talking to',
-      'Do not scroll the reader to the bottom yourself on new messages — the component already follows, and only when the reader wants it to',
+      "Do not use Conversation for an activity feed or event history. That is Timeline's job, where entries mark moments rather than speakers",
+      'Do not use it as a general item column. A List handles collections that no one is talking to',
+      'Do not scroll the reader to the bottom yourself on new messages; the component already follows, and only when the reader wants it to',
       'Do not put critical status in a system message alone; it scrolls away with the transcript',
-      'Do not build avatars into every product by reflex — the avatar slot is there for the products that need one',
+      'Do not add avatars by reflex; the avatar slot is there for products that need one',
     ],
   },
 
@@ -84,7 +84,7 @@ for (const [id, ago] of stamps) {
       name: 'Message',
       tag: 'arc-message',
       description:
-        'One message in the transcript. The speaker attribute picks the voice (user, assistant, or system), author and timestamp fill the muted meta line, markdown renders the slotted text through the house renderer, and pending shows the typing indicator until a reply arrives.',
+        'One message in the transcript. The speaker attribute picks the voice (user, assistant, or system), author and timestamp fill the muted meta line, markdown renders the slotted text through the markdown renderer, and pending shows the typing indicator until a reply arrives.',
     },
   ],
 

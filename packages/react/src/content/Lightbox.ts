@@ -8,7 +8,10 @@ export interface LightboxProps {
   images?: unknown[];
   index?: number;
   open?: boolean;
+  gallery?: string;
+  thumbnails?: boolean;
   className?: string;
+  children?: React.ReactNode;
   onArcChange?: (e: CustomEvent) => void;
   onArcClose?: (e: CustomEvent) => void;
   onArcOpen?: (e: CustomEvent) => void;

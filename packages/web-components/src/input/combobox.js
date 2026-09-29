@@ -171,7 +171,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
         color: var(--interactive);
       }
 
-      /* Per-option disabled (finding #6). Still rendered and still counted —
+      /* Per-option disabled (finding #6). Still rendered and still counted,
          dropping it would renumber the list under aria-activedescendant. */
       .combobox__option--disabled {
         opacity: 0.5;
@@ -186,7 +186,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
 
       .combobox__slot-host { display: none; }
     `,
-    // animate: false — this panel has its own keyframe entrance.
+    // animate: false; this panel has its own keyframe entrance.
     managedPanelStyles('combobox__listbox', { animate: false }),
   ];
 
@@ -233,7 +233,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
   /**
    * The visible text is derived from `value` only when a matching option
    * exists, so restoring `value` alone leaves stale text after form.reset()
-   * clears it — capture and restore the query alongside the value.
+   * clears it: capture and restore the query alongside the value.
    */
   _formResetState() {
     return { value: this.value, query: this._query };
@@ -331,7 +331,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
     }
   }
 
-  /** The slotchange DSD swallows — see shared/hydrate-slots.js. */
+  /** The slotchange DSD swallows; see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }
