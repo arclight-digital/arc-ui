@@ -54,7 +54,7 @@ CodeBlock is a hybrid component: the code display works without JavaScript, but 
     ],
     dont: [
       'Do not pass content between the tags. There is no default slot; use the `code` prop',
-      'Do not type a `$` into the code itself. It ends up in the reader\'s clipboard; use `prompt`',
+      "Do not type a `$` into the code itself. It ends up in the reader's clipboard; use `prompt`",
       'Do not use `wrap` for code where indentation matters to the reader, such as Python or YAML, unless the lines are short',
       'Do not use CodeBlock for single-line inline code; use arc-text variant="code" instead',
       'Do not assume copy will always work; it requires HTTPS and a user gesture in modern browsers',

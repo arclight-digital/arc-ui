@@ -5641,6 +5641,22 @@
         }
         .arc-top-bar[data-mobile-center="end"] .topbar__content .topbar__actions { flex: 0 0 auto; }
         .arc-top-bar[data-mobile-center="hidden"] .topbar__center { display: none; }
+
+        /* An actions box with nothing showing in it still takes the row's gap
+           on both sides, which put whatever came before it a double gap from
+           the menu button. It gives one back rather than going display:none,
+           which would hide its children too and the box could never tell
+           that one had reappeared. Below the breakpoint only: on a wide bar
+           an empty box keeps the equal thirds that centre the nav. */
+        .arc-top-bar .topbar__actions--empty {
+          margin-inline-start: calc(-1 * var(--space-md));
+        }
+
+        /* The menu button and its neighbour read as one icon pair: a small
+           step between them, not the row's wider gap. */
+        .arc-top-bar .topbar__actions + .topbar__menu-btn {
+          margin-inline-start: calc(var(--space-xs) - var(--space-md));
+        }
       }
 
       /* A phone gutter: 16px instead of 24px, contained or not. xs

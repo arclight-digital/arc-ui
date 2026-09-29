@@ -367,6 +367,32 @@ describe('arc-lightbox v2 zoom', () => {
     expect(imageOf(el).style.transform).to.equal('none');
   });
 
+  it('with a caption, a zoomed image pans to both edges and passes under it', async () => {
+    const el = mount('<arc-lightbox></arc-lightbox>');
+    el.images = [{ ...BIG[0], caption: 'A caption long enough to take a line of its own.' }];
+    await el.updateComplete;
+    el.show(0);
+    await el.updateComplete;
+    await tick();
+    pressKey('+');
+    await el.updateComplete;
+    const fig = figureOf(el);
+    const img = imageOf(el);
+    const caption = el.shadowRoot.querySelector('[part~="caption"]');
+    const top = fig.getBoundingClientRect().top;
+    const floor = caption.getBoundingClientRect().top;
+    const settle = () => img.getAnimations().forEach((a) => a.finish());
+    for (let i = 0; i < 40; i++) pressKey('ArrowUp');
+    await el.updateComplete;
+    settle();
+    expect(img.getBoundingClientRect().top, 'top edge reachable').to.be.closeTo(top, 1);
+    for (let i = 0; i < 40; i++) pressKey('ArrowDown');
+    await el.updateComplete;
+    settle();
+    expect(img.getBoundingClientRect().bottom, 'bottom edge clears the caption').to.be.closeTo(floor, 1);
+    expect(getComputedStyle(caption).zIndex).to.equal('1');
+  });
+
   it('the arrow keys pan while zoomed, and navigate again at 1x', async () => {
     const el = await openBig(0);
     pressKey('+');

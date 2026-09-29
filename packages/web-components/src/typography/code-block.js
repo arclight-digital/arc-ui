@@ -79,7 +79,6 @@ function warnMissingShiki(err) {
   );
 }
 
-
 /** Languages whose blocks take a prompt and the shell token colors. */
 const SHELL = new Set(['bash', 'shell', 'sh', 'zsh']);
 
@@ -88,7 +87,17 @@ const SHELL = new Set(['bash', 'shell', 'sh', 'zsh']);
  * is muted and the command after it takes the command color, so
  * `sudo bootc switch` reads as `bootc` being run.
  */
-const WRAPPERS = new Set(['sudo', 'doas', 'env', 'time', 'exec', 'nohup', 'xargs', 'command', 'nice']);
+const WRAPPERS = new Set([
+  'sudo',
+  'doas',
+  'env',
+  'time',
+  'exec',
+  'nohup',
+  'xargs',
+  'command',
+  'nice',
+]);
 
 /**
  * Shell scopes the css-variables theme folds together.
@@ -101,10 +110,17 @@ const WRAPPERS = new Set(['sudo', 'doas', 'env', 'time', 'exec', 'nohup', 'xargs
  */
 const SHELL_RULES = [
   {
-    scope: ['entity.name.command.shell', 'entity.name.function.call.shell', 'support.function.builtin.shell'],
+    scope: [
+      'entity.name.command.shell',
+      'entity.name.function.call.shell',
+      'support.function.builtin.shell',
+    ],
     settings: { foreground: 'var(--shiki-token-command)' },
   },
-  { scope: ['string.unquoted.argument.shell'], settings: { foreground: 'var(--shiki-token-argument)' } },
+  {
+    scope: ['string.unquoted.argument.shell'],
+    settings: { foreground: 'var(--shiki-token-argument)' },
+  },
   { scope: ['constant.other.option'], settings: { foreground: 'var(--shiki-token-flag)' } },
   {
     scope: [
@@ -853,7 +869,11 @@ export class ArcCodeBlock extends DeclaredPropsMixin(LitElement) {
   _toggleExpanded() {
     this._expanded = !this._expanded;
     this.dispatchEvent(
-      new CustomEvent('arc-toggle', { detail: { value: this._expanded }, bubbles: true, composed: true }),
+      new CustomEvent('arc-toggle', {
+        detail: { value: this._expanded },
+        bubbles: true,
+        composed: true,
+      }),
     );
   }
 

@@ -2,7 +2,7 @@
 /**
  * verify.js — the local gauntlet, in the order that makes it honest.
  *
- * `pnpm verify` = generate → checks → tests → typecheck. Local DX only — CI
+ * `pnpm verify` = generate → checks → format → tests → typecheck. Local DX only — CI
  * already runs every stage — but the *order* is the point (V4-PLAN 4.10):
  * four of the check files assert against generated wrapper output, and on an
  * ungenerated tree they silently assert against stale files. Running generate
@@ -24,6 +24,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const stages = [
   ['generate', ['pnpm', 'generate']],
   ['check', ['pnpm', 'check']],
+  // CI's verify job runs it and this didn't, so 4.8.0 passed here and went
+  // red there on formatting alone.
+  ['format:check', ['pnpm', 'format:check']],
   ['test', ['pnpm', 'test']],
   ['test:ssr-fuzz', ['pnpm', 'test:ssr-fuzz']],
   ['typecheck', ['pnpm', 'typecheck']],

@@ -93,4 +93,32 @@ describe('narrow viewport', () => {
     expect(none.shadowRoot.querySelector('[part="menu-btn"]')).to.equal(null);
     expect(dflt.shadowRoot.querySelector('[part="menu-btn"]')).to.not.equal(null);
   });
+
+  it('puts the center one extra-small step from the menu when the actions show nothing', async () => {
+    // The getpulsar.dev bar on a phone: its actions are there but all hidden.
+    const win = await phone(
+      `<arc-top-bar mobile-menu="nav" menu-position="right" mobile-center="end">
+        <span slot="logo" style="display:inline-block;width:100px;height:28px"></span>
+        <button slot="center" style="width:36px;height:36px">s</button>
+        <div slot="actions" id="acts"><span style="display:none">x</span></div>
+      </arc-top-bar>`,
+      [`${SRC}/navigation/top-bar.register.js`],
+    );
+    const bar = win.document.querySelector('arc-top-bar');
+    await until(() => bar.shadowRoot?.querySelector('.topbar__actions--empty'));
+    const step = () => {
+      const center = win.document.querySelector('[slot="center"]').getBoundingClientRect();
+      return bar.shadowRoot.querySelector('[part="menu-btn"]').getBoundingClientRect().left - center.right;
+    };
+    const xs = parseFloat(win.getComputedStyle(bar).getPropertyValue('--space-xs'));
+    expect(step()).to.be.closeTo(xs, 0.5);
+
+    // Something showing again: the box takes its place back.
+    const acts = win.document.getElementById('acts');
+    acts.firstElementChild.style.display = 'inline-block';
+    await until(() => !bar.shadowRoot.querySelector('.topbar__actions--empty'));
+    const box = bar.shadowRoot.querySelector('[part="actions"]').getBoundingClientRect();
+    const menu = bar.shadowRoot.querySelector('[part="menu-btn"]').getBoundingClientRect();
+    expect(menu.left - box.right).to.be.closeTo(xs, 0.5);
+  });
 });

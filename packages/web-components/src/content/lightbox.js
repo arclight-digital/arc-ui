@@ -314,7 +314,12 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
         color: var(--text-muted);
       }
 
+      /* Positioned so a zoomed picture, which is transformed and so painted
+         above anything static, passes under the caption rather than over it.
+         The pan limits keep the whole picture reachable above it. */
       .lightbox__caption {
+        position: relative;
+        z-index: 1;
         flex-shrink: 0;
         max-width: 60ch;
         font-family: var(--font-body);
@@ -322,6 +327,15 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
         line-height: var(--body-lh);
         color: var(--text-secondary);
         text-align: center;
+      }
+
+      /* Over a zoomed picture the caption carries its own backing, as the
+         controls do. */
+      .lightbox__img--zoomed ~ .lightbox__caption {
+        background: var(--_scrim);
+        border-radius: var(--radius-md);
+        padding: var(--space-xs) var(--space-sm);
+        margin-block: calc(-1 * var(--space-xs));
       }
 
       .lightbox__nav {
@@ -832,7 +846,11 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     this._wake();
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     const t = e.composedPath()[0];
-    if (t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+    if (
+      t instanceof HTMLElement &&
+      (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))
+    )
+      return;
     const step = this._panStep();
     switch (e.key) {
       case 'ArrowLeft':
@@ -956,12 +974,27 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     return { left: d.left + x, top: d.top + y, width: el.offsetWidth, height: el.offsetHeight };
   }
 
-  /** Pan limits at a scale: the image's edges never come inside the stage's. */
+  /**
+   * Pan limits at a scale, as { x: [min, max], y: [min, max] }. The view is
+   * the stage above the caption, which stays readable on top of a zoomed
+   * picture. A picture larger than the view can't bring an edge inside it;
+   * one smaller can't leave it. The image isn't centred in the stage when a
+   * caption shares it, so the limits are worked out from where it sits.
+   */
   _bounds(img, scale) {
     const stage = this.shadowRoot.querySelector('.lightbox__figure');
+    const caption = stage.querySelector('.lightbox__caption');
+    const view = { w: stage.clientWidth, h: caption ? caption.offsetTop : stage.clientHeight };
+    const axis = (start, size, extent) => {
+      const c = start + size / 2;
+      const half = (size * scale) / 2;
+      const a = half - c;
+      const b = extent - c - half;
+      return [Math.min(a, b), Math.max(a, b)];
+    };
     return {
-      x: Math.max(0, (img.offsetWidth * scale - stage.clientWidth) / 2),
-      y: Math.max(0, (img.offsetHeight * scale - stage.clientHeight) / 2),
+      x: axis(img.offsetLeft, img.offsetWidth, view.w),
+      y: axis(img.offsetTop, img.offsetHeight, view.h),
     };
   }
 
@@ -986,8 +1019,8 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
         ty = y - o.y - k * (y - o.y - this._panY);
       }
       const b = this._bounds(img, next);
-      this._panX = clamp(tx, -b.x, b.x);
-      this._panY = clamp(ty, -b.y, b.y);
+      this._panX = clamp(tx, ...b.x);
+      this._panY = clamp(ty, ...b.y);
     }
     this._scale = next;
     img.style.transform = this._transform();
@@ -997,8 +1030,8 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     const img = this._img();
     if (!img) return;
     const b = this._bounds(img, this._scale);
-    this._panX = clamp(this._panX + dx, -b.x, b.x);
-    this._panY = clamp(this._panY + dy, -b.y, b.y);
+    this._panX = clamp(this._panX + dx, ...b.x);
+    this._panY = clamp(this._panY + dy, ...b.y);
     img.style.transform = this._transform();
     this.requestUpdate();
   }
@@ -1011,7 +1044,9 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
   _transform() {
     // translate before scale keeps the pan in screen pixels, so a drag moves
     // the image 1:1 with the pointer.
-    return this._zoomed ? `translate(${this._panX}px, ${this._panY}px) scale(${this._scale})` : 'none';
+    return this._zoomed
+      ? `translate(${this._panX}px, ${this._panY}px) scale(${this._scale})`
+      : 'none';
   }
 
   /**
@@ -1104,7 +1139,11 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
 
     if (g.mode === 'pinch') {
       const [a, b] = [...this._pointers.values()];
-      const scale = clamp((g.scale * Math.hypot(a.x - b.x, a.y - b.y)) / g.dist, MIN_SCALE, MAX_SCALE);
+      const scale = clamp(
+        (g.scale * Math.hypot(a.x - b.x, a.y - b.y)) / g.dist,
+        MIN_SCALE,
+        MAX_SCALE,
+      );
       const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
       const k = scale / g.scale;
       // The picture point under the fingers when the pinch began stays
@@ -1113,8 +1152,8 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
       const ty = mid.y - g.origin.y - k * (g.mid.y - g.origin.y - g.panY);
       const bounds = this._bounds(img, scale);
       this._scale = scale;
-      this._panX = scale === MIN_SCALE ? 0 : clamp(tx, -bounds.x, bounds.x);
-      this._panY = scale === MIN_SCALE ? 0 : clamp(ty, -bounds.y, bounds.y);
+      this._panX = scale === MIN_SCALE ? 0 : clamp(tx, ...bounds.x);
+      this._panY = scale === MIN_SCALE ? 0 : clamp(ty, ...bounds.y);
       // Style is written directly: a re-render per pointermove is per-frame
       // work the motion budget doesn't allow.
       img.style.transform = this._transform();
@@ -1139,8 +1178,8 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
 
     if (g.mode === 'pan') {
       const b = this._bounds(img, this._scale);
-      this._panX = clamp(g.panX + dx, -b.x, b.x);
-      this._panY = clamp(g.panY + dy, -b.y, b.y);
+      this._panX = clamp(g.panX + dx, ...b.x);
+      this._panY = clamp(g.panY + dy, ...b.y);
       img.style.transform = this._transform();
     } else if (g.mode === 'swipe') {
       // A lone image can't go anywhere, so it gives a little and no more.
@@ -1217,7 +1256,11 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
   _onTap(e) {
     const now = performance.now();
     const last = this._lastTap;
-    if (last && now - last.t < DOUBLE_TAP && Math.hypot(e.clientX - last.x, e.clientY - last.y) < 30) {
+    if (
+      last &&
+      now - last.t < DOUBLE_TAP &&
+      Math.hypot(e.clientX - last.x, e.clientY - last.y) < 30
+    ) {
       this._lastTap = null;
       clearTimeout(this._tapTimer);
       this._suppressClick = true;
@@ -1244,7 +1287,9 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
      where the viewer keeps its plain fade and steps are instant. */
 
   _reducedMotion() {
-    return typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return (
+      typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches
+    );
   }
 
   _easing() {
@@ -1253,7 +1298,10 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
 
   /** The controls that fade in after a grow and out before a shrink. */
   _chrome() {
-    return [...(this.shadowRoot?.querySelectorAll('.lightbox__bar, .lightbox__nav, .lightbox__thumbs') ?? [])];
+    return [
+      ...(this.shadowRoot?.querySelectorAll('.lightbox__bar, .lightbox__nav, .lightbox__thumbs') ??
+        []),
+    ];
   }
 
   /** What the user pressed or focused to open the viewer, if it is outside it. */
@@ -1264,7 +1312,8 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
       el = document.activeElement;
       while (el?.shadowRoot?.activeElement) el = el.shadowRoot.activeElement;
     }
-    if (!(el instanceof Element) || el === document.body || el === document.documentElement) return null;
+    if (!(el instanceof Element) || el === document.body || el === document.documentElement)
+      return null;
     if (el === this || this.contains(el) || el.getRootNode() === this.shadowRoot) return null;
     return el;
   }
@@ -1301,7 +1350,13 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     if (!(el instanceof Element) || !el.isConnected) return null;
     const pic = this._pictureIn(el);
     const r = pic.getBoundingClientRect();
-    const visible = r.width > 0 && r.height > 0 && r.bottom > 0 && r.right > 0 && r.top < innerHeight && r.left < innerWidth;
+    const visible =
+      r.width > 0 &&
+      r.height > 0 &&
+      r.bottom > 0 &&
+      r.right > 0 &&
+      r.top < innerHeight &&
+      r.left < innerWidth;
     if (!visible) return null;
     const radius = parseFloat(getComputedStyle(pic).borderTopLeftRadius) || 0;
     return { left: r.left, top: r.top, width: r.width, height: r.height, radius };
@@ -1353,13 +1408,21 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
       { duration: OPEN_MS, easing },
     );
     for (const el of this._chrome()) {
-      el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 300, delay: 120, easing, fill: 'backwards' });
+      el.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: 300,
+        delay: 120,
+        easing,
+        fill: 'backwards',
+      });
     }
     if (!img.complete) {
       // Grow a picture, not an empty box: wait briefly for it to decode, and
       // hold it hidden meanwhile. Its load would otherwise fade it in at full
       // size a frame before the grow starts from the thumbnail.
-      const hold = img.animate([{ opacity: 0 }, { opacity: 0 }], { duration: 300, fill: 'forwards' });
+      const hold = img.animate([{ opacity: 0 }, { opacity: 0 }], {
+        duration: 300,
+        fill: 'forwards',
+      });
       await Promise.race([img.decode().catch(() => {}), new Promise((r) => setTimeout(r, 300))]);
       hold.cancel();
       if (token !== this._motionToken || img !== this._img()) return;
@@ -1412,10 +1475,11 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
       el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 150, fill });
     }
     img
-      .animate(
-        [this._restFrame(img), { ...this._flipFrom(thumb, rest), opacity: 1 }],
-        { duration: CLOSE_MS, easing, fill },
-      )
+      .animate([this._restFrame(img), { ...this._flipFrom(thumb, rest), opacity: 1 }], {
+        duration: CLOSE_MS,
+        easing,
+        fill,
+      })
       .finished.then(
         () => {
           if (token !== this._motionToken) return;
@@ -1502,7 +1566,10 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     fig.append(ghost);
     this._ghosts.add(ghost);
     // A swipe leaves the picture wherever the finger let go; it leaves from there.
-    const from = img.style.transform && img.style.transform !== 'none' ? img.style.transform : 'translateX(0px)';
+    const from =
+      img.style.transform && img.style.transform !== 'none'
+        ? img.style.transform
+        : 'translateX(0px)';
     const drop = () => {
       ghost.remove();
       this._ghosts.delete(ghost);
@@ -1658,9 +1725,7 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
         <div class="lightbox__bar" part="bar">
           <span class="lightbox__counter" part="counter" aria-live="polite">${
             total > 0
-              ? html`<span aria-hidden="true">${index + 1} / ${total}</span><span class="lightbox__sr">${
-                  `${index + 1} of ${total}${current?.alt ? `: ${current.alt}` : ''}`
-                }</span>`
+              ? html`<span aria-hidden="true">${index + 1} / ${total}</span><span class="lightbox__sr">${`${index + 1} of ${total}${current?.alt ? `: ${current.alt}` : ''}`}</span>`
               : nothing
           }</span>
           <div class="lightbox__actions">

@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { breakpoints } from '../generated/breakpoints.js';
 import '../layout/container.register.js';
+import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
@@ -52,12 +53,17 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     menuOpen: flag(false, { attribute: 'menu-open' }),
     mobileMenu: { type: String, attribute: 'mobile-menu' },
     menuPosition: { type: String, attribute: 'menu-position' },
-    mobileCenter: oneOf(['center', 'end', 'hidden'], { default: 'center', attribute: 'mobile-center', reflect: true }),
+    mobileCenter: oneOf(['center', 'end', 'hidden'], {
+      default: 'center',
+      attribute: 'mobile-center',
+      reflect: true,
+    }),
     navAlign: oneOf(['left', 'center', 'right'], {
       default: 'center',
       attribute: 'nav-align',
       reflect: false,
     }),
+    _actionsEmpty: { state: true },
   };
 
   static styles = [
@@ -346,6 +352,22 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
         }
         :host([mobile-center="end"]) .topbar__content .topbar__actions { flex: 0 0 auto; }
         :host([mobile-center="hidden"]) .topbar__center { display: none; }
+
+        /* An actions box with nothing showing in it still takes the row's gap
+           on both sides, which put whatever came before it a double gap from
+           the menu button. It gives one back rather than going display:none,
+           which would hide its children too and the box could never tell
+           that one had reappeared. Below the breakpoint only: on a wide bar
+           an empty box keeps the equal thirds that centre the nav. */
+        .topbar__actions--empty {
+          margin-inline-start: calc(-1 * var(--space-md));
+        }
+
+        /* The menu button and its neighbour read as one icon pair: a small
+           step between them, not the row's wider gap. */
+        .topbar__actions + .topbar__menu-btn {
+          margin-inline-start: calc(var(--space-xs) - var(--space-md));
+        }
       }
 
       /* A phone gutter: 16px instead of 24px, contained or not. xs
@@ -367,6 +389,8 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     this._rafId = null;
     this._onExternalToggle = this._onExternalToggle.bind(this);
     this._onScroll = this._onScroll.bind(this);
+    this._actionsEmpty = false;
+    this._actionsObserver = null;
   }
 
   connectedCallback() {
@@ -378,6 +402,8 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     // bar never learned it had been scrolled past.
     document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
     this._measure();
+    // Moved rather than created: no slotchange comes, so pick the watch back up.
+    for (const el of this._actionsEls ?? []) this._actionsObserver?.observe(el);
   }
 
   disconnectedCallback() {
@@ -387,6 +413,34 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     document.removeEventListener('scroll', this._onScroll, { capture: true });
     if (this._rafId) cancelAnimationFrame(this._rafId);
     this._rafId = null;
+    this._actionsObserver?.disconnect();
+    this._actionsObserver = null;
+  }
+
+  /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
+  firstUpdated() {
+    hydrateSlots(this);
+  }
+
+  /**
+   * Watch what's in the actions slot for whether any of it takes up room.
+   * Nothing assigned is empty, and so is content that is all hidden: a site
+   * that moves its actions into the menu on a phone hides them with its own
+   * CSS, and the slot never hears about it. Each assigned element is
+   * observed, so a hidden one coming back is noticed too.
+   */
+  _onActionsSlotChange(e) {
+    if (typeof ResizeObserver === 'undefined') return;
+    const els = e.target.assignedElements({ flatten: true });
+    this._actionsObserver ??= new ResizeObserver(() => this._readActions());
+    this._actionsObserver.disconnect();
+    for (const el of els) this._actionsObserver.observe(el);
+    this._actionsEls = els;
+    this._readActions();
+  }
+
+  _readActions() {
+    this._actionsEmpty = (this._actionsEls ?? []).every((el) => el.offsetWidth === 0);
   }
 
   /** Coalesce a burst of scroll events into one measurement per frame. */
@@ -487,8 +541,8 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
         <div class="topbar__center" part="center" style=${this._navJustify || nothing}>
           <slot name="center"></slot>
         </div>
-        <div class="topbar__actions" part="actions">
-          <slot name="actions"></slot>
+        <div class="topbar__actions ${this._actionsEmpty ? 'topbar__actions--empty' : ''}" part="actions">
+          <slot name="actions" @slotchange=${this._onActionsSlotChange}></slot>
         </div>
         ${menu && !menuLeft ? this._renderMenuButton() : ''}
       </div>
