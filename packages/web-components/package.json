@@ -929,9 +929,9 @@
   },
   "peerDependencies": {
     "@lit-labs/ssr": "^4.1.0",
-    "@shikijs/langs": "^3.22.0",
+    "@shikijs/langs": "^3.22.0 || ^4.0.0",
     "lit": "^3.3.0",
-    "shiki": "^3.0.0"
+    "shiki": "^3.0.0 || ^4.0.0"
   },
   "peerDependenciesMeta": {
     "shiki": {
@@ -947,8 +947,8 @@
   "devDependencies": {
     "@arclux/arc-ui-icons": "workspace:*",
     "@lit-labs/ssr": "^4.1.0",
-    "@shikijs/langs": "^3.22.0",
+    "@shikijs/langs": "^4.4.3",
     "lit": "^3.3.3",
-    "shiki": "^3.0.0"
+    "shiki": "^4.4.3"
   }
 }
