@@ -855,9 +855,9 @@
   },
   "devDependencies": {
     "@arclux/arc-ui": "workspace:*",
-    "@vitejs/plugin-vue": "^6.0.8",
+    "@vitejs/plugin-vue": "^6.0.9",
     "typescript": "^5.9.3",
     "vite": "^7.3.6",
-    "vue-tsc": "^3.3.8"
+    "vue-tsc": "^3.3.11"
   }
 }

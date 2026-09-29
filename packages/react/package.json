@@ -831,9 +831,9 @@
     "prepublishOnly": "node ../../scripts/publish-guard.js"
   },
   "peerDependencies": {
+    "@arclux/arc-ui": "workspace:^",
     "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0",
-    "@arclux/arc-ui": "workspace:^"
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "dependencies": {
     "@lit/react": "^1.0.8"
@@ -858,8 +858,8 @@
     "access": "public"
   },
   "devDependencies": {
-    "@types/react": "^19.2.14",
     "@arclux/arc-ui": "workspace:*",
+    "@types/react": "^19.3.0",
     "typescript": "^7.0.2"
   }
 }

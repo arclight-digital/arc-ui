@@ -15,13 +15,13 @@
     "@arclux/arc-ui-vue": "workspace:*",
     "@arclux/brand": "^2.0.2",
     "@arclux/glint": "^1.1.2",
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.4",
     "astro": "^5.17.1",
-    "lit": "^3.3.0",
+    "lit": "^3.3.3",
     "satori": "^0.19.2",
     "sharp": "^0.34.5"
   },
   "devDependencies": {
-    "wrangler": "^4.65.0"
+    "wrangler": "^4.144.0"
   }
 }

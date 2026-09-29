@@ -928,10 +928,10 @@
     "access": "public"
   },
   "peerDependencies": {
+    "@lit-labs/ssr": "^4.1.0",
     "@shikijs/langs": "^3.22.0",
     "lit": "^3.3.0",
-    "shiki": "^3.0.0",
-    "@lit-labs/ssr": "^4.1.0"
+    "shiki": "^3.0.0"
   },
   "peerDependenciesMeta": {
     "shiki": {
@@ -948,7 +948,7 @@
     "@arclux/arc-ui-icons": "workspace:*",
     "@lit-labs/ssr": "^4.1.0",
     "@shikijs/langs": "^3.22.0",
-    "lit": "^3.3.0",
+    "lit": "^3.3.3",
     "shiki": "^3.0.0"
   }
 }
