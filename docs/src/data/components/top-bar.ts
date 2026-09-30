@@ -37,6 +37,7 @@ Use TopBar whenever your application needs a consistent, recognizable header. It
       'Reserve the actions slot for user-facing controls: avatar, settings, notifications, sign-in',
       'Set the fixed property when the page content is scrollable and the header should stay visible',
       'Listen for the arc-sidebar-toggle event to synchronize sidebar open/close state',
+      'If your CSS hides every action at some width, hide `::part(actions)` in the same rule. The bar only notices an empty actions slot after it hydrates, so without it the server render and first paint keep a gap there',
     ],
     dont: [
       'Do not stack TopBars on one page. Use one per application shell',

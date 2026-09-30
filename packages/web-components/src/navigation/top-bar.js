@@ -34,7 +34,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  * @csspart content
  * @csspart brand
  * @csspart center
- * @csspart actions
+ * @csspart actions - The box around the actions slot. A site that hides every action with its own CSS (a phone layout that moves them into the menu) should hide this part in the same rule: the bar can only tell that the slot is empty once it has hydrated, so without it the page renders a gap there first and closes it after.
  * @csspart topbar
  */
 export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
@@ -383,7 +383,9 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
   // of layout (what the page's CSS hides), which the server can't know. Read
   // before hydration, the client's answer counted as already rendered and the
   // collapse never reached the page (getpulsar.dev, 4.9.0-pre). The ordinary
-  // slotchange after hydration renders it instead.
+  // slotchange after hydration renders it instead, which leaves the server
+  // render and the first paint with the gap. A site that hides its actions
+  // hides ::part(actions) too, and then there is nothing to collapse.
 
   constructor() {
     super();

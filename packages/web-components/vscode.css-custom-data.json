@@ -942,7 +942,10 @@
     { "name": "::part(content)" },
     { "name": "::part(brand)" },
     { "name": "::part(center)" },
-    { "name": "::part(actions)" },
+    {
+      "name": "::part(actions)",
+      "description": "The box around the actions slot. A site that hides every action with its own CSS (a phone layout that moves them into the menu) should hide this part in the same rule: the bar can only tell that the slot is empty once it has hydrated, so without it the page renders a gap there first and closes it after."
+    },
     { "name": "::part(topbar)" },
     { "name": "::part(base)", "description": "The root element." },
     {
