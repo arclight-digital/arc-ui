@@ -33,7 +33,8 @@ function expectGlyphsHidden(el, tag) {
   expect(glyphs.length, `${tag} should render a status glyph`).to.be.greaterThan(0);
   for (const glyphEl of glyphs) {
     const hidden = glyphEl.closest('[aria-hidden="true"]');
-    expect(hidden, `${tag} glyph <${glyphEl.localName}> must be inside aria-hidden="true"`).to.not.be.null;
+    expect(hidden, `${tag} glyph <${glyphEl.localName}> must be inside aria-hidden="true"`).to.not
+      .be.null;
   }
 }
 

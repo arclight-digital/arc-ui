@@ -37,7 +37,9 @@ function stubMedia(video, { duration = 100, currentTime = 0 } = {}) {
   Object.defineProperty(video, 'currentTime', {
     configurable: true,
     get: () => state.time,
-    set: (v) => { state.time = v; },
+    set: (v) => {
+      state.time = v;
+    },
   });
   Object.defineProperty(video, 'paused', { configurable: true, get: () => state.paused });
   video.play = () => {
@@ -63,7 +65,7 @@ function record(el) {
 
 function press(el, key) {
   wrapper(el).dispatchEvent(
-    new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, composed: true })
+    new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, composed: true }),
   );
 }
 
@@ -162,12 +164,8 @@ describe('arc-video playing state', () => {
     await el.updateComplete;
 
     expect(video.currentTime).to.equal(30);
-    expect(
-      el.shadowRoot.querySelector('.video__time-current').textContent
-    ).to.equal('0:30');
-    expect(
-      el.shadowRoot.querySelector('.video__time-total').textContent
-    ).to.equal('1:40');
+    expect(el.shadowRoot.querySelector('.video__time-current').textContent).to.equal('0:30');
+    expect(el.shadowRoot.querySelector('.video__time-total').textContent).to.equal('1:40');
   });
 
   it('idle-dimmed controls come back to full strength on pointer activity', async () => {

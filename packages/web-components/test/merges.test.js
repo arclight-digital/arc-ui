@@ -123,7 +123,6 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
         expect(getComputedStyle(line).borderTopStyle).to.equal('dashed');
       }
     });
-
   });
 
   describe('arc-key-value → arc-description-list', () => {
@@ -133,8 +132,9 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       );
       const item = el.querySelector('arc-description-item');
       await item.updateComplete;
-      expect(getComputedStyle(item.shadowRoot.querySelector('.item')).gridTemplateColumns)
-        .to.not.include(' ');
+      expect(
+        getComputedStyle(item.shadowRoot.querySelector('.item')).gridTemplateColumns,
+      ).to.not.include(' ');
     });
 
     it('puts term beside detail with layout="horizontal"', async () => {
@@ -158,7 +158,6 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       expect(s.display).to.equal('grid');
       expect(s.gridTemplateColumns).to.not.equal('');
     });
-
   });
 
   describe('arc-cluster → arc-stack', () => {
@@ -267,7 +266,8 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       // declaration of the same thing, and the two can drift.
       for (const variant of ['error', 'success', 'info']) {
         const el = await render(`<arc-alert variant="${variant}">x</arc-alert>`);
-        expect(el.shadowRoot.querySelector('.alert').hasAttribute('aria-live'), variant).to.be.false;
+        expect(el.shadowRoot.querySelector('.alert').hasAttribute('aria-live'), variant).to.be
+          .false;
       }
     });
 
@@ -285,7 +285,6 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       expect(slot, 'the icon slot exists').to.exist;
       expect(slot.assignedElements()).to.have.lengthOf(1);
     });
-
   });
 
   describe('arc-snackbar + arc-progress-toast → arc-toast', () => {
@@ -365,7 +364,10 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       el.show({ message: 'Uploading', progress: 10 });
       await el.updateComplete;
       await new Promise((r) => setTimeout(r, 80));
-      expect(toasts(el), 'a progress toast is finished by complete(), not a timer').to.have.lengthOf(1);
+      expect(
+        toasts(el),
+        'a progress toast is finished by complete(), not a timer',
+      ).to.have.lengthOf(1);
     });
 
     it('fires arc-complete on complete(), and not arc-close', async () => {
@@ -411,8 +413,14 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
   });
 
   describe('arc-table + arc-data-table → arc-data-grid', () => {
-    const rows = [{ a: '1', b: '2' }, { a: '3', b: '4' }];
-    const columns = [{ key: 'a', label: 'A' }, { key: 'b', label: 'B' }];
+    const rows = [
+      { a: '1', b: '2' },
+      { a: '3', b: '4' },
+    ];
+    const columns = [
+      { key: 'a', label: 'A' },
+      { key: 'b', label: 'B' },
+    ];
 
     async function grid(attrs = '') {
       const el = await render(`<arc-data-grid ${attrs}></arc-data-grid>`);
@@ -425,7 +433,9 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
     it('stripes by default, as it always has', async () => {
       const el = await grid();
       const [odd, even] = [...el.shadowRoot.querySelectorAll('tbody tr')];
-      expect(getComputedStyle(odd).backgroundColor).to.not.equal(getComputedStyle(even).backgroundColor);
+      expect(getComputedStyle(odd).backgroundColor).to.not.equal(
+        getComputedStyle(even).backgroundColor,
+      );
     });
 
     it('turns stripes off with no-striped — what a plain arc-table looked like', async () => {
@@ -435,7 +445,9 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       // direction.
       const el = await grid('no-striped');
       const [odd, even] = [...el.shadowRoot.querySelectorAll('tbody tr')];
-      expect(getComputedStyle(odd).backgroundColor).to.equal(getComputedStyle(even).backgroundColor);
+      expect(getComputedStyle(odd).backgroundColor).to.equal(
+        getComputedStyle(even).backgroundColor,
+      );
     });
 
     it('tightens cells with density="compact", header and body together', async () => {
@@ -453,7 +465,8 @@ describe('4.2 merges: the survivor absorbs the capability', () => {
       // objects keyed by column. Same output, different input — the expected
       // cells are what arc-table produced from [['1','2'],['3','4']] before
       // its removal.
-      const cells = (el) => [...el.shadowRoot.querySelectorAll('tbody td')].map((td) => td.textContent.trim());
+      const cells = (el) =>
+        [...el.shadowRoot.querySelectorAll('tbody td')].map((td) => td.textContent.trim());
       expect(cells(await grid())).to.deep.equal(['1', '2', '3', '4']);
     });
   });

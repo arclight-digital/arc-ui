@@ -107,6 +107,11 @@
     { "name": "::part(figure)" },
     { "name": "::part(image)" },
     { "name": "::part(caption)" },
+    { "name": "::part(caption-text)" },
+    {
+      "name": "::part(caption-toggle)",
+      "description": "The More / Less button on a caption longer than three lines."
+    },
     {
       "name": "::part(loading)",
       "description": "The spinner shown while a slow image loads."

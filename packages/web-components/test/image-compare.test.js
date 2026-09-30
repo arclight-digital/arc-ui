@@ -43,9 +43,10 @@ const only = (seen, kind) => seen.filter(([k]) => k === kind);
 function drag(el, downAt, moves, { vertical = false } = {}) {
   const frame = el.shadowRoot.querySelector('.compare');
   const box = frame.getBoundingClientRect();
-  const at = (fraction) => vertical
-    ? { clientX: box.left + 10, clientY: box.top + box.height * fraction }
-    : { clientX: box.left + box.width * fraction, clientY: box.top + 10 };
+  const at = (fraction) =>
+    vertical
+      ? { clientX: box.left + 10, clientY: box.top + box.height * fraction }
+      : { clientX: box.left + box.width * fraction, clientY: box.top + 10 };
   // setPointerCapture rejects an id it has never seen, so the whole gesture
   // carries one real pointerId.
   const pointer = { bubbles: true, pointerId: 1, isPrimary: true, pointerType: 'mouse' };
@@ -57,9 +58,9 @@ function drag(el, downAt, moves, { vertical = false } = {}) {
 }
 
 function press(el, key, init = {}) {
-  el.shadowRoot.querySelector('.compare__handle').dispatchEvent(
-    new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, ...init })
-  );
+  el.shadowRoot
+    .querySelector('.compare__handle')
+    .dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, ...init }));
 }
 
 describe('arc-image-compare rendering', () => {
@@ -79,8 +80,12 @@ describe('arc-image-compare rendering', () => {
 
   it('label chips render only when their prop is set', async () => {
     const el = await mountCompare('before-label="Original" after-label="Edited"');
-    expect(el.shadowRoot.querySelector('[part~="label-before"]').textContent.trim()).to.equal('Original');
-    expect(el.shadowRoot.querySelector('[part~="label-after"]').textContent.trim()).to.equal('Edited');
+    expect(el.shadowRoot.querySelector('[part~="label-before"]').textContent.trim()).to.equal(
+      'Original',
+    );
+    expect(el.shadowRoot.querySelector('[part~="label-after"]').textContent.trim()).to.equal(
+      'Edited',
+    );
 
     const bare = await mountCompare();
     expect(bare.shadowRoot.querySelector('.compare__chip')).to.not.exist;
@@ -236,11 +241,13 @@ describe('arc-image-compare orientation', () => {
     const pointer = { bubbles: true, pointerId: 1, isPrimary: true, pointerType: 'mouse' };
 
     // Pointer at 90% of the width but 30% of the height: only Y may count.
-    frame.dispatchEvent(new PointerEvent('pointerdown', {
-      ...pointer,
-      clientX: box.left + box.width * 0.9,
-      clientY: box.top + box.height * 0.3,
-    }));
+    frame.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        ...pointer,
+        clientX: box.left + box.width * 0.9,
+        clientY: box.top + box.height * 0.3,
+      }),
+    );
     window.dispatchEvent(new PointerEvent('pointerup', pointer));
     await tick();
 

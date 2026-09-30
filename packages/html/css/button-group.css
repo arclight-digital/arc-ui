@@ -3,6 +3,11 @@
 /* arc-button-group */
 .arc-button-group {
         display: inline-flex;
+        /* Follows the button shape rather than restating it: buttons are
+           pills, so the outer corners of a group of them are pill ends. In
+           CSS, where the server's paint has it too; it was written from
+           connectedCallback, which only the client runs. */
+        --_group-radius: var(--radius-full);
       }
 
       .arc-button-group .button-group {

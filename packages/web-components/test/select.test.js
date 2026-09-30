@@ -35,7 +35,9 @@ describe('arc-select value on one line', () => {
     const el = await narrow('d');
     const value = el.shadowRoot.querySelector('.select__value');
     expect(value.textContent).to.contain('2026-09-10');
-    expect(trigger(el).getBoundingClientRect().height, 'the trigger does not grow').to.equal(shortHeight);
+    expect(trigger(el).getBoundingClientRect().height, 'the trigger does not grow').to.equal(
+      shortHeight,
+    );
     expect(getComputedStyle(value).textOverflow).to.equal('ellipsis');
     expect(value.scrollWidth, 'and the text is really cut').to.be.greaterThan(value.clientWidth);
   });

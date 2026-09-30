@@ -19,7 +19,9 @@ const data = Array.from({ length: ROWS }, (_, i) => `row ${i}`);
 
 /** A list with a fixed viewport, mounted and settled. */
 async function list(attrs = '') {
-  const el = mount(`<arc-virtual-list style="height:200px" item-height="20" ${attrs}></arc-virtual-list>`);
+  const el = mount(
+    `<arc-virtual-list style="height:200px" item-height="20" ${attrs}></arc-virtual-list>`,
+  );
   el.items = data;
   await el.updateComplete;
   await tick();
@@ -85,7 +87,10 @@ describe('renderItem path', () => {
   it('passes the real index, not the window offset', async () => {
     const el = await list();
     let seen = [];
-    el.renderItem = (item, i) => { seen.push(i); return item; };
+    el.renderItem = (item, i) => {
+      seen.push(i);
+      return item;
+    };
     await el.updateComplete;
 
     seen = []; // discard the at-rest render; only the scrolled window matters

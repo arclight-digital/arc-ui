@@ -4,8 +4,9 @@ import { getApi, type ComponentApi } from '../data/manifest';
 import { version, frameworkCount } from '../data/site-stats';
 import fs from 'node:fs';
 import { tokens } from '../../../shared/tokens.js';
+import { REPO } from '../data/repo';
 
-const tokensCss = fs.readFileSync(new URL('../../../shared/base.css', import.meta.url), 'utf-8');
+const tokensCss = fs.readFileSync(new URL('shared/base.css', REPO), 'utf-8');
 
 export const prerender = true;
 

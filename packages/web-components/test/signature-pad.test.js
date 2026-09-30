@@ -44,7 +44,13 @@ async function stroke(el, points) {
   await tick();
 }
 
-const SIGN = [[20, 100], [45, 60], [70, 110], [95, 55], [120, 90]];
+const SIGN = [
+  [20, 100],
+  [45, 60],
+  [70, 110],
+  [95, 55],
+  [120, 90],
+];
 
 /** A 1x1 PNG for programmatic-value tests. */
 const TINY_PNG =
@@ -94,9 +100,27 @@ describe('arc-signature-pad drawing', () => {
     const canvas = canvasOf(el);
     const rect = canvas.getBoundingClientRect();
 
-    canvas.dispatchEvent(new PointerEvent('pointerdown', { ...pointer, clientX: rect.left + 20, clientY: rect.top + 80 }));
-    canvas.dispatchEvent(new PointerEvent('pointermove', { ...pointer, clientX: rect.left + 60, clientY: rect.top + 60 }));
-    canvas.dispatchEvent(new PointerEvent('pointermove', { ...pointer, clientX: rect.left + 100, clientY: rect.top + 90 }));
+    canvas.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        ...pointer,
+        clientX: rect.left + 20,
+        clientY: rect.top + 80,
+      }),
+    );
+    canvas.dispatchEvent(
+      new PointerEvent('pointermove', {
+        ...pointer,
+        clientX: rect.left + 60,
+        clientY: rect.top + 60,
+      }),
+    );
+    canvas.dispatchEvent(
+      new PointerEvent('pointermove', {
+        ...pointer,
+        clientX: rect.left + 100,
+        clientY: rect.top + 90,
+      }),
+    );
     await tick();
     expect(seen.length, 'silent while the pen is down').to.equal(0);
 
@@ -113,8 +137,14 @@ describe('arc-signature-pad drawing', () => {
     await el.updateComplete;
     const seen = record(el);
 
-    await stroke(el, [[20, 80], [60, 40]]);
-    await stroke(el, [[30, 110], [90, 100]]);
+    await stroke(el, [
+      [20, 80],
+      [60, 40],
+    ]);
+    await stroke(el, [
+      [30, 110],
+      [90, 100],
+    ]);
 
     expect(only(seen, 'input').length).to.equal(2);
     expect(only(seen, 'change').length).to.equal(2);

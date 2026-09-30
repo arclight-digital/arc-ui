@@ -207,7 +207,7 @@ describe('FormControlMixin: keeping the form in sync', () => {
     // Controls with their own constraint logic (pattern, range) must not have
     // valueMissing written underneath them.
     const { el } = await inForm(
-      '<arc-form-selfvalid-probe name="f" required></arc-form-selfvalid-probe>'
+      '<arc-form-selfvalid-probe name="f" required></arc-form-selfvalid-probe>',
     );
     expect(el.checkValidity(), 'the mixin did not set valueMissing').to.equal(true);
 

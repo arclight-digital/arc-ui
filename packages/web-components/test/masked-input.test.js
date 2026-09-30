@@ -20,22 +20,39 @@ const field = (el) => el.shadowRoot.querySelector('.masked__field');
 function type(el, text) {
   const f = field(el);
   for (const ch of text) {
-    f.dispatchEvent(new InputEvent('beforeinput', {
-      inputType: 'insertText', data: ch, bubbles: true, cancelable: true, composed: true,
-    }));
+    f.dispatchEvent(
+      new InputEvent('beforeinput', {
+        inputType: 'insertText',
+        data: ch,
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+      }),
+    );
   }
 }
 
 function backspace(el) {
-  field(el).dispatchEvent(new InputEvent('beforeinput', {
-    inputType: 'deleteContentBackward', bubbles: true, cancelable: true, composed: true,
-  }));
+  field(el).dispatchEvent(
+    new InputEvent('beforeinput', {
+      inputType: 'deleteContentBackward',
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    }),
+  );
 }
 
 function paste(el, text) {
-  field(el).dispatchEvent(new InputEvent('beforeinput', {
-    inputType: 'insertFromPaste', data: text, bubbles: true, cancelable: true, composed: true,
-  }));
+  field(el).dispatchEvent(
+    new InputEvent('beforeinput', {
+      inputType: 'insertFromPaste',
+      data: text,
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+    }),
+  );
 }
 
 /** Record both commit-contract events in fire order. */
@@ -196,7 +213,9 @@ describe('arc-masked-input: commit contract', () => {
 
     field(el).focus();
     type(el, '12');
-    field(el).dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+    field(el).dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
     await tick();
 
     expect(only(seen, 'change').length).to.equal(1);
@@ -234,7 +253,9 @@ describe('arc-masked-input: constraint validation', () => {
 
 describe('arc-masked-input: form participation', () => {
   it('submits the RAW value, never the formatted string', async () => {
-    const form = mount('<form><arc-masked-input name="card" mask="#### ####"></arc-masked-input></form>');
+    const form = mount(
+      '<form><arc-masked-input name="card" mask="#### ####"></arc-masked-input></form>',
+    );
     const el = form.querySelector('arc-masked-input');
     await el.updateComplete;
 
@@ -274,7 +295,9 @@ describe('arc-masked-input: input-family parity', () => {
   });
 
   it('autocomplete passes through', async () => {
-    const el = mount('<arc-masked-input mask="#### ####" autocomplete="cc-number"></arc-masked-input>');
+    const el = mount(
+      '<arc-masked-input mask="#### ####" autocomplete="cc-number"></arc-masked-input>',
+    );
     await el.updateComplete;
     expect(field(el).getAttribute('autocomplete')).to.equal('cc-number');
   });

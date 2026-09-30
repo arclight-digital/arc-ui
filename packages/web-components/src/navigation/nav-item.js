@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import { loneAnchorChild, resolveCarrierHref } from '../shared/anchor-adoption.js';
+import { loneAnchorChild, resolveCarrierHref, TEXT_NODE } from '../shared/anchor-adoption.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
@@ -51,7 +51,7 @@ export class ArcNavItem extends DeclaredPropsMixin(LitElement) {
     if (anchor) return anchor.textContent.trim();
 
     return [...this.childNodes]
-      .filter((n) => n.nodeType === Node.TEXT_NODE)
+      .filter((n) => n.nodeType === TEXT_NODE)
       .map((n) => n.textContent.trim())
       .filter(Boolean)
       .join(' ');

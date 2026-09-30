@@ -47,13 +47,18 @@ describe('arc-bar-list', () => {
   });
 
   it('shows display text and the unit, and is an ordered list with a name', async () => {
-    const el = await bars('unit="%"', [{ label: 'A', value: 1200, display: '1.2k' }, { label: 'B', value: 5 }]);
+    const el = await bars('unit="%"', [
+      { label: 'A', value: 1200, display: '1.2k' },
+      { label: 'B', value: 5 },
+    ]);
     const values = rows(el).map((r) => r.querySelector('[part~="value"]').textContent.trim());
     expect(values).to.deep.equal(['1.2k%', '5%']);
     const list = el.shadowRoot.querySelector('[part~="base"]');
     expect(list.localName).to.equal('ol');
     expect(list.getAttribute('aria-label')).to.equal('Sources');
-    expect(rows(el)[0].querySelector('[part~="track"]').getAttribute('aria-hidden')).to.equal('true');
+    expect(rows(el)[0].querySelector('[part~="track"]').getAttribute('aria-hidden')).to.equal(
+      'true',
+    );
   });
 
   it('links a row with href', async () => {
@@ -64,7 +69,9 @@ describe('arc-bar-list', () => {
   });
 
   it('accepts items as a JSON attribute', async () => {
-    const el = mount(`<arc-bar-list items='[{"label":"X","value":2},{"label":"Y","value":4}]'></arc-bar-list>`);
+    const el = mount(
+      `<arc-bar-list items='[{"label":"X","value":2},{"label":"Y","value":4}]'></arc-bar-list>`,
+    );
     await settle(el);
     expect(labels(el)).to.deep.equal(['Y', 'X']);
   });
@@ -73,7 +80,10 @@ describe('arc-bar-list', () => {
 /** Halteres adoption batch against 4.6.0 (test-findings #138–#140). */
 describe('arc-bar-list highlight, reference and more (4.7.0)', () => {
   it('emphasises a highlighted row in colour and weight (#138)', async () => {
-    const el = await bars('', [{ label: 'A', value: 3 }, { label: 'B', value: 2, highlight: true }]);
+    const el = await bars('', [
+      { label: 'A', value: 3 },
+      { label: 'B', value: 2, highlight: true },
+    ]);
     const [a, b] = rows(el);
     expect(b.querySelector('.bar').getAttribute('part')).to.equal('bar highlight');
     expect(a.querySelector('.bar').getAttribute('part')).to.equal('bar');
@@ -83,21 +93,32 @@ describe('arc-bar-list highlight, reference and more (4.7.0)', () => {
   });
 
   it('draws a reference line at its value, with a caption (#139)', async () => {
-    const el = await bars('reference="30" reference-label="Chance" unit="%"', [{ label: 'A', value: 60 }]);
+    const el = await bars('reference="30" reference-label="Chance" unit="%"', [
+      { label: 'A', value: 60 },
+    ]);
     const line = el.shadowRoot.querySelector('[part~="reference"]');
     expect(line.style.insetInlineStart).to.equal('50%');
-    expect(el.shadowRoot.querySelector('[part~="reference-label"]').textContent.trim()).to.equal('Chance: 30%');
+    expect(el.shadowRoot.querySelector('[part~="reference-label"]').textContent.trim()).to.equal(
+      'Chance: 30%',
+    );
   });
 
-  it('shows reference-display in the caption, in the list\'s own format', async () => {
-    const el = await bars('reference="0.0556" reference-label="Random pick" reference-display="6%"', [{ label: 'A', value: 0.4, display: '40%' }]);
-    expect(el.shadowRoot.querySelector('[part~="reference-label"]').textContent.trim()).to.equal('Random pick: 6%');
+  it("shows reference-display in the caption, in the list's own format", async () => {
+    const el = await bars(
+      'reference="0.0556" reference-label="Random pick" reference-display="6%"',
+      [{ label: 'A', value: 0.4, display: '40%' }],
+    );
+    expect(el.shadowRoot.querySelector('[part~="reference-label"]').textContent.trim()).to.equal(
+      'Random pick: 6%',
+    );
   });
 
   it('extends the scale to a reference beyond the largest bar', async () => {
     const el = await bars('reference="200"', [{ label: 'A', value: 100 }]);
     expect(widths(el)).to.deep.equal(['50%']);
-    expect(el.shadowRoot.querySelector('[part~="reference"]').style.insetInlineStart).to.equal('100%');
+    expect(el.shadowRoot.querySelector('[part~="reference"]').style.insetInlineStart).to.equal(
+      '100%',
+    );
   });
 
   it('counts the rows limit leaves out, and lets the more slot replace it (#140)', async () => {
@@ -105,7 +126,9 @@ describe('arc-bar-list highlight, reference and more (4.7.0)', () => {
     const more = el.shadowRoot.querySelector('[part~="more"]');
     expect(more.textContent.trim()).to.equal('2 more');
     cleanup();
-    const el2 = mount('<arc-bar-list limit="1"><a slot="more" href="#all">See all</a></arc-bar-list>');
+    const el2 = mount(
+      '<arc-bar-list limit="1"><a slot="more" href="#all">See all</a></arc-bar-list>',
+    );
     el2.items = ITEMS;
     await settle(el2);
     const slot = el2.shadowRoot.querySelector('slot[name="more"]');

@@ -137,6 +137,32 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
         All {elementCount} pass; none are client-only. There is no per-component support table
         to consult. You opt in per page, not per component.
       </p>
+      <p>
+        Rendering isn't the whole promise, so a second test holds the rest: every component's
+        docs preview, server-rendered, has to look the same before its script arrives as after.
+        That includes the ones built from their children: breadcrumbs, navigation menus,
+        tabs, accordions and lists arrive with their items, and nothing moves when the script
+        lands. Two exceptions, both about the clock: <code>arc-clock</code> shows the time, and
+        <code>arc-activity-heatmap</code> without an <code>end-date</code> ends today. Only the
+        browser knows either.
+      </p>
+    </section>
+
+    <section id="routers">
+      <h2 class="docs-heading">Client-side routers</h2>
+      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
+      <p>
+        A router that fetches the next page and parses it with <code>DOMParser</code> gets
+        declarative shadow roots as inert templates: only the page parser attaches them. Astro's
+        <code>&lt;ClientRouter /&gt;</code> is one. Attach them before the swap:
+      </p>
+      <arc-code-block language="js" code={`import { attachShadowRoots } from '@arclux/arc-ui/shadow-roots';
+
+document.addEventListener('astro:before-swap', (e) => attachShadowRoots(e.newDocument));`}></arc-code-block>
+      <p>
+        Without it, every component on the incoming page renders a fresh copy next to a dead
+        template, and nothing hydrates.
+      </p>
     </section>
 
     <section id="frameworks">
@@ -164,6 +190,11 @@ const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
           render through the component graph.
         </li>
       </ul>
+      <p>
+        It renders any Lit element defined in the process, not only ARC's. Import another
+        library's registration before rendering (<code>@arclux/brand/register</code>, your own
+        components) and its elements arrive rendered too, the way an icon pack's glyphs do.
+      </p>
       <p>
         It needs <code>@lit-labs/ssr</code>, an optional peer dependency. Install it in the
         project that server-renders. Two things are on the caller: serve the returned

@@ -44,7 +44,10 @@ const components = manifest.modules
 
 for (const c of components) {
   try {
-    await import(/* @vite-ignore */ new URL(`../${c.path.replace(/\.js$/, '.register.js')}`, import.meta.url).href);
+    await import(
+      /* @vite-ignore */ new URL(`../${c.path.replace(/\.js$/, '.register.js')}`, import.meta.url)
+        .href
+    );
   } catch {
     // conformance.test.js owns the "every module imports" assertion; a module
     // that cannot load is reported there rather than twice.
@@ -107,13 +110,12 @@ for (const c of LIVE) {
       await settle(el);
       if (!el.shadowRoot) return;
 
-      const empty = [...el.shadowRoot.querySelectorAll('*')]
-        .flatMap((node) =>
-          [...node.attributes]
-            .filter((a) => a.name.startsWith('aria-') && a.value === '')
-            .filter((a) => !EMPTY_IS_MEANINGFUL.has(a.name))
-            .map((a) => `${node.localName}[${a.name}]`),
-        );
+      const empty = [...el.shadowRoot.querySelectorAll('*')].flatMap((node) =>
+        [...node.attributes]
+          .filter((a) => a.name.startsWith('aria-') && a.value === '')
+          .filter((a) => !EMPTY_IS_MEANINGFUL.has(a.name))
+          .map((a) => `${node.localName}[${a.name}]`),
+      );
 
       expect(empty, `${tag} renders ${empty.join(', ')}`).to.eql([]);
     });

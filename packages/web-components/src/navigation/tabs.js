@@ -297,6 +297,9 @@ export class ArcTabs extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onSlotChange' };
+
   constructor() {
     super();
     this._tabs = [];

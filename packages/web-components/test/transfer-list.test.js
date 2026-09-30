@@ -43,7 +43,8 @@ const box = (el, pane) => el.shadowRoot.querySelector(`.tl__listbox[data-pane="$
 const opts = (el, pane) => [...box(el, pane).querySelectorAll('[role="option"]')];
 const labels = (el, pane) => opts(el, pane).map((o) => o.textContent.trim());
 const optFor = (el, pane, label) => opts(el, pane).find((o) => o.textContent.trim() === label);
-const count = (el, pane) => el.shadowRoot.querySelectorAll('.tl__pane-count')[pane === 'source' ? 0 : 1];
+const count = (el, pane) =>
+  el.shadowRoot.querySelectorAll('.tl__pane-count')[pane === 'source' ? 0 : 1];
 
 // The four controls in DOM order. Named rather than indexed because "grouped by
 // scope, not by direction" means the visual order is checked-pair then bulk-pair,
@@ -478,7 +479,9 @@ describe('arc-transfer-list keyboard', () => {
     press(el, 'source', 'ArrowDown');
     press(el, 'source', 'ArrowDown');
     await settle(el);
-    expect(optFor(el, 'source', 'Charlie').getAttribute('tabindex'), 'not on Charlie').to.equal('0');
+    expect(optFor(el, 'source', 'Charlie').getAttribute('tabindex'), 'not on Charlie').to.equal(
+      '0',
+    );
     press(el, 'source', 'Enter');
     await settle(el);
     expect(el.value).to.eql([]);

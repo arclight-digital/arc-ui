@@ -52,10 +52,7 @@ const stopsOf = (bg) => [...bg.matchAll(/rgba?\([^)]*\)/g)].map((m) => m[0]);
 
 describe('a lobe fades to nothing, not to black', () => {
   it('arc-divider line-white fades out in the text color at zero alpha', async () => {
-    const bg = await backgroundOf(
-      '<arc-divider variant="line-white"></arc-divider>',
-      '.divider',
-    );
+    const bg = await backgroundOf('<arc-divider variant="line-white"></arc-divider>', '.divider');
     const stops = stopsOf(bg);
     expect(stops.length, bg).to.be.at.least(3);
 
@@ -87,7 +84,10 @@ describe('the color is an argument, and it crosses the shadow boundary', () => {
     // token, two variants of one component, two colors. If the inputs did not
     // reach the shape these would be identical — which is exactly what the
     // forwarding rule made them until --lobe-* was held out of it.
-    const white = await backgroundOf('<arc-divider variant="line-white"></arc-divider>', '.divider');
+    const white = await backgroundOf(
+      '<arc-divider variant="line-white"></arc-divider>',
+      '.divider',
+    );
     const primary = await backgroundOf(
       '<arc-divider variant="line-primary"></arc-divider>',
       '.divider',
@@ -138,7 +138,10 @@ describe('the axis is an argument too', () => {
 
 describe('components that are not arc-divider get the same guarantee', () => {
   it('arc-stat rule fades in the accent, not to black', async () => {
-    const bg = await backgroundOf('<arc-stat label="Users" value="42"></arc-stat>', '.stat__rule, .stat::after, .stat__accent, .stat');
+    const bg = await backgroundOf(
+      '<arc-stat label="Users" value="42"></arc-stat>',
+      '.stat__rule, .stat::after, .stat__accent, .stat',
+    );
     // Not every arc-stat internal carries a lobe; the assertion is about the
     // one that does, so an empty background here means the selector needs
     // updating rather than that the lobe is wrong.

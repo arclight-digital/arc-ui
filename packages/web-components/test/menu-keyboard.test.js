@@ -58,7 +58,7 @@ function typeKey(search, key, init = {}) {
       composed: true,
       cancelable: true,
       ...init,
-    })
+    }),
   );
 }
 

@@ -28,11 +28,12 @@ async function tree(data, attrs = '') {
 
 const rows = (el) => [...el.shadowRoot.querySelectorAll('.json-tree__row')];
 const rowByText = (el, text) => rows(el).find((r) => r.textContent.includes(text));
-const valueOf = (el, type) =>
-  el.shadowRoot.querySelector(`.json-tree__value--${type}`);
+const valueOf = (el, type) => el.shadowRoot.querySelector(`.json-tree__value--${type}`);
 
 function press(row, key) {
-  row.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, composed: true }));
+  row.dispatchEvent(
+    new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true, composed: true }),
+  );
 }
 
 describe('primitive rendering', () => {
@@ -261,8 +262,9 @@ describe('cyclic data', () => {
 
   it('marks the cycle rather than repeating it', async () => {
     const el = await tree(selfReferential(), 'expanded');
-    const previews = [...el.shadowRoot.querySelectorAll('[part~="preview"]')]
-      .map((p) => p.textContent.trim());
+    const previews = [...el.shadowRoot.querySelectorAll('[part~="preview"]')].map((p) =>
+      p.textContent.trim(),
+    );
     expect(previews).to.include('{Circular}');
 
     // One row for the root, one for `name`, one for `self`. A tree that
@@ -274,8 +276,9 @@ describe('cyclic data', () => {
     const list = [1];
     list.push(list);
     const el = await tree({ list }, 'expanded');
-    const previews = [...el.shadowRoot.querySelectorAll('[part~="preview"]')]
-      .map((p) => p.textContent.trim());
+    const previews = [...el.shadowRoot.querySelectorAll('[part~="preview"]')].map((p) =>
+      p.textContent.trim(),
+    );
     expect(previews).to.include('[Circular]');
   });
 
@@ -295,8 +298,9 @@ describe('cyclic data', () => {
     const shared = { unit: 'ms' };
     const el = await tree({ first: shared, second: shared }, 'expanded');
 
-    const previews = [...el.shadowRoot.querySelectorAll('[part~="preview"]')]
-      .map((p) => p.textContent.trim());
+    const previews = [...el.shadowRoot.querySelectorAll('[part~="preview"]')].map((p) =>
+      p.textContent.trim(),
+    );
     expect(previews, 'neither copy is a cycle').to.not.include('{Circular}');
     expect(el.shadowRoot.querySelectorAll('.json-tree__value--string')).to.have.lengthOf(2);
   });

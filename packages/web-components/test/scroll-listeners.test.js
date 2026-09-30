@@ -60,7 +60,9 @@ describe('arc-scroll-spy', () => {
     const page = spyPage(attrs);
     const el = page.querySelector('arc-scroll-spy');
     await settle(el);
-    await until(() => el.shadowRoot.querySelectorAll('[part~="link"], .scroll-spy__link').length === 3);
+    await until(
+      () => el.shadowRoot.querySelectorAll('[part~="link"], .scroll-spy__link').length === 3,
+    );
     await settle(el);
     return { page, el };
   }
@@ -129,7 +131,9 @@ describe('arc-scroll-spy', () => {
     /** dashoffset counts *down* from the full circumference as it fills. */
     const shown = () => {
       const r = ring();
-      return 1 - Number(r.getAttribute('stroke-dashoffset')) / Number(r.getAttribute('stroke-dasharray'));
+      return (
+        1 - Number(r.getAttribute('stroke-dashoffset')) / Number(r.getAttribute('stroke-dasharray'))
+      );
     };
 
     await scrollTo(0);
@@ -400,7 +404,6 @@ describe('arc-scroll-indicator', () => {
 
     expect(removed, 'the old container was never unsubscribed').to.contain('scroll');
   });
-
 });
 
 describe('scroll listeners are connection-scoped', () => {

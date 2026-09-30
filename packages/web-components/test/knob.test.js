@@ -27,7 +27,9 @@ const dialOf = (el) => el.shadowRoot.querySelector('.knob__dial');
 const pointer = { bubbles: true, pointerId: 1, isPrimary: true, pointerType: 'mouse' };
 
 function key(target, k, init = {}) {
-  target.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...init }));
+  target.dispatchEvent(
+    new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true, ...init }),
+  );
 }
 
 describe('arc-knob rendering', () => {
@@ -170,7 +172,9 @@ describe('arc-knob wheel', () => {
     const el = mount('<arc-knob value="99" min="0" max="100" step="5"></arc-knob>');
     await el.updateComplete;
 
-    dialOf(el).dispatchEvent(new WheelEvent('wheel', { deltaY: -1, bubbles: true, cancelable: true }));
+    dialOf(el).dispatchEvent(
+      new WheelEvent('wheel', { deltaY: -1, bubbles: true, cancelable: true }),
+    );
     await tick();
     expect(el.value).to.equal(100);
   });

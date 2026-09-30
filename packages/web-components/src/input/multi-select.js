@@ -258,6 +258,9 @@ export class ArcMultiSelect extends DeclaredPropsMixin(FormControlMixin(LitEleme
 
   static _idCounter = 0;
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onSlotChange' };
+
   constructor() {
     super();
     this.placeholder = '';

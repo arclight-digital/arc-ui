@@ -44,6 +44,7 @@
  * `docs/astro.config.mjs` in this repo shows why an import statement alone is
  * not enough.
  */
+import { pathToFileURL } from 'node:url';
 import { CLIENT_ONLY } from './ssr-client-only.js';
 
 /**
@@ -142,8 +143,15 @@ async function prepare() {
       );
     }
     const { collectResult } = await import('@lit-labs/ssr/lib/render-result.js');
+    const { LitElementRenderer } = await import('@lit-labs/ssr/lib/lit-element-renderer.js');
     const { html, unsafeStatic } = await import('lit/static-html.js');
-    lit = { render: ssr.render, collectResult, html, unsafeStatic };
+    // parse5 is @lit-labs/ssr's dependency, not ours: resolve it from there.
+    const { createRequire } = await import('node:module');
+    const fromSsr = createRequire(import.meta.resolve('@lit-labs/ssr'));
+    const { parse, parseFragment } = await import(pathToFileURL(fromSsr.resolve('parse5')).href);
+    const lightDom = await import('./ssr-light-dom.js');
+    LitElementRenderer.renderOptions.push(readServerSlots);
+    lit = { render: ssr.render, collectResult, html, unsafeStatic, parse, parseFragment, lightDom };
   }
   if (!registered) {
     // The barrel is all-or-nothing, so a client-only component would be defined
@@ -202,7 +210,10 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
   } = options;
 
   const iconRegistry = await prepare();
-  if (!source.includes('<arc-')) {
+  // Any custom element, not only ARC's: another Lit library defined in this
+  // process (@arclux/brand's logos, a consumer's own) renders the same way,
+  // and a page holding only those was passed through untouched.
+  if (!/<[a-z][a-z0-9]*-[a-z0-9-]*[\s/>]/.test(source)) {
     return { html: source, stylesheets, roots: 0, deferred: 0 };
   }
 
@@ -221,7 +232,33 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
 
   source = hoistTextContent(source);
 
-  let out = await lit.collectResult(lit.render(lit.html`${lit.unsafeStatic(source)}`));
+  source = writeBackLightDom(source);
+
+  const renderOnce = async () => {
+    const marked = snapshotSlots(source);
+    try {
+      return (await lit.collectResult(lit.render(lit.html`${lit.unsafeStatic(marked)}`))).replace(
+        SLOT_MARK,
+        '',
+      );
+    } finally {
+      SLOT_SNAPSHOTS.clear();
+    }
+  };
+  let out = await renderOnce();
+
+  // Icons a component draws itself (a carousel's chevrons, a player's play
+  // glyph) are named in its shadow markup, never in the page, so the preload
+  // above can't see them and they rendered as empty placeholders that popped
+  // in after load. Their names are in the output: load them and render again,
+  // which happens at most once, and only when a page has such an icon.
+  const unseen = [...new Set([...out.matchAll(ICON_NAME)].map((m) => m[1]))].filter(
+    (n) => !iconRegistry.getSync(n),
+  );
+  if (unseen.length) {
+    await iconRegistry.preload(unseen);
+    if (unseen.some((n) => iconRegistry.getSync(n))) out = await renderOnce();
+  }
 
   // lit wraps its output in a part marker, and the opening one lands *before*
   // the doctype, enough to put the document in quirks mode.
@@ -237,6 +274,7 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
     out = preloadStylesheets(out, used, stylesheetPath);
   }
   out = markServerRendered(out);
+  out = embedDocumentStyles(out);
   if (inlineIcons) out = embedIcons(out, iconRegistry);
 
   return {
@@ -245,6 +283,193 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
     roots: (out.match(/shadowrootmode/g) || []).length,
     deferred: capped.deferred + trimmed.deferred,
   };
+}
+
+/** Snapshot id → the host's children by slot, for the render in progress. */
+const SLOT_SNAPSHOTS = new Map();
+const SLOT_ATTR = 'data-arc-ssr-slots';
+const SLOT_MARK = new RegExp(` ${SLOT_ATTR}="\\d+"`, 'g');
+
+/**
+ * Give each host that builds its shadow tree from its children those
+ * children, as the server can model them (see ssr-light-dom.js).
+ *
+ * A component opts in with `static slotReaders`, mapping a slot name (`''`
+ * for the default slot) to the method its `@slotchange` calls, or to a
+ * function called with the host as `this`. The server
+ * calls that same method with a stand-in slot before the host renders, so
+ * the server's shadow tree is the one the client draws, and the client does
+ * the same from the declarative slots before its first render (see
+ * DeclaredPropsMixin), so the two match and hydration adopts rather than
+ * redraws. Each host is marked with an id attribute for the render and the
+ * mark is stripped from the output.
+ */
+function snapshotSlots(page) {
+  const edits = [];
+  for (const host of readerHosts(page)) {
+    const id = String(SLOT_SNAPSHOTS.size);
+    SLOT_SNAPSHOTS.set(
+      id,
+      lit.lightDom.slottedNodes(page.slice(host.innerStart, host.innerEnd), lit.parseFragment),
+    );
+    const at = page[host.openEnd - 1] === '/' ? host.openEnd - 1 : host.openEnd;
+    edits.push([at, ` ${SLOT_ATTR}="${id}"`]);
+  }
+  // Back to front, so earlier offsets stay valid.
+  edits.sort((a, b) => b[0] - a[0]);
+  for (const [at, text] of edits) page = page.slice(0, at) + text + page.slice(at);
+  return page;
+}
+
+/**
+ * What a reader does to the children themselves, written into the page.
+ *
+ * arc-tabs hides every panel but the selected one, arc-code-group every block
+ * but the first, arc-sortable-list moves each item into its row's named slot.
+ * On the client those are attribute changes on light DOM, made on upgrade;
+ * lit-ssr renders a host's shadow root and has no way to change its children,
+ * so the server paint showed every panel at once and the page shrank when
+ * the script arrived. So each reader runs here first, against a stand-in of
+ * the host built from its attributes, and any start tag of a direct child it
+ * changed is rewritten in the source. The render then sees the page as the
+ * client will leave it, and so does the reader again at render time.
+ */
+function writeBackLightDom(page) {
+  const edits = [];
+  for (const host of readerHosts(page)) {
+    const snapshot = lit.lightDom.slottedNodes(
+      page.slice(host.innerStart, host.innerEnd),
+      lit.parseFragment,
+    );
+    let element;
+    try {
+      element = new host.Ctor();
+      for (const { name, value } of host.attrs) {
+        element.setAttribute(name, value);
+        element.attributeChangedCallback?.(name, null, value);
+      }
+    } catch {
+      continue;
+    }
+    runReaders(element, snapshot);
+    for (const [from, to, text] of lit.lightDom.lightDomEdits(snapshot)) {
+      edits.push([host.innerStart + from, host.innerStart + to, text]);
+    }
+  }
+  edits.sort((a, b) => b[0] - a[0]);
+  for (const [from, to, text] of edits) page = page.slice(0, from) + text + page.slice(to);
+  return page;
+}
+
+/**
+ * Every element in the page whose class declares slot readers, located by
+ * parsing the page rather than by searching it: an attribute value can hold
+ * markup (arc-copy-button's `value` carries HTML snippets, `<arc-button>`
+ * and all), and a search found tags inside it. Offsets are into `page`.
+ */
+function readerHosts(page) {
+  const registry = globalThis.customElements;
+  const isDocument = /^\s*(<!doctype|<html)/i.test(page);
+  const root = (isDocument ? lit.parse : lit.parseFragment)(page, { sourceCodeLocationInfo: true });
+  const hosts = [];
+  const walk = (node) => {
+    for (const child of node.childNodes ?? []) {
+      const Ctor = child.tagName?.includes('-') ? registry.get(child.tagName) : undefined;
+      const loc = child.sourceCodeLocation;
+      if (Ctor?.slotReaders && loc?.startTag) {
+        hosts.push({
+          Ctor,
+          attrs: child.attrs,
+          openEnd: loc.startTag.endOffset - 1,
+          innerStart: loc.startTag.endOffset,
+          innerEnd: loc.endTag ? loc.endTag.startOffset : loc.endOffset,
+        });
+      }
+      walk(child);
+    }
+  };
+  walk(root);
+  return hosts;
+}
+
+/** Call each of a host's slot readers with its children, as slotchange would. */
+function runReaders(element, snapshot) {
+  // The children belong to this host: a reader that checks
+  // `child.parentElement === this` has to see it.
+  for (const nodes of snapshot.values()) {
+    for (const node of nodes) {
+      node.__arcParent = element;
+      node.parentNode = element;
+    }
+  }
+  // Readers commonly find a slot through their own shadow root
+  // (`this.shadowRoot.querySelector('slot[name="nav"]')`), which the server
+  // doesn't have. For the length of the calls it has one that answers slot
+  // selectors from the page's children, and nothing else.
+  const slots = new Map();
+  const slotNamed = (name) => {
+    if (!slots.has(name)) slots.set(name, lit.lightDom.serverSlot(name, snapshot.get(name) ?? []));
+    return slots.get(name);
+  };
+  const querySlot = (selector) => {
+    if (/^slot:not\(\[name\]\)$|^slot$/.test(selector)) return slotNamed('');
+    const named = /^slot\[name=["']?([^"'\]]*)["']?\]$/.exec(selector);
+    return named ? slotNamed(named[1]) : null;
+  };
+  const had = Object.getOwnPropertyDescriptor(element, 'shadowRoot');
+  Object.defineProperty(element, 'shadowRoot', {
+    configurable: true,
+    value: {
+      querySelector: querySlot,
+      querySelectorAll: (selector) => [querySlot(selector)].filter(Boolean),
+    },
+  });
+  try {
+    for (const [name, reader] of Object.entries(element.constructor.slotReaders)) {
+      try {
+        const e = { target: slotNamed(name) };
+        if (typeof reader === 'function') reader.call(element, e);
+        else element[reader](e);
+      } catch {
+        // A reader that needs more of the DOM than the server models renders
+        // as it did before this existed: empty, and filled on the client.
+      }
+    }
+  } finally {
+    if (had) Object.defineProperty(element, 'shadowRoot', had);
+    else delete element.shadowRoot;
+  }
+}
+
+/** lit-ssr's per-element hook, run after attributes and before willUpdate. */
+function readServerSlots(element) {
+  const id = element.getAttribute?.(SLOT_ATTR);
+  const snapshot = id != null && SLOT_SNAPSHOTS.get(id);
+  if (snapshot) runReaders(element, snapshot);
+  return undefined;
+}
+
+/**
+ * The `>` that closes the start tag opening at `start`, or -1.
+ *
+ * Not the first `>` after it: an attribute value can hold one. arc-copy-button
+ * carries the code it copies in `value`, and a snippet of HTML there put the
+ * slot mark in the middle of the attribute, which broke the page's markup and
+ * every component after it on arcui.dev.
+ */
+function startTagEnd(page, start) {
+  let quote = null;
+  for (let i = start + 1; i < page.length; i++) {
+    const c = page[i];
+    if (quote) {
+      if (c === quote) quote = null;
+    } else if (c === '"' || c === "'") {
+      quote = c;
+    } else if (c === '>') {
+      return i;
+    }
+  }
+  return -1;
 }
 
 /**
@@ -328,7 +553,7 @@ function hoistTextContent(page) {
     // Back to front, so earlier offsets stay valid.
     for (let i = spans.length - 1; i >= 0; i--) {
       const [start, end] = spans[i];
-      const openEnd = page.indexOf('>', start);
+      const openEnd = startTagEnd(page, start);
       if (openEnd === -1 || openEnd >= end) continue;
       if (new RegExp(`\\s${attr}\\s*=`).test(page.slice(start, openEnd + 1))) continue;
       const inner = page.slice(openEnd + 1, end - close.length);
@@ -506,12 +731,40 @@ function embedIcons(page, iconRegistry) {
     const svg = iconRegistry.getSync(name);
     if (svg) icons[name] = svg;
   }
-  if (Object.keys(icons).length === 0 || !page.includes('</body>')) return page;
+  if (Object.keys(icons).length === 0) return page;
 
   // `<` is escaped so the payload cannot terminate its own script element.
   const json = JSON.stringify(icons).replace(/</g, '\\u003c');
   const tag = `<script type="application/json" id="${ICON_PAYLOAD_ID}">${json}</script>`;
-  return page.replace('</body>', `${tag}</body>`);
+  // A fragment has no </body>; the payload goes at its end. It was dropped,
+  // which left every icon in a server-rendered fragment to mismatch on
+  // hydration: the server drew the glyph, the client's first render had none.
+  return page.includes('</body>') ? page.replace('</body>', `${tag}</body>`) : page + tag;
+}
+
+/**
+ * The light-DOM styles of the components the page uses (`static
+ * documentStyles`, see shared/document-styles.js), into <head>, or at the
+ * start of a fragment. The client finds them there and doesn't add its own.
+ */
+function embedDocumentStyles(page) {
+  const registry = globalThis.customElements;
+  const tags = [...new Set([...page.matchAll(ARC_TAG)].map((m) => m[1]))].sort();
+  const styles = tags
+    .map((tag) => [tag, registry.get(tag)?.documentStyles])
+    .filter(([, css]) => css)
+    .map(([tag, css]) => `<style data-arc-document-styles="${tag}">${css}</style>`)
+    .join('');
+  if (!styles) return page;
+  if (page.includes('</head>')) return page.replace('</head>', `${styles}</head>`);
+  // A document with no <head>: at the top of <body>, never ahead of the
+  // doctype, where it would put the page in quirks mode.
+  const body = /<body\b[^>]*>/i.exec(page);
+  if (body)
+    return (
+      page.slice(0, body.index + body[0].length) + styles + page.slice(body.index + body[0].length)
+    );
+  return styles + page;
 }
 
 /** Stable short name for a stylesheet, without pulling in node:crypto. */

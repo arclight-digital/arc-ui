@@ -17,9 +17,14 @@
  * and a component that rewrote them would fight the reconciler.
  */
 
+// Node's constants by value: the server renders these carriers too, and has
+// no Node global. See ssr.js, which hands a server render its children.
+export const ELEMENT_NODE = 1;
+export const TEXT_NODE = 3;
+
 /** Nodes that carry meaning: everything but whitespace-only text. */
 function meaningfulNodes(nodes) {
-  return nodes.filter((n) => n.nodeType !== Node.TEXT_NODE || n.textContent.trim() !== '');
+  return nodes.filter((n) => n.nodeType !== TEXT_NODE || n.textContent.trim() !== '');
 }
 
 /**
@@ -36,9 +41,7 @@ function meaningfulNodes(nodes) {
  */
 export function isLoneSlottedAnchor(slot) {
   const nodes = meaningfulNodes(slot.assignedNodes({ flatten: true }));
-  return (
-    nodes.length === 1 && nodes[0].nodeType === Node.ELEMENT_NODE && nodes[0].localName === 'a'
-  );
+  return nodes.length === 1 && nodes[0].nodeType === ELEMENT_NODE && nodes[0].localName === 'a';
 }
 
 /**
@@ -55,7 +58,7 @@ export function isLoneSlottedAnchor(slot) {
 export function loneAnchorChild(host) {
   const nodes = meaningfulNodes([...host.childNodes]);
   const first = nodes[0];
-  return nodes.length === 1 && first.nodeType === Node.ELEMENT_NODE && first.localName === 'a'
+  return nodes.length === 1 && first.nodeType === ELEMENT_NODE && first.localName === 'a'
     ? /** @type {HTMLAnchorElement} */ (first)
     : null;
 }

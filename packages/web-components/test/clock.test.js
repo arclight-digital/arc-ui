@@ -168,7 +168,9 @@ describe('arc-clock lifecycle and a11y', () => {
     expect(sr.textContent).to.match(/\d{1,2}:\d{2}/);
     expect(el.shadowRoot.querySelector('[aria-live]')).to.not.exist;
     // The visual face is decorative; assistive tech reads the hidden string.
-    expect(el.shadowRoot.querySelector('[part~="face"]').getAttribute('aria-hidden')).to.equal('true');
+    expect(el.shadowRoot.querySelector('[part~="face"]').getAttribute('aria-hidden')).to.equal(
+      'true',
+    );
   });
 
   it('renders an unknown variant as the digital default', async () => {

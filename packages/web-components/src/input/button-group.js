@@ -28,6 +28,11 @@ export class ArcButtonGroup extends DeclaredPropsMixin(LitElement) {
     css`
       :host {
         display: inline-flex;
+        /* Follows the button shape rather than restating it: buttons are
+           pills, so the outer corners of a group of them are pill ends. In
+           CSS, where the server's paint has it too; it was written from
+           connectedCallback, which only the client runs. */
+        --_group-radius: var(--radius-full);
       }
 
       .button-group {
@@ -85,20 +90,12 @@ export class ArcButtonGroup extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onSlotChange' };
+
   constructor() {
     super();
     this.variant = '';
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    // Not in the constructor: that also runs on the server, where the element
-    // shim has no `style` and this threw. connectedCallback is client-only and
-    // still lands before first paint.
-    // Follows the button shape rather than restating it: buttons are pills, so
-    // the outer corners of a group of them are pill ends. A literal here (it
-    // was '10px', the old --radius-md) silently outlives any change to that.
-    this.style.setProperty('--_group-radius', 'var(--radius-full)');
   }
 
   _onSlotChange(e) {

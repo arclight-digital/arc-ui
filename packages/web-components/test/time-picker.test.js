@@ -81,9 +81,20 @@ describe('arc-time-picker display', () => {
 describe('arc-time-picker columns', () => {
   it('lists 12h hours starting at 12', async () => {
     const el = await opened();
-    expect(cellText(el, 'Hours')).to.eql(
-      ['12', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11'],
-    );
+    expect(cellText(el, 'Hours')).to.eql([
+      '12',
+      '1',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '10',
+      '11',
+    ]);
   });
 
   it('lists 24h hours zero-padded from 00', async () => {
@@ -233,9 +244,10 @@ describe('arc-time-picker min and max', () => {
 
   it('leaves everything enabled with no bounds', async () => {
     const el = await opened('step="30"');
-    expect(cells(el, 'Hours').some((b) => b.disabled), 'bounds appeared from nowhere').to.equal(
-      false,
-    );
+    expect(
+      cells(el, 'Hours').some((b) => b.disabled),
+      'bounds appeared from nowhere',
+    ).to.equal(false);
   });
 
   it('ignores an unparseable bound rather than disabling everything', async () => {
@@ -271,9 +283,10 @@ describe('arc-time-picker roving tabindex', () => {
   it('falls back to the first enabled cell when nothing is selected', async () => {
     const el = await opened('min="09:00" step="30"');
     // 12 AM through 8 AM are all out of range, so the stop must skip them.
-    expect(cellFor(el, 'Hours', '9').getAttribute('tabindex'), 'stop landed on a dead cell').to.equal(
-      '0',
-    );
+    expect(
+      cellFor(el, 'Hours', '9').getAttribute('tabindex'),
+      'stop landed on a dead cell',
+    ).to.equal('0');
   });
 });
 

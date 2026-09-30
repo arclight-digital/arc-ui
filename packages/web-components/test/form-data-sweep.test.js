@@ -27,20 +27,23 @@ import { mount, cleanup, settle } from './helpers.js';
 import '../src/shared/option.register.js';
 
 const manifest = await fetch(new URL('../custom-elements.json', import.meta.url)).then((r) =>
-  r.json()
+  r.json(),
 );
 
 /** Every custom element whose class declares `formAssociated`. */
 const SUBJECTS = manifest.modules.flatMap((m) =>
   (m.declarations ?? [])
     .filter((d) => d.tagName && (d.members ?? []).some((x) => x.name === 'formAssociated'))
-    .map((d) => ({ tag: d.tagName, path: m.path }))
+    .map((d) => ({ tag: d.tagName, path: m.path })),
 );
 
 const unimportable = [];
 for (const { path } of SUBJECTS) {
   try {
-    await import(/* @vite-ignore */ new URL(`../${path.replace(/\.js$/, '.register.js')}`, import.meta.url).href);
+    await import(
+      /* @vite-ignore */ new URL(`../${path.replace(/\.js$/, '.register.js')}`, import.meta.url)
+        .href
+    );
   } catch (error) {
     unimportable.push(`${path}: ${error.message.slice(0, 80)}`);
   }
@@ -51,41 +54,94 @@ for (const { path } of SUBJECTS) {
  * checked against the derived subject list below in both directions.
  */
 const FILL = {
-  'arc-input': (el) => { el.value = 'typed'; },
-  'arc-textarea': (el) => { el.value = 'typed'; },
-  'arc-select': (el) => { el.value = 'a'; },
-  'arc-combobox': (el) => { el.value = 'a'; },
-  'arc-multi-select': (el) => { el.value = ['a', 'b']; },
-  'arc-radio-group': (el) => { el.value = 'a'; },
+  'arc-input': (el) => {
+    el.value = 'typed';
+  },
+  'arc-textarea': (el) => {
+    el.value = 'typed';
+  },
+  'arc-select': (el) => {
+    el.value = 'a';
+  },
+  'arc-combobox': (el) => {
+    el.value = 'a';
+  },
+  'arc-multi-select': (el) => {
+    el.value = ['a', 'b'];
+  },
+  'arc-radio-group': (el) => {
+    el.value = 'a';
+  },
   // Form-associated as of finding #7: it looked exactly like a radio group and
   // submitted nothing. Fills by property, like radio-group — the sweep mounts
   // it childless, and the value does not need an arc-option to exist.
-  'arc-segmented-control': (el) => { el.value = 'a'; },
-  'arc-checkbox': (el) => { el.checked = true; },
-  'arc-toggle': (el) => { el.checked = true; },
-  'arc-date-picker': (el) => { el.value = '2026-07-30'; },
-  'arc-date-range-picker': (el) => { el.value = '2026-07-01/2026-07-10'; },
-  'arc-time-picker': (el) => { el.value = '12:30'; },
-  'arc-pin-input': (el) => { el.value = '1234'; },
-  'arc-tag-input': (el) => { el.value = ['a', 'b']; },
-  'arc-password-input': (el) => { el.value = 'hunter2'; },
+  'arc-segmented-control': (el) => {
+    el.value = 'a';
+  },
+  'arc-checkbox': (el) => {
+    el.checked = true;
+  },
+  'arc-toggle': (el) => {
+    el.checked = true;
+  },
+  'arc-date-picker': (el) => {
+    el.value = '2026-07-30';
+  },
+  'arc-date-range-picker': (el) => {
+    el.value = '2026-07-01/2026-07-10';
+  },
+  'arc-time-picker': (el) => {
+    el.value = '12:30';
+  },
+  'arc-pin-input': (el) => {
+    el.value = '1234';
+  },
+  'arc-tag-input': (el) => {
+    el.value = ['a', 'b'];
+  },
+  'arc-password-input': (el) => {
+    el.value = 'hunter2';
+  },
   // Not the default #4d7ef7: a fill that equals the starting value makes the
   // differential assertion below unfalsifiable. Caught by this sweep on its
   // first run, which is the rule earning its keep rather than being quoted.
-  'arc-color-picker': (el) => { el.value = '#00ff88'; },
-  'arc-inline-edit': (el) => { el.value = 'edited'; },
-  'arc-masked-input': (el) => { el.value = '12042026'; },
-  'arc-tree-select': (el) => { el.value = 'leaf'; },
-  'arc-transfer-list': (el) => { el.value = ['a', 'b']; },
-  'arc-signature-pad': (el) => { el.value = 'data:image/png;base64,iVBORw0KGgo='; },
+  'arc-color-picker': (el) => {
+    el.value = '#00ff88';
+  },
+  'arc-inline-edit': (el) => {
+    el.value = 'edited';
+  },
+  'arc-masked-input': (el) => {
+    el.value = '12042026';
+  },
+  'arc-tree-select': (el) => {
+    el.value = 'leaf';
+  },
+  'arc-transfer-list': (el) => {
+    el.value = ['a', 'b'];
+  },
+  'arc-signature-pad': (el) => {
+    el.value = 'data:image/png;base64,iVBORw0KGgo=';
+  },
   // Numeric controls: deliberately not their defaults, and not zero — a fill
   // that matches the starting value makes the differential assertion below
   // unfalsifiable, which is how range-slider's arithmetic mutants survived.
-  'arc-knob': (el) => { el.value = 42; },
-  'arc-number-input': (el) => { el.value = 42; },
-  'arc-rating': (el) => { el.value = 4; },
-  'arc-slider': (el) => { el.value = 42; },
-  'arc-range-slider': (el) => { el.low = 20; el.high = 80; },
+  'arc-knob': (el) => {
+    el.value = 42;
+  },
+  'arc-number-input': (el) => {
+    el.value = 42;
+  },
+  'arc-rating': (el) => {
+    el.value = 4;
+  },
+  'arc-slider': (el) => {
+    el.value = 42;
+  },
+  'arc-range-slider': (el) => {
+    el.low = 20;
+    el.high = 80;
+  },
 };
 
 /**
@@ -118,7 +174,7 @@ afterEach(cleanup);
 describe('the form-control sweep is complete', () => {
   it('every subject module imported', () => {
     expect(unimportable, 'a control that stops importing is a failure, not a smaller suite').to.eql(
-      []
+      [],
     );
   });
 
@@ -161,7 +217,9 @@ describe('filling a control changes what the form submits', () => {
       await settle(el);
       const after = entries(form).join('|');
 
-      expect(after, `${tag}: the form still submits ${JSON.stringify(before)}`).to.not.equal(before);
+      expect(after, `${tag}: the form still submits ${JSON.stringify(before)}`).to.not.equal(
+        before,
+      );
       expect(after.length, `${tag}: submitted an empty value`).to.be.greaterThan(0);
     });
   }

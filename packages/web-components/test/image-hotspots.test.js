@@ -131,10 +131,14 @@ describe('event contract', () => {
 
     let detail = null;
     let openDuringEvent = null;
-    el.addEventListener('arc-close', (e) => {
-      detail = e.detail;
-      openDuringEvent = hotspots[0].open;
-    }, { once: true });
+    el.addEventListener(
+      'arc-close',
+      (e) => {
+        detail = e.detail;
+        openDuringEvent = hotspots[0].open;
+      },
+      { once: true },
+    );
 
     pin(hotspots[0]).click();
     await hotspots[0].updateComplete;

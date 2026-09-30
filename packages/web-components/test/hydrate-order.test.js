@@ -28,10 +28,14 @@ describe('hydration order warning', () => {
   beforeEach(() => {
     warnings = [];
     realWarn = console.warn;
-    console.warn = (...args) => { warnings.push(args.join(' ')); };
+    console.warn = (...args) => {
+      warnings.push(args.join(' '));
+    };
   });
 
-  afterEach(() => { console.warn = realWarn; });
+  afterEach(() => {
+    console.warn = realWarn;
+  });
 
   const hydrationWarnings = () =>
     warnings.filter((w) => w.includes('Hydration support loaded too late'));
@@ -40,7 +44,9 @@ describe('hydration order warning', () => {
     // No data-arc-ssr: none of this matters, so it should say nothing even
     // for a class that never saw the hook.
     class Unpatched extends HTMLElement {
-      static get observedAttributes() { return ['size']; }
+      static get observedAttributes() {
+        return ['size'];
+      }
     }
     customElements.define('arc-test-not-ssr', Unpatched);
     expect(hydrationWarnings()).to.have.length(0);
@@ -63,10 +69,14 @@ describe('hydration order warning', () => {
 
     it('warns once for a class defined without it', () => {
       class Unpatched extends HTMLElement {
-        static get observedAttributes() { return ['size']; }
+        static get observedAttributes() {
+          return ['size'];
+        }
       }
       class AlsoUnpatched extends HTMLElement {
-        static get observedAttributes() { return ['variant']; }
+        static get observedAttributes() {
+          return ['variant'];
+        }
       }
       customElements.define('arc-test-unpatched', Unpatched);
       customElements.define('arc-test-unpatched-two', AlsoUnpatched);
@@ -79,7 +89,9 @@ describe('hydration order warning', () => {
 
     it('ignores elements outside the arc- namespace', () => {
       class Foreign extends HTMLElement {
-        static get observedAttributes() { return ['x']; }
+        static get observedAttributes() {
+          return ['x'];
+        }
       }
       customElements.define('other-test-element', Foreign);
       expect(hydrationWarnings()).to.have.length(0);

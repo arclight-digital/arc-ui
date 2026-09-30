@@ -48,7 +48,8 @@ async function block(width = '200px', code = '') {
  * because it was visible.
  */
 const overflowing = (el) =>
-  el.shadowRoot.querySelector('.code-block__copy')?.classList.contains('code-block__copy--quiet') ?? false;
+  el.shadowRoot.querySelector('.code-block__copy')?.classList.contains('code-block__copy--quiet') ??
+  false;
 const copyButton = (el) => el.shadowRoot.querySelector('.code-block__copy');
 
 describe('arc-code-block overflow measurement', () => {
@@ -144,12 +145,17 @@ describe('arc-code-block copy affordance', () => {
 });
 
 describe('arc-code-block copy placement', () => {
-  const inBody = (el) => !!el.shadowRoot.querySelector('.code-block__body-wrap > .code-block__copy');
+  const inBody = (el) =>
+    !!el.shadowRoot.querySelector('.code-block__body-wrap > .code-block__copy');
   const inBar = (el) =>
-    !!el.shadowRoot.querySelector('.code-block__titlebar .code-block__copy, .code-block__header .code-block__copy');
+    !!el.shadowRoot.querySelector(
+      '.code-block__titlebar .code-block__copy, .code-block__header .code-block__copy',
+    );
 
   it('sits in the title bar of a window block, never over the code', async () => {
-    const box = mount('<div style="width:200px"><arc-code-block variant="window" filename="a.js"></arc-code-block></div>');
+    const box = mount(
+      '<div style="width:200px"><arc-code-block variant="window" filename="a.js"></arc-code-block></div>',
+    );
     const el = box.querySelector('arc-code-block');
     el.code = LONG;
     await settle(el);
@@ -158,7 +164,9 @@ describe('arc-code-block copy placement', () => {
   });
 
   it('sits in the header of a default block that has one', async () => {
-    const box = mount('<div style="width:200px"><arc-code-block language="js"></arc-code-block></div>');
+    const box = mount(
+      '<div style="width:200px"><arc-code-block language="js"></arc-code-block></div>',
+    );
     const el = box.querySelector('arc-code-block');
     el.code = LONG;
     await settle(el);

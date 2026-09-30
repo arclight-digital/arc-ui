@@ -35,8 +35,9 @@ class SizeProbe extends LitElement {
 
   render() {
     return html`
-      ${['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', 'label', 'body', 'displayxl', 'heading']
-        .map((c) => html`<span class=${c}>x</span>`)}
+      ${['xs', 'sm', 'md', 'lg', 'xl', 'xxl', 'xxxl', 'label', 'body', 'displayxl', 'heading'].map(
+        (c) => html`<span class=${c}>x</span>`,
+      )}
     `;
   }
 }
@@ -144,8 +145,11 @@ describe('size scale: no component reads the public names', () => {
     // stop working the moment shared-styles stops declaring it — which it now
     // deliberately does not.
     const paths = [
-      'input/select.js', 'input/combobox.js', 'typography/prose.js',
-      'content/card.js', 'feedback/tooltip.js',
+      'input/select.js',
+      'input/combobox.js',
+      'typography/prose.js',
+      'content/card.js',
+      'feedback/tooltip.js',
     ];
     for (const path of paths) {
       const res = await fetch(new URL(`../src/${path}`, import.meta.url));

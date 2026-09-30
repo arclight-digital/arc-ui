@@ -192,13 +192,21 @@ describe('arc-resizable keyboard', () => {
   it('claims the keys it handles and leaves the rest', async () => {
     const el = await panel('size="200"');
 
-    const handled = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const handled = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     handle(el).dispatchEvent(handled);
     await settle(el);
     expect(handled.defaultPrevented).to.equal(true);
 
     const before = el.size;
-    const ignored = new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true, cancelable: true });
+    const ignored = new KeyboardEvent('keydown', {
+      key: 'ArrowUp',
+      bubbles: true,
+      cancelable: true,
+    });
     handle(el).dispatchEvent(ignored);
     await settle(el);
     expect(ignored.defaultPrevented, 'the block arrows are not this axis').to.equal(false);
@@ -240,9 +248,13 @@ describe('arc-resizable pointer drag', () => {
     const seen = record(el, ['arc-resize']);
     const h = handle(el);
 
-    h.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, clientX: 500, clientY: 300 }));
+    h.dispatchEvent(
+      new PointerEvent('pointerdown', { ...pointerInit, clientX: 500, clientY: 300 }),
+    );
     for (const dx of [10, 20, 30]) {
-      h.dispatchEvent(new PointerEvent('pointermove', { ...pointerInit, clientX: 500 + dx, clientY: 300 }));
+      h.dispatchEvent(
+        new PointerEvent('pointermove', { ...pointerInit, clientX: 500 + dx, clientY: 300 }),
+      );
       await settle(el);
     }
 
@@ -312,7 +324,12 @@ describe('arc-resizable handle edge', () => {
   const edge = (el) => {
     const h = handle(el).getBoundingClientRect();
     const host = el.getBoundingClientRect();
-    return { left: h.left - host.left, top: h.top - host.top, right: host.right - h.right, bottom: host.bottom - h.bottom };
+    return {
+      left: h.left - host.left,
+      top: h.top - host.top,
+      right: host.right - h.right,
+      bottom: host.bottom - h.bottom,
+    };
   };
 
   it('puts a start handle on the left edge, and grows on a leftward drag', async () => {
@@ -352,7 +369,9 @@ describe('arc-resizable handle edge', () => {
   });
 
   it('mirrors a start handle in a right-to-left page', async () => {
-    const el = await panel('dir="rtl" handle="start" size="200" style="width: 400px; height: 100px"');
+    const el = await panel(
+      'dir="rtl" handle="start" size="200" style="width: 400px; height: 100px"',
+    );
     expect(edge(el).right).to.equal(0);
     await drag(el, { dx: 60 });
     expect(el.size).to.equal(260);

@@ -112,8 +112,14 @@ describe('arc-diff side-by-side mode', () => {
     const el = await diff('a\nb\nc', 'a\nx\nc', 'mode="side-by-side"');
     const [left, right] = panes(el);
 
-    expect(readLines(left).map((l) => l.text), 'left is the original').to.deep.equal(['a', 'b', 'c']);
-    expect(readLines(right).map((l) => l.text), 'right is the revision').to.deep.equal(['a', 'x', 'c']);
+    expect(
+      readLines(left).map((l) => l.text),
+      'left is the original',
+    ).to.deep.equal(['a', 'b', 'c']);
+    expect(
+      readLines(right).map((l) => l.text),
+      'right is the revision',
+    ).to.deep.equal(['a', 'x', 'c']);
     expect(readLines(left).map((l) => l.kind)).to.deep.equal(['unchanged', 'removed', 'unchanged']);
     expect(readLines(right).map((l) => l.kind)).to.deep.equal(['unchanged', 'added', 'unchanged']);
   });

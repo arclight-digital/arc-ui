@@ -48,10 +48,13 @@ describe('arc-segmented-control rendering', () => {
   });
 
   it('builds the bar from arc-option children only', async () => {
-    const el = await control('', `
+    const el = await control(
+      '',
+      `
       <span>noise</span>
       <arc-option value="real">Real</arc-option>
-    `);
+    `,
+    );
     expect(labels(el)).to.deep.equal(['Real']);
   });
 
@@ -107,7 +110,13 @@ describe('arc-segmented-control selection', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await control();
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     buttons(el)[2].click();
     await settle(el);
@@ -144,7 +153,11 @@ describe('arc-segmented-control radio semantics', () => {
   it('is a radiogroup of radios', async () => {
     const el = await control();
     expect(group(el)).to.not.equal(null);
-    expect(buttons(el).map((b) => b.getAttribute('role'))).to.deep.equal(['radio', 'radio', 'radio']);
+    expect(buttons(el).map((b) => b.getAttribute('role'))).to.deep.equal([
+      'radio',
+      'radio',
+      'radio',
+    ]);
   });
 
   it('leaves exactly one tab stop, on the checked option', async () => {
@@ -217,7 +230,11 @@ describe('arc-segmented-control keyboard', () => {
   it('claims the keys it handles and leaves the rest for the page', async () => {
     const el = await control();
 
-    const handled = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const handled = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     buttons(el)[0].dispatchEvent(handled);
     await settle(el);
     expect(handled.defaultPrevented, 'or the page scrolls under the selection').to.equal(true);
@@ -235,7 +252,10 @@ describe('arc-segmented-control disabled', () => {
   it('announces itself disabled and disables every button', async () => {
     const el = await control('disabled');
     expect(group(el).getAttribute('aria-disabled')).to.equal('true');
-    expect(buttons(el).every((b) => b.disabled), 'native disabled blocks activation').to.equal(true);
+    expect(
+      buttons(el).every((b) => b.disabled),
+      'native disabled blocks activation',
+    ).to.equal(true);
   });
 
   it('takes the whole control out of the pointer path', async () => {
@@ -254,7 +274,6 @@ describe('arc-segmented-control disabled', () => {
     expect(el.value, 'the selection must not move').to.equal('day');
     expect(seen).to.deep.equal([]);
   });
-
 });
 
 /**
@@ -307,11 +326,14 @@ describe('arc-segmented-control per-option disabled', () => {
   });
 
   it('lands Home and End on the nearest selectable option', async () => {
-    const el = await control('', `
+    const el = await control(
+      '',
+      `
       <arc-option value="day" disabled>Day</arc-option>
       <arc-option value="week">Week</arc-option>
       <arc-option value="month" disabled>Month</arc-option>
-    `);
+    `,
+    );
 
     keyOn(buttons(el)[1], 'End');
     await settle(el);
@@ -323,19 +345,27 @@ describe('arc-segmented-control per-option disabled', () => {
   });
 
   it('auto-selects the first selectable option, not the first option', async () => {
-    const el = await control('', `
+    const el = await control(
+      '',
+      `
       <arc-option value="day" disabled>Day</arc-option>
       <arc-option value="week">Week</arc-option>
-    `);
-    expect(el.value, 'landing the default on a disabled segment defeats the guard').to.equal('week');
+    `,
+    );
+    expect(el.value, 'landing the default on a disabled segment defeats the guard').to.equal(
+      'week',
+    );
     expect(checked(el)).to.deep.equal(['false', 'true']);
   });
 
   it('does not spin or move when every option is disabled', async () => {
-    const el = await control('', `
+    const el = await control(
+      '',
+      `
       <arc-option value="day" disabled>Day</arc-option>
       <arc-option value="week" disabled>Week</arc-option>
-    `);
+    `,
+    );
     const seen = record(el, ['arc-change']);
 
     keyOn(buttons(el)[0], 'ArrowRight');
@@ -363,7 +393,9 @@ describe('arc-segmented-control per-option disabled', () => {
  */
 describe('arc-segmented-control form participation', () => {
   async function inForm(children = OPTIONS, attrs = 'name="range"') {
-    const form = mount(`<form><arc-segmented-control ${attrs}>${children}</arc-segmented-control></form>`);
+    const form = mount(
+      `<form><arc-segmented-control ${attrs}>${children}</arc-segmented-control></form>`,
+    );
     const el = form.firstElementChild;
     await settle(el);
     return { form, el };

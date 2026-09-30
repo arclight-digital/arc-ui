@@ -71,7 +71,12 @@ export class ArcTruncate extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this.lines = 3;
-    this._overflows = false;
+    // Assumed until measured. The server can't measure, and truncate is for
+    // text long enough to clamp, so its paint has the toggle; text that turns
+    // out to fit loses it on the first check. Assuming the opposite made
+    // every server-rendered truncate grow by the toggle's height on load.
+    // A client-only render measures in firstUpdated, before it paints.
+    this._overflows = true;
     observeResize(this, '.truncate__content', () => this._checkOverflow());
   }
 

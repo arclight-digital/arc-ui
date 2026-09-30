@@ -35,7 +35,7 @@ describe('sanitizeSvg', () => {
 
   it('drops foreignObject, which re-opens HTML parsing inside SVG', () => {
     const out = sanitizeSvg(
-      '<svg><foreignObject><iframe src="evil"></iframe></foreignObject><path/></svg>'
+      '<svg><foreignObject><iframe src="evil"></iframe></foreignObject><path/></svg>',
     );
     expect(out).to.not.contain('iframe');
     expect(out).to.not.contain('foreign');
@@ -44,8 +44,9 @@ describe('sanitizeSvg', () => {
 
   it('allows same-document references but not remote ones', () => {
     expect(sanitizeSvg('<svg><use href="#local"/></svg>')).to.contain('#local');
-    expect(sanitizeSvg('<svg><use href="https://evil.example/#x"/></svg>'))
-      .to.not.contain('evil.example');
+    expect(sanitizeSvg('<svg><use href="https://evil.example/#x"/></svg>')).to.not.contain(
+      'evil.example',
+    );
   });
 
   it('rejects a javascript: URL split by a control character', () => {

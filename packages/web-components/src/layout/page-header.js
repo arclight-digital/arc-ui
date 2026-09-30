@@ -121,6 +121,19 @@ export class ArcPageHeader extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = {
+    above: function (e) {
+      this._onSlotChange('above', e);
+    },
+    below: function (e) {
+      this._onSlotChange('below', e);
+    },
+    '': function (e) {
+      this._onSlotChange('content', e);
+    },
+  };
+
   constructor() {
     super();
     this.heading = '';

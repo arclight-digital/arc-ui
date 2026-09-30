@@ -31,7 +31,9 @@ describe('arc-lightbox open/close lifecycle', () => {
   it('show() opens and fires arc-open once', async () => {
     const el = await mountLightbox();
     let opens = 0;
-    el.addEventListener('arc-open', () => { opens++; });
+    el.addEventListener('arc-open', () => {
+      opens++;
+    });
     el.show();
     await el.updateComplete;
     expect(el.open).to.equal(true);
@@ -68,7 +70,13 @@ describe('arc-lightbox open/close lifecycle', () => {
   it('close() fires arc-close before the state flips', async () => {
     const el = await openLightbox();
     let openDuringEvent = null;
-    el.addEventListener('arc-close', () => { openDuringEvent = el.open; }, { once: true });
+    el.addEventListener(
+      'arc-close',
+      () => {
+        openDuringEvent = el.open;
+      },
+      { once: true },
+    );
     el.close();
     await el.updateComplete;
     expect(openDuringEvent, 'listener must observe the still-open state').to.equal(true);
@@ -155,7 +163,9 @@ describe('arc-lightbox zoom', () => {
     expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.contain('scale(2)');
     pressKey('-');
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.not.contain('scale(2)');
+    expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.not.contain(
+      'scale(2)',
+    );
   });
 
   it('navigation resets the zoom', async () => {
@@ -164,7 +174,9 @@ describe('arc-lightbox zoom', () => {
     await el.updateComplete;
     el.next();
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.not.contain('scale(2)');
+    expect(el.shadowRoot.querySelector('[part~="image"]').style.transform).to.not.contain(
+      'scale(2)',
+    );
   });
 });
 
@@ -179,9 +191,14 @@ describe('arc-lightbox focus management', () => {
     // composed arc-icon-button's shadow root, which contains() can't see.
     let inside = false;
     for (let node = active; node; node = node.getRootNode().host ?? null) {
-      if (el.contains(node) || el.shadowRoot.contains(node)) { inside = true; break; }
+      if (el.contains(node) || el.shadowRoot.contains(node)) {
+        inside = true;
+        break;
+      }
     }
-    expect(inside, `active element <${active.tagName}> should be inside the lightbox`).to.equal(true);
+    expect(inside, `active element <${active.tagName}> should be inside the lightbox`).to.equal(
+      true,
+    );
   });
 
   it('restores focus to whatever was focused before it opened', async () => {
@@ -219,7 +236,9 @@ describe('arc-lightbox images forms', () => {
     const img = el.shadowRoot.querySelector('[part~="image"]');
     expect(img.getAttribute('src')).to.equal(PX);
     expect(img.getAttribute('alt')).to.equal('First');
-    expect(el.shadowRoot.querySelector('[part~="caption"]').textContent.trim()).to.equal('A river valley');
+    expect(el.shadowRoot.querySelector('[part~="caption"]').textContent.trim()).to.equal(
+      'A river valley',
+    );
   });
 
   it('renders a plain-string entry with no caption', async () => {
@@ -269,7 +288,12 @@ function swipe(el, from, to) {
   const fig = figureOf(el);
   pointer(fig, 'pointerdown', from[0], from[1]);
   for (let i = 1; i <= 4; i++) {
-    pointer(fig, 'pointermove', from[0] + ((to[0] - from[0]) * i) / 4, from[1] + ((to[1] - from[1]) * i) / 4);
+    pointer(
+      fig,
+      'pointermove',
+      from[0] + ((to[0] - from[0]) * i) / 4,
+      from[1] + ((to[1] - from[1]) * i) / 4,
+    );
   }
   pointer(fig, 'pointerup', to[0], to[1]);
 }
@@ -357,17 +381,35 @@ describe('arc-lightbox v2 zoom', () => {
     const el = await openBig(0);
     const fig = figureOf(el);
     for (let i = 0; i < 10; i++) {
-      fig.dispatchEvent(new WheelEvent('wheel', { deltaY: -200, ctrlKey: true, clientX: 200, clientY: 200, bubbles: true, cancelable: true }));
+      fig.dispatchEvent(
+        new WheelEvent('wheel', {
+          deltaY: -200,
+          ctrlKey: true,
+          clientX: 200,
+          clientY: 200,
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
     }
     expect(scaleOf(el)).to.equal(4);
     expect(panXOf(el), 'anchored left of centre, so the image moved right').to.be.greaterThan(0);
     for (let i = 0; i < 10; i++) {
-      fig.dispatchEvent(new WheelEvent('wheel', { deltaY: 200, ctrlKey: true, clientX: 200, clientY: 200, bubbles: true, cancelable: true }));
+      fig.dispatchEvent(
+        new WheelEvent('wheel', {
+          deltaY: 200,
+          ctrlKey: true,
+          clientX: 200,
+          clientY: 200,
+          bubbles: true,
+          cancelable: true,
+        }),
+      );
     }
     expect(imageOf(el).style.transform).to.equal('none');
   });
 
-  it('with a caption, a zoomed image pans to both edges and passes under it', async () => {
+  it('with a caption, a zoomed image pans to both edges and the caption docks at the foot', async () => {
     const el = mount('<arc-lightbox></arc-lightbox>');
     el.images = [{ ...BIG[0], caption: 'A caption long enough to take a line of its own.' }];
     await el.updateComplete;
@@ -379,9 +421,10 @@ describe('arc-lightbox v2 zoom', () => {
     const fig = figureOf(el);
     const img = imageOf(el);
     const caption = el.shadowRoot.querySelector('[part~="caption"]');
+    // Everything in the viewer eases, the stage's own open scale included.
+    const settle = () => el.shadowRoot.getAnimations().forEach((a) => a.finish());
+    settle();
     const top = fig.getBoundingClientRect().top;
-    const floor = caption.getBoundingClientRect().top;
-    const settle = () => img.getAnimations().forEach((a) => a.finish());
     for (let i = 0; i < 40; i++) pressKey('ArrowUp');
     await el.updateComplete;
     settle();
@@ -389,7 +432,16 @@ describe('arc-lightbox v2 zoom', () => {
     for (let i = 0; i < 40; i++) pressKey('ArrowDown');
     await el.updateComplete;
     settle();
-    expect(img.getBoundingClientRect().bottom, 'bottom edge clears the caption').to.be.closeTo(floor, 1);
+    // Docked at the foot of the stage, not across the middle of the picture.
+    const docked = caption.getBoundingClientRect();
+    expect(docked.bottom, 'caption docked at the foot').to.be.closeTo(
+      fig.getBoundingClientRect().bottom - 8,
+      1,
+    );
+    expect(img.getBoundingClientRect().bottom, 'bottom edge clears the caption').to.be.closeTo(
+      docked.top,
+      1,
+    );
     expect(getComputedStyle(caption).zIndex).to.equal('1');
   });
 
@@ -489,7 +541,9 @@ describe('arc-lightbox v2 chrome', () => {
   });
 
   it('puts slotted actions in the bar before zoom and close', async () => {
-    const el = mount('<arc-lightbox><button slot="actions" id="dl">Download</button></arc-lightbox>');
+    const el = mount(
+      '<arc-lightbox><button slot="actions" id="dl">Download</button></arc-lightbox>',
+    );
     el.images = IMAGES;
     await el.updateComplete;
     el.show(0);
@@ -534,7 +588,10 @@ describe('arc-lightbox v2 declarative gallery', () => {
     const link = wrap.querySelectorAll('#lb-g a')[1];
     // On window, which the click reaches after the lightbox's document listener.
     let prevented = null;
-    const record = (e) => { prevented = e.defaultPrevented; e.preventDefault(); };
+    const record = (e) => {
+      prevented = e.defaultPrevented;
+      e.preventDefault();
+    };
     window.addEventListener('click', record);
     link.click();
     window.removeEventListener('click', record);
@@ -544,7 +601,9 @@ describe('arc-lightbox v2 declarative gallery', () => {
     expect(el.index).to.equal(1);
     expect(imageOf(el).getAttribute('src')).to.contain('/two.jpg');
     expect(imageOf(el).getAttribute('alt')).to.equal('Two');
-    expect(el.shadowRoot.querySelector('[part~="caption"]').textContent.trim()).to.equal('The second');
+    expect(el.shadowRoot.querySelector('[part~="caption"]').textContent.trim()).to.equal(
+      'The second',
+    );
     el.close();
   });
 
@@ -567,7 +626,10 @@ describe('arc-lightbox v2 declarative gallery', () => {
     const results = [];
     // Recorded on window, after the lightbox has had its turn; then cancelled
     // so the test page doesn't navigate.
-    const listen = (e) => { results.push(e.defaultPrevented); e.preventDefault(); };
+    const listen = (e) => {
+      results.push(e.defaultPrevented);
+      e.preventDefault();
+    };
     window.addEventListener('click', listen);
     link.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, ctrlKey: true }));
     el.images = [PX];
@@ -617,7 +679,11 @@ describe('arc-lightbox v2 thumbnails', () => {
     el.show(0);
     await el.updateComplete;
     const thumbs = [...el.shadowRoot.querySelectorAll('[part~="thumbnail"]')];
-    expect(thumbs.map((t) => t.getAttribute('aria-label'))).to.deep.equal(['First', 'Image 2', 'Third']);
+    expect(thumbs.map((t) => t.getAttribute('aria-label'))).to.deep.equal([
+      'First',
+      'Image 2',
+      'Third',
+    ]);
     expect(thumbs[0].querySelector('img').getAttribute('src')).to.equal(`${PX}#small`);
     expect(thumbs[0].querySelector('img').getAttribute('loading')).to.equal('lazy');
     expect(thumbs.map((t) => t.hasAttribute('aria-current'))).to.deep.equal([true, false, false]);
@@ -657,7 +723,10 @@ describe('arc-lightbox v2 motion', () => {
     expect(first.clipPath).to.match(/^inset\(/);
     const origin = el.images[0].origin.getBoundingClientRect();
     const rest = imageOf(el);
-    expect(sx).to.be.closeTo(Math.max(origin.width / rest.offsetWidth, origin.height / rest.offsetHeight), 1e-6);
+    expect(sx).to.be.closeTo(
+      Math.max(origin.width / rest.offsetWidth, origin.height / rest.offsetHeight),
+      1e-6,
+    );
   });
 
   it('asks arc-close first, and animates only once the close is not vetoed', async () => {
@@ -670,7 +739,9 @@ describe('arc-lightbox v2 motion', () => {
     expect(scripted(imageOf(el)), 'no shrink after a veto').to.have.length(0);
 
     let order = [];
-    el.addEventListener('arc-close', () => order.push(`event:${scripted(imageOf(el)).length}`), { once: true });
+    el.addEventListener('arc-close', () => order.push(`event:${scripted(imageOf(el)).length}`), {
+      once: true,
+    });
     el.close();
     order.push(`after:${scripted(imageOf(el)).length}`);
     expect(order).to.deep.equal(['event:0', 'after:1']);
@@ -698,14 +769,19 @@ describe('arc-lightbox v2 motion', () => {
       await el.updateComplete;
       expect(fig.querySelectorAll('.lightbox__ghost').length).to.be.at.most(1);
     }
-    expect(await until(() => fig.querySelectorAll('.lightbox__ghost').length === 0, { timeout: 1500 })).to.equal(true);
+    expect(
+      await until(() => fig.querySelectorAll('.lightbox__ghost').length === 0, { timeout: 1500 }),
+    ).to.equal(true);
     expect(await until(() => scripted(imageOf(el)).length === 0, { timeout: 1500 })).to.equal(true);
     expect(fig.querySelectorAll('img').length).to.equal(1);
   });
 
   it('with reduced motion: no grow, no slide, and close is immediate', async () => {
     const real = window.matchMedia;
-    window.matchMedia = (q) => ({ ...real.call(window, q), matches: /reduce/.test(q) || real.call(window, q).matches });
+    window.matchMedia = (q) => ({
+      ...real.call(window, q),
+      matches: /reduce/.test(q) || real.call(window, q).matches,
+    });
     try {
       const el = await openWithOrigin(0);
       expect(el.shadowRoot.querySelector('dialog').dataset.motion).to.equal(undefined);

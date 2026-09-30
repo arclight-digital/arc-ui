@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import { tokenStyles } from '../shared-styles.js';
 import { PositionController } from '../shared/position-controller.js';
 import { DismissController } from '../shared/dismiss-controller.js';
@@ -187,8 +188,9 @@ export class ArcNotificationPanel extends DeclaredPropsMixin(LitElement) {
   }
 
   updated(changedProperties) {
+    // Also on the host, where it has always been; the template carries it for
+    // the server's render.
     this.style.setProperty('--max-height', this.maxHeight);
-
     if (changedProperties.has('open') || changedProperties.has('position')) {
       this.open ? this._position.show() : this._position.hide();
     }
@@ -215,7 +217,7 @@ export class ArcNotificationPanel extends DeclaredPropsMixin(LitElement) {
       <div class="trigger" part="base trigger" @click="${this._onTriggerClick}">
         <slot name="trigger"></slot>
       </div>
-      <div class="panel" part="panel">
+      <div class="panel" part="panel" style=${styleMap({ '--max-height': this.maxHeight })}>
         <div class="header" part="header">
           <slot name="header"></slot>
         </div>

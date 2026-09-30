@@ -99,7 +99,13 @@ describe('arc-rating click', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await rating();
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     stars(el)[0].click();
     await settle(el);
@@ -215,13 +221,20 @@ describe('arc-rating keyboard', () => {
     keyOn(slider(el), 'ArrowRight');
     await settle(el);
 
-    expect(seen).to.deep.equal([['change', 2], ['change', 3]]);
+    expect(seen).to.deep.equal([
+      ['change', 2],
+      ['change', 3],
+    ]);
   });
 
   it('claims the keys it handles and leaves the rest for the page', async () => {
     const el = await rating('value="2"');
 
-    const handled = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const handled = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     slider(el).dispatchEvent(handled);
     await settle(el);
     expect(handled.defaultPrevented).to.equal(true);
@@ -296,8 +309,9 @@ describe('arc-rating ARIA', () => {
 
   it('hides the star glyphs from assistive tech', async () => {
     const el = await rating();
-    expect(stars(el).every((s) => s.querySelector('svg').getAttribute('aria-hidden') === 'true'))
-      .to.equal(true);
+    expect(
+      stars(el).every((s) => s.querySelector('svg').getAttribute('aria-hidden') === 'true'),
+    ).to.equal(true);
   });
 
   // Was a BUG pin (finding #11): aria-valuemin was the literal "1" while the

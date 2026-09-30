@@ -47,11 +47,14 @@ function type(el, text) {
   f.dispatchEvent(new Event('input', { bubbles: true }));
 }
 
-const key = (init) => new KeyboardEvent('keydown', { bubbles: true, cancelable: true, composed: true, ...init });
+const key = (init) =>
+  new KeyboardEvent('keydown', { bubbles: true, cancelable: true, composed: true, ...init });
 
 describe('arc-inline-edit display state', () => {
   it('renders the value as text inside a button', async () => {
-    const el = await mountEdit('<arc-inline-edit value="Take Five" label="Track title"></arc-inline-edit>');
+    const el = await mountEdit(
+      '<arc-inline-edit value="Take Five" label="Track title"></arc-inline-edit>',
+    );
     const btn = display(el);
     expect(btn).to.exist;
     expect(btn.textContent).to.include('Take Five');
@@ -68,7 +71,9 @@ describe('arc-inline-edit display state', () => {
 
 describe('arc-inline-edit activation', () => {
   it('click enters edit mode with the field focused and selected', async () => {
-    const el = await mountEdit('<arc-inline-edit value="Take Five" label="Title"></arc-inline-edit>');
+    const el = await mountEdit(
+      '<arc-inline-edit value="Take Five" label="Title"></arc-inline-edit>',
+    );
     await activate(el);
 
     const f = field(el);
@@ -170,7 +175,13 @@ describe('arc-inline-edit cancel', () => {
     await activate(el);
 
     let escaped = false;
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') escaped = true; }, { once: true });
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.key === 'Escape') escaped = true;
+      },
+      { once: true },
+    );
     field(el).dispatchEvent(key({ key: 'Escape' }));
     await el.updateComplete;
 
@@ -195,7 +206,9 @@ describe('arc-inline-edit typing', () => {
 
 describe('arc-inline-edit multiline', () => {
   it('renders a textarea and plain Enter does not commit', async () => {
-    const el = await mountEdit('<arc-inline-edit multiline value="line one" label="Notes"></arc-inline-edit>');
+    const el = await mountEdit(
+      '<arc-inline-edit multiline value="line one" label="Notes"></arc-inline-edit>',
+    );
     const seen = record(el);
     await activate(el);
 
@@ -209,7 +222,9 @@ describe('arc-inline-edit multiline', () => {
 
   it('Ctrl+Enter and Meta+Enter commit', async () => {
     for (const mod of [{ ctrlKey: true }, { metaKey: true }]) {
-      const el = await mountEdit('<arc-inline-edit multiline value="a" label="Notes"></arc-inline-edit>');
+      const el = await mountEdit(
+        '<arc-inline-edit multiline value="a" label="Notes"></arc-inline-edit>',
+      );
       const seen = record(el);
       await activate(el);
 
@@ -238,7 +253,9 @@ describe('arc-inline-edit validation and form', () => {
   });
 
   it('submits the committed value, not an in-progress draft', async () => {
-    const form = mount('<form><arc-inline-edit name="title" value="Committed" label="Title"></arc-inline-edit></form>');
+    const form = mount(
+      '<form><arc-inline-edit name="title" value="Committed" label="Title"></arc-inline-edit></form>',
+    );
     const el = form.querySelector('arc-inline-edit');
     await el.updateComplete;
 
@@ -250,7 +267,9 @@ describe('arc-inline-edit validation and form', () => {
     type(el, 'Draft in progress');
     await el.updateComplete;
 
-    expect(new FormData(form).get('title'), 'draft must not leak into the form').to.equal('Committed');
+    expect(new FormData(form).get('title'), 'draft must not leak into the form').to.equal(
+      'Committed',
+    );
 
     field(el).dispatchEvent(key({ key: 'Enter' }));
     await el.updateComplete;
@@ -260,7 +279,9 @@ describe('arc-inline-edit validation and form', () => {
 
 describe('arc-inline-edit readonly and disabled', () => {
   it('readonly never enters edit mode', async () => {
-    const el = await mountEdit('<arc-inline-edit readonly value="Locked" label="Title"></arc-inline-edit>');
+    const el = await mountEdit(
+      '<arc-inline-edit readonly value="Locked" label="Title"></arc-inline-edit>',
+    );
     display(el).click();
     display(el).dispatchEvent(key({ key: 'F2' }));
     el.edit();
@@ -269,7 +290,9 @@ describe('arc-inline-edit readonly and disabled', () => {
   });
 
   it('disabled renders a disabled button and never enters edit mode', async () => {
-    const el = await mountEdit('<arc-inline-edit disabled value="Off" label="Title"></arc-inline-edit>');
+    const el = await mountEdit(
+      '<arc-inline-edit disabled value="Off" label="Title"></arc-inline-edit>',
+    );
     expect(display(el).disabled).to.equal(true);
     el.edit();
     await el.updateComplete;
@@ -279,7 +302,9 @@ describe('arc-inline-edit readonly and disabled', () => {
 
 describe('arc-inline-edit methods', () => {
   it('edit() enters edit mode with focus and selection', async () => {
-    const el = await mountEdit('<arc-inline-edit value="Programmatic" label="Title"></arc-inline-edit>');
+    const el = await mountEdit(
+      '<arc-inline-edit value="Programmatic" label="Title"></arc-inline-edit>',
+    );
     el.edit();
     await el.updateComplete;
     await tick();

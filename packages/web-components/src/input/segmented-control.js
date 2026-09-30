@@ -113,6 +113,9 @@ export class ArcSegmentedControl extends DeclaredPropsMixin(FormControlMixin(Lit
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onSlotChange' };
+
   constructor() {
     super();
     this.value = '';

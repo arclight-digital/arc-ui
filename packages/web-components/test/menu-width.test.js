@@ -51,7 +51,15 @@ async function openMenubar(containerWidth, items, extraStyle = '') {
   return { bar, panel };
 }
 
-const ONE_LONG = [{ label: 'File', items: [{ label: LONG, shortcut: '⌘K' }, { label: 'Short', shortcut: '⌘S' }] }];
+const ONE_LONG = [
+  {
+    label: 'File',
+    items: [
+      { label: LONG, shortcut: '⌘K' },
+      { label: 'Short', shortcut: '⌘S' },
+    ],
+  },
+];
 
 describe('menu panels size to their content, not to their container', () => {
   it('fits an ordinary label-plus-shortcut row without truncating', async () => {
@@ -85,7 +93,9 @@ describe('menu panels size to their content, not to their container', () => {
   });
 
   it('is still bounded — a runaway label does not produce an unbounded panel', async () => {
-    const { panel } = await openMenubar('900px', [{ label: 'F', items: [{ label: 'x'.repeat(400) }] }]);
+    const { panel } = await openMenubar('900px', [
+      { label: 'F', items: [{ label: 'x'.repeat(400) }] },
+    ]);
     const width = panel.getBoundingClientRect().width;
     expect(width, `panel grew to ${width}px`).to.be.at.most(420);
   });

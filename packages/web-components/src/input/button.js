@@ -154,6 +154,13 @@ export class ArcButton extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = {
+    prefix: '_onPrefixSlotChange',
+    '': '_onDefaultSlotChange',
+    suffix: '_onSuffixSlotChange',
+  };
+
   constructor() {
     super();
     this.href = '';

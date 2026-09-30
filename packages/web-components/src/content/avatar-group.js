@@ -19,6 +19,7 @@ export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
   static properties = {
     max: { type: Number },
     overlap: oneOf(['sm', 'md', 'lg'], { default: 'md' }),
+    _overflow: { state: true },
   };
 
   static styles = [
@@ -63,9 +64,13 @@ export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_handleSlotChange' };
+
   constructor() {
     super();
     this.max = Infinity;
+    this._overflow = 0;
   }
 
   /** @private */
@@ -81,11 +86,10 @@ export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
       node.style.marginLeft = i === 0 ? '0' : `${ml}px`;
     });
 
-    const counter = this.shadowRoot.querySelector('.group__overflow');
-    if (counter) {
-      counter.style.display = overflow > 0 ? '' : 'none';
-      counter.textContent = `+${overflow}`;
-    }
+    // State the template renders, not text written into the counter: the
+    // server runs this reader too but has no rendered counter to write into,
+    // so a server-rendered group showed no "+N" until its script arrived.
+    this._overflow = Math.max(0, overflow);
   }
 
   /** The slotchange DSD swallows. See shared/hydrate-slots.js. */
@@ -97,7 +101,11 @@ export class ArcAvatarGroup extends DeclaredPropsMixin(LitElement) {
     return html`
       <div class="group" part="base group" role="group" aria-label="Avatar group">
         <slot @slotchange=${this._handleSlotChange}></slot>
-        <span class="group__overflow" part="overflow" style="display:none"></span>
+        ${
+          this._overflow > 0
+            ? html`<span class="group__overflow" part="overflow">+${this._overflow}</span>`
+            : ''
+        }
       </div>
     `;
   }

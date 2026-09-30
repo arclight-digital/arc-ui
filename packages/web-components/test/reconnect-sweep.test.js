@@ -36,15 +36,7 @@
  * to any other implementation. See test-findings.md #55.
  */
 import { expect } from '@esm-bundle/chai';
-import {
-  mount,
-  cleanup,
-  settle,
-  observed,
-  until,
-  nextFrame,
-  pageWith,
-} from './helpers.js';
+import { mount, cleanup, settle, observed, until, nextFrame, pageWith } from './helpers.js';
 
 import '../src/typography/truncate.register.js';
 import '../src/data/data-grid.register.js';
@@ -74,7 +66,9 @@ describe('arc-truncate reconnect', () => {
   const overflowing = (el) => el.shadowRoot.querySelector('[part~="toggle"]') !== null;
 
   async function truncate(width) {
-    const host = mount(`<div style="width:${width}px"><arc-truncate lines="2">${LONG}</arc-truncate></div>`);
+    const host = mount(
+      `<div style="width:${width}px"><arc-truncate lines="2">${LONG}</arc-truncate></div>`,
+    );
     const el = host.querySelector('arc-truncate');
     await settle(el);
     await observed();
@@ -101,7 +95,6 @@ describe('arc-truncate reconnect', () => {
     host.style.width = '4000px';
     expect(await until(() => overflowing(el) === false)).to.equal(true);
   });
-
 });
 
 describe('arc-data-grid reconnect', () => {
@@ -111,9 +104,14 @@ describe('arc-data-grid reconnect', () => {
     // Columns wider than the host, so the scroll handler has something visible
     // to do: it adds `scrolled-x`, which lifts the pinned column's shadow.
     const cols = Array.from({ length: 8 }, (_, i) => ({
-      key: `c${i}`, label: `Column ${i}`, width: '200px', pinned: i === 0,
+      key: `c${i}`,
+      label: `Column ${i}`,
+      width: '200px',
+      pinned: i === 0,
     }));
-    const host = mount('<div style="width:300px"><arc-data-grid style="display:block"></arc-data-grid></div>');
+    const host = mount(
+      '<div style="width:300px"><arc-data-grid style="display:block"></arc-data-grid></div>',
+    );
     const el = host.querySelector('arc-data-grid');
     el.columns = cols;
     el.rows = [Object.fromEntries(cols.map((c) => [c.key, c.label]))];
@@ -219,9 +217,11 @@ describe('the correct shape, for contrast', () => {
     await settle(el);
     /** How far the bar says it has got, read off the fill it draws. */
     const shown = () =>
-      Number(/scaleX\(([-\d.]+)\)/.exec(
-        el.shadowRoot.querySelector('.bar__fill').getAttribute('style'),
-      )[1]);
+      Number(
+        /scaleX\(([-\d.]+)\)/.exec(
+          el.shadowRoot.querySelector('.bar__fill').getAttribute('style'),
+        )[1],
+      );
 
     window.scrollTo(0, 600);
     expect(await until(() => shown() > 0), 'tracks before the move').to.equal(true);

@@ -36,14 +36,25 @@ const byText = (el, text) => rendered(el).find((b) => b.textContent.includes(tex
 
 describe('arc-dropdown-menu trigger width', () => {
   it('shrinks to its content by default', async () => {
-    const el = await menu('<arc-menu-item>A</arc-menu-item>', '', '<span slot="trigger">Open</span>');
+    const el = await menu(
+      '<arc-menu-item>A</arc-menu-item>',
+      '',
+      '<span slot="trigger">Open</span>',
+    );
     const trigger = el.shadowRoot.querySelector('[part~="trigger"]');
     const content = el.querySelector('[slot="trigger"]');
-    expect(trigger.getBoundingClientRect().width).to.be.closeTo(content.getBoundingClientRect().width, 1);
+    expect(trigger.getBoundingClientRect().width).to.be.closeTo(
+      content.getBoundingClientRect().width,
+      1,
+    );
   });
 
   it('fills a host given a width', async () => {
-    const el = await menu('<arc-menu-item>A</arc-menu-item>', 'style="display: block; width: 300px"', '<span slot="trigger">Open</span>');
+    const el = await menu(
+      '<arc-menu-item>A</arc-menu-item>',
+      'style="display: block; width: 300px"',
+      '<span slot="trigger">Open</span>',
+    );
     const trigger = el.shadowRoot.querySelector('[part~="trigger"]');
     expect(trigger.getBoundingClientRect().width).to.equal(300);
   });
@@ -102,13 +113,14 @@ describe('arc-dropdown-menu group labels', () => {
     <arc-menu-label label="Chemistry"></arc-menu-label>
     <arc-menu-item value="c1">Bonds</arc-menu-item>`;
 
-  it('wraps each label\'s items in a named group', async () => {
+  it("wraps each label's items in a named group", async () => {
     const el = await menu(ITEMS);
     await open(el);
     const groups = [...el.shadowRoot.querySelectorAll('[role="group"]')];
     expect(groups.map((g) => g.getAttribute('aria-label'))).to.deep.equal(['Physics', 'Chemistry']);
-    expect([...groups[0].querySelectorAll('[role="menuitem"]')].map((b) => b.textContent.trim()))
-      .to.deep.equal(['Kinematics', 'Optics']);
+    expect(
+      [...groups[0].querySelectorAll('[role="menuitem"]')].map((b) => b.textContent.trim()),
+    ).to.deep.equal(['Kinematics', 'Optics']);
   });
 
   it('draws the heading, but not as an item', async () => {
@@ -117,7 +129,9 @@ describe('arc-dropdown-menu group labels', () => {
     const headings = [...el.shadowRoot.querySelectorAll('[part~="label"]')];
     expect(headings.map((h) => h.textContent.trim())).to.deep.equal(['Physics', 'Chemistry']);
     expect(rendered(el)).to.have.length(3);
-    expect(headings[0].getAttribute('aria-hidden'), 'the group name already says it').to.equal('true');
+    expect(headings[0].getAttribute('aria-hidden'), 'the group name already says it').to.equal(
+      'true',
+    );
   });
 
   it('keeps the keyboard on items, across groups', async () => {
@@ -137,7 +151,9 @@ describe('arc-dropdown-menu group labels', () => {
     await open(el);
     el.querySelector('arc-menu-label[label]').label = 'Biology';
     await settle(el);
-    expect(el.shadowRoot.querySelectorAll('[role="group"]')[1].getAttribute('aria-label')).to.equal('Biology');
+    expect(el.shadowRoot.querySelectorAll('[role="group"]')[1].getAttribute('aria-label')).to.equal(
+      'Biology',
+    );
   });
 });
 
@@ -174,7 +190,9 @@ describe('arc-context-menu group labels', () => {
     </arc-context-menu></div>`);
     const el = host.querySelector('arc-context-menu');
     await settle(el);
-    host.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: 20, clientY: 20 }));
+    host.dispatchEvent(
+      new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: 20, clientY: 20 }),
+    );
     await settle(el);
     const group = el.shadowRoot.querySelector('[role="group"]');
     expect(group.getAttribute('aria-label')).to.equal('Edit');

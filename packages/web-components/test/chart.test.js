@@ -36,14 +36,20 @@ async function chart(attrs = '', { series = TWO, labels = LABELS } = {}) {
 const table = (el) => el.shadowRoot.querySelector('table.sr-only');
 // The table runs categories down the rows and series across the columns, so
 // the column headers are the series names and the row headers the categories.
-const seriesNames = (el) => [...table(el).querySelectorAll('thead th')].map((th) => th.textContent.trim()).slice(1);
-const categories = (el) => [...table(el).querySelectorAll('tbody th')].map((th) => th.textContent.trim());
-const cells = (el) => [...table(el).querySelectorAll('tbody td')].map((td) => td.textContent.trim());
+const seriesNames = (el) =>
+  [...table(el).querySelectorAll('thead th')].map((th) => th.textContent.trim()).slice(1);
+const categories = (el) =>
+  [...table(el).querySelectorAll('tbody th')].map((th) => th.textContent.trim());
+const cells = (el) =>
+  [...table(el).querySelectorAll('tbody td')].map((td) => td.textContent.trim());
 /** The values for one category, one per series. */
 const row = (el, i) =>
-  [...[...table(el).querySelectorAll('tbody tr')][i].querySelectorAll('td')].map((td) => td.textContent.trim());
+  [...[...table(el).querySelectorAll('tbody tr')][i].querySelectorAll('td')].map((td) =>
+    td.textContent.trim(),
+  );
 const legend = (el) => el.shadowRoot.querySelector('[part~="legend"]');
-const legendItems = (el) => [...el.shadowRoot.querySelectorAll('.legend-item')].map((i) => i.textContent.trim());
+const legendItems = (el) =>
+  [...el.shadowRoot.querySelectorAll('.legend-item')].map((i) => i.textContent.trim());
 const svg = (el) => el.shadowRoot.querySelector('svg');
 
 describe('arc-chart accessible surface', () => {
@@ -56,10 +62,12 @@ describe('arc-chart accessible surface', () => {
   it('captions the table and scopes its headers', async () => {
     const el = await chart();
     expect(table(el).querySelector('caption').textContent.trim()).to.not.equal('');
-    expect([...table(el).querySelectorAll('thead th')].every((th) => th.getAttribute('scope') === 'col'))
-      .to.equal(true);
-    expect([...table(el).querySelectorAll('tbody th')].every((th) => th.getAttribute('scope') === 'row'))
-      .to.equal(true);
+    expect(
+      [...table(el).querySelectorAll('thead th')].every((th) => th.getAttribute('scope') === 'col'),
+    ).to.equal(true);
+    expect(
+      [...table(el).querySelectorAll('tbody th')].every((th) => th.getAttribute('scope') === 'row'),
+    ).to.equal(true);
   });
 
   it('lays the series across and the categories down', async () => {
@@ -90,8 +98,14 @@ describe('arc-chart series folding', () => {
   it('folds the seventh and beyond into a summed Other', async () => {
     const el = await chart('', { series: many(8) });
 
-    expect(seriesNames(el), 'five kept, then one Other')
-      .to.deep.equal(['S1', 'S2', 'S3', 'S4', 'S5', 'Other (3 series)']);
+    expect(seriesNames(el), 'five kept, then one Other').to.deep.equal([
+      'S1',
+      'S2',
+      'S3',
+      'S4',
+      'S5',
+      'Other (3 series)',
+    ]);
   });
 
   it('sums the folded series per category', async () => {
@@ -206,9 +220,14 @@ describe('arc-chart axis', () => {
 
   it('keeps the accessible table when the axis is hidden', async () => {
     const el = await chart('hide-axis');
-    expect(cells(el), 'the values are still readable').to.deep.equal(
-      ['10', '5', '20', '10', '30', '15'],
-    );
+    expect(cells(el), 'the values are still readable').to.deep.equal([
+      '10',
+      '5',
+      '20',
+      '10',
+      '30',
+      '15',
+    ]);
   });
 });
 
@@ -264,9 +283,9 @@ describe('arc-chart arc-mark-click', () => {
     const el = await chart('type="bar"');
     const seen = record(el, ['arc-mark-click']);
 
-    el.shadowRoot.querySelector('[part~="chart"]').dispatchEvent(
-      new MouseEvent('click', { bubbles: true, composed: true }),
-    );
+    el.shadowRoot
+      .querySelector('[part~="chart"]')
+      .dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
     await settle(el);
 
     expect(seen).to.deep.equal([]);

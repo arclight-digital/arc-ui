@@ -40,10 +40,10 @@ const distanceFromEnd = (el) => {
 async function mountOverflowing(count = 12) {
   const messages = Array.from(
     { length: count },
-    (_, i) => `<arc-message speaker="${i % 2 ? 'assistant' : 'user'}">Message ${i}</arc-message>`
+    (_, i) => `<arc-message speaker="${i % 2 ? 'assistant' : 'user'}">Message ${i}</arc-message>`,
   ).join('');
   const el = mount(
-    `<arc-conversation style="--conversation-height: 160px; width: 320px">${messages}</arc-conversation>`
+    `<arc-conversation style="--conversation-height: 160px; width: 320px">${messages}</arc-conversation>`,
   );
   await el.updateComplete;
   await Promise.all([...el.querySelectorAll('arc-message')].map((m) => m.updateComplete));
@@ -68,7 +68,7 @@ describe('arc-message roles', () => {
       await el.updateComplete;
       expect(
         bubbleRow(el).classList.contains(`message--${role}`),
-        `role="${role}" must carry its own class`
+        `role="${role}" must carry its own class`,
       ).to.equal(true);
     }
   });
@@ -240,7 +240,9 @@ describe('arc-conversation auto-scroll', () => {
     scrollTo(el, scroller(el).scrollHeight);
 
     const last = el.querySelector('arc-message:last-of-type');
-    last.append(document.createTextNode(' — and a long streamed continuation of the reply. '.repeat(10)));
+    last.append(
+      document.createTextNode(' — and a long streamed continuation of the reply. '.repeat(10)),
+    );
     await tick();
     await nextFrame();
 
@@ -258,7 +260,9 @@ describe('arc-conversation auto-scroll', () => {
     await msg.updateComplete;
     await tick();
 
-    expect(distanceFromEnd(el), 'the appended message must sit below the fold').to.be.greaterThan(1);
+    expect(distanceFromEnd(el), 'the appended message must sit below the fold').to.be.greaterThan(
+      1,
+    );
   });
 });
 

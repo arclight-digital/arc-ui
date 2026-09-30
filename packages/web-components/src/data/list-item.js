@@ -207,6 +207,14 @@ export class ArcListItem extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = {
+    prefix: '_onPrefixSlotChange',
+    description: '_onDescriptionSlotChange',
+    suffix: '_onSuffixSlotChange',
+    actions: '_onActionsSlotChange',
+  };
+
   constructor() {
     super();
     this._selectable = false;

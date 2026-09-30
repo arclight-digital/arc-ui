@@ -44,7 +44,9 @@ async function dragTo(el, { clientX = 0, clientY = 0 } = {}) {
   const h = handle(el);
   h.setPointerCapture = () => {};
   h.releasePointerCapture = () => {};
-  h.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, cancelable: true, clientX, clientY }));
+  h.dispatchEvent(
+    new PointerEvent('pointerdown', { ...pointerInit, cancelable: true, clientX, clientY }),
+  );
   h.dispatchEvent(new PointerEvent('pointermove', { ...pointerInit, clientX, clientY }));
   await settle(el);
 }
@@ -64,8 +66,7 @@ describe('arc-split-pane rendering', () => {
 
   it('projects both named slots', async () => {
     const el = await pane();
-    const named = (name) =>
-      el.shadowRoot.querySelector(`slot[name="${name}"]`).assignedElements();
+    const named = (name) => el.shadowRoot.querySelector(`slot[name="${name}"]`).assignedElements();
     expect(named('primary')[0].textContent).to.equal('Left');
     expect(named('secondary')[0].textContent).to.equal('Right');
   });
@@ -187,7 +188,13 @@ describe('arc-split-pane dragging', () => {
     const el = await pane();
     const rect = base(el).getBoundingClientRect();
     let event = null;
-    document.body.addEventListener('arc-resize', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-resize',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     await dragTo(el, { clientX: rect.left + rect.width * 0.6 });
     await release(el);
@@ -257,7 +264,10 @@ describe('arc-split-pane accessibility and input', () => {
     await settle(el);
     expect(el.ratio).to.be.closeTo(0.5, 0.001);
 
-    expect(seen.map(([kind]) => kind), 'each step is announced').to.deep.equal(['resize', 'resize']);
+    expect(
+      seen.map(([kind]) => kind),
+      'each step is announced',
+    ).to.deep.equal(['resize', 'resize']);
   });
 
   it('moves with the block arrows when vertical', async () => {
@@ -310,7 +320,11 @@ describe('arc-split-pane accessibility and input', () => {
     keyOn(handle(el), 'End');
     await settle(el);
 
-    const event = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     handle(el).dispatchEvent(event);
     await settle(el);
     expect(event.defaultPrevented).to.equal(true);
@@ -335,8 +349,12 @@ describe('arc-split-pane accessibility and input', () => {
     h.releasePointerCapture = () => {};
 
     const touch = { ...pointerInit, pointerType: 'touch' };
-    h.dispatchEvent(new PointerEvent('pointerdown', { ...touch, cancelable: true, clientX: rect.left }));
-    h.dispatchEvent(new PointerEvent('pointermove', { ...touch, clientX: rect.left + rect.width * 0.8 }));
+    h.dispatchEvent(
+      new PointerEvent('pointerdown', { ...touch, cancelable: true, clientX: rect.left }),
+    );
+    h.dispatchEvent(
+      new PointerEvent('pointermove', { ...touch, clientX: rect.left + rect.width * 0.8 }),
+    );
     h.dispatchEvent(new PointerEvent('pointerup', touch));
     await settle(el);
 
@@ -354,10 +372,15 @@ describe('arc-split-pane accessibility and input', () => {
     h.releasePointerCapture = () => {};
 
     const seen = record(el, ['arc-resize']);
-    h.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, cancelable: true, clientX: rect.left }));
+    h.dispatchEvent(
+      new PointerEvent('pointerdown', { ...pointerInit, cancelable: true, clientX: rect.left }),
+    );
     for (const fraction of [0.6, 0.7, 0.8]) {
       h.dispatchEvent(
-        new PointerEvent('pointermove', { ...pointerInit, clientX: rect.left + rect.width * fraction }),
+        new PointerEvent('pointermove', {
+          ...pointerInit,
+          clientX: rect.left + rect.width * fraction,
+        }),
       );
       await settle(el);
     }

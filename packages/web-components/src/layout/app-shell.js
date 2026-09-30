@@ -302,6 +302,9 @@ export class ArcAppShell extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { topbar: '_onTopbarSlotChange', toc: '_onTocSlotChange' };
+
   constructor() {
     super();
     // The same width the top bar reveals its hamburger at, and the nav menu

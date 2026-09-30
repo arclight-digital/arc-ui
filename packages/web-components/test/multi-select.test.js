@@ -49,8 +49,7 @@ const input = (el) => el.shadowRoot.querySelector('.ms__input');
 const activeOption = (el) => {
   const id = input(el).getAttribute('aria-activedescendant');
   if (!id) return -1;
-  return [...el.shadowRoot.querySelectorAll('.ms__option')]
-    .findIndex((o) => o.id === id);
+  return [...el.shadowRoot.querySelectorAll('.ms__option')].findIndex((o) => o.id === id);
 };
 const dropdown = (el) => el.shadowRoot.querySelector('.ms__dropdown');
 const options = (el) => [...el.shadowRoot.querySelectorAll('.ms__option')];
@@ -368,9 +367,7 @@ describe('arc-multi-select keyboard', () => {
     const activeBefore = activeOption(el);
     keyOn(input(el), 'End');
     await settle(el);
-    expect(activeOption(el), 'End moved the listbox instead of the caret').to.equal(
-      activeBefore,
-    );
+    expect(activeOption(el), 'End moved the listbox instead of the caret').to.equal(activeBefore);
   });
 
   it('gives Home and End to the listbox when the field is empty', async () => {

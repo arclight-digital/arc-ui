@@ -172,7 +172,9 @@ describe('arc-list-item activation (4.7.0)', () => {
       e.preventDefault();
     };
     window.addEventListener('click', hold, { once: true });
-    target.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true, cancelable: true, ...init }));
+    target.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, composed: true, cancelable: true, ...init }),
+    );
     window.removeEventListener('click', hold);
     return prevented;
   };
@@ -189,7 +191,12 @@ describe('arc-list-item activation (4.7.0)', () => {
     const events = record(el, ['arc-select']);
     const r = row(el.querySelector('arc-list-item'));
     for (const k of ['Enter', ' ']) {
-      const ev = new KeyboardEvent('keydown', { key: k, bubbles: true, composed: true, cancelable: true });
+      const ev = new KeyboardEvent('keydown', {
+        key: k,
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      });
       r.dispatchEvent(ev);
       expect(ev.defaultPrevented, `${k} claimed`).to.equal(true);
     }
@@ -208,7 +215,10 @@ describe('arc-list-item activation (4.7.0)', () => {
   it('lets an uncancelled one navigate', async () => {
     const el = await plain('<arc-list-item value="a" href="#nowhere">A</arc-list-item>');
     const seen = record(el, ['arc-select']);
-    expect(clickAndHold(row(el.querySelector('arc-list-item'))), 'not cancelled by the row').to.equal(false);
+    expect(
+      clickAndHold(row(el.querySelector('arc-list-item'))),
+      'not cancelled by the row',
+    ).to.equal(false);
     expect(seen).to.have.length(1);
   });
 
@@ -216,7 +226,10 @@ describe('arc-list-item activation (4.7.0)', () => {
     const el = await plain('<arc-list-item value="a" href="#nowhere">A</arc-list-item>');
     const seen = record(el, ['arc-select']);
     for (const init of [{ ctrlKey: true }, { metaKey: true }, { shiftKey: true }, { button: 1 }]) {
-      expect(clickAndHold(row(el.querySelector('arc-list-item')), init), 'left to the browser').to.equal(false);
+      expect(
+        clickAndHold(row(el.querySelector('arc-list-item')), init),
+        'left to the browser',
+      ).to.equal(false);
     }
     expect(seen).to.deep.equal([]);
   });

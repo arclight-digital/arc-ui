@@ -127,7 +127,9 @@ describe('arc-sidebar inside arc-app-shell', () => {
    * that moves both.
    */
   it('takes its width from --sidebar-width, wrapper and rail together', async () => {
-    const shell = mount(SHELL.replace('breakpoint="320"', 'breakpoint="320" style="--sidebar-width:360px"'));
+    const shell = mount(
+      SHELL.replace('breakpoint="320"', 'breakpoint="320" style="--sidebar-width:360px"'),
+    );
     await shell.updateComplete;
     const sidebar = shell.querySelector('arc-sidebar');
     await sidebar.updateComplete;

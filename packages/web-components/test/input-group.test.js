@@ -22,19 +22,31 @@ const chrome = (el) => {
 
 describe('arc-input-group', () => {
   it('strips a grouped arc-input of its own box', async () => {
-    const g = mount('<arc-input-group><span slot="prefix">https://</span><arc-input aria-label="URL"></arc-input></arc-input-group>');
+    const g = mount(
+      '<arc-input-group><span slot="prefix">https://</span><arc-input aria-label="URL"></arc-input></arc-input-group>',
+    );
     await settle(g);
     const input = g.querySelector('arc-input');
     await settle(input);
-    expect(chrome(input.shadowRoot.querySelector('[part~="wrapper"]'))).to.deep.equal({ border: 'none', radius: '0px', shadow: 'none' });
+    expect(chrome(input.shadowRoot.querySelector('[part~="wrapper"]'))).to.deep.equal({
+      border: 'none',
+      radius: '0px',
+      shadow: 'none',
+    });
   });
 
   it('strips a grouped arc-select of its own box', async () => {
-    const g = mount('<arc-input-group><arc-select aria-label="Unit"><arc-option value="a">A</arc-option></arc-select></arc-input-group>');
+    const g = mount(
+      '<arc-input-group><arc-select aria-label="Unit"><arc-option value="a">A</arc-option></arc-select></arc-input-group>',
+    );
     await settle(g);
     const select = g.querySelector('arc-select');
     await settle(select);
-    expect(chrome(select.shadowRoot.querySelector('[part~="trigger"]'))).to.deep.equal({ border: 'none', radius: '0px', shadow: 'none' });
+    expect(chrome(select.shadowRoot.querySelector('[part~="trigger"]'))).to.deep.equal({
+      border: 'none',
+      radius: '0px',
+      shadow: 'none',
+    });
   });
 
   it('leaves an arc-input outside a group as it was', async () => {

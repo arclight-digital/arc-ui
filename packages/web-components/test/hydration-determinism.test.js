@@ -29,31 +29,78 @@ afterEach(cleanup);
 
 /** One realistic value per documented shape, enough to change the render. */
 const SAMPLES = {
-  'arc-activity-heatmap': { data: [{ date: '2026-01-05', value: 3 }, { date: '2026-01-06', value: 7 }] },
-  'arc-anchor-nav': { items: [{ label: 'Intro', value: 'intro' }, { label: 'Usage', value: 'usage' }] },
-  'arc-bar-list': { items: [{ label: 'Search', value: 40 }, { label: 'Direct', value: 20 }] },
-  'arc-bottom-nav': { items: [{ label: 'Home', value: 'home' }, { label: 'Search', value: 'search' }] },
-  'arc-breadcrumb-menu': { items: [{ label: 'Docs', href: '/docs' }, { label: 'Guides', href: '/docs/guides' }] },
+  'arc-activity-heatmap': {
+    data: [
+      { date: '2026-01-05', value: 3 },
+      { date: '2026-01-06', value: 7 },
+    ],
+  },
+  'arc-anchor-nav': {
+    items: [
+      { label: 'Intro', value: 'intro' },
+      { label: 'Usage', value: 'usage' },
+    ],
+  },
+  'arc-bar-list': {
+    items: [
+      { label: 'Search', value: 40 },
+      { label: 'Direct', value: 20 },
+    ],
+  },
+  'arc-bottom-nav': {
+    items: [
+      { label: 'Home', value: 'home' },
+      { label: 'Search', value: 'search' },
+    ],
+  },
+  'arc-breadcrumb-menu': {
+    items: [
+      { label: 'Docs', href: '/docs' },
+      { label: 'Guides', href: '/docs/guides' },
+    ],
+  },
   'arc-chart': { series: [{ label: 'Visits', data: [3, 5, 2] }], labels: ['Mon', 'Tue', 'Wed'] },
   'arc-color-picker': { presets: ['#ff0000', '#00ff00'] },
   'arc-comparison': { features: ['Storage', 'Bandwidth'] },
   'arc-comparison-column': { values: ['true', 'false'] },
   'arc-data-grid': {
-    columns: [{ key: 'name', label: 'Name', sortable: true }, { key: 'age', label: 'Age' }],
-    rows: [{ name: 'Ada', age: 36 }, { name: 'Grace', age: 45 }],
+    columns: [
+      { key: 'name', label: 'Name', sortable: true },
+      { key: 'age', label: 'Age' },
+    ],
+    rows: [
+      { name: 'Ada', age: 36 },
+      { name: 'Grace', age: 45 },
+    ],
     sort: [{ key: 'name', direction: 'asc' }],
   },
   'arc-date-range-picker': { presets: [{ label: 'Last 7 days', days: 7 }] },
   'arc-kanban': { columns: [{ id: 'todo', title: 'To do', items: [{ id: 'a', label: 'Write' }] }] },
   'arc-knob': { detents: [0, 50, 100] },
   'arc-lightbox': { images: [{ src: 'data:image/gif;base64,R0lGODlhAQABAAAAACw=', alt: 'Pixel' }] },
-  'arc-menubar': { items: [{ label: 'File', items: [{ label: 'Open' }] }, { label: 'Edit', items: [{ label: 'Undo' }] }] },
+  'arc-menubar': {
+    items: [
+      { label: 'File', items: [{ label: 'Open' }] },
+      { label: 'Edit', items: [{ label: 'Undo' }] },
+    ],
+  },
   'arc-multi-select': { value: ['a', 'b'] },
   'arc-rail': { items: [{ icon: 'x', label: 'Home', value: 'home' }] },
   'arc-stepper-nav': { steps: ['Account', 'Profile', 'Done'] },
   'arc-tag-input': { value: ['alpha', 'beta'], suggestions: ['gamma'] },
-  'arc-terminal': { lines: [{ type: 'command', text: 'ls' }, { type: 'output', text: 'README.md' }] },
-  'arc-transfer-list': { options: [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }], value: ['b'] },
+  'arc-terminal': {
+    lines: [
+      { type: 'command', text: 'ls' },
+      { type: 'output', text: 'README.md' },
+    ],
+  },
+  'arc-transfer-list': {
+    options: [
+      { value: 'a', label: 'A' },
+      { value: 'b', label: 'B' },
+    ],
+    value: ['b'],
+  },
   'arc-tree-select': {
     items: [{ value: 'g', label: 'Group', children: [{ value: 'a', label: 'A' }] }],
     expandedValues: ['g'],
@@ -74,14 +121,17 @@ describe('hydration with script-set list() data', () => {
     await Promise.all(
       Object.entries(fixtures).map(async ([tag, { register }]) => {
         const mod = await import(register);
-        classes[tag] = Object.values(mod).find((v) => typeof v === 'function' && v.prototype instanceof HTMLElement);
+        classes[tag] = Object.values(mod).find(
+          (v) => typeof v === 'function' && v.prototype instanceof HTMLElement,
+        );
       }),
     );
   });
 
   it('has a sample for every component with a list() prop', () => {
-    const missing = Object.entries(fixtures)
-      .flatMap(([tag, { props }]) => props.filter((p) => !(SAMPLES[tag] && p in SAMPLES[tag])).map((p) => `${tag}.${p}`));
+    const missing = Object.entries(fixtures).flatMap(([tag, { props }]) =>
+      props.filter((p) => !(SAMPLES[tag] && p in SAMPLES[tag])).map((p) => `${tag}.${p}`),
+    );
     expect(missing, 'add a sample for each').to.deep.equal([]);
   });
 
@@ -93,7 +143,9 @@ describe('hydration with script-set list() data', () => {
       // and the page's assignments park as own properties, as on a page whose
       // register barrel has not loaded.
       fresh = `hd-${tag.slice(4)}-${Math.random().toString(36).slice(2, 8)}`;
-      markup = markup.replace(new RegExp(`^<${tag}`), `<${fresh}`).replace(new RegExp(`</${tag}>\\s*$`), `</${fresh}>`);
+      markup = markup
+        .replace(new RegExp(`^<${tag}`), `<${fresh}`)
+        .replace(new RegExp(`</${tag}>\\s*$`), `</${fresh}>`);
     }
     const host = document.createElement('div');
     // setHTMLUnsafe attaches the declarative shadow root; innerHTML would not.
@@ -109,7 +161,8 @@ describe('hydration with script-set list() data', () => {
     try {
       document.body.appendChild(host);
       if (fresh) customElements.define(fresh, class extends classes[tag] {});
-      for (let i = 0; i < 3; i++) await settle(el).catch((e) => errors.push(e?.message ?? String(e)));
+      for (let i = 0; i < 3; i++)
+        await settle(el).catch((e) => errors.push(e?.message ?? String(e)));
     } finally {
       window.removeEventListener('unhandledrejection', onError);
       window.removeEventListener('error', onError);
@@ -119,7 +172,9 @@ describe('hydration with script-set list() data', () => {
 
   for (const [tag, { props, markup }] of Object.entries(fixtures)) {
     for (const beforeUpgrade of [true, false]) {
-      const when = beforeUpgrade ? 'parked before upgrade' : 'set after upgrade, before the first update';
+      const when = beforeUpgrade
+        ? 'parked before upgrade'
+        : 'set after upgrade, before the first update';
       it(`${tag}: adopts the server markup, then takes ${props.join(', ')} ${when}`, async () => {
         const { el, errors } = await hydrate(markup, props, SAMPLES[tag], { beforeUpgrade, tag });
         expect(errors, 'no hydration error').to.deep.equal([]);

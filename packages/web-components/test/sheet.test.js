@@ -21,17 +21,23 @@ describe('arc-sheet sizing', () => {
     const probe = document.createElement('div');
     probe.style.height = '80dvh';
     document.body.appendChild(probe);
-    expect(getComputedStyle(panel(el)).maxHeight).to.equal(`${probe.getBoundingClientRect().height}px`);
+    expect(getComputedStyle(panel(el)).maxHeight).to.equal(
+      `${probe.getBoundingClientRect().height}px`,
+    );
   });
 
   it('takes its height from --sheet-max-height', async () => {
-    const el = mount('<arc-sheet open heading="S" style="--sheet-max-height: 240px">Body</arc-sheet>');
+    const el = mount(
+      '<arc-sheet open heading="S" style="--sheet-max-height: 240px">Body</arc-sheet>',
+    );
     await settle(el);
     expect(getComputedStyle(panel(el)).maxHeight).to.equal('240px');
   });
 
-  it('takes a right sheet\'s width from --sheet-width', async () => {
-    const el = mount('<arc-sheet open side="right" heading="S" style="--sheet-width: 320px">Body</arc-sheet>');
+  it("takes a right sheet's width from --sheet-width", async () => {
+    const el = mount(
+      '<arc-sheet open side="right" heading="S" style="--sheet-width: 320px">Body</arc-sheet>',
+    );
     await settle(el);
     expect(getComputedStyle(panel(el)).width).to.equal('320px');
   });
@@ -64,7 +70,9 @@ describe('arc-sheet position', () => {
     });
 
     it(`puts a ${name} right sheet on the right edge, full height`, async () => {
-      const r = await box(`<arc-sheet open side="right" heading="S" style="--sheet-width: 320px" ${modality}>Short</arc-sheet>`);
+      const r = await box(
+        `<arc-sheet open side="right" heading="S" style="--sheet-width: 320px" ${modality}>Short</arc-sheet>`,
+      );
       expect(Math.round(r.right)).to.equal(window.innerWidth);
       expect(Math.round(r.width)).to.equal(320);
       expect(Math.round(r.top)).to.equal(0);

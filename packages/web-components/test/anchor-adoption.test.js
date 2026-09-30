@@ -29,10 +29,7 @@ async function mountUpgraded(htmlString) {
 
 /** Anchors in the composed tree: shadow-rendered plus slotted light DOM. */
 function allAnchors(el) {
-  return [
-    ...el.shadowRoot.querySelectorAll('a'),
-    ...el.querySelectorAll('a'),
-  ];
+  return [...el.shadowRoot.querySelectorAll('a'), ...el.querySelectorAll('a')];
 }
 
 describe('anchor adoption — arc-button', () => {
@@ -67,7 +64,9 @@ describe('anchor adoption — arc-button', () => {
   });
 
   it('an explicit href wins over a slotted anchor', async () => {
-    const el = await mountUpgraded('<arc-button href="/explicit"><a href="/slotted">Go</a></arc-button>');
+    const el = await mountUpgraded(
+      '<arc-button href="/explicit"><a href="/slotted">Go</a></arc-button>',
+    );
     expect(el.shadowRoot.querySelector('a').getAttribute('href')).to.equal('/explicit');
   });
 
@@ -88,7 +87,9 @@ describe('anchor adoption — arc-icon-button', () => {
   afterEach(cleanup);
 
   it('adopts a lone slotted anchor', async () => {
-    const el = await mountUpgraded('<arc-icon-button><a href="/settings" aria-label="Settings">S</a></arc-icon-button>');
+    const el = await mountUpgraded(
+      '<arc-icon-button><a href="/settings" aria-label="Settings">S</a></arc-icon-button>',
+    );
     const anchors = allAnchors(el);
     expect(anchors).to.have.lengthOf(1);
     expect(anchors[0].getAttribute('href')).to.equal('/settings');
@@ -98,7 +99,9 @@ describe('anchor adoption — arc-icon-button', () => {
   });
 
   it('leaves the href form untouched', async () => {
-    const el = await mountUpgraded('<arc-icon-button href="/settings" label="Settings" name="settings"></arc-icon-button>');
+    const el = await mountUpgraded(
+      '<arc-icon-button href="/settings" label="Settings" name="settings"></arc-icon-button>',
+    );
     expect(el.shadowRoot.querySelector('a').getAttribute('href')).to.equal('/settings');
   });
 });
@@ -123,7 +126,9 @@ describe('anchor adoption — arc-card', () => {
   afterEach(cleanup);
 
   it('adopts a wrapping anchor without rendering a second one', async () => {
-    const el = await mountUpgraded('<arc-card><a href="/post"><h3>Title</h3><p>Body</p></a></arc-card>');
+    const el = await mountUpgraded(
+      '<arc-card><a href="/post"><h3>Title</h3><p>Body</p></a></arc-card>',
+    );
     const anchors = allAnchors(el);
     expect(anchors).to.have.lengthOf(1);
     expect(anchors[0].getAttribute('href')).to.equal('/post');
@@ -167,18 +172,24 @@ describe('anchor adoption — nav carriers', () => {
   });
 
   it('arc-nav-item attribute href wins over a child anchor', async () => {
-    const el = await mountUpgraded('<arc-nav-item href="/explicit"><a href="/slotted">Docs</a></arc-nav-item>');
+    const el = await mountUpgraded(
+      '<arc-nav-item href="/explicit"><a href="/slotted">Docs</a></arc-nav-item>',
+    );
     expect(el.resolvedHref).to.equal('/explicit');
   });
 
   it('arc-breadcrumb-item resolves href and label from a child anchor', async () => {
-    const el = await mountUpgraded('<arc-breadcrumb-item><a href="/docs">Docs</a></arc-breadcrumb-item>');
+    const el = await mountUpgraded(
+      '<arc-breadcrumb-item><a href="/docs">Docs</a></arc-breadcrumb-item>',
+    );
     expect(el.resolvedHref).to.equal('/docs');
     expect(el.label).to.equal('Docs');
   });
 
   it('arc-sidebar-link resolves href and label from a child anchor', async () => {
-    const el = await mountUpgraded('<arc-sidebar-link><a href="/docs/install">Install</a></arc-sidebar-link>');
+    const el = await mountUpgraded(
+      '<arc-sidebar-link><a href="/docs/install">Install</a></arc-sidebar-link>',
+    );
     expect(el.resolvedHref).to.equal('/docs/install');
     expect(el.label).to.equal('Install');
   });

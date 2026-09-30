@@ -5,6 +5,7 @@ import { tokenStyles } from '../shared-styles.js';
 import { OverlayController } from '../shared/overlay-controller.js';
 import { DeclaredPropsMixin, flag, list, int } from '../shared/props.js';
 import { hydrateImages } from '../shared/hydrate-images.js';
+import { observeResize } from '../shared/subscriptions.js';
 
 /** Whether two galleries hold the same entries in the same order. */
 const sameEntries = (a, b) =>
@@ -40,6 +41,9 @@ const SLIDE_PX = 48;
 const PRESS_WINDOW = 1000;
 
 const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+/** How far above the stage's bottom edge a zoomed picture's caption docks. */
+const CAPTION_INSET = 8;
 
 /** Capture a pointer, tolerating one that has already lifted. */
 const capture = (el, id) => {
@@ -88,6 +92,8 @@ const capture = (el, id) => {
  * @csspart figure
  * @csspart image
  * @csspart caption
+ * @csspart caption-text
+ * @csspart caption-toggle - The More / Less button on a caption longer than three lines.
  * @csspart loading - The spinner shown while a slow image loads.
  * @csspart error - Shown in place of an image that failed to load.
  * @csspart thumbnails - The filmstrip row.
@@ -106,6 +112,8 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     _loaded: { state: true },
     _failed: { state: true },
     _slow: { state: true },
+    _captionOpen: { state: true },
+    _captionLong: { state: true },
     _idle: { state: true },
   };
 
@@ -329,13 +337,69 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
         text-align: center;
       }
 
-      /* Over a zoomed picture the caption carries its own backing, as the
-         controls do. */
-      .lightbox__img--zoomed ~ .lightbox__caption {
-        background: var(--_scrim);
-        border-radius: var(--radius-md);
+      /* Over a zoomed picture the caption docks at the foot of the stage
+         and carries its own backing, as the controls do. Left where it sat,
+         under a picture that is centred in the stage, it crossed the middle of
+         the zoomed image, which on a phone is most of what there is to see.
+         It moves by transform, which leaves layout and so the zoom's own
+         arithmetic alone; the distance is set from script (_view). */
+      /* The backing's padding is there at rest too, so the caption's box
+         doesn't change size when a zoom begins: its docking distance is
+         measured before the zoomed styles land. */
+      .lightbox__caption {
         padding: var(--space-xs) var(--space-sm);
         margin-block: calc(-1 * var(--space-xs));
+        border-radius: var(--radius-md);
+        transition: transform var(--transition-base), background var(--transition-base);
+      }
+
+      .lightbox__img--zoomed ~ .lightbox__caption {
+        background: var(--_scrim);
+        transform: translateY(var(--_caption-drop, 0px));
+      }
+
+      /* A long caption keeps to three lines, zoomed or not, so the picture
+         keeps the stage (a two-sentence caption took two thirds of it on a
+         phone) and the caption's box doesn't change size when a zoom begins.
+         More opens it to read, scrolling within at most two fifths of the
+         screen. */
+      .lightbox__caption-text {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        overflow: hidden;
+      }
+
+      .lightbox__caption--open .lightbox__caption-text {
+        display: block;
+        -webkit-line-clamp: none;
+        line-clamp: none;
+        max-block-size: 40dvh;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        touch-action: pan-y;
+      }
+
+      .lightbox__caption-toggle {
+        margin-block-start: var(--space-xs);
+        padding: 2px var(--space-sm);
+        min-block-size: var(--touch-min);
+        border: none;
+        border-radius: var(--radius-full);
+        background: none;
+        color: var(--interactive);
+        font: inherit;
+        font-family: var(--font-label);
+        font-size: var(--_text-xs);
+        letter-spacing: var(--label-spacing);
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .lightbox__caption-toggle:focus-visible {
+        outline: none;
+        box-shadow: var(--interactive-focus-ring);
       }
 
       .lightbox__nav {
@@ -486,6 +550,11 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     this._failed = false;
     this._slow = false;
     this._idle = false;
+    this._captionOpen = false;
+    this._captionLong = false;
+    // A rotated phone or a resized window can bring a caption under its clamp
+    // or past it.
+    observeResize(this, '.lightbox__caption-text', () => this._measureCaption());
     this._panX = 0;
     this._panY = 0;
     /** +1 after a step forward, -1 after a step back, 0 for a jump or a fresh open. */
@@ -774,6 +843,10 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
     if (changed.has('index') && (this._zoomed || this._panX || this._panY)) {
       this._resetZoom();
     }
+    if (changed.has('index') || changed.has('_images') || changed.has('open')) {
+      this._captionOpen = false;
+      this._measureCaption();
+    }
     if (this._srcChanged) {
       this._srcChanged = false;
       clearTimeout(this._slowTimer);
@@ -975,16 +1048,48 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
-   * Pan limits at a scale, as { x: [min, max], y: [min, max] }. The view is
-   * the stage above the caption, which stays readable on top of a zoomed
-   * picture. A picture larger than the view can't bring an edge inside it;
-   * one smaller can't leave it. The image isn't centred in the stage when a
-   * caption shares it, so the limits are worked out from where it sits.
+   * Whether the caption runs past its clamp, and so offers More. Read after
+   * the caption renders, and again whenever the stage is resized.
+   */
+  _measureCaption() {
+    requestAnimationFrame(() => {
+      const text = this.shadowRoot?.querySelector('.lightbox__caption-text');
+      if (!text || this._captionOpen) return;
+      this._captionLong = text.scrollHeight > text.clientHeight + 1;
+    });
+  }
+
+  _toggleCaption(e) {
+    e.stopPropagation();
+    this._captionOpen = !this._captionOpen;
+    // A zoomed picture pans within the stage above the caption, which just
+    // changed height.
+    if (this._zoomed) this.updateComplete.then(() => this._panBy(0, 0));
+  }
+
+  /**
+   * The part of the stage a zoomed picture pans within: all of it, less the
+   * caption docked at its foot. Docking is the caption's move down to
+   * `CAPTION_INSET` above the stage's bottom edge, written here as the
+   * distance its transform travels.
+   */
+  _view(stage) {
+    const caption = stage.querySelector('.lightbox__caption');
+    if (!caption) return { w: stage.clientWidth, h: stage.clientHeight };
+    const top = stage.clientHeight - CAPTION_INSET - caption.offsetHeight;
+    caption.style.setProperty('--_caption-drop', `${top - caption.offsetTop}px`);
+    return { w: stage.clientWidth, h: top };
+  }
+
+  /**
+   * Pan limits at a scale, as { x: [min, max], y: [min, max] }. A picture
+   * larger than the view can't bring an edge inside it; one smaller can't
+   * leave it. The image isn't centred in the stage when a caption shares it,
+   * so the limits are worked out from where it sits.
    */
   _bounds(img, scale) {
     const stage = this.shadowRoot.querySelector('.lightbox__figure');
-    const caption = stage.querySelector('.lightbox__caption');
-    const view = { w: stage.clientWidth, h: caption ? caption.offsetTop : stage.clientHeight };
+    const view = this._view(stage);
     const axis = (start, size, extent) => {
       const c = start + size / 2;
       const half = (size * scale) / 2;
@@ -1088,6 +1193,9 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
      on the figure and read as a click beside it, which closes the viewer. */
 
   _onPointerDown(e) {
+    // The caption is text to read, select and scroll: no pan, swipe or
+    // pinch starts on it.
+    if (e.composedPath().some((n) => n.classList?.contains('lightbox__caption'))) return;
     // A flag left by a gesture that ended without a click must not eat the
     // next real one.
     if (this._pointers.size === 0) this._suppressClick = false;
@@ -1701,7 +1809,20 @@ export class ArcLightbox extends DeclaredPropsMixin(LitElement) {
         ${
           current?.caption
             ? html`
-          <figcaption class="lightbox__caption" part="caption">${current.caption}</figcaption>
+          <figcaption class="lightbox__caption ${this._captionOpen ? 'lightbox__caption--open' : ''}" part="caption">
+            <span class="lightbox__caption-text" id="lightbox-caption" part="caption-text">${current.caption}</span>
+            ${
+              this._captionLong || this._captionOpen
+                ? html`<button
+                    class="lightbox__caption-toggle"
+                    part="caption-toggle"
+                    aria-expanded=${this._captionOpen ? 'true' : 'false'}
+                    aria-controls="lightbox-caption"
+                    @click=${this._toggleCaption}
+                  >${this._captionOpen ? 'Less' : 'More'}</button>`
+                : nothing
+            }
+          </figcaption>
         `
             : nothing
         }

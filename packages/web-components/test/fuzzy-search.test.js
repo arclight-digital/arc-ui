@@ -29,7 +29,6 @@ const beats = (query, winner, loser) => {
   expect(w, `"${query}": "${winner}" should outrank "${loser}"`).to.be.greaterThan(l);
 };
 
-
 /**
  * Type into the palette's own field.
  *
@@ -58,7 +57,7 @@ describe('fuzzy matching', () => {
   });
 
   it('ranks by kind of match, not by whether one exists', () => {
-    beats('in', 'Input', 'Number Input');      // prefix over word-boundary
+    beats('in', 'Input', 'Number Input'); // prefix over word-boundary
     beats('in', 'Number Input', 'Pagination'); // word-boundary over mid-word
     beats('modal', 'Modal', 'Modal Dialog Wrapper'); // exact over prefix
   });
@@ -203,7 +202,9 @@ describe('arc-command-palette search', () => {
     await el.updateComplete;
 
     let detail = null;
-    el.addEventListener('arc-select', (e) => { detail = e.detail; });
+    el.addEventListener('arc-select', (e) => {
+      detail = e.detail;
+    });
     el.shadowRoot.querySelector('.palette__item').click();
 
     expect(detail, 'arc-select should fire').to.not.equal(null);
@@ -220,7 +221,9 @@ describe('arc-command-palette search', () => {
     await el.updateComplete;
 
     let detail = null;
-    el.addEventListener('arc-select', (e) => { detail = e.detail; });
+    el.addEventListener('arc-select', (e) => {
+      detail = e.detail;
+    });
     el.shadowRoot.querySelector('.palette__item').click();
     expect(detail.value).to.equal('Plain');
   });
@@ -305,8 +308,13 @@ describe('result cap', () => {
   afterEach(cleanup);
 
   it('renders at most maxResults, after ranking', async () => {
-    const items = Array.from({ length: 40 }, (_, i) => `<arc-command-item>Item ${i}</arc-command-item>`);
-    const el = mount(`<arc-command-palette max-results="5">${items.join('')}</arc-command-palette>`);
+    const items = Array.from(
+      { length: 40 },
+      (_, i) => `<arc-command-item>Item ${i}</arc-command-item>`,
+    );
+    const el = mount(
+      `<arc-command-palette max-results="5">${items.join('')}</arc-command-palette>`,
+    );
     await el.updateComplete;
     await tick();
     el.open = true;

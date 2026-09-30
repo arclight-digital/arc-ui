@@ -47,14 +47,19 @@ async function menubar(items = ITEMS) {
 
 const triggers = (el) => [...el.shadowRoot.querySelectorAll('[part~="trigger"]')];
 const menus = (el) => [...el.shadowRoot.querySelectorAll('[role="menu"]')];
-const items = (el) => [...el.shadowRoot.querySelectorAll('[role="menuitem"]:not([part~="trigger"])')];
+const items = (el) => [
+  ...el.shadowRoot.querySelectorAll('[role="menuitem"]:not([part~="trigger"])'),
+];
 const labels = (el) => items(el).map((b) => b.querySelector('.item__label').textContent.trim());
 const active = (el) => el.shadowRoot.querySelector('.item.is-active');
 const activeLabel = (el) => active(el)?.querySelector('.item__label').textContent.trim() ?? null;
 const tabStops = (el) => [...el.shadowRoot.querySelectorAll('[tabindex="0"]')];
 /** Whatever currently owns the keyboard, as a label. */
 const focused = (el) =>
-  el.shadowRoot.activeElement?.textContent.trim().replace(/[›⌘].*$/, '').trim() ?? null;
+  el.shadowRoot.activeElement?.textContent
+    .trim()
+    .replace(/[›⌘].*$/, '')
+    .trim() ?? null;
 
 /**
  * Send a key at the element that actually has focus, as a real press would.
@@ -198,7 +203,9 @@ describe('arc-menubar pointer', () => {
 
     triggers(el)[0].click();
     await settle(el);
-    items(el).find((b) => b.textContent.includes('Open')).click();
+    items(el)
+      .find((b) => b.textContent.includes('Open'))
+      .click();
     await settle(el);
 
     expect(seen).to.have.lengthOf(1);
@@ -213,9 +220,13 @@ describe('arc-menubar pointer', () => {
 
     triggers(el)[0].click();
     await settle(el);
-    items(el).find((b) => b.textContent.includes('Export')).click();
+    items(el)
+      .find((b) => b.textContent.includes('Export'))
+      .click();
     await settle(el);
-    items(el).find((b) => b.textContent.includes('PNG')).click();
+    items(el)
+      .find((b) => b.textContent.includes('PNG'))
+      .click();
     await settle(el);
 
     expect(seen).to.deep.equal([['File', 'Export', 'PNG']]);
@@ -228,7 +239,9 @@ describe('arc-menubar pointer', () => {
 
     triggers(el)[0].click();
     await settle(el);
-    items(el).find((b) => b.textContent.includes('Quit')).click();
+    items(el)
+      .find((b) => b.textContent.includes('Quit'))
+      .click();
     await settle(el);
 
     expect(seen).to.have.lengthOf(0);
@@ -260,18 +273,23 @@ describe('arc-menubar pointer', () => {
     const exportItem = items(el).find((b) => b.textContent.includes('Export'));
     exportItem.dispatchEvent(new PointerEvent('pointerenter', { bubbles: false }));
 
-    expect(await until(() => menus(el).length === 2), 'submenu opens on hover dwell').to.equal(true);
+    expect(await until(() => menus(el).length === 2), 'submenu opens on hover dwell').to.equal(
+      true,
+    );
   });
 
   it('closes an open submenu when a sibling item is hovered', async () => {
     const el = await menubar();
     triggers(el)[0].click();
     await settle(el);
-    items(el).find((b) => b.textContent.includes('Export')).click();
+    items(el)
+      .find((b) => b.textContent.includes('Export'))
+      .click();
     await settle(el);
     expect(menus(el)).to.have.lengthOf(2);
 
-    items(el).find((b) => b.textContent.includes('New'))
+    items(el)
+      .find((b) => b.textContent.includes('New'))
       .dispatchEvent(new PointerEvent('pointerenter', { bubbles: false }));
     await settle(el);
 
@@ -552,9 +570,9 @@ describe('arc-menubar dismissal and state', () => {
     triggers(el)[0].click();
     await settle(el);
 
-    el.shadowRoot.querySelector('[part~="bar"]').dispatchEvent(
-      new FocusEvent('focusout', { relatedTarget: outside, bubbles: true }),
-    );
+    el.shadowRoot
+      .querySelector('[part~="bar"]')
+      .dispatchEvent(new FocusEvent('focusout', { relatedTarget: outside, bubbles: true }));
     await settle(el);
     expect(menus(el)).to.have.lengthOf(0);
   });
@@ -564,9 +582,9 @@ describe('arc-menubar dismissal and state', () => {
     triggers(el)[0].click();
     await settle(el);
 
-    el.shadowRoot.querySelector('[part~="bar"]').dispatchEvent(
-      new FocusEvent('focusout', { relatedTarget: triggers(el)[1], bubbles: true }),
-    );
+    el.shadowRoot
+      .querySelector('[part~="bar"]')
+      .dispatchEvent(new FocusEvent('focusout', { relatedTarget: triggers(el)[1], bubbles: true }));
     await settle(el);
     expect(menus(el)).to.have.lengthOf(1);
   });
@@ -615,7 +633,7 @@ describe('arc-menubar dismissal and state', () => {
     expect(active(el)).to.equal(null);
   });
 
-  it('releases each menu\'s PositionController when the menu closes', async () => {
+  it("releases each menu's PositionController when the menu closes", async () => {
     // Was finding #56: _positionOpenMenus() creates a PositionController per
     // menu key and calls host.addController(), but on close it only did
     // _positions.delete(key) — never host.removeController(). Lit keeps its own

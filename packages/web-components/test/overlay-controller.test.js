@@ -211,8 +211,9 @@ describe('OverlayController: scroll lock', () => {
     const { el, dialog } = await fixture({ open: true });
     dialog.close();
     await new Promise((r) => requestAnimationFrame(r));
-    expect(document.body.style.overflow, 'not left locked by a close we did not initiate')
-      .to.equal('');
+    expect(document.body.style.overflow, 'not left locked by a close we did not initiate').to.equal(
+      '',
+    );
   });
 });
 

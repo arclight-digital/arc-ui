@@ -72,7 +72,9 @@ describe('barrel gating: what leaves the default barrel', () => {
     // Set-backed, so an experimental component in a group cannot produce a
     // duplicate tag. prism validates every barrelExclude entry as a tag name and
     // would not complain about a repeat, so a duplicate would be invisible.
-    const out = excludedFrom(catalog(comp('arc-filter-chip', { group: 'marketing', status: 'experimental' })));
+    const out = excludedFrom(
+      catalog(comp('arc-filter-chip', { group: 'marketing', status: 'experimental' })),
+    );
     expect(out.filter((t) => t === 'arc-filter-chip')).to.have.lengthOf(1);
   });
 

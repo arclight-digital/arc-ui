@@ -62,8 +62,9 @@ describe('arc-chip ARIA context switching', () => {
     const el = await chip();
     expect(control(el).getAttribute('role')).to.equal('button');
     expect(control(el).getAttribute('aria-pressed')).to.equal('false');
-    expect(control(el).hasAttribute('aria-selected'), 'aria-selected is meaningless here')
-      .to.equal(false);
+    expect(control(el).hasAttribute('aria-selected'), 'aria-selected is meaningless here').to.equal(
+      false,
+    );
   });
 
   it('tracks aria-pressed as it toggles', async () => {
@@ -77,8 +78,10 @@ describe('arc-chip ARIA context switching', () => {
     const el = await chipIn('listbox');
     expect(control(el).getAttribute('role')).to.equal('option');
     expect(control(el).getAttribute('aria-selected')).to.equal('false');
-    expect(control(el).hasAttribute('aria-pressed'), 'aria-pressed is invalid on an option')
-      .to.equal(false);
+    expect(
+      control(el).hasAttribute('aria-pressed'),
+      'aria-pressed is invalid on an option',
+    ).to.equal(false);
   });
 
   it('becomes an option inside a group too', async () => {
@@ -122,7 +125,13 @@ describe('arc-chip toggling', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await chip();
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     control(el).click();
     await settle(el);

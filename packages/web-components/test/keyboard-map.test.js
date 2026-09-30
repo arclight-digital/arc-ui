@@ -13,9 +13,7 @@ async function map(attrs = '') {
 
 /** Distinct board key ids currently highlighted. */
 function hitIds(el) {
-  return new Set(
-    [...el.shadowRoot.querySelectorAll('.key--hit')].map((k) => k.dataset.key)
-  );
+  return new Set([...el.shadowRoot.querySelectorAll('.key--hit')].map((k) => k.dataset.key));
 }
 
 function board(el) {
@@ -83,7 +81,18 @@ describe('arc-keyboard-map layouts', () => {
     for (let i = 1; i <= 12; i++) {
       expect(el.shadowRoot.querySelector(`[data-key="f${i}"]`), `f${i}`).to.exist;
     }
-    for (const id of ['insert', 'home', 'pageup', 'delete', 'end', 'pagedown', 'up', 'down', 'left', 'right']) {
+    for (const id of [
+      'insert',
+      'home',
+      'pageup',
+      'delete',
+      'end',
+      'pagedown',
+      'up',
+      'down',
+      'left',
+      'right',
+    ]) {
       expect(el.shadowRoot.querySelector(`[data-key="${id}"]`), id).to.exist;
     }
   });
@@ -131,14 +140,16 @@ describe('arc-keyboard-map accessibility', () => {
   it('exposes role="img" with a label computed from the chords', async () => {
     const el = await map('platform="mac" highlight="mod+shift+p"');
     expect(board(el).getAttribute('role')).to.equal('img');
-    expect(board(el).getAttribute('aria-label'))
-      .to.equal('Keyboard diagram highlighting Cmd+Shift+P');
+    expect(board(el).getAttribute('aria-label')).to.equal(
+      'Keyboard diagram highlighting Cmd+Shift+P',
+    );
   });
 
   it('names win modifiers as words in the label', async () => {
     const el = await map('platform="win" highlight="mod+shift+p, alt+f4"');
-    expect(board(el).getAttribute('aria-label'))
-      .to.equal('Keyboard diagram highlighting Ctrl+Shift+P, Alt+F4');
+    expect(board(el).getAttribute('aria-label')).to.equal(
+      'Keyboard diagram highlighting Ctrl+Shift+P, Alt+F4',
+    );
   });
 
   it('falls back to a plain label with no highlights', async () => {

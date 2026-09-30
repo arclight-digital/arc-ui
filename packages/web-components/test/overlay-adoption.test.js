@@ -33,9 +33,13 @@ function backdropClick(el) {
 
 /** A pointerdown where DismissController listens for it. */
 function clickAt(target) {
-  target.dispatchEvent(new PointerEvent('pointerdown', {
-    bubbles: true, composed: true, cancelable: true,
-  }));
+  target.dispatchEvent(
+    new PointerEvent('pointerdown', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    }),
+  );
 }
 
 describe('OverlayController adoption: arc-dialog', () => {
@@ -114,7 +118,9 @@ describe('OverlayController adoption: arc-dialog', () => {
     const el = mount('<arc-dialog heading="Test"><button>Inside</button></arc-dialog>');
     await el.updateComplete;
     let fired = 0;
-    el.addEventListener('arc-open', () => { fired++; });
+    el.addEventListener('arc-open', () => {
+      fired++;
+    });
     el.open = true;
     await el.updateComplete;
     expect(fired).to.equal(1);
@@ -158,7 +164,9 @@ describe('OverlayController adoption: arc-command-palette', () => {
     // onClose — so _close() has to be idempotent or arc-close fires twice.
     const el = await openPalette();
     let closes = 0;
-    el.addEventListener('arc-close', () => { closes++; });
+    el.addEventListener('arc-close', () => {
+      closes++;
+    });
 
     pressKey('Escape');
     await el.updateComplete;
@@ -172,15 +180,38 @@ describe('DismissController adoption — pointer', () => {
   afterEach(cleanup);
 
   const cases = [
-    ['arc-popover', '<arc-popover><button slot="trigger">Open</button>Body</arc-popover>',
-      (el) => { el.open = true; }, (el) => el.open],
-    ['arc-dropdown-menu',
+    [
+      'arc-popover',
+      '<arc-popover><button slot="trigger">Open</button>Body</arc-popover>',
+      (el) => {
+        el.open = true;
+      },
+      (el) => el.open,
+    ],
+    [
+      'arc-dropdown-menu',
       '<arc-dropdown-menu label="Menu"><arc-menu-item label="One"></arc-menu-item></arc-dropdown-menu>',
-      (el) => { el.open = true; }, (el) => el.open],
-    ['arc-notification-panel', '<arc-notification-panel></arc-notification-panel>',
-      (el) => { el.open = true; }, (el) => el.open],
-    ['arc-date-picker', '<arc-date-picker label="When"></arc-date-picker>',
-      (el) => { el.open = true; }, (el) => el.open],
+      (el) => {
+        el.open = true;
+      },
+      (el) => el.open,
+    ],
+    [
+      'arc-notification-panel',
+      '<arc-notification-panel></arc-notification-panel>',
+      (el) => {
+        el.open = true;
+      },
+      (el) => el.open,
+    ],
+    [
+      'arc-date-picker',
+      '<arc-date-picker label="When"></arc-date-picker>',
+      (el) => {
+        el.open = true;
+      },
+      (el) => el.open,
+    ],
   ];
 
   for (const [tag, markup, open, isOpen] of cases) {
@@ -266,13 +297,15 @@ describe('DismissController adoption — focus', () => {
       'arc-multi-select',
       `<arc-multi-select>${OPTION}</arc-multi-select>`,
       '.ms__input',
-      (el) => el.shadowRoot.querySelector('[aria-expanded]')?.getAttribute('aria-expanded') === 'true',
+      (el) =>
+        el.shadowRoot.querySelector('[aria-expanded]')?.getAttribute('aria-expanded') === 'true',
     ],
     [
       'arc-combobox',
       '<arc-combobox></arc-combobox>',
       'input',
-      (el) => el.shadowRoot.querySelector('[aria-expanded]')?.getAttribute('aria-expanded') === 'true',
+      (el) =>
+        el.shadowRoot.querySelector('[aria-expanded]')?.getAttribute('aria-expanded') === 'true',
     ],
     // tag-input does not open a panel on focus; what it does carry is the
     // focus ring, which was equally stuck — and the ring is a class, so it is
@@ -333,15 +366,21 @@ describe('no component hand-rolls an outside-click listener', () => {
     // web-test-runner serves the source over HTTP, so this fetches the files
     // rather than reaching for a filesystem it doesn't have.
     const paths = [
-      'feedback/popover.js', 'feedback/dropdown-menu.js', 'feedback/notification-panel.js',
-      'input/date-picker.js', 'input/time-picker.js',
-      'input/search.js', 'navigation/breadcrumb-menu.js',
+      'feedback/popover.js',
+      'feedback/dropdown-menu.js',
+      'feedback/notification-panel.js',
+      'input/date-picker.js',
+      'input/time-picker.js',
+      'input/search.js',
+      'navigation/breadcrumb-menu.js',
     ];
 
     for (const path of paths) {
       const res = await fetch(new URL(`../src/${path}`, import.meta.url));
       const src = await res.text();
-      expect(src, path).to.not.match(/document\.addEventListener\(\s*['"](?:click|mousedown|pointerdown)['"]/);
+      expect(src, path).to.not.match(
+        /document\.addEventListener\(\s*['"](?:click|mousedown|pointerdown)['"]/,
+      );
     }
   });
 });
@@ -401,8 +440,9 @@ describe('dialog and confirm: the variant prop actually does something', () => {
       await tick();
 
       const confirm = el.shadowRoot.querySelector('arc-button[part~="confirm"]');
-      expect(getComputedStyle(confirm).getPropertyValue('--accent-primary').trim())
-        .to.equal('rgb(77, 126, 247)');
+      expect(getComputedStyle(confirm).getPropertyValue('--accent-primary').trim()).to.equal(
+        'rgb(77, 126, 247)',
+      );
     });
   }
 });

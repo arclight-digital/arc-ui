@@ -12,11 +12,14 @@ import '../src/input/field-row.register.js';
 
 afterEach(cleanup);
 
-const row = (v) => `<arc-field-row label="Option ${v}"><input aria-label="Option ${v}" value="${v}"></arc-field-row>`;
+const row = (v) =>
+  `<arc-field-row label="Option ${v}"><input aria-label="Option ${v}" value="${v}"></arc-field-row>`;
 
 /** A list, and an application that answers its requests by changing the rows. */
 async function app(attrs = '', values = ['a', 'b', 'c']) {
-  const el = mount(`<arc-field-list label="Options" ${attrs}>${values.map(row).join('')}</arc-field-list>`);
+  const el = mount(
+    `<arc-field-list label="Options" ${attrs}>${values.map(row).join('')}</arc-field-list>`,
+  );
   const log = [];
   el.addEventListener('arc-add', () => {
     log.push(['add']);
@@ -44,7 +47,9 @@ const handle = (r) => r.shadowRoot.querySelector('[part~="handle"]');
 const remove = (r) => r.shadowRoot.querySelector('[part~="remove"]');
 const addButton = (el) => el.shadowRoot.querySelector('[part~="add"]');
 const key = (target, k) =>
-  target.dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, composed: true, cancelable: true }));
+  target.dispatchEvent(
+    new KeyboardEvent('keydown', { key: k, bubbles: true, composed: true, cancelable: true }),
+  );
 const deepActive = () => {
   let a = document.activeElement;
   while (a?.shadowRoot?.activeElement) a = a.shadowRoot.activeElement;
@@ -57,7 +62,9 @@ describe('arc-field-list', () => {
     const second = rows(el)[1];
     expect(handle(second).getAttribute('aria-label')).to.equal('Move Option b, position 2 of 3');
     expect(remove(second).getAttribute('label')).to.equal('Remove Option b');
-    expect(el.shadowRoot.querySelector('[role="group"]').getAttribute('aria-label')).to.equal('Options');
+    expect(el.shadowRoot.querySelector('[role="group"]').getAttribute('aria-label')).to.equal(
+      'Options',
+    );
   });
 
   it('asks for a new row, and puts focus in it once it renders', async () => {
@@ -67,7 +74,9 @@ describe('arc-field-list', () => {
     expect(log).to.deep.equal([['add']]);
     expect(rows(el)).to.have.length(4);
     const newInput = rows(el)[3].querySelector('input');
-    expect(await until(() => document.activeElement === newInput), 'focus in the new row').to.equal(true);
+    expect(await until(() => document.activeElement === newInput), 'focus in the new row').to.equal(
+      true,
+    );
   });
 
   it('asks to remove a row, and moves focus to the row in its place', async () => {
@@ -103,7 +112,15 @@ describe('arc-field-list', () => {
     const { el, log } = await app();
     const h = handle(rows(el)[0]);
     const third = rows(el)[2].getBoundingClientRect();
-    const p = (y) => ({ bubbles: true, composed: true, pointerId: 1, isPrimary: true, pointerType: 'mouse', clientX: 5, clientY: y });
+    const p = (y) => ({
+      bubbles: true,
+      composed: true,
+      pointerId: 1,
+      isPrimary: true,
+      pointerType: 'mouse',
+      clientX: 5,
+      clientY: y,
+    });
     const y0 = h.getBoundingClientRect().top + 4;
     h.dispatchEvent(new PointerEvent('pointerdown', p(y0)));
     h.dispatchEvent(new PointerEvent('pointermove', p(third.bottom - 2)));
@@ -116,7 +133,10 @@ describe('arc-field-list', () => {
 
   it('disables Remove at min and Add at max', async () => {
     const { el } = await app('min="3" max="3"');
-    expect(rows(el).every((r) => remove(r).disabled), 'remove disabled at min').to.equal(true);
+    expect(
+      rows(el).every((r) => remove(r).disabled),
+      'remove disabled at min',
+    ).to.equal(true);
     expect(addButton(el).disabled, 'add disabled at max').to.equal(true);
   });
 
@@ -124,11 +144,15 @@ describe('arc-field-list', () => {
     const { el } = await app();
     const live = el.shadowRoot.querySelector('[aria-live="polite"]');
     key(handle(rows(el)[0]), 'ArrowDown');
-    expect(await until(() => live.textContent.trim() === 'Moved to position 2 of 3')).to.equal(true);
+    expect(await until(() => live.textContent.trim() === 'Moved to position 2 of 3')).to.equal(
+      true,
+    );
   });
 
   it('changes nothing itself when the application does not answer', async () => {
-    const el = mount(`<arc-field-list label="Options">${['a', 'b'].map(row).join('')}</arc-field-list>`);
+    const el = mount(
+      `<arc-field-list label="Options">${['a', 'b'].map(row).join('')}</arc-field-list>`,
+    );
     await settle(el);
     for (const r of el.children) await settle(r);
     key(handle(rows(el)[0]), 'ArrowDown');
@@ -144,7 +168,10 @@ describe('arc-field-list readonly and add label (4.7.0)', () => {
   it('shows rows without controls when readonly (#141)', async () => {
     const { el } = await app('readonly');
     expect(addButton(el) === null, 'no add button').to.equal(true);
-    expect(rows(el).every((r) => handle(r) === null && remove(r) === null), 'no row controls').to.equal(true);
+    expect(
+      rows(el).every((r) => handle(r) === null && remove(r) === null),
+      'no row controls',
+    ).to.equal(true);
     el.readonly = false;
     await settle(el);
     for (const r of rows(el)) await settle(r);

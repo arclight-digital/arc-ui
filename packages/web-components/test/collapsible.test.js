@@ -87,8 +87,9 @@ describe('arc-collapsible accessibility', () => {
 
   it('hides the decorative chevron from assistive tech', async () => {
     const el = await collapsible();
-    expect(el.shadowRoot.querySelector('.collapsible__chevron').getAttribute('aria-hidden'))
-      .to.equal('true');
+    expect(
+      el.shadowRoot.querySelector('.collapsible__chevron').getAttribute('aria-hidden'),
+    ).to.equal('true');
   });
 });
 
@@ -113,7 +114,13 @@ describe('arc-collapsible toggling', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await collapsible();
     let event = null;
-    document.body.addEventListener('arc-toggle', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-toggle',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     trigger(el).click();
     await settle(el);

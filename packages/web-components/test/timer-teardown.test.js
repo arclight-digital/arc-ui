@@ -42,7 +42,10 @@ afterEach(() => cleanup());
  */
 const TIMED = [
   ['arc-hover-card', '<arc-hover-card open-delay="20"><span>t</span></arc-hover-card>'],
-  ['arc-countdown-timer', '<arc-countdown-timer target="2099-01-01T00:00:00Z"></arc-countdown-timer>'],
+  [
+    'arc-countdown-timer',
+    '<arc-countdown-timer target="2099-01-01T00:00:00Z"></arc-countdown-timer>',
+  ],
   ['arc-time-ago', '<arc-time-ago live datetime="2026-07-31T00:00:00Z"></arc-time-ago>'],
   ['arc-typewriter', '<arc-typewriter text="hello there"></arc-typewriter>'],
   ['arc-hotkey', '<arc-hotkey keys="ctrl+k"></arc-hotkey>'],
@@ -78,7 +81,15 @@ async function withScheduling(run) {
 
   window.setTimeout = (fn, ms, ...rest) => {
     created.count += 1;
-    const id = realSetTimeout.call(window, (...a) => { live.delete(id); fn?.(...a); }, ms, ...rest);
+    const id = realSetTimeout.call(
+      window,
+      (...a) => {
+        live.delete(id);
+        fn?.(...a);
+      },
+      ms,
+      ...rest,
+    );
     live.add(id);
     return id;
   };
@@ -88,10 +99,22 @@ async function withScheduling(run) {
     live.add(id);
     return id;
   };
-  window.clearTimeout = (id) => { live.delete(id); return realClearTimeout.call(window, id); };
-  window.clearInterval = (id) => { live.delete(id); return realClearInterval.call(window, id); };
-  document.addEventListener = (t, f, o) => { listeners.push(['document', t, f, o]); return docAdd(t, f, o); };
-  window.addEventListener = (t, f, o) => { listeners.push(['window', t, f, o]); return winAdd(t, f, o); };
+  window.clearTimeout = (id) => {
+    live.delete(id);
+    return realClearTimeout.call(window, id);
+  };
+  window.clearInterval = (id) => {
+    live.delete(id);
+    return realClearInterval.call(window, id);
+  };
+  document.addEventListener = (t, f, o) => {
+    listeners.push(['document', t, f, o]);
+    return docAdd(t, f, o);
+  };
+  window.addEventListener = (t, f, o) => {
+    listeners.push(['window', t, f, o]);
+    return winAdd(t, f, o);
+  };
   document.removeEventListener = (t, f, o) => {
     const i = listeners.findIndex((l) => l[0] === 'document' && l[1] === t && l[2] === f);
     if (i > -1) listeners.splice(i, 1);
@@ -142,10 +165,9 @@ describe('timer and listener teardown', () => {
         `${tag} scheduled nothing and bound nothing — this case tests no teardown`,
       ).to.be.greaterThan(0);
 
-      expect(
-        [...live].length,
-        `${tag} left ${live.size} timer(s) running after removal`,
-      ).to.equal(0);
+      expect([...live].length, `${tag} left ${live.size} timer(s) running after removal`).to.equal(
+        0,
+      );
     });
 
     it(`${tag} releases its document and window listeners`, async () => {

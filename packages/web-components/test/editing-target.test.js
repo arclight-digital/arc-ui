@@ -32,10 +32,14 @@ describe('isEditingTarget', () => {
     expect(inner, 'expected a textarea in arc-textarea').to.exist;
 
     let seen;
-    document.addEventListener('keydown', (e) => {
-      // The premise: target really is the host, so the naive check fails.
-      seen = { target: e.target.tagName, editing: isEditingTarget(e) };
-    }, { once: true });
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        // The premise: target really is the host, so the naive check fails.
+        seen = { target: e.target.tagName, editing: isEditingTarget(e) };
+      },
+      { once: true },
+    );
     keyFrom(inner);
 
     expect(seen.target).to.equal('ARC-TEXTAREA');
@@ -48,7 +52,13 @@ describe('isEditingTarget', () => {
     const inner = el.shadowRoot.querySelector('input');
 
     let editing;
-    document.addEventListener('keydown', (e) => { editing = isEditingTarget(e); }, { once: true });
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        editing = isEditingTarget(e);
+      },
+      { once: true },
+    );
     keyFrom(inner);
     expect(editing).to.be.true;
   });
@@ -56,7 +66,13 @@ describe('isEditingTarget', () => {
   it('is false for a keypress on a plain non-editing element', () => {
     const div = mount('<div tabindex="0">x</div>');
     let editing;
-    document.addEventListener('keydown', (e) => { editing = isEditingTarget(e); }, { once: true });
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        editing = isEditingTarget(e);
+      },
+      { once: true },
+    );
     keyFrom(div);
     expect(editing).to.be.false;
   });
@@ -65,7 +81,13 @@ describe('isEditingTarget', () => {
     const el = mount('<arc-checkbox label="Agree"></arc-checkbox>');
     await el.updateComplete;
     let editing;
-    document.addEventListener('keydown', (e) => { editing = isEditingTarget(e); }, { once: true });
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        editing = isEditingTarget(e);
+      },
+      { once: true },
+    );
     keyFrom(el);
     expect(editing).to.be.false;
   });
@@ -166,7 +188,9 @@ describe('arc-hotkey ignores keys typed into a field', () => {
     await textarea.updateComplete;
 
     let fired = 0;
-    hotkey.addEventListener('arc-hotkey-trigger', () => { fired++; });
+    hotkey.addEventListener('arc-hotkey-trigger', () => {
+      fired++;
+    });
 
     keyFrom(textarea.shadowRoot.querySelector('textarea'), 'k');
     await tick();
@@ -183,7 +207,9 @@ describe('arc-hotkey ignores keys typed into a field', () => {
     await hotkey.updateComplete;
 
     let fired = 0;
-    hotkey.addEventListener('arc-hotkey-trigger', () => { fired++; });
+    hotkey.addEventListener('arc-hotkey-trigger', () => {
+      fired++;
+    });
 
     keyFrom(wrap.querySelector('#plain'), 'k');
     await tick();
@@ -202,7 +228,9 @@ describe('arc-hotkey ignores keys typed into a field', () => {
     await textarea.updateComplete;
 
     let fired = 0;
-    hotkey.addEventListener('arc-hotkey-trigger', () => { fired++; });
+    hotkey.addEventListener('arc-hotkey-trigger', () => {
+      fired++;
+    });
 
     keyFrom(textarea.shadowRoot.querySelector('textarea'), 'k');
     await tick();

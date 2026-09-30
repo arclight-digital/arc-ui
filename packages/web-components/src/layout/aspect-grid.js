@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
@@ -60,19 +61,13 @@ export class ArcAspectGrid extends DeclaredPropsMixin(LitElement) {
     this.columns = 3;
   }
 
-  updated(changed) {
-    if (changed.has('columns')) {
-      this.style.setProperty('--_cols', String(this.columns));
-    }
-    if (changed.has('ratio')) {
-      const r = this.ratio.replace('/', ' / ');
-      this.style.setProperty('--_ratio', r);
-    }
-  }
-
   render() {
+    // In the template, not written onto the host from updated(), which the
+    // server never runs; the server's paint had the defaults until the script
+    // arrived. Slotted children still inherit it through this element.
+    const vars = { '--_cols': String(this.columns), '--_ratio': this.ratio?.replace('/', ' / ') };
     return html`
-      <div class="grid" part="base grid">
+      <div class="grid" part="base grid" style=${styleMap(vars)}>
         <slot></slot>
       </div>
     `;

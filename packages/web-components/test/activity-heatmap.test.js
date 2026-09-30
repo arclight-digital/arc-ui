@@ -32,8 +32,7 @@ async function heatmap(data, attrs = END) {
 const cells = (el) => [...el.shadowRoot.querySelectorAll('[part~="cell"]')];
 const levelOf = (cell) =>
   [...cell.classList].find((c) => c.startsWith('level-'))?.slice('level-'.length);
-const cellByDate = (el, date) =>
-  el.shadowRoot.querySelector(`[part~="cell"][data-date="${date}"]`);
+const cellByDate = (el, date) => el.shadowRoot.querySelector(`[part~="cell"][data-date="${date}"]`);
 
 describe('span and grid positions', () => {
   it('renders weeks * 7 cells when the end date closes its week', async () => {
@@ -55,7 +54,7 @@ describe('span and grid positions', () => {
     const cell = cellByDate(el, '2026-03-11'); // a Wednesday in the second week
     const index = Number(cell.dataset.index);
     expect(index).to.equal(10);
-    expect(index % 7).to.equal(3);            // Sunday-start row: Wed = 3
+    expect(index % 7).to.equal(3); // Sunday-start row: Wed = 3
     expect(Math.floor(index / 7)).to.equal(1);
   });
 
@@ -75,14 +74,14 @@ describe('week-start', () => {
     expect(cells(el).length).to.equal(51 * 7 + 6);
     expect(cells(el)[0].dataset.date).to.equal('2025-03-17'); // a Monday
     const wed = cellByDate(el, '2026-03-11');
-    expect(Number(wed.dataset.index) % 7).to.equal(2);        // Monday-start row: Wed = 2
+    expect(Number(wed.dataset.index) % 7).to.equal(2); // Monday-start row: Wed = 2
   });
 
   it('moves the sparse weekday labels to the matching rows', async () => {
     const sun = await heatmap([], `${END} weeks="2"`);
     const mon = await heatmap([], `${END} weeks="2" week-start="monday"`);
-    const rowsOf = (el) => [...el.shadowRoot.querySelectorAll('[part~="weekday"]')]
-      .map((l) => l.style.gridRow);
+    const rowsOf = (el) =>
+      [...el.shadowRoot.querySelectorAll('[part~="weekday"]')].map((l) => l.style.gridRow);
     expect(rowsOf(sun)).to.deep.equal(['2', '4', '6']); // Mon/Wed/Fri under Sunday start
     expect(rowsOf(mon)).to.deep.equal(['1', '3', '5']); // Mon/Wed/Fri under Monday start
   });
@@ -168,10 +167,13 @@ const hover = (el, i) => {
 
 describe('detail bubble', () => {
   it('shows the date with the label, or the bare value, or "No activity"', async () => {
-    const el = await heatmap([
-      { date: '2026-03-04', value: 7, label: '7 commits' },
-      { date: '2026-03-05', value: 3 },
-    ], `${END} weeks="2"`);
+    const el = await heatmap(
+      [
+        { date: '2026-03-04', value: 7, label: '7 commits' },
+        { date: '2026-03-05', value: 3 },
+      ],
+      `${END} weeks="2"`,
+    );
 
     await hover(el, 3); // 2026-03-04
     let detail = el.shadowRoot.querySelector('[part~="detail"]');
@@ -190,26 +192,29 @@ describe('detail bubble', () => {
 
 describe('keyboard grid navigation', () => {
   const key = (el, k) => {
-    el.shadowRoot.querySelector('[part~="grid"]')
+    el.shadowRoot
+      .querySelector('[part~="grid"]')
       .dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true }));
     return el.updateComplete;
   };
 
   it('moves by day vertically and by week horizontally', async () => {
-    const el = await heatmap([{ date: '2026-03-14', value: 2, label: 'Launch day' }],
-      `${END} weeks="2"`);
+    const el = await heatmap(
+      [{ date: '2026-03-14', value: 2, label: 'Launch day' }],
+      `${END} weeks="2"`,
+    );
 
-    await key(el, 'ArrowDown');            // first press lands, no jump
+    await key(el, 'ArrowDown'); // first press lands, no jump
     expect(activeAt(el)).to.equal(0);
     await key(el, 'ArrowDown');
     expect(activeAt(el)).to.equal(1);
-    await key(el, 'ArrowRight');           // a week later, same weekday
+    await key(el, 'ArrowRight'); // a week later, same weekday
     expect(activeAt(el)).to.equal(8);
     await key(el, 'ArrowUp');
     expect(activeAt(el)).to.equal(7);
     await key(el, 'ArrowLeft');
     expect(activeAt(el)).to.equal(0);
-    await key(el, 'ArrowUp');              // clamped at the first day
+    await key(el, 'ArrowUp'); // clamped at the first day
     expect(activeAt(el)).to.equal(0);
 
     await key(el, 'End');
@@ -226,10 +231,13 @@ describe('keyboard grid navigation', () => {
   });
 
   it('is one tab stop with a computed summary label', async () => {
-    const el = await heatmap([
-      { date: '2026-03-04', value: 7 },
-      { date: '2026-03-05', value: 3 },
-    ], `${END} weeks="2"`);
+    const el = await heatmap(
+      [
+        { date: '2026-03-04', value: 7 },
+        { date: '2026-03-05', value: 3 },
+      ],
+      `${END} weeks="2"`,
+    );
     const grid = el.shadowRoot.querySelector('[part~="grid"]');
     expect(grid.getAttribute('tabindex')).to.equal('0');
     expect(grid.getAttribute('role')).to.equal('img');

@@ -425,16 +425,18 @@
       .arc-avatar[data-size="md"] .avatar { width: 40px; height: 40px; }
       .arc-avatar[data-size="lg"] .avatar { width: 56px; height: 56px; }
 
+      /* Visible from the start and painted over the shimmer: while it loads
+         it has no pixels and the shimmer shows through; once it arrives it
+         covers it, script or no script. It used to wait at opacity 0 for the
+         load event, so a server-rendered avatar showed only the shimmer until
+         JavaScript ran, even for a photo already in the cache. */
       .arc-avatar .avatar__img {
+        position: relative;
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: var(--radius-full);
-        opacity: 0;
-        transition: opacity var(--transition-slow);
       }
-
-      .arc-avatar .avatar__img.loaded { opacity: 1; }
 
       .arc-avatar .avatar__shimmer {
         position: absolute;
@@ -3759,6 +3761,11 @@
 /* arc-button-group */
 .arc-button-group {
         display: inline-flex;
+        /* Follows the button shape rather than restating it: buttons are
+           pills, so the outer corners of a group of them are pill ends. In
+           CSS, where the server's paint has it too; it was written from
+           connectedCallback, which only the client runs. */
+        --_group-radius: var(--radius-full);
       }
 
       .arc-button-group .button-group {

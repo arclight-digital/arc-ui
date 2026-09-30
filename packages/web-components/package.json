@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "4.8.2",
+  "version": "4.9.0",
   "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
   "type": "module",
   "main": "src/index.js",
@@ -655,6 +655,10 @@
       "types": "./types/index.d.ts",
       "default": "./src/layout/settings-nav-item.register.js"
     },
+    "./shadow-roots": {
+      "types": "./types/shadow-roots.d.ts",
+      "default": "./src/shadow-roots.js"
+    },
     "./shared-styles": {
       "types": "./types/shared-styles.d.ts",
       "default": "./src/shared-styles.js"
@@ -902,11 +906,12 @@
   "sideEffects": [
     "./src/**/*.register.js",
     "./src/register.js",
-    "./src/hydrate.js"
+    "./src/hydrate.js",
+    "./src/ssr-client-slots.js"
   ],
   "dependencies": {
     "@lit-labs/ssr-client": "^1.1.8",
-    "qrcode-generator": "^1.4.4"
+    "qrcode-generator": "^2.0.4"
   },
   "license": "MIT",
   "keywords": [

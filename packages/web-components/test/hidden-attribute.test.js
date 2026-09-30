@@ -36,7 +36,9 @@ describe('the hidden attribute', () => {
   }
 
   it('hides a row of an arc-list', async () => {
-    const box = mount('<arc-list><arc-list-item value="a">A</arc-list-item><arc-list-item value="b" hidden>B</arc-list-item></arc-list>');
+    const box = mount(
+      '<arc-list><arc-list-item value="a">A</arc-list-item><arc-list-item value="b" hidden>B</arc-list-item></arc-list>',
+    );
     const [a, b] = box.querySelectorAll('arc-list-item');
     await settle(b);
     expect(getComputedStyle(a).display).to.not.equal('none');

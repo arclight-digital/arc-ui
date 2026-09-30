@@ -104,7 +104,9 @@ describe('arc-terminal', () => {
     const el = create({ lines: [{ type: 'banana', text: 'mystery' }] });
     await el.updateComplete;
 
-    expect(el.shadowRoot.querySelector('.terminal__line--output').textContent).to.contain('mystery');
+    expect(el.shadowRoot.querySelector('.terminal__line--output').textContent).to.contain(
+      'mystery',
+    );
   });
 
   it('renders the prompt glyph on command lines', async () => {
@@ -117,7 +119,7 @@ describe('arc-terminal', () => {
     el.prompt = '>';
     await el.updateComplete;
     expect(
-      el.shadowRoot.querySelector('.terminal__line--command .terminal__prompt').textContent
+      el.shadowRoot.querySelector('.terminal__line--command .terminal__prompt').textContent,
     ).to.equal('>');
   });
 

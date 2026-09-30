@@ -35,17 +35,27 @@ import '../src/layout/toolbar.register.js';
 
 afterEach(() => cleanup());
 
-const LONG = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor '
-  + 'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud '
-  + 'exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
+const LONG =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ' +
+  'incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud ' +
+  'exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.';
 
 const RESIZERS = [
-  ['arc-truncate', `<arc-truncate lines="2" style="display:block;width:300px">${LONG}</arc-truncate>`],
+  [
+    'arc-truncate',
+    `<arc-truncate lines="2" style="display:block;width:300px">${LONG}</arc-truncate>`,
+  ],
   ['arc-marquee', `<arc-marquee style="display:block;width:300px">${LONG}</arc-marquee>`],
-  ['arc-code-block', `<arc-code-block language="js" style="display:block;width:300px">const x = 1;</arc-code-block>`],
+  [
+    'arc-code-block',
+    `<arc-code-block language="js" style="display:block;width:300px">const x = 1;</arc-code-block>`,
+  ],
   // arc-toolbar only observes when `overflow` is on — without it there is no
   // observer to tear down, and the case would test nothing.
-  ['arc-toolbar', `<arc-toolbar overflow style="display:block;width:300px"><button>a</button></arc-toolbar>`],
+  [
+    'arc-toolbar',
+    `<arc-toolbar overflow style="display:block;width:300px"><button>a</button></arc-toolbar>`,
+  ],
 ];
 
 describe('ResizeObserver teardown', () => {
@@ -78,7 +88,9 @@ describe('ResizeObserver components re-measure on width change', () => {
   // whatever each one publishes rather than through the observer itself, since
   // "did you re-measure" is only meaningful if something observable changed.
   it('arc-truncate re-evaluates overflow when the box narrows', async () => {
-    const el = mount(`<arc-truncate lines="2" style="display:block;width:900px">${LONG}</arc-truncate>`);
+    const el = mount(
+      `<arc-truncate lines="2" style="display:block;width:900px">${LONG}</arc-truncate>`,
+    );
     await settle(el);
     await observed();
 
@@ -100,7 +112,9 @@ describe('ResizeObserver components re-measure on width change', () => {
   });
 
   it('arc-marquee derives its duration from content width and speed', async () => {
-    const el = mount(`<arc-marquee speed="50" style="display:block;width:600px">${LONG}</arc-marquee>`);
+    const el = mount(
+      `<arc-marquee speed="50" style="display:block;width:600px">${LONG}</arc-marquee>`,
+    );
     await settle(el);
     await observed();
 

@@ -27,7 +27,9 @@ describe('arc-form submission wiring', () => {
       <arc-button type="submit">Send</arc-button>
     `);
     let detail = null;
-    form.addEventListener('arc-submit', (e) => { detail = e.detail; });
+    form.addEventListener('arc-submit', (e) => {
+      detail = e.detail;
+    });
     innerButton(form.querySelector('arc-button')).click();
     expect(detail, 'arc-submit event').to.not.equal(null);
     expect(detail.values.email).to.equal('a@b.c');
@@ -39,7 +41,9 @@ describe('arc-form submission wiring', () => {
       <arc-button type="reset">Clear</arc-button>
     `);
     let resetFired = false;
-    form.addEventListener('arc-reset', () => { resetFired = true; });
+    form.addEventListener('arc-reset', () => {
+      resetFired = true;
+    });
     // Reset restores the initial state, it doesn't blank the form — the
     // markup's value="a@b.c" is what this control resets *to*.
     form.querySelector('arc-input').value = 'typed@b.c';
@@ -51,7 +55,9 @@ describe('arc-form submission wiring', () => {
   it('does nothing for type="button" clicks', async () => {
     const form = await mountForm(`<arc-button>Plain</arc-button>`);
     let submitFired = false;
-    form.addEventListener('arc-submit', () => { submitFired = true; });
+    form.addEventListener('arc-submit', () => {
+      submitFired = true;
+    });
     innerButton(form.querySelector('arc-button')).click();
     expect(submitFired).to.equal(false);
   });
@@ -65,7 +71,10 @@ describe('arc-form submission wiring', () => {
     const arcButton = wrapper.querySelector('arc-button');
     await arcButton.updateComplete;
     let submitted = false;
-    wrapper.addEventListener('submit', (e) => { e.preventDefault(); submitted = true; });
+    wrapper.addEventListener('submit', (e) => {
+      e.preventDefault();
+      submitted = true;
+    });
     innerButton(arcButton).click();
     expect(submitted).to.equal(true);
   });
@@ -73,9 +82,18 @@ describe('arc-form submission wiring', () => {
   it('submits on Enter in a slotted single-line arc-input', async () => {
     const form = await mountForm(`<arc-input name="q" value="hello"></arc-input>`);
     let detail = null;
-    form.addEventListener('arc-submit', (e) => { detail = e.detail; });
+    form.addEventListener('arc-submit', (e) => {
+      detail = e.detail;
+    });
     const inner = form.querySelector('arc-input').shadowRoot.querySelector('input');
-    inner.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, composed: true, cancelable: true }));
+    inner.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      }),
+    );
     expect(detail, 'arc-submit event').to.not.equal(null);
     expect(detail.values.q).to.equal('hello');
   });
@@ -83,10 +101,19 @@ describe('arc-form submission wiring', () => {
   it('does not submit on Enter in a multiline arc-input (textarea)', async () => {
     const form = await mountForm(`<arc-input name="msg" multiline value="hi"></arc-input>`);
     let submitFired = false;
-    form.addEventListener('arc-submit', () => { submitFired = true; });
+    form.addEventListener('arc-submit', () => {
+      submitFired = true;
+    });
     const inner = form.querySelector('arc-input').shadowRoot.querySelector('textarea');
     expect(inner, 'multiline renders a textarea').to.exist;
-    inner.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, composed: true, cancelable: true }));
+    inner.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      }),
+    );
     expect(submitFired).to.equal(false);
   });
 
@@ -97,8 +124,12 @@ describe('arc-form submission wiring', () => {
     `);
     let submitFired = false;
     let invalidDetail = null;
-    form.addEventListener('arc-submit', () => { submitFired = true; });
-    form.addEventListener('arc-invalid', (e) => { invalidDetail = e.detail; });
+    form.addEventListener('arc-submit', () => {
+      submitFired = true;
+    });
+    form.addEventListener('arc-invalid', (e) => {
+      invalidDetail = e.detail;
+    });
     innerButton(form.querySelector('arc-button')).click();
     expect(submitFired).to.equal(false);
     expect(invalidDetail.errors).to.have.length(1);
@@ -112,7 +143,9 @@ describe('arc-form submission wiring', () => {
     form.loading = true;
     await form.updateComplete;
     let submitFired = false;
-    form.addEventListener('arc-submit', () => { submitFired = true; });
+    form.addEventListener('arc-submit', () => {
+      submitFired = true;
+    });
     form.submit();
     expect(submitFired).to.equal(false);
   });

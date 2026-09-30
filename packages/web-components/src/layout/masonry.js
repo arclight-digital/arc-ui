@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
@@ -64,15 +65,12 @@ export class ArcMasonry extends DeclaredPropsMixin(LitElement) {
     this.columns = 3;
   }
 
-  updated(changed) {
-    if (changed.has('columns')) {
-      this.style.setProperty('--_cols', String(this.columns));
-    }
-  }
-
   render() {
+    // In the template, not written onto the host from updated(), which the
+    // server never runs; the server's paint had the defaults until the script
+    // arrived. Slotted children still inherit it through this element.
     return html`
-      <div class="masonry" part="base masonry">
+      <div class="masonry" part="base masonry" style=${styleMap({ '--_cols': String(this.columns) })}>
         <slot></slot>
       </div>
     `;

@@ -22,7 +22,8 @@ async function block(attrs = '', code = '', width = '480px') {
 }
 
 const lines = (el) => [...el.shadowRoot.querySelectorAll('[part~="line"]')];
-const prompts = (el) => lines(el).map((l) => l.querySelector('[part="prompt"]')?.dataset.prompt ?? null);
+const prompts = (el) =>
+  lines(el).map((l) => l.querySelector('[part="prompt"]')?.dataset.prompt ?? null);
 
 describe('arc-code-block lines', () => {
   it('renders one line part per line, with no extra line for a trailing newline', async () => {
@@ -33,7 +34,10 @@ describe('arc-code-block lines', () => {
   it('gives a blank line a full line of height', async () => {
     const el = await block('', 'a\n\nc');
     const [a, blank] = lines(el);
-    expect(blank.getBoundingClientRect().height).to.be.closeTo(a.getBoundingClientRect().height, 0.5);
+    expect(blank.getBoundingClientRect().height).to.be.closeTo(
+      a.getBoundingClientRect().height,
+      0.5,
+    );
   });
 });
 
@@ -82,7 +86,9 @@ describe('arc-code-block line numbers, emphasis and diff', () => {
 
   it('tints + and - lines under `diff`, leaving file headers alone', async () => {
     const el = await block('diff', '--- a/x\n+++ b/x\n-old\n+new\n same');
-    const kind = lines(el).map((l) => (l.part.contains('line-add') ? '+' : l.part.contains('line-remove') ? '-' : ' '));
+    const kind = lines(el).map((l) =>
+      l.part.contains('line-add') ? '+' : l.part.contains('line-remove') ? '-' : ' ',
+    );
     expect(kind).to.deep.equal([' ', ' ', '-', '+', ' ']);
   });
 
@@ -145,7 +151,9 @@ describe('arc-code-block highlighting', function () {
   const SHELL = "sudo bootc switch --apply \\\n  ghcr.io/x/y:latest | grep $HOME && echo 'hi'";
 
   it('does not change the block height when the colors arrive', async () => {
-    const box = mount('<div style="width:600px"><arc-code-block language="bash" label="x"></arc-code-block></div>');
+    const box = mount(
+      '<div style="width:600px"><arc-code-block language="bash" label="x"></arc-code-block></div>',
+    );
     const el = box.querySelector('arc-code-block');
     el.code = SHELL;
     await el.updateComplete;
@@ -162,7 +170,9 @@ describe('arc-code-block highlighting', function () {
     await until(() => el._tokens !== null, { timeout: 5000 });
     await el.updateComplete;
     const colorOf = (text) => {
-      const tok = [...el.shadowRoot.querySelectorAll('.code-block__tok')].find((t) => t.textContent.trim() === text);
+      const tok = [...el.shadowRoot.querySelectorAll('.code-block__tok')].find(
+        (t) => t.textContent.trim() === text,
+      );
       return tok?.getAttribute('style') ?? '';
     };
     expect(colorOf('sudo')).to.contain('--shiki-token-prefix');
@@ -174,7 +184,9 @@ describe('arc-code-block highlighting', function () {
     expect(colorOf('grep')).to.contain('--shiki-token-command');
     expect(colorOf('echo')).to.contain('--shiki-token-command');
 
-    const bootc = [...el.shadowRoot.querySelectorAll('.code-block__tok')].find((t) => t.textContent.trim() === 'bootc');
+    const bootc = [...el.shadowRoot.querySelectorAll('.code-block__tok')].find(
+      (t) => t.textContent.trim() === 'bootc',
+    );
     expect(getComputedStyle(bootc).fontWeight).to.equal('600');
   });
 });
@@ -188,7 +200,9 @@ describe('arc-code-block header', () => {
     const copy = header.querySelector('arc-copy-button');
     expect(copy.hasAttribute('icon-only')).to.equal(true);
     await copy.updateComplete;
-    expect(copy.shadowRoot.querySelector('button').getAttribute('aria-label')).to.equal('Copy code');
+    expect(copy.shadowRoot.querySelector('button').getAttribute('aria-label')).to.equal(
+      'Copy code',
+    );
   });
 
   it('puts the header up for a label alone', async () => {

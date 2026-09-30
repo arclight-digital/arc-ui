@@ -48,11 +48,12 @@ async function opened(attrs = '', props = {}) {
  * "Previous year" labels are what a user meets, and the labels name the mode
  * unambiguously where the grid markup does not.
  */
-const mode = (el) => ({
-  'Previous month': 'days',
-  'Previous year': 'months',
-  'Previous years': 'years',
-}[el.shadowRoot.querySelector('.nav-btn')?.getAttribute('aria-label')] ?? null);
+const mode = (el) =>
+  ({
+    'Previous month': 'days',
+    'Previous year': 'months',
+    'Previous years': 'years',
+  })[el.shadowRoot.querySelector('.nav-btn')?.getAttribute('aria-label')] ?? null;
 const input = (el) => el.shadowRoot.querySelector('[part~="input"]');
 const dropdown = (el) => el.shadowRoot.querySelector('[part~="dropdown"]');
 const title = (el) => el.shadowRoot.querySelector('.calendar-title')?.textContent.trim();
@@ -132,7 +133,7 @@ describe('arc-date-picker opening and closing', () => {
     expect(dropdown(el)).to.equal(null);
   });
 
-  it('opens on the selected date\'s month, not on today', async () => {
+  it("opens on the selected date's month, not on today", async () => {
     const el = await opened('', { value: '2020-02-10' });
     expect(title(el)).to.equal('February 2020');
   });
@@ -253,7 +254,9 @@ describe('arc-date-picker selection', () => {
     el.addEventListener('arc-change', (e) => seen.push(e.detail.value));
 
     // the trailing cells belong to August
-    const outside = dayCells(el).filter((b) => b.classList.contains('outside')).at(-1);
+    const outside = dayCells(el)
+      .filter((b) => b.classList.contains('outside'))
+      .at(-1);
     const iso = outside.dataset.iso;
     outside.click();
     await settle(el);

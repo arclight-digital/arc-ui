@@ -35,16 +35,21 @@ describe('ticks', () => {
   it('maps numbers to status by threshold', async () => {
     const el = await strip([1, 0.99, 0.98, 0.95, 0.949, 0]);
     expect(ticks(el).map(statusOf)).to.deep.equal([
-      'up', 'up', 'degraded', 'degraded', 'down', 'down',
+      'up',
+      'up',
+      'degraded',
+      'degraded',
+      'down',
+      'down',
     ]);
   });
 
   it('lets an explicit status win over the value-derived one', async () => {
     const el = await strip([
-      { value: 1, status: 'down' },   // value says up, status pins down
-      { value: 0.5 },                 // no status: derived from value
-      { status: 'degraded' },         // status only
-      {},                             // neither: neutral track
+      { value: 1, status: 'down' }, // value says up, status pins down
+      { value: 0.5 }, // no status: derived from value
+      { status: 'degraded' }, // status only
+      {}, // neither: neutral track
     ]);
     expect(ticks(el).map(statusOf)).to.deep.equal(['down', 'down', 'degraded', 'none']);
   });

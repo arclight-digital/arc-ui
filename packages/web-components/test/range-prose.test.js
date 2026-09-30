@@ -32,7 +32,9 @@ const make = async (html) => {
 
 describe('arc-split-pane ratio obeys its own bounds on every path', () => {
   const pane = (attrs = '') =>
-    make(`<arc-split-pane ${attrs}><div slot="start">a</div><div slot="end">b</div></arc-split-pane>`);
+    make(
+      `<arc-split-pane ${attrs}><div slot="start">a</div><div slot="end">b</div></arc-split-pane>`,
+    );
 
   it('defaults to 0.5', async () => {
     expect((await pane()).ratio).to.equal(0.5);

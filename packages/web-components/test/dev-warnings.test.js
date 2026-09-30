@@ -28,7 +28,13 @@ describe('dev warnings', () => {
   it('warns on invalid enum values', async () => {
     mount('<arc-button variant="primry">Go</arc-button>');
     await settle();
-    expect(warnings.some((w) => w.includes('"primry" is not a valid variant') && w.includes('primary | secondary | ghost'))).to.be.true;
+    expect(
+      warnings.some(
+        (w) =>
+          w.includes('"primry" is not a valid variant') &&
+          w.includes('primary | secondary | ghost'),
+      ),
+    ).to.be.true;
   });
 
   /**

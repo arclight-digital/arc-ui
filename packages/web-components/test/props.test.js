@@ -197,7 +197,6 @@ describe('num() and int()', () => {
   });
 });
 
-
 // ---------------------------------------------------------------------------
 // list()
 // ---------------------------------------------------------------------------
@@ -207,8 +206,9 @@ describe('list()', () => {
 
   it('is an Array-typed prop that does not reflect', () => {
     expect(list().type).to.equal(Array);
-    expect(list().reflect, 'an array serialises to JSON — not a selector CSS can use')
-      .to.equal(false);
+    expect(list().reflect, 'an array serialises to JSON — not a selector CSS can use').to.equal(
+      false,
+    );
     expect(meta(list())).to.include({ kind: 'list' });
   });
 
@@ -346,7 +346,6 @@ describe('list()', () => {
     });
   });
 });
-
 
 // ---------------------------------------------------------------------------
 // nullable — "unset" as a third state, across kinds
@@ -573,7 +572,12 @@ describe('declaredProps()', () => {
   });
 
   it('ignores plain Lit declarations alongside declared ones', () => {
-    const Ctor = { elementProperties: new Map([['plain', { type: String }], ['tone', oneOf(['a'])]]) };
+    const Ctor = {
+      elementProperties: new Map([
+        ['plain', { type: String }],
+        ['tone', oneOf(['a'])],
+      ]),
+    };
     expect(declaredProps(Ctor).map(([name]) => name)).to.eql(['tone']);
   });
 });

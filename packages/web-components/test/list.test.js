@@ -43,7 +43,10 @@ const rowOf = (item) => item.shadowRoot.querySelector('[part~="item"]');
 // on the wrapper around the row and its actions, not on the row: buttons
 // beside a listitem row would break "a list holds only list items" (#125).
 const listRoleOf = (i) => i.shadowRoot.querySelector('[role="listitem"], [role="option"]');
-const selected = (el) => items(el).filter((i) => i.selected).map((i) => i.value);
+const selected = (el) =>
+  items(el)
+    .filter((i) => i.selected)
+    .map((i) => i.value);
 
 /** Activate an item the way arc-list listens for it. */
 function activate(item) {
@@ -75,8 +78,9 @@ describe('arc-list rendering', () => {
     expect(container(named).getAttribute('aria-label')).to.equal('Instruments');
 
     const bare = await list('selectable');
-    expect(bare.shadowRoot.querySelector('[part~="list"]').hasAttribute('aria-label'))
-      .to.equal(false);
+    expect(bare.shadowRoot.querySelector('[part~="list"]').hasAttribute('aria-label')).to.equal(
+      false,
+    );
   });
 });
 
@@ -184,7 +188,13 @@ describe('arc-list selection', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await list('selectable label="L"');
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     activate(items(el)[0]);
     await settle(el);
@@ -280,18 +290,22 @@ describe('arc-list keyboard', () => {
   });
 
   it('skips disabled items', async () => {
-    const el = await list('selectable label="L"', `
+    const el = await list(
+      'selectable label="L"',
+      `
       <arc-list-item value="a">Alpha</arc-list-item>
       <arc-list-item value="b" disabled>Bravo</arc-list-item>
       <arc-list-item value="c">Charlie</arc-list-item>
-    `);
+    `,
+    );
     rowOf(items(el)[0]).focus();
 
     keyOn(container(el), 'ArrowDown');
     await settle(el);
 
-    expect(items(el)[2].shadowRoot.activeElement, 'lands past the disabled item')
-      .to.equal(rowOf(items(el)[2]));
+    expect(items(el)[2].shadowRoot.activeElement, 'lands past the disabled item').to.equal(
+      rowOf(items(el)[2]),
+    );
   });
 
   it('Enter selects the focused item when selectable', async () => {
@@ -360,8 +374,10 @@ describe('arc-list ARIA structure', () => {
 
     const roles = items(el).map((i) => listRoleOf(i).getAttribute('role'));
     expect(roles).to.deep.equal(['listitem', 'listitem', 'listitem']);
-    expect(rowOf(items(el)[0]).hasAttribute('aria-selected'), 'and carry no selection state')
-      .to.equal(false);
+    expect(
+      rowOf(items(el)[0]).hasAttribute('aria-selected'),
+      'and carry no selection state',
+    ).to.equal(false);
   });
 
   it('renders options inside a selectable list', async () => {

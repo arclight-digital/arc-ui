@@ -114,9 +114,9 @@ describe('arc-data-grid rendering', () => {
 
   it('omits aria-multiselectable when not selectable', async () => {
     const el = await grid();
-    expect(el.shadowRoot.querySelector('[role="grid"]').hasAttribute('aria-multiselectable')).to.equal(
-      false,
-    );
+    expect(
+      el.shadowRoot.querySelector('[role="grid"]').hasAttribute('aria-multiselectable'),
+    ).to.equal(false);
   });
 
   it('shows the empty state spanning every column', async () => {
@@ -379,8 +379,7 @@ describe('arc-data-grid manualSort', () => {
 
 describe('arc-data-grid selection', () => {
   const selectAll = (el) => el.shadowRoot.querySelector('.select-all');
-  const rowBoxes = (el) =>
-    [...el.shadowRoot.querySelectorAll('tbody input[type="checkbox"]')];
+  const rowBoxes = (el) => [...el.shadowRoot.querySelectorAll('tbody input[type="checkbox"]')];
 
   it('adds a checkbox column only when selectable', async () => {
     expect(rowBoxes(await grid())).to.have.lengthOf(0);
@@ -856,7 +855,10 @@ describe('arc-data-grid keyboard (APG grid)', () => {
     await settle(el);
 
     const event = new KeyboardEvent('keydown', {
-      key: ' ', bubbles: true, composed: true, cancelable: true,
+      key: ' ',
+      bubbles: true,
+      composed: true,
+      cancelable: true,
     });
     cellAt(el, 0, 1).dispatchEvent(event);
     await settle(el);
@@ -1023,7 +1025,9 @@ describe('arc-data-grid teardown', () => {
 
     el.remove();
     await nextFrame();
-    expect(wrapper.classList.contains('scrolled-x'), 'the booked frame did no work').to.equal(false);
+    expect(wrapper.classList.contains('scrolled-x'), 'the booked frame did no work').to.equal(
+      false,
+    );
   });
 
   it('stops responding to scroll once disconnected', async () => {

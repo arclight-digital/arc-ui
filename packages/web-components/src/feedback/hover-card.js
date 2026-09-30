@@ -80,6 +80,9 @@ export class ArcHoverCard extends DeclaredPropsMixin(LitElement) {
     positionStyles('hovercard__card', { scale: 0.96, openCls: 'hovercard__card--visible' }),
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_syncTriggerAria' };
+
   constructor() {
     super();
     this.openDelay = 400;

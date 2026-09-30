@@ -165,6 +165,9 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onSlotChange' };
+
   constructor() {
     super();
     this.author = '';
@@ -221,12 +224,12 @@ export class ArcMessage extends DeclaredPropsMixin(LitElement) {
     hydrateSlots(this);
   }
 
-  _onSlotChange() {
-    this._readSlottedSource();
+  _onSlotChange(e) {
+    this._readSlottedSource(e?.target);
   }
 
-  _readSlottedSource() {
-    const slot = this.shadowRoot?.querySelector('slot:not([name])');
+  /** The slot it's handed, which on the server is the only one there is. */
+  _readSlottedSource(slot = this.shadowRoot?.querySelector('slot:not([name])')) {
     if (!slot) return;
     const text = slot
       .assignedNodes({ flatten: true })

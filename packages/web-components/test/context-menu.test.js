@@ -34,7 +34,9 @@ const ITEMS = `
 
 /** A target element with a context menu attached to it. */
 async function target(items = ITEMS) {
-  const host = mount(`<div id="target" tabindex="0">Right-click me<arc-context-menu>${items}</arc-context-menu></div>`);
+  const host = mount(
+    `<div id="target" tabindex="0">Right-click me<arc-context-menu>${items}</arc-context-menu></div>`,
+  );
   const el = host.querySelector('arc-context-menu');
   await settle(el);
   return { host, el };
@@ -49,7 +51,12 @@ function outsidePointerDown() {
 }
 
 async function rightClick(host, el, { clientX = 40, clientY = 60 } = {}) {
-  const event = new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX, clientY });
+  const event = new MouseEvent('contextmenu', {
+    bubbles: true,
+    cancelable: true,
+    clientX,
+    clientY,
+  });
   host.dispatchEvent(event);
   await settle(el);
   return event;
@@ -74,7 +81,13 @@ describe('arc-context-menu opening', () => {
   it('fires arc-open, bubbling and composed', async () => {
     const { host, el } = await target();
     let event = null;
-    document.body.addEventListener('arc-open', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-open',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     await rightClick(host, el);
 
@@ -165,7 +178,9 @@ describe('arc-context-menu opening', () => {
     await rightClick(host, el, { clientX: 30, clientY: 30 });
 
     let closes = 0;
-    el.addEventListener('arc-close', () => { closes += 1; });
+    el.addEventListener('arc-close', () => {
+      closes += 1;
+    });
     await rightClick(host, el, { clientX: 150, clientY: 100 });
 
     expect(el.open).to.equal(true);
@@ -308,7 +323,9 @@ describe('arc-context-menu selection', () => {
     const details = [];
     el.addEventListener('arc-select', (e) => details.push(e.detail));
 
-    menuItems(el).find((i) => i.textContent.trim() === 'Copy').click();
+    menuItems(el)
+      .find((i) => i.textContent.trim() === 'Copy')
+      .click();
     await settle(el);
 
     expect(details).to.have.lengthOf(1);
@@ -324,7 +341,9 @@ describe('arc-context-menu selection', () => {
     const details = [];
     el.addEventListener('arc-select', (e) => details.push(e.detail));
 
-    menuItems(el).find((i) => i.textContent.trim() === 'Cut').click();
+    menuItems(el)
+      .find((i) => i.textContent.trim() === 'Cut')
+      .click();
     await settle(el);
 
     expect(details[0].value).to.equal('Cut');
@@ -350,7 +369,9 @@ describe('arc-context-menu selection', () => {
     await rightClick(host, el);
     const seen = record(el, ['arc-select']);
 
-    menuItems(el).find((i) => i.textContent.trim() === 'Paste').click();
+    menuItems(el)
+      .find((i) => i.textContent.trim() === 'Paste')
+      .click();
     await settle(el);
 
     expect(seen).to.deep.equal([]);
@@ -387,7 +408,13 @@ describe('arc-context-menu closing', () => {
     await rightClick(host, el);
 
     let openDuringEvent = null;
-    el.addEventListener('arc-close', () => { openDuringEvent = el.open; }, { once: true });
+    el.addEventListener(
+      'arc-close',
+      () => {
+        openDuringEvent = el.open;
+      },
+      { once: true },
+    );
 
     keyOn(menu(el), 'Escape');
     await settle(el);

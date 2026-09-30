@@ -3,7 +3,11 @@ import '../src/input/date-picker.register.js';
 import '../src/input/calendar.register.js';
 import '../src/data/data-grid.register.js';
 import {
-  monthNames, weekdayNames, firstDayOfWeek, weekdayOffset, defaultLocale,
+  monthNames,
+  weekdayNames,
+  firstDayOfWeek,
+  weekdayOffset,
+  defaultLocale,
 } from '../src/shared/date-names.js';
 import { mount, cleanup, tick } from './helpers.js';
 
@@ -67,7 +71,7 @@ describe('weekdayOffset: the leading-blank count', () => {
   // This is the arithmetic every calendar got wrong by mixing a Sunday-based
   // getDay() with a non-Sunday first day.
   it('counts from Sunday when the week starts on Sunday', () => {
-    const sunday = new Date(2021, 7, 1);   // 2021-08-01 was a Sunday
+    const sunday = new Date(2021, 7, 1); // 2021-08-01 was a Sunday
     expect(weekdayOffset(sunday, 7)).to.equal(0);
     expect(weekdayOffset(new Date(2021, 7, 2), 7), 'Monday').to.equal(1);
     expect(weekdayOffset(new Date(2021, 7, 7), 7), 'Saturday').to.equal(6);
@@ -104,21 +108,25 @@ describe('the calendars use the shared source', () => {
     await tick();
 
     const dows = [...el.shadowRoot.querySelectorAll('.dow, [part~="dow"], .weekday')]
-      .map((n) => n.textContent.trim()).filter(Boolean);
+      .map((n) => n.textContent.trim())
+      .filter(Boolean);
     expect(dows.length, 'seven headers').to.be.at.least(7);
     // German short weekdays start with Mo, since de-DE starts the week there.
     expect(dows[0]).to.equal('Mo');
   });
 
   it('arc-date-picker respects first-day-of-week', async () => {
-    const el = mount('<arc-date-picker label="When" locale="en-GB" first-day-of-week="7"></arc-date-picker>');
+    const el = mount(
+      '<arc-date-picker label="When" locale="en-GB" first-day-of-week="7"></arc-date-picker>',
+    );
     await el.updateComplete;
     el.open = true;
     await el.updateComplete;
     await tick();
 
     const dows = [...el.shadowRoot.querySelectorAll('.dow, [part~="dow"], .weekday')]
-      .map((n) => n.textContent.trim()).filter(Boolean);
+      .map((n) => n.textContent.trim())
+      .filter(Boolean);
     expect(dows[0], 'forced to Sunday despite en-GB').to.equal('Sun');
   });
 
@@ -129,7 +137,9 @@ describe('the calendars use the shared source', () => {
     // Read off the header row rather than off `_firstDay`: a calendar that
     // resolved the locale's first day and laid the grid out from a different
     // one is exactly the bug, and the field alone cannot tell them apart.
-    const dows = [...el.shadowRoot.querySelectorAll('[part~="dow"]')].map((n) => n.textContent.trim());
+    const dows = [...el.shadowRoot.querySelectorAll('[part~="dow"]')].map((n) =>
+      n.textContent.trim(),
+    );
     expect(dows[0], 'en-GB weeks start on Monday').to.equal('Mon');
     expect(el.shadowRoot.textContent).to.include('August');
   });
@@ -141,10 +151,7 @@ describe('the calendars use the shared source', () => {
   });
 
   it('keeps no hardcoded English date names in the sources', async () => {
-    const paths = [
-      'input/date-picker.js', 'input/calendar.js',
-      'input/date-range-picker.js',
-    ];
+    const paths = ['input/date-picker.js', 'input/calendar.js', 'input/date-range-picker.js'];
     for (const path of paths) {
       const src = await (await fetch(new URL(`../src/${path}`, import.meta.url))).text();
       // Month/weekday literals in an array, i.e. the four copies this replaced.
@@ -159,12 +166,13 @@ describe('logical properties for RTL', () => {
   // line, so `.crumbs { padding-left: var(--space-md); }` written on one line
   // was invisible — eleven real violations across six components sat behind
   // that until a prettier run happened to split them onto their own lines.
-  const PHYSICAL = /^(margin|padding|border)-(left|right)\s*:|^text-align\s*:\s*(left|right)$|^border-(top|bottom)-(left|right)-radius\s*:/;
+  const PHYSICAL =
+    /^(margin|padding|border)-(left|right)\s*:|^text-align\s*:\s*(left|right)$|^border-(top|bottom)-(left|right)-radius\s*:/;
 
   // The codemod's baseline. These are the files that keep a physical property on
   // purpose, each for a stated reason; everything else must be logical.
   const ALLOWED = [
-    'shared/position-controller.js',  // JS-measured viewport coordinates
+    'shared/position-controller.js', // JS-measured viewport coordinates
   ];
 
   // ~185 component files. Fetched one after another this took longer than
@@ -181,31 +189,33 @@ describe('logical properties for RTL', () => {
     expect(paths.length, 'found component paths to sweep').to.be.greaterThan(20);
 
     const sweepable = paths.filter((p) => !ALLOWED.some((a) => p.endsWith(a)));
-    const perFile = await Promise.all(sweepable.map(async (path) => {
-      const r = await fetch(new URL(`../${path}`, import.meta.url));
-      if (!r.ok) return [];
-      const src = await r.text();
-      const found = [];
-      // Read the css`…` templates as innermost selector/body pairs, so how a
-      // rule is formatted cannot decide whether it is swept. Nested at-rules
-      // fall out for free: [^{}]* can never span a brace, so every match is an
-      // innermost block and its selector is the text since the last one.
-      for (const block of src.matchAll(/\bcss`([^`]*)`/g)) {
-        for (const rule of block[1].matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
-          const selector = rule[1].trim();
-          // A rule keyed on a physical side describes that side by API
-          // contract: `position="left"` means the left edge, not the start
-          // edge, so its border belongs on the physical right. Same for a
-          // resolved data-placement. The codemod's deliberate carve-outs.
-          if (/\[(?:position|data-placement)\s*=\s*"(?:left|right)"\]/.test(selector)) continue;
-          for (const raw of rule[2].split(';')) {
-            const decl = raw.trim();
-            if (decl && PHYSICAL.test(decl)) found.push(`${path}: ${decl};`);
+    const perFile = await Promise.all(
+      sweepable.map(async (path) => {
+        const r = await fetch(new URL(`../${path}`, import.meta.url));
+        if (!r.ok) return [];
+        const src = await r.text();
+        const found = [];
+        // Read the css`…` templates as innermost selector/body pairs, so how a
+        // rule is formatted cannot decide whether it is swept. Nested at-rules
+        // fall out for free: [^{}]* can never span a brace, so every match is an
+        // innermost block and its selector is the text since the last one.
+        for (const block of src.matchAll(/\bcss`([^`]*)`/g)) {
+          for (const rule of block[1].matchAll(/([^{}]*)\{([^{}]*)\}/g)) {
+            const selector = rule[1].trim();
+            // A rule keyed on a physical side describes that side by API
+            // contract: `position="left"` means the left edge, not the start
+            // edge, so its border belongs on the physical right. Same for a
+            // resolved data-placement. The codemod's deliberate carve-outs.
+            if (/\[(?:position|data-placement)\s*=\s*"(?:left|right)"\]/.test(selector)) continue;
+            for (const raw of rule[2].split(';')) {
+              const decl = raw.trim();
+              if (decl && PHYSICAL.test(decl)) found.push(`${path}: ${decl};`);
+            }
           }
         }
-      }
-      return found;
-    }));
+        return found;
+      }),
+    );
     // Sorted so the failure message is stable rather than ordered by whichever
     // fetch happened to resolve first.
     const offenders = perFile.flat().sort();

@@ -119,7 +119,13 @@ describe('arc-tree-view expansion', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await tree();
     let event = null;
-    document.body.addEventListener('arc-toggle', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-toggle',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     rowFor(el, 'src').click();
     await settle(el);
@@ -245,7 +251,10 @@ describe('arc-tree-view keyboard', () => {
       keyOn(rowFor(el, 'src'), key);
       await settle(el);
 
-      expect(seen.map(([k]) => k), `${key} selects only`).to.deep.equal(['select']);
+      expect(
+        seen.map(([k]) => k),
+        `${key} selects only`,
+      ).to.deep.equal(['select']);
       cleanup();
     }
   });
@@ -343,7 +352,7 @@ describe('arc-tree-view duplicate labels', () => {
     await settle(el);
 
     expect(labels(el), "the clicked branch's child is shown").to.include('logo.svg');
-    expect(labels(el), "and the same-named branch stays shut").to.not.include('old.svg');
+    expect(labels(el), 'and the same-named branch stays shut').to.not.include('old.svg');
   });
 
   it('collapses only the branch that was clicked', async () => {
@@ -406,6 +415,9 @@ describe('arc-tree-view duplicate labels', () => {
     assets[1].click();
     await settle(el);
 
-    expect(seen).to.deep.equal([['project', 'assets'], ['archive', 'assets']]);
+    expect(seen).to.deep.equal([
+      ['project', 'assets'],
+      ['archive', 'assets'],
+    ]);
   });
 });

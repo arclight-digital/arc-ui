@@ -343,10 +343,14 @@ describe('arc-navigation-menu navigation', () => {
   it('crosses the shadow boundary', async () => {
     const el = await menu();
     let caught = null;
-    document.addEventListener('arc-navigate', (e) => {
-      e.preventDefault();
-      caught = e;
-    }, { once: true });
+    document.addEventListener(
+      'arc-navigate',
+      (e) => {
+        e.preventDefault();
+        caught = e;
+      },
+      { once: true },
+    );
 
     triggers(el)[0].click();
     await settle(el);

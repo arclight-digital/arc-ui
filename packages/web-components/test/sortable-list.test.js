@@ -45,16 +45,25 @@ const rows = (el) => [...el.shadowRoot.querySelectorAll('[part~="item"]')];
 const projected = (row) =>
   [...row.querySelectorAll('slot')].flatMap((slot) => slot.assignedNodes({ flatten: true }));
 const labels = (el) =>
-  rows(el).map((r) => projected(r).map((n) => n.textContent).join('').trim());
+  rows(el).map((r) =>
+    projected(r)
+      .map((n) => n.textContent)
+      .join('')
+      .trim(),
+  );
 
 /** Drag row `from` onto row `to`, as the browser sequences it. */
 async function dragRow(el, from, to) {
   const dt = new DataTransfer();
   rows(el)[from].dispatchEvent(new DragEvent('dragstart', { bubbles: true, dataTransfer: dt }));
   await settle(el);
-  rows(el)[to].dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer: dt }));
+  rows(el)[to].dispatchEvent(
+    new DragEvent('dragover', { bubbles: true, cancelable: true, dataTransfer: dt }),
+  );
   await settle(el);
-  rows(el)[to].dispatchEvent(new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: dt }));
+  rows(el)[to].dispatchEvent(
+    new DragEvent('drop', { bubbles: true, cancelable: true, dataTransfer: dt }),
+  );
   await settle(el);
 }
 
@@ -81,8 +90,9 @@ describe('arc-sortable-list rendering', () => {
 
   it('hides the decorative grip from assistive tech', async () => {
     const el = await list();
-    expect(el.shadowRoot.querySelector('[part~="handle"]').getAttribute('aria-hidden'))
-      .to.equal('true');
+    expect(el.shadowRoot.querySelector('[part~="handle"]').getAttribute('aria-hidden')).to.equal(
+      'true',
+    );
   });
 
   it('survives having no items', async () => {
@@ -98,10 +108,13 @@ describe('arc-sortable-list rendering', () => {
   // screen. check-slot-hydration.js describes exactly this hide-and-mirror
   // shape, and what it cannot see is that a mirror is lossy.
   it('projects the item itself, markup and all', async () => {
-    const el = await list('', `
+    const el = await list(
+      '',
+      `
       <div><strong>Bold</strong> <em>and</em> more</div>
       <div>Plain</div>
-    `);
+    `,
+    );
 
     const assigned = projected(rows(el)[0]);
     expect(assigned, 'the real element is what the row shows').to.have.lengthOf(1);
@@ -123,7 +136,10 @@ describe('arc-sortable-list rendering', () => {
     const el = await list();
     await dragRow(el, 0, 2);
     expect(labels(el)).to.deep.equal(['Bravo', 'Charlie', 'Alpha']);
-    expect(rows(el).every((r) => projected(r).length === 1), 'one child per row').to.equal(true);
+    expect(
+      rows(el).every((r) => projected(r).length === 1),
+      'one child per row',
+    ).to.equal(true);
   });
 
   it('adopts a child added after mount', async () => {
@@ -169,7 +185,13 @@ describe('arc-sortable-list drag reordering', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await list();
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     await dragRow(el, 0, 1);
 
@@ -253,7 +275,11 @@ describe('arc-sortable-list keyboard reordering', () => {
     keyOn(rows(el)[0], 'ArrowDown');
     await settle(el);
 
-    expect(labels(el), 'arrows are inert until pick-up').to.deep.equal(['Alpha', 'Bravo', 'Charlie']);
+    expect(labels(el), 'arrows are inert until pick-up').to.deep.equal([
+      'Alpha',
+      'Bravo',
+      'Charlie',
+    ]);
   });
 
   it('Escape abandons the move without announcing', async () => {

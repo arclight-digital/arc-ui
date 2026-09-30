@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { serverHostStyle } from '../shared/server-host-style.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
@@ -45,6 +46,11 @@ export class ArcCenter extends DeclaredPropsMixin(LitElement) {
   constructor() {
     super();
     this.maxWidth = '60ch';
+  }
+
+  /** The same custom property on the server, which never runs updated(). */
+  willUpdate(changed) {
+    if (changed.has('maxWidth')) serverHostStyle(this, { '--_max-width': this.maxWidth });
   }
 
   updated(changed) {

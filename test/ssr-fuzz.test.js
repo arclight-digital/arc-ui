@@ -78,9 +78,7 @@ function markupTemplate(text) {
  * returns a slot and never gets there. Property-dependent branches are where
  * browser-only code hides, so they have to be rendered, not assumed.
  */
-const MANIFEST = JSON.parse(
-  fs.readFileSync(path.join(WC, 'custom-elements.json'), 'utf-8')
-);
+const MANIFEST = JSON.parse(fs.readFileSync(path.join(WC, 'custom-elements.json'), 'utf-8'));
 
 /** Attributes whose value has to be a real icon name to exercise anything. */
 const ICON_ATTRIBUTE = /(^|-)icon$|^name$/;
@@ -138,7 +136,7 @@ function populatedMarkups(tag) {
 
   const variants = Math.max(
     1,
-    ...decl.attributes.map((a) => literalsOf(a.type?.text ?? '').length)
+    ...decl.attributes.map((a) => literalsOf(a.type?.text ?? '').length),
   );
   const markups = [];
   for (let v = 0; v < variants; v++) {
@@ -243,10 +241,7 @@ const PROPERTY_SAMPLES = {
   'arc-lightbox': () => ({
     template: html`<arc-lightbox
       index="1"
-      .images=${[
-        { src: '/a.jpg', alt: 'A', caption: 'First' },
-        '/b.jpg',
-      ]}
+      .images=${[{ src: '/a.jpg', alt: 'A', caption: 'First' }, '/b.jpg']}
     ></arc-lightbox>`,
   }),
   'arc-json-tree': () => ({
@@ -262,10 +257,14 @@ const PROPERTY_SAMPLES = {
       .expandedValues=${['strings']}
       .items=${[
         { value: 'keys', label: 'Keys', children: [{ value: 'piano', label: 'Piano' }] },
-        { value: 'strings', label: 'Strings', children: [
-          { value: 'violin', label: 'Violin' },
-          { value: 'cello', label: 'Cello' },
-        ] },
+        {
+          value: 'strings',
+          label: 'Strings',
+          children: [
+            { value: 'violin', label: 'Violin' },
+            { value: 'cello', label: 'Cello' },
+          ],
+        },
       ]}
     ></arc-tree-select>`,
   }),

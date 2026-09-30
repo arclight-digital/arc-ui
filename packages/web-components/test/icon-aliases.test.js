@@ -22,8 +22,13 @@ const describeIcons = icons ? describe : describe.skip;
 if (!icons) console.warn(`↷ icon-aliases: ${ICONS_MISSING}`);
 
 const CROSS_LIBRARY = [
-  'chevron-left', 'chevron-right', 'chevron-up', 'chevron-down',
-  'chevrons-left', 'chevrons-right', 'dots-three',
+  'chevron-left',
+  'chevron-right',
+  'chevron-up',
+  'chevron-down',
+  'chevrons-left',
+  'chevrons-right',
+  'dots-three',
 ];
 
 // Each library's resolver is one dynamic import of ~1,500 lazy entries, and the

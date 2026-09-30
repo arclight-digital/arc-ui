@@ -7,6 +7,7 @@
  * hand-maintained tables, so docs can't drift from the source.
  */
 import fs from 'node:fs';
+import { REPO } from './repo';
 
 export interface ApiProp {
   name: string;
@@ -75,7 +76,7 @@ export interface ComponentApi {
 }
 
 const manifest = JSON.parse(
-  fs.readFileSync(new URL('../../../packages/web-components/custom-elements.json', import.meta.url), 'utf-8'),
+  fs.readFileSync(new URL('packages/web-components/custom-elements.json', REPO), 'utf-8'),
 );
 
 function detailOf(typeText?: string): string | undefined {

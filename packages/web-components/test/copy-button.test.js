@@ -46,7 +46,9 @@ describe('arc-copy-button', () => {
     button(el).click();
     expect(await until(() => button(el).getAttribute('aria-label') === 'Copied')).to.equal(true);
     const at = performance.now();
-    expect(await until(() => button(el).getAttribute('aria-label') === 'Copy code', { timeout: 3000 })).to.equal(true);
+    expect(
+      await until(() => button(el).getAttribute('aria-label') === 'Copy code', { timeout: 3000 }),
+    ).to.equal(true);
     expect(performance.now() - at).to.be.within(1200, 1900);
   });
 });

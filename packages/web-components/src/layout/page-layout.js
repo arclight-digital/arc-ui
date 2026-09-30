@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
@@ -104,6 +105,8 @@ export class ArcPageLayout extends DeclaredPropsMixin(LitElement) {
     this.gap = 'var(--space-xl)';
   }
 
+  // Also on the host, where it has always been and where a page can read it;
+  // the template carries it for the server's render.
   updated(changed) {
     if (changed.has('maxWidth')) {
       this.style.setProperty('--max-width', this.maxWidth);
@@ -114,8 +117,16 @@ export class ArcPageLayout extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
+    // In the template rather than written onto the host from updated(): the
+    // server renders a template and never runs updated(), so a page-layout
+    // with a gap or max width of its own drew with the defaults until its
+    // script arrived. Slotted content still inherits both through this div.
     return html`
-      <div class="page-layout" part="base layout">
+      <div
+        class="page-layout"
+        part="base layout"
+        style=${styleMap({ '--max-width': this.maxWidth, '--gap': this.gap })}
+      >
         <div class="sidebar" part="sidebar">
           <slot name="sidebar"></slot>
         </div>

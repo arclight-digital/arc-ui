@@ -54,11 +54,14 @@ describe('arc-tabs rendering', () => {
   });
 
   it('builds the bar from arc-tab children only', async () => {
-    const el = await tabs('', `
+    const el = await tabs(
+      '',
+      `
       <p>not a tab</p>
       <arc-tab label="Real">content</arc-tab>
       <div label="Impostor"></div>
-    `);
+    `,
+    );
     expect(labels(el)).to.deep.equal(['Real']);
   });
 
@@ -84,8 +87,11 @@ describe('arc-tabs selected', () => {
   it('defaults to the first tab', async () => {
     const el = await tabs();
     expect(el.selected).to.equal(0);
-    expect(buttons(el).map((b) => b.getAttribute('aria-selected')))
-      .to.deep.equal(['true', 'false', 'false']);
+    expect(buttons(el).map((b) => b.getAttribute('aria-selected'))).to.deep.equal([
+      'true',
+      'false',
+      'false',
+    ]);
   });
 
   it('honours a selected set in markup', async () => {
@@ -129,8 +135,9 @@ describe('arc-tabs ARIA', () => {
     expect(list.getAttribute('aria-orientation')).to.equal('horizontal');
 
     const vertical = await tabs('orientation="vertical"');
-    expect(vertical.shadowRoot.querySelector('.tabs__list').getAttribute('aria-orientation'))
-      .to.equal('vertical');
+    expect(
+      vertical.shadowRoot.querySelector('.tabs__list').getAttribute('aria-orientation'),
+    ).to.equal('vertical');
   });
 
   it('marks every button role=tab and the panel role=tabpanel', async () => {
@@ -158,7 +165,10 @@ describe('arc-tabs ARIA', () => {
     const targets = buttons(el).map((b) => b.getAttribute('aria-controls'));
 
     const resolves = targets.map((id) => el.shadowRoot.getElementById(id));
-    expect(resolves.every((node) => node !== null), 'no dangling IDREF').to.equal(true);
+    expect(
+      resolves.every((node) => node !== null),
+      'no dangling IDREF',
+    ).to.equal(true);
     expect(new Set(resolves).size, 'and they all name the one panel').to.equal(1);
     expect(resolves[0]).to.equal(panel(el));
   });
@@ -220,11 +230,14 @@ describe('arc-tabs disabled tabs', () => {
   });
 
   it('lands Home and End on the nearest selectable tab', async () => {
-    const el = await tabs('', `
+    const el = await tabs(
+      '',
+      `
       <arc-tab label="First" disabled>One</arc-tab>
       <arc-tab label="Second">Two</arc-tab>
       <arc-tab label="Third" disabled>Three</arc-tab>
-    `);
+    `,
+    );
 
     keyOn(buttons(el)[1], 'End');
     await settle(el);
@@ -236,19 +249,28 @@ describe('arc-tabs disabled tabs', () => {
   });
 
   it('does not spin or move when every tab is disabled', async () => {
-    const el = await tabs('', `
+    const el = await tabs(
+      '',
+      `
       <arc-tab label="First" disabled>One</arc-tab>
       <arc-tab label="Second" disabled>Two</arc-tab>
-    `);
+    `,
+    );
     const seen = record(el, ['arc-change']);
 
-    const event = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     buttons(el)[0].dispatchEvent(event);
     await settle(el);
 
     expect(el.selected).to.equal(0);
     expect(seen).to.deep.equal([]);
-    expect(event.defaultPrevented, 'the key is still ours — the page must not scroll').to.equal(true);
+    expect(event.defaultPrevented, 'the key is still ours — the page must not scroll').to.equal(
+      true,
+    );
   });
 
   it('re-renders the bar when a tab is disabled after mount', async () => {
@@ -332,7 +354,11 @@ describe('arc-tabs keyboard', () => {
 
   it('claims the keys it does handle', async () => {
     const el = await tabs();
-    const event = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     buttons(el)[0].dispatchEvent(event);
     await settle(el);
     expect(event.defaultPrevented, 'or the tab bar scrolls under the selection').to.equal(true);
@@ -357,7 +383,13 @@ describe('arc-tabs arc-change', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await tabs();
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     buttons(el)[1].click();
     await settle(el);
@@ -374,7 +406,10 @@ describe('arc-tabs arc-change', () => {
     el.selected = 2;
     await settle(el);
 
-    expect(visible(el).map((t) => t.label), 'the panel still switches').to.deep.equal(['Third']);
+    expect(
+      visible(el).map((t) => t.label),
+      'the panel still switches',
+    ).to.deep.equal(['Third']);
     expect(seen, 'a programmatic set is not a user change').to.deep.equal([]);
   });
 
@@ -387,7 +422,10 @@ describe('arc-tabs arc-change', () => {
     keyOn(buttons(el)[1], 'ArrowRight');
     await settle(el);
 
-    expect(seen).to.deep.equal([['change', 1], ['change', 2]]);
+    expect(seen).to.deep.equal([
+      ['change', 1],
+      ['change', 2],
+    ]);
   });
 });
 
@@ -402,7 +440,8 @@ describe('arc-tabs enum fallbacks', () => {
   it('an unknown align lays out like the default', async () => {
     const known = await tabs();
     const unknown = await tabs('align="sideways"');
-    const justify = (el) => getComputedStyle(el.shadowRoot.querySelector('.tabs__list')).justifyContent;
+    const justify = (el) =>
+      getComputedStyle(el.shadowRoot.querySelector('.tabs__list')).justifyContent;
     expect(justify(unknown)).to.equal(justify(known));
     // Guard: the property must actually be driven by the attribute, or the
     // assertion above passes for the wrong reason.
@@ -427,8 +466,9 @@ describe('arc-tabs enum fallbacks', () => {
   it('normalises an unknown orientation to the default before it reaches ARIA', async () => {
     const el = await tabs('orientation="diagonal"');
     expect(el.orientation, 'property normalised').to.equal('horizontal');
-    expect(el.shadowRoot.querySelector('.tabs__list').getAttribute('aria-orientation'))
-      .to.equal('horizontal');
+    expect(el.shadowRoot.querySelector('.tabs__list').getAttribute('aria-orientation')).to.equal(
+      'horizontal',
+    );
   });
 });
 
@@ -455,7 +495,7 @@ describe('arc-tabs indicator', () => {
     };
   };
 
-  it('takes the selected button\'s box', async () => {
+  it("takes the selected button's box", async () => {
     const el = await tabs();
     const button = buttons(el)[0];
     expect(box(el)).to.deep.equal({
@@ -498,8 +538,7 @@ describe('arc-tabs indicator', () => {
     );
     await settle(el);
 
-    expect(labels(el)[2], 'the index now names the tab before the one it did')
-      .to.equal('Second');
+    expect(labels(el)[2], 'the index now names the tab before the one it did').to.equal('Second');
     expect(box(el).x, 'and the indicator moved with it').to.not.equal(before);
     expect(box(el).x).to.equal(`${buttons(el)[2].offsetLeft}px`);
   });
@@ -519,10 +558,10 @@ describe('arc-tabs indicator', () => {
     const el = await tabs('selected="11" style="max-width:240px"', many);
     const list = el.shadowRoot.querySelector('.tabs__list');
 
-    expect(list.scrollWidth, 'the bar has to overflow for this to mean anything')
-      .to.be.greaterThan(list.clientWidth);
+    expect(list.scrollWidth, 'the bar has to overflow for this to mean anything').to.be.greaterThan(
+      list.clientWidth,
+    );
     expect(list.scrollLeft, 'the bar scrolled to its selection').to.be.greaterThan(0);
-    expect(document.scrollingElement.scrollTop, 'the page did not move')
-      .to.equal(pageScroll);
+    expect(document.scrollingElement.scrollTop, 'the page did not move').to.equal(pageScroll);
   });
 });

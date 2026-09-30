@@ -43,12 +43,14 @@ describe('motion tokens', () => {
     for (const name of ['--transition-fast', '--transition-base', '--transition-slow']) {
       const value = tokenValue(name);
       expect(value, `${name} should be declared`).to.not.equal('');
-      expect(value, `${name} should carry a cubic-bezier, not a keyword`)
-        .to.match(/cubic-bezier\(/);
+      expect(value, `${name} should carry a cubic-bezier, not a keyword`).to.match(
+        /cubic-bezier\(/,
+      );
       // The keyword must not survive anywhere in the value — "120ms ease" is
       // exactly the shape this replaced.
-      expect(/(^|[\s,])ease([\s,;]|$)/.test(value), `${name} still uses the ease keyword`)
-        .to.equal(false);
+      expect(/(^|[\s,])ease([\s,;]|$)/.test(value), `${name} still uses the ease keyword`).to.equal(
+        false,
+      );
     }
   });
 
@@ -93,8 +95,10 @@ describe('reduced motion', () => {
         .join('\n');
 
       expect(css).to.contain('prefers-reduced-motion');
-      expect(css, 'the guard should shorten rather than cancel, so animationend still fires')
-        .to.match(/animation-duration:\s*0\.01ms/);
+      expect(
+        css,
+        'the guard should shorten rather than cancel, so animationend still fires',
+      ).to.match(/animation-duration:\s*0\.01ms/);
     });
   }
 

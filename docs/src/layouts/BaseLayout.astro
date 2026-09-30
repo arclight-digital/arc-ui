@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import { version } from '../data/site-stats';
 
 interface Props {
@@ -100,7 +100,7 @@ const siteJsonLd = {
     {/* fallback="swap": browsers without the View Transitions API (Firefox)
         get an instant swap instead of Astro's simulated fade-out/fade-in,
         which reads as a full-page flicker. Native browsers still cross-fade. */}
-    <ViewTransitions fallback="swap" />
+    <ClientRouter fallback="swap" />
         <script>
       // Hydration support, and it must stay the first import in this block.
       // arc-dsd ships every component with its shadow root already attached and
@@ -113,6 +113,13 @@ const siteJsonLd = {
       // preserve the source order of sibling <script> blocks, and emitted the
       // component block first when this was split out.
       import '@arclux/arc-ui/hydrate';
+      import { attachShadowRoots } from '@arclux/arc-ui/shadow-roots';
+
+      // The router parses the next page with DOMParser, which leaves every
+      // server-rendered shadow root an inert <template>: a soft navigation
+      // swapped in components that rendered fresh copies beside dead
+      // templates instead of hydrating. Attached here, before the swap.
+      document.addEventListener('astro:before-swap', (e) => attachShadowRoots(e.newDocument));
 
 
       // Critical-first registration: the shell components every page shows

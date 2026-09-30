@@ -59,16 +59,18 @@ export class ArcAvatar extends DeclaredPropsMixin(LitElement) {
       :host([size="md"]) .avatar { width: 40px; height: 40px; }
       :host([size="lg"]) .avatar { width: 56px; height: 56px; }
 
+      /* Visible from the start and painted over the shimmer: while it loads
+         it has no pixels and the shimmer shows through; once it arrives it
+         covers it, script or no script. It used to wait at opacity 0 for the
+         load event, so a server-rendered avatar showed only the shimmer until
+         JavaScript ran, even for a photo already in the cache. */
       .avatar__img {
+        position: relative;
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: var(--radius-full);
-        opacity: 0;
-        transition: opacity var(--transition-slow);
       }
-
-      .avatar__img.loaded { opacity: 1; }
 
       .avatar__shimmer {
         position: absolute;

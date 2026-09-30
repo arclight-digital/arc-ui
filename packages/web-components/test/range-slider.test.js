@@ -19,7 +19,9 @@ import '../src/input/range-slider.register.js';
 afterEach(() => cleanup());
 
 async function slider(attrs = '') {
-  const el = mount(`<arc-range-slider style="width: 400px; display: block" ${attrs}></arc-range-slider>`);
+  const el = mount(
+    `<arc-range-slider style="width: 400px; display: block" ${attrs}></arc-range-slider>`,
+  );
   await settle(el);
   return el;
 }
@@ -45,8 +47,15 @@ describe('arc-range-slider rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await slider('label="Price"');
     for (const part of [
-      'range-slider', 'header', 'label', 'values', 'track', 'rail', 'fill',
-      'thumb-low', 'thumb-high',
+      'range-slider',
+      'header',
+      'label',
+      'values',
+      'track',
+      'rail',
+      'fill',
+      'thumb-low',
+      'thumb-high',
     ]) {
       expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
@@ -85,8 +94,9 @@ describe('arc-range-slider rendering', () => {
   it('shows the readout and the label', async () => {
     const el = await slider('label="Price" low="20" high="80"');
     expect(el.shadowRoot.querySelector('[part~="label"]').textContent).to.contain('Price');
-    expect(el.shadowRoot.querySelector('[part~="values"]').textContent.replace(/\s+/g, ' '))
-      .to.contain('20');
+    expect(
+      el.shadowRoot.querySelector('[part~="values"]').textContent.replace(/\s+/g, ' '),
+    ).to.contain('20');
   });
 });
 
@@ -94,7 +104,10 @@ describe('arc-range-slider accessibility', () => {
   it('gives each thumb slider semantics bounded by the other', async () => {
     const el = await slider('low="30" high="70"');
 
-    for (const [which, now] of [['low', '30'], ['high', '70']]) {
+    for (const [which, now] of [
+      ['low', '30'],
+      ['high', '70'],
+    ]) {
       const t = thumb(el, which);
       expect(t.getAttribute('role'), which).to.equal('slider');
       expect(t.getAttribute('aria-valuenow'), which).to.equal(now);
@@ -170,7 +183,11 @@ describe('arc-range-slider keyboard', () => {
   it('claims the keys it handles and leaves the rest', async () => {
     const el = await slider('low="20" high="80"');
 
-    const handled = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const handled = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     thumb(el, 'low').dispatchEvent(handled);
     await settle(el);
     expect(handled.defaultPrevented).to.equal(true);
@@ -202,7 +219,10 @@ describe('arc-range-slider keyboard', () => {
     await settle(el);
 
     expect(el.low, 'the value did not move').to.equal(0);
-    expect(seen.map(([k]) => k), 'so neither event fires').to.deep.equal([]);
+    expect(
+      seen.map(([k]) => k),
+      'so neither event fires',
+    ).to.deep.equal([]);
   });
 
   it('a key at the high rail stays silent', async () => {
@@ -231,7 +251,11 @@ describe('arc-range-slider keyboard', () => {
 
   it('still claims the key at a rail, so the page does not scroll', async () => {
     const el = await slider('low="0" high="100" step="5"');
-    const event = new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true });
+    const event = new KeyboardEvent('keydown', {
+      key: 'ArrowLeft',
+      bubbles: true,
+      cancelable: true,
+    });
     thumb(el, 'low').dispatchEvent(event);
     await settle(el);
     expect(event.defaultPrevented).to.equal(true);
@@ -272,7 +296,10 @@ describe('arc-range-slider pointer', () => {
     t.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, clientX: rect.left }));
     for (const fraction of [0.1, 0.2, 0.3]) {
       t.dispatchEvent(
-        new PointerEvent('pointermove', { ...pointerInit, clientX: rect.left + rect.width * fraction }),
+        new PointerEvent('pointermove', {
+          ...pointerInit,
+          clientX: rect.left + rect.width * fraction,
+        }),
       );
       await settle(el);
     }
@@ -318,7 +345,9 @@ describe('arc-range-slider disabled and readonly', () => {
   });
 
   it('readonly mutes both input paths but keeps submitting', async () => {
-    const form = mount('<form><arc-range-slider name="price" low="20" high="80" readonly></arc-range-slider></form>');
+    const form = mount(
+      '<form><arc-range-slider name="price" low="20" high="80" readonly></arc-range-slider></form>',
+    );
     const el = form.querySelector('arc-range-slider');
     await settle(el);
     const seen = record(el);
@@ -334,7 +363,9 @@ describe('arc-range-slider disabled and readonly', () => {
 
 describe('arc-range-slider form participation', () => {
   it('submits the pair under its name and tracks changes', async () => {
-    const form = mount('<form><arc-range-slider name="price" low="20" high="80"></arc-range-slider></form>');
+    const form = mount(
+      '<form><arc-range-slider name="price" low="20" high="80"></arc-range-slider></form>',
+    );
     const el = form.querySelector('arc-range-slider');
     await settle(el);
 
@@ -342,12 +373,15 @@ describe('arc-range-slider form participation', () => {
 
     el.low = 35;
     await settle(el);
-    expect(new FormData(form).get('price'), 'a programmatic set reaches the form')
-      .to.equal('35,80');
+    expect(new FormData(form).get('price'), 'a programmatic set reaches the form').to.equal(
+      '35,80',
+    );
   });
 
   it('restores both bounds on form reset', async () => {
-    const form = mount('<form><arc-range-slider name="price" low="20" high="80"></arc-range-slider></form>');
+    const form = mount(
+      '<form><arc-range-slider name="price" low="20" high="80"></arc-range-slider></form>',
+    );
     const el = form.querySelector('arc-range-slider');
     await settle(el);
 

@@ -117,6 +117,9 @@ export class ArcLink extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onDefaultSlotChange' };
+
   constructor() {
     super();
     this.href = '';

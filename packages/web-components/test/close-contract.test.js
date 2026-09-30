@@ -40,7 +40,13 @@ describe('cancelable arc-close', () => {
     await el.updateComplete;
 
     let openDuringEvent = null;
-    el.addEventListener('arc-close', () => { openDuringEvent = el.open; }, { once: true });
+    el.addEventListener(
+      'arc-close',
+      () => {
+        openDuringEvent = el.open;
+      },
+      { once: true },
+    );
     el.shadowRoot.querySelector('arc-icon-button').click();
     expect(openDuringEvent, 'listener must observe the still-open state').to.equal(true);
   });

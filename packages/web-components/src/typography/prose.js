@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { adoptDocumentStyles } from '../shared/document-styles.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
 
 /**
@@ -118,27 +119,16 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
     super();
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this._injectLightStyles();
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    if (this._lightStyle && this._lightStyle.parentNode) {
-      this._lightStyle.remove();
-    }
-  }
-
   /**
-   * Inject a scoped <style> into the light DOM for nested element styles
-   * that ::slotted() cannot reach (li, a, code, strong, etc.)
+   * Styles for the light DOM, which ::slotted() can't reach past its first
+   * level (li, a, code, strong in the content). Once per document or shadow
+   * root, under a fixed attribute, and emitted into the page by the server
+   * renderer too (ssr.js reads this), so a server-rendered page has them in
+   * its first paint. Each instance used to append its own copy into its own
+   * children, which reached the page only when the script ran and put a
+   * <style> among the content a framework thinks it owns.
    */
-  _injectLightStyles() {
-    if (this._lightStyle) return;
-
-    const style = document.createElement('style');
-    style.textContent = `
+  static documentStyles = `
       arc-prose li {
         margin-bottom: 4px;
         line-height: var(--body-lh);
@@ -191,8 +181,10 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
         margin-bottom: 0;
       }
     `;
-    this._lightStyle = style;
-    this.appendChild(style);
+
+  connectedCallback() {
+    super.connectedCallback();
+    adoptDocumentStyles(this);
   }
 
   render() {

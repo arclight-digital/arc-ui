@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { serverHostStyle } from '../shared/server-host-style.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
@@ -369,6 +370,9 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onSlotChange' };
+
   constructor() {
     super();
     this.active = '';
@@ -407,13 +411,18 @@ export class ArcSidebar extends DeclaredPropsMixin(LitElement) {
     this.requestUpdate();
   }
 
-  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
+  /** The same custom property on the server, which never runs updated(). */
+  willUpdate(changed) {
+    if (changed.has('width') && this.width) serverHostStyle(this, { '--_width': this.width });
+  }
+
   updated(changed) {
     if (changed.has('width')) {
       this.style.setProperty('--_width', this.width || 'auto');
     }
   }
 
+  /** The slotchange DSD swallows: see shared/hydrate-slots.js. */
   firstUpdated() {
     hydrateSlots(this);
   }

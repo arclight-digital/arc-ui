@@ -17,7 +17,16 @@
  * See test-findings.md.
  */
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup, settle, keyOn, wait, until, record, stubReducedMotion } from './helpers.js';
+import {
+  mount,
+  cleanup,
+  settle,
+  keyOn,
+  wait,
+  until,
+  record,
+  stubReducedMotion,
+} from './helpers.js';
 
 import '../src/content/carousel.register.js';
 
@@ -89,8 +98,11 @@ describe('arc-carousel rendering', () => {
     const el = await carousel('show-dots');
     expect(dots(el)).to.have.lengthOf(3);
     expect(el.shadowRoot.querySelector('[part~="dots"]').getAttribute('role')).to.equal('tablist');
-    expect(dots(el).map((d) => d.getAttribute('aria-selected')))
-      .to.deep.equal(['true', 'false', 'false']);
+    expect(dots(el).map((d) => d.getAttribute('aria-selected'))).to.deep.equal([
+      'true',
+      'false',
+      'false',
+    ]);
   });
 
   it('shows dots and arrows by default', async () => {
@@ -175,7 +187,13 @@ describe('arc-carousel navigation', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await carousel('show-arrows');
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     nextArrow(el).click();
     await settle(el);
@@ -220,8 +238,11 @@ describe('arc-carousel navigation', () => {
     await settle(el);
 
     expect(current(el)).to.equal(2);
-    expect(dots(el).map((d) => d.getAttribute('aria-selected')))
-      .to.deep.equal(['false', 'false', 'true']);
+    expect(dots(el).map((d) => d.getAttribute('aria-selected'))).to.deep.equal([
+      'false',
+      'false',
+      'true',
+    ]);
   });
 
   it('stays silent when the current dot is clicked again', async () => {
@@ -307,13 +328,21 @@ describe('arc-carousel keyboard', () => {
   it('claims the keys it handles and leaves the rest', async () => {
     const el = await carousel();
 
-    const handled = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true });
+    const handled = new KeyboardEvent('keydown', {
+      key: 'ArrowRight',
+      bubbles: true,
+      cancelable: true,
+    });
     viewport(el).dispatchEvent(handled);
     await settle(el);
     expect(handled.defaultPrevented).to.equal(true);
 
     const before = current(el);
-    const ignored = new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true });
+    const ignored = new KeyboardEvent('keydown', {
+      key: 'ArrowDown',
+      bubbles: true,
+      cancelable: true,
+    });
     viewport(el).dispatchEvent(ignored);
     await settle(el);
     expect(ignored.defaultPrevented).to.equal(false);
@@ -359,10 +388,7 @@ describe('arc-carousel auto-play', () => {
     // that something *happens*, and a fixed sleep sized off the nominal
     // interval is a guess about how busy the machine is. The hover half above
     // asserts nothing happens, which a fixed sleep can say honestly.
-    expect(
-      await until(() => current(el) !== at),
-      'and it resumes on leave',
-    ).to.equal(true);
+    expect(await until(() => current(el) !== at), 'and it resumes on leave').to.equal(true);
   });
 
   it('pauses while something inside it has focus', async () => {

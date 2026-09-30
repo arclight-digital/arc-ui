@@ -48,26 +48,111 @@ useBaseCss();
  */
 const CASES = [
   { tag: 'arc-icon', attr: 'size', def: 'sm', other: 'xl', sel: null, props: ['width', 'height'] },
-  { tag: 'arc-scroll-area', attr: 'orientation', def: 'vertical', other: 'horizontal', sel: '.scroll-area', props: ['overflowX', 'overflowY'] },
-  { tag: 'arc-progress', attr: 'size', def: 'md', other: 'lg', sel: '.progress__track', props: ['height'] },
-  { tag: 'arc-textarea', attr: 'resize', def: 'vertical', other: 'none', sel: 'textarea', props: ['resize'] },
-  { tag: 'arc-inset', attr: 'space', def: 'md', other: 'xl', sel: null, props: ['paddingTop', 'paddingLeft'] },
+  {
+    tag: 'arc-scroll-area',
+    attr: 'orientation',
+    def: 'vertical',
+    other: 'horizontal',
+    sel: '.scroll-area',
+    props: ['overflowX', 'overflowY'],
+  },
+  {
+    tag: 'arc-progress',
+    attr: 'size',
+    def: 'md',
+    other: 'lg',
+    sel: '.progress__track',
+    props: ['height'],
+  },
+  {
+    tag: 'arc-textarea',
+    attr: 'resize',
+    def: 'vertical',
+    other: 'none',
+    sel: 'textarea',
+    props: ['resize'],
+  },
+  {
+    tag: 'arc-inset',
+    attr: 'space',
+    def: 'md',
+    other: 'xl',
+    sel: null,
+    props: ['paddingTop', 'paddingLeft'],
+  },
   { tag: 'arc-prose', attr: 'size', def: 'md', other: 'lg', sel: null, props: ['fontSize'] },
-  { tag: 'arc-drawer', attr: 'position', def: 'left', other: 'right', sel: '.drawer__panel', props: ['left', 'right'] },
-  { tag: 'arc-sheet', attr: 'side', def: 'bottom', other: 'right', sel: '.sheet__panel', props: ['bottom', 'right', 'width'] },
-  { tag: 'arc-tooltip', attr: 'position', def: 'top', other: 'left', sel: '.tooltip__popup', props: ['bottom', 'right', 'transform'] },
-  { tag: 'arc-scroll-to-top', attr: 'position', def: 'bottom-right', other: 'bottom-left', sel: '.scroll-to-top', props: ['left', 'right'] },
-  { tag: 'arc-dialog', attr: 'size', def: 'md', other: 'lg', sel: '.dialog__panel', props: ['maxWidth'] },
-  { tag: 'arc-float-bar', attr: 'position', def: 'bottom', other: 'top', sel: '.float-bar', props: ['top', 'bottom'] },
-  { tag: 'arc-button-group', attr: 'orientation', def: 'horizontal', other: 'vertical', sel: '.button-group, .btn-group', props: ['flexDirection'] },
-  { tag: 'arc-anchor-nav', attr: 'orientation', def: 'horizontal', other: 'vertical', sel: null, props: [] },
+  {
+    tag: 'arc-drawer',
+    attr: 'position',
+    def: 'left',
+    other: 'right',
+    sel: '.drawer__panel',
+    props: ['left', 'right'],
+  },
+  {
+    tag: 'arc-sheet',
+    attr: 'side',
+    def: 'bottom',
+    other: 'right',
+    sel: '.sheet__panel',
+    props: ['bottom', 'right', 'width'],
+  },
+  {
+    tag: 'arc-tooltip',
+    attr: 'position',
+    def: 'top',
+    other: 'left',
+    sel: '.tooltip__popup',
+    props: ['bottom', 'right', 'transform'],
+  },
+  {
+    tag: 'arc-scroll-to-top',
+    attr: 'position',
+    def: 'bottom-right',
+    other: 'bottom-left',
+    sel: '.scroll-to-top',
+    props: ['left', 'right'],
+  },
+  {
+    tag: 'arc-dialog',
+    attr: 'size',
+    def: 'md',
+    other: 'lg',
+    sel: '.dialog__panel',
+    props: ['maxWidth'],
+  },
+  {
+    tag: 'arc-float-bar',
+    attr: 'position',
+    def: 'bottom',
+    other: 'top',
+    sel: '.float-bar',
+    props: ['top', 'bottom'],
+  },
+  {
+    tag: 'arc-button-group',
+    attr: 'orientation',
+    def: 'horizontal',
+    other: 'vertical',
+    sel: '.button-group, .btn-group',
+    props: ['flexDirection'],
+  },
+  {
+    tag: 'arc-anchor-nav',
+    attr: 'orientation',
+    def: 'horizontal',
+    other: 'vertical',
+    sel: null,
+    props: [],
+  },
 ];
 
 /** Mount `<tag attr=value>` with enough content to lay out, and return styles. */
 async function stylesFor({ tag, attr, sel }, value) {
-  const html = value === undefined
-    ? `<${tag} open>content</${tag}>`
-    : `<${tag} ${attr}="${value}" open>content</${tag}>`;
+  const html =
+    value === undefined
+      ? `<${tag} open>content</${tag}>`
+      : `<${tag} ${attr}="${value}" open>content</${tag}>`;
   const el = mount(html);
   overrides.push(el);
   if (el.updateComplete) await el.updateComplete;
@@ -89,10 +174,14 @@ describe('codemod-widened enum defaults: an unknown value lands on the default',
       }
 
       for (const p of c.props) {
-        expect(unknown[p], `${c.tag} ${c.attr}="unknown" should match no-attribute for ${p}`)
-          .to.equal(def[p]);
-        expect(unknown[p], `${c.tag} ${c.attr}="unknown" should match ${c.attr}="${c.def}" for ${p}`)
-          .to.equal(explicit[p]);
+        expect(
+          unknown[p],
+          `${c.tag} ${c.attr}="unknown" should match no-attribute for ${p}`,
+        ).to.equal(def[p]);
+        expect(
+          unknown[p],
+          `${c.tag} ${c.attr}="unknown" should match ${c.attr}="${c.def}" for ${p}`,
+        ).to.equal(explicit[p]);
       }
 
       // At least one measured property must differ from the non-default member,
@@ -100,7 +189,10 @@ describe('codemod-widened enum defaults: an unknown value lands on the default',
       // attribute drove nothing we're looking at.
       if (other) {
         const differs = c.props.some((p) => other[p] !== def[p]);
-        expect(differs, `${c.tag}: ${c.attr}="${c.other}" computed identically to the default for ${c.props.join(', ')} — this test is not measuring the right property`).to.be.true;
+        expect(
+          differs,
+          `${c.tag}: ${c.attr}="${c.other}" computed identically to the default for ${c.props.join(', ')} — this test is not measuring the right property`,
+        ).to.be.true;
       }
     });
   }
@@ -131,7 +223,9 @@ describe('shared positionStyles: the open rule outranks the closed rule', () => 
     const sheet = new CSSStyleSheet();
     // :host rules only apply inside a shadow root, so adopt rather than inline.
     // Transitions off: this is a specificity assertion, not an animation one.
-    sheet.replaceSync(`.panel { transition: none !important; }\n${positionStyles('panel', { scale: 0.95 }).cssText}`);
+    sheet.replaceSync(
+      `.panel { transition: none !important; }\n${positionStyles('panel', { scale: 0.95 }).cssText}`,
+    );
     root.adoptedStyleSheets = [sheet];
     const panel = document.createElement('div');
     panel.className = 'panel';

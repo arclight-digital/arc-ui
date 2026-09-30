@@ -65,6 +65,9 @@ export class ArcConversation extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { '': '_onSlotChange' };
+
   constructor() {
     super();
     /** Whether the reader was near the live end at the last scroll sample. */

@@ -45,8 +45,14 @@ async function mountButton() {
 }
 
 describe('a :root override reaches components', () => {
-  const touched = ['--space-md', '--radius-md', '--z-dropdown', '--touch-min',
-                   '--text-md', '--accent-primary'];
+  const touched = [
+    '--space-md',
+    '--radius-md',
+    '--z-dropdown',
+    '--touch-min',
+    '--text-md',
+    '--accent-primary',
+  ];
   afterEach(() => {
     for (const t of touched) document.documentElement.style.removeProperty(t);
     cleanup();
@@ -132,7 +138,8 @@ describe('compositions are forwarded, shadow-private references are not', () => 
     const from = cssText.indexOf(':root {');
     const root = cssText.slice(from, cssText.indexOf('\n}', from));
     return new Map(
-      [...root.matchAll(/(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2]]));
+      [...root.matchAll(/(--[a-zA-Z0-9_-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2]]),
+    );
   }
 
   afterEach(() => {
@@ -178,8 +185,14 @@ describe('compositions are forwarded, shadow-private references are not', () => 
   });
 
   it('forwards the semantic aliases and the accent compounds', async () => {
-    for (const n of ['--interactive', '--surface-raised', '--divider', '--focus-glow',
-                     '--glow-md', '--transition-base']) {
+    for (const n of [
+      '--interactive',
+      '--surface-raised',
+      '--divider',
+      '--focus-glow',
+      '--glow-md',
+      '--transition-base',
+    ]) {
       expect(forwardedNames(), n).to.include(n);
     }
   });
@@ -197,7 +210,9 @@ describe('compositions are forwarded, shadow-private references are not', () => 
 
     el.style.setProperty('--interactive', 'rgb(4, 5, 6)');
     await el.updateComplete;
-    expect(seen(el, '--interactive'), 'the compound itself still overrides').to.equal('rgb(4, 5, 6)');
+    expect(seen(el, '--interactive'), 'the compound itself still overrides').to.equal(
+      'rgb(4, 5, 6)',
+    );
   });
 });
 

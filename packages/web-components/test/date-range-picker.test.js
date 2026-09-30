@@ -129,7 +129,9 @@ describe('arc-date-range-picker selection', () => {
 
     list[0].click();
     await settle(el);
-    pickable(el).find((d) => d.dataset.iso === toIso).click();
+    pickable(el)
+      .find((d) => d.dataset.iso === toIso)
+      .click();
     await settle(el);
 
     expect(details, 'exactly one commit').to.have.lengthOf(1);
@@ -144,12 +146,20 @@ describe('arc-date-range-picker selection', () => {
     el.end = '';
     await open(el);
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     const toIso = pickable(el)[3].dataset.iso;
     pickable(el)[0].click();
     await settle(el);
-    pickable(el).find((d) => d.dataset.iso === toIso).click();
+    pickable(el)
+      .find((d) => d.dataset.iso === toIso)
+      .click();
     await settle(el);
 
     expect(event).to.not.equal(null);
@@ -176,7 +186,9 @@ describe('arc-date-range-picker selection', () => {
     const toIso = pickable(el)[2].dataset.iso;
     pickable(el)[0].click();
     await settle(el);
-    pickable(el).find((d) => d.dataset.iso === toIso).click();
+    pickable(el)
+      .find((d) => d.dataset.iso === toIso)
+      .click();
     await settle(el);
 
     expect(details[0].value, 'the same type as the property').to.be.a('string');
@@ -197,7 +209,9 @@ describe('arc-date-range-picker selection', () => {
     const toIso = pickable(el)[2].dataset.iso;
     pickable(el)[0].click();
     await settle(el);
-    pickable(el).find((d) => d.dataset.iso === toIso).click();
+    pickable(el)
+      .find((d) => d.dataset.iso === toIso)
+      .click();
     await settle(el);
 
     expect(details[0].value).to.equal(`${details[0].start}/${details[0].end}`);
@@ -224,8 +238,14 @@ describe('arc-date-range-picker bounds', () => {
 
     expect(outside.length, 'there are days on both sides of the window').to.be.greaterThan(0);
     expect(inside.length).to.equal(11);
-    expect(outside.every((d) => d.disabled), 'everything outside is disabled').to.equal(true);
-    expect(inside.every((d) => !d.disabled), 'everything inside is pickable').to.equal(true);
+    expect(
+      outside.every((d) => d.disabled),
+      'everything outside is disabled',
+    ).to.equal(true);
+    expect(
+      inside.every((d) => !d.disabled),
+      'everything inside is pickable',
+    ).to.equal(true);
   });
 
   // This was recorded as "the panel always shows the current month" and that
@@ -259,8 +279,9 @@ describe('arc-date-range-picker presets', () => {
     el.presets = [{ label: 'Last 7 days', days: 7 }];
     await open(el);
 
-    const preset = [...el.shadowRoot.querySelectorAll('button')]
-      .find((b) => b.textContent.includes('Last 7 days'));
+    const preset = [...el.shadowRoot.querySelectorAll('button')].find((b) =>
+      b.textContent.includes('Last 7 days'),
+    );
     expect(preset, 'the preset renders').to.not.equal(null);
 
     const details = [];

@@ -308,10 +308,30 @@ describe('PositionController flip: the exact fit', () => {
   // The probe's panel is 120x80 and its anchor 100x20; offset and padding are
   // 8 each, so a side fits exactly when the gap is 80 (or 120) + 16.
   const EXACT = [
-    { placement: 'bottom', opposite: 'top', at: () => ({ top: window.innerHeight - 116, left: 200 }), tighter: { top: 1 } },
-    { placement: 'top', opposite: 'bottom', at: () => ({ top: 96, left: 200 }), tighter: { top: -1 } },
-    { placement: 'right', opposite: 'left', at: () => ({ top: 200, left: window.innerWidth - 236 }), tighter: { left: 1 } },
-    { placement: 'left', opposite: 'right', at: () => ({ top: 200, left: 136 }), tighter: { left: -1 } },
+    {
+      placement: 'bottom',
+      opposite: 'top',
+      at: () => ({ top: window.innerHeight - 116, left: 200 }),
+      tighter: { top: 1 },
+    },
+    {
+      placement: 'top',
+      opposite: 'bottom',
+      at: () => ({ top: 96, left: 200 }),
+      tighter: { top: -1 },
+    },
+    {
+      placement: 'right',
+      opposite: 'left',
+      at: () => ({ top: 200, left: window.innerWidth - 236 }),
+      tighter: { left: 1 },
+    },
+    {
+      placement: 'left',
+      opposite: 'right',
+      at: () => ({ top: 200, left: 136 }),
+      tighter: { left: -1 },
+    },
   ];
 
   for (const { placement, opposite, at, tighter } of EXACT) {
@@ -369,7 +389,11 @@ describe('PositionController: the opt-outs', () => {
 
   it('constrainSize caps the panel to the room above it', async () => {
     const el = await probe({
-      placement: () => 'top', offset: 8, padding: 8, constrainSize: true, flip: false,
+      placement: () => 'top',
+      offset: 8,
+      padding: 8,
+      constrainSize: true,
+      flip: false,
     });
     el.placeAnchor({ top: 300, left: 100 });
     el.controller.show();
@@ -599,10 +623,10 @@ describe('arc-menubar nested menus on the top layer', () => {
     await import('../src/navigation/menubar.register.js');
     const el = document.createElement('arc-menubar');
     el.items = [
-      { label: 'File', items: [
-        { label: 'New' },
-        { label: 'Export', items: [{ label: 'PNG' }, { label: 'SVG' }] },
-      ] },
+      {
+        label: 'File',
+        items: [{ label: 'New' }, { label: 'Export', items: [{ label: 'PNG' }, { label: 'SVG' }] }],
+      },
     ];
     document.body.appendChild(el);
     await el.updateComplete;
@@ -622,8 +646,7 @@ describe('arc-menubar nested menus on the top layer', () => {
     const cell = el.shadowRoot.querySelector('.top');
     // The written coordinate, not a rect: menu-in opens from translateY(-4px),
     // so a rect read on the opening frame is 4px high.
-    expect(parseFloat(menu.style.top))
-      .to.be.closeTo(cell.getBoundingClientRect().bottom + 4, 1);
+    expect(parseFloat(menu.style.top)).to.be.closeTo(cell.getBoundingClientRect().bottom + 4, 1);
   });
 
   it('holds a menu and its submenu open at once, each positioned', async () => {
@@ -698,8 +721,9 @@ describe('arc-select on the top layer', () => {
     await el.updateComplete;
     el.open = false;
     await el.updateComplete;
-    expect(el.shadowRoot.querySelector('.select__dropdown').matches(':popover-open'))
-      .to.equal(false);
+    expect(el.shadowRoot.querySelector('.select__dropdown').matches(':popover-open')).to.equal(
+      false,
+    );
   });
 
   it('escapes an overflow:hidden ancestor', async () => {

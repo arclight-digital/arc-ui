@@ -28,8 +28,7 @@ import '../src/hydrate.js';
 
 afterEach(() => cleanup());
 
-const PIXEL =
-  'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
+const PIXEL = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
 
 const SERVER_HTML = `<arc-image   src="${PIXEL}" alt="pixel" aspect fit="cover"><template shadowroot="open" shadowrootmode="open"><style></style><!--lit-part o71FFQQIA5o=-->
       <div class="image-wrapper" part="base wrapper">

@@ -82,7 +82,9 @@ describe('context weights derive from role weights', () => {
     setToken('--font-label-weight', '700');
     for (const token of ['--section-title-weight', '--ui-accent-weight']) {
       probe.style.fontWeight = `var(${token})`;
-      expect(getComputedStyle(probe).fontWeight, `${token} should track the label role`).to.equal('700');
+      expect(getComputedStyle(probe).fontWeight, `${token} should track the label role`).to.equal(
+        '700',
+      );
     }
   });
 
@@ -92,7 +94,9 @@ describe('context weights derive from role weights', () => {
     setToken('--font-display-weight', '800');
     for (const token of ['--heading-weight', '--display-xl-weight', '--wordmark-weight']) {
       probe.style.fontWeight = `var(${token})`;
-      expect(getComputedStyle(probe).fontWeight, `${token} should track the display role`).to.equal('800');
+      expect(getComputedStyle(probe).fontWeight, `${token} should track the display role`).to.equal(
+        '800',
+      );
     }
   });
 
@@ -101,7 +105,9 @@ describe('context weights derive from role weights', () => {
     probe.style.fontWeight = 'var(--heading-weight)';
     document.body.appendChild(probe);
     setToken('--font-body-weight', '200');
-    expect(getComputedStyle(probe).fontWeight, 'headings should not follow body weight').to.equal('500');
+    expect(getComputedStyle(probe).fontWeight, 'headings should not follow body weight').to.equal(
+      '500',
+    );
   });
 });
 
@@ -131,7 +137,9 @@ describe('field text weight is one decision', () => {
     for (const [html, selector] of cases) {
       const el = mount(html);
       await el.updateComplete;
-      expect(weightOf(el, selector), `${el.localName} should follow --field-weight`).to.equal('600');
+      expect(weightOf(el, selector), `${el.localName} should follow --field-weight`).to.equal(
+        '600',
+      );
     }
   });
 });

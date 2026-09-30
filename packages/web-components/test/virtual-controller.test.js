@@ -31,7 +31,13 @@ customElements.define('vc-probe', Probe);
 /** A stand-in scroller: whatever numbers the test wants to hand the controller. */
 const viewport = (scrollTop, clientHeight) => ({ scrollTop, clientHeight });
 
-function harness({ scrollTop = 0, clientHeight = 100, total = 1000, rowHeight = 10, overscan = 0 } = {}) {
+function harness({
+  scrollTop = 0,
+  clientHeight = 100,
+  total = 1000,
+  rowHeight = 10,
+  overscan = 0,
+} = {}) {
   const host = mount('<vc-probe></vc-probe>');
   const state = { scrollTop, clientHeight, total, rowHeight, overscan, changes: [] };
   state.controller = new VirtualController(host, {
@@ -69,7 +75,13 @@ describe('VirtualController', () => {
   });
 
   it('does not window past the end', () => {
-    const s = harness({ scrollTop: 9900, clientHeight: 100, rowHeight: 10, total: 1000, overscan: 5 });
+    const s = harness({
+      scrollTop: 9900,
+      clientHeight: 100,
+      rowHeight: 10,
+      total: 1000,
+      overscan: 5,
+    });
     s.controller.measure();
     expect(s.controller.end).to.be.at.most(1000);
   });

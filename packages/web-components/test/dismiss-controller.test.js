@@ -83,7 +83,7 @@ async function fixture(opts = {}) {
     `<arc-dismiss-probe>
        <button class="light">light</button>
        <button class="light2">light2</button>
-     </arc-dismiss-probe>`
+     </arc-dismiss-probe>`,
   );
   const outside = document.createElement('button');
   outside.textContent = 'outside';
@@ -109,7 +109,7 @@ function down(target) {
 /** A focusout as the platform delivers it: fired at the node losing focus. */
 function focusOut(target, relatedTarget) {
   target.dispatchEvent(
-    new FocusEvent('focusout', { bubbles: true, composed: true, relatedTarget })
+    new FocusEvent('focusout', { bubbles: true, composed: true, relatedTarget }),
   );
 }
 

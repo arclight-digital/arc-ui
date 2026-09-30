@@ -30,11 +30,17 @@ const panel = (el) => el.shadowRoot.querySelector('[part~="panel"]');
 
 /** A page with an input to be reading from, and the overlay after it. */
 async function page(tag, attrs = 'no-modal') {
-  const wrap = mount(`<div><input id="reading" aria-label="Reading"><button id="behind">Behind</button>
+  const wrap =
+    mount(`<div><input id="reading" aria-label="Reading"><button id="behind">Behind</button>
     <${tag} heading="Panel" ${attrs}><button id="inside">Inside</button></${tag}></div>`);
   const el = wrap.querySelector(tag);
   await settle(el);
-  return { el, reading: wrap.querySelector('#reading'), behind: wrap.querySelector('#behind'), inside: wrap.querySelector('#inside') };
+  return {
+    el,
+    reading: wrap.querySelector('#reading'),
+    behind: wrap.querySelector('#behind'),
+    inside: wrap.querySelector('#inside'),
+  };
 }
 
 async function open(el) {
@@ -43,7 +49,12 @@ async function open(el) {
 }
 
 function escapeOn(target) {
-  const e = new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, composed: true, cancelable: true });
+  const e = new KeyboardEvent('keydown', {
+    key: 'Escape',
+    bubbles: true,
+    composed: true,
+    cancelable: true,
+  });
   target.dispatchEvent(e);
   return e;
 }
@@ -76,9 +87,14 @@ for (const { tag } of SUBJECTS) {
       const hit = document.elementFromPoint(box.left + 2, box.top + 2);
       // The drawer may cover the button's corner on the left edge; the sheet
       // covers the bottom. Either way the page is reachable where it is visible.
-      expect(hit === behind || panel(el).contains(hit) || hit === el, 'the page takes the click').to.equal(true);
+      expect(
+        hit === behind || panel(el).contains(hit) || hit === el,
+        'the page takes the click',
+      ).to.equal(true);
       let clicked = false;
-      behind.addEventListener('click', () => { clicked = true; });
+      behind.addEventListener('click', () => {
+        clicked = true;
+      });
       behind.click();
       expect(clicked).to.equal(true);
     });
@@ -146,7 +162,14 @@ for (const { tag } of SUBJECTS) {
       inside.focus();
       inside.addEventListener('keydown', (e) => e.preventDefault(), { once: true });
       escapeOn(inside);
-      inside.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, composed: true, cancelable: true }));
+      inside.dispatchEvent(
+        new KeyboardEvent('keydown', {
+          key: 'Enter',
+          bubbles: true,
+          composed: true,
+          cancelable: true,
+        }),
+      );
       await settle(el);
       expect(el.open).to.equal(true);
     });
@@ -202,7 +225,15 @@ describe('arc-sheet snap points', () => {
     el.addEventListener('arc-change', (e) => seen.push(e.detail.value));
     return seen;
   };
-  const pointer = (box, y) => ({ bubbles: true, composed: true, pointerId: 1, isPrimary: true, pointerType: 'mouse', clientX: box.left + 10, clientY: y });
+  const pointer = (box, y) => ({
+    bubbles: true,
+    composed: true,
+    pointerId: 1,
+    isPrimary: true,
+    pointerType: 'mouse',
+    clientX: box.left + 10,
+    clientY: y,
+  });
   const pause = (ms) => new Promise((r) => setTimeout(r, ms));
   /**
    * A drag at a human pace: moves 80ms apart, so the release reads as a
@@ -267,7 +298,10 @@ describe('arc-sheet snap points', () => {
   it('steps between heights from the keyboard', async () => {
     const el = await sheet('snap-points="100px, 200px, 300px"');
     const seen = changes(el);
-    const key = (k) => handle(el).dispatchEvent(new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }));
+    const key = (k) =>
+      handle(el).dispatchEvent(
+        new KeyboardEvent('keydown', { key: k, bubbles: true, cancelable: true }),
+      );
     key('ArrowUp');
     key('ArrowUp');
     key('ArrowUp'); // already at the top
@@ -287,14 +321,18 @@ describe('arc-sheet snap points', () => {
     const box = h.getBoundingClientRect();
     h.dispatchEvent(new PointerEvent('pointerdown', pointer(box, box.top + 4)));
     h.dispatchEvent(new PointerEvent('pointermove', pointer(box, box.top + 4 - 120)));
-    expect(getComputedStyle(panel).transitionDuration.split(',').every((d) => parseFloat(d) === 0)).to.equal(true);
+    expect(
+      getComputedStyle(panel)
+        .transitionDuration.split(',')
+        .every((d) => parseFloat(d) === 0),
+    ).to.equal(true);
     expect(Math.round(panel.getBoundingClientRect().height)).to.equal(220);
     h.dispatchEvent(new PointerEvent('pointerup', pointer(box, box.top + 4 - 120)));
   });
 
   it('snaps a drag to the nearest height', async () => {
     const el = await sheet();
-    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
+    expect(await settledAt(el, 100), 'rests at 100px before the drag').to.equal(true);
     const seen = changes(el);
     await drag(el, -150); // up to 250: nearer 300 than 100
     await settle(el);
@@ -304,7 +342,7 @@ describe('arc-sheet snap points', () => {
 
   it('settles back when a drag ends nearer where it started', async () => {
     const el = await sheet();
-    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
+    expect(await settledAt(el, 100), 'rests at 100px before the drag').to.equal(true);
     const seen = changes(el);
     await drag(el, -40);
     await settle(el);
@@ -314,7 +352,7 @@ describe('arc-sheet snap points', () => {
 
   it('goes to the next height on a flick, however short', async () => {
     const el = await sheet();
-    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
+    expect(await settledAt(el, 100), 'rests at 100px before the drag').to.equal(true);
     const seen = changes(el);
     await flick(el, -45); // 145: nearer 100, but moving up fast
     await settle(el);
@@ -323,7 +361,7 @@ describe('arc-sheet snap points', () => {
 
   it('requests a close when dragged well below the smallest height', async () => {
     const el = await sheet();
-    expect(await settledAt(el, 100), "rests at 100px before the drag").to.equal(true);
+    expect(await settledAt(el, 100), 'rests at 100px before the drag').to.equal(true);
     let closes = 0;
     el.addEventListener('arc-close', () => closes++);
     await drag(el, 80); // to 20px, under 60% of 100
@@ -333,7 +371,9 @@ describe('arc-sheet snap points', () => {
   });
 
   it('ignores snap points on a right sheet', async () => {
-    const el = mount('<arc-sheet open side="right" heading="S" snap-points="100px, 300px">Body</arc-sheet>');
+    const el = mount(
+      '<arc-sheet open side="right" heading="S" snap-points="100px, 300px">Body</arc-sheet>',
+    );
     await settle(el);
     expect(handle(el).hasAttribute('role')).to.equal(false);
     expect(panel(el).style.getPropertyValue('--_snap-height')).to.equal('');
@@ -357,11 +397,21 @@ describe('arc-sheet persistent and empty chrome (4.7.0)', () => {
   const footer = (el) => el.shadowRoot.querySelector('[part~="footer"]');
 
   it('ignores Escape and has no close button when persistent (#136)', async () => {
-    const el = await open('persistent no-modal snap-points="100px, 300px"', '<button id="b">In</button>');
+    const el = await open(
+      'persistent no-modal snap-points="100px, 300px"',
+      '<button id="b">In</button>',
+    );
     expect(el.shadowRoot.querySelector('[part~="close"]') === null).to.equal(true);
     const b = el.querySelector('#b');
     b.focus();
-    b.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, composed: true, cancelable: true }));
+    b.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Escape',
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+      }),
+    );
     await settle(el);
     expect(el.open).to.equal(true);
   });
@@ -375,12 +425,22 @@ describe('arc-sheet persistent and empty chrome (4.7.0)', () => {
 
   it('settles back on the smallest height instead of closing when dragged down (#136)', async () => {
     const el = await open('persistent snap-points="100px, 300px" snap="1"');
-    await until(() => Math.abs(panel(el).getBoundingClientRect().height - 300) <= 1, { timeout: 1500 });
+    await until(() => Math.abs(panel(el).getBoundingClientRect().height - 300) <= 1, {
+      timeout: 1500,
+    });
     let closes = 0;
     el.addEventListener('arc-close', () => closes++);
     const h = el.shadowRoot.querySelector('[part~="handle"]');
     const box = h.getBoundingClientRect();
-    const p = (y) => ({ bubbles: true, composed: true, pointerId: 1, isPrimary: true, pointerType: 'mouse', clientX: box.left + 5, clientY: y });
+    const p = (y) => ({
+      bubbles: true,
+      composed: true,
+      pointerId: 1,
+      isPrimary: true,
+      pointerType: 'mouse',
+      clientX: box.left + 5,
+      clientY: y,
+    });
     h.dispatchEvent(new PointerEvent('pointerdown', p(box.top + 4)));
     await new Promise((r) => setTimeout(r, 80));
     h.dispatchEvent(new PointerEvent('pointermove', p(box.top + 290)));

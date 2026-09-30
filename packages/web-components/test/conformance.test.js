@@ -43,7 +43,10 @@ const manifest = await fetch(new URL('../custom-elements.json', import.meta.url)
 const ONLY = globalThis.__ARC_CONFORMANCE_ONLY__ ?? null;
 
 const modules = manifest.modules
-  .map((m) => ({ path: m.path, tags: (m.declarations ?? []).map((d) => d.tagName).filter(Boolean) }))
+  .map((m) => ({
+    path: m.path,
+    tags: (m.declarations ?? []).map((d) => d.tagName).filter(Boolean),
+  }))
   .filter((m) => m.tags.length)
   .filter((m) => !ONLY || m.tags.some((t) => ONLY.includes(t)));
 

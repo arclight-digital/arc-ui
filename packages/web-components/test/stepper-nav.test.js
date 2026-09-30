@@ -257,7 +257,10 @@ describe('arc-stepper-nav: an out-of-range active', () => {
   it('does not read every step as completed past the end', async () => {
     const el = await stepper('active="99"');
     const labels = indicators(el).map((b) => b.getAttribute('aria-label'));
-    expect(labels.filter((l) => l.endsWith('(completed)')), 'all but the last').to.have.lengthOf(4);
+    expect(
+      labels.filter((l) => l.endsWith('(completed)')),
+      'all but the last',
+    ).to.have.lengthOf(4);
   });
 
   it('the label and the action agree at the end of the wizard', async () => {

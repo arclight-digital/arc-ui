@@ -20,7 +20,12 @@ function capturingWarn() {
   const warnings = [];
   const real = console.warn;
   console.warn = (...args) => warnings.push(args.join(' '));
-  return { warnings, restore: () => { console.warn = real; } };
+  return {
+    warnings,
+    restore: () => {
+      console.warn = real;
+    },
+  };
 }
 
 describe('built-in glyphs on a page with no icon library', () => {
@@ -43,7 +48,9 @@ describe('built-in glyphs on a page with no icon library', () => {
     const el = mount('<arc-sheet open heading="Sheet">Body</arc-sheet>');
     await el.updateComplete;
     const button = el.shadowRoot.querySelector('[part~="close"]');
-    await until(() => button.shadowRoot?.querySelector('arc-icon')?.shadowRoot?.querySelector('svg'));
+    await until(() =>
+      button.shadowRoot?.querySelector('arc-icon')?.shadowRoot?.querySelector('svg'),
+    );
     const svg = button.shadowRoot.querySelector('arc-icon').shadowRoot.querySelector('svg');
     expect(svg.querySelector('path').getAttribute('d')).to.equal('M6 6l12 12M18 6L6 18');
   });

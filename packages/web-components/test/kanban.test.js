@@ -24,7 +24,14 @@ afterEach(() => cleanup());
 useBaseCss();
 
 const COLUMNS = [
-  { id: 'todo', title: 'To do', items: [{ id: 'a', label: 'Alpha' }, { id: 'b', label: 'Bravo' }] },
+  {
+    id: 'todo',
+    title: 'To do',
+    items: [
+      { id: 'a', label: 'Alpha' },
+      { id: 'b', label: 'Bravo' },
+    ],
+  },
   { id: 'doing', title: 'Doing', items: [{ id: 'c', label: 'Charlie' }] },
   { id: 'done', title: 'Done', items: [] },
 ];
@@ -47,13 +54,23 @@ const cardById = (el, id) => el.shadowRoot.querySelector(`[part~="card"][data-ca
  */
 async function clickCard(el, id) {
   const card = cardById(el, id);
-  const init = { bubbles: true, pointerId: 1, isPrimary: true, pointerType: 'mouse', button: 0, clientX: 10, clientY: 10 };
+  const init = {
+    bubbles: true,
+    pointerId: 1,
+    isPrimary: true,
+    pointerType: 'mouse',
+    button: 0,
+    clientX: 10,
+    clientY: 10,
+  };
   card.dispatchEvent(new PointerEvent('pointerdown', init));
   card.dispatchEvent(new PointerEvent('pointerup', init));
   await settle(el);
 }
 const labelsIn = (el, colIndex) =>
-  [...columnEls(el)[colIndex].querySelectorAll('[part~="card-label"]')].map((n) => n.textContent.trim());
+  [...columnEls(el)[colIndex].querySelectorAll('[part~="card-label"]')].map((n) =>
+    n.textContent.trim(),
+  );
 const counts = (el) =>
   [...el.shadowRoot.querySelectorAll('[part~="column-count"]')].map((n) => n.textContent.trim());
 
@@ -64,7 +81,14 @@ describe('arc-kanban rendering', () => {
   it('exposes the documented css parts', async () => {
     const el = await board();
     for (const part of [
-      'board', 'column', 'column-header', 'column-title', 'column-count', 'list', 'card', 'card-label',
+      'board',
+      'column',
+      'column-header',
+      'column-title',
+      'column-count',
+      'list',
+      'card',
+      'card-label',
     ]) {
       expect(el.shadowRoot.querySelector(`[part~="${part}"]`), part).to.not.equal(null);
     }
@@ -78,13 +102,23 @@ describe('arc-kanban rendering', () => {
 
   it('titles each column', async () => {
     const el = await board();
-    expect([...el.shadowRoot.querySelectorAll('[part~="column-title"]')].map((n) => n.textContent.trim()))
-      .to.deep.equal(['To do', 'Doing', 'Done']);
+    expect(
+      [...el.shadowRoot.querySelectorAll('[part~="column-title"]')].map((n) =>
+        n.textContent.trim(),
+      ),
+    ).to.deep.equal(['To do', 'Doing', 'Done']);
   });
 
   it('renders a description only when the card has one', async () => {
     const el = await board('', [
-      { id: 'c1', title: 'C', items: [{ id: 'a', label: 'A', description: 'details' }, { id: 'b', label: 'B' }] },
+      {
+        id: 'c1',
+        title: 'C',
+        items: [
+          { id: 'a', label: 'A', description: 'details' },
+          { id: 'b', label: 'B' },
+        ],
+      },
     ]);
     expect(el.shadowRoot.querySelectorAll('[part~="card-description"]')).to.have.lengthOf(1);
   });
@@ -120,7 +154,15 @@ describe('arc-kanban column counts', () => {
       { id: 'x', title: 'X', limit: 3, items: [{ id: 'a', label: 'A' }] },
     ]);
     const over = await board('', [
-      { id: 'x', title: 'X', limit: 1, items: [{ id: 'a', label: 'A' }, { id: 'b', label: 'B' }] },
+      {
+        id: 'x',
+        title: 'X',
+        limit: 1,
+        items: [
+          { id: 'a', label: 'A' },
+          { id: 'b', label: 'B' },
+        ],
+      },
     ]);
 
     const colour = (el) =>
@@ -144,7 +186,13 @@ describe('arc-kanban card activation', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await board();
     let event = null;
-    document.body.addEventListener('arc-card-click', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-card-click',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     await clickCard(el, 'a');
 
@@ -269,8 +317,10 @@ describe('arc-kanban internal copy', () => {
     keyOn(cardById(el, 'a'), ' ');
     await settle(el);
 
-    expect(source[0].items.map((i) => i.id), 'the caller array is not mutated')
-      .to.deep.equal(['a', 'b']);
+    expect(
+      source[0].items.map((i) => i.id),
+      'the caller array is not mutated',
+    ).to.deep.equal(['a', 'b']);
   });
 
   it('re-renders when a new array is assigned', async () => {

@@ -135,7 +135,7 @@ const CASES = [
  * that render their own trigger and were simply never listed.
  */
 const manifest = await fetch(new URL('../custom-elements.json', import.meta.url)).then((r) =>
-  r.json()
+  r.json(),
 );
 
 const OPENABLE = manifest.modules
@@ -151,7 +151,8 @@ const NO_SECOND_PATH = {
   'arc-command-palette': 'no trigger of its own; opened by a global shortcut',
   'arc-confirm': 'no trigger of its own; wraps arc-dialog for an imperative API',
   'arc-dialog': 'no trigger of its own; the application opens it',
-  'arc-context-menu': 'opens from a contextmenu event on a separate target, not from a click on itself',
+  'arc-context-menu':
+    'opens from a contextmenu event on a separate target, not from a click on itself',
   'arc-search': 'the panel opens on typing, so there is no click path to compare',
   'arc-collapsible': 'a disclosure: the heading click is the only path there is',
   'arc-sidebar-section': 'a disclosure: the heading click is the only path there is',
@@ -176,12 +177,18 @@ describe('open parity: the sweep covers everything that opens', () => {
 
   it('no case or exemption names a component that cannot open', () => {
     const claimed = [...CASES.map((c) => c.tag), ...Object.keys(NO_SECOND_PATH)];
-    expect(claimed.filter((t) => !OPENABLE.includes(t)), 'listed but not openable').to.eql([]);
+    expect(
+      claimed.filter((t) => !OPENABLE.includes(t)),
+      'listed but not openable',
+    ).to.eql([]);
   });
 
   it('nothing is both swept and exempted', () => {
     const swept = CASES.map((c) => c.tag);
-    expect(swept.filter((t) => t in NO_SECOND_PATH), 'in both lists').to.eql([]);
+    expect(
+      swept.filter((t) => t in NO_SECOND_PATH),
+      'in both lists',
+    ).to.eql([]);
   });
 });
 

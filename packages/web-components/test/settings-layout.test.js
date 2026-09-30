@@ -17,7 +17,9 @@ async function layout(attrs = 'sections', wrapped = true) {
   const items = `
     <arc-settings-nav-item href="#t-profile">Profile</arc-settings-nav-item>
     <arc-settings-nav-item href="#t-security">Security</arc-settings-nav-item>`;
-  const nav = wrapped ? `<nav slot="nav" aria-label="Settings">${items}</nav>` : items.replaceAll('<arc-settings-nav-item', '<arc-settings-nav-item slot="nav"');
+  const nav = wrapped
+    ? `<nav slot="nav" aria-label="Settings">${items}</nav>`
+    : items.replaceAll('<arc-settings-nav-item', '<arc-settings-nav-item slot="nav"');
   const el = mount(`<arc-settings-layout ${attrs}>${nav}
     <section id="t-profile">Profile body</section>
     <section id="t-security">Security body</section></arc-settings-layout>`);
@@ -77,8 +79,13 @@ describe('arc-settings-layout nav', () => {
   it('declares the phone tab row', async () => {
     // The runner's viewport is wide, so the narrow rule is asserted on the sheet.
     const el = await layout();
-    const css = el.shadowRoot.adoptedStyleSheets.flatMap((s) => [...s.cssRules]).map((r) => r.cssText).join('\n');
-    expect(css).to.match(/@media \(max-width: 768px\)[\s\S]*flex-direction: row[\s\S]*overflow-x: auto/);
+    const css = el.shadowRoot.adoptedStyleSheets
+      .flatMap((s) => [...s.cssRules])
+      .map((r) => r.cssText)
+      .join('\n');
+    expect(css).to.match(
+      /@media \(max-width: 768px\)[\s\S]*flex-direction: row[\s\S]*overflow-x: auto/,
+    );
   });
 });
 
@@ -103,7 +110,9 @@ describe('arc-settings-layout containment (4.7.0)', () => {
     document.head.appendChild(style);
     try {
       const el = await layout();
-      const visible = [...el.querySelectorAll('section')].filter((s) => getComputedStyle(s).display !== 'none').map((s) => s.id);
+      const visible = [...el.querySelectorAll('section')]
+        .filter((s) => getComputedStyle(s).display !== 'none')
+        .map((s) => s.id);
       expect(visible).to.deep.equal(['t-profile']);
     } finally {
       style.remove();

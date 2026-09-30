@@ -183,6 +183,13 @@ export class ArcToolbar extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = {
+    prefix: '_onSlotChange',
+    '': '_onSlotChange',
+    suffix: '_onSlotChange',
+  };
+
   constructor() {
     super();
     this._overflowItems = [];

@@ -19,8 +19,7 @@ import '../src/input/image-cropper.register.js';
 afterEach(() => cleanup());
 
 /** A 4:3 red PNG, inline so it loads without a network round trip. */
-const IMG =
-  'data:image/gif;base64,R0lGODlhBAADAPAAAP8AAAAAACH5BAAAAAAALAAAAAAEAAMAAAIDhI9WADs=';
+const IMG = 'data:image/gif;base64,R0lGODlhBAADAPAAAP8AAAAAACH5BAAAAAAALAAAAAAEAAMAAAIDhI9WADs=';
 
 async function cropper(attrs = '') {
   const el = mount(`<arc-image-cropper src="${IMG}" height="240" ${attrs}></arc-image-cropper>`);
@@ -55,7 +54,9 @@ describe('arc-image-cropper loading states', () => {
   });
 
   it('reports a broken image as an alert', async () => {
-    const el = mount('<arc-image-cropper src="/definitely-not-an-image.png" height="240"></arc-image-cropper>');
+    const el = mount(
+      '<arc-image-cropper src="/definitely-not-an-image.png" height="240"></arc-image-cropper>',
+    );
     await settle(el);
     for (let i = 0; i < 10 && !part(el, 'error'); i++) {
       await nextFrame();
@@ -92,8 +93,9 @@ describe('arc-image-cropper crop rectangle', () => {
     await settle(el);
     await nextFrame();
 
-    expect(crop(el).getBoundingClientRect().left, 'moved along the inline axis')
-      .to.be.greaterThan(before.left - 0.5);
+    expect(crop(el).getBoundingClientRect().left, 'moved along the inline axis').to.be.greaterThan(
+      before.left - 0.5,
+    );
   });
 
   it('claims the arrow keys so the page does not scroll', async () => {
@@ -240,7 +242,13 @@ describe('arc-image-cropper arc-crop-change', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await cropper();
     let event = null;
-    document.body.addEventListener('arc-crop-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-crop-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     keyOn(crop(el), 'ArrowRight');
     await settle(el);

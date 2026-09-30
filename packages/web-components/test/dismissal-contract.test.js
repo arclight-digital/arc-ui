@@ -39,7 +39,7 @@ import { expect } from '@esm-bundle/chai';
 import { mount, cleanup, settle, deepActive } from './helpers.js';
 
 const manifest = await fetch(new URL('../custom-elements.json', import.meta.url)).then((r) =>
-  r.json()
+  r.json(),
 );
 
 /** Every custom element with a public `open` member, with its own docs. */
@@ -51,7 +51,7 @@ const SUBJECTS = manifest.modules.flatMap((m) =>
       path: m.path,
       open: (d.members ?? []).find((x) => x.name === 'open'),
       events: d.events ?? [],
-    }))
+    })),
 );
 
 // The register module, not the component module: importing the class does not
@@ -60,7 +60,8 @@ const unimportable = [];
 for (const { tag, path } of SUBJECTS) {
   try {
     await import(
-      /* @vite-ignore */ new URL(`../${path.replace(/\.js$/, '.register.js')}`, import.meta.url).href
+      /* @vite-ignore */ new URL(`../${path.replace(/\.js$/, '.register.js')}`, import.meta.url)
+        .href
     );
   } catch (error) {
     unimportable.push(`${tag}: ${error.message.slice(0, 80)}`);
@@ -108,7 +109,11 @@ const POLICY = {
   'arc-notification-panel': { escape: 'BUG', outside: true, bug: '#86' },
 
   // ── Field-with-a-panel: the panel dismisses, the field keeps focus ────────
-  'arc-select': { escape: true, outside: true, markup: '<arc-select><arc-option value="a">A</arc-option></arc-select>' },
+  'arc-select': {
+    escape: true,
+    outside: true,
+    markup: '<arc-select><arc-option value="a">A</arc-option></arc-select>',
+  },
   'arc-tree-select': { escape: true, outside: true },
   'arc-date-picker': { escape: true, outside: true },
   'arc-date-range-picker': { escape: true, outside: true },
@@ -123,9 +128,21 @@ const POLICY = {
   },
 
   // ── Not overlays. `open` here is disclosure or layout state ───────────────
-  'arc-collapsible': { escape: null, outside: null, why: 'a disclosure; its heading is the only control' },
-  'arc-sidebar-section': { escape: null, outside: null, why: 'a disclosure inside a persistent nav' },
-  'arc-float-bar': { escape: null, outside: null, why: 'layout affordance; visibility tracks a selection, not focus' },
+  'arc-collapsible': {
+    escape: null,
+    outside: null,
+    why: 'a disclosure; its heading is the only control',
+  },
+  'arc-sidebar-section': {
+    escape: null,
+    outside: null,
+    why: 'a disclosure inside a persistent nav',
+  },
+  'arc-float-bar': {
+    escape: null,
+    outside: null,
+    why: 'layout affordance; visibility tracks a selection, not focus',
+  },
 };
 
 describe('dismissal contract: the derivation itself', () => {
@@ -149,8 +166,14 @@ describe('dismissal contract: the derivation itself', () => {
   it('POLICY has exactly one row per subject, and no rows for anything else', () => {
     const tags = SUBJECTS.map((s) => s.tag).sort();
     const rows = Object.keys(POLICY).sort();
-    expect(rows.filter((t) => !tags.includes(t)), 'POLICY rows with no such component').to.eql([]);
-    expect(tags.filter((t) => !rows.includes(t)), 'components with no POLICY row').to.eql([]);
+    expect(
+      rows.filter((t) => !tags.includes(t)),
+      'POLICY rows with no such component',
+    ).to.eql([]);
+    expect(
+      tags.filter((t) => !rows.includes(t)),
+      'components with no POLICY row',
+    ).to.eql([]);
   });
 
   it('every pinned gap names its finding', () => {
@@ -280,13 +303,18 @@ async function pressEscape(el) {
     (active && active !== el && within(el, active) && active) ||
     el.shadowRoot?.querySelector(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"]), ' +
-        '[role="menu"], [role="listbox"], [role="dialog"], [role="tooltip"]'
+        '[role="menu"], [role="listbox"], [role="dialog"], [role="tooltip"]',
     ) ||
     (el.shadowRoot && deepestIn(el.shadowRoot)) ||
     el;
 
   origin.dispatchEvent(
-    new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, composed: true, cancelable: true })
+    new KeyboardEvent('keydown', {
+      key: 'Escape',
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+    }),
   );
 }
 
@@ -320,7 +348,7 @@ async function dismissOutside(el) {
   const backdrop = deepQuery(el, '[part~="backdrop"], [class*="backdrop"]');
   if (!backdrop) {
     document.body.dispatchEvent(
-      new PointerEvent('pointerdown', { bubbles: true, composed: true, cancelable: true })
+      new PointerEvent('pointerdown', { bubbles: true, composed: true, cancelable: true }),
     );
     return 'document pointerdown';
   }
@@ -328,11 +356,13 @@ async function dismissOutside(el) {
   // Click first — the documented backdrop gesture — and only fall through to
   // pointerdown if the component listens for that instead. Sequential, not
   // both, so a component cannot be closed twice and pass the once-only test.
-  backdrop.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true, cancelable: true }));
+  backdrop.dispatchEvent(
+    new MouseEvent('click', { bubbles: true, composed: true, cancelable: true }),
+  );
   await el.updateComplete;
   if (el.open) {
     backdrop.dispatchEvent(
-      new PointerEvent('pointerdown', { bubbles: true, composed: true, cancelable: true })
+      new PointerEvent('pointerdown', { bubbles: true, composed: true, cancelable: true }),
     );
   }
   return 'backdrop click';
@@ -449,8 +479,10 @@ describe('dismissal contract: closing announces itself exactly once', () => {
       await settle();
 
       expect(el.open, 'precondition: it closed').to.equal(false);
-      expect(seen.length, `expected one of ${closeEvents.join('/')}, got ${seen.join(',')}`)
-        .to.equal(1);
+      expect(
+        seen.length,
+        `expected one of ${closeEvents.join('/')}, got ${seen.join(',')}`,
+      ).to.equal(1);
     });
   }
 });
@@ -541,7 +573,9 @@ describe('dismissal contract: the guard that swallows Escape', () => {
     // Pins the boundary measured while diagnosing #85, so a future "fix" that
     // narrows `_selectableItems` to enabled items reintroduces the bug for the
     // most common context-menu state there is.
-    const el = mount('<arc-context-menu><arc-menu-item disabled>A</arc-menu-item></arc-context-menu>');
+    const el = mount(
+      '<arc-context-menu><arc-menu-item disabled>A</arc-menu-item></arc-context-menu>',
+    );
     await el.updateComplete;
     el.open = true;
     await el.updateComplete;

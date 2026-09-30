@@ -120,6 +120,9 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { legend: '_onLegendSlotChange', actions: '_onActionsSlotChange' };
+
   constructor() {
     super();
     this.legend = '';

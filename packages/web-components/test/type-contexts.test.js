@@ -96,7 +96,10 @@ describe('--ui-lh: running text inside a control', () => {
     // Anti-vacuity: --ui-lh must not be the leading of everything, or it is
     // just --line-height with extra steps and the distinction it names is gone.
     setToken('--ui-lh', '3');
-    const alert = await styleOf('<arc-alert heading="x">Body copy here.</arc-alert>', '.alert__content');
+    const alert = await styleOf(
+      '<arc-alert heading="x">Body copy here.</arc-alert>',
+      '.alert__content',
+    );
     const size = parseFloat(alert.fontSize);
     expect(parseFloat(alert.lineHeight)).to.be.lessThan(size * 3);
   });
@@ -124,7 +127,10 @@ describe('--numeral-*: the large figure', () => {
     // clamp, character for character, in two files with nothing between them.
     setToken('--numeral-size', '61px');
     const clock = await styleOf('<arc-clock></arc-clock>', '.time');
-    const timer = await styleOf('<arc-countdown-timer to="2030-01-01"></arc-countdown-timer>', '.number');
+    const timer = await styleOf(
+      '<arc-countdown-timer to="2030-01-01"></arc-countdown-timer>',
+      '.number',
+    );
     expect(clock.fontSize).to.equal('61px');
     expect(timer.fontSize).to.equal('61px');
   });
@@ -162,7 +168,9 @@ describe('the role weights reach the components that had spelled them', () => {
     const th = await styleOf(GRID, 'th');
     const alert = await styleOf('<arc-alert heading="Careful">x</arc-alert>', '.alert__heading');
     expect(th.fontWeight).to.equal('250');
-    expect(alert.fontWeight, 'arc-alert had font-weight: 600 in its own stylesheet').to.equal('250');
+    expect(alert.fontWeight, 'arc-alert had font-weight: 600 in its own stylesheet').to.equal(
+      '250',
+    );
   });
 
   it('500 follows the body role', async () => {

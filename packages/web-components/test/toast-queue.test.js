@@ -88,7 +88,9 @@ describe('arc-toast: visible cap and FIFO queue', () => {
   it('drops the oldest queued entries past queueLimit and reports it', async () => {
     const el = await mountToast('max-visible="1" queue-limit="2" duration="0"');
     let dropped = 0;
-    el.addEventListener('arc-queue-overflow', (e) => { dropped += e.detail.dropped; });
+    el.addEventListener('arc-queue-overflow', (e) => {
+      dropped += e.detail.dropped;
+    });
 
     const q = counts(el);
     for (const m of ['v', 'q1', 'q2', 'q3']) el.show({ message: m });
@@ -99,8 +101,7 @@ describe('arc-toast: visible cap and FIFO queue', () => {
 
     // Which two survived, shown rather than inspected: clearing the screen
     // releases them in order, and `q1` — the dropped one — never appears.
-    const dismissVisible = () =>
-      el.shadowRoot.querySelector('[part~="dismiss"]').click();
+    const dismissVisible = () => el.shadowRoot.querySelector('[part~="dismiss"]').click();
 
     dismissVisible();
     await until(() => messages(el).join() === 'q2', 'q2 released first');
@@ -113,7 +114,9 @@ describe('arc-toast: visible cap and FIFO queue', () => {
   it('reports visible and queued counts as they change', async () => {
     const el = await mountToast('max-visible="1" duration="0"');
     const seen = [];
-    el.addEventListener('arc-queue-change', (e) => { seen.push(e.detail); });
+    el.addEventListener('arc-queue-change', (e) => {
+      seen.push(e.detail);
+    });
 
     el.show({ message: 'one' });
     el.show({ message: 'two' });

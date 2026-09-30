@@ -4,25 +4,41 @@ import { mount, cleanup, tick, deepActive } from './helpers.js';
 
 /** Send a key to an element the way a real press reaches it. */
 function key(el, k, init = {}) {
-  el.dispatchEvent(new KeyboardEvent('keydown', {
-    key: k, bubbles: true, composed: true, cancelable: true, ...init,
-  }));
+  el.dispatchEvent(
+    new KeyboardEvent('keydown', {
+      key: k,
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+      ...init,
+    }),
+  );
 }
 
 /** An instrument bank: two-level tree with a disabled leaf. */
 function sampleItems() {
   return [
-    { value: 'keys', label: 'Keys', children: [
-      { value: 'piano', label: 'Piano' },
-      { value: 'rhodes', label: 'Rhodes', disabled: true },
-    ] },
-    { value: 'strings', label: 'Strings', children: [
-      { value: 'violin', label: 'Violin' },
-      { value: 'cello', label: 'Cello' },
-    ] },
-    { value: 'percussion', label: 'Percussion', children: [
-      { value: 'timpani', label: 'Timpani' },
-    ] },
+    {
+      value: 'keys',
+      label: 'Keys',
+      children: [
+        { value: 'piano', label: 'Piano' },
+        { value: 'rhodes', label: 'Rhodes', disabled: true },
+      ],
+    },
+    {
+      value: 'strings',
+      label: 'Strings',
+      children: [
+        { value: 'violin', label: 'Violin' },
+        { value: 'cello', label: 'Cello' },
+      ],
+    },
+    {
+      value: 'percussion',
+      label: 'Percussion',
+      children: [{ value: 'timpani', label: 'Timpani' }],
+    },
   ];
 }
 
@@ -47,7 +63,7 @@ function rowLabels(el) {
 
 function rowByLabel(el, label) {
   return rows(el).find(
-    (r) => r.querySelector('.tree-select__row-label').textContent.trim() === label
+    (r) => r.querySelector('.tree-select__row-label').textContent.trim() === label,
   );
 }
 
@@ -80,7 +96,9 @@ describe('arc-tree-select: open and close', () => {
     await el.updateComplete;
 
     let fired = false;
-    el.addEventListener('arc-change', () => { fired = true; });
+    el.addEventListener('arc-change', () => {
+      fired = true;
+    });
     key(trigger(el), 'Escape');
     await el.updateComplete;
 
@@ -99,7 +117,9 @@ describe('arc-tree-select: leaf-only selection', () => {
     await el.updateComplete;
 
     let detail = null;
-    el.addEventListener('arc-change', (e) => { detail = e.detail; });
+    el.addEventListener('arc-change', (e) => {
+      detail = e.detail;
+    });
 
     rowByLabel(el, 'Strings').click();
     await el.updateComplete;
@@ -119,7 +139,9 @@ describe('arc-tree-select: leaf-only selection', () => {
     await el.updateComplete;
 
     let fired = false;
-    el.addEventListener('arc-change', () => { fired = true; });
+    el.addEventListener('arc-change', () => {
+      fired = true;
+    });
     rowByLabel(el, 'Keys').click();
     await el.updateComplete;
 
@@ -165,7 +187,11 @@ describe('arc-tree-select: expansion state', () => {
     const el = await mountTreeSelect();
     el.value = 'cello';
     await el.updateComplete;
-    expect(rowLabels(el), 'still collapsed while closed').to.deep.equal(['Keys', 'Strings', 'Percussion']);
+    expect(rowLabels(el), 'still collapsed while closed').to.deep.equal([
+      'Keys',
+      'Strings',
+      'Percussion',
+    ]);
 
     el.open = true;
     await el.updateComplete;
@@ -225,7 +251,9 @@ describe('arc-tree-select: keyboard', () => {
     await el.updateComplete;
 
     let detail = null;
-    el.addEventListener('arc-change', (e) => { detail = e.detail; });
+    el.addEventListener('arc-change', (e) => {
+      detail = e.detail;
+    });
     key(trigger(el), 'Enter');
     await el.updateComplete;
 
@@ -261,7 +289,9 @@ describe('arc-tree-select: keyboard', () => {
     await el.updateComplete;
 
     let fired = false;
-    el.addEventListener('arc-change', () => { fired = true; });
+    el.addEventListener('arc-change', () => {
+      fired = true;
+    });
     key(trigger(el), 'Enter');
     await el.updateComplete;
 
@@ -278,7 +308,9 @@ describe('arc-tree-select: keyboard', () => {
     key(trigger(el), 'p');
     await el.updateComplete;
     const active = el.shadowRoot.querySelector('.tree-select__row--active');
-    expect(active.querySelector('.tree-select__row-label').textContent.trim()).to.equal('Percussion');
+    expect(active.querySelector('.tree-select__row-label').textContent.trim()).to.equal(
+      'Percussion',
+    );
   });
 });
 
@@ -297,7 +329,7 @@ describe('arc-tree-select: disabled nodes', () => {
     // Nav order with Keys expanded: Keys, Piano, Strings, ... — Rhodes absent.
     const navLabels = Array.from(
       { length: el._navRows.length },
-      (_, i) => el._navRows[i].node.label
+      (_, i) => el._navRows[i].node.label,
     );
     expect(navLabels).to.not.include('Rhodes');
   });
@@ -309,7 +341,9 @@ describe('arc-tree-select: disabled nodes', () => {
     await el.updateComplete;
 
     let fired = false;
-    el.addEventListener('arc-change', () => { fired = true; });
+    el.addEventListener('arc-change', () => {
+      fired = true;
+    });
     rowByLabel(el, 'Rhodes').click();
     await el.updateComplete;
 
@@ -345,7 +379,9 @@ describe('arc-tree-select: form participation', () => {
   afterEach(cleanup);
 
   it('submits the selected leaf value under its name', async () => {
-    const form = mount('<form><arc-tree-select name="instrument" label="Instrument"></arc-tree-select></form>');
+    const form = mount(
+      '<form><arc-tree-select name="instrument" label="Instrument"></arc-tree-select></form>',
+    );
     const el = form.querySelector('arc-tree-select');
     el.items = sampleItems();
     await el.updateComplete;
@@ -356,7 +392,9 @@ describe('arc-tree-select: form participation', () => {
   });
 
   it('required with no selection is invalid, and selecting fixes it', async () => {
-    const form = mount('<form><arc-tree-select name="instrument" label="Instrument" required></arc-tree-select></form>');
+    const form = mount(
+      '<form><arc-tree-select name="instrument" label="Instrument" required></arc-tree-select></form>',
+    );
     const el = form.querySelector('arc-tree-select');
     el.items = sampleItems();
     await el.updateComplete;
@@ -370,7 +408,9 @@ describe('arc-tree-select: form participation', () => {
   });
 
   it('form.reset() restores the initial value', async () => {
-    const form = mount('<form><arc-tree-select name="instrument" label="Instrument"></arc-tree-select></form>');
+    const form = mount(
+      '<form><arc-tree-select name="instrument" label="Instrument"></arc-tree-select></form>',
+    );
     const el = form.querySelector('arc-tree-select');
     el.items = sampleItems();
     await el.updateComplete;

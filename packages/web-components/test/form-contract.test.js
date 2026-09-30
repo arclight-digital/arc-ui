@@ -45,21 +45,91 @@ import '../src/input/rating.register.js';
 
 /** tag → how to programmatically make the control non-empty. */
 const REQUIRED_SWEEP = [
-  ['arc-input', (el) => { el.value = 'x'; }],
-  ['arc-textarea', (el) => { el.value = 'x'; }],
-  ['arc-select', (el) => { el.value = 'a'; }],
-  ['arc-combobox', (el) => { el.value = 'a'; }],
-  ['arc-multi-select', (el) => { el.value = ['a']; }],
-  ['arc-radio-group', (el) => { el.value = 'a'; }],
-  ['arc-checkbox', (el) => { el.checked = true; }],
-  ['arc-toggle', (el) => { el.checked = true; }],
-  ['arc-date-picker', (el) => { el.value = '2026-07-30'; }],
-  ['arc-time-picker', (el) => { el.value = '12:30'; }],
-  ['arc-pin-input', (el) => { el.value = '1234'; }],
-  ['arc-tag-input', (el) => { el.value = ['a']; }],
-  ['arc-password-input', (el) => { el.value = 'hunter2'; }],
+  [
+    'arc-input',
+    (el) => {
+      el.value = 'x';
+    },
+  ],
+  [
+    'arc-textarea',
+    (el) => {
+      el.value = 'x';
+    },
+  ],
+  [
+    'arc-select',
+    (el) => {
+      el.value = 'a';
+    },
+  ],
+  [
+    'arc-combobox',
+    (el) => {
+      el.value = 'a';
+    },
+  ],
+  [
+    'arc-multi-select',
+    (el) => {
+      el.value = ['a'];
+    },
+  ],
+  [
+    'arc-radio-group',
+    (el) => {
+      el.value = 'a';
+    },
+  ],
+  [
+    'arc-checkbox',
+    (el) => {
+      el.checked = true;
+    },
+  ],
+  [
+    'arc-toggle',
+    (el) => {
+      el.checked = true;
+    },
+  ],
+  [
+    'arc-date-picker',
+    (el) => {
+      el.value = '2026-07-30';
+    },
+  ],
+  [
+    'arc-time-picker',
+    (el) => {
+      el.value = '12:30';
+    },
+  ],
+  [
+    'arc-pin-input',
+    (el) => {
+      el.value = '1234';
+    },
+  ],
+  [
+    'arc-tag-input',
+    (el) => {
+      el.value = ['a'];
+    },
+  ],
+  [
+    'arc-password-input',
+    (el) => {
+      el.value = 'hunter2';
+    },
+  ],
   // The one number-valued control with a meaningful empty — see the header.
-  ['arc-rating', (el) => { el.value = 4; }],
+  [
+    'arc-rating',
+    (el) => {
+      el.value = 4;
+    },
+  ],
 ];
 
 describe('required ⇒ valueMissing until filled', () => {
@@ -70,7 +140,9 @@ describe('required ⇒ valueMissing until filled', () => {
       const el = mount(`<${tag} required></${tag}>`);
       await el.updateComplete;
       expect(el.checkValidity(), `${tag}: empty + required must be invalid`).to.equal(false);
-      expect(el.validity.valueMissing, `${tag}: the failing flag must be valueMissing`).to.equal(true);
+      expect(el.validity.valueMissing, `${tag}: the failing flag must be valueMissing`).to.equal(
+        true,
+      );
 
       fill(el);
       await el.updateComplete;

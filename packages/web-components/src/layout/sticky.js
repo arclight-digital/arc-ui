@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
+import { serverHostStyle } from '../shared/server-host-style.js';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
 
 /**
@@ -56,6 +57,11 @@ export class ArcSticky extends DeclaredPropsMixin(LitElement) {
     super();
     this.offset = '0px';
     this._observer = null;
+  }
+
+  /** The same custom property on the server, which never runs updated(). */
+  willUpdate(changed) {
+    if (changed.has('offset')) serverHostStyle(this, { '--_offset': this.offset });
   }
 
   updated(changed) {

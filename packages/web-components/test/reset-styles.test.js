@@ -10,7 +10,9 @@ import { mount, cleanup, settle } from './helpers.js';
 
 class ResetProbe extends LitElement {
   static styles = [resetStyles, css`p { margin: 7px; padding: 3px; width: 50px; }`];
-  render() { return html`<p>x</p>`; }
+  render() {
+    return html`<p>x</p>`;
+  }
 }
 customElements.define('reset-probe', ResetProbe);
 

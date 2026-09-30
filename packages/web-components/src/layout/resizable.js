@@ -1,4 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
+import { styleMap } from 'lit/directives/style-map.js';
 import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, oneOf, num } from '../shared/props.js';
 
@@ -231,8 +232,12 @@ export class ArcResizable extends DeclaredPropsMixin(LitElement) {
   }
 
   render() {
+    // Also in the template, which the server renders: the host property below
+    // (part of the documented surface, and kept) is written from firstUpdated,
+    // which only the browser runs, so a server-rendered panel sat at its
+    // content's width until the script arrived.
     return html`
-      <div class="container" part="base container">
+      <div class="container" part="base container" style=${styleMap({ '--panel-size': `${this.size}px` })}>
         <slot></slot>
       </div>
       <div

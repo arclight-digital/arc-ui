@@ -51,8 +51,9 @@ describe('arc-command-bar rendering', () => {
 
   it('passes the icon name through, with a default', async () => {
     const el = await bar();
-    expect(el.shadowRoot.querySelector('arc-icon').getAttribute('name'))
-      .to.equal('magnifying-glass');
+    expect(el.shadowRoot.querySelector('arc-icon').getAttribute('name')).to.equal(
+      'magnifying-glass',
+    );
 
     const custom = await bar('icon="command"');
     expect(custom.shadowRoot.querySelector('arc-icon').getAttribute('name')).to.equal('command');
@@ -182,7 +183,10 @@ describe('arc-command-bar accessibility', () => {
     await settle(el);
 
     let nativeSubmits = 0;
-    form.addEventListener('submit', (e) => { e.preventDefault(); nativeSubmits++; });
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      nativeSubmits++;
+    });
     const seen = record(el, ['arc-submit']);
 
     const event = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });

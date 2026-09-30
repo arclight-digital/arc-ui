@@ -53,27 +53,33 @@ const navigations = (el) => {
 describe('arc-breadcrumb-menu: the trail', () => {
   it('renders one crumb per item with a separator between', async () => {
     const el = await crumbs();
-    expect(links(el).map((b) => b.textContent.trim().split('\n')[0].trim()))
-      .to.eql(['Home', 'Projects', 'Arc UI']);
-    expect(el.shadowRoot.querySelectorAll('[part~="separator"]').length, 'n-1 separators').to.equal(2);
+    expect(links(el).map((b) => b.textContent.trim().split('\n')[0].trim())).to.eql([
+      'Home',
+      'Projects',
+      'Arc UI',
+    ]);
+    expect(el.shadowRoot.querySelectorAll('[part~="separator"]').length, 'n-1 separators').to.equal(
+      2,
+    );
   });
 
   it('marks only the last crumb as the current page', async () => {
     const el = await crumbs();
-    expect(links(el).map((b) => b.getAttribute('aria-current')))
-      .to.eql(['false', 'false', 'page']);
+    expect(links(el).map((b) => b.getAttribute('aria-current'))).to.eql(['false', 'false', 'page']);
   });
 
   it('names the nav for assistive tech', async () => {
     const el = await crumbs();
-    expect(el.shadowRoot.querySelector('[part~="base"]').getAttribute('aria-label'))
-      .to.equal('Breadcrumb');
+    expect(el.shadowRoot.querySelector('[part~="base"]').getAttribute('aria-label')).to.equal(
+      'Breadcrumb',
+    );
   });
 
   it('takes a custom nav label', async () => {
     const el = await crumbs(ITEMS, 'label="You are here"');
-    expect(el.shadowRoot.querySelector('[part~="base"]').getAttribute('aria-label'))
-      .to.equal('You are here');
+    expect(el.shadowRoot.querySelector('[part~="base"]').getAttribute('aria-label')).to.equal(
+      'You are here',
+    );
   });
 
   it('renders nothing for an empty trail', async () => {
@@ -147,8 +153,10 @@ describe('arc-breadcrumb-menu: navigating', () => {
 describe('arc-breadcrumb-menu: the dropdown', () => {
   it('only exists for a crumb that has siblings', async () => {
     const el = await crumbs();
-    expect(links(el)[0].hasAttribute('aria-expanded'), 'a plain crumb is not a disclosure')
-      .to.equal(false);
+    expect(
+      links(el)[0].hasAttribute('aria-expanded'),
+      'a plain crumb is not a disclosure',
+    ).to.equal(false);
     expect(links(el)[1].getAttribute('aria-expanded')).to.equal('false');
   });
 
@@ -184,7 +192,9 @@ describe('arc-breadcrumb-menu: the dropdown', () => {
     links(el)[1].click();
     await settle(el);
 
-    expect(el.shadowRoot.querySelectorAll('[part~="dropdown"]').length, 'only ever one').to.equal(1);
+    expect(el.shadowRoot.querySelectorAll('[part~="dropdown"]').length, 'only ever one').to.equal(
+      1,
+    );
     expect(dropdownItems(el).map((b) => b.textContent.trim())).to.eql(['B2']);
   });
 
@@ -206,7 +216,9 @@ describe('arc-breadcrumb-menu: the dropdown', () => {
     await settle(el);
     expect(dropdown(el)).to.not.equal(null);
 
-    document.body.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, composed: true }));
+    document.body.dispatchEvent(
+      new PointerEvent('pointerdown', { ...pointerInit, composed: true }),
+    );
     await settle(el);
 
     expect(dropdown(el)).to.equal(null);
@@ -234,7 +246,9 @@ describe('arc-breadcrumb-menu: reconnection', () => {
 
     expect(dropdown(el), 'still open across the move').to.not.equal(null);
 
-    document.body.dispatchEvent(new PointerEvent('pointerdown', { ...pointerInit, composed: true }));
+    document.body.dispatchEvent(
+      new PointerEvent('pointerdown', { ...pointerInit, composed: true }),
+    );
     await settle(el);
 
     expect(dropdown(el)).to.equal(null);

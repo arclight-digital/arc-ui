@@ -12,7 +12,16 @@
  * real comparison rather than stubbing it out.
  */
 import { expect } from '@esm-bundle/chai';
-import { mount, cleanup, settle, nextFrame, until, record, deepActive, pressKey } from './helpers.js';
+import {
+  mount,
+  cleanup,
+  settle,
+  nextFrame,
+  until,
+  record,
+  deepActive,
+  pressKey,
+} from './helpers.js';
 
 import '../src/layout/app-shell.register.js';
 

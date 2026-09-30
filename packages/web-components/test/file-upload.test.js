@@ -99,7 +99,13 @@ describe('arc-file-upload receiving files', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await upload();
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     await drop(el, [file('a.txt')]);
 
@@ -221,7 +227,10 @@ describe('arc-file-upload removal', () => {
     el.shadowRoot.querySelector('[part~="file-item"] button')?.click();
     await settle(el);
 
-    expect(seen.map(([k]) => k), 'remove then change').to.deep.equal(['remove', 'change']);
+    expect(
+      seen.map(([k]) => k),
+      'remove then change',
+    ).to.deep.equal(['remove', 'change']);
     expect(seen[0][1].value.name).to.equal('a.txt');
     expect(seen[0][1].index).to.equal(0);
     expect(seen[1][1].value.map((f) => f.name)).to.deep.equal(['b.txt']);
@@ -244,7 +253,10 @@ describe('arc-file-upload keyboard and disabled', () => {
     for (const key of ['Enter', ' ']) {
       const el = await upload();
       let opened = 0;
-      nativeInput(el).addEventListener('click', (e) => { e.preventDefault(); opened++; });
+      nativeInput(el).addEventListener('click', (e) => {
+        e.preventDefault();
+        opened++;
+      });
 
       keyOn(dropzone(el), key);
       await settle(el);
@@ -282,11 +294,13 @@ describe('arc-file-upload keyboard and disabled', () => {
   it('a disabled dropzone is out of the tab order and inert', async () => {
     const el = await upload('disabled');
     let opened = 0;
-    nativeInput(el).addEventListener('click', (e) => { e.preventDefault(); opened++; });
+    nativeInput(el).addEventListener('click', (e) => {
+      e.preventDefault();
+      opened++;
+    });
 
     expect(dropzone(el).getAttribute('tabindex'), 'still a tab stop').to.equal('-1');
-    expect(dropzone(el).getAttribute('aria-disabled'), 'not announced disabled')
-      .to.equal('true');
+    expect(dropzone(el).getAttribute('aria-disabled'), 'not announced disabled').to.equal('true');
 
     keyOn(dropzone(el), 'Enter');
     await settle(el);

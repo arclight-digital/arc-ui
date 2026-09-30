@@ -118,7 +118,13 @@ describe('arc-theme-toggle cycling', () => {
   it('bubbles and crosses the shadow boundary', async () => {
     const el = await toggle();
     let event = null;
-    document.body.addEventListener('arc-change', (e) => { event = e; }, { once: true });
+    document.body.addEventListener(
+      'arc-change',
+      (e) => {
+        event = e;
+      },
+      { once: true },
+    );
 
     button(el).click();
     await settle(el);
@@ -232,7 +238,9 @@ describe('arc-theme-toggle global state', () => {
   // header toggle and a settings-panel toggle disagreed the moment either was
   // used, with the page on the new theme and the other button on the old one.
   it('a second toggle on the page follows the first', async () => {
-    const wrap = mount('<div><arc-theme-toggle></arc-theme-toggle><arc-theme-toggle></arc-theme-toggle></div>');
+    const wrap = mount(
+      '<div><arc-theme-toggle></arc-theme-toggle><arc-theme-toggle></arc-theme-toggle></div>',
+    );
     const [first, second] = wrap.querySelectorAll('arc-theme-toggle');
     await settle(first);
     await settle(second);
@@ -330,7 +338,9 @@ describe('arc-theme-toggle icon-only', () => {
     const sizes = { xs: '28px', sm: '32px', md: '36px', lg: '44px' };
     for (const [size, expected] of Object.entries(sizes)) {
       const el = await toggle(`icon-only size="${size}"`);
-      const peer = mount(`<arc-icon-button name="plus" label="Add" size="${size}"></arc-icon-button>`);
+      const peer = mount(
+        `<arc-icon-button name="plus" label="Add" size="${size}"></arc-icon-button>`,
+      );
       await settle(peer);
 
       expect(getComputedStyle(button(el)).width, size).to.equal(expected);

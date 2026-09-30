@@ -57,8 +57,12 @@ for (const { tag, region, endRegion } of BARS) {
       // the part list carrying it again would be the same quiet rot.
       const el = mount(`<${tag}></${tag}>`);
       await settle(el);
-      expect(el.shadowRoot.querySelector(region).getAttribute('part').split(/\s+/)).to.eql(['prefix']);
-      expect(el.shadowRoot.querySelector(endRegion).getAttribute('part').split(/\s+/)).to.eql(['suffix']);
+      expect(el.shadowRoot.querySelector(region).getAttribute('part').split(/\s+/)).to.eql([
+        'prefix',
+      ]);
+      expect(el.shadowRoot.querySelector(endRegion).getAttribute('part').split(/\s+/)).to.eql([
+        'suffix',
+      ]);
     });
   });
 }

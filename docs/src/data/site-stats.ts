@@ -8,11 +8,12 @@
  */
 import fs from 'node:fs';
 import { components } from './components/index';
+import { REPO } from './repo';
 
 const pkg = JSON.parse(
-  fs.readFileSync(new URL('../../../packages/web-components/package.json', import.meta.url), 'utf-8'),
+  fs.readFileSync(new URL('packages/web-components/package.json', REPO), 'utf-8'),
 );
-const baseCss = fs.readFileSync(new URL('../../../shared/base.css', import.meta.url), 'utf-8');
+const baseCss = fs.readFileSync(new URL('shared/base.css', REPO), 'utf-8');
 
 export const componentCount = components.length;
 
@@ -22,8 +23,8 @@ export const componentCount = components.length;
  * counting those files is counting tags; it's also the number the ssr check
  * renders, which is why the SSR claims quote it.
  */
-const wcSrc = new URL('../../../packages/web-components/src/', import.meta.url);
-const iconSrc = new URL('../../../packages/icons/src/', import.meta.url);
+const wcSrc = new URL('packages/web-components/src/', REPO);
+const iconSrc = new URL('packages/icons/src/', REPO);
 const countRegisters = (dir: URL): number =>
   fs.readdirSync(dir, { withFileTypes: true }).reduce((n, entry) => {
     if (entry.isDirectory()) return n + countRegisters(new URL(`${entry.name}/`, dir));
@@ -36,7 +37,7 @@ export const frameworkCount = frameworks.length;
 
 /** Steps in the generate pipeline, counted from the pipeline definition itself
  *  (gen('…') / check('…') calls plus the literal prism step in scripts/generate.js). */
-const generateJs = fs.readFileSync(new URL('../../../scripts/generate.js', import.meta.url), 'utf-8');
+const generateJs = fs.readFileSync(new URL('scripts/generate.js', REPO), 'utf-8');
 export const buildSteps =
   (generateJs.match(/\b(?:gen|check)\('[a-z-]+'\)/g) ?? []).length +
   (generateJs.match(/name: 'prism'/g) ?? []).length;
@@ -45,7 +46,7 @@ export const buildSteps =
 export const tokenCount = new Set(baseCss.match(/--[a-z0-9-]+(?=\s*:)/g)).size;
 
 /** Counted from the component test suites so the landing page can't drift from reality. */
-const testDir = new URL('../../../packages/web-components/test/', import.meta.url);
+const testDir = new URL('packages/web-components/test/', REPO);
 const testFiles = fs.readdirSync(testDir).filter((f) => f.endsWith('.test.js'));
 export const testSuiteCount = testFiles.length;
 export const testCount = testFiles.reduce(
@@ -54,7 +55,7 @@ export const testCount = testFiles.reduce(
 );
 
 /** Unique class names in the generated utilities stylesheet. */
-const utilitiesCss = fs.readFileSync(new URL('../../../shared/utilities.css', import.meta.url), 'utf-8');
+const utilitiesCss = fs.readFileSync(new URL('shared/utilities.css', REPO), 'utf-8');
 export const utilityClassCount = new Set(utilitiesCss.match(/^\.[a-z0-9\\:-]+(?=[ ,{])/gm)).size;
 
 export const version = pkg.version as string;
@@ -102,7 +103,7 @@ export const iconCount = iconSets.reduce((n, set) => {
 
 /** Published packages: the web components, the icon packs, and the wrappers. */
 export const packageCount = fs
-  .readdirSync(new URL('../../../packages/', import.meta.url), { withFileTypes: true })
+  .readdirSync(new URL('packages/', REPO), { withFileTypes: true })
   .filter((e) => e.isDirectory()).length;
 
 /** Components by tier, largest first — the shape of the library. */
@@ -130,7 +131,7 @@ const collectGenerated = (dir: URL) => {
     }
   }
 };
-for (const p of prismPackages) collectGenerated(new URL(`../../../packages/${p}/src/`, import.meta.url));
+for (const p of prismPackages) collectGenerated(new URL(`packages/${p}/src/`, REPO));
 export const generatedFileCount = generatedFiles.length;
 export const generatedLineCount = generatedFiles.reduce((n, src) => n + src.split('\n').length, 0);
 export const prismVersion = generatedFiles[0]?.match(/@arclux\/prism (\d+\.\d+\.\d+)/)?.[1] ?? '';

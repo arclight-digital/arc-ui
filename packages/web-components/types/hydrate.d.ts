@@ -46,3 +46,4 @@
  * hydrated correctly.
  */
 import '@lit-labs/ssr-client/lit-element-hydrate-support.js';
+import './ssr-client-slots.js';

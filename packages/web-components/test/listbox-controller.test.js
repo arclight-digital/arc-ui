@@ -12,14 +12,22 @@ import { mount, cleanup, tick, deepActive } from './helpers.js';
 
 /** Send a key to an element the way a real press reaches it. */
 function key(el, k, init = {}) {
-  el.dispatchEvent(new KeyboardEvent('keydown', {
-    key: k, bubbles: true, composed: true, cancelable: true, ...init,
-  }));
+  el.dispatchEvent(
+    new KeyboardEvent('keydown', {
+      key: k,
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+      ...init,
+    }),
+  );
 }
 
 async function mountSelect(count = 12) {
-  const options = Array.from({ length: count }, (_, i) =>
-    `<arc-option value="v${i}">Option ${i}</arc-option>`).join('');
+  const options = Array.from(
+    { length: count },
+    (_, i) => `<arc-option value="v${i}">Option ${i}</arc-option>`,
+  ).join('');
   const el = mount(`<arc-select label="Pick">${options}</arc-select>`);
   await el.updateComplete;
   await tick();
@@ -285,7 +293,9 @@ describe('ListboxController: selection', () => {
     await el.updateComplete;
 
     let detail = null;
-    el.addEventListener('arc-change', (e) => { detail = e.detail; });
+    el.addEventListener('arc-change', (e) => {
+      detail = e.detail;
+    });
     key(trigger(el), 'Enter');
     await el.updateComplete;
 
@@ -300,7 +310,9 @@ describe('ListboxController: selection', () => {
     el._listbox.setActive(1);
 
     let fired = false;
-    el.addEventListener('arc-change', () => { fired = true; });
+    el.addEventListener('arc-change', () => {
+      fired = true;
+    });
     key(trigger(el), 'Escape');
     await el.updateComplete;
 
@@ -371,8 +383,11 @@ describe('ListboxController: disabled options', () => {
 
   /** A select whose options at `disabledIndexes` refuse selection. */
   async function mountWithDisabled(count, disabledIndexes) {
-    const options = Array.from({ length: count }, (_, i) =>
-      `<arc-option value="v${i}" ${disabledIndexes.includes(i) ? 'disabled' : ''}>Option ${i}</arc-option>`).join('');
+    const options = Array.from(
+      { length: count },
+      (_, i) =>
+        `<arc-option value="v${i}" ${disabledIndexes.includes(i) ? 'disabled' : ''}>Option ${i}</arc-option>`,
+    ).join('');
     const el = mount(`<arc-select label="Pick">${options}</arc-select>`);
     await el.updateComplete;
     await tick();
@@ -450,7 +465,10 @@ describe('ListboxController: disabled options', () => {
     await el.updateComplete;
 
     const event = new KeyboardEvent('keydown', {
-      key: 'Enter', bubbles: true, composed: true, cancelable: true,
+      key: 'Enter',
+      bubbles: true,
+      composed: true,
+      cancelable: true,
     });
     trigger(el).dispatchEvent(event);
     await el.updateComplete;
@@ -507,14 +525,22 @@ function harness({ labels = ['Apple', 'Apricot', 'Banana'], open = true, ...opts
   const state = { labels, open, updates: 0, opened: 0, closed: 0, selected: [] };
   const host = {
     addController() {},
-    requestUpdate() { state.updates += 1; },
+    requestUpdate() {
+      state.updates += 1;
+    },
     updateComplete: Promise.resolve(true),
   };
   state.controller = new ListboxController(host, {
     getItemCount: () => state.labels.length,
     isOpen: () => state.open,
-    onOpen: () => { state.opened += 1; state.open = true; },
-    onClose: () => { state.closed += 1; state.open = false; },
+    onOpen: () => {
+      state.opened += 1;
+      state.open = true;
+    },
+    onClose: () => {
+      state.closed += 1;
+      state.open = false;
+    },
     onSelect: (i) => state.selected.push(i),
     optionId: (i) => `opt-${i}`,
     getItemLabel: (i) => state.labels[i],
@@ -784,21 +810,27 @@ describe('arc-option disabled: every consumer refuses the click', () => {
     {
       tag: 'arc-select',
       optionSelector: '.select__option',
-      open: (el) => { el.open = true; },
+      open: (el) => {
+        el.open = true;
+      },
       read: (el) => el.value,
       empty: '',
     },
     {
       tag: 'arc-combobox',
       optionSelector: '.combobox__option',
-      open: (el) => { el._open = true; },
+      open: (el) => {
+        el._open = true;
+      },
       read: (el) => el.value,
       empty: '',
     },
     {
       tag: 'arc-multi-select',
       optionSelector: '.ms__option',
-      open: (el) => { el._open = true; },
+      open: (el) => {
+        el._open = true;
+      },
       read: (el) => [...(el.value || [])].join(','),
       empty: '',
     },
@@ -856,7 +888,16 @@ describe('ListboxController: no update scheduled from inside updated()', () => {
       tag: 'arc-tree-select',
       open: 'open',
       value: 'b',
-      items: [{ value: 'g', label: 'G', children: [{ value: 'a', label: 'A' }, { value: 'b', label: 'B' }] }],
+      items: [
+        {
+          value: 'g',
+          label: 'G',
+          children: [
+            { value: 'a', label: 'A' },
+            { value: 'b', label: 'B' },
+          ],
+        },
+      ],
     },
   ];
 
@@ -882,8 +923,10 @@ describe('ListboxController: no update scheduled from inside updated()', () => {
   for (const host of hosts) {
     it(`${host.tag} renders once on first connect`, async () => {
       const { scheduled } = await watched(host);
-      expect(scheduled, `update requested from updated() after ${JSON.stringify(scheduled)}`)
-        .to.deep.equal([]);
+      expect(
+        scheduled,
+        `update requested from updated() after ${JSON.stringify(scheduled)}`,
+      ).to.deep.equal([]);
     });
 
     it(`${host.tag} opens and closes without a second render`, async () => {
@@ -892,8 +935,10 @@ describe('ListboxController: no update scheduled from inside updated()', () => {
       await el.updateComplete;
       el[host.open] = false;
       await el.updateComplete;
-      expect(scheduled, `update requested from updated() after ${JSON.stringify(scheduled)}`)
-        .to.deep.equal([]);
+      expect(
+        scheduled,
+        `update requested from updated() after ${JSON.stringify(scheduled)}`,
+      ).to.deep.equal([]);
     });
   }
 

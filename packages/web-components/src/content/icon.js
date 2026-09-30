@@ -1,6 +1,7 @@
 import { LitElement, html, css, nothing } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { tokenStyles } from '../shared-styles.js';
+import { serverHostStyle } from '../shared/server-host-style.js';
 import { iconRegistry } from './icon-registry.js';
 import { sanitizeSvg } from './sanitize-svg.js';
 import { DeclaredPropsMixin, oneOf } from '../shared/props.js';
@@ -104,6 +105,14 @@ export class ArcIcon extends DeclaredPropsMixin(LitElement) {
     this.size = 'sm';
     this.label = '';
     this._svgContent = null;
+  }
+
+  /** A numeric size on the server, as updated() sets it in the browser. */
+  willUpdate(changed) {
+    const px = Number(this.size);
+    if (changed.has('size') && this.size !== '' && Number.isFinite(px) && px > 0) {
+      serverHostStyle(this, { width: `${px}px`, height: `${px}px` });
+    }
   }
 
   updated(changed) {

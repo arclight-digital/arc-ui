@@ -26,8 +26,20 @@ afterEach(() => cleanup());
 /** Submit and capture the arc-submit / arc-invalid outcome. */
 async function submit(form) {
   const seen = {};
-  form.addEventListener('arc-submit', (e) => { seen.submit = e.detail; }, { once: true });
-  form.addEventListener('arc-invalid', (e) => { seen.invalid = e.detail; }, { once: true });
+  form.addEventListener(
+    'arc-submit',
+    (e) => {
+      seen.submit = e.detail;
+    },
+    { once: true },
+  );
+  form.addEventListener(
+    'arc-invalid',
+    (e) => {
+      seen.invalid = e.detail;
+    },
+    { once: true },
+  );
   form.submit();
   await tick();
   return seen;

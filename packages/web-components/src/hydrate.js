@@ -46,6 +46,12 @@
  * hydrated correctly.
  */
 import '@lit-labs/ssr-client/lit-element-hydrate-support.js';
+// Next, and in a module whose name says ssr-client: the chunk rule a consumer
+// writes to keep the support module ahead of every component (see above)
+// matches `ssr-client`, so this lands in that chunk with it. It chains the
+// same hook and has the same timing; inlined into the entry, it ran after
+// lit-element had already read the hook, which arcui.dev did for a build.
+import './ssr-client-slots.js';
 
 /**
  * Say so, once, when this module lost the race described above.
@@ -88,7 +94,18 @@ if (typeof customElements !== 'undefined' && typeof document !== 'undefined') {
     } catch {
       return; // Not a Lit element; nothing to say about it.
     }
-    if (patched !== false) return;
+    if (patched !== false) {
+      if (!constructor.slotReaders || globalThis.__arcSlotReaders) return;
+      warned = true;
+      console.warn(
+        `[arc-ui] <${name}> reads its children before hydrating, and the part of ` +
+          '@arclux/arc-ui/hydrate that does it loaded after lit-element: it will ' +
+          "render an empty frame over the server's items and hydration will fail. " +
+          'Keep ssr-client-slots.js in the same early chunk as the hydration support ' +
+          "(a manualChunks rule matching 'ssr-client' covers both).",
+      );
+      return;
+    }
 
     warned = true;
     console.warn(

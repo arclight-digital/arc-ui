@@ -15,7 +15,12 @@
  */
 import { expect } from '@esm-bundle/chai';
 import { mount, cleanup } from './helpers.js';
-import { collectFocusable, deepActiveElement, trapTabKey, focusFirst } from '../src/shared/focus-trap.js';
+import {
+  collectFocusable,
+  deepActiveElement,
+  trapTabKey,
+  focusFirst,
+} from '../src/shared/focus-trap.js';
 
 afterEach(cleanup);
 

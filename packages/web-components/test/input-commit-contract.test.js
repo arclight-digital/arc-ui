@@ -143,13 +143,21 @@ describe('arc-color-picker', () => {
     // setPointerCapture rejects an id it has never seen, so the whole gesture
     // carries one real pointerId.
     const pointer = { bubbles: true, pointerId: 1, isPrimary: true, pointerType: 'mouse' };
-    area.dispatchEvent(new PointerEvent('pointerdown', {
-      ...pointer, clientX: box.left + 10, clientY: box.top + 10,
-    }));
+    area.dispatchEvent(
+      new PointerEvent('pointerdown', {
+        ...pointer,
+        clientX: box.left + 10,
+        clientY: box.top + 10,
+      }),
+    );
     for (const dx of [20, 30, 40]) {
-      window.dispatchEvent(new PointerEvent('pointermove', {
-        ...pointer, clientX: box.left + dx, clientY: box.top + 20,
-      }));
+      window.dispatchEvent(
+        new PointerEvent('pointermove', {
+          ...pointer,
+          clientX: box.left + dx,
+          clientY: box.top + 20,
+        }),
+      );
       await tick();
     }
     window.dispatchEvent(new PointerEvent('pointerup', pointer));
@@ -232,7 +240,9 @@ describe('arc-search', () => {
     const field = el.shadowRoot.querySelector('.search__input');
     field.value = 'query';
     field.dispatchEvent(new Event('input', { bubbles: true }));
-    field.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+    field.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
     await tick();
 
     expect(only(seen, 'change').length).to.equal(1);
@@ -249,7 +259,10 @@ describe('arc-search', () => {
     el.shadowRoot.querySelector('.search__suggestion').click();
     await tick();
 
-    expect(seen.map(([k]) => k), 'pick is a selection, then a commit').to.deep.equal(['select', 'change']);
+    expect(
+      seen.map(([k]) => k),
+      'pick is a selection, then a commit',
+    ).to.deep.equal(['select', 'change']);
     expect(only(seen, 'change')[0][1], 'commits the picked value').to.equal(el.value);
   });
 });
@@ -353,7 +366,9 @@ describe('arc-tag-input', () => {
     const field = el.shadowRoot.querySelector('.ti__input');
     field.value = 'abc';
     field.dispatchEvent(new Event('input', { bubbles: true }));
-    field.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+    field.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }),
+    );
     await tick();
 
     expect(only(seen, 'change').length).to.equal(1);

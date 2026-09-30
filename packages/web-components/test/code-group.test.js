@@ -42,8 +42,16 @@ const visible = (blocks) => blocks.map((b) => !b.hidden);
 describe('arc-code-group', () => {
   it('makes a tab of each block, named by label, then filename', async () => {
     const { el } = await group();
-    expect(tabs(el).map((t) => t.textContent.trim())).to.deep.equal(['Pulsar', 'Pulsar for NVIDIA', 'other.sh']);
-    expect(tabs(el).map((t) => t.getAttribute('aria-selected'))).to.deep.equal(['true', 'false', 'false']);
+    expect(tabs(el).map((t) => t.textContent.trim())).to.deep.equal([
+      'Pulsar',
+      'Pulsar for NVIDIA',
+      'other.sh',
+    ]);
+    expect(tabs(el).map((t) => t.getAttribute('aria-selected'))).to.deep.equal([
+      'true',
+      'false',
+      'false',
+    ]);
   });
 
   it('shows one block at a time, with its own chrome hidden', async () => {
@@ -51,7 +59,9 @@ describe('arc-code-group', () => {
     expect(visible(blocks)).to.deep.equal([true, false, false]);
     await blocks[0].updateComplete;
     expect(blocks[0].hasAttribute('data-grouped')).to.equal(true);
-    expect(getComputedStyle(blocks[0].shadowRoot.querySelector('[part="header"]')).display).to.equal('none');
+    expect(
+      getComputedStyle(blocks[0].shadowRoot.querySelector('[part="header"]')).display,
+    ).to.equal('none');
   });
 
   it('switches on click and fires arc-change', async () => {
@@ -92,10 +102,14 @@ describe('arc-code-group', () => {
   });
 
   it('keeps groups with the same sync-key together and remembers the choice', async () => {
-    const box = mount(`<div>${MARKUP('sync-key="edition"')}${MARKUP('sync-key="edition"')}${MARKUP()}</div>`);
+    const box = mount(
+      `<div>${MARKUP('sync-key="edition"')}${MARKUP('sync-key="edition"')}${MARKUP()}</div>`,
+    );
     const [a, b, c] = box.querySelectorAll('arc-code-group');
     await Promise.all([a, b, c].map((g) => settle(g)));
-    await until(() => [a, b, c].every((g) => g.shadowRoot.querySelectorAll('[role="tab"]').length === 3));
+    await until(() =>
+      [a, b, c].every((g) => g.shadowRoot.querySelectorAll('[role="tab"]').length === 3),
+    );
     const seenOnB = [];
     b.addEventListener('arc-change', () => seenOnB.push(1));
 
@@ -113,7 +127,11 @@ describe('arc-code-group', () => {
 
   it('labels the tab list and ties the panel to the selected tab', async () => {
     const { el } = await group('label="Edition"');
-    expect(el.shadowRoot.querySelector('[role="tablist"]').getAttribute('aria-label')).to.equal('Edition');
-    expect(el.shadowRoot.querySelector('[role="tabpanel"]').getAttribute('aria-labelledby')).to.equal('tab-0');
+    expect(el.shadowRoot.querySelector('[role="tablist"]').getAttribute('aria-label')).to.equal(
+      'Edition',
+    );
+    expect(
+      el.shadowRoot.querySelector('[role="tabpanel"]').getAttribute('aria-labelledby'),
+    ).to.equal('tab-0');
   });
 });

@@ -296,6 +296,9 @@ export class ArcMaskedInput extends DeclaredPropsMixin(FormControlMixin(LitEleme
     `,
   ];
 
+  /** Slots read on the server and before hydration; see ssr.js. */
+  static slotReaders = { prefix: '_onPrefixSlotChange', suffix: '_onSuffixSlotChange' };
+
   constructor() {
     super();
     this.mask = '';

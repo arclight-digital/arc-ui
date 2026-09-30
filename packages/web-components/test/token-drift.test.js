@@ -24,7 +24,10 @@ function normalise(value) {
   const src = value.replace(/--_text-/g, '--text-');
   let out = '';
   for (let i = 0; i < src.length; i++) {
-    if (!src.startsWith('var(', i)) { out += src[i]; continue; }
+    if (!src.startsWith('var(', i)) {
+      out += src[i];
+      continue;
+    }
     // Walk to the matching paren so a fallback containing its own var() is
     // discarded wholesale rather than half-matched by a regex.
     let depth = 0;
@@ -33,7 +36,10 @@ function normalise(value) {
       if (src[j] === '(') depth++;
       else if (src[j] === ')' && --depth === 0) break;
     }
-    out += `var(${src.slice(i + 4, j).split(',')[0].trim()})`;
+    out += `var(${src
+      .slice(i + 4, j)
+      .split(',')[0]
+      .trim()})`;
     i = j;
   }
   return out.replace(/\s+/g, ' ').trim();
@@ -61,7 +67,9 @@ describe('token drift: :host and :root come from one source', () => {
     // copy of the token tree. Nineteen of eighty-one had drifted; --text-3xl
     // shipped the 2xl value and --label-inline-size disagreed by 2px between the
     // shadow-DOM and standalone-CSS builds.
-    const base = declarations(rootBlock(await fetchText(new URL('../src/base.css', import.meta.url))));
+    const base = declarations(
+      rootBlock(await fetchText(new URL('../src/base.css', import.meta.url))),
+    );
     const host = declarations(hostTokens.cssText);
 
     const problems = [];
@@ -90,7 +98,8 @@ describe('token drift: :host and :root come from one source', () => {
   it('keeps colours off :host, so a component is not pinned to one theme', async () => {
     const host = declarations(hostTokens.cssText);
     const themed = [...host.keys()].filter((n) =>
-      /^--(bg|text-(primary|secondary|muted|ghost)|border|accent|color|chart|feedback)/.test(n));
+      /^--(bg|text-(primary|secondary|muted|ghost)|border|accent|color|chart|feedback)/.test(n),
+    );
     expect(themed, 'themed tokens must inherit from :root').to.deep.equal([]);
   });
 
@@ -116,7 +125,9 @@ describe('token drift: no component reads a token that does not exist', () => {
 
   for (const [path, token] of suspects) {
     it(`${path} resolves ${token}`, async () => {
-      const base = declarations(rootBlock(await fetchText(new URL('../src/base.css', import.meta.url))));
+      const base = declarations(
+        rootBlock(await fetchText(new URL('../src/base.css', import.meta.url))),
+      );
       const src = await fetchText(new URL(`../src/${path}`, import.meta.url));
 
       // Either the component no longer reads it, or the token now exists.
@@ -128,10 +139,15 @@ describe('token drift: no component reads a token that does not exist', () => {
   it('resolves --radius-xs on a live component host', async () => {
     const tag = 'radius-probe';
     if (!customElements.get(tag)) {
-      customElements.define(tag, class extends LitElement {
-        static styles = [tokenStyles];
-        render() { return null; }
-      });
+      customElements.define(
+        tag,
+        class extends LitElement {
+          static styles = [tokenStyles];
+          render() {
+            return null;
+          }
+        },
+      );
     }
     const el = document.createElement(tag);
     document.body.appendChild(el);

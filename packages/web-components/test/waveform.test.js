@@ -39,13 +39,21 @@ function scrub(el, downAt, moves) {
   // setPointerCapture rejects an id it has never seen, so the whole gesture
   // carries one real pointerId.
   const pointer = { bubbles: true, pointerId: 1, isPrimary: true, pointerType: 'mouse' };
-  track.dispatchEvent(new PointerEvent('pointerdown', {
-    ...pointer, clientX: atX(downAt), clientY: box.top + 10,
-  }));
+  track.dispatchEvent(
+    new PointerEvent('pointerdown', {
+      ...pointer,
+      clientX: atX(downAt),
+      clientY: box.top + 10,
+    }),
+  );
   for (const fraction of moves) {
-    window.dispatchEvent(new PointerEvent('pointermove', {
-      ...pointer, clientX: atX(fraction), clientY: box.top + 10,
-    }));
+    window.dispatchEvent(
+      new PointerEvent('pointermove', {
+        ...pointer,
+        clientX: atX(fraction),
+        clientY: box.top + 10,
+      }),
+    );
   }
   window.dispatchEvent(new PointerEvent('pointerup', pointer));
 }
@@ -98,7 +106,9 @@ describe('arc-waveform rendering', () => {
   });
 
   it('is a slider when interactive, an image otherwise', async () => {
-    const el = await mountWaveform('interactive label="Track scrubber" duration="100" position="0.25"');
+    const el = await mountWaveform(
+      'interactive label="Track scrubber" duration="100" position="0.25"',
+    );
     const track = el.shadowRoot.querySelector('.waveform');
     expect(track.getAttribute('role')).to.equal('slider');
     expect(track.getAttribute('tabindex')).to.equal('0');
@@ -144,20 +154,28 @@ describe('arc-waveform scrubbing', () => {
     const seen = record(el);
     const track = el.shadowRoot.querySelector('.waveform');
 
-    track.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    track.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }),
+    );
     await tick();
     expect(el.position).to.be.closeTo(0.51, 0.001);
     expect(seen.map(([k]) => k)).to.deep.equal(['input', 'change']);
 
-    track.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }));
+    track.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true, cancelable: true }),
+    );
     await tick();
     expect(el.position).to.be.closeTo(0.5, 0.001);
 
-    track.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true, cancelable: true }));
+    track.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'End', bubbles: true, cancelable: true }),
+    );
     await tick();
     expect(el.position).to.equal(1);
 
-    track.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true, cancelable: true }));
+    track.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Home', bubbles: true, cancelable: true }),
+    );
     await tick();
     expect(el.position).to.equal(0);
   });
@@ -166,8 +184,11 @@ describe('arc-waveform scrubbing', () => {
     const el = await mountWaveform('interactive position="1"');
     const seen = record(el);
 
-    el.shadowRoot.querySelector('.waveform')
-      .dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    el.shadowRoot
+      .querySelector('.waveform')
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }),
+      );
     await tick();
 
     expect(seen.length).to.equal(0);
@@ -179,8 +200,11 @@ describe('arc-waveform scrubbing', () => {
     const seen = record(el);
 
     scrub(el, 0.1, [0.9]);
-    el.shadowRoot.querySelector('.waveform')
-      .dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }));
+    el.shadowRoot
+      .querySelector('.waveform')
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }),
+      );
     await tick();
 
     expect(seen.length).to.equal(0);
@@ -196,9 +220,11 @@ describe('arc-waveform scrubbing', () => {
  */
 describe('arc-waveform steps and value text', () => {
   const key = (el, k) =>
-    el.shadowRoot.querySelector('.waveform').dispatchEvent(
-      new KeyboardEvent('keydown', { key: k, bubbles: true, composed: true, cancelable: true }),
-    );
+    el.shadowRoot
+      .querySelector('.waveform')
+      .dispatchEvent(
+        new KeyboardEvent('keydown', { key: k, bubbles: true, composed: true, cancelable: true }),
+      );
   const slider = (el) => el.shadowRoot.querySelector('[role="slider"]');
 
   it('moves one step per arrow press', async () => {
@@ -251,7 +277,9 @@ describe('arc-waveform steps and value text', () => {
   });
 
   it('announces value-text instead of the built-in text', async () => {
-    const el = await mountWaveform('interactive steps="40" duration="10" value-text="85 of 200 ms"');
+    const el = await mountWaveform(
+      'interactive steps="40" duration="10" value-text="85 of 200 ms"',
+    );
     expect(slider(el).getAttribute('aria-valuetext')).to.equal('85 of 200 ms');
   });
 

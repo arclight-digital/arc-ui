@@ -202,11 +202,9 @@ describe('arc-color-picker the edit/commit contract', () => {
     const el = await picker('', { value: '#ff0000' });
     const seen = record(el);
 
-    drag(
-      area(el),
-      [at(area(el), 0.1, 0.5), at(area(el), 0.4, 0.5), at(area(el), 0.7, 0.5)],
-      { moveTarget: window },
-    );
+    drag(area(el), [at(area(el), 0.1, 0.5), at(area(el), 0.4, 0.5), at(area(el), 0.7, 0.5)], {
+      moveTarget: window,
+    });
     await settle(el);
 
     expect(only(seen, 'input').length, 'one arc-input per pointer event').to.equal(3);
@@ -272,11 +270,9 @@ describe('arc-color-picker area and hue interaction', () => {
   it('clamps a drag that leaves the area', async () => {
     const el = await picker('', { value: '#ff0000' });
     const r = area(el).getBoundingClientRect();
-    drag(
-      area(el),
-      [at(area(el), 0.5, 0.5), { clientX: r.left - 500, clientY: r.top - 500 }],
-      { moveTarget: window },
-    );
+    drag(area(el), [at(area(el), 0.5, 0.5), { clientX: r.left - 500, clientY: r.top - 500 }], {
+      moveTarget: window,
+    });
     await settle(el);
     expect(shownSat(el)).to.equal(0);
     expect(shownLit(el)).to.equal(100);
@@ -404,10 +400,10 @@ describe('arc-color-picker presets', () => {
     swatches(el)[2].click();
     await settle(el);
     expect(el.value).to.equal('#0000ff');
-    expect(seen.map(([kind]) => kind), 'a discrete pick is edit and commit').to.eql([
-      'input',
-      'change',
-    ]);
+    expect(
+      seen.map(([kind]) => kind),
+      'a discrete pick is edit and commit',
+    ).to.eql(['input', 'change']);
   });
 
   it('syncs the area to the preset it picked', async () => {
@@ -495,7 +491,9 @@ describe('arc-color-picker disabled', () => {
 
 describe('arc-color-picker form participation', () => {
   it('submits the hex under its name', async () => {
-    const form = mount('<form><arc-color-picker name="brand" value="#00ff00"></arc-color-picker></form>');
+    const form = mount(
+      '<form><arc-color-picker name="brand" value="#00ff00"></arc-color-picker></form>',
+    );
     const el = form.querySelector('arc-color-picker');
     await settle(el);
     expect(new FormData(form).get('brand')).to.equal('#00ff00');

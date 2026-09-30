@@ -23,10 +23,11 @@ const page = async (attrs = '') => {
   return el;
 };
 
-const pages = (el) => [...el.shadowRoot.querySelectorAll('[part~="page"]')].map((b) => b.textContent.trim());
+const pages = (el) =>
+  [...el.shadowRoot.querySelectorAll('[part~="page"]')].map((b) => b.textContent.trim());
 const rendered = (el) =>
   [...el.shadowRoot.querySelectorAll('[part~="page"], [part~="ellipsis"]')].map((n) =>
-    n.getAttribute('part') === 'ellipsis' ? '…' : n.textContent.trim()
+    n.getAttribute('part') === 'ellipsis' ? '…' : n.textContent.trim(),
   );
 const prev = (el) => el.shadowRoot.querySelector('[part~="prev"]');
 const next = (el) => el.shadowRoot.querySelector('[part~="next"]');
@@ -93,7 +94,9 @@ describe('arc-pagination: navigating', () => {
     const el = await page('total="10" current="5" siblings="1"');
     const seen = record(el, ['arc-change']);
 
-    [...el.shadowRoot.querySelectorAll('[part~="page"]')].find((b) => b.textContent.trim() === '6').click();
+    [...el.shadowRoot.querySelectorAll('[part~="page"]')]
+      .find((b) => b.textContent.trim() === '6')
+      .click();
     await settle(el);
 
     expect(el.current).to.equal(6);
@@ -123,7 +126,10 @@ describe('arc-pagination: navigating', () => {
     await settle(el);
     expect(el.current).to.equal(5);
 
-    expect(only(seen, 'change')).to.eql([['change', 6], ['change', 5]]);
+    expect(only(seen, 'change')).to.eql([
+      ['change', 6],
+      ['change', 5],
+    ]);
   });
 
   it('previous is disabled on the first page', async () => {
@@ -161,8 +167,9 @@ describe('arc-pagination: compact', () => {
   it('replaces the page buttons with a position label', async () => {
     const el = await page('total="10" current="3" compact');
     expect(pages(el), 'no numbered buttons').to.eql([]);
-    expect(el.shadowRoot.querySelector('[part~="label"]').textContent.replace(/\s+/g, ' ').trim())
-      .to.equal('3 / 10');
+    expect(
+      el.shadowRoot.querySelector('[part~="label"]').textContent.replace(/\s+/g, ' ').trim(),
+    ).to.equal('3 / 10');
   });
 
   it('still steps with previous and next', async () => {
@@ -171,8 +178,9 @@ describe('arc-pagination: compact', () => {
     await settle(el);
 
     expect(el.current).to.equal(4);
-    expect(el.shadowRoot.querySelector('[part~="label"]').textContent.replace(/\s+/g, ' ').trim())
-      .to.equal('4 / 10');
+    expect(
+      el.shadowRoot.querySelector('[part~="label"]').textContent.replace(/\s+/g, ' ').trim(),
+    ).to.equal('4 / 10');
   });
 });
 

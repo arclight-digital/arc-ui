@@ -2,7 +2,10 @@ import { expect } from '@esm-bundle/chai';
 import '../src/feedback/command-palette.register.js';
 import { deepActive, mount, cleanup, tick, pressKey } from './helpers.js';
 
-const ITEMS = Array.from({ length: 20 }, (_, i) => `<arc-command-item>Item ${i}</arc-command-item>`).join('');
+const ITEMS = Array.from(
+  { length: 20 },
+  (_, i) => `<arc-command-item>Item ${i}</arc-command-item>`,
+).join('');
 
 async function mountPalette() {
   const el = mount(`<arc-command-palette>${ITEMS}</arc-command-palette>`);
