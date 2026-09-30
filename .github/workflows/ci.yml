@@ -56,6 +56,12 @@ jobs:
       - name: Component tests
         run: pnpm test
 
+      # Server rendering in Node: the fuzz over every component class, and the
+      # public entry end to end. Ran only in local `pnpm verify` until 4.8.2,
+      # which is how components outside the barrel shipped rendering nothing.
+      - name: SSR tests
+        run: pnpm test:ssr-fuzz
+
       # The whole auto-discovered suite, not a hardcoded subset — a newly added
       # check file must run here, not just locally. Every check reads source or
       # files the `pnpm generate` step above produced (the ssr check imports the

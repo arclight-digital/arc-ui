@@ -38,7 +38,9 @@ export class ArcPageLayout extends DeclaredPropsMixin(LitElement) {
 
       .page-layout {
         padding: var(--space-xl) var(--space-lg);
-        gap: var(--gap);
+        /* --gap is written from script, so a server render and the frame
+           before upgrade have none; the fallback is the prop's default. */
+        gap: var(--gap, var(--space-xl));
         min-height: 100%;
         box-sizing: border-box;
       }

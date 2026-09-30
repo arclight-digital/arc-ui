@@ -11,8 +11,8 @@ importers:
   .:
     devDependencies:
       '@arclux/prism':
-        specifier: ^3.2.0
-        version: 3.2.0
+        specifier: ^3.4.0
+        version: 3.4.0
       '@axe-core/playwright':
         specifier: ^4.13.0
         version: 4.13.0(playwright-core@1.63.0)
@@ -325,8 +325,8 @@ packages:
     resolution: {integrity: sha512-+mDIJ8F850eXsbdDOiByQR7Ue0264kM2us+7vjTVgYqTqp/iVWu6Twn/ZgsoDstmUmq4mcQx+H4NAEIDxTakMA==}
     engines: {node: '>=22.0.0'}
 
-  '@arclux/prism@3.2.0':
-    resolution: {integrity: sha512-uIp9hvDLZ/Cvtu59f0lQWROAdysN/Kgy3R43ThgmOd/Fs8N5uoMoQvCNXgaeY2KaSIB3Uwx3hYztbDwHADfFhA==}
+  '@arclux/prism@3.4.0':
+    resolution: {integrity: sha512-wuxiiLOnLUyxCUqqZ4ZhvKR6FT3u4TCNHevmSGxh1kSfUWUsBGsSBtwUNgeCNtltYx6YulLRJkukY34+781Yyg==}
     engines: {node: '>=24'}
     hasBin: true
 
@@ -5753,7 +5753,7 @@ snapshots:
 
   '@arclux/glint@1.1.2': {}
 
-  '@arclux/prism@3.2.0':
+  '@arclux/prism@3.4.0':
     dependencies:
       chokidar: 5.0.0
 

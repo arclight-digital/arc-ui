@@ -189,6 +189,11 @@ export default {
   html: {
     outDir: 'packages/html/examples',
     baseCSS: 'shared/base.css',
+    // The page a component inherits its font and colour from. base.css has no
+    // html/body rules (consumers own their page), so without this a standalone
+    // example fell back to the browser's serif and black text. Examples only:
+    // nothing here reaches the published CSS.
+    pageCSS: 'docs/src/styles/global.css',
     tokensJS: 'shared/tokens.js',
     inlineVariant: true,
   },

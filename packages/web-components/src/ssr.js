@@ -116,6 +116,9 @@ const SHADOW_OPEN = /<template shadowroot(?:mode)?="[^"]*"[^>]*>/g;
 /** A shadow root that opens with its stylesheet, which is all of them. */
 const SHADOW_STYLE = /(<template shadowroot(?:mode)?="[^"]*"[^>]*>)<style>([\s\S]*?)<\/style>/g;
 
+/** Every ARC tag a page opens. */
+const ARC_TAG = /<(arc-[a-z0-9]+(?:-[a-z0-9]+)*)[\s>/]/g;
+
 /** `<arc-icon name="…">`, the only attribute needing resolution before render. */
 const ICON_NAME = /<arc-icon\b[^>]*\bname=["']([^"']+)["']/g;
 
@@ -214,6 +217,7 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
   // client produces under the same conditions, so the page still hydrates
   // cleanly: it is a page with no icons, not a broken one.
   await iconRegistry.preload([...source.matchAll(ICON_NAME)].map((m) => m[1]));
+  await defineUsed(source);
 
   source = hoistTextContent(source);
 
@@ -241,6 +245,32 @@ export async function renderDeclarativeShadowDOM(source, options = {}) {
     roots: (out.match(/shadowrootmode/g) || []).length,
     deferred: capped.deferred + trimmed.deferred,
   };
+}
+
+/**
+ * Define the components a page uses that the barrel doesn't carry.
+ *
+ * ./register.js is the default barrel, which leaves out arc-code-block (its
+ * highlighter is a heavy optional dependency), the domain groups and anything
+ * experimental. Until 4.8.2 that meant the server never defined them, and an
+ * undefined tag renders as nothing: every code block on arcui.dev and
+ * getpulsar.dev reached readers, search engines and no-JS visitors as an empty
+ * box, while the docs said every component server-renders. Each is loaded
+ * through its own public entry, the same import a client makes for it, and
+ * only when a page names it. A tag with no entry (a typo, or an element this
+ * package doesn't ship) is left to render as it always did.
+ */
+async function defineUsed(source) {
+  const registry = globalThis.customElements;
+  const missing = new Set();
+  for (const [, tag] of source.matchAll(ARC_TAG)) {
+    if (!registry.get(tag)) missing.add(tag);
+  }
+  await Promise.all(
+    [...missing].map((tag) =>
+      import(/* @vite-ignore */ `@arclux/arc-ui/${tag.slice(4)}`).catch(() => {}),
+    ),
+  );
 }
 
 /**

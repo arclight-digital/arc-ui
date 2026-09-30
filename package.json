@@ -2,7 +2,7 @@
   "name": "arc-ui-monorepo",
   "private": true,
   "type": "module",
-  "version": "4.8.1",
+  "version": "4.8.2",
   "description": "ARC UI — ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
   "engines": {
     "node": ">=24.0.0",
@@ -19,7 +19,7 @@
     "generate:prism:watch": "npx prism --watch",
     "pretest": "pnpm run generate:icons",
     "test": "web-test-runner",
-    "test:ssr-fuzz": "node --test test/ssr-fuzz.test.js",
+    "test:ssr-fuzz": "node --test test/ssr-fuzz.test.js test/ssr-entry.test.js",
     "lint": "eslint 'packages/*/src/**/*.{js,ts}'",
     "lint:fix": "eslint --fix 'packages/*/src/**/*.{js,ts}'",
     "format": "prettier --write 'packages/*/src/**/*.{js,ts,css}' 'shared/**/*.{js,css}' 'docs/src/data/components/*.ts'",
@@ -40,7 +40,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@arclux/prism": "^3.2.0",
+    "@arclux/prism": "^3.4.0",
     "@axe-core/playwright": "^4.13.0",
     "@custom-elements-manifest/analyzer": "^0.11.0",
     "@esm-bundle/chai": "4.3.4-fix.0",
