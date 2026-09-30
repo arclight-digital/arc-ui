@@ -120,7 +120,7 @@ export class ArcAccordion extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
-  /** Slots read on the server and before hydration; see ssr.js. */
+  /** @internal Slots read on the server and before hydration; see ssr.js. */
   static slotReaders = { '': '_onSlotChange' };
 
   constructor() {

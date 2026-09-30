@@ -194,7 +194,7 @@ export class ArcTooltip extends DeclaredPropsMixin(LitElement) {
 
   static _idCounter = 0;
 
-  /** Slots read on the server and before hydration; see ssr.js. */
+  /** @internal Slots read on the server and before hydration; see ssr.js. */
   static slotReaders = { '': '_syncTriggerAria' };
 
   constructor() {

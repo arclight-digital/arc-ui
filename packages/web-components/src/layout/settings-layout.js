@@ -127,7 +127,7 @@ export class ArcSettingsLayout extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
-  /** Slots read on the server and before hydration; see ssr.js. */
+  /** @internal Slots read on the server and before hydration; see ssr.js. */
   static slotReaders = { nav: '_sync', '': '_sync' };
 
   constructor() {

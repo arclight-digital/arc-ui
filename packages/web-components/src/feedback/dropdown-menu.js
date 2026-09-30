@@ -192,7 +192,7 @@ export class ArcDropdownMenu extends DeclaredPropsMixin(LitElement) {
     managedPanelStyles('dropdown__panel', { closedTransform: 'translateY(-4px)' }),
   ];
 
-  /** Slots read on the server and before hydration; see ssr.js. */
+  /** @internal Slots read on the server and before hydration; see ssr.js. */
   static slotReaders = { '': '_onSlotChange', trigger: '_syncTriggerAria' };
 
   constructor() {

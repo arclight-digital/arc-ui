@@ -94,16 +94,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "multiple",
               "privacy": "public",
               "type": {
@@ -278,16 +268,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_handleSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "max",
@@ -559,16 +539,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onDefaultSlotChange', footer: '_onFooterSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "href",
               "privacy": "public",
               "type": {
@@ -698,16 +668,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "autoPlay",
@@ -2278,18 +2238,7 @@
               "name": ""
             }
           ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            }
-          ],
+          "members": [],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -2976,16 +2925,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "gap",
@@ -5706,16 +5645,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "features",
               "privacy": "public",
               "type": {
@@ -6315,16 +6244,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "columns",
@@ -7430,16 +7349,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ prefix: '_onPrefixSlotChange', description: '_onDescriptionSlotChange', suffix: '_onSuffixSlotChange', actions: '_onActionsSlotChange', }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -7584,16 +7493,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "value",
@@ -8476,16 +8375,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "active",
               "privacy": "public",
               "type": {
@@ -8848,16 +8737,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "headingLevel",
@@ -10142,16 +10021,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "placeholder",
               "privacy": "public",
               "type": {
@@ -10591,16 +10460,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "open",
               "privacy": "public",
               "type": {
@@ -10708,16 +10567,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "method",
               "name": "scrollToEnd",
@@ -11048,16 +10897,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange', trigger: '_syncTriggerAria' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "open",
               "privacy": "public",
               "type": {
@@ -11164,16 +11003,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_syncTriggerAria' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "openDelay",
@@ -11432,16 +11261,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "author",
@@ -11757,16 +11576,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ trigger: '_syncTriggerAria' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "trigger",
@@ -12112,16 +11921,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ header: '_onHeaderSlotChange', footer: '_onFooterSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "heading",
@@ -12652,16 +12451,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_syncTriggerAria' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "content",
               "privacy": "public",
               "type": {
@@ -12844,16 +12633,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "variant",
               "privacy": "public",
               "type": {
@@ -12975,16 +12754,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ prefix: '_onPrefixSlotChange', '': '_onDefaultSlotChange', suffix: '_onSuffixSlotChange', }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "href",
@@ -14317,16 +14086,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "value",
@@ -15917,16 +15676,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "label",
               "privacy": "public",
               "type": {
@@ -16223,16 +15972,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ legend: '_onLegendSlotChange', actions: '_onActionsSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "legend",
@@ -16885,16 +16624,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onDefaultSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "name",
@@ -17800,16 +17529,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ prefix: '_onPrefixSlotChange', suffix: '_onSuffixSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "size",
               "privacy": "public",
               "type": {
@@ -17914,16 +17633,6 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
-            },
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ prefix: '_onPrefixSlotChange', suffix: '_onSuffixSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
             },
             {
               "kind": "field",
@@ -18881,16 +18590,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ tooltip: '_onTooltipSlotChange', description: '_onDescriptionSlotChange', }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "for",
               "privacy": "public",
               "type": {
@@ -19060,16 +18759,6 @@
                 "name": "FormControlMixin",
                 "module": "src/shared/form-control-mixin.js"
               }
-            },
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ prefix: '_onPrefixSlotChange', suffix: '_onSuffixSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
             },
             {
               "kind": "field",
@@ -19522,16 +19211,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "placeholder",
@@ -21271,16 +20950,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -22610,16 +22279,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "value",
               "privacy": "public",
               "type": {
@@ -22833,16 +22492,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "value",
@@ -23175,16 +22824,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "value",
@@ -24486,16 +24125,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange', 'item-${item.originalIndex}': '_onRowSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "disabled",
               "privacy": "public",
               "type": {
@@ -24649,16 +24278,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "label",
@@ -27696,16 +27315,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ topbar: '_onTopbarSlotChange', toc: '_onTocSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "breakpoint",
               "privacy": "public",
               "type": {
@@ -28706,16 +28315,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ above: function (e) { this._onSlotChange('above', e); }, below: function (e) { this._onSlotChange('below', e); }, '': function (e) { this._onSlotChange('content', e); }, }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "heading",
               "privacy": "public",
               "type": {
@@ -29304,16 +28903,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ nav: '_sync', '': '_sync' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "navPosition",
@@ -29912,16 +29501,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ prefix: '_onSlotChange', '': '_onSlotChange', suffix: '_onSlotChange', }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "sticky",
               "privacy": "public",
               "type": {
@@ -30066,16 +29645,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "value",
@@ -30493,16 +30062,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Read on the server too; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "separator",
@@ -31068,16 +30627,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onDefaultSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "href",
               "privacy": "public",
               "type": {
@@ -31494,16 +31043,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "label",
@@ -32007,16 +31546,6 @@
               "static": true,
               "default": "6",
               "description": "Ring geometry. r drives the dasharray, so the two cannot drift apart."
-            },
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
             },
             {
               "kind": "field",
@@ -32623,16 +32152,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "active",
               "privacy": "public",
               "type": {
@@ -33214,16 +32733,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "selected",
               "privacy": "public",
               "type": {
@@ -33397,16 +32906,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ actions: '_onActionsSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
             {
               "kind": "field",
               "name": "heading",
@@ -33836,18 +33335,7 @@
               "name": ""
             }
           ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            }
-          ],
+          "members": [],
           "events": [
             {
               "name": "arc-toggle",
@@ -37176,16 +36664,6 @@
           "members": [
             {
               "kind": "field",
-              "name": "slotReaders",
-              "type": {
-                "text": "object"
-              },
-              "static": true,
-              "default": "{ '': '_onSlotChange' }",
-              "description": "Slots read on the server and before hydration; see ssr.js."
-            },
-            {
-              "kind": "field",
               "name": "syncKey",
               "privacy": "public",
               "type": {
@@ -37985,13 +37463,6 @@
             }
           ],
           "members": [
-            {
-              "kind": "field",
-              "name": "documentStyles",
-              "static": true,
-              "default": "` arc-prose li { margin-bottom: 4px; line-height: var(--body-lh); } arc-prose li::marker { color: var(--text-ghost); } arc-prose a { color: var(--interactive); text-decoration: underline; text-decoration-color: rgba(var(--interactive-rgb), 0.3); text-underline-offset: 3px; transition: text-decoration-color var(--transition-fast); } arc-prose a:hover { text-decoration-color: var(--interactive); } arc-prose code { font-family: var(--font-mono); font-size: 0.9em; background: var(--surface-overlay); padding: 2px 6px; border-radius: var(--radius-sm); color: var(--accent-primary); } arc-prose pre code { background: none; padding: 0; font-size: inherit; color: inherit; } arc-prose strong { color: var(--text-primary); font-weight: var(--font-label-weight, 600); } arc-prose em { font-style: italic; } arc-prose th, arc-prose td { padding: 8px 16px; text-align: start; border-bottom: 1px solid var(--divider); } arc-prose th { font-weight: var(--font-label-weight, 600); color: var(--text-primary); } arc-prose blockquote p { margin-bottom: 0; } `",
-              "description": "Styles for the light DOM, which ::slotted() can't reach past its first\nlevel (li, a, code, strong in the content). Once per document or shadow\nroot, under a fixed attribute, and emitted into the page by the server\nrenderer too (ssr.js reads this), so a server-rendered page has them in\nits first paint. Each instance used to append its own copy into its own\nchildren, which reached the page only when the script ran and put a\n<style> among the content a framework thinks it owns."
-            },
             {
               "kind": "field",
               "name": "size",

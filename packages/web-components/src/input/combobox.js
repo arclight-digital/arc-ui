@@ -192,7 +192,7 @@ export class ArcCombobox extends DeclaredPropsMixin(FormControlMixin(LitElement)
 
   static _idCounter = 0;
 
-  /** Slots read on the server and before hydration; see ssr.js. */
+  /** @internal Slots read on the server and before hydration; see ssr.js. */
   static slotReaders = { '': '_onSlotChange' };
 
   constructor() {

@@ -84,7 +84,7 @@ export class ArcPopover extends DeclaredPropsMixin(LitElement) {
     positionStyles('popover__panel'),
   ];
 
-  /** Slots read on the server and before hydration; see ssr.js. */
+  /** @internal Slots read on the server and before hydration; see ssr.js. */
   static slotReaders = { trigger: '_syncTriggerAria' };
 
   constructor() {

@@ -105,7 +105,7 @@ export class ArcBreadcrumb extends LitElement {
     `,
   ];
 
-  /** Read on the server too; see ssr.js. */
+  /** @internal Read on the server too; see ssr.js. */
   static slotReaders = { '': '_onSlotChange' };
 
   constructor() {

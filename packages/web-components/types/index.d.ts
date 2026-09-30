@@ -5,8 +5,6 @@ import { LitElement } from 'lit';
  * `<arc-accordion>`
  */
 export declare class ArcAccordion extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** When true, allows multiple accordion panels to be open simultaneously. When false (default), opening one panel closes any other open panel. @default false */
   multiple: boolean;
 }
@@ -63,8 +61,6 @@ export declare class ArcAlert extends LitElement {
  * Events: arc-change
  */
 export declare class ArcAnchorNav extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The value of the currently active link. Controls which item is highlighted. @default '' */
   value: string;
   /** Declarative list of items to render. Each object needs a label (display text) and value (identifier). Alternative to slotting children. @default [] */
@@ -108,8 +104,6 @@ export declare class ArcAnnouncement extends LitElement {
  * Events: arc-sidebar-toggle
  */
 export declare class ArcAppShell extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { topbar: '_onTopbarSlotChange', toc: '_onTocSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Viewport width in pixels at which the layout switches between mobile and desktop modes. */
   breakpoint: number;
   /** Controls whether the sidebar is visible on mobile viewports (below 768 px). On desktop the sidebar is always shown regardless of this attribute. Toggle it from a hamburger button in your TopBar to give mobile users access to navigation. @default false */
@@ -168,8 +162,6 @@ export declare class ArcAvatar extends LitElement {
  * `<arc-avatar-group>`
  */
 export declare class ArcAvatarGroup extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_handleSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Maximum number of avatars to display. Excess avatars are hidden and a "+N" overflow badge is shown. @default Infinity */
   max: number;
   /** Overlap density preset. sm = -8px, md = -12px, lg = -16px negative margin between avatars. @default 'md' */
@@ -251,8 +243,6 @@ export declare class ArcBottomNav extends LitElement {
  * Events: arc-navigate
  */
 export declare class ArcBreadcrumb extends LitElement {
-  /** Read on the server too; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Character used as the separator between breadcrumb items. Common options: '/', '>', '•'. @default '/' */
   separator: string;
   /** @default 'Breadcrumb' */
@@ -286,8 +276,6 @@ export declare class ArcBreadcrumbMenu extends LitElement {
  * `<arc-button>`
  */
 export declare class ArcButton extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { prefix: '_onPrefixSlotChange', '': '_onDefaultSlotChange', suffix: '_onSuffixSlotChange', } */
-  slotReaders: Record<string, unknown>;
   /** When provided, the button renders as an <a> element instead of a <button>, making it a navigational link. This is the recommended approach for any action that takes the user to a new page or section. @default '' */
   href: string;
   /** Controls the visual weight and emphasis. Primary is a filled button with a neon glow hover suited for the top-level CTA. Secondary uses a bordered outline for supporting actions. Ghost renders with no border or background, ideal for low-priority or tertiary actions. @default 'primary' */
@@ -306,8 +294,6 @@ export declare class ArcButton extends LitElement {
  * `<arc-button-group>`
  */
 export declare class ArcButtonGroup extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Button variant cascaded to all children (e.g., "ghost", "outline"). @default '' */
   variant: string;
   /** Layout direction. Vertical stacks buttons top-to-bottom. @default 'horizontal' */
@@ -341,8 +327,6 @@ export declare class ArcCalendar extends LitElement {
  * `<arc-card>`
  */
 export declare class ArcCard extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onDefaultSlotChange', footer: '_onFooterSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** When set, renders the card as an anchor element, making the entire card surface a clickable link. On hover, the border transitions to a blue-to-violet gradient and the inner surface gains a lift shadow. @default '' */
   href: string;
   /** Controls internal spacing. Options: 'none', 'sm', 'md', 'lg'. @default 'md' */
@@ -356,8 +340,6 @@ export declare class ArcCard extends LitElement {
  * Events: arc-change
  */
 export declare class ArcCarousel extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Enables automatic slide advancement on a timer. Pauses on hover and focus, respects prefers-reduced-motion. @default false */
   autoPlay: boolean;
   /** Auto-play interval in milliseconds between slide transitions. @default 5000 */
@@ -510,8 +492,6 @@ export declare class ArcCodeBlock extends LitElement {
  * Events: arc-change
  */
 export declare class ArcCodeGroup extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Groups with the same key switch together, matched by tab name, and the choice is remembered in localStorage (`arc-code-group:<key>`). @default '' */
   syncKey: string;
   /** Accessible name for the tab list, such as "Package manager". @default '' */
@@ -584,8 +564,6 @@ export declare class ArcColorSwatch extends LitElement {
  * Events: arc-input, arc-change
  */
 export declare class ArcCombobox extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The currently selected option value. Reflected as an attribute so it can be read from the DOM. Updated automatically when the user selects an option. @default '' */
   value: string;
   /** Placeholder text shown in the input when no value is entered. @default '' */
@@ -664,8 +642,6 @@ export declare class ArcCommandItem extends LitElement {
  * Events: arc-select, arc-close
  */
 export declare class ArcCommandPalette extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Placeholder text displayed in the search input when the query is empty. @default 'Type a command...' */
   placeholder: string;
   /** How many ranked results to render. Truncation happens after ranking, so what survives is the best of the set. Raise it for a short command list; the default suits a large one. @default 50 */
@@ -678,8 +654,6 @@ export declare class ArcCommandPalette extends LitElement {
  * `<arc-comparison>`
  */
 export declare class ArcComparison extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Feature label strings, one row each. Settable as a property, or as a JSON array in markup: `features='["Storage","Bandwidth"]'`. A malformed value falls back to an empty list rather than throwing. @default [] */
   features: string[];
 }
@@ -741,8 +715,6 @@ export declare class ArcContainer extends LitElement {
  * Events: arc-open, arc-close, arc-select
  */
 export declare class ArcContextMenu extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Controls the visibility of the context menu. Set to true when the contextmenu event fires; set to false when the user selects an item, clicks the backdrop, or presses Escape. @default false */
   open: boolean;
 }
@@ -752,8 +724,6 @@ export declare class ArcContextMenu extends LitElement {
  * Events: arc-scroll-away, arc-scroll-return
  */
 export declare class ArcConversation extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Follow new content: when a message is added or grows while the reader is near the bottom, scroll to keep the latest visible. A reader who has scrolled up is never pulled back down. Defaults to true; set the property to false to leave scrolling entirely to the consumer. @default true */
   autoScroll: boolean;
   /** Scroll the transcript to its newest message. */
@@ -953,8 +923,6 @@ export declare class ArcDescriptionItem extends LitElement {
  * `<arc-description-list>`
  */
 export declare class ArcDescriptionList extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Number of grid columns for laying out items side by side. @default 1 */
   columns: number;
   /** How each item arranges its own term and detail. `stacked` (the default) puts the term above the detail; `horizontal` puts them side by side on a shared two-column grid, so terms align down the list. This composes with `columns`, which is about how many *items* sit across. One item can be horizontal inside a three-column list. @default 'stacked' */
@@ -1028,8 +996,6 @@ export declare class ArcDrawer extends LitElement {
  * Events: arc-close, arc-select
  */
 export declare class ArcDropdownMenu extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange', trigger: '_syncTriggerAria' } */
-  slotReaders: Record<string, unknown>;
   /** Controls whether the menu panel is visible. Toggled by clicking the trigger. Set to false when the user selects an item, clicks outside, or presses Escape. @default false */
   open: boolean;
 }
@@ -1067,8 +1033,6 @@ export declare class ArcFeatureCard extends LitElement {
  * Events: arc-add, arc-remove, arc-move
  */
 export declare class ArcFieldList extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Accessible name for the group of rows, such as "Options". @default '' */
   label: string;
   /** Text of the Add button, exactly as given. The plus sign before it is an icon, not part of the text, so `add-label="Option"` reads "Option" with a + beside it. @default 'Add' */
@@ -1097,8 +1061,6 @@ export declare class ArcFieldRow extends LitElement {
  * `<arc-fieldset>`
  */
 export declare class ArcFieldset extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { legend: '_onLegendSlotChange', actions: '_onActionsSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Text displayed in the `<legend>` element. Also available via the `legend` slot for markup. @default '' */
   legend: string;
   /** Helper text displayed below the legend. @default '' */
@@ -1263,8 +1225,6 @@ export declare class ArcHotspot extends LitElement {
  * Events: arc-open, arc-close
  */
 export declare class ArcHoverCard extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_syncTriggerAria' } */
-  slotReaders: Record<string, unknown>;
   /** Milliseconds to wait after hover/focus before showing the card. Prevents accidental activation during fast cursor movement. @default 400 */
   openDelay: number;
   /** Milliseconds to wait after the cursor leaves the trigger before hiding the card. Moving into the card cancels this timer. @default 300 */
@@ -1289,8 +1249,6 @@ export declare class ArcIcon extends LitElement {
  * `<arc-icon-button>`
  */
 export declare class ArcIconButton extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onDefaultSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Name of the arc-icon to render. When empty, the default slot is used for custom icon content. @default '' */
   name: string;
   /** Optional text label displayed next to the icon. When provided, the button expands from a square to a wider labeled button with uppercase styling. @default '' */
@@ -1378,8 +1336,6 @@ export declare class ArcImageCropper extends LitElement {
  * `<arc-image-hotspots>`
  */
 export declare class ArcImageHotspots extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
 }
 
 /**
@@ -1448,8 +1404,6 @@ export declare class ArcInlineEdit extends LitElement {
 export declare class ArcInput extends LitElement {
   /** Runs its own constraint logic and owns the whole validity flag set. @default false */
   autoValidates: boolean;
-  /** Slots read on the server and before hydration; see ssr.js. @default { prefix: '_onPrefixSlotChange', suffix: '_onSuffixSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The `name` attribute sent with form data on submission. Also used by the Form component to track field state and validation. @default '' */
   name: string;
   /** Visible label rendered above the input. Automatically associated with the field via a generated id, ensuring screen readers announce it correctly. @default '' */
@@ -1491,8 +1445,6 @@ export declare class ArcInput extends LitElement {
  * `<arc-input-group>`
  */
 export declare class ArcInputGroup extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { prefix: '_onPrefixSlotChange', suffix: '_onSuffixSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Controls addon padding and font size. @default 'md' */
   size: 'sm' | 'md' | 'lg';
 }
@@ -1609,8 +1561,6 @@ export declare class ArcKnob extends LitElement {
  * `<arc-label>`
  */
 export declare class ArcLabel extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { tooltip: '_onTooltipSlotChange', description: '_onDescriptionSlotChange', } */
-  slotReaders: Record<string, unknown>;
   /** ID of the target input element. Clicking the label focuses the associated control. @default '' */
   for: string;
   /** Shows a red asterisk (*) after the label text. @default false */
@@ -1674,8 +1624,6 @@ export declare class ArcLightbox extends LitElement {
  * `<arc-link>`
  */
 export declare class ArcLink extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onDefaultSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** URL destination for the link. @default '' */
   href: string;
   /** Link style variant. `default` uses accent-primary color, `muted` uses muted text, `nav` uses secondary text with 14px size and flex layout. @default 'default' */
@@ -1693,8 +1641,6 @@ export declare class ArcLink extends LitElement {
  * Events: arc-select, arc-change
  */
 export declare class ArcList extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The currently selected value(s). Comma-separated when `multiple` is true. The selection itself is held as a list of values, so a value containing a comma is selected and rendered correctly; only the *serialised* multi-select string cannot represent one, since the comma is its separator. Single-select is exact for any value. @default '' */
   value: string;
   /** Accessible name for the list, applied as `aria-label`. Required when `selectable` is set so the listbox has an accessible name. @default '' */
@@ -1714,8 +1660,6 @@ export declare class ArcList extends LitElement {
  * Events: arc-select
  */
 export declare class ArcListItem extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { prefix: '_onPrefixSlotChange', description: '_onDescriptionSlotChange', suffix: '_onSuffixSlotChange', actions: '_onActionsSlotChange', } */
-  slotReaders: Record<string, unknown>;
   /** Unique identifier used for selection tracking. @default '' */
   value: string;
   /** When set, renders the item as an anchor tag for navigation. @default '' */
@@ -1750,8 +1694,6 @@ export declare class ArcMarkdown extends LitElement {
  * `<arc-marquee>`
  */
 export declare class ArcMarquee extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** CSS length value for the gap between slotted items. Accepts any valid CSS length or custom property. @default 'var(--space-xl)' */
   gap: string;
   /** Scroll speed in pixels per second. The animation duration is calculated from the content width divided by this value. @default 40 */
@@ -1769,8 +1711,6 @@ export declare class ArcMarquee extends LitElement {
 export declare class ArcMaskedInput extends LitElement {
   /** Runs its own constraint logic and owns the whole validity flag set. @default false */
   autoValidates: boolean;
-  /** Slots read on the server and before hydration; see ssr.js. @default { prefix: '_onPrefixSlotChange', suffix: '_onSuffixSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The formatted presentation string: raw characters interleaved with mask literals, e.g. raw 12042026 under a date mask reads 12/04/2026. Read-only: it is derived from value and mask, never stored, and never submitted. */
   formattedValue: unknown;
   /** The mask pattern. `#` accepts a digit, `A` an uppercase letter (lowercase input is uppercased), `a` any letter, `*` a letter or digit; every other character is a literal typed for the user. Examples: `##/##/####`, `#### #### #### ####`, `AAA-###`. @default '' */
@@ -1866,8 +1806,6 @@ export declare class ArcMenubar extends LitElement {
  * `<arc-message>`
  */
 export declare class ArcMessage extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Display name shown in the muted meta line above the bubble. Omit it and the meta line only appears when a timestamp is set. @default '' */
   author: string;
   /** When the message was sent, as an ISO 8601 string. Rendered as house relative time ("3 minutes ago") through arc-time-ago, with the absolute date on its title. @default '' */
@@ -1909,8 +1847,6 @@ export declare class ArcMeter extends LitElement {
  * Events: arc-change, arc-input
  */
 export declare class ArcMultiSelect extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Hint text shown inside the control when no items are selected and the input is empty. @default '' */
   placeholder: string;
   /** Visible label rendered above the control in a small uppercase style. @default '' */
@@ -1967,8 +1903,6 @@ export declare class ArcNavItem extends LitElement {
  * Events: arc-mobile-menu-toggle, arc-navigate
  */
 export declare class ArcNavigationMenu extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** @default 'Navigation menu' */
   label: string;
 }
@@ -2062,8 +1996,6 @@ export declare class ArcOption extends LitElement {
  * `<arc-page-header>`
  */
 export declare class ArcPageHeader extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { above: function (e) { this._onSlotChange('above', e); }, below: function (e) { this._onSlotChange('below', e); }, '': function (e) { this._onSlotChange('content', e); }, } */
-  slotReaders: Record<string, unknown>;
   /** The page title rendered as an <h1>. This is the primary text landmark and should clearly describe the current page or view (e.g. "Team Settings", "Order #4021"). Keep it concise: two to five words is ideal. @default '' */
   heading: string;
   /** Optional supporting text displayed below the title row. Use it to provide a one-line summary of what the page contains or what action the user should take. When empty, the description paragraph is not rendered. @default '' */
@@ -2201,8 +2133,6 @@ export declare class ArcPinInput extends LitElement {
  * Events: arc-open, arc-close
  */
 export declare class ArcPopover extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { trigger: '_syncTriggerAria' } */
-  slotReaders: Record<string, unknown>;
   /** Deprecated, and has no effect: it was reserved for trigger modes that were never built, and v5 removes it. For a panel that opens on hover, use `arc-hover-card`. @default '' */
   trigger: string;
   /** Whether the popover panel is currently visible. Reflected as an attribute. @default false */
@@ -2233,8 +2163,6 @@ export declare class ArcProgress extends LitElement {
  * `<arc-prose>`
  */
 export declare class ArcProse extends LitElement {
-  /** Styles for the light DOM, which ::slotted() can't reach past its first level (li, a, code, strong in the content). Once per document or shadow root, under a fixed attribute, and emitted into the page by the server renderer too (ssr.js reads this), so a server-rendered page has them in its first paint. Each instance used to append its own copy into its own children, which reached the page only when the script ran and put a <style> among the content a framework thinks it owns. @default ` arc-prose li { margin-bottom: 4px; line-height: var(--body-lh); } arc-prose li::marker { color: var(--text-ghost); } arc-prose a { color: var(--interactive); text-decoration: underline; text-decoration-color: rgba(var(--interactive-rgb), 0.3); text-underline-offset: 3px; transition: text-decoration-color var(--transition-fast); } arc-prose a:hover { text-decoration-color: var(--interactive); } arc-prose code { font-family: var(--font-mono); font-size: 0.9em; background: var(--surface-overlay); padding: 2px 6px; border-radius: var(--radius-sm); color: var(--accent-primary); } arc-prose pre code { background: none; padding: 0; font-size: inherit; color: inherit; } arc-prose strong { color: var(--text-primary); font-weight: var(--font-label-weight, 600); } arc-prose em { font-style: italic; } arc-prose th, arc-prose td { padding: 8px 16px; text-align: start; border-bottom: 1px solid var(--divider); } arc-prose th { font-weight: var(--font-label-weight, 600); color: var(--text-primary); } arc-prose blockquote p { margin-bottom: 0; } ` */
-  documentStyles: unknown;
   /** Controls the base font size of the prose container. Affects paragraph text; headings and code maintain their own scale. @default 'md' */
   size: 'sm' | 'md' | 'lg';
 }
@@ -2273,8 +2201,6 @@ export declare class ArcRadio extends LitElement {
  * Events: arc-change
  */
 export declare class ArcRadioGroup extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The currently selected value. Must match one of the child arc-radio value attributes. Setting this property programmatically updates the visual selection and the internal aria-checked state. @default '' */
   value: string;
   /** The form field name submitted with the selected value. Required for native form integration: without it, the selection will not appear in FormData. @default '' */
@@ -2455,8 +2381,6 @@ export declare class ArcScrollIndicator extends LitElement {
 export declare class ArcScrollSpy extends LitElement {
   /** Ring geometry. r drives the dasharray, so the two cannot drift apart. @default 6 */
   ringRadius: number;
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The id of the currently active section. Reflects to an attribute and updates automatically as the user scrolls. @default '' */
   active: string;
   /** Pixel distance from the top of the viewport at which a section counts as current. Increase it to account for taller sticky headers. @default 80 */
@@ -2484,8 +2408,6 @@ export declare class ArcScrollToTop extends LitElement {
  * Events: arc-input, arc-clear, arc-change, arc-select
  */
 export declare class ArcSearch extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Current text content of the search input. @default '' */
   value: string;
   /** Hint text displayed when the input is empty. @default 'Search...' */
@@ -2513,8 +2435,6 @@ export declare class ArcSection extends LitElement {
  * Events: arc-change
  */
 export declare class ArcSegmentedControl extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The value of the currently selected option. Reflected as an attribute and auto-set to the first selectable option if empty. @default '' */
   value: string;
   /** The form field name submitted with the selected value. Required for native form integration: without it, the selection will not appear in FormData. @default '' */
@@ -2545,8 +2465,6 @@ export declare class ArcSegmentedControl extends LitElement {
  * Events: arc-change
  */
 export declare class ArcSelect extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The currently selected value. Must match one of the child `arc-option` value attributes. Setting this programmatically updates the displayed label and internal selection state. @default '' */
   value: string;
   /** Hint text displayed inside the trigger button when no option is selected. Use it to communicate what kind of choice the user should make, such as "Choose a team member..." or "Pick a status". The placeholder disappears once a value is chosen. @default 'Select...' */
@@ -2586,8 +2504,6 @@ export declare class ArcSelect extends LitElement {
  * `<arc-settings-layout>`
  */
 export declare class ArcSettingsLayout extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { nav: '_sync', '': '_sync' } */
-  slotReaders: Record<string, unknown>;
   /** Controls whether the navigation panel appears as a left sidebar (220px wide, CSS Grid) or a top bar (full-width, flexbox column). Below 768px either becomes a scrolling row of tabs. @default 'left' */
   navPosition: 'left' | 'top';
   /** Show only the content section whose `id` matches the active nav item (`href="#profile"` shows `id="profile"`), and hide the others with `hidden`. Off, every section stays on the page, as for one long page the nav scrolls through. @default false */
@@ -2609,8 +2525,6 @@ export declare class ArcSettingsNavItem extends LitElement {
  * Events: arc-change, arc-close, arc-open
  */
 export declare class ArcSheet extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { header: '_onHeaderSlotChange', footer: '_onFooterSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Text displayed in the header row. Also used as the `aria-label` for the dialog panel. @default '' */
   heading: string;
   /** Heights a bottom sheet rests at, smallest first, as a comma-separated list of CSS lengths (`snap-points="120px, 50dvh, 88dvh"`). From script, a string or an array. The handle then drags between them, snapping to the nearest on release or to the next on a flick, and dragging well below the smallest requests a close. The handle is also a slider: arrow keys move between heights. Ignored by a right sheet. @default '' */
@@ -2632,8 +2546,6 @@ export declare class ArcSheet extends LitElement {
  * Events: arc-navigate
  */
 export declare class ArcSidebar extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** The href of the currently active sidebar link. Used to highlight the matching link with accent styling. @default '' */
   active: string;
   /** Width of the sidebar. Accepts any CSS length value. Unset by default, which lets the rail fill whatever container it is placed in, including `arc-app-shell`, whose own rail is 280px wide and reads `--sidebar-width`. Set this only for a standalone sidebar; inside the shell the wrapper wins, and the token is the way to move both together. @default '' */
@@ -2796,8 +2708,6 @@ export declare class ArcSlider extends LitElement {
  * Events: arc-change
  */
 export declare class ArcSortableList extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange', 'item-${item.originalIndex}': '_onRowSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Disables all interaction, reducing opacity to 40% and blocking pointer events. @default false */
   disabled: boolean;
 }
@@ -2916,8 +2826,6 @@ export declare class ArcStep extends LitElement {
  * `<arc-stepper>`
  */
 export declare class ArcStepper extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Zero-indexed active step; steps before this index show as completed. Clamped to the range of rendered steps. @default 0 */
   active: number;
 }
@@ -2959,8 +2867,6 @@ export declare class ArcSuggestion extends LitElement {
  * `<arc-switch-group>`
  */
 export declare class ArcSwitchGroup extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Group heading rendered as a `<legend>` element. @default '' */
   label: string;
   /** Layout direction. Vertical stacks toggles, horizontal arranges them in a row. @default 'vertical' */
@@ -2986,8 +2892,6 @@ export declare class ArcTab extends LitElement {
  * Events: arc-change
  */
 export declare class ArcTabs extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Zero-based index of the currently active tab. Changing this value programmatically switches the visible panel and updates ARIA attributes. Out-of-range values are clamped to the nearest valid index. @default 0 */
   selected: number;
   /** Aligns the tab list. Options: 'start', 'center', 'end'. @default 'start' */
@@ -3217,8 +3121,6 @@ export declare class ArcTimePicker extends LitElement {
  * `<arc-timeline>`
  */
 export declare class ArcTimeline extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** ARIA heading level for each event title. Clamped to 1 or greater: `aria-level` below 1 is invalid and is dropped by assistive technology. @default 3 */
   headingLevel: number;
 }
@@ -3301,8 +3203,6 @@ export declare class ArcToggle extends LitElement {
  * Events: arc-overflow-change
  */
 export declare class ArcToolbar extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { prefix: '_onSlotChange', '': '_onSlotChange', suffix: '_onSlotChange', } */
-  slotReaders: Record<string, unknown>;
   /** When set, the toolbar uses position: sticky with top: 0 and z-index: 50, keeping it visible as the user scrolls through content below. @default false */
   sticky: boolean;
   /** Controls the toolbar height. `md`, the default, is 48px for primary toolbars; `sm` is 36px for secondary or nested toolbars; `lg` is 60px. The nested arc-icon-button in the overflow menu tracks it. @default 'md' */
@@ -3317,8 +3217,6 @@ export declare class ArcToolbar extends LitElement {
  * `<arc-tooltip>`
  */
 export declare class ArcTooltip extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_syncTriggerAria' } */
-  slotReaders: Record<string, unknown>;
   /** The plain-text string displayed inside the tooltip popup. Keep this concise: one short phrase that describes the trigger element or provides a supplementary hint. HTML is not supported; for formatted content, use the Popover component instead. @default '' */
   content: string;
   /** Time in milliseconds to wait after mouseenter or focusin before the tooltip becomes visible. The default of 200 ms prevents accidental activation during casual pointer movement. Increase to 400-600 ms in dense toolbars; avoid setting to 0 as it creates a jittery experience. @default 200 */
@@ -3332,8 +3230,6 @@ export declare class ArcTooltip extends LitElement {
  * Events: eventName, arc-sidebar-toggle, arc-mobile-menu-toggle
  */
 export declare class ArcTopBar extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { actions: '_onActionsSlotChange' } */
-  slotReaders: Record<string, unknown>;
   /** Brand text displayed in the top-left corner next to the optional logo slot. Rendered uppercase with wide letter-spacing at the wordmark size. Keep this to one or two words that identify the application. @default '' */
   heading: string;
   /** Destination of the brand link. Defaults to `/`; set it when the app is mounted under a sub-path, or to an empty string to render the brand as plain text with no link at all. @default '/' */
@@ -3462,8 +3358,6 @@ export declare class ArcTreeSelect extends LitElement {
  * Events: arc-toggle, arc-select
  */
 export declare class ArcTreeView extends LitElement {
-  /** Slots read on the server and before hydration; see ssr.js. @default { '': '_onSlotChange' } */
-  slotReaders: Record<string, unknown>;
 }
 
 /**

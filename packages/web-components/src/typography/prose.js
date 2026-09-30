@@ -120,6 +120,7 @@ export class ArcProse extends DeclaredPropsMixin(LitElement) {
   }
 
   /**
+   * @internal
    * Styles for the light DOM, which ::slotted() can't reach past its first
    * level (li, a, code, strong in the content). Once per document or shadow
    * root, under a fixed attribute, and emitted into the page by the server
