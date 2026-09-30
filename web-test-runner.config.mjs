@@ -20,6 +20,13 @@ function ssrPreviews() {
       if (context.path === '/__ssr-previews.js') {
         return { body: `export default ${JSON.stringify(get().body)};`, type: 'js' };
       }
+      // `/__ssr-render.js?m=<base64 markup>`: one server render, for a test
+      // that needs a specific page rather than the previews.
+      if (context.path === '/__ssr-render.js') {
+        const m = new URL(context.url, 'http://x').searchParams.get('m') ?? '';
+        const html = execFileSync(process.execPath, ['test/ssr-render.mjs', m], { maxBuffer: 64 << 20 }).toString();
+        return { body: `export default ${JSON.stringify(html)};`, type: 'js' };
+      }
       if (context.path === '/__register-all.js') {
         const src = 'packages/web-components/src';
         const files = fs

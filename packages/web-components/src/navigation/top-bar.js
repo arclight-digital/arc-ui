@@ -379,8 +379,11 @@ export class ArcTopBar extends DeclaredPropsMixin(LitElement) {
     `,
   ];
 
-  /** Slots read on the server and before hydration; see ssr.js. */
-  static slotReaders = { actions: '_onActionsSlotChange' };
+  // No slotReaders, on purpose. Whether the actions box is empty is a matter
+  // of layout (what the page's CSS hides), which the server can't know. Read
+  // before hydration, the client's answer counted as already rendered and the
+  // collapse never reached the page (getpulsar.dev, 4.9.0-pre). The ordinary
+  // slotchange after hydration renders it instead.
 
   constructor() {
     super();

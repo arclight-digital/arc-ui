@@ -294,6 +294,12 @@ const SLOT_MARK = new RegExp(` ${SLOT_ATTR}="\\d+"`, 'g');
  * Give each host that builds its shadow tree from its children those
  * children, as the server can model them (see ssr-light-dom.js).
  *
+ * A reader must compute only what the server can compute too: from the
+ * children and their attributes, never from layout. On the render that adopts
+ * the server's tree, Lit takes what the client computed as already on the
+ * page; a class that depends on a measurement never arrives (arc-top-bar's
+ * empty actions box, which measures, reads after hydration instead).
+ *
  * A component opts in with `static slotReaders`, mapping a slot name (`''`
  * for the default slot) to the method its `@slotchange` calls, or to a
  * function called with the host as `this`. The server

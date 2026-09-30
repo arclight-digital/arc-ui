@@ -234,4 +234,28 @@ describe('narrow viewport', () => {
     await box.updateComplete;
     expect(q('[part="caption-toggle"]'), 'a short caption offers nothing').to.equal(null);
   });
+
+  it('collapses empty actions on a server-rendered bar too, once it hydrates', async function () {
+    this.timeout(8000);
+    // getpulsar.dev on 4.9.0-pre: the actions reader ran before the adopting
+    // render, so its client-only answer ("nothing showing") was taken as
+    // already rendered and the collapse never reached the page.
+    const markup = `<arc-top-bar mobile-menu="nav" menu-position="right" mobile-center="end">
+        <span slot="logo" style="display:inline-block;width:100px;height:28px"></span>
+        <button slot="center" style="width:36px;height:36px">s</button>
+        <div slot="actions" id="acts"><button>Install</button></div>
+      </arc-top-bar>`;
+    const { default: ssr } = await import(`/__ssr-render.js?m=${encodeURIComponent(btoa(markup))}`);
+    const win = await phone(
+      `<style>#acts > * { display: none }</style>${ssr}`,
+      [`${SRC}/hydrate.js`, `${SRC}/navigation/top-bar.register.js`],
+    );
+    const bar = win.document.querySelector('arc-top-bar');
+    expect(bar.shadowRoot, 'server-rendered').to.not.equal(null);
+    expect(await until(() => bar.shadowRoot.querySelector('.topbar__actions--empty'), { timeout: 3000 }), 'collapsed').to.equal(true);
+    const center = win.document.querySelector('[slot="center"]').getBoundingClientRect();
+    const menu = bar.shadowRoot.querySelector('[part="menu-btn"]').getBoundingClientRect();
+    const xs = parseFloat(win.getComputedStyle(bar).getPropertyValue('--space-xs'));
+    expect(menu.left - center.right).to.be.closeTo(xs, 0.5);
+  });
 });
