@@ -7,11 +7,11 @@ export const collapsible: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'A disclosure widget with a clickable heading that toggles the visibility of its slotted content with a CSS grid animation.',
+    'A heading that shows and hides the content under it when clicked.',
 
   overview: `Collapsible is one section that opens and closes when you click its heading. Accordion manages several panels and closes the others. Collapsible stands alone, for optional details, advanced settings or extra information the user may not need straight away. Unlike Accordion, its body is a real slot, so it takes any markup.
 
-The heading is a \`<button>\` with \`aria-expanded\`, so Enter and Space toggle it. The body is a \`region\` labeled with the heading text. \`open\` is reflected, so you can set it in HTML or change it from code, and every change fires \`arc-toggle\` with \`{ open }\`.`,
+The heading is a \`<button>\` with \`aria-expanded\`, so Enter and Space toggle it. The body is a \`region\` labeled with the heading text. \`open\` is reflected, so you can set it in HTML or change it from code. \`arc-toggle\` fires with \`{ open }\` when the user toggles the section, not when code sets \`open\`.`,
 
   features: [
     'Height animates with a `grid-template-rows` transition from `0fr` to `1fr`, with no JavaScript measuring',
