@@ -6,7 +6,7 @@ export const diff: ComponentDef = {
   tag: 'arc-diff',
   tier: 'data',
   interactivity: 'static',
-  description: 'Line-based text diff viewer with inline and side-by-side display modes.',
+  description: 'Shows the lines added and removed between two strings, in one column or side by side.',
 
   overview: `Diff compares the \`original\` and \`revised\` strings line by line and shows what changed. Added lines get a green tint and a \`+\` prefix, removed lines a red tint, strikethrough and a \`-\` prefix, and unchanged lines are muted with a blank prefix. The diff is a longest-common-subsequence computation inside the component, with no diff library.
 
