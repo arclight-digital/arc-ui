@@ -7,7 +7,7 @@ export const knob: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Rotary knob input for continuous parameters, with a glowing 270-degree arc fill, vertical-drag interaction, magnetic detents, and a monospace value readout.',
+    'A rotary knob you drag up or down to set a number, like a gain or volume control on a synth.',
   searchKeywords: ['dial', 'rotary', 'potentiometer', 'synth', 'gain', 'volume'],
 
   overview: `Knob is a rotary control that fits a full parameter range into a small circle, so a rack of channel strips or a synth panel can put a dozen side by side. A 270-degree arc fills from \`min\` to the current value, a glowing line marks the position, and the readout below uses tabular monospace digits so its width doesn't change as you turn.
