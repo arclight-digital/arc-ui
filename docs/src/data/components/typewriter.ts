@@ -9,43 +9,35 @@ export const typewriter: ComponentDef = {
   replayable: true,
   description: 'Character-by-character text reveal animation with blinking cursor.',
 
-  overview: `Typewriter reveals text one character at a time, recreating the classic typewriter effect used in hero headlines, onboarding sequences, and conversational UI. The animation is driven by a \`setTimeout\` chain, with no frame-sync overhead.
+  overview: `Typewriter reveals its \`text\` one character at a time, for hero headlines, onboarding sequences and conversational UI. A \`setTimeout\` chain drives it.
 
-The \`speed\` prop controls milliseconds per character (default 50ms, roughly 20 characters per second), and an optional \`delay\` defers the start for staggered or sequenced reveals. When \`loop\` is enabled, the text clears after a configurable \`pause-end\` duration (default 2s) and replays indefinitely, useful for rotating taglines or feature highlights.
+\`speed\` is milliseconds per character (50 by default, about 20 characters a second), and \`delay\` holds the start so several typewriters can run in sequence. With \`loop\`, the text clears after \`pause-end\` (2 seconds by default) and types again, for rotating taglines.
 
-\`replay()\` restarts the animation from the beginning, which is the method behind a "watch again" control and the way to re-trigger a one-shot reveal after the content around it changes. It restarts the same sequence rather than queueing a second one, so calling it mid-type is safe.
+\`replay()\` restarts the animation from the beginning. Use it for a "watch again" control, or to run a one-shot reveal again after the content around it changes. It restarts the same sequence, not a second one, so it's safe to call mid-type.
 
-A blinking cursor (the classic \`|\` caret) appears by default and automatically fades out once typing completes. The cursor color follows \`--accent-primary\`, so it adapts to any theme. When \`prefers-reduced-motion\` is active, the full text is shown immediately with no animation, so content is never hidden from users who need reduced motion.`,
+A blinking \`|\` cursor in \`--accent-primary\` is on by default, and \`no-cursor\` turns it off. Once typing finishes, the cursor fades out after about 3 seconds, or keeps blinking with \`loop\`. Under \`prefers-reduced-motion\` the full text shows at once.`,
 
   features: [
-    'Character-by-character text reveal with configurable speed',
-    'Optional initial delay for sequenced or staggered animations',
-    'Blinking cursor that fades out on completion',
-    'Loop mode with configurable pause between cycles',
-    'Respects `prefers-reduced-motion`: shows full text immediately',
-    '`replay()` restarts the animation from the beginning, safe to call mid-type',
-    'Fires `arc-complete` event when typing finishes',
-    'Inherits font from parent, so it works with any typography',
+    'Fires `arc-complete` when typing finishes',
+    'Inherits its font from the parent',
   ],
 
   guidelines: {
     do: [
-      'Use in hero sections and landing pages for dramatic text reveals',
-      'Set speed between 30-80ms for natural-feeling typing',
-      'Use delay to stagger multiple typewriters in sequence',
-      'Enable loop for rotating taglines or feature highlights',
-      'Pair with a static heading. Typewriter text should be supplementary, not the only content',
+      'Use it in hero sections and on landing pages',
+      'Set `speed` between 30 and 80ms for typing that looks natural',
+      'Use `delay` to run several typewriters one after another',
+      'Put the important text in a static heading as well. A screen reader that reaches the typewriter mid-animation reads only what\'s typed so far',
     ],
     dont: [
-      'Do not use for critical content that users need to read immediately. The delay hides information',
-      'Do not run more than 2-3 typewriters simultaneously. It becomes chaotic',
-      'Do not set speed below 20ms. It looks like a flash, not typing',
-      'Do not use loop on long paragraphs. The constant reset is distracting',
-      'Do not rely on the typewriter for the only instance of important text. Screen readers see it all at once',
+      'Don\'t use it for text readers need to read right away. The animation holds it back',
+      'Don\'t run more than two or three typewriters at once',
+      'Don\'t set `speed` below 20ms. It reads as a flash, not typing',
+      'Don\'t loop long paragraphs',
     ],
   },
 
-  previewHtml: `<arc-typewriter text="Welcome to the future of UI." speed="60" cursor></arc-typewriter>`,
+  previewHtml: `<arc-typewriter text="This line types itself one character at a time." speed="60" cursor></arc-typewriter>`,
 
   tabs: [
     {
