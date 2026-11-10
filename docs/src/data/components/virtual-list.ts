@@ -7,11 +7,9 @@ export const virtualList: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'Windowed list that renders only visible items for efficient scrolling through thousands of rows. Fixed item height with configurable overscan.',
+    'A scrolling list of fixed-height rows that renders only the rows on screen.',
 
   overview: `VirtualList renders only the rows on screen. A spacer stands in for the full list height (\`items.length × itemHeight\`), so the scrollbar behaves as if every row existed, while the DOM holds one screenful plus an \`overscan\` buffer. Scroll handling is throttled with \`requestAnimationFrame\`, and the number of DOM nodes stays the same however long the array is. The tests run it with 10,000 rows.
-
-Rows come from one of two places, because rendering a row means something different inside a framework than outside one.
 
 In plain JS, HTML or Lit, give it a \`renderItem\` callback. It's called only for rows on screen and can return anything Lit can render, such as a template, a DOM node or a string.
 
@@ -20,9 +18,9 @@ list.items = data;
 list.renderItem = (item, index) => \`\${index + 1}. \${item.name}\`;
 \`\`\`
 
-In a framework, use the wrapper's own idiom: a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, and a \`rowTemplate\` in Angular. Each of these wrappers listens for \`arc-range-change\`, tracks the visible range and renders exactly those rows. The library's other wrappers pass props straight through. The element owns the scroll geometry and your framework owns the rows, so a React row is a real React element.
+In a framework, use the wrapper's own idiom: a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, and a \`rowTemplate\` in Angular. Each of these wrappers listens for \`arc-range-change\`, tracks the visible range and renders exactly those rows as your framework's own elements.
 
-Working with the element directly, you can also drive it yourself. It renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` with \`{ start, end }\` (\`end\` exclusive) each time the range moves. That's once per row crossed, not once per frame. \`visibleRange\` returns the same values on demand, and \`scrollToIndex(n)\` jumps to a row. An index past the end is clamped and scrolls to the last row.`,
+Working with the element directly, you can also drive it yourself. It renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` with \`{ start, end }\` (\`end\` exclusive) when the range changes, at most once per animation frame. \`visibleRange\` returns the same values on demand, and \`scrollToIndex(n)\` jumps to a row. An index past the end is clamped and scrolls to the last row.`,
 
   features: [
     'All rows share one height, `item-height` (40px by default)',
