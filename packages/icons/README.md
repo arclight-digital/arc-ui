@@ -15,8 +15,8 @@ npm i @arclux/arc-ui @arclux/arc-ui-icons lit
 import '@arclux/arc-ui-icons/phosphor';
 ```
 
-That is the whole setup. The import registers Phosphor with ARC UI's icon
-registry and, if no library has been selected yet, makes it the active one:
+The import registers Phosphor with ARC UI's icon registry and, if no library
+has been selected yet, makes it the active one:
 
 ```html
 <arc-icon name="star"></arc-icon>
@@ -72,7 +72,7 @@ import phosphor from '@arclux/arc-ui-icons/phosphor'; // { 'check': '<svg…>', 
 
 ## A library of your own
 
-Nothing here is privileged. `register()` takes any name and any map:
+The built-in packs use the same API you do. `register()` takes any name and any map:
 
 ```js
 import { iconRegistry } from '@arclux/arc-ui';
@@ -100,7 +100,7 @@ spelling and each pack ships an alias table, exported as
 
 Browse both sets at [arcui.dev/docs/components/icon](https://arcui.dev/docs/components/icon).
 
-## Licence
+## License
 
 `MIT AND ISC`. The packaging is ARC UI's, under MIT; the artwork is not ours to
 relicense and is redistributed under its own terms: **Phosphor Icons** under MIT
@@ -109,8 +109,8 @@ portions derived from Feather under MIT ([lucide.dev](https://lucide.dev)). Both
 permit commercial use, modification and redistribution.
 
 All three notices are in [LICENSE](./LICENSE), which is generated from the
-installed upstream packages so that it stays a copy rather than a transcription;
+installed upstream packages, not typed by hand.
 `scripts/checks/icon-attribution.js` fails the build if it drifts from what is
 actually being shipped. Each glyph is reproduced unchanged apart from the removal
 of fixed `width`/`height` and `class` attributes, so it can inherit size and
-colour from its host.
+color from its host.
