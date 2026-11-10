@@ -8,7 +8,7 @@ export const clock: ComponentDef = {
   interactivity: 'interactive',
   description: 'Live clock with a digital or analog face, optionally pinned to an IANA timezone.',
 
-  overview: `Clock shows the current time and updates once a second, from one interval that starts on connect and is cleared on disconnect. \`variant\` picks the face. The digital face sets the time in \`var(--font-mono)\` with tabular numerals, so the digits change without the layout shifting. The analog face is an SVG dial with twelve tick marks, hour and minute hands in the primary text color, and an accent second hand with a soft glow.
+  overview: `Clock shows the current time and updates once a second, from one interval that starts on connect and is cleared on disconnect. \`variant\` picks the face. The digital face sets the time in \`var(--font-mono)\` with tabular numerals, so the digits change without the layout shifting. The analog face is an SVG dial with a tick for every minute (longer ones at the hours), hour and minute hands in the primary text color, and an accent second hand with a soft glow.
 
 Both faces take the same attributes. \`timezone\` takes an IANA name such as "Asia/Tokyo" and defaults to the viewer's zone. An unrecognized name falls back to local time without throwing. \`show-seconds\` adds seconds to the digital time or a second hand to the dial. On the digital face, \`hour12\` forces 12-hour time (set the property to \`false\` for 24-hour, or leave it unset to follow the viewer's locale), and \`show-timezone\` adds the zone abbreviation in muted text. \`label\` puts a caption in the accent gradient under the face. Labeled clocks side by side make a row of world clocks.
 
