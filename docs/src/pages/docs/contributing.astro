@@ -2,18 +2,18 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
-  { id: 'getting-started', label: 'Getting Started' },
+  { id: 'getting-started', label: 'Getting started' },
   { id: 'development', label: 'Development' },
   { id: 'architecture', label: 'Architecture' },
-  { id: 'pull-requests', label: 'Pull Requests' },
-  { id: 'reporting-issues', label: 'Reporting Issues' },
-  { id: 'code-style', label: 'Code Style' },
+  { id: 'pull-requests', label: 'Pull requests' },
+  { id: 'reporting-issues', label: 'Reporting issues' },
+  { id: 'code-style', label: 'Code style' },
 ];
 ---
 
 <DocsLayout
   title="Contributing"
-  description="How to contribute to ARC UI."
+  description="Set up the ARC UI repo, regenerate the framework packages, and open a pull request or issue."
   activeSlug="contributing"
   headings={headings}
   breadcrumbs={[{ label: 'Contributing' }]}
@@ -21,11 +21,11 @@ const headings = [
   <div class="contributing-page">
     <h1 class="page-title">Contributing</h1>
     <p class="page-desc">
-      ARC UI is open source, and contributions are welcome.
+      ARC UI is MIT-licensed. Bug reports and pull requests go to the GitHub repository.
     </p>
 
     <section id="getting-started">
-      <h2 class="docs-heading">Getting Started</h2>
+      <h2 class="docs-heading">Getting started</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">Prerequisites:</p>
       <ul class="docs-list">
@@ -37,8 +37,8 @@ const headings = [
 cd arc-ui
 pnpm install"></arc-code-block></div>
       <p class="docs-text">
-        The repo pins its package manager via the <code>packageManager</code> field.
-        Use <strong>pnpm</strong> for all repository commands.
+        The <code>packageManager</code> field pins the pnpm version. Use
+        <strong>pnpm</strong> for every command in the repo.
       </p>
     </section>
 
@@ -46,7 +46,7 @@ pnpm install"></arc-code-block></div>
       <h2 class="docs-heading">Development</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The docs site is the primary development environment:
+        Work on components in the docs site. Start it with:
       </p>
       <div class="docs-code"><arc-code-block language="bash" code="pnpm dev"></arc-code-block></div>
       <p class="docs-text">
@@ -55,13 +55,15 @@ pnpm install"></arc-code-block></div>
       </p>
       <div class="docs-code"><arc-code-block language="bash" code="pnpm generate"></arc-code-block></div>
       <arc-alert variant="warning">
-        Never hand-edit files in <code>packages/react/</code>, <code>packages/vue/</code>,
-        <code>packages/html/css/</code>, or <code>shared/base.css</code>. These are generated
-        by Prism and will be overwritten.
+        Don't hand-edit the framework packages (<code>packages/react/</code>,
+        <code>vue/</code>, <code>svelte/</code>, <code>angular/</code>, <code>solid/</code>,
+        <code>preact/</code>), <code>packages/html/css/</code>, or
+        <code>shared/base.css</code>. <code>pnpm generate</code> writes them and overwrites
+        your edits.
       </arc-alert>
       <p class="docs-text">
-        Version bumps go through a script that updates every package at once. Never edit
-        <code>package.json</code> versions by hand:
+        Bump versions with this script, which updates every package at once. Don't edit
+        <code>package.json</code> versions by hand.
       </p>
       <div class="docs-code"><arc-code-block language="bash" code="pnpm bump-versions <version>"></arc-code-block></div>
     </section>
@@ -70,8 +72,8 @@ pnpm install"></arc-code-block></div>
       <h2 class="docs-heading">Architecture</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI is a monorepo with Lit Web Components as the single source of truth. Prism, a custom
-        code generator, reads the Web Component source and produces idiomatic wrappers for each framework.
+        ARC UI is a monorepo. The Lit web components are the source, and Prism, a custom code
+        generator, reads them and writes a wrapper package for each framework.
       </p>
       <p class="docs-text">Components are organized into seven tiers:</p>
       <ul class="docs-list">
@@ -81,18 +83,18 @@ pnpm install"></arc-code-block></div>
         <li><strong>Data</strong>: Tables, lists, badges, meters, stats, timelines</li>
         <li><strong>Typography</strong>: Code blocks, markdown, text, kbd</li>
         <li><strong>Input</strong>: Buttons, forms, selects, sliders</li>
-        <li><strong>Feedback</strong>: Modals, dialogs, toasts, tooltips</li>
+        <li><strong>Feedback</strong>: Dialogs, toasts, tooltips</li>
       </ul>
       <p class="docs-text">
-        Design tokens live in <code>shared/tokens.js</code>, the single source of truth.
-        <code>shared/base.css</code> is generated from it by <code>pnpm generate</code>.
+        Design tokens are defined in <code>shared/tokens.js</code>, and
+        <code>pnpm generate</code> writes <code>shared/base.css</code> from it.
         Compound tokens must use <code>var()</code> references so consumers can override
         just the base tokens.
       </p>
     </section>
 
     <section id="pull-requests">
-      <h2 class="docs-heading">Pull Requests</h2>
+      <h2 class="docs-heading">Pull requests</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ol class="docs-list">
         <li>Fork the repository and create a feature branch from <code>main</code></li>
@@ -105,7 +107,7 @@ pnpm install"></arc-code-block></div>
     </section>
 
     <section id="reporting-issues">
-      <h2 class="docs-heading">Reporting Issues</h2>
+      <h2 class="docs-heading">Reporting issues</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
         Open an issue on
@@ -114,14 +116,14 @@ pnpm install"></arc-code-block></div>
       </p>
       <ul class="docs-list">
         <li>Steps to reproduce (for bugs)</li>
-        <li>Expected vs. actual behavior</li>
+        <li>Expected and actual behavior</li>
         <li>Browser and OS version</li>
         <li>A minimal reproduction if possible</li>
       </ul>
     </section>
 
     <section id="code-style">
-      <h2 class="docs-heading">Code Style</h2>
+      <h2 class="docs-heading">Code style</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="docs-list">
         <li>Web Components are plain JavaScript (no TypeScript build step)</li>
@@ -130,17 +132,17 @@ pnpm install"></arc-code-block></div>
         <li>All components import <code>tokenStyles</code> from <code>../shared-styles.js</code></li>
         <li>Use <code>var(--token-name)</code> for all colors, spacing, and typography</li>
         <li>Clean up event listeners in <code>disconnectedCallback()</code></li>
-        <li>Support keyboard navigation and ARIA attributes for interactive components</li>
+        <li>Make interactive components work from the keyboard</li>
         <li>Run <code>pnpm format</code> before committing</li>
       </ul>
     </section>
 
     <section class="see-also">
-      <h2 class="docs-heading">See Also</h2>
+      <h2 class="docs-heading">See also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/getting-started">Getting Started</a>: installation and setup</li>
-        <li><a href="/docs/accessibility">Accessibility</a>: accessibility principles and support</li>
+        <li><a href="/docs/getting-started">Getting started</a>: installation and setup</li>
+        <li><a href="/docs/accessibility">Accessibility</a>: what the components handle and how they're audited</li>
         <li><a href="/docs/tokens">Tokens</a>: design token reference</li>
       </ul>
     </section>
