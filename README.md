@@ -11,22 +11,20 @@
 
 <p align="center">
   <a href="https://arcui.dev">Documentation</a> &nbsp;&middot;&nbsp;
-  <a href="https://arcui.dev/docs/getting-started">Getting Started</a> &nbsp;&middot;&nbsp;
+  <a href="https://arcui.dev/docs/getting-started">Getting started</a> &nbsp;&middot;&nbsp;
   <a href="https://arcui.dev/docs/components">Components</a> &nbsp;&middot;&nbsp;
   <a href="https://arcui.dev/docs/theme-synthesizer">Theme Synthesizer</a>
 </p>
 
 ---
 
-A component library is a bet on a framework. Rewrite the app and you rewrite the design system with it.
+ARC UI is a set of [Lit](https://lit.dev) web components. **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source, so every framework gets the same elements and the same tokens. Changing framework means changing the import path.
 
-ARC UI is written once as [Lit](https://lit.dev) Web Components, and **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source. Same elements, same tokens, same pixels. Change framework and only the import path moves.
+It's built AI-first. Before anything ships it has to pass 2,687 browser tests (as of v4.9.1) and Prism's own suite (TODO(copy): Prism's test count; this said 600, and those tests aren't in this repo), and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so the zero-JS HTML package looks the same as the React one.
 
-Built AI-first: components are generated, then held to 4,600+ UI tests and a 600-test generator suite before anything ships. The verification layer, not the author, is the authority. Every wrapper package mounts in a real browser on every run, and the visual system is CSS custom properties end to end, so the zero-JS HTML package wears the same design as the React one.
+Lit is a peer dependency. The package depends on `@lit-labs/ssr-client` and `qrcode-generator`, and takes `shiki` and `@shikijs/langs` (for Code Block) and `@lit-labs/ssr` (for server rendering) as optional peers.
 
-One runtime dependency: Lit.
-
-## Quick Start
+## Quick start
 
 ```bash
 npm install @arclux/arc-ui lit
@@ -66,7 +64,7 @@ function App() {
 <button class="arc-button" data-variant="primary">Get Started</button>
 ```
 
-## Framework Packages
+## Framework packages
 
 | Framework | Package | Install |
 |-----------|---------|---------|
@@ -79,27 +77,27 @@ function App() {
 | Preact | `@arclux/arc-ui-preact` | `npm i @arclux/arc-ui-preact @arclux/arc-ui lit` |
 | HTML / CSS | `@arclux/arc-ui-html` | `npm i @arclux/arc-ui-html` |
 
-All framework packages are generated from the same Lit source and stay in sync automatically. Icons are a separate install: `@arclux/arc-ui-icons` carries Phosphor and Lucide, so a project that renders no icons pays for none.
+Prism generates every framework package from the same Lit source, and CI fails any commit where the generated output doesn't match it. Icons are a separate install: `@arclux/arc-ui-icons` has Phosphor and Lucide, so a project that renders no icons downloads none.
 
 ## Components
 
-The catalog is wide so you rarely have to leave it. 169 components across seven tiers. The count is a side effect of coverage: v4 cut five that existed to make it bigger.
+169 components across seven tiers. v4 cut five that were broken or far short of their job, and [MIGRATION.md](https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md#the-five-cuts) says what was wrong with each.
 
 | Tier | Count | Highlights |
 |------|-------|------------|
 | **Layout** | 19 | App Shell, Auth Shell, Dashboard Grid, Page Layout, Split Pane, Resizable, Masonry |
 | **Navigation** | 22 | Top Bar, Sidebar, Tabs, Menubar, Breadcrumb, Command Bar, Drawer, Tree View |
 | **Content** | 26 | Card, Accordion, Avatar, Lightbox, QR Code, Divider, Infinite Scroll, Virtual List |
-| **Data** | 25 | Chart, Data Grid, Kanban, Calendar, Timeline, Stat, Gauge, Sparkline |
-| **Input** | 44 | Input, Select, Combobox, Date Range Picker, Tag Input, Transfer List, Image Cropper |
+| **Data** | 25 | Chart, Data Grid, Kanban, Timeline, Stat, Gauge, Sparkline |
+| **Input** | 44 | Input, Select, Combobox, Calendar, Date Range Picker, Tag Input, Transfer List, Image Cropper |
 | **Feedback** | 18 | Dialog, Confirm, Toast, Command Palette, Tooltip, Sheet, Popover, Alert |
 | **Typography** | 15 | Code Block, Markdown, Terminal, Kbd, Keyboard Map, Prose, Blockquote |
 
-Twelve marketing components (carousel, CTA banner, typewriter and friends) and three audio/media primitives are published from `@arclux/arc-ui/marketing` and `@arclux/arc-ui/media`. Same package, same version, kept out of the default import so an admin dashboard never bundles a landing-page hero. Browse the full catalog at [arcui.dev/docs/components](https://arcui.dev/docs/components).
+Twelve marketing components (Carousel, CTA Banner, Typewriter and nine more) and three audio and media components (Knob, Level Meter, Waveform) are published from `@arclux/arc-ui/marketing` and `@arclux/arc-ui/media`. They're in the same package at the same version, but left out of the default import so an admin dashboard never bundles a landing-page hero. The full catalog is at [arcui.dev/docs/components](https://arcui.dev/docs/components).
 
-## Server Rendering
+## Server rendering
 
-Every component renders to declarative shadow DOM on the server. `renderDeclarativeShadowDOM` takes HTML and returns HTML, so Next, Nuxt, SvelteKit, Angular Universal and Astro are each one call away from markup that hydrates cleanly.
+Every component renders to declarative shadow DOM on the server. `renderDeclarativeShadowDOM` takes the HTML your framework rendered (Next, Nuxt, SvelteKit, Angular Universal, Astro, or a string you built yourself) and returns it with each `<arc-*>` element rendered into a shadow root, along with the stylesheets to serve beside it. It needs the optional peer `@lit-labs/ssr`.
 
 ```js
 import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
@@ -107,29 +105,36 @@ import { renderDeclarativeShadowDOM } from '@arclux/arc-ui/ssr';
 const page = await renderDeclarativeShadowDOM(appHtml);
 ```
 
-It also renders [arcui.dev](https://arcui.dev): two hundred pages and roughly twenty thousand shadow roots per build.
+On the client, import `@arclux/arc-ui/hydrate` before any component, so the elements adopt the server's markup instead of rendering it again. The same function renders [arcui.dev](https://arcui.dev).
 
 ## Icons
 
-Both packs live in `@arclux/arc-ui-icons` (Phosphor and Lucide, ~3,400 glyphs), registered explicitly and lazy-loaded per glyph, so a page pays only for the icons it renders:
+`@arclux/arc-ui-icons` has both packs (Phosphor and Lucide, about 3,400 glyphs). You register one explicitly, and each glyph loads on demand, so a page downloads only the icons it renders:
 
 ```js
 import '@arclux/arc-ui-icons/phosphor'; // registers and selects; <arc-icon name="star"> just works
 ```
 
-Your own icon set arrives through the same registration seam, aliases included, and the built-in components resolve against it.
+Your own icon set registers the same way, with an alias table so the built-in components find their icons in it.
 
 ## Accessibility
 
-Every component documentation page, live demos included, is audited with [axe-core](https://github.com/dequelabs/axe-core) in both dark and light themes on every commit. Structural WCAG violations fail CI; run the audit yourself with `pnpm audit:a11y`. Live results: [arcui.dev/docs/accessibility](https://arcui.dev/docs/accessibility).
+Every component documentation page, live demos included, is audited with [axe-core](https://github.com/dequelabs/axe-core) in both dark and light themes on every commit. Serious and critical violations fail CI. Run the audit yourself with `pnpm audit:a11y` after `pnpm build:docs`. Live results: [arcui.dev/docs/accessibility](https://arcui.dev/docs/accessibility).
 
 ## Verification
 
-The suite makes claims checkable: the full browser test suite runs against every component, a build-time check suite fails on undeclared tokens, docs claims no component honours, and generated files that drifted from their source; the shared modules every component leans on are gated by mutation testing, ratcheted so a score can only rise; and the wrapper packages are mounted in a real browser against one contract across all seven targets. A release tag on a red commit does not publish.
+CI runs:
 
-## Design Tokens
+- the browser test suite, against every component
+- build-time checks that fail on docs claims a component doesn't back up, motion curves and focus rings that skip the tokens, and generated files that drifted from their source
+- mutation testing on the shared modules every component uses, with per-module thresholds that can only go up
+- `pnpm test:wrappers`, which mounts all six framework wrapper packages in a real browser and runs one shared contract against them
 
-Every visual decision (colors, spacing, typography, shadows, glows) is a CSS custom property. Override 2–4 base tokens and the entire system cascades:
+A release tag on a failing commit doesn't publish.
+
+## Design tokens
+
+Colors, spacing, type, shadows and glows are all CSS custom properties. To rebrand, set the two accent colors, each with its `-rgb` channel:
 
 ```css
 :root {
@@ -140,9 +145,9 @@ Every visual decision (colors, spacing, typography, shadows, glows) is a CSS cus
 }
 ```
 
-Compound tokens (gradients, glows, focus rings) reference the base accents through `var()`, so every gradient, card hover, and glow line updates automatically.
+Gradients, glows, focus rings and card hovers are built from those through `var()`, so they follow.
 
-### Theme Modes
+### Theme modes
 
 ```html
 <html data-theme="dark">   <!-- Default -->
@@ -150,17 +155,17 @@ Compound tokens (gradients, glows, focus rings) reference the base accents throu
 <html data-theme="auto">   <!-- Follow OS preference -->
 ```
 
-Use `theme-fixed-dark` / `theme-fixed-light` to pin a region to one scheme regardless of the page theme (e.g., top bar, footer). A pinned dark region is plain near-black on a dark page; on a light page it lifts to a deep color derived from your accent, rather than sitting there as a black slab.
+Use `theme-fixed-dark` or `theme-fixed-light` to pin a region, such as a top bar or footer, to one scheme whatever the page theme. A pinned dark region is plain near-black on a dark page. On a light page it becomes a deep color derived from your accent.
 
-`[data-density="compact"]` and `[data-density="comfortable"]` restate the spacing scale at 0.75x and 1.25x, on the page or on a region. Touch targets and type stay put. A generated high-contrast preset ships at `@arclux/arc-ui/themes/high-contrast`, solved to 7:1 by the same contrast solver as the four shipped schemes.
+`[data-density="compact"]` and `[data-density="comfortable"]` scale the spacing by 0.75x and 1.25x, on the page or on one region. Touch targets and type sizes don't change. A generated high-contrast preset ships at `@arclux/arc-ui/themes/high-contrast`, solved to 7:1 by the same contrast contract as the four shipped schemes.
 
-### Token Categories
+### Token categories
 
-Backgrounds, text, borders, accents, spacing (xs–4xl), type scale, shadows, radii, z-index, transitions, glows, and gradients. See the [Token Reference](https://arcui.dev/docs/tokens) for the full list.
+Backgrounds, text, borders, accents, spacing (xs–4xl), type scale, shadows, radii, z-index, transitions, glows and gradients. The [token reference](https://arcui.dev/docs/tokens) lists every token.
 
-## How Prism Works
+## How Prism works
 
-Prism reads Lit Web Component source files, parsing properties, styles, slots, events, and CSS parts, then generates idiomatic wrappers for each target:
+Prism reads the Lit source (properties, styles, slots, events and CSS parts) and generates wrappers for each target:
 
 - **React**: `@lit/react` `createComponent` wrappers with TypeScript types
 - **Vue 3**: Single-file components with prop definitions
@@ -170,13 +175,13 @@ Prism reads Lit Web Component source files, parsing properties, styles, slots, e
 - **Preact**: Preact-compatible components
 - **HTML/CSS**: Standalone CSS extracted from Shadow DOM + plain HTML examples
 
-One command keeps everything in sync:
+To regenerate everything:
 
 ```bash
 pnpm generate
 ```
 
-## Project Structure
+## Project structure
 
 ```
 arc-ui/
@@ -207,14 +212,16 @@ pnpm dev              # Start Astro docs dev server
 pnpm generate         # Regenerate tokens + all framework wrappers
 ```
 
-## Browser Support
+## Browser support
 
 | Browser | Version |
 |---------|---------|
-| Chrome | Last 2 versions |
-| Firefox | Last 2 versions |
+| Chrome | TODO(copy) |
+| Firefox | TODO(copy) |
 | Safari | 16.4+ |
-| Edge | Last 2 versions |
+| Edge | TODO(copy) |
+
+TODO(copy): Chrome, Firefox and Edge versions. This said "last 2 versions", which nothing in the repo backs. The [browser support page](https://arcui.dev/docs/browser-support) gives feature floors (Chrome 73, Firefox 101).
 
 ## Upgrading
 
@@ -225,7 +232,9 @@ Start with the [v4.0.0 release
 notes](https://arcui.dev/docs/changelog) (curation, contracts, platform,
 light), then the [v4 contents
 list](https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md#v4-breaking-changes)
-if you are coming from v3. v3 receives patches for a quarter after the v4 tag.
+if you are coming from v3. TODO(copy): v3 support end date. MIGRATION.md says
+patches for a quarter after the v4 tag (about 2026-11-17); SECURITY.md says
+latest release only.
 
 ## License
 
@@ -237,7 +246,7 @@ The icon packs in `@arclux/arc-ui-icons` are redistributed under their own terms
 ## Links
 
 - [Documentation](https://arcui.dev)
-- [Getting Started](https://arcui.dev/docs/getting-started)
+- [Getting started](https://arcui.dev/docs/getting-started)
 - [Components](https://arcui.dev/docs/components)
 - [Theme Synthesizer](https://arcui.dev/docs/theme-synthesizer)
 - [GitHub](https://github.com/arclight-digital/arc-ui)
