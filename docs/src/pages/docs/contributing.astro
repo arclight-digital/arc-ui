@@ -100,7 +100,7 @@ pnpm install"></arc-code-block></div>
         <li>Fork the repository and create a feature branch from <code>main</code></li>
         <li>Make your changes to the Web Component source</li>
         <li>Run <code>pnpm generate</code> to regenerate wrappers and CSS</li>
-        <li>Run <code>pnpm lint</code> and <code>pnpm format:check</code></li>
+        <li>Run <code>pnpm test</code>, <code>pnpm lint</code> and <code>pnpm format:check</code></li>
         <li>Test your changes in the docs site (<code>pnpm dev</code>)</li>
         <li>Open a pull request describing the change</li>
       </ol>
@@ -129,7 +129,7 @@ pnpm install"></arc-code-block></div>
         <li>Web Components are plain JavaScript (no TypeScript build step)</li>
         <li>Use <code>static properties</code> instead of decorators</li>
         <li>Follow existing naming: <code>arc-component-name</code> for tags, <code>ArcComponentName</code> for classes</li>
-        <li>All components import <code>tokenStyles</code> from <code>../shared-styles.js</code></li>
+        <li>Components import <code>tokenStyles</code> from <code>../shared-styles.js</code>. A few elements with no transitions of their own, mostly children such as <code>arc-tab</code> and <code>arc-radio</code>, leave it out.</li>
         <li>Use <code>var(--token-name)</code> for all colors, spacing, and typography</li>
         <li>Clean up event listeners in <code>disconnectedCallback()</code></li>
         <li>Make interactive components work from the keyboard</li>
