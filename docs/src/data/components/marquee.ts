@@ -8,7 +8,7 @@ export const marquee: ComponentDef = {
   interactivity: 'static',
   replayable: true,
   description:
-    'Continuously scrolling strip of content with settings for speed, direction, gap and pause on hover. For logos, testimonials and announcements.',
+    'A strip of content that scrolls sideways in a loop, such as a row of logos.',
 
   overview: `Marquee scrolls its children horizontally in a loop. It copies them into a second group in its shadow DOM, and a CSS keyframe animation moves both groups, so the copy takes the original's place as it scrolls out with no visible seam.
 
@@ -25,7 +25,7 @@ export const marquee: ComponentDef = {
       'Use it for decorative content like logo strips or scrolling testimonials',
       'Leave `pause-on-hover` on so people can stop on an item and read it',
       'Put in enough items to fill the width. Otherwise the gap before the copy shows',
-      'Keep `speed` between 20 and 60 pixels per second so text stays readable',
+      'Keep `speed` near its default of 40 pixels per second when the strip has text people need to read',
       'Turn on reduced motion and check that the paused strip looks right',
     ],
     dont: [
