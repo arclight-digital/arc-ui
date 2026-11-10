@@ -9,35 +9,24 @@ export const kbd: ComponentDef = {
   searchKeywords: ['keyboard key'],
   description: 'Keyboard key indicator styled like a physical key.',
 
-  overview: `Kbd renders a keyboard key indicator styled to resemble a physical keycap. It uses a raised background, a 1px border with a thicker 2px bottom border, and monospace typography to create the classic "keycap" appearance. The component is inline-level, so it sits within running text and suits documenting keyboard shortcuts, hotkeys, and key combinations.
-
-The component accepts any content via its default slot: single keys like "Ctrl", modifier combinations, or special characters. The styling is minimal: 11px monospace text (\`--font-mono\`), \`--bg-elevated\` background, and \`--border-default\` borders. The thicker bottom border creates the "raised key" illusion. The \`user-select: none\` rule prevents accidental selection when users are reading shortcut documentation.
-
-Kbd renders a semantic \`<kbd>\` HTML element inside the shadow DOM, which is the correct element for representing user keyboard input. This ensures screen readers and other assistive technologies interpret the content correctly. The CSS part (\`kbd\`) is exposed for style overrides when you need to adjust colors for different contexts.`,
+  overview: `Kbd shows a keyboard key, styled like a keycap, inline in running text. Use it to document shortcuts and key combinations. It renders a semantic \`<kbd>\` element and takes any content in its default slot: a single key like "Ctrl", a modifier or a special character.`,
 
   features: [
-    'Semantic <kbd> element for correct assistive technology interpretation',
-    'Physical keycap appearance with a raised background and thicker bottom border',
-    'Monospace typography (`--font-mono`) at 11px for consistent key label rendering',
-    'Inline display for natural flow within paragraph text',
-    'user-select: none prevents accidental selection during reading',
-    'CSS part (kbd) for external style customization',
+    'Keycap look: a `--surface-overlay` background and a 1px `--border-default` border with a 2px bottom edge',
+    'Monospace text (`--font-mono`) at the small text size (`--text-sm`)',
+    '`user-select: none`, so a key isn\'t caught up when someone selects the surrounding text',
   ],
 
   guidelines: {
     do: [
-      'Use for documenting keyboard shortcuts in help text and documentation pages',
-      'Combine multiple Kbd elements with "+" or separator text for key combinations',
+      'Use one Kbd per key, joined with "+" or other separator text',
       'Use standard key names: Ctrl, Shift, Alt, Cmd, Enter, Esc, Tab',
-      'Place inline within sentences: "Press Ctrl + C to copy"',
-      'Use it for single keys or modifier labels, not for typing entire words',
     ],
     dont: [
-      'Do not use Kbd for non-keyboard input like mouse actions or touch gestures',
-      'Do not put long strings inside a Kbd. It is designed for short key labels (1-5 characters)',
-      'Do not style Kbd to look like a button. It is a documentation element, not an interactive one',
-      'Do not nest Kbd elements inside each other',
-      'Do not use Kbd for code snippets. Use the CodeBlock component for code',
+      'Don\'t use it for mouse actions or touch gestures',
+      'Don\'t put words or long strings in a Kbd. It\'s meant for key labels of one to five characters',
+      'Don\'t style it to look like a button. It isn\'t interactive',
+      'Don\'t use it for code. Use CodeBlock',
     ],
   },
 
