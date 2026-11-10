@@ -8,15 +8,15 @@ export const lightbox: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['gallery', 'image viewer', 'zoom', 'photo', 'pinch'],
   description:
-    'Full-screen image viewer on the overlay stack: open from a thumbnail, step through a gallery by arrow, key or swipe, zoom up to 4x with pinch, wheel or double-click, and dismiss with Escape, a backdrop click or a swipe down.',
+    'Full-screen image viewer. Open it from a thumbnail, step through a gallery, zoom up to 4x, and close it with Escape, a backdrop click or a swipe down.',
 
   overview: `Lightbox shows a gallery of images at full screen, above the page behind a blurred backdrop. It shares the overlay infrastructure with Dialog and Sheet: focus is trapped while open, page scroll is locked, Escape and a backdrop click dismiss, and focus returns to the trigger on close. Open it from a thumbnail with \`show(index)\`, or set \`open\` and \`index\` directly.
 
-There are two ways to give it pictures. Set the \`images\` property to an array of \`src\` strings or \`{ src, alt, caption, srcset, sizes, width, height }\` objects; the forms mix freely. Or set \`gallery\` to a selector for links already on the page, such as \`gallery="#photos a"\`. Each matched \`<a href>\` becomes an entry, with alt text from the image inside it and a caption from \`data-caption\`. A click on one opens the viewer on that picture. The links are read at click time, so ones added later are included, and without JavaScript they still open the full-size image.
+There are two ways to give it pictures. Set the \`images\` property to an array of \`src\` strings or \`{ src, alt, caption, srcset, sizes, width, height }\` objects, and one array can mix the two. Or set \`gallery\` to a selector for links already on the page, such as \`gallery="#photos a"\`. Each matched \`<a href>\` becomes an entry, with alt text from the image inside it and a caption from \`data-caption\`. A click on one opens the viewer on that picture. The links are read at click time, so ones added later are included, and without JavaScript they still open the full-size image.
 
-Navigation wraps at both ends: the arrow buttons, the arrow keys, Home and End, or a sideways swipe on touch. Each step fires \`arc-change\` with the new index, and the images either side of the current one are fetched ahead so a step shows at once. A slow image gets a quiet spinner after 150ms; one that fails shows a short message and its alt text instead of a broken picture.
+Stepping wraps at both ends. Move with the arrow buttons, the arrow keys, Home and End, or a sideways swipe on touch. Each step fires \`arc-change\` with the new index in \`detail.value\`, and the images either side of the current one are fetched ahead so a step shows at once. A slow image gets a spinner after 150ms, and one that fails shows a short message and its alt text instead of a broken picture.
 
-Zoom runs from 1x to 4x. Pinch or Ctrl + wheel zooms toward the fingers or the pointer, a double-click or double-tap zooms to 2x at that spot, and \`+\`, \`-\` and \`0\` step and reset it. While zoomed, dragging and the arrow keys pan, and the image's edges never come inside the frame. Navigating or closing resets the zoom.
+Zoom runs from 1x to 4x. Pinch or Ctrl + wheel zooms toward the fingers or the pointer, a double-click or double-tap zooms to 2x at that spot, and \`+\`, \`-\` and \`0\` step and reset it. While zoomed, dragging and the arrow keys pan, and the image's edges never come inside the frame. Stepping to another image or closing resets the zoom.
 
 Opened from a thumbnail, the picture grows out of it, and on close it shrinks back into the thumbnail of whichever image is showing. Each step slides the picture a short way in the direction of travel. Under reduced motion both become a plain fade. A gallery link is its own origin; for the \`images\` property, the element clicked or focused when \`show()\` ran is the origin for the image it opened on, and an entry's \`origin\` (an element or a selector) names one for any image.
 
@@ -27,38 +27,25 @@ The top bar and the arrows fade after a few seconds without movement, and come b
 \`next()\`, \`prev()\` and \`close()\` drive the viewer from outside, with the same events as the built-in controls. \`arc-close\` is cancelable on every path, including a swipe down and a programmatic \`close()\`, so a veto always holds.`,
 
   features: [
-    'Full-screen overlay with backdrop blur, sharing the focus-trap and scroll-lock infrastructure used by Dialog and Sheet',
-    'Accepts plain `src` strings or `{ src, alt, caption, srcset, sizes, width, height }` objects in the same `images` array',
-    '`gallery` builds the list from links already on the page and opens on click, with no script',
-    'Arrow buttons, arrow keys, Home/End and sideways swipes, wrapping at both ends',
-    'Zoom from 1x to 4x by pinch, Ctrl + wheel, double-click or double-tap, anchored where you point; pan by drag or arrow keys',
-    'Swipe down to close on touch',
-    'Neighbouring images preloaded; a delayed spinner for slow loads and an error state for failed ones',
-    'Controls carry their own backing so they read over bright photos, and fade when idle',
-    '`actions` slot for extra bar buttons such as download or share',
-    'Grows out of the thumbnail it was opened from and shrinks back into it on close; steps slide in the direction of travel',
-    'Optional `thumbnails` filmstrip with per-entry `thumb` sources, lazy-loaded',
-    'Monospace `3 / 12` counter; screen readers hear "3 of 12" and the alt text',
-    '`arc-close` is cancelable on every dismissal path; `arc-change` carries the new index on `detail.value`',
-    'Focus is trapped while open and restored to the trigger element on close',
+    'Each group of controls has its own backing, so it stays readable over bright photos',
+    'The counter shows `3 / 12` in monospace, and screen readers hear "3 of 12" followed by the alt text',
   ],
 
   guidelines: {
     do: [
-      'Use Lightbox for photo galleries, screenshots, and any image worth inspecting at full size',
-      'Prefer `gallery` when the thumbnails are already links to the full images; it keeps working without JavaScript',
-      'Open it from a visible thumbnail so the viewer starts on the image the user chose',
-      'Provide `alt` text for every entry. It also labels the dialog and is read out on each step',
-      'Add `thumbnails` for galleries longer than a handful of images, where the counter alone makes jumping around slow',
+      'Use it for photo galleries, screenshots and other images worth seeing at full size',
+      'Prefer `gallery` when the thumbnails already link to the full images',
+      'Open it from a visible thumbnail so the viewer starts on the image the reader chose',
+      'Give every entry `alt` text. It also labels the dialog and is read out on each step',
+      'Add `thumbnails` for galleries longer than a handful of images, where stepping one at a time is slow',
       'Pass `width` and `height` when you know them, so the frame holds its shape while the image loads',
       'Use `caption` for attribution or context that should travel with the image',
-      'Listen for `arc-change` when something outside the viewer should track the current image',
     ],
     dont: [
-      'Do not use Lightbox for non-image content. Dialog is the general-purpose overlay',
-      "Do not open it on page load; a full-screen takeover should be the user's choice",
-      'Do not pass small thumbnails as the `src`. Supply full-resolution sources, or a `srcset` that includes them',
-      'Do not put a second overlay on top of it; close one surface before opening another',
+      'Don\'t use it for anything but images. Use Dialog',
+      'Don\'t open it on page load. Let the reader choose a full-screen view',
+      'Don\'t pass small thumbnails as `src`. Use full-size sources, or a `srcset` that includes them',
+      'Don\'t open a second overlay on top of it. Close one before opening another',
     ],
   },
 
