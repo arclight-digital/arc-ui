@@ -7,39 +7,33 @@ export const menubar: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Desktop-application-style menu bar (File / Edit / View) with nested submenus, keyboard shortcuts display, and full WAI-ARIA menubar keyboard navigation.',
+    'Desktop-application menu bar (File, Edit, View) with submenus, shortcut hints and WAI-ARIA menubar keyboard navigation.',
 
-  overview: `Menubar renders the horizontal command bar familiar from desktop applications: a row of top-level menus like File, Edit, and View, each opening a vertical dropdown of commands. The entire structure is data-driven: assign an array to the \`items\` property via JavaScript and the component renders triggers, menus, submenus, dividers, and right-aligned keyboard shortcut hints.
+  overview: `Menubar is the row of menus from desktop applications: File, Edit and View, each opening a dropdown of commands. One \`items\` array describes it all, set as a property from JavaScript or as a JSON attribute when the menu is static. The component renders the triggers, menus, submenus, dividers and right-aligned shortcut hints.
 
-Menu entries can nest one further level: an item with its own \`items\` array becomes a submenu parent, rendered with a caret indicator. Submenus open to the right of their parent item and automatically flip to the left when they would overflow the viewport. Entries with \`{ divider: true }\` render as separator lines, \`disabled\` entries are skipped by keyboard navigation, and \`shortcut\` strings display in muted monospace (display only: the component does not bind global hotkeys).
+An entry with its own \`items\` array becomes a submenu, marked with a caret. Submenus go one level deep. They open to the right of their parent and flip to the left when they would overflow the viewport. \`{ divider: true }\` renders a separator line, keyboard navigation skips \`disabled\` entries, and \`shortcut\` strings show in muted monospace. Shortcuts are display only: the component doesn't bind any keys.
 
-Interaction follows the WAI-ARIA menubar pattern faithfully. The bar exposes a single tab stop with roving focus: ArrowLeft/ArrowRight move across top-level items, ArrowDown or Enter opens a menu, ArrowUp opens it focused on the last item. Inside menus, arrows move and wrap past dividers and disabled items, ArrowRight enters a submenu, ArrowLeft steps back out (or over to the previous top-level menu), typeahead jumps to items by first letter, and Escape unwinds one level at a time, restoring focus to the trigger. With the pointer, clicking a trigger toggles its menu, hovering other triggers switches menus once one is open, and hovering a submenu parent opens it after a short delay. Activating a leaf fires \`arc-select\` with the full label path from root to leaf.`,
+Interaction follows the WAI-ARIA menubar pattern. The bar is a single tab stop with roving focus: ArrowLeft and ArrowRight move across top-level items, ArrowDown or Enter opens a menu, and ArrowUp opens it on the last item. Inside a menu, the arrows move and wrap past dividers and disabled items, ArrowRight enters a submenu, ArrowLeft steps back out (or over to the previous top-level menu), typing a letter jumps to the next item that starts with it, and Escape closes one level at a time and returns focus to the trigger. With a pointer, clicking a trigger toggles its menu, hovering another trigger switches menus once one is open, and hovering a submenu parent opens it after a short delay. Activating a leaf fires \`arc-select\` with the label path from root to leaf.`,
 
   features: [
-    'Data-driven: one `items` array describes triggers, menus, submenus, dividers, shortcuts, and disabled states',
-    'Faithful WAI-ARIA menubar pattern: `role="menubar"`, `role="menu"`, `role="menuitem"`, roving tabindex with a single tab stop',
-    'Full 2D keyboard navigation: arrows in both axes, Home/End, Enter/Space, Escape unwinding one level at a time',
-    'Typeahead: printable characters jump to the next matching item in the open menu, or across the menubar when closed',
-    'Standard menubar pointer behavior: click to toggle, hover to switch open menus, ~150ms hover-intent delay on submenus',
-    'Submenus flip from right to left automatically when they would overflow the viewport',
-    '`arc-select` event carries the full label path from root to leaf (e.g. `["File", "Export", "PNG"]`)',
-    'CSS parts for `bar`, `trigger`, `menu`, `item`, and `shortcut` enable external styling',
+    'Roles are `menubar`, `menu` and `menuitem`, with a roving tabindex',
+    'Home and End jump to the first and last item, and Space activates an item like Enter',
+    'Typing a letter also works on the bar itself when no menu is open',
+    'Submenus open after about 150ms of hover',
+    '`arc-select` puts the path in `detail.path`, such as `["File", "Export", "PNG"]`',
   ],
 
   guidelines: {
     do: [
-      'Assign `items` via JavaScript. It is a property, not an HTML attribute',
-      'Group related commands with `{ divider: true }` entries, mirroring desktop app conventions',
-      'Use `shortcut` strings that match your actual key bindings. The menubar displays them but you must register the hotkeys yourself',
-      'Keep top-level labels to single words (File, Edit, View) so the bar scans like a native app',
-      'Listen to `arc-select` and branch on the label path array to route commands',
+      'Group related commands with `{ divider: true }` entries',
+      'Make `shortcut` strings match your real key bindings. You register the bindings yourself',
+      'Keep top-level labels to one word (File, Edit, View)',
+      'Route commands by the label path in `arc-select`',
     ],
     dont: [
-      'Do not use Menubar for site navigation. Use navigation-menu or top-bar; menubars are for application commands',
-      'Do not nest submenus more than one level below a menu. Deep chains are hard to traverse with a pointer',
-      'Do not put destructive actions directly next to common ones without a divider between them',
-      'Do not rely on shortcut hints as functionality. They are display-only text',
-      'Avoid more than 7-8 top-level menus; consolidate rare commands into a submenu instead',
+      'Don\'t use it for site navigation. Use Navigation Menu or Top Bar. A menubar is for application commands',
+      'Don\'t put destructive actions right next to common ones without a divider between them',
+      'Don\'t use more than 7 or 8 top-level menus. Move rare commands into a submenu',
     ],
   },
 
@@ -49,7 +43,7 @@ Interaction follows the WAI-ARIA menubar pattern faithfully. The bar exposes a s
 
   previewHtml: `<div style="display: flex; flex-direction: column; gap: var(--space-md); align-items: flex-start;">
   <arc-menubar id="demo-menubar-preview"></arc-menubar>
-  <div style="font-size: var(--text-sm); color: var(--text-muted); font-family: var(--font-mono);">selected: <span id="demo-menubar-out">—</span></div>
+  <div style="font-size: var(--text-sm); color: var(--text-muted); font-family: var(--font-mono);">selected: <span id="demo-menubar-out">none</span></div>
 </div>`,
 
   previewSetup: `const mb = el.querySelector('#demo-menubar-preview');
