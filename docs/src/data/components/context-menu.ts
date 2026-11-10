@@ -6,17 +6,17 @@ export const contextMenu: ComponentDef = {
   tag: 'arc-context-menu',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Right-click context menu with keyboard shortcuts.',
+  description: 'Replaces the browser\'s right-click menu inside one element with a menu of your own items.',
 
   overview: `ContextMenu replaces the browser's right-click menu inside one element. It listens for \`contextmenu\` on its parent, so a right-click anywhere in the parent opens the menu at the pointer, flipped away from the viewport edges. Items are \`<arc-menu-item>\` children with an optional \`icon\`, \`shortcut\` hint and \`disabled\`. \`<arc-menu-divider>\` separates them and \`<arc-menu-label>\` heads a named group.
 
-Choosing an item fires \`arc-select\` with its \`value\`, or its label if it has none, and closes the menu. Escape or a click outside also closes it. \`arc-open\` and \`arc-close\` fire on each change, and \`arc-close\` is cancelable.
+Choosing an item fires \`arc-select\` with its \`value\`, or its label if it has none, and closes the menu. Escape or a click outside also closes it. \`arc-open\` fires on every right-click, including one that only moves an open menu. \`arc-close\` fires when it closes and is cancelable.
 
 The menu takes focus when it opens. Arrow Down and Arrow Up move through the items, skipping dividers and disabled ones, Home and End jump to the first and last, and Enter or Space chooses. Closing from the keyboard returns focus to where it was. A click elsewhere leaves focus where you clicked.`,
 
   features: [
     'A second right-click while it\'s open moves the menu to the new spot',
-    'The `arc-select` detail also carries the item\'s `label`, `shortcut`, `icon` and `index`',
+    'The `arc-select` detail also has `index`, and an `item` object with the item\'s `label`, `shortcut`, `icon` and `value`',
     'Opens with a scale-in animation',
   ],
 
