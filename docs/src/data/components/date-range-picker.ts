@@ -9,38 +9,33 @@ export const dateRangePicker: ComponentDef = {
   description:
     'Dual-calendar picker for selecting a start/end date range with presets and full keyboard navigation.',
 
-  overview: `DateRangePicker extends the single DatePicker model to a start/end range. The read-only input displays the committed range in a compact human-readable form (e.g. "Jan 5 – Feb 2, 2026") while the \`start\` and \`end\` properties hold ISO strings (YYYY-MM-DD). The derived \`value\` getter returns the two dates joined as an ISO 8601 interval ("2026-01-05/2026-02-02"). The same string is submitted with the parent form via ElementInternals, and \`form.reset()\` restores the initial range.
+  overview: `DateRangePicker is DatePicker for a start and end date. The read-only field shows the range as "Jan 5 – Feb 2, 2026", while \`start\` and \`end\` hold ISO dates (YYYY-MM-DD). \`value\` joins them as an ISO 8601 interval ("2026-01-05/2026-02-02"), and that string is what submits with the form under \`name\`. \`form.reset()\` restores the initial range.
 
-Selection follows the familiar two-click model: the first click (or Enter on a focused day) sets the start date, and while the end is pending, hovering or keyboard-focusing another day previews the resulting range with a soft highlight. The second click commits the range (automatically swapping if the second date is earlier), fires \`arc-change\` with \`{ start, end }\`, and closes the popup. A third click begins a new range. The popup shows a configurable number of month panels (two by default) that sit side by side and wrap into a vertical stack when horizontal space runs out, with shared previous/next month navigation.
+The first click, or Enter on a focused day, sets the start. Until you pick the end, hovering or focusing another day previews the range. The second click sets the end, swapping the two if it's earlier, fires \`arc-change\` with the interval as \`value\` plus \`start\` and \`end\`, and closes the popup. A third click starts a new range. \`months\` sets how many month panels show (2 by default). They sit side by side and stack when the popup is too narrow, with one pair of previous and next buttons.
 
-An optional \`presets\` array renders a left rail of one-click quick ranges such as "Last 7 days". Each entry is \`{ label, days }\` and resolves to a range ending today. The day grids use a roving tabindex with Arrow/Home/End/PageUp/PageDown navigation that pages months automatically at the edges, endpoint days carry ", range start"/", range end" label suffixes, and a polite live region announces selection progress ("Start date set. Choose end date.") for screen reader users. Escape closes the popup and restores focus to the input.`,
+\`presets\` adds a rail of quick ranges on the left. Each entry is \`{ label, days }\` and selects the last \`days\` days ending today, fires \`arc-change\` and closes the popup.`,
 
   features: [
-    'Two-click range selection with automatic start/end swap when picked out of order',
-    'Live range preview highlight while hovering or keyboard-focusing the end date',
-    'ISO 8601 interval value ("start/end") submitted through native form association',
-    'Configurable number of side-by-side month panels (default 2) that stack when space is tight',
-    'Optional preset rail for one-click quick ranges like "Last 7 days"',
-    'Min/max bounds that disable out-of-range days',
-    'Roving-tabindex day grid with Arrow, Home/End, and PageUp/PageDown month paging',
-    'Polite live-region announcements of selection progress for assistive technology',
-    'Escape and outside-click dismissal with focus restoration to the input',
+    'The day grids are one tab stop. Arrow keys, Home, End, Page Up and Page Down move focus and turn the month at the edges',
+    'The start and end days get ", range start" and ", range end" added to their labels',
+    'A polite live region announces progress, such as "Start date set. Choose end date."',
+    'Escape closes the popup and puts focus back in the field. A click outside also closes it',
+    '`min` and `max` dim and disable days outside the range, and `required` keeps the field invalid until both dates are set',
+    'The popup renders in the top layer, so an `overflow: hidden` ancestor doesn\'t clip it',
   ],
 
   guidelines: {
     do: [
-      'Provide presets for the ranges users pick most often (7/30/90 days) to reduce interaction cost',
-      'Use the start and end ISO strings (or the interval value) for APIs. Never parse the display text',
-      'Set min and max when only a bounded window is meaningful (e.g. report data availability)',
-      'Listen to arc-change to react to committed ranges; it fires only when both dates are set',
-      'Set months={1} in narrow layouts like popover filters where two panels would overflow',
+      'Add presets for the ranges people pick most, such as 7, 30 and 90 days',
+      'Send `start` and `end`, or the interval `value`, to APIs. Never parse the display text',
+      'Set `min` and `max` when only some dates have data, as in a report',
+      'Set `months="1"` in narrow places, such as a filter popover, where two panels would overflow',
     ],
     dont: [
-      'Do not use it for a single date. Use DatePicker instead',
-      'Do not treat the first click as a committed value; arc-change fires only after the end date is chosen',
-      'Do not hand-build preset buttons outside the component when the presets prop covers the need',
-      'Do not place it inside an overflow: hidden container, as the popup will be clipped',
-      'Do not set min greater than max, which disables every day in the calendar',
+      'Don\'t use it for a single date. Use DatePicker',
+      'Don\'t treat the first click as a value. `arc-change` only fires once the end date is chosen',
+      'Don\'t build your own preset buttons when `presets` does the job',
+      'Don\'t set `min` later than `max`. Every day is disabled',
     ],
   },
 
@@ -49,7 +44,7 @@ An optional \`presets\` array renders a left rail of one-click quick ranges such
   previewHeight: '560px',
 
   previewHtml: `<arc-date-range-picker
-  label="Reporting Period"
+  label="Reporting period"
   placeholder="Select date range"
   presets='[{"label":"Last 7 days","days":7},{"label":"Last 30 days","days":30},{"label":"Last 90 days","days":90}]'
   style="width:300px"
