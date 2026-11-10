@@ -8,7 +8,7 @@ export const alert: ComponentDef = {
   interactivity: 'hybrid',
   searchKeywords: ['callout', 'notice', 'tip', 'banner', 'aside'],
   description:
-    'Contextual alert banner with five semantic variants and an optional dismiss button.',
+    'An inline message box colored by severity, with an optional close button.',
 
   overview: `Alert shows a message inline in the page. The variant sets the color and icon: \`info\`, \`tip\`, \`success\`, \`warning\` or \`error\`.
 
@@ -46,7 +46,7 @@ Severity and urgency don't always agree, and \`live\` sets the announcement on i
 
   previewHtml: `<div style="display:flex;flex-direction:column;width:100%;gap:var(--space-md)">
   <arc-alert variant="success" heading="Deployment complete" dismissible>Your changes are now live on production.</arc-alert>
-  <arc-alert variant="tip" heading="Faster builds">Add a <code>.arcignore</code> to skip files the bundler never reads.</arc-alert>
+  <arc-alert variant="tip" heading="Faster builds">Cache <code>node_modules</code> between CI runs to skip the install step.</arc-alert>
   <arc-alert variant="info" density="compact">
     <arc-icon slot="icon" name="sparkle"></arc-icon>
     Compact density, with the status glyph replaced through the <code>icon</code> slot.
