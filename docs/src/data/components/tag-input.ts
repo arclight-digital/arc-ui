@@ -7,7 +7,7 @@ export const tagInput: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Free-text token entry field with optional autocomplete suggestions, delimiter splitting, and duplicate rejection.',
+    'A text field that turns each entry into a removable chip, with optional suggestions as you type.',
 
   overview: `TagInput collects a list of free-text values as removable chips. Pressing Enter or typing the \`delimiter\` (a comma by default) adds the trimmed text as a tag, and pasted text is split on the delimiter into several tags at once.
 
