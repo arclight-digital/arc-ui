@@ -7,13 +7,13 @@ export const icon: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Renders an icon by name from a registered library. `@arclux/arc-ui-icons` ships Phosphor (1,512 icons) and Lucide (1,896), and you can switch libraries in one line or register your own icons.',
+    'Renders an SVG icon by name from the Phosphor or Lucide library, or from icons you register yourself.',
 
   overview: `Icon looks up \`name\` in the icon registry, runs the SVG through a sanitizer that strips \`<script>\` elements and \`on*\` handler attributes, and renders the result in its shadow root. Sanitized SVGs are cached, so each one is processed once.
 
-**Icons load on demand.** Each of the 3,400+ icons is its own module, 500 to 650 bytes on average. \`<arc-icon name="star">\` fetches only \`star.js\`. Importing \`arc-icon\` brings no icon library with it, only the nine glyphs ARC UI's own buttons draw (close, chevrons, overflow, edit, play and pause).
+Each of the 3,400+ icons is its own module (Lucide icons average 500 bytes and Phosphor icons 660), and \`<arc-icon name="star">\` fetches only \`star.js\`. Importing \`arc-icon\` brings no icon library with it, only the nine glyphs ARC UI's own buttons draw (close, chevrons, overflow, edit, play and pause).
 
-**The icons are in their own package.** \`@arclux/arc-ui-icons\` has two libraries: **Phosphor Icons** (phosphoricons.com), 1,512 glyphs drawn as filled paths, and **Lucide** (lucide.dev), a community fork of Feather Icons with 1,896 stroke-based glyphs. Click any icon in the browser below to copy its name.
+The icons ship separately in \`@arclux/arc-ui-icons\`. It has two libraries: **Phosphor Icons** (phosphoricons.com), 1,512 glyphs drawn as filled paths, and **Lucide** (lucide.dev), a community fork of Feather Icons with 1,896 stroke-based glyphs. Click any icon in the browser below to copy its name.
 
 Install it and import a pack. One line registers it, and if nothing else has been selected it becomes the active library, so \`<arc-icon name="star">\` works on the next line:
 
@@ -21,7 +21,7 @@ Install it and import a pack. One line registers it, and if nothing else has bee
 import '@arclux/arc-ui-icons/phosphor';
 \`\`\`
 
-Nothing is selected by default. Until a pack registers, a named icon renders its slot fallback (unless it's one of the nine built-in glyphs) and the registry logs a warning saying why. Before v4 both packs were vendored inside \`@arclux/arc-ui\`, where they were 88% of the published files and 44% of the unpacked bytes of every install, icons or no icons.
+Nothing is selected by default. Until a pack registers, a named icon renders its slot fallback (unless it's one of the nine built-in glyphs) and the registry logs a warning saying why. Before v4 both packs were vendored inside \`@arclux/arc-ui\`, where they were 88% of the published files and 44% of the unpacked bytes of every install.
 
 To switch libraries for the whole page, use the \`iconRegistry\` API or the \`<arc-icon-library>\` element:
 
@@ -77,7 +77,7 @@ import lucide from '@arclux/arc-ui-icons/all/lucide';     // loads all ~1,900 ic
       'Register custom icons with `iconRegistry.set()` before they first render',
     ],
     dont: [
-      'Don\'t render SVG strings from user input. The sanitizer is a second line of defense, not a trust boundary',
+      'Don\'t render SVG strings from user input without sanitizing them yourself first',
       'Don\'t use `xl` for icons in running text. `sm` or `md` matches body copy',
       'Don\'t set both `name` and slot content. When the name resolves, the slot is ignored',
       'Don\'t let an icon carry critical information on its own. Pair it with visible text',
