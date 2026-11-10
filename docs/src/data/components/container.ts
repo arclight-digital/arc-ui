@@ -8,48 +8,39 @@ export const container: ComponentDef = {
   interactivity: 'static',
   description: 'Max-width wrapper for page sections.',
 
-  overview: `Container constrains width. It centers its children horizontally with \`margin-inline: auto\` and caps their width at the \`--max-width\` design token (1120px by default), and adds inline padding via \`--space-lg\`. Wrap every landing page hero, documentation section, and dashboard content area in a Container to keep line lengths readable and horizontal spacing uniform.
+  overview: `Container constrains width. It centers its content with \`margin-inline: auto\`, caps it at the \`--max-width\` token (1120px by default) and adds \`--space-lg\` of inline padding. Use it around page sections so line lengths and side margins match across the page.
 
-The \`narrow\` boolean prop switches the max-width constraint to \`--max-width-sm\` (typically 720px), which suits article-style content, blog posts, and focused forms where shorter lines read better. That one toggle covers the two most common content widths without custom CSS.
+\`size\` picks the cap: \`sm\` is \`--max-width-sm\` (720px), \`md\` is the default, \`lg\` is 1400px, \`xl\` is 1600px and \`full\` removes it. \`narrow\` is the same as \`size="sm"\`, for articles and single-column forms. \`padding\` sets the inline padding to \`none\`, \`sm\`, \`md\` (the default) or \`lg\`.
 
-Container exposes a \`container\` CSS part on the inner wrapper, so you can target it with \`::part(container)\` for one-off adjustments. Because the component uses \`padding-inline\` rather than fixed margins, it works in RTL layouts and leaves vertical spacing to the parent or sibling components like Section.`,
+It sets only inline spacing, with logical properties, so it works in right-to-left layouts. Vertical spacing is up to the parent or a Section.`,
 
   features: [
-    'Centers content with margin-inline: auto and respects the `--max-width` token',
-    'Narrow mode switches to `--max-width-sm` for article and form layouts',
-    'Consistent inline padding via `--space-lg` design token',
-    'RTL-safe layout using logical properties (padding-inline, margin-inline)',
-    'Exposes a container CSS part for targeted ::part() styling',
-    'Leaves block spacing to parent layout components',
-    'Wrapper with no JavaScript',
+    'Content renders inside an inner wrapper exposed as the `container` CSS part, for one-off `::part(container)` changes',
   ],
 
   guidelines: {
     do: [
-      'Wrap every full-width page section in a Container to maintain consistent margins',
-      'Use the narrow prop for blog posts, articles, and single-column forms',
-      'Nest Container inside Section when you need both vertical spacing and width constraints',
-      'Rely on the --max-width and --max-width-sm tokens for global width changes',
-      'Combine with DashboardGrid or other grid components for structured inner layouts',
+      'Put a Container inside a Section when you need both vertical spacing and a width cap',
+      'Change the `--max-width` and `--max-width-sm` tokens to change widths across the site',
+      'Use DashboardGrid or another grid inside it for the inner layout',
     ],
     dont: [
-      'Do not nest Containers inside other Containers; a single wrapper per content band is enough',
-      'Do not override padding-inline with fixed pixel values; adjust the --space-lg token instead',
-      'Do not use Container as a flex or grid parent; it is a block-level width constraint only',
-      'Do not apply background colors directly to Container; wrap it in a full-bleed div for colored bands',
-      'Do not confuse Container with PageLayout. Container constrains width; PageLayout manages column structure',
+      'Don\'t nest Containers. The inline padding doubles',
+      'Don\'t override `padding-inline` with fixed pixels. Use the `padding` prop or the `--space-*` tokens',
+      'Don\'t make it a flex or grid parent. Its children are inside the inner wrapper, so `display` on the host doesn\'t lay them out',
+      'Don\'t use it for column structure. That\'s PageLayout',
     ],
   },
 
   previewHtml: `<div style="width:100%;display:flex;flex-direction:column;gap:var(--space-md)">
   <div style="width:100%;margin-inline:auto;padding-inline:var(--space-lg);box-sizing:border-box">
     <div style="background:rgba(77,126,247,0.08);border:1px dashed var(--accent-primary);border-radius:var(--radius-sm);padding:var(--space-lg);text-align:center;color:var(--text-secondary);font-size:14px;font-family:var(--font-body)">
-      Default container — max-width: var(--max-width)
+      Default container (max-width: var(--max-width))
     </div>
   </div>
   <div style="width:65%;margin-inline:auto;padding-inline:var(--space-lg);box-sizing:border-box">
     <div style="background:rgba(139,92,246,0.08);border:1px dashed var(--accent-secondary);border-radius:var(--radius-sm);padding:var(--space-lg);text-align:center;color:var(--text-secondary);font-size:14px;font-family:var(--font-body)">
-      Narrow container — max-width: var(--max-width-sm)
+      Narrow container (max-width: var(--max-width-sm))
     </div>
   </div>
 </div>`,
