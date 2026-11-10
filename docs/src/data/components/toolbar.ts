@@ -8,37 +8,30 @@ export const toolbar: ComponentDef = {
   interactivity: 'hybrid',
   description: 'Horizontal toolbar with prefix, center, and suffix slots.',
 
-  overview: `Toolbar is a horizontal action bar that groups related controls (buttons, dropdowns, search fields) into a consistent strip above or within a content region. It follows the classic three-slot pattern: the prefix slot anchors inline-start actions (like a file menu or back button), the center (default) slot holds a title or contextual info, and the suffix slot pins inline-end actions (like save, share, or settings). The v3 slot names start/end still work as deprecated aliases through v4.
+  overview: `Toolbar is a horizontal strip of controls (buttons, dropdowns, a search field) above or inside a content region. The \`prefix\` slot holds start-edge actions such as a file menu or a back button, the default slot holds a title or context in the middle, and \`suffix\` holds end-edge actions such as Save or Share.
 
-The component renders with \`role="toolbar"\` so screen readers treat the contained controls as one group. Three size variants are available: the default \`md\` (48px height) for primary toolbars, \`sm\` (36px) for secondary or nested ones, and \`lg\` (60px) for a prominent application bar. \`lg\` was added in v4 when the size enum was canonicalised across the library. This component declared only \`md\` and \`sm\`, so a toolbar was the one control that could not be made taller. The nested arc-icon-button in the overflow menu tracks whichever size you set. The \`border\` prop (on by default) adds a subtle bottom border to visually separate the toolbar from the content below.
+It has \`role="toolbar"\`, so screen readers treat its controls as one group. \`size\` sets the height: \`md\` (the default) is 48px for a main toolbar, \`sm\` is 36px for a secondary or nested one, and \`lg\` is 60px for a prominent app bar. A bottom border is on by default, and \`no-border\` removes it.
 
-When the \`sticky\` prop is set, the toolbar uses \`position: sticky\` with \`top: 0\` and a z-index of 50, keeping it visible as the user scrolls through long content. The toolbar background uses \`--bg-card\` to provide a slight elevation from the page surface. Combine Toolbar with SplitPane panels, code editors, or document viewers where contextual actions should remain accessible without scrolling.`,
+With \`overflow\` set, items that don't fit the width are hidden from the end and listed in a "More" menu, whose icon button follows \`size\`. With \`sticky\` set, the toolbar sticks to \`top: 0\` at \`z-index: 50\` as the content scrolls.`,
 
   features: [
-    'Three-slot layout: prefix (inline-start), center (flexible), suffix (inline-end)',
-    '`role="toolbar"` for accessible grouping of related controls',
-    'Three size variants: `md` (48px), `sm` (36px), and `lg` (60px), with the overflow menu’s icon button tracking the size',
-    'Optional bottom border via the border prop (enabled by default)',
-    'Sticky positioning with top: 0 and z-index: 50 when sticky is set',
-    'Card-colored background (`--bg-card`) for subtle elevation above the page surface',
-    'Exposed CSS parts (base, prefix, center, suffix) for targeted ::part() styling',
-    'Consistent gap spacing (`--space-sm`) between slotted controls',
+    'Background is `--surface-raised`',
+    'Slotted controls are spaced by `--space-sm`',
   ],
 
   guidelines: {
     do: [
-      'Use Toolbar above content panels, editors, and detail views for contextual actions',
-      'Place the most important action (e.g. Save) in the suffix slot where users expect it',
-      'Use size="sm" for secondary toolbars nested inside panels or split panes',
-      'Enable sticky for long scrollable content where the toolbar should remain visible',
-      'Group related buttons together in each slot for visual clarity',
+      'Use it above content panels, editors and detail views for actions on that content',
+      'Put the main action, such as Save, in the `suffix` slot',
+      'Use `size="sm"` for a secondary toolbar inside a panel or split pane',
+      'Set `sticky` over long scrolling content so the toolbar stays in view',
+      'Group related buttons in the same slot',
     ],
     dont: [
-      'Do not use Toolbar as the primary site navigation. Use TopBar or NavigationMenu instead',
-      'Do not overload the toolbar with more than five or six controls; move overflow into a DropdownMenu',
-      'Do not nest Toolbar inside another Toolbar. Use a single toolbar with grouped slot content',
-      'Do not disable the border prop when the toolbar sits above content with the same background color',
-      'Do not use Toolbar for status information. Use StatusBar for persistent informational displays',
+      'Don\'t use it as the main site navigation. Use TopBar or NavigationMenu',
+      'Don\'t put more than five or six controls in it. Move the rest into a DropdownMenu',
+      'Don\'t turn off the border when the toolbar sits on content with the same background color',
+      'Don\'t use it for status information. Use StatusBar',
     ],
   },
 
