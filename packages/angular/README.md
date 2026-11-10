@@ -2,7 +2,7 @@
 
 Angular standalone component wrappers for [ARC UI](https://arcui.dev) web components.
 
-> **Auto-generated** — this package is produced by [Prism](https://www.npmjs.com/package/@arclux/prism) from the canonical source in [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). Do not edit by hand.
+> [Prism](https://www.npmjs.com/package/@arclux/prism) generates this package's code from [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). To change a component, edit its source in [`packages/web-components`](https://github.com/arclight-digital/arc-ui/tree/main/packages/web-components). Hand edits here are overwritten the next time `pnpm generate` runs.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Angular standalone component wrappers for [ARC UI](https://arcui.dev) web compon
 npm install @arclux/arc-ui-angular @arclux/arc-ui lit
 ```
 
-Requires `@angular/core >= 17.0.0`.
+Requires `@angular/core`, `@angular/common` and `@angular/forms` >=17.0.0 <22.0.0.
 
 ## Usage
 
@@ -37,7 +37,7 @@ export class AppComponent {
 }
 ```
 
-Components are organized by tier and can be imported from subpaths:
+Each tier also has its own subpath:
 
 ```typescript
 import { Button } from '@arclux/arc-ui-angular/input';
@@ -53,13 +53,19 @@ Each component exposes its `arc-*` CustomEvents as camelCase `@Output()` emitter
 <arc-input label="Email" (arcInput)="onInput($event)"></arc-input>
 ```
 
+## Forms
+
+Form controls implement `ControlValueAccessor`, so `formControlName` and `ngModel` work on them.
+
 ## Server-side rendering
 
-The wrappers register custom elements on import, which requires a DOM. With Angular Universal / SSR, render them client-side only.
+To render the components on the server, pass your framework's HTML output through `renderDeclarativeShadowDOM` from `@arclux/arc-ui/ssr`. It renders each `<arc-*>` element into a declarative shadow root and needs the optional peer `@lit-labs/ssr`. On the client, import `@arclux/arc-ui/hydrate` before any component. The [server rendering guide](https://arcui.dev/docs/server-rendering) has the details.
+
+To skip server rendering, render them client-side only.
 
 ## Theming
 
-Components read design tokens from CSS custom properties. Overriding the base accent tokens re-themes every component — see the [theming guide](https://arcui.dev/docs/theming):
+Components read design tokens from CSS custom properties. Gradients, glows and focus rings are built from the accent tokens, so overriding those changes them too. See the [theming guide](https://arcui.dev/docs/theming):
 
 ```css
 :root {
@@ -70,7 +76,7 @@ Components read design tokens from CSS custom properties. Overriding the base ac
 
 ## Links
 
-- [Documentation & interactive examples](https://arcui.dev)
+- [Documentation](https://arcui.dev)
 - [Canonical source (`@arclux/arc-ui`)](https://www.npmjs.com/package/@arclux/arc-ui)
 - [Repository](https://github.com/arclight-digital/arc-ui)
 - [License (MIT)](https://github.com/arclight-digital/arc-ui/blob/main/LICENSE)
