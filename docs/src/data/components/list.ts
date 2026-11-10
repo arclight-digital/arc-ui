@@ -7,7 +7,7 @@ export const list: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   description:
-    'List container with optional selection, keyboard navigation and three visual variants. Holds arc-list-item rows.',
+    'A vertical list of arc-list-item rows that can also work as a single- or multi-select listbox.',
 
   overview: `List holds a column of \`<arc-list-item>\` rows. Arrow Up and Down move between rows and wrap at the ends, and Home and End jump to the first and last.
 
@@ -62,7 +62,7 @@ Set \`selectable\` and the list becomes a \`role="listbox"\` that manages \`aria
       name: 'List Item',
       tag: 'arc-list-item',
       description:
-        'Individual row within an arc-list. Supports prefix/suffix slots, a description slot for secondary text, an actions slot for per-row buttons, links, and selection state.',
+        'One row of an arc-list, optionally a link, with slots for secondary text and row actions.',
     },
   ],
 
