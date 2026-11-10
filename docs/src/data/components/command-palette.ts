@@ -12,7 +12,7 @@ export const commandPalette: ComponentDef = {
 
 Commands are \`<arc-command-item>\` children. An item's text content is its label, and it can add an \`icon\`, a \`shortcut\` hint, \`keywords\` that are searched but never shown, and a \`description\` that's shown as a second line and also searched. Search is fuzzy and ranked: "cmdpal" finds "Command Palette", terms can come in any order, and the best matches come first with the matched characters marked. Only the top \`max-results\` (50 by default) are rendered.
 
-Picking an item fires \`arc-select\` with its \`value\`, or its label if it has no value, and closes the palette. Escape and a click on the backdrop close it too. Every close fires a cancelable \`arc-close\`, so \`preventDefault()\` keeps the palette open. For a search field that's always on screen, use CommandBar.`,
+Picking an item fires \`arc-select\` with its \`value\`, or its label if it has no value, and closes the palette. Escape and a click on the backdrop close it too. Each of these fires a cancelable \`arc-close\`, so \`preventDefault()\` keeps the palette open. Setting \`open\` to \`false\` from code closes it without the event. For a search field that's always on screen, use CommandBar.`,
 
   features: [
     'Opens with a scale-in transition. The search input takes focus and the query clears on every open',
