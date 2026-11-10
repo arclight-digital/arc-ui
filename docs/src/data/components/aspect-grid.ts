@@ -6,7 +6,7 @@ export const aspectGrid: ComponentDef = {
   tag: 'arc-aspect-grid',
   tier: 'layout',
   interactivity: 'static',
-  description: 'Uniform aspect-ratio cell grid with configurable columns and ratio.',
+  description: 'Equal columns where every child has the same aspect ratio.',
 
   overview: `AspectGrid lays its children out in equal-width columns and gives every child the same aspect ratio. Use it when every item should be the same size: photo galleries, team portraits, video thumbnails, product cards.
 
