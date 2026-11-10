@@ -1,5 +1,5 @@
 <h1 align="center">ARC UI</h1>
-<p align="center"><strong>Change framework without changing your design system.</strong></p>
+<p align="center"><strong>Lit web components, with a native package for each of seven frameworks.</strong></p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@arclux/arc-ui"><img src="https://img.shields.io/npm/v/@arclux/arc-ui?style=flat-square&color=4d7ef7" alt="npm version"></a>
@@ -20,7 +20,7 @@
 
 ARC UI is a set of [Lit](https://lit.dev) web components. **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source, so every framework gets the same elements and the same tokens. Changing framework means changing the import path.
 
-It's built AI-first. Before anything ships it has to pass 5,140 browser tests (the test runner's count at v4.9.1) and Prism's own suite (TODO(copy): Prism's test count; this said 600, and those tests aren't in this repo), and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so the zero-JS HTML package looks the same as the React one.
+It's built AI-first (TODO(copy): say in one sentence what that means here, for example who or what writes the components). Before anything ships it has to pass 5,140 browser tests (the test runner's count at v4.9.1) and Prism's own suite (TODO(copy): Prism's test count; this said 600, and those tests aren't in this repo), and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so in dark mode the zero-JS HTML package looks the same as the React one. The HTML package has no light theme.
 
 Lit is a peer dependency. The package depends on `@lit-labs/ssr-client` and `qrcode-generator`, and takes `shiki` and `@shikijs/langs` (for Code Block) and `@lit-labs/ssr` (for server rendering) as optional peers.
 
@@ -93,7 +93,7 @@ Prism generates every framework package from the same Lit source, and CI fails a
 | **Feedback** | 18 | Dialog, Confirm, Toast, Command Palette, Tooltip, Sheet, Popover, Alert |
 | **Typography** | 15 | Code Block, Markdown, Terminal, Kbd, Keyboard Map, Prose, Blockquote |
 
-Twelve marketing components (Carousel, CTA Banner, Typewriter and nine more) and three audio and media components (Knob, Level Meter, Waveform) are published from `@arclux/arc-ui/marketing` and `@arclux/arc-ui/media`. They're in the same package at the same version, but left out of the default import so an admin dashboard never bundles a landing-page hero. The full catalog is at [arcui.dev/docs/components](https://arcui.dev/docs/components).
+Ten marketing components (Carousel, CTA Banner, Typewriter and seven more) and three audio and media components (Knob, Level Meter, Waveform) are published from `@arclux/arc-ui/marketing` and `@arclux/arc-ui/media`. They're in the same package at the same version, but left out of the `@arclux/arc-ui` barrel, so an admin dashboard that imports from it never bundles a landing-page hero. `@arclux/arc-ui/register` still registers them. The full catalog is at [arcui.dev/docs/components](https://arcui.dev/docs/components).
 
 ## Server rendering
 
@@ -127,7 +127,7 @@ CI runs:
 
 - the browser test suite, against every component
 - build-time checks that fail on docs claims a component doesn't back up, motion curves and focus rings that skip the tokens, and generated files that drifted from their source
-- mutation testing on the shared modules every component uses, with per-module thresholds that can only go up
+- mutation testing on the shared modules every component uses, with each module's threshold set just under its measured score
 - `pnpm test:wrappers`, which mounts all six framework wrapper packages in a real browser and runs one shared contract against them
 
 A release tag on a failing commit doesn't publish.
@@ -170,7 +170,7 @@ Prism reads the Lit source (properties, styles, slots, events and CSS parts) and
 - **React**: `@lit/react` `createComponent` wrappers with TypeScript types
 - **Vue 3**: Single-file components with prop definitions
 - **Svelte 5**: Native Svelte components
-- **Angular**: Standalone components with `CUSTOM_ELEMENTS_SCHEMA`; form controls implement `ControlValueAccessor`, so `formControlName` and `ngModel` work
+- **Angular**: Standalone components whose selectors are the `arc-*` tags; form controls implement `ControlValueAccessor`, so `formControlName` and `ngModel` work
 - **Solid**: Solid component wrappers
 - **Preact**: Preact-compatible components
 - **HTML/CSS**: Standalone CSS extracted from Shadow DOM + plain HTML examples
@@ -202,7 +202,7 @@ arc-ui/
   docs/                      # Astro documentation site (arcui.dev)
 ```
 
-Only `packages/web-components/`, `shared/tokens.js` and the handful of hand-written modules in `packages/icons/src/` (the alias table and the two registration entry points) are hand-edited. Everything else is generated.
+Of the source in `packages/` and `shared/`, only `packages/web-components/`, `shared/tokens.js`, `shared/color.js`, `shared/utilities.js` and the handful of hand-written modules in `packages/icons/src/` (the alias table and the two registration entry points) are hand-edited. The rest is generated.
 
 ## Development
 
@@ -233,7 +233,7 @@ notes](https://arcui.dev/docs/changelog) (curation, contracts, platform,
 light), then the [v4 contents
 list](https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md#v4-breaking-changes)
 if you are coming from v3. TODO(copy): v3 support end date. MIGRATION.md says
-patches for a quarter after the v4 tag (about 2026-11-17); SECURITY.md says
+patches for a quarter after the v4 tag (about 2026-11-17); SECURITY.md said
 latest release only.
 
 ## License
