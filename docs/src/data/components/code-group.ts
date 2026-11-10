@@ -10,35 +10,29 @@ export const codeGroup: ComponentDef = {
   description:
     'One code block with tabs for its variants, such as npm, pnpm and yarn. Groups with the same sync-key switch together and remember the choice.',
 
-  overview: `Code Group puts several \`arc-code-block\` elements behind one set of tabs, so variants of the same thing (an install command for three package managers, or one command for two editions of a product) take the space of one block. Each child becomes a tab, named by its \`label\`, or its \`filename\` or \`language\` when it has no label. The group draws the frame, the tab strip and a single copy button that copies whichever block is showing; the blocks drop their own header.
+  overview: `CodeGroup puts several \`arc-code-block\` elements behind one set of tabs, so variants of the same thing (an install command for three package managers, or one command for two editions of a product) take the space of one block. Each child becomes a tab, named by its \`label\`, or by its \`filename\` or \`language\` when it has no label. The group draws the frame, the tab strip and one copy button that copies whichever block is showing, and the blocks drop their own headers.
 
-Give related groups the same \`sync-key\` and they switch together: pick pnpm in one and every group on the page with that key shows pnpm, matched by tab name. The choice is saved in localStorage under the key, so the next page opens on it too. A group without the tab a reader picked keeps what it had.
+Give related groups the same \`sync-key\` and they switch together: pick pnpm in one and every group on the page with that key shows pnpm, matched by tab name. The choice is saved in localStorage under the key, so the next page opens on it too. A group without the tab the reader picked keeps what it had.
 
-The tabs follow the ARIA tabs pattern: one tab stop, the arrow keys move and select, Home and End jump to the ends. Picking a tab fires \`arc-change\` with the tab's name and index. Before the component upgrades, and without JavaScript, the blocks show one after another with their own headers, so nothing is hidden. A server render opens on the first tab and a remembered choice applies once the page is live.
+The tabs follow the ARIA tabs pattern: one tab stop, the arrow keys move and select, Home and End jump to the ends. Picking a tab fires \`arc-change\` with the tab's name and index. Before the component upgrades, and without JavaScript, the blocks show one after another with their own headers, so nothing is hidden. A server render opens on the first tab, and a remembered choice applies once the page is live.
 
-Code Group is light: it does not import arc-code-block, so it sits in the main barrel. Import \`@arclux/arc-ui/code-block\` for the blocks themselves, and shiki if you want them colored.`,
+CodeGroup doesn't import arc-code-block, so it's in the main barrel. Import \`@arclux/arc-ui/code-block\` for the blocks themselves, and shiki if you want them colored.`,
 
   features: [
-    'One block with a tab per `arc-code-block` child, named by label, filename or language',
-    'A single icon-only copy button that copies the visible block',
-    '`sync-key` switches every group with the same key, matched by tab name',
-    'The choice persists in localStorage under the key',
-    'ARIA tabs: one tab stop, arrow keys, Home and End',
-    '`arc-change` with the tab name and index when a reader picks a tab',
-    'Without JavaScript the blocks show in sequence with their own headers',
+    'The copy button is icon-only',
   ],
 
   guidelines: {
     do: [
       'Use it for real alternatives a reader picks one of: package managers, operating systems, editions',
-      'Give every block a short `label`; the tab names are all a reader has to choose by',
+      'Give every block a short `label`. The tab names are all a reader has to choose by',
       'Use the same `sync-key` and the same tab names across a page or a whole docs site',
       'Keep the blocks parallel, so switching tabs changes only what differs',
     ],
     dont: [
-      'Do not use it for steps a reader runs in order; those belong in separate blocks, one after another',
-      'Do not put anything but `arc-code-block` elements inside; other children are ignored',
-      'Do not give tabs in synced groups different names for the same thing, or they will not follow each other',
+      'Don\'t use it for steps a reader runs in order. Those go in separate blocks, one after another',
+      'Don\'t put anything but `arc-code-block` elements inside. Other children are ignored',
+      'Don\'t give tabs in synced groups different names for the same thing, or they won\'t follow each other',
     ],
   },
 
