@@ -6,7 +6,7 @@ export const datePicker: ComponentDef = {
   tag: 'arc-date-picker',
   tier: 'input',
   interactivity: 'interactive',
-  description: 'Calendar-based date picker with keyboard navigation.',
+  description: 'A read-only date field that opens a month calendar, for picking one date.',
 
   overview: `DatePicker is a read-only text field that opens a calendar. Clicking the field toggles a six-week grid for one month, with buttons for the previous and next month. Clicking the month title switches to a grid of months, and again to a grid of years, for longer jumps. The field shows the chosen date as "Jan 15, 2026", and \`value\` holds it as \`YYYY-MM-DD\`. Picking a date fires \`arc-change\` with that string.
 
