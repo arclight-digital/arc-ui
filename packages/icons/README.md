@@ -65,11 +65,9 @@ how you override one glyph without replacing the set.
 
 If you want a whole library as a single value (an icon picker is the usual
 reason), import `@arclux/arc-ui-icons/all/phosphor`. It loads every glyph.
-TODO(copy): the sample below imports `@arclux/arc-ui-icons/phosphor`, whose
-default export throws on any read; it should import `/all/phosphor`.
 
 ```js
-import phosphor from '@arclux/arc-ui-icons/phosphor'; // { 'check': '<svg…>', … }
+import phosphor from '@arclux/arc-ui-icons/all/phosphor'; // { 'check': '<svg…>', … }
 ```
 
 ## A library of your own
