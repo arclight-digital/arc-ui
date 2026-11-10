@@ -9,37 +9,33 @@ export const calendar: ComponentDef = {
   description:
     'Month-view calendar grid for date selection, with min/max constraints, keyboard navigation, and today highlighting.',
 
-  overview: `Calendar renders a full month grid with day-of-week headers, previous/next month navigation, and selectable date cells. It is the building block for date pickers and scheduling interfaces. The selected date is stored as an ISO string (YYYY-MM-DD) in the \`value\` prop, and the visible month is controlled independently via \`month\` (0-based) and \`year\`, so you can navigate programmatically without changing the selection.
+  overview: `Calendar shows one month as a grid of days, with previous and next month buttons in the header. Use it on its own or inside a date picker or scheduling screen.
 
-Days from the previous and next months fill the grid to maintain a consistent 6-row layout, but these "outside" days are displayed at reduced opacity. The current date receives an inset ring highlight (\`--border-bright\`), while the selected date gets a solid accent-primary background. Optional \`min\` and \`max\` ISO date strings constrain the selectable range; disabled dates are dimmed and non-interactive.
+The selected date is an ISO string (YYYY-MM-DD) in \`value\`. The visible month is set separately by \`month\` (0-based) and \`year\`, so you can change the month from code without changing the selection. It doesn't follow \`value\`: it shows the current month until you set \`month\` and \`year\`.
 
-Arrow keys move a focus ring through the grid (including automatic month transitions at boundaries), and Enter or Space confirms the selection. The component fires \`arc-change\` when a date is selected and \`arc-month-change\` when the visible month changes, so you can lazy-load events or availability data for the new period.`,
+Month and weekday names come from \`locale\` (by default the document's \`lang\`, then the browser's language). The week starts on the locale's usual first day unless you set \`first-day-of-week\` (1 = Monday to 7 = Sunday).
+
+Arrow keys move a focus ring through the grid and cross into the next or previous month at the edges. Enter or Space selects the focused day. \`arc-change\` fires with the selected date, and \`arc-month-change\` fires when the visible month changes, so you can load events or availability for the new month.`,
 
   features: [
-    'Standard 7-column month grid with Sun-Sat headers in monospace uppercase',
-    'Previous and next month navigation buttons in the header',
-    'Today highlighting with an inset border ring for orientation',
-    'Selected date highlighted with solid accent-primary background and bold weight',
-    'Min/max date constraints via ISO date strings that disable out-of-range days',
-    'Arrow key navigation through the grid with automatic month transitions at boundaries',
-    'Outside-month day cells shown at 30% opacity to fill the 6-row grid consistently',
-    'Two events: `arc-change` on date selection and `arc-month-change` on month/year changes',
+    'Days from the neighboring months fill out a 6-row grid at 30% opacity',
+    'Today gets an inset `--border-bright` ring. The selected date gets a solid accent-primary background and bold weight',
+    '`min` and `max` (ISO strings) disable and dim the days outside the range',
+    'Day numbers are monospace so the columns line up',
   ],
 
   guidelines: {
     do: [
-      'Set `min` and `max` to constrain the selectable range when your use case has date boundaries',
-      'Use `arc-month-change` to lazy-load events or availability data when the user changes months',
-      'Pair Calendar with a text input or DatePicker wrapper for combined typed and visual date entry',
-      'Pre-set `month` and `year` to the month containing the initial `value` so the selection is visible on load',
-      'Provide sufficient container width (280px minimum) so the grid cells are easy to click',
+      'Set min and max when only some dates are valid',
+      'Load events or availability on arc-month-change',
+      'Pair it with a text input, or use DatePicker, when people should be able to type a date too',
+      'Set month and year to the month of the initial value so the selection is visible on load',
+      'Give it at least 280px of width so the days are easy to tap',
     ],
     dont: [
-      'Do not use Calendar for time selection; it handles dates only',
-      'Do not set `min` greater than `max`; the component will disable all days',
-      'Do not use Calendar for date range selection (two dates); it supports single date selection only',
-      'Do not override the monospace font on day cells; it keeps the columns aligned',
-      'Avoid placing Calendar in extremely narrow containers below 280px; the grid cells become too small for touch targets',
+      'Don\'t use it to pick a time. It handles dates only',
+      'Don\'t set min later than max. Every day ends up disabled',
+      'Don\'t use it to pick a range. It selects one date, so use DateRangePicker',
     ],
   },
 
