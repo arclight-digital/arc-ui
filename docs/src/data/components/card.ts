@@ -7,38 +7,29 @@ export const card: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Content container with a subtle border and hover effects. Links the entire card surface when an href is provided, with an animated gradient border.',
+    'Content container with a border and hover effects. When it links somewhere, the whole surface is the link and the border turns to a gradient on hover.',
 
-  overview: `Card is the content container in ARC UI. It wraps any slotted content in a rounded, bordered surface that sits on top of the page background, separating grouped information from its surroundings.
+  overview: `Card wraps its content in a rounded, bordered surface. It has no opinion about the layout inside: slot headings, paragraphs, badges, icons or images and style them yourself. The card handles the border, radius, background, padding and focus ring.
 
-When you provide an \`href\` attribute, the card transforms into a full-surface link. On hover, a gradient border animates from blue to violet, and the inner surface gains a subtle lift shadow. Linked cards suit navigation grids, project listings, and dashboard tiles where the entire card should be clickable.
-
-Cards have no opinion about their inner layout. Slot any headings, paragraphs, badges, icons, or images inside and style them with your own markup. The card handles the outer chrome (border, radius, background, padding, focus ring, and responsive adjustments).`,
+To make the whole card a link, set \`href\`, or wrap the content in a single \`<a>\`. The slotted anchor works before the script loads and with JavaScript off, so use it on public pages. Either way, on hover the border turns to a gradient from the accent-primary to the accent-secondary color and the inner surface lifts with a shadow. Linked cards suit navigation grids, project lists and dashboard tiles.`,
 
   features: [
-    'Gradient border hover animation on linked cards (blue to violet)',
-    'Full-surface link behavior when href is set, so no nested anchor tags are needed',
-    'Accessible focus ring with glow effect for keyboard navigation',
-    'Responsive padding that tightens on small viewports',
-    'Footer slot for actions, links, or metadata, with no visual chrome and hidden when empty',
-    'CSS parts (card, body, footer, inner) for style customization',
-    'Equal-height support via height: 100% for grid layouts',
-    'Dark-mode-native design with subtle inset highlight on hover',
+    'A footer slot for actions, links or metadata. It stays outside a slotted anchor, so its buttons click on their own, and it\'s hidden when empty',
+    'Padding tightens at 768 px and below',
+    'The card fills its grid cell (`height: 100%`), so cards in a row come out the same height',
   ],
 
   guidelines: {
     do: [
-      'Use cards to group related content that belongs together visually',
-      'Provide an href when the entire card should navigate somewhere',
-      'Place cards in CSS Grid or Flexbox layouts for consistent sizing',
-      'Keep card content concise: a heading, short description, and optional metadata',
-      'Use arc-badge or arc-tag inside cards to surface status or category information',
+      'Put cards in a CSS Grid or flex layout so they size consistently',
+      'Keep the content short: a heading, a short description and optional metadata',
+      'Use arc-badge or arc-tag inside a card to show status or category',
     ],
     dont: [
-      'Do not nest interactive elements (buttons, links) inside a linked card; it creates conflicting click targets',
-      'Do not use cards for single lines of text. Use inline elements or a list instead',
-      'Do not overload a card with too much content. If it needs scrolling, break it into sections',
-      'Do not mix linked and non-linked cards in the same grid without visual distinction',
+      'Don\'t put buttons or links in a card with href. The whole card, footer included, is one link. With a slotted anchor, put them in the footer slot',
+      'Don\'t use a card for a single line of text. Use a list',
+      'Don\'t fill a card until it needs scrolling. Split the content into sections',
+      'Don\'t mix linked and plain cards in one grid unless they look different',
     ],
   },
 
@@ -57,7 +48,7 @@ Cards have no opinion about their inner layout. Slot any headings, paragraphs, b
       <h3 style="margin: 0; font-size: 1.1rem;">Meridian API</h3>
       <arc-badge variant="success">Shipped</arc-badge>
     </div>
-    <p style="margin: 0 0 16px; color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">GraphQL gateway that unifies three internal services behind a single schema. Handles 12k requests per second in production.</p>
+    <p style="margin: 0 0 16px; color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">GraphQL gateway that puts three internal services behind a single schema.</p>
     <span style="font-size: 0.75rem; color: var(--text-subtle);">Updated 5 days ago</span>
   </arc-card>
 
@@ -66,7 +57,7 @@ Cards have no opinion about their inner layout. Slot any headings, paragraphs, b
       <h3 style="margin: 0; font-size: 1.1rem;">Nightfall Theme</h3>
       <arc-badge variant="warning">Beta</arc-badge>
     </div>
-    <p style="margin: 0 0 16px; color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">Dark-mode design system tokens and component skins. Provides WCAG AAA contrast ratios across all interactive states.</p>
+    <p style="margin: 0 0 16px; color: var(--text-muted); font-size: 0.875rem; line-height: 1.5;">Dark-mode design tokens and component skins for the internal tools.</p>
     <span style="font-size: 0.75rem; color: var(--text-subtle);">Updated today</span>
   </arc-card>
 </div>`,
