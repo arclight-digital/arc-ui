@@ -7,7 +7,7 @@ export const checkbox: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Multi-select form control with checked, indeterminate, and disabled states. For preferences, bulk selection, and consent forms where users toggle one or more independent options.',
+    'A checkbox with a built-in label and an indeterminate state for "select all" boxes.',
 
   overview: `Checkbox lets users pick any combination of options, where a radio group allows only one. It has a built-in label, a \`name\` and \`value\` for native form submission, and \`arc-change\` on every state change.
 
