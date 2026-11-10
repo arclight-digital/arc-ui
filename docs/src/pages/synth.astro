@@ -286,11 +286,6 @@ const description =
                 ))}
               </div>
             </section>
-            <arc-alert variant="info">
-              Durations, not the <code>--transition-*</code> shorthands. The shorthands compose from
-              these plus the easing scale, so moving a duration retunes every animation that reads
-              it instead of replacing the composition with a literal.
-            </arc-alert>
           </div>
         </div>
       </aside>
@@ -472,7 +467,7 @@ const description =
                 <h3 class="matrix-cell__title">Accent, composed</h3>
                 <p class="matrix-cell__note">
                   None of these read an accent token directly. They read the gradients, glows and
-                  focus rings that compose from it. They move because the base tokens moved.
+                  focus rings built from it.
                 </p>
                 <div class="matrix-cell__body matrix-cell__body--stack">
                   <arc-divider variant="line-gradient"></arc-divider>
@@ -524,7 +519,7 @@ const description =
                         {pair.requirement === 'text'
                           ? '4.5:1 text'
                           : pair.requirement === 'info'
-                            ? '—'
+                            ? 'None'
                             : '3:1 non-text'}
                       </td>
                     </tr>
@@ -533,9 +528,9 @@ const description =
               </table>
 
               <arc-alert variant="info">
-                WCAG 2.1 ratios, computed from the tokens as you set them. Text pairs clearing 7:1
-                are marked AAA. This covers the pairings ARC UI actually paints; a component that
-                composites your colors at partial alpha can still land differently.
+                WCAG 2.1 ratios, computed from the tokens as you set them. Text pairs at 7:1 or
+                more are marked AAA. This covers the pairings ARC UI paints. A component that draws
+                your colors at partial alpha can still come out differently.
               </arc-alert>
             </div>
           </div>
@@ -572,9 +567,9 @@ const description =
               </div>
 
               <arc-alert variant="info">
-                Load this after ARC UI's stylesheet. Only what you changed is here. Gradients,
-                glows, focus rings and shadows compose from the base tokens at <code>:root</code>,
-                so they re-derive on their own.
+                Load this after ARC UI's stylesheet. Unless you include unchanged tokens, it has
+                only the tokens you changed. Gradients, glows, focus rings and shadows are built
+                from the base tokens at <code>:root</code>, so they update on their own.
               </arc-alert>
             </div>
           </div>
@@ -917,7 +912,7 @@ const description =
         ? `${failures} pairing${failures === 1 ? '' : 's'} below the bar. The worst is ${
             (auditMode === 'both' ? sumBoth : sumActive).worst?.label.toLowerCase()
           }.`
-        : 'Every pairing clears its threshold in both themes.';
+        : 'Every pairing clears its threshold.';
     }
 
     // The chip in the command bar reports both themes regardless of which one
@@ -929,7 +924,7 @@ const description =
     if (chipText && chipDot && chip) {
       chipText.textContent = bothFailures
         ? `${bothFailures} contrast issue${bothFailures === 1 ? '' : 's'}`
-        : 'Contrast clean';
+        : 'No contrast issues';
       chip.classList.toggle('is-failing', bothFailures > 0);
     }
     const badge = $('[data-contrast-badge]') as HTMLElement;
@@ -1198,7 +1193,7 @@ const description =
       const previous = cloneState(state);
       state = defaultState();
       apply();
-      toast('Reset to the ARC UI defaults.');
+      toast('Reset to the ARC UI defaults. Press Ctrl+Z or Cmd+Z to undo.');
       // One level of undo, because a reset that eats twenty minutes of work
       // with no way back is the reason people stop touching the button.
       const undo = () => {
