@@ -80,9 +80,9 @@ Registering components:
 
 ## Architecture
 
-Framework packages are generated from the Lit Web Component source. Practical consequences:
+Framework packages are generated from the Lit Web Component source.
 
-- Props, slots, and CSS parts are the same in every target. Events keep their \`arc-*\` names and are bound in each framework's own style: \`onArcInput\` in React, Solid and Preact, \`@arc-input\` in Vue, \`onarc-input\` in Svelte, \`(arcInput)\` in Angular. Anything documented for \`<arc-button>\` applies to React's \`<Button>\`, Vue's \`<Button>\`, etc.
+- Props, slots, and CSS parts are the same in every target. Events keep their \`arc-*\` names and are bound in each framework's own style: \`onArcInput\` in React, Solid and Preact, \`@arc-input\` in Vue, \`onarc-input\` in Svelte, \`(arc-input)\` in Angular. Angular wrappers also have \`<property>Change\` outputs (\`valueChange\`, \`checkedChange\`) for two-way binding. Anything documented for \`<arc-button>\` applies to React's \`<Button>\`, Vue's \`<Button>\`, etc.
 - Wrapper packages are generated output; the Web Component package (\`@arclux/arc-ui\`) is the source of truth. File issues against it.
 - \`@arclux/arc-ui-html\` is standalone HTML/CSS with no JavaScript.
 
@@ -101,7 +101,7 @@ Components are organized into seven tiers by responsibility:
 
 The theme is dark by default. Set \`data-theme="light"\` on \`<html>\` for light mode, or \`data-theme="auto"\` to follow \`prefers-color-scheme\`.
 
-Compound tokens (gradients, glows, focus rings, shadows) reference the two accent colors via \`var()\`, so overriding those four declarations changes every derived value:
+Glows, focus rings and the accent gradients reference the two accent colors via \`var()\`, so overriding these four declarations changes them too:
 
 \`\`\`css
 :root {
@@ -122,7 +122,7 @@ ARC UI ships no font files. Typography is five role slots (\`body\`, \`label\`, 
 }
 \`\`\`
 
-- \`body\`: used for prose, inputs, and headings; the default for everything.
+- \`body\`: used for prose, inputs, descriptions, and table cells; the default for everything no other role covers.
 - \`label\`: used for form labels, table headers, and eyebrows (small, uppercase, tracked type).
 - \`mono\`: used for code, keyboard hints, and tabular numerics.
 - \`display\`: used for large headings; it follows \`body\` until assigned its own family.
@@ -130,7 +130,7 @@ ARC UI ships no font files. Typography is five role slots (\`body\`, \`label\`, 
 
 ## Server-side rendering
 
-\`@arclux/arc-ui/ssr\` exports \`renderDeclarativeShadowDOM(html)\`, which takes HTML and returns \`{ html, stylesheets }\`. Serve the stylesheets at the paths the HTML links them from. Every \`<arc-*>\` in the input gets a declarative shadow root, regardless of what produced the markup (Next, Nuxt, SvelteKit, Astro, a hand-assembled string). All components server-render. Requires the optional peer \`@lit-labs/ssr\`. On the client, import \`@arclux/arc-ui/hydrate\` before any component is defined so Lit adopts the server markup instead of re-rendering it.
+\`@arclux/arc-ui/ssr\` exports \`renderDeclarativeShadowDOM(html)\`, which takes HTML and returns \`{ html, stylesheets }\`. Serve the stylesheets at the paths the HTML links them from. Every \`<arc-*>\` in the input gets a declarative shadow root, whatever produced the markup. Of the frameworks, only Astro (this site's build) is tested in the repo. All components server-render. Requires the optional peer \`@lit-labs/ssr\`. On the client, import \`@arclux/arc-ui/hydrate\` before any component is defined so Lit adopts the server markup instead of re-rendering it.
 
 ## Components (${components.length})
 
