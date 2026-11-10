@@ -9,33 +9,26 @@ export const buttonGroup: ComponentDef = {
   description:
     'Joins multiple buttons into one visual unit with shared borders and collapsed radii. Supports horizontal and vertical orientations.',
 
-  overview: `ButtonGroup joins adjacent buttons into a connected strip where inner border radii are removed and outer buttons retain rounded corners. The group reads as a single control while each button stays independently clickable.
+  overview: `ButtonGroup joins adjacent buttons into one strip. The inner corners go square, the outer ends keep the buttons' pill shape, and each button still clicks on its own. It works horizontally (the default) or vertically.
 
-The component overrides the border-radius CSS custom properties on slotted children, giving the first and last child outer radii while removing inner radii. Margins between items are collapsed by -1px to prevent double borders. Both horizontal (default) and vertical orientations are supported.
-
-The \`size\` and \`variant\` props cascade to all child buttons, so you don't set them individually. Changing one prop swaps the whole group between ghost, outline, and solid styles.`,
+Set \`size\` and \`variant\` on the group and it copies them onto every child button. \`arc-button\` has three variants: primary, secondary and ghost.`,
 
   features: [
-    'Border radius management: outer corners rounded, inner corners flat',
-    'Collapsed -1px margins to prevent double borders between items',
-    'Horizontal and vertical orientations',
-    'Cascades `size` and `variant` props to all child buttons',
-    'Semantic `role="group"` container',
-    'Works with `arc-button`, `arc-icon-button`, or any slotted children',
-    'Exposed CSS part: group',
+    'Items overlap by 1px so neighboring borders don\'t double up',
+    'The wrapper has `role="group"`',
+    'Takes `arc-button`, `arc-icon-button` or any other slotted element',
   ],
 
   guidelines: {
     do: [
-      'Use for related actions that belong together, such as text alignment (Left, Center, Right)',
-      'Keep button groups to 2-5 items for readability',
+      'Use it for related actions, such as text alignment (Left, Center, Right)',
+      'Keep a group to two to five buttons',
       'Use the vertical orientation for stacked toolbar controls',
-      'Set variant on the group instead of individual buttons for consistency',
+      'Set size and variant on the group, not on each button',
     ],
     dont: [
-      'Do not mix different button sizes inside a group. Use the group `size` prop',
-      'Do not use button groups for navigation. Use tabs or segmented control instead',
-      'Do not put destructive actions in the same group as constructive ones without clear visual separation',
+      'Don\'t use a button group for navigation. Use Tabs or SegmentedControl',
+      'Don\'t put a destructive action in the same group as other actions unless it looks clearly different',
     ],
   },
 
