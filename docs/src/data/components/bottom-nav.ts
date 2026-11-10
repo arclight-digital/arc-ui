@@ -7,40 +7,29 @@ export const bottomNav: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Mobile bottom bar with icon and label items. The active item gets an accent-primary glow underline on a surface-overlay background with backdrop blur.',
+    'Mobile bottom bar with icon and label items on a blurred surface-overlay background. The active item gets an accent-primary glow underline.',
 
-  overview: `BottomNav is a fixed-position navigation bar anchored to the bottom of the viewport, for mobile and touch-first interfaces. It renders a row of icon-and-label items, and the active one is highlighted with an accent-primary glow underline and a frosted surface-overlay background with backdrop blur.
+  overview: `BottomNav is a navigation bar fixed to the bottom of the viewport, for phones and other touch screens. Each item is an icon above a short label, for the three to five top-level destinations a mobile app usually has.
 
-The component follows the mobile navigation pattern used by native apps: three to five top-level destinations, each represented by an icon above a short label. Tapping an item dispatches an \`arc-change\` event so your application can update the active route. The \`value\` prop controls which item is currently selected, for controlled or uncontrolled usage.
+Pass the destinations as \`items\` (\`{ label, icon, value }\`) and the active one as \`value\`. Tapping an item sets \`value\` and fires \`arc-change\` with \`{ value }\`, so your app can change the route.
 
-BottomNav complements TopBar: use TopBar for desktop viewports and swap in BottomNav at mobile breakpoints. The backdrop blur keeps the bar legible when content scrolls beneath it. For deeper hierarchical navigation on mobile, pair BottomNav with a Drawer or Sheet for secondary menu levels.`,
+Use TopBar on desktop and swap in BottomNav at mobile widths. The bar's backdrop blur keeps it legible over content scrolling underneath. For a second level of navigation, open a Drawer or Sheet from a BottomNav item.`,
 
   features: [
-    'Fixed bottom positioning for mobile-first navigation',
-    'Icon + label items for scannable touch targets',
-    'Accent-primary glow underline on the active item',
-    'Surface-overlay background with backdrop blur',
-    '`arc-change` event on item selection',
-    'Controlled value prop for external state management',
-    'Supports three to five navigation destinations',
-    'Keyboard accessible with arrow key navigation',
-    'Token-driven theming via CSS custom properties',
+    'Items are `<button>` elements, so Tab and Enter reach them. There are no arrow-key bindings',
+    'The active item gets `aria-current="page"`',
   ],
 
   guidelines: {
     do: [
-      'Limit to three to five items; more will crowd the bar on small screens',
-      'Use recognizable icons with short labels (one to two words)',
-      'Show BottomNav only on mobile breakpoints. Use TopBar or Sidebar on desktop',
-      'Set the value prop to match the current route for correct highlighting',
-      'Pair with a Drawer or Sheet for deeper navigation within a section',
+      'Use three to five items. More crowd the bar on a small screen',
+      'Give every item an icon people recognize and a label of one or two words',
+      'Show it only at mobile widths, and use TopBar or Sidebar on desktop',
+      'Set value to match the current route so the right item is highlighted',
     ],
     dont: [
-      'Do not display BottomNav and TopBar navigation simultaneously on the same viewport',
-      'Do not use labels longer than two words; they will truncate on narrow screens',
-      'Do not add more than five items. Prioritize the most important destinations',
-      'Do not use BottomNav for actions (like "Create" or "Delete"); it is for navigation only',
-      'Do not forget to provide icons; label-only items break the expected mobile pattern',
+      'Don\'t show BottomNav and TopBar navigation at the same time',
+      'Don\'t use it for actions like "Create" or "Delete". It is for navigation only',
     ],
   },
 
