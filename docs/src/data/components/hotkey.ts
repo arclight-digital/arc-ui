@@ -7,37 +7,29 @@ export const hotkey: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Invisible keyboard shortcut listener that supports modifier combos (Ctrl+K) and chord sequences (g i). Fires an event when the key pattern is matched.',
+    'Invisible keyboard shortcut listener for modifier combos (Ctrl+K) and chord sequences (g i). Fires an event when the keys match.',
 
-  overview: `Hotkey is a zero-UI component that listens for keyboard shortcuts and fires an \`arc-hotkey-trigger\` event when a matching key pattern is detected. It renders nothing visible (\`display: none\` is enforced), so it acts purely as a declarative shortcut binding you drop into your template.
+  overview: `Hotkey listens for a keyboard shortcut and fires \`arc-hotkey-trigger\` when someone presses it. It renders nothing (\`display: none\` is enforced), so you can put it anywhere in your markup.
 
-The \`keys\` prop accepts modifier combos like \`"ctrl+k"\`, \`"meta+shift+p"\`, and \`"alt+n"\`, as well as Vim-style chord sequences where space-separated keys must be pressed in order (e.g. \`"g i"\` means press G, release, then press I within 1 second). Modifier names are normalized: \`cmd\`/\`command\` → \`meta\`, \`option\` → \`alt\`, \`control\` → \`ctrl\`.
+The \`keys\` prop takes modifier combos like \`"ctrl+k"\`, \`"meta+shift+p"\` and \`"alt+n"\`, or a Vim-style chord of space-separated keys pressed in order: \`"g i"\` means press G, release, then press I within 1 second. Modifier names are normalized: \`cmd\`/\`command\` → \`meta\`, \`option\` → \`alt\`, \`control\` → \`ctrl\`.
 
-By default, Hotkey skips events when focus is inside an input, textarea, select, or contentEditable element, preventing shortcuts from interfering with typing. Setting \`global\` attaches the listener to \`window\` and removes this filter, useful for app-wide shortcuts that must work regardless of focus.`,
+By default, Hotkey ignores keys typed into an input, textarea, select or contentEditable element. Setting \`global\` listens on \`window\` instead of \`document\` and drops that filter, so the shortcut also fires while someone is typing.`,
 
   features: [
-    'Modifier combos: ctrl+k, meta+shift+p, alt+n, etc.',
-    'Chord sequences: "g i" (press G, then I within 1 second)',
-    'Normalized modifier names: cmd/command → meta, option → alt',
-    "Automatic input/textarea/select filtering: won't fire while typing",
-    'Global mode attaches to window and bypasses focus filtering',
-    'Disabled prop to temporarily suspend the shortcut',
-    'Zero UI: `display: none` is enforced, so there is no layout impact',
-    'Fires `arc-hotkey-trigger` with `event.detail.keys` containing the matched pattern',
+    '`disabled` suspends the shortcut without removing the element',
+    'The event\'s `detail.keys` holds the pattern that matched',
   ],
 
   guidelines: {
     do: [
-      'Use for app-level shortcuts like Ctrl+K for search or Ctrl+S for save',
-      'Set `global` for shortcuts that must work inside text inputs (e.g. Ctrl+S)',
-      'Provide visual hints elsewhere in the UI (tooltips, menu items) showing available shortcuts',
-      'Use `disabled` to suspend shortcuts when a modal or dialog is open',
+      'Set `global` for shortcuts that must work inside text inputs, such as Ctrl+S',
+      'Show the shortcut somewhere in the UI, in a tooltip or a menu item',
+      'Set `disabled` while a modal or dialog is open',
     ],
     dont: [
-      "Do not override browser-reserved shortcuts (Ctrl+T, Ctrl+W, Ctrl+N). They won't work",
-      "Do not create chord sequences longer than 2-3 keys. Users can't remember them",
-      'Do not rely on hotkeys as the only way to access a feature. Always provide a clickable alternative',
-      'Do not forget the 1-second chord timeout. Slow typists may miss the window',
+      'Don\'t bind shortcuts the browser reserves, like Ctrl+T, Ctrl+W and Ctrl+N. They won\'t fire',
+      'Don\'t make chords longer than two or three keys. People won\'t remember them',
+      'Don\'t make a hotkey the only way to reach a feature. Give it a button or menu item too',
     ],
   },
 
