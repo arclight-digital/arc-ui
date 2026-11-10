@@ -7,40 +7,31 @@ export const loadingOverlay: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'Semi-transparent surface-overlay with backdrop blur covering a container or page. Centers a spinner with optional progress text.',
+    'Semi-transparent, blurred overlay that covers a container or the page, with a centered spinner and optional progress text.',
 
-  overview: `LoadingOverlay provides a blocking loading state for containers or the entire page. It renders a semi-transparent surface-overlay with backdrop blur that covers its parent element (or the full viewport in global mode), centering a spinner with an optional progress message.
+  overview: `Loading Overlay covers part of the page while something loads. It puts a semi-transparent, blurred layer over the content, with a large spinner in the middle and an optional \`message\` under it. Set \`active\` to show it.
 
-Use loading-overlay when a section of the UI is temporarily unavailable: fetching data, processing a submission, or waiting for an external service. Unlike spinner (which is a small inline indicator), loading-overlay communicates that the entire region is blocked and prevents user interaction until loading completes.
+By default the overlay uses \`position: absolute\` and covers its nearest positioned ancestor. With \`global\`, it's fixed to the viewport and covers the whole page. Use it for a region that can't be used until loading finishes. For a small inline indicator, use Spinner.
 
-In container mode, the overlay is positioned absolutely within its parent and covers only that element. In global mode, it uses fixed positioning to cover the entire viewport, blocking all interaction across the page. The overlay includes a focus trap in global mode to prevent keyboard users from tabbing behind it.`,
+The overlay stops clicks reaching the content under it. It doesn't stop the keyboard: there's no focus trap and nothing behind it is made inert, so Tab still reaches the covered controls. The overlay is a \`role="status"\` live region.`,
 
   features: [
-    'Semi-transparent overlay with backdrop blur effect',
-    'Centered spinner with configurable progress message',
-    'Container mode: covers the parent element with position: absolute',
-    'Global mode: covers the full viewport with position: fixed and a focus trap',
-    'Prevents pointer events and keyboard interaction behind the overlay',
-    'Smooth fade-in and fade-out transitions',
-    'Accessible: aria-busy="true" on the overlay container',
-    'Respects `prefers-reduced-motion`: disables blur and fade when set',
-    'Composable: uses spinner internally',
+    'Fades in and out. With `prefers-reduced-motion`, it appears and disappears without the fade, and the blur stays',
   ],
 
   guidelines: {
     do: [
-      'Use loading-overlay for operations that block the entire container or page',
-      'Provide a descriptive message like "Saving changes..." to set user expectations',
-      'Use global mode sparingly, only for full-page blocking operations like an initial data load',
-      'Remove the overlay immediately when loading completes. Avoid artificial delays',
-      'Set the parent container to position: relative when using container mode',
+      'Set `position: relative` on the container you want covered',
+      'Set a message that says what\'s happening, like "Saving changes..."',
+      'Save `global` for operations that block the whole page, like an initial data load',
+      'Remove the overlay as soon as loading finishes. Don\'t add a delay',
+      'Disable the covered controls yourself if keyboard users mustn\'t reach them',
     ],
     dont: [
-      "Do not use loading-overlay for background operations that don't block the UI. Use spinner instead",
-      'Do not leave the overlay active indefinitely. Always include error handling and timeouts',
-      'Do not stack multiple loading overlays on the same page',
-      'Do not use loading-overlay when the content shape is known. Prefer skeleton placeholders',
-      'Do not use global mode for section-level loading. It blocks the entire application unnecessarily',
+      'Don\'t use it for background work that doesn\'t block the UI. Use Spinner',
+      'Don\'t leave it up indefinitely. Handle errors and time out',
+      'Don\'t stack several loading overlays on one page',
+      'Don\'t use it when you know the content\'s layout in advance. Use Skeleton placeholders',
     ],
   },
 
