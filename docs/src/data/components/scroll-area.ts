@@ -7,51 +7,40 @@ export const scrollArea: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Styled scrollable container with custom thin scrollbar styling for Webkit and Firefox, configurable orientation, and optional max-height constraint.',
+    'A scrolling container with a thin themed scrollbar, a choice of scroll direction and an optional max height.',
 
-  overview: `ScrollArea is a scrollable container with custom scrollbar styling that uses ARC UI's design tokens. Instead of the browser's default thick scrollbars, ScrollArea renders slim 6px tracks with rounded thumbs that use the theme's border and surface colors. The thumb darkens subtly on hover, giving feedback without drawing attention to the chrome.
+  overview: `ScrollArea wraps content that might outgrow its space, like a sidebar list, a modal body or a dropdown, and scrolls it with a thin scrollbar in the theme's colors. In Chromium and Safari the scrollbar is 6px with a rounded thumb that lightens from \`border-bright\` to \`text-ghost\` on hover. Firefox gets \`scrollbar-width: thin\` in the same colors.
 
-The component supports three orientation modes. The default \`"vertical"\` orientation enables vertical scrolling while hiding horizontal overflow, the most common pattern for content panels, sidebars, and dropdown menus. Setting \`orientation="horizontal"\` reverses this for horizontally scrollable galleries or code blocks. The \`"both"\` option enables scrolling in both directions for large tables or canvas-like content.
+\`orientation\` picks the direction. \`vertical\` is the default and hides horizontal overflow. \`horizontal\` does the reverse, for galleries or wide code blocks, and \`both\` scrolls both ways, for data grids. \`max-height\` takes any CSS length and caps the height so the content scrolls.
 
-The \`max-height\` attribute constrains the container's height, which bounds lists, menus, or panels within a fixed space. The inner content renders via the default slot, and the container inherits the parent's border-radius for consistent clipping. ScrollArea is keyboard-accessible with \`tabindex="0"\` and \`role="region"\`, so keyboard users can scroll with arrow keys when the container is focused.`,
+The container is a focusable \`role="region"\` labelled "Scrollable content", so keyboard users can Tab to it and scroll with the arrow keys. It inherits the host's border-radius, and \`scroll-behavior\` is \`smooth\`.`,
 
   features: [
-    'Custom thin scrollbar styling (6px) for both Webkit and Firefox browsers using design tokens',
-    'Three orientation modes: `vertical` (default), `horizontal`, and `both` for scroll direction control',
-    'Optional `max-height` attribute to constrain the scrollable region within a fixed space',
-    'Smooth scrolling via `scroll-behavior: smooth` CSS property',
-    'Scrollbar thumb hover effect that transitions from border-bright to text-ghost color',
-    'Keyboard-accessible with `tabindex="0"` and `role="region"` for arrow-key scrolling',
-    'Inherits parent border-radius so clipping matches',
-    'Firefox scrollbar support via `scrollbar-width: thin` and `scrollbar-color`',
+    'Parts: `base` and `scroll-area`, both on the scrolling element',
   ],
 
   guidelines: {
     do: [
-      'Set `max-height` when ScrollArea is used inside fixed-height layouts like sidebars, modals, or dropdowns',
-      'Use `orientation="horizontal"` for image galleries, code blocks, or horizontally scrollable tables',
-      'Place ScrollArea around content that may exceed the available space rather than letting the entire page scroll',
-      'Ensure the scroll area has a visible boundary (border or background) so users know the region is scrollable',
-      'Use `orientation="both"` sparingly: only for truly two-dimensional content like data grids',
+      'Set `max-height` inside fixed-height layouts like sidebars, modals and dropdowns',
+      'Give the area a border or background so people can see where it ends',
+      'Keep `orientation="both"` for content that really is two-dimensional, like a data grid',
     ],
     dont: [
-      'Do not nest multiple Scroll Areas: nested scrolling regions create confusing interaction',
-      'Do not set `max-height` to very small values that hide most content without clear indication',
-      'Do not use ScrollArea for the main page scroll: it is designed for embedded scrollable regions',
-      'Do not override the custom scrollbar styles with conflicting global CSS: the component encapsulates them in shadow DOM',
-      'Avoid using ScrollArea when content fits within the viewport: unnecessary scroll containers add cognitive overhead',
+      'Don\'t nest scroll areas. The wheel scrolls the inner one until it hits its end, then the outer one',
+      'Don\'t set a `max-height` so small that most of the content is hidden with nothing to say it\'s there',
+      'Don\'t use it for the main page scroll. Let the page scroll itself',
     ],
   },
 
   previewHtml: `<arc-scroll-area max-height="150px" style="border:1px solid var(--border-default); border-radius:var(--radius-md); padding:var(--space-sm);">
-  <p>Line 1: ScrollArea provides styled scrollable containers.</p>
-  <p>Line 2: Custom thin scrollbars match the design system.</p>
-  <p>Line 3: Supports vertical, horizontal, and both orientations.</p>
-  <p>Line 4: Set max-height to constrain the visible area.</p>
-  <p>Line 5: Keyboard accessible with tabindex and role region.</p>
-  <p>Line 6: Smooth scroll behavior is enabled by default.</p>
-  <p>Line 7: Works great in sidebars, modals, and dropdowns.</p>
-  <p>Line 8: Try scrolling down to see more content below.</p>
+  <p>Line 1</p>
+  <p>Line 2</p>
+  <p>Line 3</p>
+  <p>Line 4</p>
+  <p>Line 5</p>
+  <p>Line 6</p>
+  <p>Line 7</p>
+  <p>Line 8: the last line.</p>
 </arc-scroll-area>`,
 
   tabs: [
