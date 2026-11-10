@@ -95,8 +95,9 @@ await page.getByRole('radio', { name: 'Weekly' }).click();
       </arc-tabs>
 
       <p class="docs-text">
-        Lit is a peer dependency, so you install it alongside ARC UI. The CDN version needs no
-        build step.
+        Lit is a peer dependency, so you install it alongside ARC UI. TODO(copy): the CDN tab's
+        modules import <code>lit</code> by its bare name, which a browser can't resolve without an
+        import map. Fix the snippet or drop the tab?
       </p>
     </section>
 
@@ -124,7 +125,8 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
             <p class="docs-text">
               ARC UI ships no font files. <code>base.css</code> names three reference faces
               (Host Grotesk for body text, Tomorrow for labels, JetBrains Mono for code) and loads none
-              of them. Skip this step and everything renders in <code>system-ui</code>. A font CDN
+              of them. Skip this step and text renders in <code>system-ui</code>, and code in
+              <code>ui-monospace</code>. A font CDN
               is the quickest way to load them:
             </p>
             <arc-code-block language="html" code={fontsSnippet}></arc-code-block>
@@ -183,7 +185,7 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
         </div>
         <div class="import-row">
           <code class="import-row__code">{`{ ArcButton } from '@arclux/arc-ui'`}</code>
-          <span class="import-row__note">The class, for extending it or creating elements in script. Loads and registers every component.</span>
+          <span class="import-row__note">The class, for extending it or creating elements in script. Loads and registers every component except <code>arc-code-block</code> and the marketing and media groups (<code>@arclux/arc-ui/marketing</code>, <code>@arclux/arc-ui/media</code>).</span>
         </div>
       </div>
 
