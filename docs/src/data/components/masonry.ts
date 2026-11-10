@@ -7,38 +7,27 @@ export const masonry: ComponentDef = {
   tier: 'layout',
   interactivity: 'static',
   description:
-    'Pinterest-style vertical-pack grid using CSS columns for efficient masonry layout without JavaScript.',
+    'Packs variable-height children into columns with CSS columns, Pinterest-style.',
 
-  overview: `Masonry is a layout primitive that arranges variable-height children into a Pinterest-style vertical-pack grid using pure CSS columns. Items flow top-to-bottom within each column, filling vertical space efficiently without leaving gaps. This is the classic masonry pattern used in image galleries, card feeds, and content discovery interfaces.
+  overview: `Masonry packs children of different heights into columns. It uses CSS \`column-count\` and \`column-gap\`, so the browser does the layout and no script measures or positions items. Children fill the first column top to bottom, then the next, and the browser picks the break points so the columns end at similar heights.
 
-The component uses CSS \`column-count\` and \`column-gap\` so layout is handled entirely by the browser with zero JavaScript overhead. The browser balances the columns: children fill the first column top to bottom, then the next, and the break points are chosen so the columns end at similar heights. The \`columns\` prop controls the number of columns, while the \`gap\` prop maps to design system spacing tokens for consistent rhythm.
-
-Use Masonry when your content items have naturally varying heights: image galleries, blog post cards, testimonial collections, or any feed where uniform row heights would waste space. For uniform aspect-ratio grids, use AspectGrid instead. For responsive column-to-stack behavior, combine Masonry with ResponsiveSwitcher.`,
+\`columns\` sets the column count (3 by default), and \`gap\` picks the sm, md or lg spacing token. Use it for image galleries, blog post cards, or any feed where uniform row heights would waste space.`,
 
   features: [
-    'Pure CSS columns layout with zero JavaScript for masonry positioning',
-    'Configurable column count via the `columns` prop',
-    'Design-token-based gap spacing (sm, md, lg) for consistent rhythm',
-    'Balanced columns: the browser splits children so the columns end at similar heights',
-    'Break-inside: avoid ensures children are never split across columns',
-    'Lightweight wrapper with no resize observers or layout calculations',
-    'CSS part: `grid` for targeted ::part() styling',
+    'Children get `break-inside: avoid`, so no item is split across two columns',
+    'The `gap` also sets the space below each child, so rows and columns are spaced alike',
   ],
 
   guidelines: {
     do: [
-      'Use for image galleries with varying aspect ratios',
-      'Use for card feeds where content height varies (blog posts, testimonials, products)',
-      'Set columns to match the expected viewport width: 2 for narrow, 3-4 for wide',
-      'Combine with ResponsiveSwitcher to reduce columns on smaller screens',
-      'Use gap="md" for most card-based layouts; gap="sm" for dense image grids',
+      'Set `columns` for the expected width: 2 for narrow containers, 3 or 4 for wide ones',
+      'Combine with ResponsiveSwitcher to drop columns on smaller screens',
+      'Use `gap="md"` for most card layouts and `gap="sm"` for dense image grids',
     ],
     dont: [
-      'Do not use Masonry for uniform-height content. Use a regular CSS grid or AspectGrid instead',
-      'Do not set very high column counts (>5) as it creates unreadably narrow columns',
-      'Do not expect left-to-right reading order. Masonry flows top-to-bottom per column',
-      'Do not nest Masonry inside Masonry',
-      'Do not use for layouts that require precise item ordering. Column flow is determined by height',
+      'Don\'t use it for items of the same height. Use a CSS grid or AspectGrid',
+      'Don\'t set more than five columns. They get too narrow to read',
+      'Don\'t use it where items must read left to right. Order runs down each column, and where a column breaks depends on item heights',
     ],
   },
 
