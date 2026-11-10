@@ -8,7 +8,7 @@ export const carousel: ComponentDef = {
   interactivity: 'interactive',
   replayable: true,
   description:
-    'A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and keyboard controls.',
+    'Shows its children one at a time as full-width slides in a scroll-snapping strip.',
 
   overview: `Carousel shows its children one at a time as full-width slides in a scroll-snapping viewport. Users move between slides with the round arrow buttons at the left and right edges, the dots under the viewport, or the left and right arrow keys. Arrows and dots are on by default, and \`no-arrows\` and \`no-dots\` turn them off.
 
