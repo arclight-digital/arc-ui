@@ -10,51 +10,43 @@ export const waveform: ComponentDef = {
     'Audio waveform visualization that doubles as a scrubber. Renders a consumer-computed peaks array as an SVG waveform with an accent played region and glowing playhead, and becomes a full seek control when interactive.',
   searchKeywords: ['audio', 'scrubber', 'seek', 'peaks', 'player', 'sound', 'playhead'],
 
-  overview: `Waveform draws an audio clip's shape from a plain array of peak amplitudes (one number per bar, 0 to 1) and marks playback progress on it: the played region renders in accent with a soft glow, the unplayed region stays muted, and a thin glowing playhead line sits at the current position. Set \`interactive\` and the same element becomes a scrubber, with pointer dragging, keyboard seeking, and full slider semantics for assistive technology.
+  overview: `Waveform draws an audio clip's shape from an array of peak amplitudes (one number per bar, 0 to 1) and marks playback progress on it. The played region is in the accent color with a soft glow, the unplayed region is muted, and a thin glowing playhead sits at the current position. Set \`interactive\` and the same element becomes a scrubber, with pointer dragging, keyboard seeking and slider semantics for assistive technology. \`variant="bars"\` draws one bar per peak, centered on the middle line, and \`mirror\` draws a filled min/max envelope.
 
-The component never touches audio: no AudioContext, no decoding, no fetching. The consumer computes peaks however it likes (from a decoded buffer, a server-side analysis pass, or a cached sidecar file) and hands them over as the \`peaks\` property. That split keeps the component a pure function of its props, so it server-renders, and keeps it cheap enough to repeat down a lane of clips in a DAW timeline or a list of voice memos.
+The component doesn't load, decode or play audio. You compute the peaks however you like (from a decoded buffer, a server-side analysis pass or a cached sidecar file) and pass them as the \`peaks\` property. The SVG depends only on its props, so it renders on the server.
 
-\`position\` is a fraction of the total (0 to 1), not seconds. If your player thinks in seconds, divide by the duration on the way in and multiply on the way out. The \`time\` field on both event details does the multiplication for you whenever \`duration\` is set. Setting \`duration\` also renders a monospaced time readout below the track and switches the slider's spoken value from a percentage to elapsed and total time.
+\`position\` is a fraction of the total (0 to 1), not seconds. If your player thinks in seconds, divide by the duration on the way in and multiply on the way out. With \`duration\` set, the \`time\` field on both event details does the multiplying for you, a monospace time readout appears below the track, and screen readers hear elapsed and total time instead of a percentage.
 
-While scrubbing, \`arc-input\` fires on every pointer move with the live position, and \`arc-change\` fires once on release with the committed one. This is the standard ARC edit/commit contract. Wire the actual seek of your audio source to \`arc-change\`, and use \`arc-input\` for live feedback such as a time display or audible scrubbing. Two variants cover the common looks: \`bars\` draws discrete bar pairs mirrored around the center line, and \`mirror\` draws a filled min/max envelope.`,
+While the reader scrubs, \`arc-input\` fires on every pointer move with the live position, and \`arc-change\` fires once on release with the final one, as with ARC UI's other inputs. Seek your audio source on \`arc-change\`, and use \`arc-input\` for live feedback such as a time display or audible scrubbing.`,
 
   features: [
-    '`steps` for a timeline of discrete frames (arrow keys move one step), and `value-text` for your own screen-reader wording',
-    'Renders from a consumer-computed peaks array: no AudioContext, no decoding, no audio dependencies',
-    'Two variants: `bars` (mirrored bar pairs) and `mirror` (filled min/max envelope)',
-    'Played region in accent with a soft glow; unplayed region muted; thin glowing playhead line',
-    'Interactive mode adds pointer scrubbing and keyboard seeking (arrows, PageUp/PageDown, Home/End)',
-    'Standard edit/commit events: `arc-input` continuously while scrubbing, `arc-change` once on release',
-    'Optional `duration` enables monospaced elapsed/total time readouts and spoken time values',
-    'Full slider ARIA when interactive; labeled image semantics otherwise',
-    'Resizes by viewBox scaling: no ResizeObserver, no measuring, fluid at any width',
-    'Playhead motion uses the motion tokens and honors prefers-reduced-motion',
-    'Server-renders: the SVG is a pure function of props',
-    'Empty or missing peaks render an empty track rather than an error',
+    'Keyboard seeking with the arrow keys, PageUp and PageDown, and Home and End',
+    '`steps` divides the track into discrete frames, and the arrow keys move one step',
+    '`value-text` replaces the screen reader wording with your own',
+    'A slider when interactive, and a labeled image otherwise',
+    'Scales with its SVG viewBox, so it fits any width without measuring',
+    'Empty or missing peaks render an empty track, not an error',
   ],
 
   guidelines: {
     do: [
-      'Compute peaks once per clip and cache them. A few dozen to a few hundred values is plenty; the component clamps each to 0-1',
-      'Wire the actual seek of your audio source to arc-change, and keep arc-input for cheap live feedback like a time display',
-      'Set duration whenever you know it, so users get time readouts and screen readers hear times instead of percentages',
-      'Give every waveform a label. It names the slider for assistive technology, or describes the image when not interactive',
-      'Use the bars variant for scrubbers and player UI, and the mirror variant for dense timeline lanes where discrete bars would shimmer',
-      'Set the height with the --waveform-height custom property when the default is too short or too tall for its row',
+      'Compute peaks once per clip and cache them. A few dozen to a few hundred values is plenty, and each is clamped to 0 to 1',
+      'Set `duration` whenever you know it',
+      'Give every waveform a `label`. It names the slider, or describes the image when the waveform isn\'t interactive',
+      'Use `bars` for scrubbers and player UI, and `mirror` for dense timeline lanes where separate bars would shimmer',
+      'Set the height with `--waveform-height` when the default doesn\'t suit its row',
     ],
     dont: [
-      'Do not use Waveform for generic trend data. That is Sparkline’s job; Waveform’s shape says "audio" and its center-mirrored geometry distorts ordinary series',
-      'Do not use it as a level indicator or progress bar. Meter shows a single current value against a range; Waveform shows amplitude over time',
-      'Do not feed it raw sample data. Downsample to peaks first; tens of thousands of bars help no one and cost real DOM',
-      'Do not track position in seconds. The position property is a 0-1 fraction; convert at the edges or read the time field on event details',
-      'Do not seek your audio source on arc-input. That fires on every pointer move; the committed value arrives once, on arc-change',
+      'Don\'t use it for general trend data. Use Sparkline. The mirrored geometry distorts ordinary series',
+      'Don\'t use it as a level indicator or progress bar. Meter shows one current value against a range',
+      'Don\'t feed it raw sample data. Downsample to peaks first. In `bars`, every peak is its own SVG element',
+      'Don\'t seek your audio source on `arc-input`. It fires on every pointer move',
     ],
   },
 
   previewHtml: `<div style="display: flex; flex-direction: column; gap: 28px; width: min(560px, 100%);">
   <div style="display: flex; flex-direction: column; gap: 8px;">
     <arc-waveform id="wf-scrub-demo" variant="bars" interactive duration="32" label="Rendered preview"></arc-waveform>
-    <span style="font-size: 12px; color: var(--text-muted);">Bars, interactive — drag or use arrow keys to seek</span>
+    <span style="font-size: 12px; color: var(--text-muted);">Bars, interactive. Drag or use the arrow keys to seek</span>
   </div>
   <div style="display: flex; flex-direction: column; gap: 8px;">
     <arc-waveform id="wf-mirror-demo" variant="mirror" position="0.35" duration="12" label="Sample preview" style="--waveform-height: 36px;"></arc-waveform>
