@@ -253,18 +253,6 @@ export class AppComponent {}`}></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="js" code={`import '@arclux/arc-ui/button';
 import '@arclux/arc-ui/card';`}></arc-code-block></div>
-      <p class="docs-text">Or load it from a CDN. TODO(copy): the components import <code>lit</code> by its bare name, which a browser can't resolve without an import map, and this snippet has none. Fix the snippet or drop it?</p>
-      <div class="docs-code"><arc-code-block language="html" code={`<link rel="stylesheet"
-  href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
-<script type="module"
-  src="https://unpkg.com/@arclux/arc-ui@${version}/register">
-</script>
-
-<arc-button variant="primary">Click Me</arc-button>
-<arc-card>
-  <h3>Hello World</h3>
-  <p>Pure HTML, no framework needed.</p>
-</arc-card>`}></arc-code-block></div>
       <arc-alert variant="tip">For pages that can't run JavaScript, <code>@arclux/arc-ui-html</code> has CSS-only versions of many components. They style plain HTML by class name and <code>data-*</code> attribute, and the package's <code>examples/</code> folder has the markup for each.</arc-alert>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Full bundle -->
 <link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html@${version}/css/arc-ui.css">
