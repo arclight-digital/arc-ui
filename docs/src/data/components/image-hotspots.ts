@@ -7,14 +7,14 @@ export const imageHotspots: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'An image with pins that each open a small popover, for annotated screenshots, product photos and simple maps.',
+    'An image with pins that each open a small popover, for annotating a screenshot or photo.',
   searchKeywords: ['annotation', 'pin', 'marker', 'callout', 'map', 'screenshot'],
 
   overview: `Image Hotspots puts pins over a picture, and each pin opens a popover. Slot the image and the \`<arc-hotspot>\` children together. Each pin positions itself from its \`x\` and \`y\` attributes, given as percentages of the image, so source order doesn't matter and nothing is measured.
 
 Each pin is a \`<button>\` with a label and \`aria-expanded\`. Activating it opens its popover above the pin, and the popover flips and shifts to stay in the viewport. The parent keeps one popover open at a time. An open popover closes on Escape, on a click anywhere else, or on a second click of its pin.
 
-**Every close goes through \`close()\`, and it can be vetoed.** \`close()\` fires a cancelable \`arc-close\` first, so a listener that calls \`preventDefault()\` keeps the popover open whoever asked for the close. That includes the parent: closing the other popovers is itself a \`close()\` call, so a hotspot holding an unsaved note can refuse to close when someone clicks another pin, as well as on Escape. Call \`close()\` yourself to dismiss a popover from script. Its first argument, \`restoreFocus\`, defaults to true and returns focus to the pin. Pass \`false\` when you're closing one popover to open another, so focus lands on the new pin.
+Every close goes through \`close()\`, including the parent's. It fires a cancelable \`arc-close\` first, and a listener that calls \`preventDefault()\` keeps the popover open. Closing the other popovers is itself a \`close()\` call, so a hotspot holding an unsaved note can refuse to close when someone clicks another pin, as well as on Escape. Call \`close()\` yourself to dismiss a popover from script. Its first argument, \`restoreFocus\`, defaults to true and returns focus to the pin. Pass \`false\` when you're closing one popover to open another, so focus lands on the new pin.
 
 Pins server-render at their coordinates because positioning is plain CSS from attributes. Only the popovers need JavaScript. Every hotspot fires \`arc-open\` and \`arc-close\`, which bubble to the parent with \`detail.value\` set to the hotspot's label, or its index if it has no label.`,
 
@@ -61,10 +61,10 @@ Pins server-render at their coordinates because positioning is plain CSS from at
     Switch between projects without losing your place. Every workspace keeps its own layout.
   </arc-hotspot>
   <arc-hotspot x="62" y="42" label="Live charts">
-    Metrics stream in over WebSockets and render at 60fps, no refresh required.
+    Each chart covers the last 30 days. Hover a line to see daily values.
   </arc-hotspot>
   <arc-hotspot x="84" y="82" label="Exports">
-    Send any panel to CSV, PNG, or a shared link with one click.
+    Download any panel as a CSV file or a PNG image.
   </arc-hotspot>
 </arc-image-hotspots>`,
   previewLayout: 'center',
