@@ -50,7 +50,7 @@ Components use the `.arc-*` class prefix. Variants are set via data attributes:
 
 ## Theming
 
-Dark mode is the default. Switch with `data-theme` on the root element:
+`arc-ui.css` defines the dark tokens only. It has no `data-theme` or `prefers-color-scheme` rules, so the attributes below change nothing with this package alone. TODO(copy): how should this package do light mode? Ship light tokens in `arc-ui.css`, or document loading `@arclux/arc-ui/base.css` alongside it?
 
 ```html
 <html data-theme="light">
