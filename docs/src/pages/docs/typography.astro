@@ -2,18 +2,18 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
-  { id: 'roles-not-typefaces', label: 'Roles, Not Typefaces' },
-  { id: 'the-roles', label: 'The Roles' },
-  { id: 'assigning', label: 'Assigning a Typeface' },
-  { id: 'loading', label: 'Loading the Font Files' },
-  { id: 'fallbacks', label: 'Fallbacks & Layout Shift' },
-  { id: 'reference-faces', label: 'The Reference Faces' },
+  { id: 'roles-not-typefaces', label: 'How roles work' },
+  { id: 'the-roles', label: 'The roles' },
+  { id: 'assigning', label: 'Assigning a typeface' },
+  { id: 'loading', label: 'Loading the font files' },
+  { id: 'fallbacks', label: 'Fallbacks & layout shift' },
+  { id: 'reference-faces', label: 'The reference faces' },
 ];
 
 const roles = [
   {
     slot: 'body',
-    name: 'Text',
+    name: 'Body',
     reference: 'Host Grotesk',
     fallback: 'system-ui, sans-serif',
     weight: '500',
@@ -24,9 +24,9 @@ const roles = [
     slot: 'label',
     name: 'Label',
     reference: 'Tomorrow',
-    fallback: 'ui-monospace, monospace',
+    fallback: 'system-ui, -apple-system, Segoe UI, sans-serif',
     weight: '600',
-    uses: 'Form labels, table headers, eyebrows, dividers, segment labels. Rendered small, uppercase and tracked, so it wants a face that holds up at 12px in caps.',
+    uses: 'Form labels, table headers, eyebrows, dividers, segment labels. Set small, uppercase and tracked, so it needs a face that reads well at 12px in capitals.',
     specimen: 'Section label',
   },
   {
@@ -41,10 +41,10 @@ const roles = [
   {
     slot: 'display',
     name: 'Display',
-    reference: 'follows Text',
-    fallback: 'follows Text',
+    reference: 'follows Body',
+    fallback: 'follows Body',
     weight: '500',
-    uses: 'Large headings and hero type. Inherits the Text role until you assign it a face of its own, so a display typeface is opt-in rather than assumed. The weight does not follow Text; large type usually wants its own.',
+    uses: 'Large headings and hero type. Uses the Body face until you assign one. Its weight is set separately from Body\'s.',
     specimen: 'Radiant interfaces',
   },
   {
@@ -70,44 +70,39 @@ const roles = [
     <h1 class="page-title">Typography</h1>
     <p class="page-desc">
       ARC UI ships no font files. It defines five typographic <strong>roles</strong> and names a
-      reference face for each; you assign your own by overriding one token per role.
+      reference face for each. To use your own face, override one token per role.
     </p>
 
     <section id="roles-not-typefaces">
-      <h2 class="docs-heading">Roles, Not Typefaces</h2>
+      <h2 class="docs-heading">How roles work</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        A design system that bundles its own typefaces makes two decisions on your behalf: which
-        faces you use, and how they reach the browser. ARC UI makes neither. What it commits to
-        is the <em>roles</em>: which parts of the interface are set in which voice, at what
-        size, weight and tracking. Those relationships are the typographic design; the specific
-        faces are yours.
+        ARC UI decides which parts of the interface use which role, and at what size, weight and
+        tracking. You decide which face fills each role and how it gets to the browser.
       </p>
       <p class="docs-text">
-        Every role is four tokens: the family you assign, the fallback stack behind it, the
-        weight the role is set at, and the composed value components actually consume:
+        Each role has four tokens: the family you assign, the fallback stack, the weight, and the
+        combined value that components read:
       </p>
       <arc-code-block language="css" code={`--font-body-family:    'Host Grotesk';               /* assign this */
 --font-body-fallback:  system-ui, sans-serif;        /* rarely */
 --font-body-weight:    500;                          /* if your face disagrees */
 --font-body:           var(--font-body-family), var(--font-body-fallback);`}></arc-code-block>
       <p class="docs-text">
-        Override only <code>-family</code> and everything downstream (the fallback, and every
-        component using that role) follows. Nothing here needs you to retype a font stack.
+        Override only <code>-family</code>. The fallback stays in place and every component using
+        that role picks up the new face, so you never retype a font stack.
       </p>
       <p class="docs-text">
-        The weight is a separate knob because a face you assign will not always ship the weight
-        the role is set at. The Label role is set at 600 across some fifty components; point it
-        at a face whose heaviest cut is 500 and the browser synthesises the difference, which
-        looks like smeared type rather than a missing weight. Setting
-        <code>--font-label-weight</code> once fixes all of them; derived tokens like
-        <code>--section-title-weight</code> and <code>--ui-accent-weight</code> reference the
-        role rather than restating a number.
+        The weight is its own token because your face may not have the weight the role uses.
+        Label is set at 600. Point it at a face whose heaviest cut is 500 and the browser fakes
+        the bold, which looks smeared. Setting <code>--font-label-weight</code> to 500 fixes every
+        component at once, because derived tokens like <code>--section-title-weight</code> and
+        <code>--ui-accent-weight</code> read the role's weight instead of repeating the number.
       </p>
     </section>
 
     <section id="the-roles">
-      <h2 class="docs-heading">The Roles</h2>
+      <h2 class="docs-heading">The roles</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <div class="role-list">
         {roles.map((r) => (
@@ -127,19 +122,18 @@ const roles = [
         ))}
       </div>
       <p class="docs-text">
-        <code>--font-accent</code> is kept as an alias of the Label role. It named that role
-        before the slots were split out, and the name was misleading: it reads like a display
-        face, but it has always driven form labels and table headers. Prefer
-        <code>--font-label</code> in new work.
+        <code>--font-accent</code> is an alias of the Label role, kept from before the roles were
+        split out. The name sounds like a display face, but it has always set form labels and
+        table headers. Use <code>--font-label</code> in new work.
       </p>
     </section>
 
     <section id="assigning">
-      <h2 class="docs-heading">Assigning a Typeface</h2>
+      <h2 class="docs-heading">Assigning a typeface</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Set the family tokens on <code>:root</code>, after ARC UI's stylesheet. That is all.
-        Components read the roles through the shadow boundary.
+        Set the family tokens on <code>:root</code>, after ARC UI's stylesheet. Custom properties
+        inherit through the shadow boundary, so components pick them up.
       </p>
       <arc-code-block language="css" code={`@import '@arclux/arc-ui/base.css';
 
@@ -150,13 +144,14 @@ const roles = [
   --font-display-family: 'Fraunces';   /* opt into a display face */
 }`}></arc-code-block>
       <p class="docs-text">
-        Assigning one role does not disturb the others. Leaving a role unassigned keeps its
-        reference face, and if that face never loads, its fallback.
+        Assigning one role leaves the others alone, except Display, which follows Body until you
+        assign it. A role you don't assign keeps its reference face, or its fallback if that face
+        isn't loaded.
       </p>
       <h3 class="tier-heading">Using one typeface everywhere</h3>
       <p class="docs-text">
-        Point the roles at the same family. The size, weight and tracking distinctions that
-        separate them are defined independently, so the hierarchy survives.
+        Point the roles at the same family. Size, weight and tracking are set separately for each
+        role, so the hierarchy stays.
       </p>
       <arc-code-block language="css" code={`:root {
   --font-body-family:  'Inter';
@@ -165,7 +160,7 @@ const roles = [
       <h3 class="tier-heading">Scoping to part of a page</h3>
       <p class="docs-text">
         Role tokens are ordinary custom properties, so they cascade. Assign them on any ancestor
-        to rebrand a subtree.
+        to change the faces in that part of the page.
       </p>
       <arc-code-block language="css" code={`.marketing-section {
   --font-display-family: 'Playfair Display';
@@ -173,12 +168,12 @@ const roles = [
     </section>
 
     <section id="loading">
-      <h2 class="docs-heading">Loading the Font Files</h2>
+      <h2 class="docs-heading">Loading the font files</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Assigning a role tells components which family to ask for. Getting that family into the
-        browser is separate, and ARC UI stays out of it. Self-host, use a font CDN, or use a
-        package like Fontsource. A self-hosted <code>@font-face</code> looks like this:
+        Assigning a role tells components which family to ask for. Loading the font is up to you:
+        self-host it, use a font CDN, or use a package like Fontsource. A self-hosted
+        <code>@font-face</code> looks like this:
       </p>
       <arc-code-block language="css" code={`@font-face {
   font-family: 'Inter';
@@ -190,32 +185,28 @@ const roles = [
 
 :root { --font-body-family: 'Inter'; }`}></arc-code-block>
       <p class="docs-text">
-        Declare a variable font <strong>once</strong>, with a weight range. Declaring the same
-        file under several discrete weights is the most common way to get this wrong: a
-        <code>@font-face</code> naming a single weight gives the browser no way to set the
-        <code>wght</code> axis, so it renders the font's <em>default instance</em> for every one
-        of them. Nothing errors, every weight resolves, and the hierarchy is flat: components in
-        this library ask for weights from 200 to 800 and would all render identically.
+        Declare a variable font <strong>once</strong>, with a weight range. If you declare the
+        same file several times with one weight each, the browser can't set the
+        <code>wght</code> axis and renders the font's <em>default instance</em> for all of them.
+        There's no error, and every weight ARC UI uses, from 200 to 700, renders the same.
       </p>
       <p class="docs-text">
-        Use the range the font actually has. Asking for a weight outside it gets the nearest end
-        of the axis, so a face whose lightest cut is 300 cannot deliver the 200 some roles
-        default to. Set <code>--font-quote-weight</code> and friends to something it can reach
-        instead.
+        Use the range the font has. A weight outside it gets the nearest end of the axis, so a
+        face whose lightest cut is 300 can't give the Quote role its default 200. Set
+        <code>--font-quote-weight</code> to a weight the face has.
       </p>
       <p class="docs-text">
         Preload the faces used above the fold, and only those:
       </p>
       <arc-code-block language="html" code={`<link rel="preload" href="/fonts/inter-variable.woff2" as="font" type="font/woff2" crossorigin />`}></arc-code-block>
 
-      <h3 class="tier-heading">Use the family name the package registers, not the one you expect</h3>
+      <h3 class="tier-heading">Use the family name the package registers</h3>
       <p class="docs-text">
         Whatever loads your font decides what the family is <em>called</em>, and the assignment
-        has to use that exact string. This mistake fails quietly: an unknown family name is not
-        an error; it is skipped, so the role falls through to its fallback and the page
-        renders in <code>system-ui</code>, which looks close enough to a grotesque to read as
-        "the font loaded" at a glance. Fontsource's variable packages are where this usually
-        happens; they register the family with a <code>Variable</code> suffix:
+        has to use that exact string. An unknown family name isn't an error. The browser skips
+        it, the role falls back, and the page renders in <code>system-ui</code>, which looks
+        enough like a grotesque that you may not notice. Fontsource's variable packages, for
+        example, register the family with a <code>Variable</code> suffix:
       </p>
       <arc-code-block language="js" code={`import '@fontsource-variable/host-grotesk';   // registers "Host Grotesk Variable"`}></arc-code-block>
       <arc-code-block language="css" code={`:root {
@@ -224,26 +215,24 @@ const roles = [
 }`}></arc-code-block>
       <p class="docs-text">
         The static Fontsource packages (<code>@fontsource/host-grotesk</code>) register the bare
-        name, so the two differ by more than the import path. To check which you have, look at
-        the <code>font-family</code> in the package's own CSS, or confirm in DevTools: the
-        Computed panel names the face actually rendering, and Rendered Fonts names the file it
-        came from. If it says <code>system-ui</code>, the name is wrong.
+        name. To check yours, read the <code>font-family</code> in the package's CSS, or open
+        DevTools: the Computed panel shows the face that's rendering, and Rendered Fonts shows
+        the file it came from. If it says <code>system-ui</code>, the name is wrong.
       </p>
     </section>
 
     <section id="fallbacks">
-      <h2 class="docs-heading">Fallbacks &amp; Layout Shift</h2>
+      <h2 class="docs-heading">Fallbacks &amp; layout shift</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Each role carries a fallback stack so an unassigned or unloaded face degrades to
-        something deliberate rather than to the browser default. You can replace a fallback on
-        its own:
+        Each role has a fallback stack, used when its face isn't loaded. You can replace a
+        fallback on its own:
       </p>
       <arc-code-block language="css" code={`:root { --font-body-fallback: Georgia, serif; }`}></arc-code-block>
       <p class="docs-text">
-        Fallbacks differ from webfonts in width and vertical metrics, so text reflows when the
-        real face arrives. The fix is a metric-matched fallback declared against your font's
-        actual metrics:
+        A fallback has different widths and vertical metrics from your webfont, so text reflows
+        when the real face arrives. To prevent that, declare a fallback adjusted to your font's
+        metrics:
       </p>
       <arc-code-block language="css" code={`@font-face {
   font-family: 'Inter Fallback';
@@ -258,23 +247,20 @@ const roles = [
   --font-body-fallback: 'Inter Fallback', system-ui, sans-serif;
 }`}></arc-code-block>
       <p class="docs-text">
-        Tools such as Fontaine and <code>next/font</code> generate these overrides
-        automatically. Pair with <code>font-display: swap</code>; with a metric-matched fallback
-        the swap stops being visible as a jump.
+        Fontaine and <code>next/font</code> can generate these overrides for you. With
+        <code>font-display: swap</code> and a matched fallback, the swap no longer shows as a
+        jump.
       </p>
     </section>
 
     <section id="reference-faces">
-      <h2 class="docs-heading">The Reference Faces</h2>
+      <h2 class="docs-heading">The reference faces</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The defaults name Host Grotesk, Tomorrow, JetBrains Mono and Georgia. The specimens
-        above render them live (this documentation site loads them, and the components were
-        designed against them), but ARC UI does not ship or load them. If you load nothing, each
-        role renders its fallback, which is a supported configuration rather than a broken one.
-      </p>
-      <p class="docs-text">
-        Treat them as a reference rendering, not a requirement. The roles are the contract.
+        The defaults name Host Grotesk, Tomorrow, JetBrains Mono and Georgia. The components were
+        designed with them, and this site loads them for the specimens above, but ARC UI doesn't
+        ship or load them. If you load nothing, each role renders in its fallback, and that's a
+        supported setup.
       </p>
     </section>
   </div>
