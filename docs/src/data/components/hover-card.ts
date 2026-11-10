@@ -6,39 +6,28 @@ export const hoverCard: ComponentDef = {
   tag: 'arc-hover-card',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Card that appears on hover with a delay.',
+  description: 'Floating card that opens after a delay when its trigger is hovered or focused.',
 
-  overview: `HoverCard displays a floating card with supplementary content when the user hovers over or focuses a trigger element. Unlike Tooltip (which shows a short text label), HoverCard is designed for richer content: user profile previews, link metadata, product summaries, or any structured information that should appear on demand without a click.
+  overview: `Hover Card shows a floating card when someone hovers over or focuses its trigger. Tooltip shows a short text label. Hover Card holds structured content, such as a profile preview, link metadata or a product summary, that opens without a click.
 
-The card appears after a configurable \`open-delay\` (default 400ms) and disappears after a \`close-delay\` (default 300ms) once the cursor leaves the trigger. Moving the cursor from the trigger into the card itself cancels the close timer, so users can interact with links, buttons, or text inside the card without it vanishing. This enter-to-keep-open pattern is essential for hover-based rich content panels.
+The card opens after \`open-delay\` (400ms by default) and closes \`close-delay\` (300ms by default) after the cursor leaves the trigger. Moving the cursor into the card cancels the close, so people can use links and buttons inside it. Escape closes it while focus is in the trigger or the card.
 
-The \`position\` attribute picks one of four placements (\`bottom\` by default, \`top\`, \`left\`, or \`right\`) and controls the CSS absolute positioning relative to the trigger. The card animates in with a scale transition from 0.96 to 1 and fades in via opacity, and the transition respects ARC design token timing variables. Pressing Escape while the card is visible hides it immediately. The trigger is provided via the default slot, and the card content goes in the \`content\` named slot.`,
+\`position\` sets the preferred side: \`bottom\` (default), \`top\`, \`left\` or \`right\`. If the card doesn't fit there, it flips to the opposite side and shifts along the edge to stay in the viewport. It opens with a fade and a scale from 0.96 to 1. Put the trigger in the default slot and the card's content in the \`content\` slot.`,
 
   features: [
-    'Rich content popover for profiles, previews, and structured hover information',
-    'Configurable open-delay and close-delay (defaults 400ms / 300ms)',
-    'Enter-to-keep-open: moving the cursor into the card cancels the close timer',
-    'Four positioning options: bottom, top, left, right via the position attribute',
-    'Scale and opacity entrance animation using ARC design token transition timing',
-    'Escape key dismissal for keyboard accessibility',
-    'Focus-in and focus-out support so keyboard users can trigger the card via tab navigation',
-    '`arc-open` and `arc-close` custom events for tracking card visibility state',
+    '`arc-open` and `arc-close` fire when the card shows and hides',
   ],
 
   guidelines: {
     do: [
-      'Use HoverCard for supplementary content that enriches the trigger without requiring a click (e.g. user profile previews)',
-      'Keep card content concise. A heading, a few lines of text, and optionally a link or action',
-      'Set position to avoid clipping against viewport edges; "top" works well for triggers near the bottom of the page',
-      'Increase open-delay for triggers in dense layouts to prevent accidental activation during quick mouse traversal',
-      'Test with keyboard navigation to ensure the card is accessible via focus-in on the trigger',
+      'Keep the content short: a heading, a few lines of text, and at most a link or an action',
+      'Raise `open-delay` in dense layouts so the card doesn\'t open as the cursor passes over',
     ],
     dont: [
-      'Do not use HoverCard for critical information that the user must see. Hover is not discoverable on touch devices',
-      'Do not place complex interactive forms inside the card; use a Popover or Dialog for those use cases',
-      'Do not set open-delay to 0, as this causes cards to flash on every accidental hover',
-      'Do not nest a HoverCard inside another HoverCard. The stacking and delay logic will conflict',
-      'Do not forget the content slot; without it, the card renders as an empty floating panel',
+      'Don\'t put anything people must see in a hover card. Touch screens have no hover',
+      'Don\'t put forms in the card. Use Popover or Dialog',
+      'Don\'t set `open-delay` to 0. The card flashes open on every passing hover',
+      'Don\'t leave the `content` slot empty. The card opens as an empty panel',
     ],
   },
 
