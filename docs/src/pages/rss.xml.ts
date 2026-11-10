@@ -43,10 +43,10 @@ export const GET: APIRoute = async ({ site }) => {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>ARC UI Changelog</title>
+    <title>ARC UI changelog</title>
     <link>${base}/docs/changelog</link>
     <atom:link href="${base}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Release notes for ARC UI. Lit Web Components generated natively for seven framework targets.</description>
+    <description>Release notes for ARC UI, a Lit web component library with generated packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML.</description>
     <language>en</language>
     <lastBuildDate>${new Date(`${releases[0].date}T12:00:00Z`).toUTCString()}</lastBuildDate>
 ${items}
