@@ -7,39 +7,27 @@ export const commandBar: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Always-visible search input that sits inside a top bar. Accent-primary bottom border on focus with a glow ring.',
+    'Search input that stays visible in a top bar or toolbar. The border turns accent-colored with a glow ring on focus.',
 
-  overview: `CommandBar is a persistent search-and-command input that lives inside a TopBar or toolbar region. Unlike CommandPalette, which is a modal overlay triggered by a keyboard shortcut, CommandBar is always visible and ready for input. It suits applications where search is a primary workflow, such as admin dashboards, documentation sites, and developer tools.
+  overview: `CommandBar is a search field for a TopBar or toolbar. It renders an icon, a text input and a \`hint\` slot. It fires \`arc-input\` on every keystroke and \`arc-submit\` on Enter, both with \`{ value }\`. It doesn't render results: show them in a dropdown or popover, or send the submitted value to a results page.
 
-When focused, the input reveals an accent-primary bottom border with a subtle glow ring. The component dispatches \`arc-input\` on every keystroke for live filtering and \`arc-submit\` when the user presses Enter, so you can wire up search-as-you-type or explicit command submission.
-
-CommandBar is minimal: it handles the input chrome and events and leaves result rendering to your application. Pair it with a dropdown or popover to display search results, or route the submitted value to a dedicated search results page. For modal command experiences, use CommandPalette instead.`,
+Use it where people search all the time, as in an admin dashboard or a docs site. When search is occasional, use CommandPalette, a modal overlay you open on demand.`,
 
   features: [
-    'Always-visible search input for persistent toolbar placement',
-    'Accent-primary bottom border with glow ring on focus',
-    '`arc-input` event on every keystroke for live filtering',
-    '`arc-submit` event on Enter for explicit command submission',
-    'Customisable placeholder text',
-    'Controlled value prop for external state management',
-    'Keyboard accessible with standard input behavior',
-    'Token-driven theming via CSS custom properties',
+    '`label` sets the input\'s `aria-label` and defaults to "Search". The placeholder is never used as the name',
+    '`icon` takes any Phosphor icon name and defaults to `magnifying-glass`',
+    'Enter is claimed, so inside a `<form>` it fires `arc-submit` without also submitting the form',
+    'Set `value` from outside to control the input',
   ],
 
   guidelines: {
     do: [
-      'Place inside a TopBar or toolbar for consistent positioning',
-      'Use a descriptive placeholder like "Search docs..." to hint at scope',
-      'Listen to arc-input for search-as-you-type and arc-submit for explicit queries',
-      'Pair with a dropdown or popover to display search results inline',
-      'Constrain the width with max-width so the bar does not dominate the toolbar',
+      'Write a placeholder that names the scope, such as "Search docs..."',
+      'If there\'s more than one on a page, give each a different `label`. Otherwise they\'re all announced as "Search"',
+      'Give it a max-width so it doesn\'t take over the toolbar',
     ],
     dont: [
-      'Do not use CommandBar when search is secondary. Prefer CommandPalette for on-demand access',
-      'Do not place multiple CommandBars on the same page',
-      'Do not omit the placeholder; an empty input gives no affordance',
-      'Do not use CommandBar as a general-purpose text input; it is styled for search only',
-      'Do not forget to handle the arc-submit event; users expect Enter to do something',
+      'Don\'t use it as a general text input. It\'s styled and labeled for search',
     ],
   },
 
