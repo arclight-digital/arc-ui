@@ -8,46 +8,35 @@ export const stat: ComponentDef = {
   interactivity: 'static',
   description: 'Numeric statistic display with gradient value and label.',
 
-  overview: `Stat renders a single key metric as a vertically stacked, center-aligned block. The value is displayed in a large, lightweight font (weight 200) with a blue-to-violet gradient fill and a dual-layer drop-shadow glow, which makes numbers stand out against dark backgrounds. A thin gradient rule sits between the value and its uppercase label.
+  overview: `Stat shows one number with a short uppercase label under it. The value is drawn at weight 200 in the accent gradient with a glow, and a short gradient rule separates it from the label.
 
-The value font-size uses \`clamp(32px, 4.5vw, 48px)\` to scale responsively between breakpoints, so it stays readable from mobile to desktop without media queries. The label uses the Tomorrow accent font at a small uppercase size with wide letter-spacing, following the system's standard labeling pattern.
+\`size\` scales the whole block. \`md\` is the default, \`sm\` fits a strip of vitals beside other content, and \`lg\` is for a hero figure. \`plain\` draws the value in the text color with no gradient, glow or rule, so it doesn't compete with a dense layout.
 
-Stat also supports an optional trend indicator via the \`trend\` and \`change\` props. Setting \`trend\` to "up", "down", or "neutral" renders a colored arrow below the label, and the \`change\` prop displays accompanying text (typically a percentage like "+12%"). Up trends render in green, down trends in red, and neutral in muted grey, so direction is clear alongside the headline number.
-
-Stat fits landing-page metrics, dashboard KPI rows, and pricing comparison grids. Place several Stats side by side in a flex or grid container to make a metrics row. The exposed CSS parts ("stat", "value", "label", and "trend") allow per-instance styling of colors or sizes.`,
+\`trend="up"\` or \`"down"\` adds a green or red arrow below the label, and \`"neutral"\` adds a muted dash. \`change\` sets the text beside it, such as "+12%".`,
 
   features: [
-    '`size` (sm, md, lg) and `plain` for a quiet stat in a dense strip of vitals',
-    'Gradient-clipped value text with blue-to-violet fill and dual drop-shadow glow',
-    'Responsive font-size using clamp() that scales from 32px to 48px',
-    'Decorative gradient rule separator between value and label',
-    'Uppercase Tomorrow-font label with wide letter-spacing',
-    'Four exposed CSS parts (stat, value, label, trend) for external style overrides',
-    'Optional trend indicator (up/down/neutral arrow with change text) for at-a-glance direction',
-    'Light font weight (200) for the numeric display',
-    'Center-aligned vertical layout with configurable padding via design tokens',
+    'At `md` the value is `clamp(32px, 4.5vw, 48px)`, so it scales with the viewport without media queries',
+    'The label is set in Tomorrow (`--font-label`) with wide letter spacing',
   ],
 
   guidelines: {
     do: [
-      'Place Stats in a row of three or four for a metrics section',
-      'Use short values like "99.9%", "<50ms", or "24/7"',
-      'Keep labels to one or two words: they are designed for terse descriptions',
-      'Pair with arc-section or a flex container to create structured stat rows',
-      'Use the ::part(value) selector to apply custom gradients for branded metric colors',
+      'Put three or four Stats side by side in a flex container or arc-section',
+      'Keep values short, such as "99.9%", "<50ms" or "1,204"',
+      'Keep labels to one or two words',
+      'Use `::part(value)` to give a value a different gradient',
     ],
     dont: [
-      'Do not use Stat for long text content: it is optimized for short numeric values',
-      'Do not place a single Stat in isolation; they work best in groups that invite comparison',
-      'Do not override the font-weight to bold: the light 200 weight is part of the design',
-      'Do not embed interactive elements inside the value or label props; they render as plain text spans',
+      'Don\'t use Stat for long text. It\'s sized for short numbers',
+      'Don\'t make the value bold. The display is built around weight 200',
+      'Don\'t put links or buttons in `value` or `label`. Both render as plain text',
     ],
   },
 
   previewHtml: `<div style="display: flex; gap: 32px; justify-content: center; flex-wrap: wrap;">
   <arc-stat value="99.9%" label="Uptime" trend="up" change="+12%"></arc-stat>
   <arc-stat value="<50ms" label="Latency" trend="down" change="-8%"></arc-stat>
-  <arc-stat value="24/7" label="Support"></arc-stat>
+  <arc-stat value="312" label="Orders"></arc-stat>
   <arc-stat value="1,204" label="Sessions" size="sm" plain></arc-stat>
 </div>`,
 
