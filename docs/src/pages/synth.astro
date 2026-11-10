@@ -174,8 +174,8 @@ const description =
             <section class="rail-group">
               <h2 class="rail-group__title">Font roles</h2>
               <p class="rail-group__hint">
-                ARC UI ships no font files. Assign a typeface to a role and every component wearing
-                that role follows, so you never name a font in a component again.
+                ARC UI ships no font files. Assign a typeface to a role and every component that
+                uses that role follows.
               </p>
               <div class="rail-group__body rail-group__body--stack">
                 {FONT_ROLES.map((role) => (
@@ -466,8 +466,8 @@ const description =
               <section class="matrix-cell matrix-cell--wide">
                 <h3 class="matrix-cell__title">Accent, composed</h3>
                 <p class="matrix-cell__note">
-                  None of these read an accent token directly. They read the gradients, glows and
-                  focus rings built from it.
+                  Each of these is drawn from the two accents, some directly and some through the
+                  glow and gradient tokens.
                 </p>
                 <div class="matrix-cell__body matrix-cell__body--stack">
                   <arc-divider variant="line-gradient"></arc-divider>
@@ -568,7 +568,7 @@ const description =
 
               <arc-alert variant="info">
                 Load this after ARC UI's stylesheet. Unless you include unchanged tokens, it has
-                only the tokens you changed. Gradients, glows, focus rings and shadows are built
+                only the tokens you changed. Glows, focus rings and the accent gradients are built
                 from the base tokens at <code>:root</code>, so they update on their own.
               </arc-alert>
             </div>
