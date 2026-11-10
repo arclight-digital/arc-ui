@@ -6,45 +6,34 @@ export const section: ComponentDef = {
   tag: 'arc-section',
   tier: 'layout',
   interactivity: 'static',
-  description: 'Page section with optional uppercase label, consistent spacing.',
+  description: 'A page section with vertical padding, a centered max width and an optional uppercase label.',
 
-  overview: `Section is a vertical spacing and labeling primitive that wraps a block of page content in consistent padding and an optional uppercase label. It renders a semantic \`<section>\` element, centers its children at \`--max-width\`, and applies top and bottom padding (\`--space-3xl\`) that automatically tightens on screens narrower than 768px. Use it to divide a long page into visually distinct bands without manually managing padding or breakpoints.
+  overview: `Section wraps one band of a page, like a features block or a pricing table, in a \`<section>\` element. It centers its content at \`--max-width\` and pads it with \`--space-3xl\` above and below and \`--space-lg\` at the sides. At 768px and narrower the padding drops to \`--space-2xl\` and \`--space-md\`.
 
-The optional \`label\` prop renders a small, uppercase, accent-font heading above the slot content. This label uses the \`--section-title-weight\`, \`--section-title-size\`, and \`--section-title-spacing\` tokens, so it stays consistent with every other section label in your application. It is muted (\`--text-muted\`) and typeset with \`--font-accent\` so it orients the reader without competing with a heading.
+\`label\` adds a small uppercase line above the content, set in \`--font-label\` and \`--text-muted\` and sized by the \`--section-title-weight\`, \`--section-title-size\` and \`--section-title-spacing\` tokens. It's a \`<span>\`, not a heading, so put your own heading in the content.
 
-Section sets \`scroll-margin-top: var(--space-md)\` on its inner wrapper, so when you link to a section by ID (or pair it with ScrollSpy), the browser scrolls to the right position, leaving room above the sticky nav bar. Combine Section with Container for width-constrained pages, or use it inside full-bleed layouts where the section itself handles horizontal centering.`,
+Use Section on its own in a full-bleed layout, since it centers itself, or inside Container on a page that already has a width limit.`,
 
   features: [
-    'Semantic <section> element for accessible document structure',
-    'Optional uppercase label using `--font-accent` and `--section-title-`* tokens',
-    'Consistent vertical padding (`--space-3xl`) that tightens on mobile at 768px',
-    'Automatic horizontal centering at `--max-width` with `--space-lg` inline padding',
-    'Built-in scroll-margin-top for correct anchor-link positioning under sticky headers',
-    'Exposed CSS parts (section, label) for targeted ::part() styling',
-    'Responsive padding reduction via a built-in media query',
+    'Parts: `base` and `section` on the `<section>`, and `label`',
   ],
 
   guidelines: {
     do: [
-      'Use Section to divide landing pages into logical content bands (features, pricing, testimonials)',
-      'Set the label prop for orientation: it helps users scan the page structure at a glance',
-      'Give each Section an id attribute so ScrollSpy and anchor links work correctly',
-      'Pair Section with Container when you need an additional width constraint inside a full-bleed band',
-      'Keep label text short: one or two words is ideal for uppercase labels',
+      'Keep the label to one or two words',
+      'Give each section an `id` for ScrollSpy and anchor links',
+      'Put Container inside a full-bleed section when the content needs a narrower width',
     ],
     dont: [
-      'Do not nest Section inside Section; use a heading or Divider for sub-grouping instead',
-      'Do not use Section as a generic flex container; it is a vertical spacing and labeling wrapper only',
-      'Do not override the responsive padding without testing on mobile screens',
-      'Do not rely on Section for navigation structure; use PageLayout or SettingsLayout instead',
-      'Do not place form elements directly inside Section without a Container for width constraint',
+      'Don\'t use it as a general flex container. It only pads, centers and labels',
+      'Don\'t put form fields straight into it without a Container to limit their width',
     ],
   },
 
   previewHtml: `<div style="width:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
-  <arc-section label="Features">
-    <h2 style="margin:0 0 8px;font-family:var(--font-body);font-size:22px;font-weight:700;color:var(--text-primary)">What We Offer</h2>
-    <p style="margin:0;color:var(--text-secondary);font-size:15px;line-height:1.6;font-family:var(--font-body)">A comprehensive set of UI primitives that handle layout, theming, and accessibility out of the box.</p>
+  <arc-section label="Guide">
+    <h2 style="margin:0 0 8px;font-family:var(--font-body);font-size:22px;font-weight:700;color:var(--text-primary)">Getting started</h2>
+    <p style="margin:0;color:var(--text-secondary);font-size:15px;line-height:1.6;font-family:var(--font-body)">Install the package, import a component, and add its tag to your page.</p>
   </arc-section>
 </div>`,
 
