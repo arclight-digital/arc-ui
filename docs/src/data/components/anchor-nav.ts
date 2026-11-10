@@ -7,7 +7,7 @@ export const anchorNav: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Vertical or horizontal in-page link bar. The active link gets an accent-primary background pill or an underline glow.',
+    'Links to the sections of one page, with the section in view highlighted.',
 
   overview: `AnchorNav is a table of contents for one long page: a row or column of links to its sections, with the section in view highlighted. Use it on pages with named sections, such as a docs page or a settings screen split into panels.
 
@@ -18,6 +18,7 @@ Pass items as the \`items\` array (\`{ label, value }\`) or as slotted children 
   features: [
     '`arc-change` fires with `{ value }` on click and when scrolling changes the active section',
     'The active array item gets `aria-current="true"`',
+    'The active link gets a tinted background in a vertical nav and an underline in a horizontal one',
   ],
 
   guidelines: {
