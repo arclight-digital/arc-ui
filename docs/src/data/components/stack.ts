@@ -7,7 +7,7 @@ export const stack: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Flexbox layout component for vertical or horizontal stacking with token-based spacing.',
+    'Lays out its children in a column or a row, spaced by a gap from the spacing scale.',
 
   overview: `Stack lays out its children in a column or a row with a gap from the spacing scale. You set \`direction\`, \`gap\`, \`align\` and \`justify\` as attributes in place of writing flexbox CSS.
 
