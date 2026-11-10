@@ -7,38 +7,30 @@ export const banner: ComponentDef = {
   tier: 'feedback',
   interactivity: 'hybrid',
   description:
-    'Full-width persistent strip pinned to viewport or section top. Uses the same semantic variants as alert, but edge-to-edge with no border-radius and a subtle gradient wash.',
+    'Full-width strip for page-wide messages, with the same semantic variants as Alert and a gradient wash.',
 
-  overview: `Banner shows full-width messages that span their container, usually the viewport or a major content section. Unlike alert (which sits inline with border-radius and constrained width), banner is edge-to-edge with no rounding, like a system-level notification bar.
+  overview: `Banner is a one-line message strip that takes the full width of its container, usually the viewport or a major section. Use it for messages about the whole app: maintenance windows, version updates, cookie consent, account warnings. For feedback about one part of a page, use Alert.
 
-Use banner for messages that apply globally rather than to a specific piece of content: maintenance windows, version updates, cookie consent, or account-level warnings. The sticky option pins the banner to the top of the viewport so it remains visible as the user scrolls, while the dismissible option lets users close it once they have acknowledged the message.
+\`sticky\` keeps the banner at the top while the page scrolls. \`dismissible\` adds a close button, which fires a cancelable \`arc-close\` and then hides the banner.
 
-Four semantic variants (info, success, warning, and error) apply a subtle gradient wash and matching icon, using the same colors as alert and toast. The component renders as a landmark with \`role="banner"\` when used at the page level, and includes \`aria-live="polite"\` for dynamically injected banners.`,
+The four variants (info, success, warning, error) set a gradient wash and an icon, in the same colors as Alert and Toast. Every banner renders with \`role="alert"\`, whatever the variant, so screen readers announce it straight away.`,
 
   features: [
-    'Full-width edge-to-edge layout with no border-radius',
-    'Four semantic variants (info, success, warning, error) with gradient wash backgrounds',
-    'Sticky mode pins the banner to the top of the viewport on scroll',
-    'Dismissible mode adds a close button and fires `arc-close` on close',
-    'Accessible `role="banner"` and aria-live="polite" for dynamic content',
-    'Slide-down enter and collapse exit transitions',
-    'Slot for custom content including links, buttons, or inline actions',
+    'The default slot takes links, buttons and other inline actions',
+    'A 1px border in the variant color, `--radius-md` corners, a wash that fades out by 60% of the width, and a 2px line along the bottom',
   ],
 
   guidelines: {
     do: [
-      'Use banner for global, page-level messages that apply to the entire application',
-      'Enable sticky for critical messages that must remain visible as the user scrolls',
-      'Use the warning variant for maintenance windows or upcoming breaking changes',
-      'Keep banner text concise: one line with an optional action link',
-      'Place the banner at the very top of the layout, above the top bar if possible',
+      'Turn on sticky for messages that must stay visible while the user scrolls',
+      'Use the warning variant for maintenance windows and upcoming breaking changes',
+      'Keep the text to one line, with an optional action link',
+      'Put the banner at the very top of the layout, above the top bar if you can',
     ],
     dont: [
-      'Do not use banner for inline, content-specific feedback. Use alert or inline-message instead',
-      'Do not stack multiple banners. Consolidate messages or queue them sequentially',
-      'Do not make every banner dismissible; some system messages should persist',
-      'Do not use the error variant for warnings. Reserve it for genuine outages or failures',
-      'Do not place banners in the middle of page content; they belong at the top edge',
+      'Don\'t stack banners. Combine the messages or show them one after another',
+      'Don\'t make every banner dismissible. Some system messages should stay',
+      'Don\'t use the error variant for warnings. Keep it for outages and failures',
     ],
   },
 
