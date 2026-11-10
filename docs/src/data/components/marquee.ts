@@ -8,39 +8,31 @@ export const marquee: ComponentDef = {
   interactivity: 'static',
   replayable: true,
   description:
-    'Continuously scrolling content strip with configurable speed, direction, gap, and pause-on-hover behavior for logos, testimonials, and announcements.',
+    'Continuously scrolling strip of content with settings for speed, direction, gap and pause on hover. For logos, testimonials and announcements.',
 
-  overview: `Marquee creates a looping horizontal scroll animation for its slotted content. The component duplicates its children into a shadow-DOM clone group, then uses a CSS keyframe animation to translate the combined track so that as the primary group scrolls out of view, the duplicate takes its place, creating an infinite loop with no visible seam. This technique avoids JavaScript-driven animation, relying entirely on GPU-accelerated CSS transforms.
+  overview: `Marquee scrolls its children horizontally in a loop. It copies them into a second group in its shadow DOM, and a CSS keyframe animation moves both groups, so the copy takes the original's place as it scrolls out with no visible seam.
 
-The scroll speed is controlled by the \`speed\` prop, which represents pixels per second. The component automatically calculates the animation duration based on the measured width of the content group, so the perceived speed remains consistent regardless of how much content is slotted. A ResizeObserver recalculates the duration when content changes size, so the speed holds after dynamic content updates.
+\`speed\` is in pixels per second. Marquee measures the content's width and sets the animation's duration from it, so the speed is the same however much content you put in. A ResizeObserver measures again when the content changes size.
 
-By default, the marquee pauses when the user hovers over it (\`pause-on-hover\` is true), giving users time to read or interact with the content. The component also respects \`prefers-reduced-motion\` by pausing the animation entirely for users who have opted out of motion. The \`direction\` prop accepts \`"left"\` (default) or \`"right"\` to control which way the content scrolls, and the \`gap\` prop sets the spacing between items using any valid CSS length.`,
+\`pause-on-hover\` is on by default and stops the animation while the pointer is over it. With \`prefers-reduced-motion\`, the animation stays paused. \`direction\` is \`"left"\` (the default) or \`"right"\`, and \`gap\` takes any CSS length for the space between items.`,
 
   features: [
-    'Infinite loop using duplicated shadow-DOM content and CSS keyframe translation',
-    'Speed prop in pixels-per-second with automatic duration calculation based on content width',
-    'ResizeObserver-driven recalculation ensures consistent speed after dynamic content changes',
-    'Pause-on-hover enabled by default: the animation pauses when the cursor enters the track',
-    'Respects `prefers-reduced-motion` media query by pausing animation for motion-sensitive users',
-    'Configurable scroll direction: `left` (default) or `right`',
-    'Adjustable gap between items using any valid CSS length via the `gap` prop',
-    'GPU-accelerated animation using `will-change: transform` for smooth 60fps performance',
+    'The track sets `will-change: transform`',
   ],
 
   guidelines: {
     do: [
-      'Use Marquee for decorative content like logo strips, partner logos, or scrolling testimonials',
-      'Keep `pause-on-hover` enabled (default) so users can read individual items at their own pace',
-      'Provide enough slotted items to fill the viewport width. Otherwise the duplicate gap may be visible',
-      'Set `speed` between 20-60 pixels per second for a comfortable, readable scroll rate',
-      'Test with `prefers-reduced-motion` enabled to confirm the static fallback looks correct',
+      'Use it for decorative content like logo strips or scrolling testimonials',
+      'Leave `pause-on-hover` on so people can stop on an item and read it',
+      'Put in enough items to fill the width. Otherwise the gap before the copy shows',
+      'Keep `speed` between 20 and 60 pixels per second so text stays readable',
+      'Turn on reduced motion and check that the paused strip looks right',
     ],
     dont: [
-      'Do not use Marquee for critical information that users must read. It is easy to miss scrolling content',
-      'Do not place interactive elements (buttons, links) inside the marquee without `pause-on-hover`. They become hard to click',
-      'Do not set `speed` above 100. Fast scrolling is disorienting and inaccessible',
-      'Do not use Marquee as a substitute for a proper notification system or alert banner',
-      'Avoid stacking multiple Marquees moving in different directions. The competing motion is visually overwhelming',
+      'Don\'t put anything people must read in a marquee. Scrolling text is easy to miss',
+      'Don\'t put buttons or links in it with `pause-on-hover` off. They\'re hard to click while they move',
+      'Don\'t use it in place of a notification or an alert banner',
+      'Don\'t stack marquees that move in different directions',
     ],
   },
 
