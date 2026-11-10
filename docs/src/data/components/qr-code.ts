@@ -7,43 +7,35 @@ export const qrCode: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'Client-side QR code renderer that encodes any string into a crisp inline SVG. Themes automatically via currentColor, with an optional contrast card for guaranteed scanability on dark backgrounds.',
+    'Encodes a string as a QR code in the browser and draws it as inline SVG. Follows your text color, with an optional white card for dark backgrounds.',
 
-  overview: `QRCode encodes a URL, Wi-Fi credential, 2FA provisioning URI, or any other string entirely on the client and renders it as a single-path inline SVG. There is no canvas, no image request, and no server round-trip. All dark modules are combined into one \`<path>\` with crisp edges, so even large codes stay lightweight and scale cleanly.
+  overview: `QRCode encodes a URL, a Wi-Fi string, a 2FA provisioning URI or any other string in the browser and renders it as inline SVG, with no canvas, image request or server call. All the dark modules are joined into one \`<path>\` drawn with \`shape-rendering="crispEdges"\`, so the DOM stays small and the code scales to any size.
 
-By default the modules inherit \`currentColor\` (falling back to \`var(--text-primary)\`) over a transparent background, so the code follows your text color. Override the two custom properties \`--qr-fg\` (module color) and \`--qr-bg\` (background) to change it.
+The modules use \`--qr-fg\` if you set it and \`currentColor\` otherwise, which defaults to \`--text-primary\`. The background is \`--qr-bg\`, transparent by default. Set either custom property to change them.
 
-QR scanners expect dark modules on a light background. On ARC's dark theme, the default rendering produces light modules on a dark surface, an "inverted" code that most scanners handle but less reliably than a standard one. When scanability matters (payment links, ticket check-in, device pairing), set the \`contrast\` attribute. It renders the code as black modules on a white rounded card, which scans reliably in both themes.
+Scanners read dark modules on a light background more reliably than the reverse. On ARC's dark theme the default rendering is light modules on a dark surface, an inverted code. When a scan has to work (payment links, ticket check-in, device pairing), set \`contrast\`. It draws black modules on a white rounded card in both themes and ignores \`--qr-fg\` and \`--qr-bg\`.
 
-The component re-encodes automatically whenever \`value\` or \`level\` changes, and renders nothing when \`value\` is empty or exceeds QR capacity. The raw value is never exposed to assistive technology, so set a \`label\` describing what the code does. Values are often secrets (2FA URIs, tokens).`,
+The code re-encodes whenever \`value\` or \`level\` changes, and renders nothing when \`value\` is empty or too long for a QR code at that level. The SVG has \`role="img"\` and takes its accessible name from \`label\`, or "QR code" without one. The value itself is never exposed to assistive technology, because it may be a secret like a 2FA URI or a token.`,
 
   features: [
-    'Fully client-side encoding via the qrcode-generator library (MIT, zero dependencies)',
-    'Single-path SVG output with run-length-combined modules: small DOM, crisp at any size',
-    'Themes automatically: modules use var(`--qr-fg`, currentColor), background var(`--qr-bg`, transparent)',
-    'Contrast mode renders a white rounded card with forced dark modules so it scans in both themes',
-    'Four error-correction levels (L / M / Q / H) with automatic version (size) selection',
-    'Configurable quiet zone (border of empty modules) around the code',
-    '`role="img"` with a consumer-provided accessible label: the raw value is never exposed by default',
-    'Re-encodes reactively when value or level changes; renders nothing for empty values',
-    'CSS parts (svg, card) for external style overrides',
+    'Encoding by the qrcode-generator library (MIT, no dependencies of its own)',
+    'Four error-correction levels (L, M, Q, H) and automatic version (size) selection',
+    '`quiet-zone` sets the width of the empty border around the code, in modules',
+    'Parts: `base`, `svg`, `card`',
   ],
 
   guidelines: {
     do: [
-      'Set the contrast attribute whenever reliable scanning matters (payments, tickets, pairing): inverted light-on-dark codes are less reliable with some scanners',
-      'Provide a meaningful label describing what the code does ("Scan to open the event page"), not the encoded value itself',
-      'Use level "M" (the default) for most content; step up to "Q" or "H" only when the code may be partially obscured (e.g. a logo overlay or print wear)',
-      'Keep encoded values short: shorter strings produce fewer modules and scan faster from further away',
-      'Render at 160px or larger for codes meant to be scanned from another device across a desk',
-      'Pair with visible text or a copy button showing the same link, for users who cannot scan',
+      'Write a `label` that says what the code does ("Scan to open the event page"), not the value. Assistive technology reads the label, and the value may be a secret',
+      'Use level M (the default) for most content. Step up to Q or H only when part of the code may be covered or worn, as with a logo overlay or a printed code',
+      'Keep values short. Shorter strings make fewer modules, which scan faster and from further away',
+      'Render codes at 160px or larger when they\'re scanned from another device across a desk',
+      'Show the same link as text or with a copy button for people who can\'t scan',
     ],
     dont: [
-      'Do not rely on the default transparent rendering for scan-critical codes on the dark theme; use contrast mode instead',
-      'Do not put the raw encoded value in the label: it is exposed to assistive technology and may be a secret (2FA URI, token)',
-      'Do not encode very long strings (over ~1KB): capacity runs out and density makes scanning unreliable at typical sizes',
-      'Do not override --qr-fg/--qr-bg with low-contrast or same-lightness colors: scanners need strong dark-on-light contrast',
-      'Do not shrink the quiet zone below 2 modules when the code sits against busy surrounding content',
+      'Don\'t encode strings over about 1KB. Capacity runs out, and dense codes don\'t scan reliably at usual sizes',
+      'Don\'t set `--qr-fg` and `--qr-bg` to colors of similar lightness. Scanners need strong dark-on-light contrast',
+      'Don\'t set `quiet-zone` below 2 when the code is next to busy content',
     ],
   },
 
