@@ -12,18 +12,18 @@ export const scrollSpy: ComponentDef = {
 
 The current section is the last one whose top has scrolled past \`offset\` pixels from the top of the viewport (80 by default). Raise \`offset\` to clear a taller sticky header. When the page reaches the bottom, the last section counts as current even if it's too short to reach that line. ScrollSpy listens for scroll events on the whole document in the capture phase, so sections inside a scrolling container are tracked as well as ones in the window.
 
-The current link gets \`aria-current="location"\` and the accent background, and the component fires \`arc-change\` with \`{ value }\` set to the section id. Clicking a link scrolls its section into view, smoothly unless the reader has asked for reduced motion, and writes \`#id\` to the URL with \`history.replaceState\`.`,
+The current link gets \`aria-current="location"\` and the accent background, and the component fires \`arc-change\` with \`{ value }\` set to the section id when scrolling changes the current section. Clicking a link marks it current without firing \`arc-change\`, scrolls its section into view, smoothly unless the reader has asked for reduced motion, and writes \`#id\` to the URL with \`history.replaceState\`.`,
 
   features: [
     '`level` on a spy link indents it and sets it in a smaller font, for nested headings',
-    'Links whose `target` matches no element on the page are skipped',
+    'A link whose `target` matches no element on the page still shows in the list but is never marked current',
   ],
 
   guidelines: {
     do: [
       'Give every section a unique `id` that matches a spy link\'s `target`',
       'Set `offset` to the height of your sticky header or TopBar',
-      'Listen for `arc-change` to update breadcrumbs or analytics',
+      'Listen for `arc-change` to follow the section being read as the reader scrolls',
       'Keep link labels short, matching or abbreviating the section headings',
     ],
     dont: [
