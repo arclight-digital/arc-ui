@@ -8,44 +8,36 @@ export const tabs: ComponentDef = {
   interactivity: 'hybrid',
   description: 'Tabbed content navigation with keyboard support and ARIA roles.',
 
-  overview: `Tabs organize related content into separate panels that share the same page space. Only one panel is visible at a time, letting users switch context without navigating away. This makes Tabs ideal for grouping settings pages, documentation sections, or dashboard views where horizontal real estate is limited.
+  overview: `Tabs puts related panels in one space and shows one at a time. Each \`<arc-tab>\` child sets the \`label\` for its button and holds its panel's content. It suits settings pages, documentation sections and dashboard views, where the reader switches between panels and doesn't need to see two at once.
 
-The component follows the WAI-ARIA Tabs pattern. Each tab button carries \`role="tab"\` and its corresponding panel carries \`role="tabpanel"\`, linked via \`aria-controls\` and \`aria-labelledby\`. Focus management uses a roving tabindex so arrow keys move between tabs while Tab moves focus out of the tab list entirely, matching the behavior users expect from native OS tab controls.
+The component follows the WAI-ARIA Tabs pattern. Each button has \`role="tab"\` inside a \`role="tablist"\`, and the panel has \`role="tabpanel"\`, linked by \`aria-controls\` and \`aria-labelledby\`. Focus uses a roving tabindex, so the arrow keys move between tabs and Tab leaves the tab list.
 
-Switching tabs moves one indicator between them: the underline in the default variant, the ground behind the selection in \`pills\` and in vertical bars. The incoming panel rises into place rather than cutting. Both are CSS, both stop under \`prefers-reduced-motion\`, and a bar holding more tabs than room scrolls the selection into view without moving the page around it. Panels that are not active are removed from the accessibility tree and hidden with \`display: none\` so screen readers never encounter stale content.`,
+Switching tabs moves one indicator between them: the underline in the default variant, the ground behind the selection in \`pills\` and in vertical bars. The incoming panel rises into place. Both are CSS, both stop under \`prefers-reduced-motion\`, and a bar holding more tabs than room scrolls the selection into view without moving the page around it. Inactive panels are hidden with \`display: none\`, so they're also out of the accessibility tree.`,
 
   features: [
-    'Arrow-key keyboard navigation between tabs (left/right for horizontal, up/down for vertical)',
-    'Automatic WAI-ARIA roles: tab, tablist, and tabpanel with proper `aria-controls` linking',
-    'One indicator that travels between tabs, and a panel that rises in behind it',
-    'Disabled tab support: individual tabs can be non-interactive while remaining visible',
-    'Programmatic selected index via the `selected` property',
-    'Roving tabindex so only the active tab participates in the page Tab order',
-    'Supports HTML content inside each panel',
+    'With `orientation="vertical"`, the up and down arrows replace left and right',
+    'A disabled tab stays visible, but the arrow keys skip it and clicking does nothing',
+    '`selected` sets the active tab by zero-based index',
   ],
 
   guidelines: {
     do: [
-      'Use Tabs when content sections are closely related and users need to compare or switch between them frequently',
-      'Keep tab labels short (one or two words) so the entire tab bar fits without scrolling',
-      'Set a sensible default `selected` index (usually 0) so the component is never empty on first render',
-      'Provide meaningful panel content for every tab; avoid empty or placeholder panels in production',
-      'Use the disabled state for tabs that are temporarily unavailable rather than hiding them entirely',
+      'Keep tab labels to one or two words so the whole bar fits without scrolling',
+      'Disable a tab that\'s temporarily unavailable instead of hiding it',
     ],
     dont: [
-      'Do not use Tabs for sequential steps. Use a Stepper component instead',
-      'Avoid nesting Tabs inside Tabs; the double tab bar creates confusion for keyboard and screen-reader users',
-      'Do not place critical actions (like a Save button) inside a non-default tab where users may never see them',
-      'Avoid more than five or six tabs in a single group. Consider a dropdown or sidebar navigation for larger sets',
-      'Do not rely on tab order to imply a workflow; tabs should be independently meaningful',
+      'Don\'t use Tabs for sequential steps. Use StepperNav',
+      'Don\'t nest Tabs inside Tabs. Two tab bars are hard to follow with a keyboard or screen reader',
+      'Don\'t put a Save button or other key action in a tab that isn\'t open by default',
+      'Don\'t put more than five or six tabs in one group. Use a dropdown or sidebar navigation for more',
     ],
   },
 
   previewHtml: `<div style="width:100%">
   <arc-tabs>
-    <arc-tab label="Overview">ARC UI is a framework-agnostic component library built on web standards. It ships as lightweight Lit-based web components with zero-config wrappers for every major framework.</arc-tab>
-    <arc-tab label="Features">Keyboard navigation with arrow keys, automatic ARIA tab/tabpanel roles, smooth crossfade transitions between panels, and lazy rendering for heavy content.</arc-tab>
-    <arc-tab label="Changelog">v2.4.0 — Added disabled tab support and improved focus-visible ring styling. v2.3.0 — Introduced smooth crossfade panel transitions.</arc-tab>
+    <arc-tab label="Overview">ARC UI is a set of Lit web components, with wrapper packages for React, Vue, Svelte, Angular, Solid and Preact.</arc-tab>
+    <arc-tab label="Features">The arrow keys move between tabs. Home and End jump to the first and last tab.</arc-tab>
+    <arc-tab label="Changelog">Each release's changes are listed on the GitHub releases page.</arc-tab>
   </arc-tabs>
 </div>`,
 
@@ -214,7 +206,7 @@ export default function TabsDemo() {
       name: 'Tab',
       tag: 'arc-tab',
       description:
-        'An individual tab panel within a Tabs group. Each Tab renders a button in the tab bar and owns its associated content panel. Use this sub-component when you need fine-grained control over individual tab behavior, such as disabling a specific tab or attaching per-tab event listeners.',
+        'One tab in a Tabs group. Its `label` is the button text, its content is the panel, and `disabled` turns the button off.',
     },
   ],
 
