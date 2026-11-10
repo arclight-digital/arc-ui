@@ -6,50 +6,41 @@ export const commandPalette: ComponentDef = {
   tag: 'arc-command-palette',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Spotlight-style command palette with search and keyboard shortcuts.',
+  description: 'Modal command list with fuzzy, ranked search and shortcut hints.',
 
-  overview: `CommandPalette is a spotlight-style overlay for quick access to application commands, navigation, and actions. It renders as a centered modal dialog with a search input at the top, a scrollable results list in the middle, and a keyboard-hint footer at the bottom. Users open it with a trigger (typically a keyboard shortcut like Cmd+K), type to filter commands, and press Enter to execute the focused item.
+  overview: `CommandPalette is a modal dialog with a search field, a list of commands and a footer of key hints. You open it by setting \`open\`, usually from a Cmd+K handler or a button. The palette doesn't bind any shortcut itself.
 
-The palette accepts \`<arc-command-item>\` children in its default slot, each with a \`label\` and an optional \`shortcut\` string. On open, the search input auto-focuses and the query resets so users start clean every time. The filtered results update live as the user types, matching against each item's label. Arrow keys cycle the focus highlight through the visible results, and the footer displays the key bindings so users can navigate without a mouse.
+Commands are \`<arc-command-item>\` children. An item's text content is its label, and it can add an \`icon\`, a \`shortcut\` hint, \`keywords\` that are searched but never shown, and a \`description\` that's shown as a second line and also searched. Search is fuzzy and ranked: "cmdpal" finds "Command Palette", terms can come in any order, and the best matches come first with the matched characters marked. Only the top \`max-results\` (50 by default) are rendered.
 
-When an item is selected (by clicking or pressing Enter), the palette dispatches an \`arc-select\` event containing the item's label and shortcut, then closes itself. The Escape key and backdrop click both dismiss the palette and fire an \`arc-close\` event. The component locks body scroll while open and restores it on close, so the background page does not shift under the overlay.`,
+Picking an item fires \`arc-select\` with its \`value\`, or its label if it has no value, and closes the palette. Escape and a click on the backdrop close it too. Every close fires a cancelable \`arc-close\`, so \`preventDefault()\` keeps the palette open. For a search field that's always on screen, use CommandBar.`,
 
   features: [
-    'Centered modal dialog with a scale-in transition on open',
-    'Auto-focusing search input that resets the query on every open',
-    'Live type-ahead filtering against command item labels',
-    'Keyboard navigation: ArrowUp/ArrowDown cycle focus, Enter selects, Escape closes',
-    'Keyboard shortcut hints displayed next to each command item in monospace',
-    'Footer bar showing navigation key bindings for discoverability',
-    'Backdrop overlay with click-to-close and body scroll locking',
-    '`arc-select` and `arc-close` custom events for integration with application logic',
+    'Opens with a scale-in transition. The search input takes focus and the query clears on every open',
+    'Arrow Up and Arrow Down move the highlight, Enter selects and Escape closes',
+    'Body scroll is locked while it\'s open, and focus returns to where it was when it closes',
+    'When nothing matches, the empty state repeats the query',
+    'The backdrop is `::backdrop`, which can\'t be a CSS part. Style it with `--palette-backdrop`',
   ],
 
   guidelines: {
     do: [
-      'Bind a global keyboard shortcut (e.g. Cmd+K) to toggle the open property for fast access',
-      'Provide concise, action-oriented labels on each <arc-command-item> (e.g. "Open File", "Toggle Theme")',
-      'Include shortcut hints on items that have associated keyboard bindings for discoverability',
-      'Close the palette programmatically after handling the arc-select event to confirm the action ran',
-      'Keep the command list under 20-30 items; for larger sets, rely on the search filter',
+      'Write labels as short actions, such as "Open file" or "Toggle theme"',
+      'Add `shortcut` to items that have a key binding',
+      'Give items a `value` when two of them could share a label, so your `arc-select` handler can tell them apart',
     ],
     dont: [
-      'Do not use CommandPalette as a generic search bar; it is for discrete actions, not content search',
-      'Do not leave the palette open after an item is selected; it should always close to return focus to the app',
-      'Do not put nested interactive components like forms or modals inside command items',
-      'Do not omit the label attribute on <arc-command-item>; the filter and display both depend on it',
-      'Do not override the body scroll lock behavior, as this prevents jarring background movement',
+      'Don\'t put forms or other interactive content in an item. The palette renders its own copy of each item from its text, so anything else is lost',
     ],
   },
 
-  previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Open CommandPalette</arc-button>
+  previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Open command palette</arc-button>
 <arc-command-palette placeholder="Search commands...">
-  <arc-command-item shortcut="Ctrl+N" icon="file-plus">New File</arc-command-item>
-  <arc-command-item shortcut="Ctrl+O" icon="folder-open">Open File</arc-command-item>
+  <arc-command-item shortcut="Ctrl+N" icon="file-plus">New file</arc-command-item>
+  <arc-command-item shortcut="Ctrl+O" icon="folder-open">Open file</arc-command-item>
   <arc-command-item shortcut="Ctrl+S" icon="floppy-disk">Save</arc-command-item>
-  <arc-command-item icon="moon">Toggle Dark Mode</arc-command-item>
-  <arc-command-item icon="gear">Go to Settings</arc-command-item>
-  <arc-command-item icon="sign-out">Sign Out</arc-command-item>
+  <arc-command-item icon="moon">Toggle dark mode</arc-command-item>
+  <arc-command-item icon="gear">Go to settings</arc-command-item>
+  <arc-command-item icon="sign-out">Sign out</arc-command-item>
 </arc-command-palette>`,
 
   tabs: [
@@ -164,13 +155,13 @@ export default function Example() {
     {
       name: 'CommandItem',
       tag: 'arc-command-item',
-      description: 'Action item inside a CommandPalette.',
+      description: 'One command in a CommandPalette. Its text content is the label.',
     },
     {
       name: 'CommandGroup',
       tag: 'arc-command-group',
       description:
-        'Groups CommandItems under a small uppercase heading in the results list. Items inside a group still filter and keyboard-navigate as one flat list; headings disappear when none of their items match.',
+        'Puts CommandItems under a small uppercase heading. Items in groups still filter and move as one flat list, groups are ordered by their best match, and a heading hides when none of its items match.',
     },
   ],
 
