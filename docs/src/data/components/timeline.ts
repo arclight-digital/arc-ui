@@ -8,44 +8,36 @@ export const timeline: ComponentDef = {
   interactivity: 'static',
   description: 'Vertical timeline with dated events.',
 
-  overview: `Timeline renders a vertical sequence of events connected by a dotted line, suitable for changelogs, activity feeds, project histories, and audit logs. Each event displays a heading, optional description, and optional date in a clean layout with a blue dot marker and a connecting vertical line. The last item's line is automatically hidden to cap the timeline cleanly.
+  overview: `Timeline lists events in a vertical column, each with a dot and a line down to the next. Use it for changelogs, activity feeds, project histories and audit logs. The last item has no line below it.
 
-Like Stepper, Timeline uses a declarative child-element API: nest \`<arc-timeline-item>\` elements with \`heading\`, \`date\`, and text content (accessed via the \`description\` getter which reads \`textContent\`). The parent collects children via slotchange and renders the visual timeline, keeping markup readable and data management simple.
+Each event is an \`<arc-timeline-item>\` with a \`heading\`, an optional \`date\` and an optional description in its text. Timeline reads the items as data and renders its own copy of each. The description is the item's \`textContent\`, so it renders as plain text, and links or other markup inside an item are lost.
 
-The dot marker uses \`--accent-primary\` with a double-ring effect (2px \`--bg-card\` border surrounded by a 1px \`--accent-primary-border\` box shadow) for a polished appearance. The date is rendered in accent font (\`--font-accent\`) at 11px in \`--text-ghost\` color, giving it a subtle, metadata-like treatment. The timeline renders as a semantic \`<ol>\` with \`role="list"\` for correct ordering and accessibility.`,
+The heading and date are uppercase in the label font, with the date in \`--text-ghost\`. The dot is \`--accent-primary\` with a 2px \`--surface-base\` border and a faint accent ring, and the line fades from the accent color to \`--border-default\`. Hovering an item enlarges its dot and turns its heading accent.`,
 
   features: [
-    'Vertical event sequence with blue dot markers and connecting lines',
-    'Declarative `<arc-timeline-item>` children with heading, date, and text content',
-    'Double-ring dot marker using border and box-shadow for a polished appearance',
-    'Automatic hiding of the last item connecting line for clean termination',
-    'Monospace date display in `--text-ghost` color for subtle metadata treatment',
-    'Semantic <ol> with `role="list"` for accessible ordered event representation',
-    'CSS parts (timeline, item, marker, dot, line, content, title, description, date)',
-    'Description read from textContent of child elements for flexible content',
+    'Renders an `<ol>` with `role="list"`',
+    'Each heading has `role="heading"`, at `aria-level` 3 unless you set `heading-level`',
   ],
 
   guidelines: {
     do: [
-      'Use for chronologically ordered events: changelogs, activity logs, project history',
-      'Include dates for every item when the timeline represents real events',
-      'Order items chronologically (most recent first or earliest first) and stay consistent',
-      'Keep headings concise and event descriptions to one or two sentences',
-      'Use inside a card or sidebar for contextual activity feeds',
+      'Include a date on every item when the timeline records real events',
+      'Pick one order, newest first or oldest first, and keep to it',
+      'Keep headings short and descriptions to one or two sentences',
+      'Put it in a card or sidebar for an activity feed',
     ],
     dont: [
-      'Do not use timeline for non-sequential content. It implies chronological ordering',
-      'Do not mix items with and without dates randomly. Be consistent across all items',
-      'Do not use more than 10-15 items without pagination or a "show more" pattern',
-      'Do not use timeline as a stepper. Stepper is for workflow progress, timeline is for history',
-      'Do not put interactive elements (buttons, forms) inside timeline items. Keep them read-only',
+      'Don\'t use it for content that isn\'t in time order. The line implies a sequence',
+      'Don\'t show more than 10 to 15 items without pagination or a "show more" control',
+      'Don\'t use it for progress through a workflow. Use Stepper',
+      'Don\'t put links, buttons or forms in an item. Only its text is rendered',
     ],
   },
 
   previewHtml: `<arc-timeline style="max-width: 400px;">
-  <arc-timeline-item heading="v2.0 Released" date="2026-02-01">Major release with new component library.</arc-timeline-item>
-  <arc-timeline-item heading="Beta Launch" date="2026-01-15">Public beta opened for early adopters.</arc-timeline-item>
-  <arc-timeline-item heading="Project Started" date="2025-12-01">Initial commit and architecture planning.</arc-timeline-item>
+  <arc-timeline-item heading="Order shipped" date="2026-02-01">Left the warehouse with tracking number 4417.</arc-timeline-item>
+  <arc-timeline-item heading="Payment received" date="2026-01-15">Card payment cleared.</arc-timeline-item>
+  <arc-timeline-item heading="Order placed" date="2025-12-01">Two items added to the order.</arc-timeline-item>
 </arc-timeline>`,
 
   tabs: [
