@@ -9,36 +9,25 @@ export const sticky: ComponentDef = {
   description:
     'Wrapper that goes sticky at a configurable offset and emits a stuck attribute/event for visual state changes.',
 
-  overview: `Sticky is a layout wrapper that applies \`position: sticky\` to its children and uses an IntersectionObserver to detect when the element has actually become stuck to the viewport edge. When the stuck state changes, the component sets a \`stuck\` attribute on the host element and fires an \`arc-stuck\` event, so you can change visuals downstream (add a shadow, change the background, toggle a border) without wiring a scroll listener.
+  overview: `Sticky is a wrapper with \`position: sticky\`. \`offset\` sets its \`top\` value. \`"0px"\`, the default, sticks it flush with the top edge, and \`"64px"\` sticks it under a 64px top bar.
 
-The \`offset\` prop controls the \`top\` value for the sticky positioning (e.g. "0px" for flush with the viewport top, "64px" to account for a fixed top bar). The IntersectionObserver sentinel technique does not rely on scroll events, so stuck detection stays cheap on complex pages with many sticky elements.
-
-Common use cases include section headers that stick as the user scrolls through a long list, toolbar rows that become fixed under a top bar, and table column headers in scrollable data regions. Sticky handles the positioning and detection; your styles respond to the \`[stuck]\` attribute for visual feedback.`,
+An IntersectionObserver watches a 1px sentinel at the top of the wrapper, so Sticky knows when it has stuck without a scroll listener. When that changes, it sets or removes the \`stuck\` attribute on the host and fires \`arc-stuck\` with \`{ stuck }\` in the detail. The stuck state adds \`--shadow-sm\` by default. Style \`[stuck]\` to change the background, border or anything else.`,
 
   features: [
-    'CSS `position: sticky` with configurable `top` offset via the `offset` prop',
-    'IntersectionObserver-based stuck detection: no scroll event listeners',
-    'Sets a `stuck` boolean attribute on the host when the element is stuck',
-    'Fires `arc-stuck` custom event with `{ stuck: boolean }` detail for state synchronization',
-    'Sentinel technique that works with many sticky elements on the same page',
-    'CSS part: `sticky` for targeted ::part() styling',
-    'Works inside any scrollable container as well as the viewport',
+    'The wrapper sits at `z-index: 10`, above the content that scrolls under it',
   ],
 
   guidelines: {
     do: [
-      'Use for section headers in long scrollable lists or content areas',
-      'Use for toolbar rows that should stick below a fixed top bar (set offset to top bar height)',
-      'Style the stuck state via the `[stuck]` attribute selector for shadows, borders, or background changes',
-      'Listen for the `arc-stuck` event when you need to update application state on stick/unstick',
-      'Set offset to match any fixed headers above the sticky element to avoid overlap',
+      'Use it for section headers in long lists',
+      'Use it for a toolbar row under a fixed top bar, with `offset` set to the top bar\'s height',
+      'Style the stuck state with the `[stuck]` selector',
+      'Listen for `arc-stuck` when app state needs to change on stick or unstick',
     ],
     dont: [
-      'Do not use Sticky for elements that should be `position: fixed`: Sticky respects scroll context',
-      'Do not nest Sticky inside another Sticky in the same scroll container',
-      'Do not rely on Sticky for critical layout structure: it is a progressive enhancement',
-      'Do not set offset to a negative value: the element will stick above the viewport edge',
-      'Do not use Sticky when the parent container does not have overflow scroll: sticky has no effect without a scrollable ancestor',
+      'Don\'t use it for something that must stay on screen at all times. It scrolls away with its parent, so use `position: fixed`',
+      'Don\'t set a negative offset. The element sticks above the top edge',
+      'Don\'t expect it to stick past the end of its parent. A sticky element stays inside its parent\'s box',
     ],
   },
 
@@ -47,7 +36,7 @@ Common use cases include section headers that stick as the user scrolls through 
     <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);margin-bottom:var(--space-sm)">Scroll down to see the sticky header</div>
   </div>
   <div style="position:sticky;top:0;z-index:1;padding:var(--space-sm) var(--space-md);background:var(--bg-elevated);backdrop-filter:blur(8px);border-bottom:1px solid var(--border-subtle);font-size:14px;font-weight:600;color:var(--text-primary);font-family:var(--font-body)">
-    Sticky Section Header
+    Sticky section header
   </div>
   <div style="padding:var(--space-md);display:flex;flex-direction:column;gap:var(--space-sm)">
     <div style="padding:var(--space-sm);background:rgba(77,126,247,0.06);border-radius:var(--radius-sm);color:var(--text-secondary);font-size:13px;font-family:var(--font-body)">List item 1</div>
