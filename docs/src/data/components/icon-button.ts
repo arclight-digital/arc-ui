@@ -9,14 +9,14 @@ export const iconButton: ComponentDef = {
   description:
     'Compact button that shows an icon, with an optional text label, in ghost, secondary or primary variants.',
 
-  overview: `Icon Button is a button whose main content is an icon. Icon-only, it's a circle. Set \`text\` and it becomes a small rounded rectangle with an uppercase label beside the icon. Use it in toolbars, action bars and card headers.
+  overview: `Icon Button is a button whose main content is an icon. Icon-only, it's a circle. Set \`text\` and it becomes a small rounded rectangle with an uppercase label beside the icon.
 
 There are three variants: \`ghost\` (transparent, the default), \`secondary\` (bordered, with a glow on hover) and \`primary\` (solid accent fill). Icon-only sizes are \`xs\` (28px), \`sm\` (32px), \`md\` (36px, the default) and \`lg\` (44px), and each size has its own padding when there's text.
 
 With \`href\`, it renders an \`<a>\` in place of a \`<button>\`. \`name\` picks an icon from arc-icon. For your own SVG, leave \`name\` empty and put the SVG in the default slot.`,
 
   features: [
-    'The icon scales with `size`',
+    'The icon is 12px at `xs`, 16px at `sm` and `md`, and 20px at `lg`',
     'Pressing it scales the button to 0.93',
     'A disabled link drops its `href` and gets `aria-disabled`, so it leaves the tab order',
     'An `aria-label` set on the host moves to the inner button. If `label` is also set, `label` wins',
