@@ -6,7 +6,7 @@ export const statusBar: ComponentDef = {
   tag: 'arc-status-bar',
   tier: 'layout',
   interactivity: 'static',
-  description: 'Bottom status bar with prefix, center, and suffix slots.',
+  description: 'A thin strip for the bottom of an app window, with start, middle and end content.',
 
   overview: `StatusBar is a 28px strip for the bottom of an app window, like the one in a code editor. Text is in \`--font-mono\` at the small text size, in the muted color.
 
