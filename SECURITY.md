@@ -12,7 +12,7 @@ Instead, email **hello@arclight.build** with:
 - Steps to reproduce
 - Potential impact
 
-TODO(copy): confirm the response times. This said we acknowledge receipt within 48 hours and aim to provide a fix or mitigation within 7 days for critical issues.
+We acknowledge reports within 48 hours and aim to ship a fix or mitigation for critical issues within 7 days.
 
 ## Scope
 
@@ -30,7 +30,7 @@ This policy applies to the ARC UI packages published under `@arclux/` on npm:
 
 ## Supported versions
 
-TODO(copy): which versions get security updates? This said only the latest release, but MIGRATION.md says v3 gets patches for a quarter after the v4 tag (about 2026-11-17).
+4.x gets security fixes. 3.x gets them until 2026-11-16, a quarter after the v4.0.0 tag. After that, only the latest release does.
 
 ---
 
