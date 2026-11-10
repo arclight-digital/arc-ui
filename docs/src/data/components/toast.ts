@@ -10,71 +10,51 @@ export const toast: ComponentDef = {
   description:
     'Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable position, and enter/exit animations.',
 
-  overview: `Toast provides a stack-managed notification system that shows brief, non-blocking messages. Unlike modals or alerts, toasts appear in a fixed corner of the viewport and dismiss themselves automatically, which suits confirming background operations (file saved, record updated, network reconnected) without interrupting the user.
+  overview: `Toast shows short messages that don't block the page and dismiss themselves, such as "File saved" or "Back online". Place one \`<arc-toast>\` in your layout and call its \`show()\` method whenever a message should appear. Toasts stack at one corner or edge of the viewport, set by \`position\`, and span the full width below 640px.
 
-A single \`<arc-toast>\` element acts as the toaster: you place it once in your layout and call its \`show()\` method imperatively whenever a notification needs to appear. Each call pushes a new toast onto the stack. Multiple toasts stack vertically with consistent spacing, and each one exits with a scale-and-fade animation after the configured duration. There is no need to manage an array of open notifications in your component state.
+\`max-visible\` (3 by default) caps how many are on screen. The rest wait in a queue, up to \`queue-limit\`, and appear as space frees up. Set \`max-visible="0"\` for no cap. Dedupe is on by default. Showing a message that matches a visible or queued toast of the same variant adds a "(×N)" counter to that toast and restarts its timer, in place, with no second toast. Set \`no-dedupe\` to turn it off.
 
-**Queueing is built in.** \`max-visible\` (default 3) caps how many toasts are on screen at once; the rest wait and appear as slots free up, with \`queue-limit\` bounding the backlog. Set \`max-visible="0"\` for unbounded stacking. \`dedupe\` collapses a repeat of a message already showing into a "(×N)" counter on the existing toast (updated in place, so nothing flickers) and restarts its timer, so a message that keeps repeating stays on screen while it does. \`arc-queue-change\` reports the visible and queued counts; \`arc-queue-overflow\` fires when the backlog is full and the oldest queued toast is dropped.
+To raise a toast without a reference to the element, dispatch an \`arc-toast\` event on \`document\` with the options \`show()\` takes.
 
-\`show()\` returns the id it assigned, and \`dismiss(id)\` removes that toast whether it is visible or still queued.
+For long-running work, pass a numeric \`progress\` to \`show()\`. The toast draws a track under its message, is never deduped and never dismisses on a timer, so two uploads with the same file name get two bars. Move the bar with \`updateToast(id, { progress })\` and finish with \`complete(id)\`. That dismisses the toast and fires \`arc-complete\`. \`complete\` is separate from \`dismiss\` so that code waiting for the work to finish doesn't run when the reader closes the toast. An \`onCancel\` callback turns the close button into a cancel button that fires \`arc-cancel\`. Progress mode is set at \`show()\` and can't be turned on later.
 
-Toasts can also be raised from anywhere without a reference to the element: dispatch an \`arc-toast\` event on \`document\` with the same options \`show()\` takes.
-
-**Progress mode** covers long-running work. Pass a numeric \`progress\` to \`show()\` and the toast renders a track beneath its message, then exempts itself from the two behaviours that assume a message is momentary: it is never deduped, and it never auto-dismisses. Two uploads of a file with the same name are two uploads, so coalescing them would leave one bar tracking both; and the toast ends when the work does, not when a timer says so. Move the bar with \`updateToast(id, { progress })\` (which can revise the message in the same call) and finish with \`complete(id)\`, which dismisses it and fires \`arc-complete\`. Supplying an \`onCancel\` callback turns the close button into a cancel button and fires \`arc-cancel\`; without one the toast keeps an ordinary dismiss. \`complete\` is not \`dismiss\`: the operation finishing and the user closing the toast are different events, and code waiting on the first should not be woken by the second. The mode is chosen at \`show()\` and cannot be switched on later, because a track appearing mid-life would relayout a notification the reader is already reading.
-
-**An action button** turns a toast into an undo or a retry. \`actionLabel\` renders a ghost button in the toast, and a click runs the \`action\` callback, fires \`arc-action\`, and dismisses. Both the callback and the event exist because a callback cannot be attached declaratively, and either is a valid way to listen.
-
-Four built-in variants (info, success, warning, error) apply a colored bottom-edge indicator and a matching icon so severity reads at a glance. Six position options anchor the stack to any corner or center edge of the viewport, and on small screens the toasts span the full width. The container carries \`role="status"\` and \`aria-live="polite"\` so screen readers announce new messages without stealing focus.`,
+\`actionLabel\` adds a button for an undo or a retry. Clicking it runs the \`action\` callback, fires \`arc-action\` and dismisses the toast.`,
 
   features: [
-    'Imperative show() API: call with message, variant, and optional duration; returns the toast id',
-    '`max-visible` caps on-screen toasts (default 3) and queues the rest; `queue-limit` bounds the backlog',
-    '`dedupe` collapses a repeated message into a "(×N)" counter, updated in place',
-    '`dismiss(id)` removes a toast whether it is visible or still queued',
-    'Progress mode: pass `progress` to `show()` for a track that skips dedupe and never auto-dismisses',
-    '`updateToast(id, { progress, message })` moves the bar and revises the text; `complete(id)` ends it and fires `arc-complete`',
-    '`onCancel` turns the close button into a cancel button and fires `arc-cancel`',
-    '`action` and `actionLabel` render an undo/retry button that fires `arc-action` before dismissing',
-    'Document-level `arc-toast` event raises a toast without a reference to the element',
-    '`arc-queue-change` and `arc-queue-overflow` report queue state',
-    'Four variants (info, success, warning, error) with color-coded bottom indicators and icons',
-    'Six position anchors: top-right, top-left, top-center, bottom-right, bottom-left, bottom-center',
-    'Auto-dismiss after configurable duration (default 4 000 ms); pass 0 to persist',
-    'Enter/exit animations with scale and opacity transitions',
-    'Manual dismiss via close button on each toast',
-    'Vertical stacking with consistent gap for multiple simultaneous toasts',
-    'aria-live="polite" container for screen-reader announcements',
-    'Respects `prefers-reduced-motion`: disables animations when set',
-    'Responsive full-width layout on viewports under 640 px',
-    '`arc-close` event fires when a toast is removed',
+    '`show({ message, variant, duration })` returns the toast\'s id, and `dismiss(id)` removes it whether it\'s visible or queued',
+    '`duration` defaults to 4000ms, and 0 keeps a toast until it\'s closed',
+    'Positions: `top-right`, `top-left`, `top-center`, `bottom-right`, `bottom-left` and `bottom-center`',
+    'Four variants (info, success, warning and error), each with an icon and a colored bottom edge',
+    '`updateToast()` can change the message in the same call as the progress',
+    '`arc-queue-change` reports the visible and queued counts, and `arc-queue-overflow` fires when the queue is full and the oldest waiting toast is dropped',
+    '`arc-close` fires with the toast\'s id when it\'s removed',
+    'The container has `role="status"` and `aria-live="polite"`, so screen readers announce new messages without moving focus',
   ],
 
   guidelines: {
     do: [
-      'Place a single <arc-toast> element at the root of your layout so all pages share one toaster',
-      'Use the success variant to confirm completed actions like saves, uploads, and deletions',
-      'Keep messages to one sentence or less so users can read them before auto-dismiss',
-      'Use the error variant for failures that need acknowledgment but not a blocking dialog',
-      'Set duration to 0 for critical messages that the user must dismiss manually',
-      'Pair with form submissions and async operations to provide immediate feedback',
-      'Use progress mode for work with a knowable percentage: uploads, exports, batch jobs',
-      'Give a progress toast an onCancel whenever the work can actually be abandoned, so the button means something',
-      'Call complete(id) when the work finishes, so listeners can tell completion from the user closing the toast',
+      'Place one `<arc-toast>` at the root of your layout so every page shares it',
+      'Use `success` to confirm saves, uploads and deletions',
+      'Keep messages to one sentence so readers finish before the toast goes',
+      'Use `error` for failures that need acknowledging but not a blocking dialog',
+      'Set `duration` to 0 for a message the reader must close',
+      'Use progress mode for work with a known percentage, such as uploads, exports and batch jobs',
+      'Give a progress toast `onCancel` only when the work can really be stopped',
+      'Call `complete(id)` when the work finishes',
     ],
     dont: [
-      'Do not create multiple <arc-toast> elements on the same page. Use one shared instance',
-      'Do not use toasts for information that requires user decision or input; use a Dialog, or Confirm for a yes/no',
-      'Do not display sensitive data (passwords, tokens) in a toast. They are visible to anyone nearby',
-      'Do not set very short durations (under 2 000 ms); users may not have time to read the message',
-      'Do not rely solely on color to convey meaning. The icon and message text must stand on their own',
-      'Do not fire toasts in rapid succession for batch operations; summarize into a single notification',
-      'Do not use progress mode for work of unknown duration. A bar that cannot advance honestly is a Spinner',
-      'Do not leave a progress toast open after its work ends; it never auto-dismisses, so complete(id) or dismiss(id) is required',
-      'Do not put the only route to an irreversible action in a toast action button. It dismisses on its own',
+      'Don\'t use a toast for anything that needs a decision or input. Use Dialog, or Confirm for a yes or no',
+      'Don\'t show passwords, tokens or other secrets. Anyone nearby can see them',
+      'Don\'t set a duration under 2000ms. Readers may not finish the message',
+      'Don\'t rely on color alone. The icon and the text must carry the meaning',
+      'Don\'t fire one toast per item in a batch. Summarize the batch in one',
+      'Don\'t use progress mode for work of unknown length. Use Spinner',
+      'Don\'t leave a progress toast open after the work ends. It never dismisses itself, so call `complete(id)` or `dismiss(id)`',
+      'Don\'t make an action button the only way to reach an irreversible action. The toast dismisses on its own',
     ],
   },
 
-  previewHtml: `<div style="width:100%"><arc-toast id="demo-toaster" position="top-right"></arc-toast><div style="display:flex;gap:8px;flex-wrap:wrap"><arc-button variant="primary" id="demo-toast-success">Show Success Toast</arc-button><arc-button variant="secondary" id="demo-toast-error">Show Error Toast</arc-button><arc-button variant="ghost" id="demo-toast-progress">Upload a File</arc-button></div></div>`,
+  previewHtml: `<div style="width:100%"><arc-toast id="demo-toaster" position="top-right"></arc-toast><div style="display:flex;gap:8px;flex-wrap:wrap"><arc-button variant="primary" id="demo-toast-success">Show success toast</arc-button><arc-button variant="secondary" id="demo-toast-error">Show error toast</arc-button><arc-button variant="ghost" id="demo-toast-progress">Upload a file</arc-button></div></div>`,
 
   previewSetup: `
       const toaster = document.getElementById('demo-toaster');
