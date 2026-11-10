@@ -8,56 +8,43 @@ export const dataGrid: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['table', 'data table', 'spreadsheet', 'striped', 'density'],
   description:
-    'A spreadsheet-grade grid for working with tabular data: inline cell editing, multi-column sorting, pinned columns, row selection, and virtualized rendering. Columns are defined as a JavaScript array, and the grid implements the full WAI-ARIA grid keyboard pattern with a single tab stop.',
+    'Grid for tabular data with inline editing, multi-column sorting, pinned columns, row selection and virtual scrolling. Columns are a JavaScript array, and the whole grid is one tab stop with the WAI-ARIA grid keyboard pattern.',
 
-  overview: `DataGrid is the whole tabular family in one component. Columns are configured through a \`columns\` array property (not child elements), where each entry can opt into sorting, inline editing, alignment, a fixed width, and left-edge pinning. Nothing is on by default that a read-only table would not want, so a plain display grid is this component with the interactive props left alone.
+  overview: `DataGrid renders \`rows\`, an array of objects, under \`columns\`, an array of \`{ key, label }\` entries. Both are set as JavaScript properties, not child elements. Each column can add \`sortable\`, \`editable\`, \`pinned\`, a fixed \`width\` and \`align\`. With none of those and \`selectable\` off, it's a plain read-only table.
 
-**It absorbed \`arc-table\` and \`arc-data-table\` in v4**, which is why that is true. Three props came across and they are the ones a read-mostly table cares about. \`density="compact"\` tightens cell padding, from Table. \`striped\` draws alternating row backgrounds. It defaults **on**, because this grid has always striped unconditionally and a merge is not the place to restyle the survivor, so \`no-striped\` is the migration path for a plain Table. \`overscan\` sets how many rows render above and below the visible window when \`virtual\` is on; it was public on \`arc-virtual-list\` and a hard-coded 5 here, and the divergence survived because the two copies of the arithmetic never met. Raising it trades DOM nodes for fewer blank rows on a fling.
+**It replaced \`arc-table\` and \`arc-data-table\` in v4.** Three props came from them. \`density="compact"\` tightens cell padding. \`striped\` draws alternating row backgrounds and is on by default, so a plain Table migrates with \`no-striped\`. \`overscan\` sets how many rows render above and below the visible window when \`virtual\` is on (5 by default).
 
-Migrating: Table's positional \`columns: ["A"]\` / \`rows: [["1"]]\` become named keys (\`[{ key, label }]\`) and one object per row, so a column can move without every row moving with it. Data Table's slotted \`<arc-column>\` children become one \`columns\` entry each with the same field names, and its \`sort-column\`/\`sort-direction\` pair becomes a single entry in the multi-sort \`sort\` array, where one entry behaves exactly as the pair did. Selection, virtual scrolling and \`overscan\` are unchanged. See the tombstones for [Table](/docs/components/table), [Data Table](/docs/components/data-table) and [Column](/docs/components/column).
+Migrating: Table's positional \`columns: ["A"]\` and \`rows: [["1"]]\` become named keys (\`[{ key, label }]\`) and one object per row, so a column can move without every row moving with it. Data Table's slotted \`<arc-column>\` children become one \`columns\` entry each with the same field names, and its \`sort-column\`/\`sort-direction\` pair becomes a single entry in the multi-sort \`sort\` array, which behaves the same. Selection, virtual scrolling and \`overscan\` are unchanged. See the removal notes for [Table](/docs/components/table), [Data Table](/docs/components/data-table) and [Column](/docs/components/column).
 
-Sorting is multi-column: clicking a sortable header cycles ascending → descending → off, and Shift+clicking appends the column as a secondary sort. When more than one sort is active, each sorted header shows its direction arrow plus a priority number. The grid sorts a copy of your data internally and also emits \`arc-sort\` with the full sort array. Set \`manual-sort\` to skip internal sorting and drive it from a server instead.
+Clicking a sortable header cycles ascending, descending and off, and Shift+click adds the column as a secondary sort. With more than one sort active, each sorted header shows its arrow and a priority number. The grid sorts its own copy of the rows and fires \`arc-sort\` with the whole sort array. With \`manual-sort\`, it leaves the row order alone so you can sort on the server.
 
-Editable columns turn cells into inline editors: press Enter or double-click a cell to open a token-styled input, Enter or blur commits (emitting \`arc-cell-change\`), Escape cancels. The grid mutates only its own display copy. Your source array stays untouched, so you remain the owner of the data. Pinned columns stay stuck to the left edge during horizontal scroll with an elevation shadow, and the \`virtual\` mode renders only visible rows for large datasets.
+In an editable column, Enter or a double-click opens an input in the cell. Enter or blur commits and fires \`arc-cell-change\` with \`{ rowIndex, key, value, row }\`, and Escape cancels. The grid works on a shallow copy, so sorting and edits never change the array you passed in: write edits back to your own data. Reassigning \`rows\` resets the selection and closes any open editor.
 
-Keyboard support follows the WAI-ARIA grid pattern: one tab stop for the whole grid, arrow keys move a roving cell focus, Home/End jump to row ends, Ctrl+Home/End jump to the grid corners, Enter activates (sorts a header, edits a cell), and Space toggles row selection.`,
+The grid is one tab stop. Arrow keys move focus between cells, Home and End go to the ends of a row, Ctrl+Home and Ctrl+End to the corners, Enter sorts a header or edits a cell, and Space toggles row selection.`,
 
   features: [
-    'Column configuration via a plain JavaScript array: width, alignment, sortable, editable, pinned per column',
-    'Multi-column sorting: click cycles asc/desc/none, Shift+click adds secondary sorts with priority indicators',
-    'manual-sort mode for server-side sorting driven by the `arc-sort` event',
-    'Inline cell editing with Enter/double-click to open, Enter/blur to commit, Escape to cancel',
-    'Grid mutates only its internal display copy. Consumer data stays the source of truth',
-    'Pinned columns stick to the left edge with an elevation shadow while scrolling horizontally',
-    'Row selection with select-all checkbox including indeterminate state',
-    'Virtualized rendering for large datasets via the `virtual` and `row-height` props, with `overscan` controlling the buffer',
-    '`density="compact"` reduces cell padding for dense data displays (absorbed from `arc-table`)',
-    '`striped` alternating row backgrounds, on by default (`no-striped` for a plain table)',
-    'Full WAI-ARIA grid keyboard pattern: roving cell focus, one tab stop, arrow/Home/End/Ctrl navigation',
-    '`arc-sort`, `arc-cell-change`, and `arc-select` custom events',
-    'Sticky header row that stays visible during vertical scroll',
-    'CSS custom property theming via ARC design tokens, plus ::part hooks for table, header, row, cell, and editor',
+    'Pinned columns always come first and stick to the inline-start edge, with a shadow once the grid scrolls sideways',
+    '`selectable` adds a checkbox column. The header checkbox selects all and shows an indeterminate state for a partial selection, and `arc-select` sends indices into your original array',
+    '`virtual` renders only the visible rows plus the overscan buffer. `row-height` (40 by default) has to match the real row height',
+    'The header row stays in view while the body scrolls',
+    'CSS parts: `wrapper`, `table`, `header`, `header-cell`, `body`, `row`, `cell`, `editor`',
   ],
 
   guidelines: {
     do: [
-      'Use DataGrid for read-mostly display too. Leave `selectable` off and set no column `editable`, and it is a table',
-      'Reach for `density="compact"` and `no-striped` when the grid is displaying rather than editing; that combination is what a plain `arc-table` looked like before it merged in here',
-      'Listen to arc-cell-change and write edits back to your own data store. The grid only updates its display copy',
-      'Set manual-sort and handle arc-sort yourself when the dataset is paginated or sorted server-side',
-      'Pin only one or two key identifier columns (IDs, names) so unpinned data stays readable',
-      'Give pinned columns an explicit width. Pinned offsets are computed from column widths',
-      'Enable `virtual` with an accurate `row-height` for datasets beyond a few hundred rows',
-      'Raise `overscan` if fast scrolling shows blank rows, and lower it if the row count in the DOM is the problem',
+      'For a display-only table, set `density="compact"` and `no-striped`. That\'s what a plain `arc-table` looked like',
+      'Set `manual-sort` and handle `arc-sort` when the data is paginated or sorted on the server',
+      'Pin one or two identifying columns, such as an ID or a name',
+      'Give pinned columns a `width`. Pinned offsets are computed from it',
+      'Turn on `virtual`, with an accurate `row-height`, for long datasets',
+      'Raise `overscan` if fast scrolling shows blank rows, and lower it if the number of rows in the DOM is the problem',
     ],
     dont: [
-      'Do not mark every column editable. Restrict editing to fields users genuinely need to change inline',
-      'Do not rely on the grid to persist edits; it never mutates the rows array you passed in',
-      'Do not pin so many columns that unpinned content has no room on narrow screens',
-      'Do not mix virtual mode with rows of varying heights. Virtualization assumes a fixed `row-height`',
-      'Do not set `overscan` high to paper over a wrong `row-height`; the buffer hides the symptom and every scroll position stays slightly wrong',
-      'Do not nest complex interactive components (modals, drawers) inside grid cells',
-      'Do not reach for DataGrid to render a list of one thing per row. That is `arc-list`, and a grid is the wrong semantics for it',
+      'Don\'t make every column editable. Limit editing to fields people need to change in place',
+      'Don\'t pin so many columns that the rest have no room on narrow screens',
+      'Don\'t use `virtual` with rows of different heights. It assumes every row is `row-height` tall',
+      'Don\'t raise `overscan` to cover a wrong `row-height`. The blank rows go away, but every scroll position stays slightly off',
+      'Don\'t use it for a list of one thing per row. Use `arc-list`, since grid semantics are wrong for that',
     ],
   },
 
