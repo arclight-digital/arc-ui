@@ -10,42 +10,30 @@ export const drawer: ComponentDef = {
   description:
     'Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for off-canvas navigation, filters, and detail views.',
 
-  overview: `Drawer is a slide-out panel that emerges from the left or right edge of the viewport, overlaying page content behind a semi-transparent backdrop. It is the standard pattern for housing navigation menus on mobile, exposing filter panels in data-heavy applications, or showing contextual detail views without navigating away from the current page.
+  overview: `Drawer is a panel that slides in from the left or right edge of the viewport, set by \`position\`. Use it for a mobile navigation menu, a filter panel or a detail view, without leaving the current page. It has a header with the \`heading\` and a close button, and a body that scrolls.
 
-When the Drawer opens it locks body scroll, preventing the user from accidentally interacting with background content. A CSS transform animation slides the panel into view while the backdrop fades in, creating a clear spatial relationship between the panel and the page behind it. Closing is handled by the built-in close button, the Escape key, or a click on the backdrop. Each fires an \`arc-close\` event so your application state stays in sync.
+By default it's modal. It's a native \`<dialog>\`, so the page behind is inert, dimmed by a backdrop and scroll-locked until it closes. With \`no-modal\` it floats over a page that stays usable: no backdrop, no scroll lock, and opening it leaves focus where it was. Escape still closes it while focus is inside.
 
-Choose Drawer over Dialog when the supplementary content is navigation-oriented, when users need to glance back at the main page while interacting with the panel, or when the content is tall and benefits from full-height scrolling. For blocking decisions that require explicit user action, use Dialog instead.`,
+The close button, Escape and a backdrop click all fire \`arc-close\`. The event is cancelable, so \`preventDefault()\` keeps the drawer open.
+
+Choose Drawer over Dialog for navigation, for tall content that needs to scroll, or, with \`no-modal\`, when people need to keep using the page beside it. For a decision the user has to make before going on, use Dialog.`,
 
   features: [
-    '`no-modal` for a drawer that floats over a page that stays usable: no backdrop, no scroll lock, and focus stays where it was',
-    'Slides in from the left or right edge via CSS transforms with configurable `position` prop',
-    'Semi-transparent backdrop overlay dims the page and captures click-to-close',
-    'Escape key dismissal with automatic keyboard listener management',
-    'Body scroll lock while open prevents background content interaction',
-    'Built-in header bar with heading text and close button',
-    'Scrollable body region for long content like navigation trees or filter forms',
-    'Fires `arc-close` custom event on any dismiss action for state synchronization',
-    'Max-width capped at 85vw so the drawer never fully obscures the page',
-    'CSS custom property theming via `--bg-surface`, `--border-subtle`, and `--text-primary`',
-    'Accessible with `role="dialog"`, `aria-modal="true"`, and `aria-label` from heading',
+    '300px wide by default and never more than 85vw, so some of the page always shows',
+    '`heading` is also the panel\'s accessible name',
+    'The backdrop is `::backdrop`, which can\'t be a CSS part. Style it with `--drawer-backdrop`',
   ],
 
   guidelines: {
     do: [
-      'Use for mobile navigation menus that slide in from the left edge',
-      'Use for filter or settings panels in data-heavy dashboards',
-      'Provide a clear, short heading that tells the user what the panel contains',
-      'Keep the drawer width reasonable. The default 300px works for most navigation use cases',
-      'Use `position="right"` for detail views and contextual information panels',
-      'Always listen for the `arc-close` event to keep your open state in sync',
+      'Use `position="left"` for navigation menus and `position="right"` for details, filters and settings',
+      'Write a short heading that says what\'s in the panel',
+      'Listen for `arc-close` and update your own open state',
     ],
     dont: [
-      'Do not use a Drawer for critical confirmations. Use Dialog instead',
-      'Do not nest a Drawer inside another Drawer',
-      'Do not put complex multi-step forms in a Drawer. Consider a full page or Dialog',
-      'Do not auto-open a Drawer on page load without a clear user-initiated trigger',
-      'Do not remove the backdrop. Users expect click-outside-to-close behavior',
-      'Do not place unrelated content in the drawer heading area. Keep it for the title and close button',
+      'Don\'t use it for critical confirmations. Use Dialog',
+      'Don\'t put long multi-step forms in it. Use a full page or a Dialog',
+      'Don\'t open it on page load. Open it when someone asks for it',
     ],
   },
 
