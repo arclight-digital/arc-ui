@@ -13,7 +13,7 @@ export const fieldset: ComponentDef = {
 
 The default variant is a bordered box with rounded corners, and \`variant="card"\` adds a surface background and a small shadow. \`error\` shows a message below the controls with \`role="alert"\`, for group-level problems such as "Select at least one option". The \`actions\` slot puts buttons or links, such as "Select all" or "Reset", on the legend's line.
 
-\`disabled\` dims the group to 50% opacity and sets \`disabled\` on the inner \`<fieldset>\`. Your controls are slotted, not inside that element, so disable them as well.`,
+\`disabled\` dims the group to 50% opacity and sets \`disabled\` on every ARC form control inside it, however deeply nested. A control added as a direct child while it's disabled is disabled too; one added inside a wrapper element is only picked up the next time \`disabled\` changes. Re-enabling it removes \`disabled\` only from the controls it set, so a control you disabled yourself stays disabled. Buttons aren't covered, \`arc-button\` or native, and neither are native inputs: the inner \`<fieldset>\` is in the shadow root and slotted children aren't its descendants, so disable those yourself.`,
 
   features: [
     'CSS parts: `fieldset`, `legend`, `description`, `content`, `error`',

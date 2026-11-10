@@ -4,14 +4,28 @@ import { hydrateSlots } from '../shared/hydrate-slots.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
+ * Controls some arc-fieldset disabled, as opposed to controls disabled on
+ * their own. Shared across instances so nested fieldsets agree: the one that
+ * re-enables last is the one that releases, whichever disabled first.
+ */
+const cascaded = new WeakSet();
+
+const isControl = (el) => !!customElements.get(el.localName)?.formAssociated;
+
+/**
  * Grouped form section with legend, description, error message, and optional card variant. Wraps
  * related inputs with native fieldset semantics.
+ *
+ * `disabled` reaches the controls by attribute. The native `<fieldset disabled>` is in the shadow
+ * root and the controls are slotted, not its descendants, so the platform's own cascade never gets
+ * to them. The fieldset sets `disabled` on every form-associated element it holds (every ARC form
+ * control, at any depth), and on re-enable removes it only from the ones it disabled.
  *
  * @tag arc-fieldset
  * @status stable
  * @prop {string} legend - Text displayed in the `<legend>` element. Also available via the `legend` slot for markup.
  * @prop {string} description - Helper text displayed below the legend.
- * @prop {boolean} disabled - Disables all child controls and dims the fieldset.
+ * @prop {boolean} disabled - Dims the fieldset and disables every ARC form control inside it, at any depth, and a control slotted in directly while it is disabled. Re-enabling it re-enables only the controls it disabled, so a control that was already disabled stays disabled.
  * @prop {string} error - Error message displayed below the content with `role="alert"`.
  * @prop {'default' | 'card'} variant - Visual style. Card adds a surface background and shadow.
  * @slot legend
@@ -145,6 +159,51 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
     hydrateSlots(this);
   }
 
+  updated(changed) {
+    super.updated?.(changed);
+    if (changed.has('disabled')) this._cascadeDisabled();
+  }
+
+  /** A control slotted in while the fieldset is disabled joins the rest. */
+  _onDefaultSlotChange() {
+    if (this.disabled) this._cascadeDisabled();
+  }
+
+  /**
+   * Put every form control inside in the fieldset's disabled state. Done after
+   * render rather than in a slot reader: the server can't write `disabled` onto
+   * children, so doing it before a server-rendered control hydrates would make
+   * its first client render differ from the server's. Such a control waits for
+   * its own first update instead.
+   */
+  _cascadeDisabled() {
+    for (const el of this.querySelectorAll('*')) {
+      if (!isControl(el)) continue;
+      if (el.shadowRoot && !el.hasUpdated) {
+        customElements
+          .whenDefined(el.localName)
+          .then(() => el.updateComplete)
+          .then(() => this._syncControl(el));
+      } else {
+        this._syncControl(el);
+      }
+    }
+  }
+
+  _syncControl(el) {
+    if (!this.contains(el)) return;
+    if (this.disabled) {
+      // Already disabled means disabled on its own (or by an outer fieldset,
+      // which is then the one that releases it).
+      if (el.hasAttribute('disabled')) return;
+      cascaded.add(el);
+      el.setAttribute('disabled', '');
+    } else if (cascaded.has(el) && !el.parentElement?.closest('arc-fieldset[disabled]')) {
+      cascaded.delete(el);
+      el.removeAttribute('disabled');
+    }
+  }
+
   render() {
     const hasContent = this.legend || this._hasLegend || this._hasActions;
 
@@ -167,7 +226,7 @@ export class ArcFieldset extends DeclaredPropsMixin(LitElement) {
         `}
         ${this.description ? html`<div class="fieldset__description" part="description">${this.description}</div>` : ''}
         <div class="fieldset__content" part="content">
-          <slot></slot>
+          <slot @slotchange=${this._onDefaultSlotChange}></slot>
         </div>
         ${this.error ? html`<div class="fieldset__error" role="alert" part="error">${this.error}</div>` : ''}
       </fieldset>
