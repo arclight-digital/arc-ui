@@ -41,7 +41,7 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
 
 <DocsLayout
   title="Utilities"
-  description="An optional utility layer generated from the same design tokens ARC UI components compile against."
+  description="Optional arc- prefixed utility classes for spacing, layout and surface, generated from ARC UI's design tokens."
   activeSlug="utilities"
   headings={headings}
   breadcrumbs={[{ label: 'Utilities' }]}
@@ -51,38 +51,37 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
 
     <section id="overview">
       <p>
-        ARC UI components own everything inside their shadow boundary and nothing outside it.
-        The space <em>between</em> components is yours, and in practice everyone writes the same
-        flex, gap and padding CSS to fill it, against {tokenCount} custom properties
-        <code>base.css</code> already publishes with no ergonomic way to use them.
+        ARC UI components style what's inside their shadow roots and nothing outside. The space
+        <em>between</em> components is yours to lay out, usually with flex, gap and padding CSS
+        written against the {tokenCount} custom properties in <code>base.css</code>.
       </p>
       <p>
-        <strong>{utilityClassCount} generated, <code>arc-</code>-prefixed classes</strong>, about
-        2.6&nbsp;KB gzipped, covering spacing, layout and surface. It is a deliberate middle:
-        enough to lay out a page around ARC components, not enough to be a framework. This site
-        loads the stylesheet, so every demo on this page is the classes themselves, live.
+        The utility layer is <strong>{utilityClassCount} generated, <code>arc-</code>-prefixed
+        classes</strong>, about 2.6&nbsp;KB gzipped, for spacing, layout and surface. This site
+        loads the stylesheet, so the demos on this page use the classes themselves.
       </p>
     </section>
 
     <section id="why">
-      <h2 class="docs-heading">Why not just use Tailwind</h2>
+      <h2 class="docs-heading">Why not Tailwind</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        You can, and for most utility work you should. What Tailwind cannot do is know what
+        You can, and for most utility work you should. What Tailwind can't know is what
         <code>arc-card</code> uses for its own padding.
       </p>
       <p>
-        These classes are generated from the same <code>tokens.js</code> the components compile
-        against, so <code>.arc-p-md</code> and a card's internal padding resolve to the same
-        value, and overriding one base token moves both:
+        These classes are generated from <code>tokens.js</code>, the same file that generates
+        <code>base.css</code>. A class and a component that use the same step read the same
+        custom property (<code>.arc-p-lg</code> and a card's default padding both read <code>--space-lg</code>),
+        so overriding that token changes both:
       </p>
       <arc-code-block language="css" code={`:root { --space-md: 20px; }
 
 /* .arc-p-md and every component's internal md spacing move together */`}></arc-code-block>
       <p>
-        Every declaration reads a <code>var()</code> rather than a literal, which is what keeps
-        that link intact. Use these where you want your layout to track the component system,
-        and anything else for the rest.
+        Every class on a token scale (spacing, color, type size, radius, shadow) takes its value
+        from a <code>var()</code>. Use these where your layout should follow the
+        tokens, and anything you like for the rest.
       </p>
     </section>
 
@@ -92,10 +91,10 @@ const fontRoles = ['body', 'label', 'mono', 'display', 'quote'];
       <arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';       /* defines the tokens */
 import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       <p>
-        Opt-in and standalone: nobody who only wants tokens pays for it. Every class is
-        <code>arc-</code> prefixed, because consumers run Tailwind or Bootstrap and an
-        unprefixed <code>.flex</code> would collide catastrophically. It costs the terseness that
-        makes utilities pleasant, and there is no way around it for a library.
+        The stylesheet is separate, so if you only want the tokens you don't load it. Every class
+        has the <code>arc-</code> prefix, because your project may also run Tailwind or
+        Bootstrap, and an unprefixed <code>.flex</code> would collide with theirs. The prefix
+        makes the classes longer, and a library has no way around that.
       </p>
     </section>
 
@@ -103,11 +102,11 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       <h2 class="docs-heading">Spacing</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        Every step of the <code>--space-*</code> scale, on padding, margin and gap. Suffixes are
-        logical, not physical: <code>x</code>/<code>y</code> for the inline and block axes,
+        Every step of the <code>--space-*</code> scale, for padding, margin and gap. The suffixes
+        map to logical properties: <code>x</code>/<code>y</code> for the inline and block axes,
         <code>s</code>/<code>e</code> for start and end, <code>t</code>/<code>b</code> for block
         start and end. A layout built from these mirrors under <code>dir="rtl"</code> without a
-        second stylesheet. The same class works in both directions:
+        second stylesheet. Here is the same class in both directions:
       </p>
       <div class="demo-stack">
         <div class="demo-box arc-ps-xl arc-py-sm"><code>.arc-ps-xl</code></div>
@@ -160,8 +159,8 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
         </li>
         <li>
           <strong>Size</strong>: <code>.arc-w-full</code>, <code>.arc-h-full</code>,
-          <code>.arc-max-w-full</code>, and <code>.arc-min-w-0</code>, which is the fix for a
-          flex child that refuses to shrink and text that refuses to ellipsis.
+          <code>.arc-max-w-full</code>, and <code>.arc-min-w-0</code>, which lets a flex child
+          shrink below its content width so its text can truncate with an ellipsis.
         </li>
       </ul>
     </section>
@@ -182,13 +181,13 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
         </tbody>
       </table>
       <p>
-        Colors use the token names directly, so <code>.arc-text-primary</code> is the foreground
-        color and <code>.arc-text-lg</code> is a type size, the same split
-        <code>--text-primary</code> and <code>--text-lg</code> already have. The generator fails
-        the build if a future token ever makes those two collide.
+        Class names follow the token names, so <code>.arc-text-primary</code> is a color and
+        <code>.arc-text-lg</code> is a type size, as with <code>--text-primary</code> and
+        <code>--text-lg</code>. The generator fails the build if a new token would make a color
+        and a size share a class name.
       </p>
       <p class="demo-fonts">
-        Font classes name the five <strong>roles</strong>, not typefaces:
+        Font classes name the five typographic <strong>roles</strong>:
         {fontRoles.map((role) => (
           <span class={`arc-font-${role}`}>.arc-font-{role}</span>
         ))}
@@ -200,22 +199,21 @@ import '@arclux/arc-ui/utilities.css'; /* uses them */`}></arc-code-block>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul>
         <li>
-          <strong>Light DOM only.</strong> A class cannot cross a shadow boundary. These style
-          the space around ARC components, never anything inside one. Use <code>::part()</code>
-          and the CSS custom properties for that.
+          <strong>Light DOM only.</strong> A class can't reach into a shadow root, so these style
+          the space around ARC UI components and nothing inside them. For that, use
+          <code>::part()</code> and the components' CSS custom properties.
         </li>
         <li>
-          <strong>No responsive or state variants.</strong> No <code>sm:</code>, no
-          <code>hover:</code>. That is where a utility layer becomes a framework, and this one
-          is not that. Write a media query.
+          <strong>No responsive or state variants.</strong> There's no <code>sm:</code> or
+          <code>hover:</code>. Write a media query.
         </li>
         <li>
-          <strong>No arbitrary values.</strong> The scale is the point: a class that resolves
-          to an arbitrary pixel value is not tracking the token system.
+          <strong>No arbitrary values.</strong> A class set to an arbitrary pixel value wouldn't
+          follow the tokens.
         </li>
         <li>
-          <strong>Requires the tokens.</strong> Every class reads a <code>var()</code>, so load
-          <code>base.css</code>, or define the same variables yourself.
+          <strong>Requires the tokens.</strong> The scale classes read a <code>var()</code>, so
+          load <code>base.css</code> or define the same variables yourself.
         </li>
       </ul>
     </section>
