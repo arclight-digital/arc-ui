@@ -7,7 +7,7 @@ export const gauge: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning, error) and an animated sweep.',
+    'Shows one reading on a 270- or 180-degree arc, colored by the same thresholds as Meter.',
   searchKeywords: ['radial', 'dial', 'speedometer', 'donut'],
 
   overview: `Gauge is the radial version of Meter: the same value, range and thresholds, drawn as an arc instead of a bar. A neutral track carries a value arc in the zone color with a matching glow, and the reading is in the middle in mono type, with an optional \`unit\` and a \`label\` under it. \`variant="full"\`, the default, is a 270-degree horseshoe with the reading inside. \`variant="half"\` is a 180-degree semicircle with the reading on the baseline.
