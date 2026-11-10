@@ -8,45 +8,38 @@ export const input: ComponentDef = {
   interactivity: 'hybrid',
   searchKeywords: ['textfield', 'text field'],
   description:
-    'Versatile form control supporting single-line text, email, password, and multiline textarea modes with built-in label, placeholder, and validation states. Pairs with Form for complete data-entry workflows.',
+    'Text field with a built-in label, placeholder and validation states. Set `multiline` for a textarea.',
 
-  overview: `Input is the foundational text-entry component in ARC UI. It wraps a native \`<input>\` or \`<textarea>\` element with consistent styling, an integrated label, placeholder support, and validation feedback. All of it goes through a single declarative API.
+  overview: `Input wraps a native \`<input>\` or \`<textarea>\` with a label, placeholder and validation feedback. Use it for freeform text: names, emails, passwords, search queries or longer messages.
 
-Use Input whenever you need to collect freeform text from a user: names, emails, passwords, search queries, or longer messages. The \`multiline\` prop switches the underlying element to a \`<textarea>\` for multi-row content without changing the component interface, so forms stay uniform whether a field needs one line or twenty.
+The \`multiline\` prop swaps the \`<input>\` for a \`<textarea>\` and keeps every other prop the same. The \`prefix\` and \`suffix\` slots put icons, unit labels or a clear button inside the field's border.
 
-Input supports \`prefix\` and \`suffix\` slots for placing icons, labels, or other inline elements inside the field box. This is useful for search icons, unit labels, clear buttons, or any adornment that should appear visually attached to the input.
-
-Input works with the Form component. Wrap a set of Inputs inside a Form to get coordinated validation, submission handling, and error summary. Each Input exposes \`name\`, \`required\`, and \`type\` props that Form reads automatically, so you rarely need extra wiring.`,
+Inside a Form, each Input's \`name\` and value are collected on submit, and \`required\` fields are checked before the form submits.`,
 
   features: [
-    'Integrated label rendered above the field with automatic `for`/`id` association',
-    'Multiple input types: text, email, tel, url, and password',
-    'Multiline mode converts to a resizable textarea with a single boolean prop',
-    'Prefix and suffix slots for icons or inline adornments inside the field box',
-    'Placeholder text with accessible contrast ratios',
-    'Required-field indicator with built-in validation message',
-    'Disabled state that greys out the field and blocks interaction',
-    'Keyboard-accessible with visible focus ring following design tokens',
-    'Pairs with Form for coordinated validation and submission',
+    'The `label` renders above the field and is tied to it with a generated `for`/`id` pair',
+    'Types: text, email, tel, url and password',
+    'The multiline textarea resizes vertically',
+    'An empty `required` field is invalid, with the message "Please fill out this field."',
+    'A disabled field can\'t be edited and its value isn\'t submitted',
   ],
 
   guidelines: {
     do: [
-      'Always provide a `label` so the field is accessible to screen readers',
-      'Use the most specific `type` available (e.g. `email` for email addresses) to trigger the correct mobile keyboard',
-      'Set `placeholder` to show an example value, not as a replacement for the label',
-      'Use `multiline` for any field that may need more than one line of text',
-      'Use the `prefix` slot for search icons or currency symbols that contextualise the input',
-      'Use the `suffix` slot for unit labels, clear buttons, or status indicators',
-      'Group related Inputs inside a Form component for coordinated validation',
-      'Mark required fields with the `required` prop so validation is handled automatically',
+      'Give every field a `label` so screen readers announce it',
+      'Use the most specific `type`, such as `email` for email addresses, so phones show the right keyboard',
+      'Use `placeholder` for an example value, not as the label',
+      'Use `multiline` for any field that may need more than one line',
+      'Use the `prefix` slot for a search icon or currency symbol',
+      'Use the `suffix` slot for a unit, a clear button or a status icon',
+      'Mark required fields with `required`',
     ],
     dont: [
-      'Do not use placeholder text as the only label. It disappears on focus and fails accessibility',
-      'Do not set `type="password"` on a multiline input. Passwords are always single-line',
-      'Do not disable inputs without explaining to the user why the field is unavailable',
-      'Avoid overriding the built-in validation styling with custom CSS. Use design tokens instead',
-      'Do not use Input for structured data like dates or selects. Use DatePicker or Select instead',
+      'Don\'t use the placeholder as the only label. It disappears once someone types',
+      'Don\'t set `type` on a multiline input. A textarea ignores it, so `type="password"` would show the text',
+      'Don\'t disable a field without telling the user why',
+      'Don\'t restyle the error state with custom CSS. Change the design tokens',
+      'Don\'t use Input for dates or a fixed set of choices. Use DatePicker or Select',
     ],
   },
 
