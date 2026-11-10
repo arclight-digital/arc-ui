@@ -7,13 +7,13 @@ export const chart: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   description:
-    'An SVG chart for dashboards with line, area, bar, and donut types. Driven by a series array, with nice-tick scales, a legend, hover crosshair and tooltips, and a visually-hidden data table for assistive technology.',
+    'Line, area, bar and donut charts drawn in SVG from a plain array of series, with no charting library.',
 
   overview: `Chart draws line, area, grouped or stacked bar, and donut charts from plain JavaScript data, with no charting library. Pass a \`series\` array of \`{ label, data }\` objects and a \`labels\` array of x-axis categories. The component works out a 1/2/5-step y scale, faint horizontal gridlines, abbreviated axis numbers (1.2k, 3.4M) and thin marks in the ARC chart palette.
 
 Series take their colors in fixed order from \`--chart-1\` to \`--chart-6\`, never cycled. With more than six series, the extras are summed into an "Other" series, flagged in the legend, so no two series share a color. The legend appears for two or more series and not for one.
 
-Hovering is on by default. Line and area charts show a vertical crosshair with a tooltip listing every series at that category. Bar and donut charts show a tooltip per mark. The hover targets are invisible full-height columns, one per category, so nobody has to hit a 2px line. Clicking a mark fires \`arc-mark-click\` with the series index, category index and value. For assistive technology, the chart has a generated \`role="img"\` summary and a visually hidden \`<table>\` of the real values.`,
+On hover, line and area charts show a vertical crosshair with a tooltip listing every series at that category. Bar and donut charts show a tooltip per mark. The hover targets are invisible full-height columns, one per category, so nobody has to hit a 2px line. Clicking a mark fires \`arc-mark-click\` with the series index, category index and value. For assistive technology, the chart has a generated \`role="img"\` summary and a visually hidden \`<table>\` of the real values.`,
 
   features: [
     'One y-axis, with 1px horizontal gridlines only',
