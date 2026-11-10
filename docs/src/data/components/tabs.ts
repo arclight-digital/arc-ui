@@ -6,13 +6,13 @@ export const tabs: ComponentDef = {
   tag: 'arc-tabs',
   tier: 'navigation',
   interactivity: 'hybrid',
-  description: 'Tabbed content navigation with keyboard support and ARIA roles.',
+  description: 'A row of tab buttons that shows one of several panels at a time.',
 
-  overview: `Tabs puts related panels in one space and shows one at a time. Each \`<arc-tab>\` child sets the \`label\` for its button and holds its panel's content. It suits settings pages, documentation sections and dashboard views, where the reader switches between panels and doesn't need to see two at once.
+  overview: `Tabs puts related panels in one space and shows one at a time. Each \`<arc-tab>\` child sets the \`label\` for its button and holds its panel's content. Use it when the reader switches between panels and doesn't need to see two at once.
 
 The component follows the WAI-ARIA Tabs pattern. Each button has \`role="tab"\` inside a \`role="tablist"\`, and the panel has \`role="tabpanel"\`, linked by \`aria-controls\` and \`aria-labelledby\`. Focus uses a roving tabindex, so the arrow keys move between tabs and Tab leaves the tab list.
 
-Switching tabs moves one indicator between them: the underline in the default variant, the ground behind the selection in \`pills\` and in vertical bars. The incoming panel rises into place. Both are CSS, both stop under \`prefers-reduced-motion\`, and a bar holding more tabs than room scrolls the selection into view without moving the page around it. Inactive panels are hidden with \`display: none\`, so they're also out of the accessibility tree.`,
+Switching tabs moves one indicator between them: the underline in the default variant, the ground behind the selection in \`pills\` and in vertical bars. The incoming panel rises into place. Both animations are CSS and stop under \`prefers-reduced-motion\`. When there are more tabs than the bar can show, it scrolls the selected tab into view without scrolling the page. Inactive panels are hidden with \`display: none\`, so they're also out of the accessibility tree.`,
 
   features: [
     'With `orientation="vertical"`, the up and down arrows replace left and right',
