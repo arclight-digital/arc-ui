@@ -8,37 +8,28 @@ export const copyButton: ComponentDef = {
   interactivity: 'interactive',
   description: 'One-click copy-to-clipboard button with confirmation.',
 
-  overview: `CopyButton copies a text value to the system clipboard in one click. It renders as a compact button with a clipboard icon and a "Copy" label. When clicked, it calls the Clipboard API to write the \`value\` property to the clipboard, then transitions to a green checkmark "Copied!" confirmation state for two seconds before reverting to its default appearance.
+  overview: `CopyButton writes its \`value\` to the clipboard when clicked. It shows a clipboard icon and the word "Copy". After a successful copy it turns success-colored with a check mark and "Copied!" for 2 seconds, then goes back, and fires \`arc-copy\` with the copied value.
 
-It is commonly paired with code blocks, API keys, URLs, and other text users need to paste elsewhere. Because it uses the async Clipboard API (\`navigator.clipboard.writeText\`), it requires a secure context (HTTPS or localhost). If the clipboard write fails, for example in a non-secure iframe, the error is caught silently and the button stays in its default state.
+It uses \`navigator.clipboard.writeText\`, which needs a secure context (HTTPS or localhost). If the write fails, as it can in a non-secure iframe, the error is swallowed and the button doesn't change, so nothing tells the user it failed.
 
-CopyButton dispatches an \`arc-copy\` event on successful copy, carrying the copied value in the event detail. Parent components can react to the copy, for example by showing a toast or logging the event. The \`disabled\` attribute reduces opacity and prevents interaction, and all states (default, hover, focus, copied) are styled through ARC design tokens.`,
+\`icon-only\` drops the word and draws a round, borderless 30px button for toolbars, whose check shows for 1.4 seconds. Its accessible name is "Copy to clipboard", or your \`label\` (such as "Copy code"), and "Copied" after a copy.`,
 
   features: [
-    'One-click copy to clipboard using the async Clipboard API',
-    'Visual confirmation state with green checkmark icon and "Copied!" label for 2 seconds',
-    '`arc-copy` custom event fired on successful copy with the value in the detail payload',
-    'Disabled state with reduced opacity and pointer-events: none',
-    'Focus-visible ring via var(`--focus-glow`) for keyboard accessibility',
-    'Hover state with elevated border and background color shift',
-    'Fails silently when the Clipboard API is unavailable (non-secure contexts)',
-    'Compact inline-flex layout that sits next to code blocks and input fields',
+    'Clicks are ignored while the "Copied!" state is showing',
+    '`disabled` lowers the opacity and blocks pointer events',
   ],
 
   guidelines: {
     do: [
-      'Place CopyButton adjacent to the content it copies, such as a code snippet, URL, or API key',
-      'Set the value property to the exact string the user expects to paste, not a formatted or truncated version',
-      'Use the arc-copy event to trigger a toast or analytics event confirming the copy action',
-      'Ensure the page is served over HTTPS so the Clipboard API is available',
-      'Use the disabled attribute when the value is not yet available (e.g. while loading)',
+      'Put it next to the text it copies, such as a code snippet, URL or API key',
+      'Set `value` to the exact string people expect to paste, not a formatted or truncated version',
+      'Set `label` when several copy buttons share a page, so each name says what it copies',
+      'Serve the page over HTTPS so the Clipboard API is available',
+      'Set `disabled` until the value exists, for example while it loads',
     ],
     dont: [
-      'Do not use CopyButton for general-purpose actions; it is for clipboard copy only',
-      'Do not set the value to empty string and expect the button to be useful; always provide meaningful content',
-      'Do not override the 2-second confirmation timeout; two seconds is long enough to notice',
-      'Do not nest CopyButton inside another button or interactive element, as this creates invalid HTML nesting',
-      'Do not rely solely on the confirmation state for feedback; pair with a toast for users who look away',
+      'Don\'t put it inside another button or interactive element. HTML doesn\'t allow nested interactive content',
+      'Don\'t rely on the "Copied!" state alone. Pair it with a toast from `arc-copy` for people who look away',
     ],
   },
 
