@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { DeclaredPropsMixin, flag } from '../shared/props.js';
+import { notifyOwner } from '../shared/hydrate-slots.js';
 
 /**
  * Individual radio option rendered inside a RadioGroup. Each Radio represents a single selectable
@@ -9,7 +10,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @tag arc-radio
  * @status stable
  * @prop {string} value - The value submitted when this option is selected. Must be unique within the parent RadioGroup.
- * @prop {boolean} disabled - When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys.
+ * @prop {boolean} disabled - When true, the option is dimmed and announced as disabled, the arrow keys skip it, it is never the group's Tab stop, and a click or Space does not select it. Setting it does not clear a group `value` that already names this option.
  * @slot - Default content.
  */
 export class ArcRadio extends DeclaredPropsMixin(LitElement) {
@@ -29,6 +30,14 @@ export class ArcRadio extends DeclaredPropsMixin(LitElement) {
 
   get label() {
     return this.textContent.trim();
+  }
+
+  /**
+   * The group renders its own copy of each radio, so a change here is
+   * invisible until the group re-renders; see shared/option.js.
+   */
+  updated(changed) {
+    notifyOwner(this, changed, ['disabled', 'value']);
   }
 
   render() {

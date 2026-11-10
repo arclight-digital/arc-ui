@@ -15,11 +15,14 @@ Each option is an \`<arc-radio>\` with a \`value\`. The group reads each option'
 
 The whole group is one Tab stop. Any arrow key moves to the next or previous option and selects it, wrapping at either end, and Space selects the focused option. Each selection fires \`arc-change\` with the new value.
 
+Add \`disabled\` to one \`<arc-radio>\` to rule out that option and leave the rest live. Like a disabled native radio, it's dimmed and announced as disabled, the arrow keys skip it, and a click or Space doesn't select it.
+
 \`orientation\` is \`vertical\` by default, which suits longer labels. \`horizontal\` puts short labels in a row, like sizes S, M, L and XL. With a \`name\`, the selected value submits with native forms.`,
 
   features: [
     '`radiogroup` role, with `role="radio"` and `aria-checked` on each option',
     '`disabled` on the group blocks clicks and keys and drops it to 50% opacity',
+    '`disabled` on one `<arc-radio>` gives that option `aria-disabled="true"` and 50% opacity, and takes it out of selection and arrow-key order',
     'The group\'s `aria-label` is its `name` attribute',
   ],
 

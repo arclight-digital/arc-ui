@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing } from 'lit';
 import { tokenStyles } from '../shared-styles.js';
 import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { hydrateSlots } from '../shared/hydrate-slots.js';
+import { isOptionDisabled } from '../shared/option.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
@@ -92,7 +93,14 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
         transition: opacity var(--transition-fast), transform var(--transition-fast);
       }
 
-      .radio:hover .radio__circle {
+      /* One disabled option in an otherwise live group; the host rule above
+         covers the whole group. */
+      .radio[aria-disabled="true"] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .radio:not([aria-disabled="true"]):hover .radio__circle {
         box-shadow: 0 0 8px rgba(var(--interactive-rgb), 0.1);
         border-color: var(--text-muted);
       }
@@ -151,8 +159,33 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
       .filter((el) => el.tagName === 'ARC-RADIO');
   }
 
+  /**
+   * The next enabled index walking `step` from `from`, wrapping, or
+   * `undefined` when every option is disabled. A disabled native radio is
+   * skipped by the arrow keys, so a disabled arc-radio is too.
+   */
+  _seek(from, step) {
+    const n = this._radios.length;
+    for (let i = 1; i <= n; i += 1) {
+      const candidate = (from + step * i + n * i) % n;
+      if (!isOptionDisabled(this._radios[candidate])) return candidate;
+    }
+    return undefined;
+  }
+
+  /** The index that holds the group's single Tab stop. */
+  _tabStop() {
+    const selected = this._radios.findIndex(
+      (opt) => opt.value === this.value && !isOptionDisabled(opt),
+    );
+    if (selected !== -1) return selected;
+    return this._radios.findIndex((opt) => !isOptionDisabled(opt));
+  }
+
   _select(val) {
     if (this.disabled || this.readonly) return;
+    const option = this._radios.find((opt) => opt.value === val);
+    if (option && isOptionDisabled(option)) return;
     this.value = val;
     this.dispatchEvent(
       new CustomEvent('arc-change', {
@@ -167,9 +200,8 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
     const opts = this._radios;
     let next;
 
-    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = (index + 1) % opts.length;
-    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft')
-      next = (index - 1 + opts.length) % opts.length;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') next = this._seek(index, 1);
+    else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') next = this._seek(index, -1);
     else if (e.key === ' ') {
       e.preventDefault();
       this._select(opts[index].value);
@@ -177,6 +209,7 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
     } else return;
 
     e.preventDefault();
+    if (next === undefined) return;
     this._select(opts[next].value);
     this.updateComplete.then(() => {
       const radios = this.shadowRoot.querySelectorAll('.radio');
@@ -190,6 +223,7 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
   }
 
   render() {
+    const tabStop = this._tabStop();
     return html`
       <div part="base" class="radio-group__slot-host">
         <slot @slotchange=${this._onSlotChange}></slot>
@@ -201,7 +235,8 @@ export class ArcRadioGroup extends DeclaredPropsMixin(FormControlMixin(LitElemen
             class="radio"
             role="radio"
             aria-checked=${opt.value === this.value ? 'true' : 'false'}
-            tabindex=${opt.value === this.value || (!this.value && i === 0) ? '0' : '-1'}
+            aria-disabled=${isOptionDisabled(opt) ? 'true' : nothing}
+            tabindex=${i === tabStop ? '0' : '-1'}
             @click=${() => this._select(opt.value)}
             @keydown=${(e) => this._handleKeydown(e, i)}
           >
