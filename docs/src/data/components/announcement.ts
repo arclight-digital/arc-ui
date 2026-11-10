@@ -9,41 +9,29 @@ export const announcement: ComponentDef = {
   description:
     'ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen readers.',
 
-  overview: `Announcement is an accessibility utility that creates an ARIA live region for announcing dynamic content changes to screen readers. It has no visual output (zero width, zero height) and exists only for assistive technology users.
+  overview: `Announcement is a live region with nothing on screen. Set its \`message\` property and screen readers read the new text out. Use it for changes sighted users see but screen reader users would miss: route changes, live search result counts, form confirmations, timer updates, new chat messages.
 
-When you set the \`message\` property, the component updates its internal live region and the screen reader announces the new content. The \`politeness\` prop controls the interruption level: \`polite\` waits for the screen reader to finish its current announcement before speaking the new message, while \`assertive\` interrupts immediately for urgent updates.
-
-Use announcement for any dynamic state change that sighted users can perceive visually but screen reader users would otherwise miss: route changes, live search result counts, form submission confirmations, timer updates, or chat message arrivals. Place the component once in your layout and update its message property whenever you need to announce something.`,
+\`politeness\` sets how it interrupts. \`polite\` waits for the screen reader to finish what it's saying, and \`assertive\` cuts in at once. Put one in your layout and update its \`message\` whenever you need to announce something.`,
 
   features: [
-    'ARIA live region with configurable politeness (polite or assertive)',
-    'No visual footprint: no width, height, or visible rendering',
-    'Set the message property to trigger a screen-reader announcement',
-    'Polite mode waits for current speech to finish before announcing',
-    'Assertive mode interrupts current speech for urgent updates',
-    'Each message change triggers a new announcement',
-    'Renders a single visually-hidden element',
-    'Works with all major screen readers (NVDA, JAWS, VoiceOver, TalkBack)',
+    'Renders one `role="status"` element with `aria-atomic="true"`, clipped to a 1px box',
+    'Setting the same message twice in a row doesn\'t announce it again, because nothing changed',
   ],
 
   guidelines: {
     do: [
-      'Use announcement for dynamic content changes that screen reader users would otherwise miss',
-      'Use polite for non-urgent updates like search result counts or status changes',
-      'Use assertive for critical updates like errors, timeouts, or session expiration warnings',
-      'Place a single <arc-announcement> in your layout and reuse it for all announcements',
-      'Keep messages concise; screen reader users cannot skim long announcements',
+      'Use polite for routine updates like search result counts',
+      'Use assertive for errors, timeouts and session expiry warnings',
+      'Keep messages short. Screen reader users can\'t skim an announcement',
     ],
     dont: [
-      'Do not use announcement for content that is already in an ARIA live region (like toast or alert)',
-      'Do not fire rapid successive announcements; screen readers may drop intermediate messages',
-      'Do not use assertive for routine updates. It interrupts the user and should be reserved for urgency',
-      'Do not duplicate announcements that are already handled by native ARIA roles',
-      'Do not use announcement as a substitute for proper labeling and semantic HTML',
+      'Don\'t announce content that is already in a live region, such as Toast or Alert',
+      'Don\'t fire announcements in quick succession. Screen readers may drop the ones in between',
+      'Don\'t use it in place of labels and semantic HTML',
     ],
   },
 
-  previewHtml: `<arc-announcement id="demo-announce" politeness="polite"></arc-announcement><arc-button id="demo-announce-btn" variant="secondary">Announce Message</arc-button>`,
+  previewHtml: `<arc-announcement id="demo-announce" politeness="polite"></arc-announcement><arc-button id="demo-announce-btn" variant="secondary">Announce message</arc-button>`,
 
   previewSetup: `
       document.getElementById('demo-announce-btn')?.addEventListener('click', () => {
