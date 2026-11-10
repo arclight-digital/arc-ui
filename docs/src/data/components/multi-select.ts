@@ -7,7 +7,7 @@ export const multiSelect: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Multi-value select with tag chips, inline search filtering, and keyboard navigation.',
+    'A dropdown for picking several options, shown as removable chips.',
 
   overview: `Multi Select lets people pick several values from a fixed list. Each selection shows as a removable tag chip inside the control. The text input is also a filter: typing narrows the dropdown to options whose label contains what you typed.
 
@@ -30,7 +30,7 @@ Options are \`<arc-option>\` children, each with a \`value\` attribute and its t
     ],
     dont: [
       'Don\'t use it when only one value is allowed. Use Select',
-      'Don\'t load more than about 50 options without considering server-side filtering. `arc-input` gives you the query on each keystroke',
+      'Don\'t load a long option list. Every matching option renders, so filter on the server instead. `arc-input` gives you the query on each keystroke',
       'Don\'t disable a field that has selections without saying why it can\'t be edited',
     ],
   },
