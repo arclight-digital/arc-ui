@@ -7,51 +7,39 @@ export const rangeSlider: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Dual-thumb range slider for selecting a numeric interval within a defined range, with accent-primary fill between the thumbs and live value display.',
+    'A slider with two thumbs for picking a low and a high value. The track between them fills with the accent color.',
 
-  overview: `RangeSlider lets users select a contiguous sub-range between two bounds by dragging two thumbs along a shared track. The filled region between the thumbs is rendered with accent-primary, which shows the selected interval.
+  overview: `RangeSlider picks an interval, like a price filter or a frequency band, by dragging two thumbs along one track. For a single value, use Slider.
 
-When a \`label\` is provided the component renders a header row with the label on the left and the current range values ("low – high") on the right in monospace font, matching the single Slider's visual pattern. The \`show-values\` attribute (on by default) controls whether the numeric readout appears.
+With a \`label\`, a header row shows the label on the left and the current "low – high" values on the right in monospace. \`show-values\` is on by default. Turn it off with \`no-values\` to hide the readout.
 
-Instead of layering two native range inputs, this component implements a custom track with pointer-capture dragging, so it behaves the same across browsers. Both thumbs are keyboard accessible with arrow keys, Home, and End, and each carries ARIA \`role="slider"\` attributes (\`aria-valuenow\`, \`aria-valuemin\`, \`aria-valuemax\`) so screen readers announce the current value and range constraints.
+The track is custom, not two stacked native range inputs. Dragging uses pointer capture, and clicking the track moves the nearest thumb there. Each thumb is a focusable \`role="slider"\` with its own \`aria-label\` and \`aria-valuenow\`, \`aria-valuemin\` and \`aria-valuemax\`. Arrow keys move a thumb by \`step\`, and Home and End jump to its limit.
 
-RangeSlider fires \`arc-input\` continuously during drag for real-time previews and \`arc-change\` on thumb release for committing the final selection, with \`{ low, high }\` in the event detail. The low thumb is clamped to never exceed the high thumb and vice versa, so the thumbs can't cross.`,
+Dragging fires \`arc-input\` continuously and \`arc-change\` when you let go. A key press fires both, and neither fires if the key leaves the range where it was. The detail carries \`value\` as \`[low, high]\`, plus \`low\` and \`high\` on their own. Each thumb stops at the other, so low never passes high.`,
 
   features: [
-    'Custom dual-thumb track built with pointer capture for consistent cross-browser dragging',
-    'Accent-primary filled region between the two thumbs visually indicates the selected range',
-    'Header row displaying the label and "low – high" values in monospace font when `label` and `show-values` are set',
-    'Configurable `min`, `max`, and `step` props for precise range and increment control',
-    'Thumb hover and focus effects with scale-up and accent-primary glow shadow matching the single Slider',
-    'Keyboard support: ArrowLeft/Right/Up/Down step by `step`, Home and End jump to limits',
-    'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release, both with `{ low, high }` detail',
-    'ARIA slider roles on each thumb with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
-    'Clamping logic prevents thumbs from crossing each other, maintaining low ≤ high invariant',
-    'Click-on-track moves the nearest thumb to the clicked position',
-    'Disabled state at 50% opacity with pointer events blocked',
-    'Reduced-motion media query disables thumb transitions',
+    'Thumb `aria-label`s are the label plus "low" or "high", or "Range low" and "Range high" without a label',
+    '`min`, `max` and `step` props. Values snap to multiples of `step`',
+    'Hover and focus add a glow to the thumb',
+    'Disabled drops to 50% opacity and blocks pointer events',
   ],
 
   guidelines: {
     do: [
-      'Provide a `label` so users understand what the range represents at a glance',
-      'Use for selecting a sub-range within a larger set, such as a price filter, date range, or frequency band',
-      'Use `arc-input` for real-time filtering or preview and `arc-change` for committing the selection to a server',
-      'Choose `step` values that match your data granularity; use 1 for integers, 0.01 for fine decimal values',
-      'Place the RangeSlider in a container at least 250px wide for comfortable dual-thumb dragging',
-      'Set `low` and `high` to sensible defaults that represent the most common range for your use case',
+      'Give it a `label` unless something next to it already says what the range is',
+      'Use `arc-input` for live filtering and `arc-change` for saving or other expensive work',
+      'Match `step` to your data: 1 for integers, 0.01 for fine decimals',
+      'Give it at least 250px of width so both thumbs are easy to drag',
+      'Start `low` and `high` at the range most people want',
     ],
     dont: [
-      'Do not use RangeSlider when the user only needs to pick a single value; use Slider instead',
-      'Do not set a `step` so small that the two thumbs become difficult to separate with a mouse',
-      'Do not omit `label` when the slider is standalone: without context the numeric readout is meaningless',
-      'Do not use for non-numeric selections; use a multi-select or checkbox group instead',
-      'Avoid placing multiple range sliders in a narrow column without sufficient vertical spacing',
+      'Don\'t make `step` so small that the thumbs are hard to pull apart with a mouse',
+      'Don\'t use it for non-numeric choices. Use MultiSelect or a group of checkboxes',
     ],
   },
 
   previewHtml: `<div style="width:100%; max-width:400px;">
-  <arc-range-slider label="Price Range" low="25" high="75" min="0" max="100" step="1"></arc-range-slider>
+  <arc-range-slider label="Price range" low="25" high="75" min="0" max="100" step="1"></arc-range-slider>
 </div>`,
 
   tabs: [
