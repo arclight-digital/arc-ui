@@ -9,42 +9,33 @@ export const colorPicker: ComponentDef = {
   description:
     'Color picker with a saturation/lightness area, hue slider, hex input, and optional preset swatches.',
 
-  overview: `ColorPicker is a compact, self-contained interface for selecting any color. The main interaction area is a rectangular saturation/lightness gradient where users click or drag a crosshair to set the color. Below it, a horizontal hue slider lets users rotate through the full 360-degree color wheel. A hex input with a live color preview swatch allows direct entry of known color values.
+  overview: `ColorPicker has a saturation/lightness area where users click or drag a crosshair, a hue slider across the full 360 degrees under it, and a hex input with a preview swatch for typing a known color. Pass a \`presets\` array and a row of swatches appears under the hex input, with the active one outlined in the primary color. Use presets for a brand palette or frequent colors. The area still allows any color.
 
-When preset colors are provided via the \`presets\` array prop, the component renders a row of clickable swatches beneath the hex input. The active preset is highlighted with a primary-colored border. Presets suit brand palettes or frequently used colors, giving one-click access while the gradient area still allows any custom color.
-
-ColorPicker performs all HSL-to-hex conversion internally. It fires \`arc-input\` continuously as the color changes (every frame of a drag across the area or the hue track), so use it to drive a live preview. \`arc-change\` fires once the color is committed (pointer released after a drag, a preset clicked, or a valid hex entered), so use it for anything expensive, like a save. Both carry the hex string in the event detail.`,
+\`arc-input\` fires on every frame of a drag across the area or the hue slider, so use it for a live preview. \`arc-change\` fires once the color is committed (pointer released, preset clicked, or a valid hex entered), so use it for anything expensive, like a save. Both carry the hex string.`,
 
   features: [
-    'Saturation/lightness gradient area with crosshair cursor and pointer-drag interaction',
-    'Horizontal hue slider spanning the full 0-360 degree spectrum with a draggable thumb',
-    'Live color preview swatch adjacent to an editable hex input field',
-    'Preset color swatches rendered from an array prop with active-state border highlighting',
-    'Internal HSL-to-hex and hex-to-HSL conversion; all values are emitted as hex strings',
-    'Hex input validates on blur; invalid values revert to the current color',
-    'Touch-friendly pointer events with `setPointerCapture` for mobile dragging',
-    'Disabled state at 40% opacity with pointer events blocked',
+    'Values go in and come out as 6-digit hex strings. The HSL conversion happens inside',
+    'The hex input checks its value on blur or Enter. An invalid value reverts to the current color',
+    'Dragging uses `setPointerCapture`, so a drag keeps working when the pointer leaves the area',
+    'Disabled pickers drop to 50% opacity and ignore the pointer',
   ],
 
   guidelines: {
     do: [
-      'Provide a `label` to give the picker context, especially when multiple pickers appear on the same page',
-      'Pass a `presets` array for brand palettes or commonly used colors to speed up selection',
-      'Use the `value` prop to set an initial color in 6-digit hex format (e.g. `#4d7ef7`)',
-      'Listen for `arc-input` to update a live preview while the user drags, and `arc-change` for the committed color on release',
-      'Place the picker inside a popover or dropdown if horizontal space is constrained',
+      'Set a `label`, especially when there\'s more than one picker on the page',
+      'Set the initial color with `value` in 6-digit hex (for example `#4d7ef7`)',
+      'Put the picker in a popover or dropdown when horizontal space is tight',
     ],
     dont: [
-      'Do not pass 3-digit hex shorthand (e.g. `#f00`); the component expects the full 6-digit format',
-      'Do not use ColorPicker when the user only needs to choose from a fixed set of options. Use a select or radio group instead',
-      'Do not provide more than ~20 preset swatches; the row wraps and gets crowded',
-      'Do not rely on color alone to convey meaning. Pair with labels or icons for accessibility',
-      'Avoid placing the picker in very narrow containers under 260px wide; the area and slider need room',
+      'Don\'t pass 3-digit hex shorthand (`#f00`). The component expects all six digits',
+      'Don\'t use it when users choose from a fixed set. Use a select or a radio group',
+      'Don\'t give it more than about 20 presets. The row wraps and gets crowded',
+      'Don\'t put it in a container narrower than 260px. The area and the slider need the room',
     ],
   },
 
   previewHtml: `<arc-color-picker
-  label="Brand Color"
+  label="Brand color"
   value="#4d7ef7"
 ></arc-color-picker>`,
 
