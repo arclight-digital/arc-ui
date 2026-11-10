@@ -6,11 +6,11 @@ export const text: ComponentDef = {
   tag: 'arc-text',
   tier: 'typography',
   interactivity: 'static',
-  description: 'Typography component with variants matching the arclight type scale.',
+  description: 'Sets text in one of nine styles from the ARC UI type scale.',
 
-  overview: `Text sets type from ARC UI's type scale. Each of its nine variants fixes the font size, weight, letter spacing, line height and color.
+  overview: `Text sets type from ARC UI's type scale in one of nine variants.
 
-\`display\` is a large headline with a gradient fill, \`heading\` is a section title, and \`body\` (the default) is paragraph text in the secondary text color. \`muted\` and \`ghost\` are dimmer text for supporting content. \`accent\` fills short text with the accent gradient and a glow, \`label\` is an uppercase section title in Tomorrow, \`wordmark\` is uppercase branding text with an accent glow, and \`code\` is monospace in \`--accent-secondary\`, for inline code.
+\`display\` is a large headline with a gradient fill, \`heading\` is a section title, and \`body\` (the default) is paragraph text in the secondary text color. \`muted\` and \`ghost\` set only a dimmer color, for supporting content, and take their size from the surrounding text. \`accent\` fills short text with the accent gradient and a glow, \`label\` is an uppercase section title in Tomorrow, \`wordmark\` is uppercase branding text with an accent glow, and \`code\` is monospace in \`--accent-secondary\`, for inline code.
 
 \`as\` sets the element: \`h1\` to \`h6\`, \`span\`, or \`p\` (the default). The variant sets the look, so a section can be an \`h2\` for the outline and still look like \`display\`.`,
 
@@ -38,7 +38,7 @@ export const text: ComponentDef = {
   previewHtml: `<div style="display: flex; flex-direction: column; gap: 16px;">
   <arc-text variant="display" as="h1">Display headline</arc-text>
   <arc-text variant="heading" as="h2">Section heading</arc-text>
-  <arc-text variant="body">Body paragraph text with balanced wrapping for readability.</arc-text>
+  <arc-text variant="body">Your export is ready. The download link expires in seven days.</arc-text>
   <arc-text variant="muted">Muted supporting text</arc-text>
   <arc-text variant="accent" as="span">Accent highlight</arc-text>
   <arc-text variant="label" as="span">Section label</arc-text>
