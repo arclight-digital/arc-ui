@@ -13,11 +13,11 @@ export const ctaBanner: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Full-width call-to-action banner with an eyebrow, a gradient headline, body copy and action buttons.',
+    'A centered block that ends a landing page with a gradient headline and one or two buttons.',
 
   overview: `CtaBanner is a centered block that closes a landing page or a marketing section. From top to bottom it stacks an \`eyebrow\` label, a gradient-text \`headline\`, the default slot for body copy and an \`actions\` slot for buttons, over a radial gradient made from the accent tokens. Set \`nogradient\` to turn the background off.
 
-The \`eyebrow\` and \`headline\` slots take markup when a plain string isn't enough. Below 768px the padding shrinks and the buttons stack.`,
+The \`eyebrow\` and \`headline\` slots take markup in place of the prop's text, but only while the prop is also set. Without it, the slotted markup renders with no styling and the headline gets no \`<h2>\`. Below 768px the padding shrinks and the buttons stack.`,
 
   features: [
     'The headline uses `--text-2xl`, which scales from 28px to 36px',
