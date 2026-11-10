@@ -8,41 +8,32 @@ export const clock: ComponentDef = {
   interactivity: 'interactive',
   description: 'Live clock with a digital or analog face, optionally pinned to an IANA timezone.',
 
-  overview: `Clock displays the current time and keeps it current, updating once per second from a single interval that starts on connect and is cleared on disconnect. It has two faces, selected by the \`variant\` attribute. The digital face renders the time in \`var(--font-mono)\` with tabular numerals in the primary text color, so digits tick over without the layout shifting. The analog face is an SVG dial: a minimal tick ring with twelve major marks, hour and minute hands in the primary text color, and an accent-colored second hand with a soft glow around a center pin.
+  overview: `Clock shows the current time and updates once a second, from one interval that starts on connect and is cleared on disconnect. \`variant\` picks the face. The digital face sets the time in \`var(--font-mono)\` with tabular numerals, so the digits change without the layout shifting. The analog face is an SVG dial with twelve tick marks, hour and minute hands in the primary text color, and an accent second hand with a soft glow.
 
-Both faces read the same attributes. \`timezone\` accepts any IANA name such as "Asia/Tokyo" and defaults to the viewer's local zone; an unrecognized value falls back to local time rather than throwing. \`show-seconds\` adds seconds to the digital string or the second hand to the dial. On the digital face, \`hour12\` forces 12-hour display (set the property to \`false\` to force 24-hour display; when unset, the viewer's locale decides), and \`show-timezone\` appends the zone abbreviation in muted text. An optional \`label\` renders a gradient-accent caption under the face, so a row of clocks becomes a world-clock strip.
+Both faces take the same attributes. \`timezone\` takes an IANA name such as "Asia/Tokyo" and defaults to the viewer's zone. An unrecognized name falls back to local time without throwing. \`show-seconds\` adds seconds to the digital time or a second hand to the dial. On the digital face, \`hour12\` forces 12-hour time (set the property to \`false\` for 24-hour, or leave it unset to follow the viewer's locale), and \`show-timezone\` adds the zone abbreviation in muted text. \`label\` puts a caption in the accent gradient under the face. Labeled clocks side by side make a row of world clocks.
 
-The visual face is decorative to assistive technology. The current time, along with the label and zone when present, is exposed as visually hidden text that updates each tick without an \`aria-live\` region, so screen readers can query the time on demand without a stream of announcements. The analog hands move in discrete one-second ticks rather than a continuous sweep, so there is no motion to suppress under \`prefers-reduced-motion\`.
+Screen readers ignore the face. The time, with the label and zone when present, is visually hidden text that updates each tick with no \`aria-live\`, so a screen reader can ask for the time without hearing it every second. The analog hands jump once a second with no sweep, so there's no motion for reduced-motion settings to stop.
 
-Server rendering produces a valid static face (a dash placeholder on the digital face, hands at twelve on the dial) that hydration replaces with the live time without layout shift.`,
+The server renders a valid static face (a dash on the digital face, hands at twelve on the dial), and hydration swaps in the live time without a layout shift.`,
 
   features: [
-    'Digital and analog faces from one element, selected by the variant attribute',
-    'Live updates once per second, with the interval cleared on disconnect',
-    'Pins to any IANA timezone; invalid names fall back to local time',
-    'Digital face uses mono tabular numerals so ticking digits never shift layout',
-    'Accent second hand with a soft glow, composed from the base accent tokens',
-    'hour12 forces 12-hour or 24-hour display; unset follows the viewer locale',
-    'show-timezone renders the muted zone abbreviation beside the digital time',
-    'Optional gradient-accent label under the face for world-clock strips',
-    'Accessible time exposed as visually hidden text, with no aria-live flooding',
-    'Discrete one-second hand ticks, so prefers-reduced-motion needs nothing suppressed',
+    'The second hand\'s color and glow come from the base accent tokens',
   ],
 
   guidelines: {
     do: [
-      'Use Clock to show the current time in a dashboard header, a status bar, or a world-clock strip',
-      'Label each clock when more than one is on screen, so the zones read at a glance',
-      'Pin timezone explicitly for team or ops views where "local" is ambiguous',
-      'Use show-seconds when the seconds carry meaning, such as an ops console; omit it when they are noise',
-      'Prefer the analog face where the time is ambient and the digital face where it will be read precisely',
+      'Use it for the current time in a dashboard header, a status bar or a row of world clocks',
+      'Label each clock when there\'s more than one on screen',
+      'Set timezone for team or ops views where "local" is ambiguous',
+      'Turn on show-seconds when the seconds matter, as on an ops console, and leave it off otherwise',
+      'Use the analog face where the time is background information and the digital face where people read it exactly',
     ],
     dont: [
-      'Do not use Clock to count toward a deadline. That is CountdownTimer, which counts down to a target and fires an event at zero',
-      'Do not use Clock to describe when something happened. That is TimeAgo, which renders relative phrases like "3 minutes ago"',
-      'Do not place many seconds-precision clocks on one page; each ticks every second, and together they compete for attention',
-      'Do not force hour12 in interfaces serving mixed locales without a reason; the locale default is usually right',
-      "Do not rely on the displayed time for anything transactional. It is the viewer's device clock, not a server clock",
+      'Don\'t use it to count down to a deadline. Use CountdownTimer, which fires an event at zero',
+      'Don\'t use it to say when something happened. Use TimeAgo, which renders phrases like "3 minutes ago"',
+      'Don\'t put many clocks with seconds on one page. Each ticks every second and they compete for attention',
+      'Don\'t force hour12 for a mixed-locale audience without a reason. The locale default is usually right',
+      "Don't rely on the displayed time for anything transactional. It is the viewer's device clock, not a server clock",
     ],
   },
 
