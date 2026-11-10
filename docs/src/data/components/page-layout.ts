@@ -7,11 +7,11 @@ export const pageLayout: ComponentDef = {
   tier: 'layout',
   interactivity: 'hybrid',
   description:
-    'Lays out a page as sidebar-left, sidebar-right, centered or wide, with one attribute and CSS Grid.',
+    'A CSS Grid page frame whose `layout` attribute picks a left sidebar, a right aside, a centered column or full width.',
 
-  overview: `PageLayout replaces hand-written grid columns and breakpoints with one \`layout\` attribute. \`sidebar-left\` puts the \`sidebar\` slot in a 240px column left of the main content. \`sidebar-right\` puts the \`aside\` slot in a 300px column on the right. \`centered\` (the default) caps the content at a max width with auto margins, and \`wide\` lets it run full width.
+  overview: `PageLayout picks its grid from the \`layout\` attribute. \`sidebar-left\` puts the \`sidebar\` slot in a 240px column left of the main content. \`sidebar-right\` puts the \`aside\` slot in a 300px column on the right. \`centered\` (the default) caps the content at a max width with auto margins, and \`wide\` lets it run full width.
 
-Main content goes in the default slot. A slot that the current layout doesn't use is hidden, so you can change layouts with one attribute and leave the content alone.
+Main content goes in the default slot. A slot that the current layout doesn't use is hidden, so switching \`layout\` doesn't mean moving content between slots.
 
 At 768px and below, both sidebar layouts collapse to one stacked column. \`gap\` sets the space between regions and \`maxWidth\` sets the cap for \`centered\`.`,
 
