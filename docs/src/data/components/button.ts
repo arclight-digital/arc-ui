@@ -7,58 +7,44 @@ export const button: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Primary call-to-action element with three visual variants that map to action hierarchy. Supports prefix and suffix slots for icons. Renders as an anchor when given an href, for navigation actions on landing pages, toolbars, and forms.',
+    'Action button with three variants for action hierarchy and prefix and suffix slots for icons. For links, slot a real anchor, which works before JavaScript loads.',
 
-  overview: `Button is the primary CTA element in ARC UI. Its three variants (primary, secondary, and ghost) map to an action hierarchy: primary is the single most important action, secondary is a visible but lower-emphasis alternative, and ghost is a minimal option for tertiary actions.
+  overview: `Button has three variants for an action hierarchy: \`primary\` for the one most important action, \`secondary\` for a visible alternative with less emphasis, and \`ghost\` for tertiary actions. The \`prefix\` and \`suffix\` slots hold icons or other inline elements beside the label, such as a search icon or an arrow.
 
-The \`prefix\` and \`suffix\` slots hold icons or other inline elements beside the label, such as a search icon or an arrow.
+For links, slot a real \`<a>\` as the button's only child. The anchor is ordinary HTML in the initial markup, so the link works with JavaScript disabled and before the element upgrades. On a slow connection your landing-page button is clickable straight away, not after hydration. Button adopts the anchor on upgrade and styles it as the control, so there is only ever one link in the accessibility tree.
 
-For links, slot a real \`<a>\` as the button's only child. That anchor is ordinary HTML in the initial markup, so the link works with JavaScript disabled and before the element upgrades. On a slow connection your hero CTA is clickable immediately instead of after hydration. Button adopts the anchor on upgrade and styles it as the control, so there is only ever one link in the accessibility tree.
+The \`href\` attribute still works and renders an \`<a>\` in the shadow root. Use it inside app shells behind a login, where JavaScript is a given and the extra markup is noise. On public, indexed or first-load-critical pages, slot the anchor instead: with the destination on the custom element, the link can't exist without JavaScript. With no \`href\` and no slotted anchor, Button behaves as a normal button for form submission and other actions.
 
-The \`href\` attribute is still supported and renders an \`<a>\` in the shadow root. Use it inside app shells behind a login, where JavaScript is a given and the extra markup is noise. Prefer the slotted-anchor form anywhere the page is public, indexed, or first-load critical, because when the destination lives on the custom element the anchor cannot exist without JavaScript. When no href and no slotted anchor are present, Button behaves as a standard button element for form submissions and interactive triggers.
-
-Three size presets (sm, md, lg) scale buttons to their context. Use lg for hero sections and high-impact CTAs, md for general UI, and sm for compact toolbars or inline actions. All sizes keep the same padding ratios and touch targets.`,
+The sizes (sm, md, lg) change the padding. The font size and the minimum touch target are the same in all three. Use lg for hero sections, md for general UI and sm for compact toolbars and inline actions.`,
 
   features: [
-    'Three variants (primary, secondary, ghost) for action hierarchy',
-    'Three size presets (sm, md, lg) scaled for context',
-    'Prefix and suffix slots for icons or inline elements alongside the label',
-    'Adopts a slotted <a> so links work without JavaScript and before hydration',
-    'Renders as <a> with href for accessible navigation',
-    'Neon glow hover effect on primary variant',
-    'Focus-visible ring for keyboard accessibility',
-    'Scale-down on active press',
-    'Disabled state that prevents interaction and dims the element',
-    'Uppercase Tomorrow type',
+    'Labels are uppercase in the label font',
+    'Primary glows on hover, and every variant shrinks slightly while pressed',
+    'Disabled buttons are dimmed and ignore pointer and keyboard input',
   ],
 
   guidelines: {
     do: [
-      'Use primary for the single most important action on the page',
-      'Pair primary with secondary or ghost to create a clear visual hierarchy',
-      'Use the `prefix` slot for leading icons and `suffix` for trailing arrows or indicators',
-      'Use the lg size for hero sections and above-the-fold CTAs',
-      'Slot a real `<a>` for navigation on public pages so the link survives with JavaScript disabled',
-      'Reserve the `href` attribute for app shells where JavaScript is guaranteed',
-      'Keep button labels short and action-oriented (e.g. "Get Started", "View Docs")',
+      'Pair primary with secondary or ghost so the most important action stands out',
+      'Use the prefix slot for leading icons and suffix for trailing arrows or indicators',
+      'Write labels that say what happens, in two or three words: "Create project", "Read the API docs"',
     ],
     dont: [
-      'Do not place multiple primary buttons side by side. Use one primary per action group',
-      'Do not use ghost variant for the most important action; it is too subtle for primary CTAs',
-      'Do not render navigation as a plain button; this hurts accessibility and SEO',
-      'Do not put a second link inside a slotted anchor; the adopted anchor is already the control',
-      'Do not use long sentences as button labels; aim for two to three words maximum',
-      'Do not disable buttons without explaining why the action is unavailable',
+      'Don\'t put two primary buttons side by side. Use one primary per group of actions',
+      'Don\'t use ghost for the most important action. It is too faint',
+      'Don\'t make a navigation link a plain button. Screen readers and search engines need a real link',
+      'Don\'t put a second link inside a slotted anchor. The adopted anchor is already the control',
+      'Don\'t disable a button without saying why the action is unavailable',
     ],
   },
 
   previewHtml: `<div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-  <arc-button variant="primary" size="lg">Get Started</arc-button>
+  <arc-button variant="primary" size="lg">Create project</arc-button>
   <arc-button variant="secondary">
     <svg slot="prefix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"/></svg>
     Bookmark
   </arc-button>
-  <arc-button variant="ghost">Learn More</arc-button>
+  <arc-button variant="ghost">Read the docs</arc-button>
 </div>`,
 
   tabs: [
