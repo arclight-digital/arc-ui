@@ -7,7 +7,7 @@ export const kbd: ComponentDef = {
   tier: 'typography',
   interactivity: 'static',
   searchKeywords: ['keyboard key'],
-  description: 'Keyboard key indicator styled like a physical key.',
+  description: 'Shows the name of a keyboard key, like Ctrl or Enter, drawn as a physical keycap.',
 
   overview: `Kbd shows a keyboard key, styled like a keycap, inline in running text. Use it to document shortcuts and key combinations. It renders a semantic \`<kbd>\` element and takes any content in its default slot: a single key like "Ctrl", a modifier or a special character.`,
 
@@ -24,7 +24,7 @@ export const kbd: ComponentDef = {
     ],
     dont: [
       'Don\'t use it for mouse actions or touch gestures',
-      'Don\'t put words or long strings in a Kbd. It\'s meant for key labels of one to five characters',
+      'Don\'t put words or long strings in a Kbd',
       'Don\'t style it to look like a button. It isn\'t interactive',
       'Don\'t use it for code. Use CodeBlock',
     ],
