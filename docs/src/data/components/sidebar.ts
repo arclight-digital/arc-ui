@@ -7,16 +7,15 @@ export const sidebar: ComponentDef = {
   tier: 'navigation',
   interactivity: 'hybrid',
   description:
-    'Vertical navigation with grouped, optionally collapsible sections and a highlighted active link. For docs sites, admin panels and other layouts with a persistent side nav.',
+    'A vertical list of navigation links in grouped sections that can collapse, with the current page highlighted.',
 
   overview: `Sidebar is a vertical list of links grouped into SidebarSections. Use it when people move between many related pages, as in documentation or an admin dashboard. Each section can have a \`heading\` and an \`icon\` before it. Set \`active\` on the SidebarLink for the current page to highlight it.
 
-A section is a static group until you set \`collapsible\`, which turns its heading into a toggle button. \`open\` then controls whether the links are showing, and defaults to expanded (\`no-open\` starts it collapsed). Either state change fires \`arc-toggle\` with \`{ open }\` in the detail. You can drive it from script with \`section.toggle()\`, which is how you expand the section containing the current route on load, or collapse everything but one. It fires the same event the header does, so a listener sees both paths identically. It is a no-op on a section without \`collapsible\`: a section whose header offers no way back would otherwise be collapsible from script into a state the user cannot undo.
+A section is a static group until you set \`collapsible\`, which turns its heading into a toggle button. \`open\` then controls whether the links are showing, and defaults to expanded (\`no-open\` starts it collapsed). Clicking the heading fires \`arc-toggle\` with \`{ open }\` in the detail. \`section.toggle()\` does the same from script, event included. Setting \`open\` directly doesn't fire it. \`toggle()\` does nothing on a section without \`collapsible\`, because the user would have no heading button to reopen it with.
 
 Put Sidebar in the left column of an AppShell or PageLayout, with TopBar above. It sticks below the top bar, fills the viewport height under it, and scrolls on its own, so a long link list stays reachable on a long page.`,
 
   features: [
-    '`toggle()` on a section expands or collapses it from script, firing `arc-toggle` exactly as the header does',
     '`arc-toggle` carries `{ open }` and bubbles, so one listener on the sidebar covers every section',
     'Focus-visible ring on every link',
     'Only `arc-sidebar-link` children of a section are rendered',
@@ -26,7 +25,7 @@ Put Sidebar in the left column of an AppShell or PageLayout, with TopBar above. 
     do: [
       'Give every section a short heading, one to three words that name the group',
       'Set `active` on the link that matches the current route, and on only one link',
-      'Call `toggle()` on the section holding the active route at page load, so a deep link arrives with its group already open',
+      'Start sections with `no-open` and call `toggle()` on the one holding the active route at page load, so a deep link arrives with its group open',
       'Show the Sidebar in a Drawer on narrow viewports',
       'Put the most-used sections first',
     ],
