@@ -6,13 +6,13 @@ export const gradientText: ComponentDef = {
   tag: 'arc-gradient-text',
   tier: 'typography',
   interactivity: 'static',
-  description: 'Inline text wrapper that applies gradient fills to text declaratively.',
+  description: 'Fills inline text with one of four gradients or your own CSS gradient.',
 
   overview: `GradientText fills inline text with a gradient using \`background-clip: text\`. Pick a \`variant\`: \`accent\` (the default, \`--gradient-accent-text\`), \`display\` (\`--gradient-display-text\`), \`sunset\` or \`ocean\`. For your own gradient, set \`variant="custom"\` and pass any CSS gradient in \`gradient\`. \`gradient\` is ignored with the other variants.
 
 It's inline and inherits the parent's font size, weight and line height, so it works inside a heading, a paragraph or a button label. Every variant adds a faint drop-shadow glow in \`--accent-primary-rgb\`. The paint box extends a little above and below the text so descenders aren't clipped under a tight line height.
 
-\`animated\` slides the gradient back and forth on a 4-second loop, and stops under reduced motion.`,
+\`animated\` slides the gradient back and forth on a 4-second loop, and stops under reduced motion. It has no visible effect with \`variant="custom"\`.`,
 
   features: [
     '`accent` and `display` read theme tokens, so they follow theme overrides',
