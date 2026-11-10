@@ -7,39 +7,31 @@ export const infiniteScroll: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'Intersection Observer-powered container that fires a load event when the user scrolls near the bottom, with built-in loading spinner and end-of-list state.',
+    'Container that fires a load event as the reader nears the bottom, with a loading spinner and an end-of-list state.',
 
-  overview: `InfiniteScroll wraps your content in a feed container and watches for when the user approaches the bottom using an Intersection Observer sentinel element. When the sentinel enters the viewport (plus a configurable \`threshold\` margin), the component fires an \`arc-load-more\` event, signalling your application to fetch and append the next batch of items. This eliminates the need for manual scroll listeners or pagination button clicks.
+  overview: `Infinite Scroll wraps your items and puts an Intersection Observer sentinel after them. When the sentinel comes within \`threshold\` pixels (200 by default) of the bottom of the viewport, the component fires \`arc-load-more\`. Fetch the next batch and append it.
 
-While data is being fetched, set the \`loading\` prop to \`true\` to display a centered spinner in the footer area. The component automatically suppresses additional \`arc-load-more\` events while loading is active, preventing duplicate fetch requests. Once your data arrives, reset \`loading\` to \`false\` and the sentinel resumes observation.
+Set \`loading\` to \`true\` while you fetch. A spinner shows in the footer, and no further \`arc-load-more\` fires until you set \`loading\` back to \`false\`.
 
-When all data has been loaded, set the \`finished\` prop to \`true\`. The sentinel is removed and replaced with a "No more items" text indicator, and the Intersection Observer is disconnected. The container uses \`aria-busy\` to communicate loading state to assistive technologies. If your items are self-contained entries (e.g. posts), slot them as \`<article>\` elements and add \`role="feed"\` to the component to opt into the ARIA feed pattern.`,
+When there's nothing left, set \`finished\` to \`true\`. The observer disconnects and the footer shows "No more items". The container sets \`aria-busy\` while loading. If your items are self-contained entries such as posts, slot them as \`<article>\` elements and add \`role="feed"\` to the component for the ARIA feed pattern.`,
 
   features: [
-    'Intersection Observer-based sentinel that fires `arc-load-more` when the user nears the content bottom',
-    'Configurable `threshold` prop (in pixels) to control how far in advance the load event triggers',
-    'Built-in `arc-spinner` displayed in the footer when `loading` is `true`',
-    'Automatic suppression of duplicate load events while loading is in progress',
-    'End-of-list state via the `finished` prop: removes the sentinel and shows "No more items" text',
-    'ARIA `aria-busy` for accessible loading communication',
-    'Observer automatically disconnects and reconnects when `finished` or `disabled` change',
-    'Disabled state at 40% opacity with pointer events blocked',
+    '`disabled` disconnects the observer, blocks pointer events and dims the component to 50% opacity',
+    'The observer reconnects when `finished` or `disabled` is set back to false',
   ],
 
   guidelines: {
     do: [
-      'Set `loading` to `true` immediately when you begin fetching data, and reset it to `false` when data arrives',
-      'Set `finished` to `true` when the API indicates no more pages remain, so the observer disconnects',
-      'Use a reasonable `threshold` (100-300px) so content loads before users hit the bottom and see a gap',
-      'Place InfiniteScroll inside a scrollable parent or let the page itself be the scroll container',
-      'Append new items as direct children of the component. They render in the default slot',
+      'Set `loading` to `true` as soon as you start fetching, and back to `false` when the data arrives',
+      'Set `finished` when the API says there are no more pages',
+      'Use a `threshold` of 100 to 300px so content arrives before people reach the bottom',
+      'Put it inside a scrollable parent, or let the page scroll',
+      'Append new items as direct children. They render in the default slot',
     ],
     dont: [
-      'Do not leave `loading` as `true` indefinitely. This blocks further load events and leaves the spinner visible',
-      'Do not use InfiniteScroll for small, fixed datasets. Standard pagination or a simple list fits better',
-      'Do not set `threshold` to 0. The user will see a flash of empty space before content loads',
-      'Do not nest multiple InfiniteScroll components. Their observers may conflict',
-      'Avoid using InfiniteScroll without providing a way to reach footer content, since it pushes the footer down continuously',
+      'Don\'t use it for small, fixed datasets. Use pagination or a plain list',
+      'Don\'t set `threshold` to 0. Loading then starts only once the sentinel is on screen, so people see empty space first',
+      'Don\'t put footer content below it without another way to reach it. The footer moves down every time items load',
     ],
   },
 
