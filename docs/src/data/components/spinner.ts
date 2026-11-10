@@ -26,10 +26,8 @@ The \`white\` variant draws the ring in \`--text-primary\`, the body text color.
       'Use `lg` for a full-page or overlay loading state',
       'Check the `white` variant in both themes before putting it on a filled background',
       'Add a visible label such as "Loading..." when there\'s room for one',
-      'Remove the spinner as soon as loading finishes, with no added delay',
     ],
     dont: [
-      'Don\'t show several spinners on one screen at once',
       'Don\'t put `lg` inline with text. It\'s taller than the line',
       'Don\'t use `primary` on a primary-colored background. The ring disappears',
     ],
