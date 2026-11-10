@@ -6,7 +6,7 @@ export const commandPalette: ComponentDef = {
   tag: 'arc-command-palette',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Modal command list with fuzzy, ranked search and shortcut hints.',
+  description: 'Command list that opens as a dialog, with fuzzy, ranked search and shortcut hints.',
 
   overview: `CommandPalette is a modal dialog with a search field, a list of commands and a footer of key hints. You open it by setting \`open\`, usually from a Cmd+K handler or a button. The palette doesn't bind any shortcut itself.
 
