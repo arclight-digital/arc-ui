@@ -88,25 +88,28 @@ shipped bug, add a test that pins the invariant that broke.
 - **Child elements**: if a component renders another `arc-*` element, declare it
   with a `@requires` JSDoc tag so per-component imports register it (checked by
   `pnpm check child-registrations`)
-- **Styles**: all components import `tokenStyles` from `../shared-styles.js`
+- **Styles**: components import `tokenStyles` from `../shared-styles.js`. A few
+  elements with no transitions of their own, mostly children such as `arc-tab`
+  and `arc-radio`, leave it out.
 - **Tokens**: edit `shared/tokens.js` only; use `var(--token)`, never hardcode
   colors, spacing, or font families (font faces are role slots, see the
   typography docs)
 - **JSDoc**: component JSDoc generates the docs API tables, the type
-  declarations, and the editor data. An undocumented prop is an untyped prop.
-- **Every path that changes a shared prop announces it.** If a component assigns
-  to one of its own public props outside the constructor, every such path fires
-  the event that reports the new value, not most of them. Route them through
-  one method (`arc-app-shell._setOpen()` is the pattern) instead of assigning
-  in several places, and check it as a property of the component, once.
+  declarations, and the editor data.
+- **Announce every change to a shared prop.** If a component assigns to one of
+  its own public props outside the constructor, every path that does it fires
+  the event that reports the new value. Route them through one method
+  (`arc-app-shell._setOpen()` is the pattern) instead of assigning in several
+  places.
 
-  The wrapper generator decides a prop is two-way by looking for exactly this
-  (an assignment outside the constructor plus an event carrying the value), so
-  a prop with three announced paths and one silent one is emitted as bindable
-  and then drifts on the silent one. The component's own tests can't see the
-  drift, because the copy that goes stale belongs to the consumer.
-  `arc-app-shell` shipped that: hamburger, backdrop and Escape announced, the
-  mobile→desktop resize did not.
+  `@arclux/prism`, the wrapper generator, treats a prop as two-way when the
+  component assigns it outside the constructor and fires an event carrying the
+  value. A prop with three announced paths and one silent one is generated as
+  bindable, and the framework's copy goes stale whenever the silent path runs.
+  The component's own tests won't catch it, because the stale copy is in the
+  consumer's framework state. `arc-app-shell` shipped this
+  bug: closing the drawer from the backdrop, Escape or a followed link was
+  announced, and the resize from mobile to desktop width closed it silently.
 
 ### Pull requests
 
