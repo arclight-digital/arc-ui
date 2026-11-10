@@ -8,7 +8,7 @@ export const textarea: ComponentDef = {
   interactivity: 'hybrid',
   searchKeywords: ['multiline'],
   description:
-    'Multi-line text input with integrated label, placeholder, resize control, and live character count that turns red at the limit.',
+    'A multi-line text field with a label, an optional character counter and an error message.',
 
   overview: `Textarea wraps a native \`<textarea>\` with an uppercase label, a placeholder, an optional character counter and an error message. Use it for anything longer than one line, such as a support request, a comment or a bio.
 
@@ -33,7 +33,7 @@ Set \`maxlength\` and a live counter appears below the field. It turns red when 
       'Use the `error` prop to show server-side validation messages after submission',
     ],
     dont: [
-      'Don\'t use Textarea for single-line values such as a name, an email or anything under about 20 characters. Use Input',
+      'Don\'t use Textarea for single-line values such as a name or an email. Use Input',
       'Don\'t set `disabled` and `error` together. The reader can\'t act on the error',
       'Don\'t restyle the border and focus ring with custom CSS. Change the design tokens',
     ],
