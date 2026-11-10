@@ -8,7 +8,7 @@ export const dialog: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['modal', 'popup', 'overlay'],
   description:
-    'General-purpose focus-trapping overlay on the native <dialog>, with a blurred backdrop, a slide-up entrance and Escape to close. For forms, settings and other content that blocks the page.',
+    'A modal overlay on the native dialog element, for forms, settings and other content that blocks the page.',
 
   overview: `Dialog is the general overlay, built on the native \`<dialog>\` element, so the browser handles the top layer, \`::backdrop\` and modality. It opens over a blurred backdrop, moves focus inside, and returns focus to where it came from when it closes. Use it for forms, settings, previews and multi-step flows where the page behind shouldn't be usable.
 
@@ -18,7 +18,7 @@ export const dialog: ComponentDef = {
 
   features: [
     'The backdrop\'s dim and blur come from `--dialog-backdrop` and `--dialog-backdrop-filter`',
-    'Slides up on open and fades out on close',
+    'Slides up and fades in on open, and reverses on close',
     '`size` sets the max width: `sm` is 400px, `md` 560px and `lg` 720px. `fullscreen` fills the viewport',
     '`header` and `footer` slots around the body',
     '`heading` is the text in the header bar and the dialog\'s accessible name',
