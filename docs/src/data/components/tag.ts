@@ -7,43 +7,35 @@ export const tag: ComponentDef = {
   tier: 'data',
   interactivity: 'hybrid',
   description:
-    'Compact pill-shaped label with color variants, custom color support, and an optional remove button, for categorisation, filtering, and selection feedback.',
+    'Compact pill-shaped label with color variants, custom color support and an optional remove button, for categories, filters and selections.',
 
-  overview: `Tag is a small, pill-shaped label component used to categorise, filter, or display metadata inline. It renders its content in uppercase with accent font styling and letter spacing, giving it a distinct visual weight that stands out against body text without overwhelming the layout. Tags are commonly seen in filter bars, resource cards, multi-select summaries, and anywhere compact labeling is needed.
+  overview: `Tag is a small pill-shaped label for a category, a filter or a piece of metadata. Its text is uppercase in the label font with wide letter spacing. You'll see it in filter bars, on resource cards and in the summary of a multi-select.
 
-Seven color variants are available: \`default\` (neutral border and muted text), \`primary\` (accent-primary tint), \`secondary\` (accent-secondary tint), \`success\` (green), \`warning\` (yellow), \`error\` (red), and \`info\` (blue). The accent and status variants gain a colored glow on hover, which helps in interactive filtering where users need to tell active categories apart at a glance. \`info\` arrived in 4.2 from arc-badge, which had it when Tag did not. Every other status set in the library carries all four, and a badge migrating to a tag would otherwise have fallen through to \`default\`.
+There are seven variants: \`default\` (neutral border and muted text), \`primary\` and \`secondary\` (accent tints), and the status colors \`success\` (green), \`warning\` (yellow), \`error\` (red) and \`info\` (blue). Each variant glows in its own color on hover, and \`default\` glows in the accent color.
 
-For cases where the built-in variants don't cover your color needs, the \`color\` prop accepts an RGB triplet (e.g. \`"77, 126, 247"\`) and applies it as the tag's border, text, background tint, and hover glow. This is useful for category-specific colors that come from data rather than design tokens.
+When no variant fits, \`color\` takes an RGB triplet such as \`"77, 126, 247"\` and uses it for the border, text, background tint and hover glow. Use it for category colors that come from your data.
 
-When the \`removable\` prop is set, a small close button appears after the label. Clicking it fires an \`arc-remove\` event, allowing the parent component to handle removal logic (e.g. removing a filter, un-selecting a value). The remove button has its own hover state and focus ring, ensuring it is independently accessible for keyboard users.`,
+\`removable\` adds a close button after the label. Clicking it fires \`arc-remove\`, and your code removes the tag or clears the filter. The close button has its own hover state and focus ring.`,
 
   features: [
-    'Seven color variants: default, primary, secondary, success, warning, error, and info',
-    'Custom `color` prop accepting an RGB triplet for data-driven category colors',
-    'Pill shape with full border-radius and uppercase letter-spaced text for visual distinction',
-    'Optional remove button via `removable` prop, firing `arc-remove` on click',
-    'Hover glow effect on colored variants and custom colors using matching box-shadow',
-    'Default slot for label content, supporting text, icons, or mixed content',
-    'Disabled state at 50% opacity with pointer events blocked on the entire tag',
-    'Focus-visible ring on the remove button for keyboard accessibility',
-    'CSS parts `tag`, `label`, and `remove` for targeted external styling',
+    'The default slot takes text, icons or both',
+    'A disabled tag is 50% opacity and ignores the pointer, close button included',
   ],
 
   guidelines: {
     do: [
-      'Use the `primary` or `secondary` variant to visually group related categories together',
-      'Use the `color` prop when category colors come from data (e.g. project colors, label colors)',
-      'Enable `removable` when the tag represents a user-applied filter that can be cleared',
-      'Keep tag labels to 1-3 words. Uppercase styling makes length more noticeable',
-      'Listen to `arc-remove` on the parent container using event delegation for efficient handling',
-      'Combine multiple tags in a flex-wrap container with a small gap for scannable filter displays',
+      'Use `primary` or `secondary` to group related categories',
+      'Use `color` when category colors come from data, such as project or label colors',
+      'Set `removable` on a filter the reader applied and can clear',
+      'Keep labels to one to three words. Uppercase makes long ones stand out',
+      'Listen for `arc-remove` once on the parent container, not on every tag',
+      'Lay a set of tags out in a wrapping flex row with a small gap',
     ],
     dont: [
-      'Do not use Tag for long descriptive text. It is designed for short categorical labels',
-      'Do not use the remove button for destructive actions (like deleting a resource). It should only remove the tag itself',
-      'Do not mix more than two color variants in the same tag group. It creates visual noise',
-      'Do not set `disabled` on removable tags without also disabling the action that applied them',
-      'Avoid using Tag as a button replacement. It lacks the semantic role and focus handling of a button',
+      'Don\'t use Tag for long text',
+      'Don\'t use the close button for destructive actions such as deleting a resource. It should only remove the tag',
+      'Don\'t use more than two variants in one group of tags',
+      'Don\'t use Tag as a button. It has no button role or button focus handling',
     ],
   },
 
@@ -53,7 +45,7 @@ When the \`removable\` prop is set, a small close button appears after the label
   <arc-tag variant="secondary">Secondary</arc-tag>
   <arc-tag variant="success">Success</arc-tag>
   <arc-tag variant="warning">Warning</arc-tag>
-  <arc-tag variant="error">Danger</arc-tag>
+  <arc-tag variant="error">Error</arc-tag>
   <arc-tag color="255, 120, 50">Custom</arc-tag>
   <arc-tag variant="primary" removable>Removable</arc-tag>
 </div>`,
