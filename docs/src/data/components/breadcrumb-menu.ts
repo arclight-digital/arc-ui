@@ -7,9 +7,9 @@ export const breadcrumbMenu: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Each breadcrumb segment doubles as a dropdown showing sibling pages at that hierarchy level. Dropdown panels match dropdown-menu styling.',
+    'A breadcrumb trail where a segment can open a dropdown of its sibling pages.',
 
-  overview: `BreadcrumbMenu is a breadcrumb trail where a segment can open a dropdown of its sibling pages, so users can move sideways at any level without going up to the parent first. It's for deep hierarchies where people switch between items at the same depth, like file managers, CMS interfaces and documentation sites. The dropdowns use DropdownMenu's styling.
+  overview: `BreadcrumbMenu is a breadcrumb trail where a segment can open a dropdown of its sibling pages, so users can move sideways at any level without going up to the parent first. It's for deep hierarchies where people switch between items at the same depth. The dropdowns use DropdownMenu's styling.
 
 Give an item in \`items\` a \`siblings\` array and its segment becomes a button with a chevron that opens the dropdown on click. Without \`siblings\`, the segment is a plain crumb. A segment with siblings only opens its dropdown, so its own \`href\` is never used.
 
@@ -24,7 +24,6 @@ Segments and dropdown items are buttons, not links. Clicking one fires \`arc-nav
       'Listen for arc-navigate and hand the href to your router',
       'Add siblings only at levels where moving sideways is useful',
       'Keep each sibling list to ten items or fewer',
-      'Mark the current page in the sibling list',
     ],
     dont: [
       'Don\'t use it for a flat hierarchy (two levels or fewer). Use Breadcrumb',
