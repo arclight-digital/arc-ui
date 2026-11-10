@@ -9,44 +9,35 @@ export const chart: ComponentDef = {
   description:
     'An SVG chart for dashboards with line, area, bar, and donut types. Driven by a series array, with nice-tick scales, a legend, hover crosshair and tooltips, and a visually-hidden data table for assistive technology.',
 
-  overview: `Chart renders line, area, grouped/stacked bar, and donut charts from plain JavaScript data, with no external charting library. Pass a \`series\` array of \`{ label, data }\` objects and a \`labels\` array of x-axis categories, and the component computes a nice 1/2/5-step y scale, recessive horizontal gridlines, abbreviated axis numbers (1.2k, 3.4M), and thin marks in the fixed ARC chart palette.
+  overview: `Chart draws line, area, grouped or stacked bar, and donut charts from plain JavaScript data, with no charting library. Pass a \`series\` array of \`{ label, data }\` objects and a \`labels\` array of x-axis categories. The component works out a 1/2/5-step y scale, faint horizontal gridlines, abbreviated axis numbers (1.2k, 3.4M) and thin marks in the ARC chart palette.
 
-Series colors are assigned in fixed order from \`--chart-1\` through \`--chart-6\` and are never cycled. When more than six series are provided, the extras are summed into an "Other" series and flagged in the legend, so identity stays readable. The legend renders automatically for two or more series and is omitted for a single series.
+Series take their colors in fixed order from \`--chart-1\` to \`--chart-6\`, never cycled. With more than six series, the extras are summed into an "Other" series, flagged in the legend, so no two series share a color. The legend appears for two or more series and not for one.
 
-A hover layer is on by default: line and area charts show a vertical crosshair with a tooltip listing every series value at the hovered category, while bar and donut charts show per-mark tooltips. Hit targets are invisible full-height columns per category, so users do not have to hit a 2px line. Clicking a mark emits \`arc-mark-click\` with the series index, category index, and value. For assistive technology, the chart container carries a generated \`role="img"\` summary and a visually-hidden \`<table>\` exposes the real values.`,
+Hovering is on by default. Line and area charts show a vertical crosshair with a tooltip listing every series at that category. Bar and donut charts show a tooltip per mark. The hover targets are invisible full-height columns, one per category, so nobody has to hit a 2px line. Clicking a mark fires \`arc-mark-click\` with the series index, category index and value. For assistive technology, the chart has a generated \`role="img"\` summary and a visually hidden \`<table>\` of the real values.`,
 
   features: [
-    'Four chart types: line, area, bar (grouped or stacked), and donut',
-    'Fixed-order series colors `--chart-1` through `--chart-6`, never cycled',
-    'More than 6 series automatically fold into a summed "Other" series',
-    'Nice-tick y scale (1/2/5 steps) with abbreviated axis numbers (1.2k, 3.4M)',
-    'Single y-axis with recessive 1px horizontal gridlines only',
-    'Hover crosshair + all-series tooltip on line/area; per-mark tooltips on bar/donut',
-    'Full-plot-height invisible hover columns, so thin marks are easy to hit',
-    '`arc-mark-click` event with seriesIndex, index, and value',
-    'Intl.NumberFormat value formatting: number, percent, or currency',
-    'Legend with 8px color chips, rendered automatically for 2+ series',
-    '`role="img"` summary label plus a visually-hidden data table for AT users',
-    'ResizeObserver-driven responsive width; respects `prefers-reduced-motion`',
-    'Styleable via ::part(chart), ::part(legend), ::part(tooltip), ::part(axis)',
+    'One y-axis, with 1px horizontal gridlines only',
+    '`value-format` formats values with `Intl.NumberFormat` as number, percent or currency',
+    'Legend chips are 8px, in the series color',
+    'Width follows the container via ResizeObserver',
   ],
 
   guidelines: {
     do: [
-      'Keep charts to 6 or fewer series. Beyond that, pre-aggregate or split into small multiples',
-      'Use type="area" for a single dominant series and type="line" when comparing trends',
-      'Use stacked only when the total is meaningful; use grouped bars to compare series per category',
-      'Set value-format="percent" with fractional data (0.24 renders as 24%)',
-      'Provide a label for every series; labels drive the legend, tooltip, and data table',
-      'Listen to arc-mark-click to drive drill-down navigation or detail panels',
+      'Keep a chart to six series or fewer. Past that, aggregate first or split into small multiples',
+      'Use type="area" for one dominant series and type="line" to compare trends',
+      'Stack bars only when the total means something. Use grouped bars to compare series within a category',
+      'Pass fractions with value-format="percent" (0.24 renders as 24%)',
+      'Label every series. The labels feed the legend, the tooltip and the data table',
+      'Use arc-mark-click for drill-down or a detail panel',
     ],
     dont: [
-      'Do not plot two measures of different scale on one chart. There is one y-axis, never dual axes',
-      'Do not use donut charts for more than ~6 segments or for precise comparisons. Use bars instead',
-      'Do not hide the legend on multi-series charts unless the series are directly labeled nearby',
-      'Do not encode meaning in custom mark colors; the fixed palette keeps series identity consistent',
-      'Do not use hide-axis on charts where readers need to look up values; it is for compact trend panels',
-      'Do not feed stacked bars negative values; stacking assumes non-negative data',
+      'Don\'t plot two measures with different scales on one chart. There is one y-axis and no second one',
+      'Don\'t use a donut for more than about six segments or for precise comparison. Use bars',
+      'Don\'t hide the legend on a multi-series chart unless the series are labeled right next to the lines',
+      'Don\'t color marks yourself to carry meaning. The fixed palette keeps each series the same color everywhere',
+      'Don\'t use hide-axis where readers need to look up values. It is for compact trend panels',
+      'Don\'t give stacked bars negative values. Stacking assumes non-negative data',
     ],
   },
 
