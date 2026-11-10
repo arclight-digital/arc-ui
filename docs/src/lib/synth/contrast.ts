@@ -41,20 +41,20 @@ export interface ContrastResult extends ContrastPair {
 }
 
 export const PAIRS: ContrastPair[] = [
-  { label: 'Body text on card', fg: '--text-primary', bg: '--bg-card', requirement: 'text', note: 'The single most-read pairing in the system.' },
+  { label: 'Body text on card', fg: '--text-primary', bg: '--bg-card', requirement: 'text', note: 'Prose inside cards.' },
   { label: 'Body text on base', fg: '--text-primary', bg: '--bg-base', requirement: 'text', note: 'Page-level prose.' },
   { label: 'Secondary text on card', fg: '--text-secondary', bg: '--bg-card', requirement: 'text', note: 'Descriptions, table cells, helper copy.' },
   { label: 'Muted text on card', fg: '--text-muted', bg: '--bg-card', requirement: 'text', note: 'Timestamps and captions still have to be readable.' },
-  { label: 'Ghost text on card', fg: '--text-ghost', bg: '--bg-card', requirement: 'text', note: 'The faintest step. Fails easily — reserve it for decoration.' },
-  { label: 'Accent text on card', fg: '--accent-primary', bg: '--bg-card', requirement: 'text', note: 'Links and accent labels are read, not just seen.' },
+  { label: 'Ghost text on card', fg: '--text-ghost', bg: '--bg-card', requirement: 'text', note: 'The faintest text step, and the first to fail if you change the surfaces.' },
+  { label: 'Accent text on card', fg: '--accent-primary', bg: '--bg-card', requirement: 'text', note: 'Links and accent labels.' },
   { label: 'Accent on deep', fg: '--accent-primary', bg: '--bg-deep', requirement: 'nontext', note: 'Focus rings and glows against the deepest ground.' },
   { label: 'Secondary accent on card', fg: '--accent-secondary', bg: '--bg-card', requirement: 'nontext', note: 'Gradient endpoints and secondary emphasis.' },
   { label: 'Success on card', fg: '--color-success', bg: '--bg-card', requirement: 'nontext', note: 'Status color carrying meaning without text.' },
   { label: 'Warning on card', fg: '--color-warning', bg: '--bg-card', requirement: 'nontext', note: 'Status color carrying meaning without text.' },
   { label: 'Error on card', fg: '--color-error', bg: '--bg-card', requirement: 'nontext', note: 'Status color carrying meaning without text.' },
   { label: 'Info on card', fg: '--color-info', bg: '--bg-card', requirement: 'nontext', note: 'Status color carrying meaning without text.' },
-  { label: 'Bright border on card', fg: '--border-bright', bg: '--bg-card', requirement: 'info', note: 'Structure, not state — no threshold applies. Below about 1.3:1 the edge stops being findable.' },
-  { label: 'Default border on card', fg: '--border-default', bg: '--bg-card', requirement: 'info', note: 'Structure, not state. Shown so you can see how far your surfaces and borders have drifted apart.' },
+  { label: 'Bright border on card', fg: '--border-bright', bg: '--bg-card', requirement: 'info', note: 'No WCAG threshold applies to a structural border. Below about 1.3:1 the edge is hard to see.' },
+  { label: 'Default border on card', fg: '--border-default', bg: '--bg-card', requirement: 'info', note: 'No threshold applies. Shown so you can see how far your borders and surfaces have drifted apart.' },
 ];
 
 const THRESHOLDS: Record<Requirement, number> = { text: 4.5, large: 3, nontext: 3, info: 0 };
