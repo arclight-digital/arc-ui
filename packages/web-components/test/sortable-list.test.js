@@ -296,6 +296,55 @@ describe('arc-sortable-list keyboard reordering', () => {
     expect(seen).to.deep.equal([]);
   });
 
+  it('Escape after arrow moves puts the rows back', async () => {
+    // The rows used to stay wherever the arrows had put them, with no
+    // arc-change, so the list showed an order the consumer was never told of.
+    const el = await list();
+    const seen = record(el, ['arc-change']);
+    await pickUp(el, 0);
+
+    keyOn(rows(el)[0], 'ArrowDown');
+    await settle(el);
+    keyOn(rows(el)[1], 'ArrowDown');
+    await settle(el);
+    expect(labels(el), 'moved to the bottom first').to.deep.equal(['Bravo', 'Charlie', 'Alpha']);
+
+    keyOn(rows(el)[2], 'Escape');
+    await settle(el);
+
+    expect(labels(el), 'original order restored').to.deep.equal(['Alpha', 'Bravo', 'Charlie']);
+    expect(seen, 'nothing changed, so nothing to report').to.deep.equal([]);
+    expect(el.shadowRoot.activeElement, 'focus follows the row home').to.equal(rows(el)[0]);
+  });
+
+  it('Escape restores the order from the start of this move, not from mount', async () => {
+    const el = await list();
+    const seen = record(el, ['arc-change']);
+    await pickUp(el, 0);
+    keyOn(rows(el)[0], 'ArrowDown');
+    await settle(el);
+    keyOn(rows(el)[1], 'Enter');
+    await settle(el);
+    expect(seen).to.have.lengthOf(1);
+
+    await pickUp(el, 1);
+    keyOn(rows(el)[1], 'ArrowDown');
+    await settle(el);
+    keyOn(rows(el)[2], 'Escape');
+    await settle(el);
+
+    expect(labels(el)).to.deep.equal(['Bravo', 'Alpha', 'Charlie']);
+    expect(seen, 'no second arc-change').to.have.lengthOf(1);
+
+    // The next move starts from the restored order.
+    await pickUp(el, 2);
+    keyOn(rows(el)[2], 'ArrowUp');
+    await settle(el);
+    keyOn(rows(el)[1], 'Enter');
+    await settle(el);
+    expect(seen[1][1]).to.deep.equal([1, 2, 0]);
+  });
+
   it('stops at both ends rather than wrapping', async () => {
     const el = await list();
     await pickUp(el, 0);
@@ -399,6 +448,18 @@ describe('arc-sortable-list ARIA state', () => {
     await settle(el);
 
     expect(live(el).textContent.trim()).to.equal('Move cancelled.');
+  });
+
+  it('announces the position after each arrow move', async () => {
+    const el = await list();
+    keyOn(rows(el)[0], ' ');
+    await settle(el);
+    keyOn(rows(el)[0], 'Enter');
+    await settle(el);
+    keyOn(rows(el)[0], 'ArrowDown');
+    await settle(el);
+
+    expect(live(el).textContent).to.contain('Alpha').and.to.contain('position 2 of 3');
   });
 
   it('stays quiet until something happens', async () => {

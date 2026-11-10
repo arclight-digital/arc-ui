@@ -10,7 +10,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @tag arc-sortable-list
  * @status stable
  * @prop {boolean} disabled - Disables all interaction, reducing opacity to 40% and blocking pointer events.
- * @fires arc-change - Fired when items are reordered, with updated order in detail
+ * @fires arc-change - Fired when a drag or keyboard move is dropped, with updated order in detail. Escape during a keyboard move restores the order from pick-up and fires nothing.
  * @slot - Default content.
  * @csspart base - The root element.
  * @csspart list
@@ -159,6 +159,8 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
     this._overIndex = -1;
     this._kbSelected = -1;
     this._kbMoving = false;
+    /** The row order when the current keyboard move was picked up, for Escape. */
+    this._kbOrigin = null;
   }
 
   /* ---- Slot management ---- */
@@ -215,6 +217,11 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
     this._announcement = message;
   }
 
+  /** Each arrow step, worded as arc-kanban words it. */
+  _announceStep(index) {
+    this._announce(`${this._labelAt(index)}, position ${index + 1} of ${this._items.length}.`);
+  }
+
   _announcePlaced(index) {
     this._announce(
       `${this._labelAt(index)} dropped. Position ${index + 1} of ${this._items.length}.`,
@@ -269,6 +276,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
         if (this._kbMoving) {
           // Confirm placement
           this._kbMoving = false;
+          this._kbOrigin = null;
           this._announcePlaced(index);
           this._kbSelected = -1;
           this._fireOrderChange();
@@ -284,10 +292,12 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
         if (this._kbSelected === index && !this._kbMoving) {
           e.preventDefault();
           this._kbMoving = true;
+          this._kbOrigin = this._items;
           this._announce(`${this._labelAt(index)} picked up. Use the arrow keys to move it.`);
         } else if (this._kbMoving) {
           e.preventDefault();
           this._kbMoving = false;
+          this._kbOrigin = null;
           this._announcePlaced(index);
           this._kbSelected = -1;
           this._fireOrderChange();
@@ -297,8 +307,12 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
       case 'Escape':
         e.preventDefault();
         // Silent about *where* it landed: Escape abandons the move
-        // and the original order is restored, so there is nothing to report.
+        // and the original order is restored, so there is nothing to report
+        // and no arc-change. The arrows reorder `_items` as they go, so the
+        // restore is real work; it used to be only this comment, and the rows
+        // stayed where the arrows had put them.
         if (this._kbMoving || this._kbSelected >= 0) this._announce('Move cancelled.');
+        if (this._kbMoving) this._restoreKbOrigin();
         this._kbMoving = false;
         this._kbSelected = -1;
         break;
@@ -310,6 +324,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
           this._moveItemInPlace(from, from - 1);
           this._kbSelected = from - 1;
           this._focusItem(this._kbSelected);
+          this._announceStep(this._kbSelected);
         }
         break;
 
@@ -320,6 +335,7 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
           this._moveItemInPlace(from, from + 1);
           this._kbSelected = from + 1;
           this._focusItem(this._kbSelected);
+          this._announceStep(this._kbSelected);
         }
         break;
 
@@ -344,6 +360,26 @@ export class ArcSortableList extends DeclaredPropsMixin(LitElement) {
     const [moved] = items.splice(from, 1);
     items.splice(to, 0, moved);
     this._items = items;
+  }
+
+  /**
+   * Put the rows back in the order they had at pick-up, and focus the moved
+   * row where it lands. Rows added during the move keep their place after the
+   * restored ones; rows removed during it stay gone.
+   */
+  _restoreKbOrigin() {
+    const origin = this._kbOrigin;
+    this._kbOrigin = null;
+    if (!origin) return;
+    const moved = this._items[this._kbSelected];
+    const current = new Set(this._items);
+    const kept = new Set(origin);
+    this._items = [
+      ...origin.filter((item) => current.has(item)),
+      ...this._items.filter((item) => !kept.has(item)),
+    ];
+    const home = this._items.indexOf(moved);
+    if (home >= 0) this._focusItem(home);
   }
 
   _fireOrderChange() {
