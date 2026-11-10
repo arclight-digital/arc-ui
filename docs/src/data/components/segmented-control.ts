@@ -7,39 +7,26 @@ export const segmentedControl: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'A radio-group-style toggle bar that renders slotted arc-option elements as a row of mutually exclusive buttons with an active highlight.',
+    'A row of buttons where exactly one is selected, built from arc-option children.',
 
-  overview: `SegmentedControl is a compact, horizontal set of mutually exclusive options rendered as a pill-shaped button group. It reads \`<arc-option>\` children from its default slot and mirrors them as styled buttons inside a bordered container with rounded corners. The currently selected option receives an accent-primary background with a glow, while unselected options appear in muted text that brightens on hover.
+  overview: `SegmentedControl draws its \`<arc-option>\` children as buttons in one rounded, bordered bar. The selected button gets the accent background and a glow. Use it for two to five short options where exactly one must be picked, like a daily, weekly or monthly view. For more options, use Select or RadioGroup.
 
-The component uses a \`radiogroup\` ARIA role with individual \`radio\` roles on each option button, following the WAI-ARIA radio group pattern. Keyboard navigation supports arrow keys for cycling through options (with wrapping), Home/End for jumping to the first or last option, and Enter/Space for confirming a selection. Focus management automatically moves focus to the newly selected button after keyboard navigation.
+The bar is a \`radiogroup\` and each button a \`radio\` with \`aria-checked\`. Arrow keys move the selection and wrap at the ends, Home and End jump to the first and last option, and focus follows the selection.
 
-SegmentedControl auto-selects the first option when no initial \`value\` is provided, so the control always has a valid selection. It fires a single \`arc-change\` event with the selected value whenever the user makes a new choice.`,
+With no \`value\` set, the first option is selected, so the control always has a value. \`arc-change\` fires with the new value each time the selection changes.`,
 
   features: [
-    'Renders slotted `<arc-option>` elements as styled toggle buttons in a horizontal pill container',
-    'Active option highlighted with accent-primary background, contrasting text, and glow shadow',
-    'Full keyboard navigation: arrow keys cycle options with wrapping, Home/End jump to edges, Enter/Space confirm',
-    'ARIA radiogroup pattern with `role="radio"` and `aria-checked` on each option button',
-    'Auto-selects the first option when no `value` attribute is provided',
-    'Hover state brightens text and adds a subtle background on non-active options',
-    'Disabled state at 40% opacity with pointer events blocked on the entire control',
-    'Respects `prefers-reduced-motion` by disabling transitions',
+    'Each option\'s label is its text content, so markup inside an `<arc-option>` is dropped',
+    'Disabled drops the whole control to 50% opacity and blocks pointer events',
   ],
 
   guidelines: {
     do: [
-      'Use SegmentedControl for 2-5 options where the user must pick exactly one',
-      'Keep option labels short, ideally one or two words, to prevent overflow',
-      'Provide a `value` attribute if you need to pre-select an option other than the first',
-      'Listen to `arc-change` to react to selection changes in your application logic',
-      'Place the control within a form context or a settings panel where space is limited',
+      'Keep labels to one or two words so the bar doesn\'t overflow',
     ],
     dont: [
-      'Do not use for more than 5 options; use Select or RadioGroup instead for longer lists',
-      'Do not nest interactive elements inside `<arc-option>` children: labels should be plain text',
-      'Do not use SegmentedControl for navigation between views; use Tabs instead',
-      'Do not rely solely on the glow color to indicate selection: the component also uses aria-checked for accessibility',
-      'Avoid using it for binary toggles where a Toggle switch would be more semantically appropriate',
+      'Don\'t use it to switch between views. Use Tabs',
+      'Don\'t use it for a single on/off setting. Use Toggle',
     ],
   },
 
@@ -54,7 +41,7 @@ SegmentedControl auto-selects the first option when no initial \`value\` is prov
       name: 'Option',
       tag: 'arc-option',
       description:
-        'Individual option element slotted into the segmented control. The `value` attribute identifies the option and the text content becomes the label.',
+        'One option in the bar. `value` identifies it and its text content is the label.',
     },
   ],
 
