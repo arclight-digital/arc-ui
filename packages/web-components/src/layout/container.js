@@ -7,7 +7,7 @@ import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
  *
  * @tag arc-container
  * @status stable
- * @prop {boolean} narrow - Use the narrow max-width (720px vs 1120px)
+ * @prop {boolean} narrow - Caps the width at `--max-width-sm` (720px by default), the same as `size="sm"`. Applies while `size` is the default `md`; a `size` of `lg`, `xl` or `full` wins over it.
  * @prop {'sm' | 'md' | 'lg' | 'xl' | 'full'} size - Controls the maximum width.
  * @prop {'none' | 'sm' | 'md' | 'lg'} padding - Controls inline padding.
  * @slot - Default content.
@@ -33,9 +33,12 @@ export class ArcContainer extends DeclaredPropsMixin(LitElement) {
         padding-inline: var(--space-lg);
       }
 
-      :host([narrow]) .container,
       :host([size="sm"]) .container { max-width: var(--max-width-sm); }
       :host([size="md"]) .container { max-width: var(--max-width); }
+      /* \`size\` defaults to md and reflects, so [size="md"] is always present
+         when size was left alone. narrow narrows that default only; any other
+         size the author set still wins. */
+      :host([narrow][size="md"]) .container { max-width: var(--max-width-sm); }
       :host([size="lg"]) .container { max-width: 1400px; }
       :host([size="xl"]) .container { max-width: 1600px; }
       :host([size="full"]) .container { max-width: none; }
