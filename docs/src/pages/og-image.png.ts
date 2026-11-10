@@ -236,7 +236,7 @@ export const GET: APIRoute = async () => {
                 marginTop: '20px',
                 letterSpacing: '0.5px',
               },
-              children: 'One source of truth. Seven framework targets.',
+              children: `One Lit source, ${frameworkCount} framework targets.`,
             },
           },
           // Framework pills
@@ -264,8 +264,8 @@ export const GET: APIRoute = async () => {
         children: [
           statCard(String(componentCount), 'Components', blue, blueRgb),
           statCard(String(frameworkCount), 'Frameworks', teal, tealRgb),
-          statCard(String(buildSteps), 'Build Steps', blue, blueRgb),
-          statCard(String(tokenCount), 'Design Tokens', teal, tealRgb),
+          statCard(String(buildSteps), 'Build steps', blue, blueRgb),
+          statCard(String(tokenCount), 'Design tokens', teal, tealRgb),
         ],
       },
     },
