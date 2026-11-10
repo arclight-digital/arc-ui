@@ -8,37 +8,28 @@ export const statusBar: ComponentDef = {
   interactivity: 'static',
   description: 'Bottom status bar with prefix, center, and suffix slots.',
 
-  overview: `StatusBar is a compact informational strip for the bottom of an application window, as in code editors, terminals, and desktop applications. It renders at a fixed 28px height with a monospace font (\`--font-mono\`) and muted text color, for status indicators, cursor positions, encoding info, and connection states.
+  overview: `StatusBar is a 28px strip for the bottom of an app window, like the one in a code editor. Text is in \`--font-mono\` at the small text size, in the muted color.
 
-The component uses a three-region flexbox layout with named slots: \`start\` (flex-shrink: 0, anchored to the leading edge), default (centered, flex: 1), and \`end\` (flex-shrink: 0, anchored to the trailing edge via margin-left: auto). The start and end indicators stay pinned to their edges while center content fills the remaining space.
+It has three slots. \`prefix\` is pinned to the start edge, \`suffix\` to the end edge, and the default slot is centered in the space between them.
 
-The \`position\` prop controls whether the status bar flows with the page layout (\`static\`, the default) or sticks to the bottom of the viewport (\`fixed\`). Fixed positioning sets \`bottom: 0\`, \`left: 0\`, \`right: 0\` with a z-index of 100, so the bar stays put while scrolling. The bar renders with \`role="status"\` for screen reader announcements of dynamic content changes.`,
+\`position="static"\` (the default) keeps the bar in the page flow. \`position="fixed"\` pins it to the bottom of the viewport with \`z-index: 100\`. The bar has \`role="status"\`, so screen readers announce changes to its text.`,
 
   features: [
-    'Compact 28px height with monospace font for data-dense status information',
-    'Three-slot layout: start (pinned), center (flexible), end (pinned)',
-    'Static or fixed positioning via the position prop',
-    'Fixed mode pins to viewport bottom with z-index: 100',
-    '`role="status"` for accessible live-region announcements',
-    'Dark background (`--bg-deep`) with a top border',
-    'Exposed CSS parts (base, prefix, center, suffix) for targeted styling',
-    'Muted 11px text that stays out of the way of primary content',
+    '`--surface-base` background with a `--divider` border on top',
   ],
 
   guidelines: {
     do: [
-      'Use StatusBar for editor-style applications that need persistent status indicators',
-      'Place cursor position, line numbers, or encoding info in the prefix slot',
-      'Put connection status, sync state, or version info in the suffix slot',
-      'Use the center slot for transient messages like "Saved" or "Building..."',
-      'Set position="fixed" when the status bar should persist during scrolling',
+      'Put cursor position, line numbers or encoding in the `prefix` slot',
+      'Put connection status, sync state or a version in the `suffix` slot',
+      'Use the default slot for short messages such as "Saved" or "Building..."',
+      'Set `position="fixed"` when the bar should stay in view while the page scrolls, and pad the bottom of the page by 28px so it doesn\'t cover content',
     ],
     dont: [
-      'Do not use StatusBar as a primary navigation bar; use TopBar or Toolbar instead',
-      'Do not place interactive buttons or form controls in the status bar; keep it informational',
-      'Do not set position="fixed" in layouts where AppShell already manages the bottom edge',
-      'Do not override the 28px height: the compact size is intentional for information density',
-      'Do not use StatusBar for toast-style notifications; use Toast or Alert for user-facing messages',
+      'Don\'t use it as primary navigation. Use TopBar or Toolbar',
+      'Don\'t put buttons or form controls in it. Keep it to information',
+      'Don\'t change the 28px height',
+      'Don\'t use it for notifications the reader must see. Use Toast or Alert',
     ],
   },
 
