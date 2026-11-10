@@ -7,41 +7,30 @@ export const sheet: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'A sliding overlay panel that emerges from the bottom or right edge of the viewport, with a blurred backdrop, header, scrollable body, and footer slot.',
+    'A panel that slides in from the bottom or right edge of the viewport, over a blurred backdrop, with a header, a scrolling body and a footer slot.',
 
-  overview: `Sheet provides a modal-like surface that slides into view from the bottom or right edge of the screen, suited to contextual actions, filters, or detail views that do not warrant a full-page navigation. When opened, a backdrop with a 4px blur covers the rest of the UI and clicking it dismisses the sheet. The bottom variant includes a drag-handle bar at the top as an affordance, while the right variant omits it.
+  overview: `Sheet slides a panel in from the bottom (the default) or the right edge, set with \`side\`. Use it for filters, a detail view or a short form that doesn't need its own page. The bottom sheet has a drag-handle bar at the top. The right sheet doesn't.
 
-The panel is structured into three zones: a header row with a heading and close button, a scrollable body for slotted content, and a sticky footer for action buttons. You can replace the default heading with any markup via the \`header\` named slot, and put buttons in the \`footer\` slot. The body area uses \`overflow-y: auto\` so long content scrolls naturally within the panel.
+The panel has a header row with the \`heading\` and a close button, a body that scrolls when its content is long, and a footer row below it for action buttons. The \`header\` slot replaces the heading, and the \`footer\` slot holds the buttons.
 
-Sheet manages focus trapping and scroll locking automatically. When opened, it locks \`document.body\` overflow to prevent background scrolling, moves focus to the close button, and listens for the Escape key to dismiss. The \`arc-open\` event fires when the sheet becomes visible and \`arc-close\` fires on dismissal, so parent components can sync state or clean up.`,
+By default the sheet is modal. A backdrop with a 4px blur covers the page, and clicking it closes the sheet. The page behind is scroll-locked, focus moves to the close button, and Escape closes it. \`arc-open\` fires when the sheet opens and \`arc-close\` when it closes, so you can keep your own state in step.`,
 
   features: [
     '`snap-points` for a bottom sheet that rests at several heights (a peek strip and a full view): drag the handle between them, or step with the arrow keys',
     '`no-modal` for a sheet that floats over a page that stays usable: no backdrop, no scroll lock, and focus stays where it was',
-    'Two placement modes: `bottom` (default) and `right`, controlled by the `side` prop',
-    'Backdrop overlay with `backdrop-filter: blur(4px)` that dismisses the sheet on click',
-    'Bottom variant includes a rounded drag-handle bar for mobile touch affordance',
-    'Structured layout with header, scrollable body, and sticky footer zones',
-    'Named slots for `header` and `footer` to customise the chrome areas',
-    'Automatic scroll locking on `document.body` when open, restored on close',
-    'Escape key dismissal with focus auto-moved to the close button on open',
-    'Fires `arc-open` and `arc-close` custom events for lifecycle synchronisation',
   ],
 
   guidelines: {
     do: [
-      'Use the bottom sheet for mobile-friendly contextual panels like filters or share menus',
-      'Use the right sheet for desktop detail panes, settings forms, or property inspectors',
-      'Provide a descriptive `heading` so screen readers announce the dialog purpose via `aria-label`',
-      'Listen to `arc-close` to reset your local open state and perform any necessary cleanup',
-      'Populate the `footer` slot with primary and secondary action buttons for task-oriented sheets',
+      'Use the bottom sheet for filters or share menus on a phone',
+      'Use the right sheet for detail panes, settings forms or property inspectors on a desktop',
+      'Set `heading`. It\'s also the panel\'s `aria-label`, so screen readers announce it',
+      'Put the primary and secondary actions in the `footer` slot',
     ],
     dont: [
-      'Do not nest a Sheet inside another Sheet; use a Dialog for layered overlays instead',
-      'Do not use Sheet for brief confirmations or alerts; use Confirm or Toast for those patterns',
-      'Do not set both `side="bottom"` and `side="right"`: only one placement is active at a time',
-      'Do not place critical navigation inside a Sheet: it is dismissible and should contain optional content',
-      'Avoid overloading the sheet body with too many form fields; consider a full page for complex forms',
+      'Don\'t use it for a quick confirmation or a status message. Use Confirm or Toast',
+      'Don\'t put navigation people need in a sheet. It can be dismissed, so keep its content optional',
+      'Don\'t put a long, complex form in a sheet. Give it a page',
     ],
   },
 
@@ -50,7 +39,7 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
   <arc-button id="open-right-sheet" variant="secondary">Details</arc-button>
   <arc-button id="open-peek-sheet" variant="secondary">Peek</arc-button>
 </div>
-<arc-sheet id="demo-bottom-sheet" heading="Filter Results" side="bottom">
+<arc-sheet id="demo-bottom-sheet" heading="Filter results" side="bottom">
   <div style="display:flex;flex-direction:column;gap:var(--space-md);">
     <div>
       <div style="font-weight:600;font-size:13px;color:var(--text-primary);margin-bottom:var(--space-xs);">Status</div>
@@ -75,10 +64,10 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
   </div>
   <div slot="footer" style="display:flex;gap:var(--space-sm);width:100%;justify-content:flex-end;">
     <arc-button id="reset-filters" variant="ghost">Reset</arc-button>
-    <arc-button id="apply-filters" variant="primary">Apply Filters</arc-button>
+    <arc-button id="apply-filters" variant="primary">Apply filters</arc-button>
   </div>
 </arc-sheet>
-<arc-sheet id="demo-right-sheet" heading="Project Details" side="right">
+<arc-sheet id="demo-right-sheet" heading="Project details" side="right">
   <div style="display:flex;flex-direction:column;gap:var(--space-lg);">
     <div style="display:flex;align-items:center;gap:var(--space-md);">
       <arc-avatar name="acme-dashboard" size="lg"></arc-avatar>
@@ -109,7 +98,7 @@ Sheet manages focus trapping and scroll locking automatically. When opened, it l
   </div>
   <div slot="footer" style="display:flex;gap:var(--space-sm);width:100%;justify-content:flex-end;">
     <arc-button variant="ghost">Settings</arc-button>
-    <arc-button variant="primary">Open Project</arc-button>
+    <arc-button variant="primary">Open project</arc-button>
   </div>
 </arc-sheet>
 <arc-sheet id="demo-peek-sheet" heading="Now playing" no-modal snap-points="140px, 70dvh">
