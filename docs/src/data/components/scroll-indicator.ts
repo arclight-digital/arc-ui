@@ -9,7 +9,7 @@ export const scrollIndicator: ComponentDef = {
   description:
     'A thin bar along the top or bottom edge that fills as you scroll the page or a container.',
 
-  overview: `ScrollIndicator shows how far a reader has scrolled through a long article, doc page or settings panel. The bar fills left to right. It tracks the window by default, or the element matched by the \`target\` selector. A selector that matches nothing falls back to the window. Progress updates from a scroll listener throttled to one \`requestAnimationFrame\` per frame.
+  overview: `ScrollIndicator shows how far the reader has scrolled. The bar fills left to right. It tracks the window by default, or the element matched by the \`target\` selector. A selector that matches nothing falls back to the window. Its scroll listener updates the bar at most once per animation frame.
 
 The bar uses \`position: sticky\` on the top edge, or the bottom with \`position="bottom"\`, and has \`pointer-events: none\`, so it never blocks clicks or text selection. \`color="accent"\` fills it with \`--accent-primary\`, and \`color="gradient"\` blends primary to secondary. \`size\` sets the thickness: \`sm\` 2px (the default), \`md\` 3px or \`lg\` 4px.
 
