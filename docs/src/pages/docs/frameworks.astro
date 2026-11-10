@@ -218,8 +218,8 @@ export class AppComponent {}`}></arc-code-block></div>
         ARC UI tag, with the same props and enum unions as the wrapper packages.
         <strong>Add it to your program as a file.</strong> A <code>types</code> entry in
         <code>compilerOptions</code> does nothing here. TypeScript resolves <code>types</code>
-        as a package name and doesn't follow an export subpath, so nothing is included, every
-        tag stays untyped, and you get no error.
+        as a package name and doesn't follow an export subpath, so the tags stay untyped and
+        nothing reports an error.
       </p>
       <div class="docs-code"><arc-code-block language="json" code={`{
   "include": [
@@ -235,14 +235,14 @@ export class AppComponent {}`}></arc-code-block></div>
 
       <h3 class="docs-subheading">What you give up</h3>
       <p class="docs-text">
-        The difference is custom events, and it varies by framework. Solid binds them natively
-        (<code>on:arc-change=&#123;handler&#125;</code>), and the declaration file types it.
-        React 19 forwards unknown props to the element, so an event needs a ref and a listener.
-        Preact lowercases the name after <code>on</code>, so a dashed event like
-        <code>arc-change</code> can't be reached from a prop at all, and a ref with
-        <code>addEventListener</code> is the only way.
-        <strong>The wrapper packages do that listener wiring for you</strong>. If you use custom
-        events a lot in React or Preact, use the wrapper.
+        The difference is custom events. Solid binds them with
+        <code>on:arc-change=&#123;handler&#125;</code>, and its declaration file types it.
+        React 19 and Preact 10 attach a function prop whose name starts with <code>on</code> as a
+        listener for the rest of the name, as written, so <code>onarc-change=&#123;handler&#125;</code>
+        listens for <code>arc-change</code>. Their declaration files accept any <code>on*</code>
+        prop, so a misspelled event name compiles and never fires.
+        <strong>The wrapper packages give each event a typed handler prop</strong>, such as
+        <code>onArcChange</code>.
       </p>
     </section>
 
@@ -253,7 +253,7 @@ export class AppComponent {}`}></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="js" code={`import '@arclux/arc-ui/button';
 import '@arclux/arc-ui/card';`}></arc-code-block></div>
-      <p class="docs-text">Or load it from a CDN with no build step:</p>
+      <p class="docs-text">Or load it from a CDN. TODO(copy): the components import <code>lit</code> by its bare name, which a browser can't resolve without an import map, and this snippet has none. Fix the snippet or drop it?</p>
       <div class="docs-code"><arc-code-block language="html" code={`<link rel="stylesheet"
   href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
 <script type="module"
@@ -265,7 +265,7 @@ import '@arclux/arc-ui/card';`}></arc-code-block></div>
   <h3>Hello World</h3>
   <p>Pure HTML, no framework needed.</p>
 </arc-card>`}></arc-code-block></div>
-      <arc-alert variant="tip">For pages that can't run JavaScript, <code>@arclux/arc-ui-html</code> has CSS-only versions of many components, applied as classes on plain HTML.</arc-alert>
+      <arc-alert variant="tip">For pages that can't run JavaScript, <code>@arclux/arc-ui-html</code> has CSS-only versions of many components. They style plain HTML by class name and <code>data-*</code> attribute, and the package's <code>examples/</code> folder has the markup for each.</arc-alert>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Full bundle -->
 <link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html@${version}/css/arc-ui.css">
 
