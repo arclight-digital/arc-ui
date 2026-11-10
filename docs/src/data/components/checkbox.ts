@@ -9,39 +9,32 @@ export const checkbox: ComponentDef = {
   description:
     'Multi-select form control with checked, indeterminate, and disabled states. For preferences, bulk selection, and consent forms where users toggle one or more independent options.',
 
-  overview: `Checkbox is the multi-select form control in ARC UI. Unlike radio groups, which allow only one active choice, checkboxes let users select any combination of options independently. Use them for settings pages, filter panels, consent agreements, and any context where selections are not exclusive.
+  overview: `Checkbox lets users pick any combination of options, where a radio group allows only one. It has a built-in label, a \`name\` and \`value\` for native form submission, and \`arc-change\` on every state change.
 
-The component has three visual states: unchecked, checked, and indeterminate. Indeterminate suits "select all" patterns where only some child items are checked, and shows that the group is partially selected. Toggling an indeterminate checkbox resolves it to checked, as in file managers and data tables.
+Besides checked and unchecked, it has an indeterminate state for a "select all" box whose group is only partly checked. Toggling an indeterminate checkbox makes it checked, as in file managers and data tables. Space toggles the focused checkbox, and clicking the label does too. \`disabled\` dims the box and blocks input.
 
-Every checkbox includes a label, a form-compatible name/value pair, and keyboard support. Space toggles the state, and a focus-visible ring shows keyboard users which control is active. The disabled state dims the checkbox and prevents interaction, which suits options that depend on a prerequisite.`,
+There is no checkbox group component. Group related checkboxes yourself, for example in a Fieldset.`,
 
   features: [
-    'Checked and unchecked toggle with a single click or Space press',
-    'Indeterminate (mixed) state for partial "select all" patterns',
-    'Built-in label with proper click-to-toggle association',
-    'Disabled state that dims the control and blocks interaction',
-    'Form-compatible name and value attributes for native submission',
-    'Focus-visible ring for keyboard accessibility',
-    'Fires `arc-change` event on every state transition',
-    'Works standalone or as part of a checkbox group',
+    'Indeterminate shows a dash in place of the checkmark',
+    'Unchecked boxes submit nothing, and checked ones submit `value` (default "on"), as native checkboxes do',
   ],
 
   guidelines: {
     do: [
-      'Use checkboxes when users can select zero, one, or many options from a list',
-      'Provide a clear, concise label for every checkbox, and never leave one unlabeled',
-      'Use the indeterminate state for "select all" controls that govern a partially-checked group',
-      'Order checkbox lists logically: alphabetically, by frequency, or by importance',
-      'Group related checkboxes together with a visible heading or fieldset legend',
-      'Set a default checked state for recommended or common options when appropriate',
+      'Give every checkbox a short label',
+      'Use the indeterminate state on a "select all" box that controls a partly checked group',
+      'Order the options alphabetically, by frequency or by importance',
+      'Put related checkboxes under a visible heading or fieldset legend',
+      'Pre-check recommended or common options',
     ],
     dont: [
-      'Do not use checkboxes for mutually exclusive choices. Use a radio group instead',
-      'Do not use a checkbox as an on/off switch for instant actions. Use a toggle for that pattern',
-      'Do not rely solely on color to communicate checked state; the checkmark icon matters',
-      'Do not disable checkboxes without a nearby explanation of why the option is unavailable',
-      'Do not nest checkboxes more than one level deep; flat lists are easier to scan',
-      'Do not use negative label phrasing like "Don\'t send emails"; prefer affirmative wording',
+      'Don\'t use checkboxes for mutually exclusive choices. Use a radio group',
+      'Don\'t use a checkbox as an on/off switch that acts at once. Use a toggle',
+      'Don\'t rely on color alone to show the checked state. The checkmark carries it',
+      'Don\'t disable a checkbox without saying nearby why the option is unavailable',
+      'Don\'t nest checkboxes more than one level deep',
+      'Don\'t write negative labels like "Don\'t send emails". Say what checking it does',
     ],
   },
 
