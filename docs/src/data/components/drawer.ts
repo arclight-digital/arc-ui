@@ -8,7 +8,7 @@ export const drawer: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['side panel'],
   description:
-    'Slide-out panel with backdrop overlay, keyboard dismissal, and left/right positioning for off-canvas navigation, filters, and detail views.',
+    'A panel that slides in from the left or right edge, for navigation menus, filters and detail views.',
 
   overview: `Drawer is a panel that slides in from the left or right edge of the viewport, set by \`position\`. Use it for a mobile navigation menu, a filter panel or a detail view, without leaving the current page. It has a header with the \`heading\` and a close button, and a body that scrolls.
 
