@@ -62,7 +62,7 @@ export const COLOR_GROUPS: ColorGroup[] = [
   {
     id: 'surfaces',
     label: 'Surfaces',
-    hint: 'The five grounds, deepest first. Each step should read as lifting off the one below it.',
+    hint: 'The five background levels, deepest first. Each should look slightly raised from the one before it.',
     controls: [
       { token: '--bg-deep', label: 'Deep' },
       { token: '--bg-surface', label: 'Surface' },
@@ -74,7 +74,7 @@ export const COLOR_GROUPS: ColorGroup[] = [
   {
     id: 'text',
     label: 'Text',
-    hint: 'Hierarchy comes from lifting to primary, not from stepping down the ramp — the lower three sit within 17 RGB points of each other.',
+    hint: 'Use primary to make text stand out. The lower three differ by less than 20 in each RGB channel, so stepping between them barely shows.',
     controls: [
       { token: '--text-primary', label: 'Primary', rgb: true },
       { token: '--text-secondary', label: 'Secondary' },
@@ -85,7 +85,7 @@ export const COLOR_GROUPS: ColorGroup[] = [
   {
     id: 'borders',
     label: 'Borders',
-    hint: 'Structure only. State is never marked with a border in ARC UI.',
+    hint: 'For dividers and edges. State, such as an input error, uses the status colors.',
     controls: [
       { token: '--border-subtle', label: 'Subtle' },
       { token: '--border-default', label: 'Default' },
@@ -95,7 +95,7 @@ export const COLOR_GROUPS: ColorGroup[] = [
   {
     id: 'accent',
     label: 'Accent',
-    hint: 'The two colors the whole system is built on. Every gradient, glow and focus ring composes from these — change them and watch the preview.',
+    hint: 'Every gradient, glow and focus ring is built from these two colors.',
     controls: [
       { token: '--accent-primary', label: 'Primary', rgb: true },
       { token: '--accent-secondary', label: 'Secondary', rgb: true },
@@ -158,7 +158,7 @@ export const SPACE_GROUPS: RangeGroup[] = [
   {
     id: 'spacing',
     label: 'Spacing',
-    hint: 'The rhythm every component measures its padding and gaps against.',
+    hint: 'The scale components use for padding and gaps.',
     controls: [
       { token: '--space-xs', label: 'XS', min: 2, max: 8, step: 1, unit: 'px', gauge: 'space' },
       { token: '--space-sm', label: 'SM', min: 4, max: 16, step: 1, unit: 'px', gauge: 'space' },
@@ -170,7 +170,7 @@ export const SPACE_GROUPS: RangeGroup[] = [
   {
     id: 'radii',
     label: 'Radii',
-    hint: 'Corner softness across the set. Zero everywhere gives a hard, terminal-flavoured build.',
+    hint: 'Corner radius for every component. Set them all to zero for square corners.',
     controls: [
       { token: '--radius-xs', label: 'XS', min: 0, max: 8, step: 1, unit: 'px', gauge: 'radius' },
       { token: '--radius-sm', label: 'SM', min: 0, max: 12, step: 1, unit: 'px', gauge: 'radius' },
@@ -204,7 +204,7 @@ export const SPACE_GROUPS: RangeGroup[] = [
 export const MOTION_GROUP: RangeGroup = {
   id: 'motion',
   label: 'Duration',
-  hint: 'The transition tokens compose from these, so a change here retunes every animation that reads them.',
+  hint: 'The --transition-* shorthands combine these with the easing scale, so a change here changes every animation that uses them.',
   controls: [
     { token: '--duration-fast', label: 'Fast', min: 60, max: 300, step: 10, unit: 'ms' },
     { token: '--duration-base', label: 'Base', min: 100, max: 500, step: 10, unit: 'ms' },
