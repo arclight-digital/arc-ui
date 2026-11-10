@@ -13,7 +13,7 @@ export const confirm: ComponentDef = {
 
 It's built on Dialog, so it has the same blurred backdrop, raised panel and focus trap. Escape, a backdrop click and the X button all count as cancel. \`variant="error"\` turns the confirm button the error color.
 
-**Upgrading from v3:** the \`arc-dialog\` tag used to be this prompt. In v4, \`arc-dialog\` is the overlay primitive (renamed from \`arc-modal\`), and the prompt's props (\`heading\`, \`message\`, \`confirm-label\`, \`cancel-label\`, \`variant\`) moved here unchanged. Only the tag name changed.`,
+**Upgrading from v3:** the \`arc-dialog\` tag used to be this prompt. In v4, \`arc-dialog\` is the overlay primitive (renamed from \`arc-modal\`), and the prompt's props (\`heading\`, \`message\`, \`confirm-label\`, \`cancel-label\`, \`variant\`) moved here. \`variant="danger"\` is now \`variant="error"\`. A leftover \`"danger"\` falls back to the default variant with no warning, so the confirm button loses its error color.`,
 
   features: [
     '`ArcConfirm.open()` takes `heading`, `message`, `confirmLabel`, `cancelLabel` and `variant`. Its body can only be the `message` string',
