@@ -7,41 +7,32 @@ export const footer: ComponentDef = {
   tier: 'navigation',
   interactivity: 'static',
   description:
-    'Page footer with branding, link columns, and legal text. Provides a structured layout with slots for a logo, navigational link groups, social icons, and copyright information.',
+    'Page footer with slots for a logo, link columns, social icons and legal text.',
 
-  overview: `Footer is the bottom-of-page landmark that anchors every page with branding, navigation, and legal information. It uses four slots (logo, default for columns, social, and legal), so you can compose any footer from a single-line copyright notice to a multi-column site map.
+  overview: `Footer is the page's \`<footer>\` landmark. It has four slots: \`logo\`, the default slot for link columns, \`social\` and \`legal\`. The legal slot gets its own thin rule above it.
 
-The default slot renders its children in a responsive CSS Grid that automatically wraps link columns from a single stack on mobile to as many columns as fit at 160 px minimum width. So you drop in three or four \`<div>\` elements with heading-and-link-list markup and the grid handles the rest. No manual breakpoints are needed.
+Link columns go in the default slot, usually a \`<div>\` each with a heading and a list of links. They wrap on a CSS grid with a 160px minimum column width, one column on a phone and as many as fit on a wide screen, with no breakpoints to set.
 
-Footer ships with two props that cover the most common layout tweaks. The \`border\` prop (on by default) adds a subtle top rule to visually separate the footer from the content above. \`density="compact"\` tightens all internal spacing for dashboards and admin panels where vertical real estate is at a premium. Together border, density, and the four slots cover the vast majority of footer patterns without custom CSS.`,
+\`border\` adds a top border and is on by default. Set \`no-border\` to remove it. \`density="compact"\` tightens the spacing, for dashboards and admin panels. \`align="center"\` centers everything, and \`contained\` wraps the content in a Container of size \`sm\`, \`md\`, \`lg\`, \`xl\` or \`full\` (\`md\` if left empty).`,
 
   features: [
-    'Slot-based composition with logo, default (columns), social, and legal regions',
-    'Responsive CSS Grid columns that auto-wrap without manual breakpoints',
-    'Compact mode for dashboards and space-constrained layouts',
-    'Optional top border to separate footer from page content',
-    'Dark background with muted text for clear visual hierarchy',
-    'Legal section with its own subtle top divider for copyright and policy links',
-    'CSS custom property theming via design tokens',
-    'Shadow DOM encapsulation with ::part() hooks for targeted styling',
+    'The background is `--surface-base`, so it follows the theme',
+    'CSS parts: `base`, `brand`, `columns`, `social`, `legal`',
   ],
 
   guidelines: {
     do: [
-      'Place the footer as the last child of your page layout or AppShell',
-      'Use the logo slot for your brand mark or wordmark. Keep it compact',
-      'Organize link columns by category (Product, Company, Resources) for scannability',
-      'Include essential legal text (copyright year, company name) in the legal slot',
-      'Use density="compact" inside admin shells and dashboards to save vertical space',
-      'Keep link column headings short and consistent in casing',
+      'Make it the last child of your page layout or AppShell',
+      'Keep the logo in the `logo` slot small',
+      'Group links into columns by topic, such as Product, Company and Resources',
+      'Put the copyright line and company name in the `legal` slot',
+      'Use `density="compact"` inside admin shells and dashboards',
+      'Keep column headings short, with the same casing',
     ],
     dont: [
-      'Do not nest interactive widgets (forms, modals) inside the footer. Keep it navigational',
-      'Do not use more than four or five link columns; too many columns overwhelm on smaller screens',
-      'Do not remove the border prop on pages with light backgrounds. The separator aids readability',
-      'Do not duplicate primary navigation in the footer verbatim; footer nav should be a curated subset',
-      'Do not place critical call-to-action buttons in the footer. They belong above the fold',
-      'Do not omit a copyright notice; legal requires it for most commercial products',
+      'Don\'t put forms, modals or other interactive widgets in it. Keep it to navigation',
+      'Don\'t repeat the main navigation word for word. Pick the links people look for at the bottom of a page',
+      'Don\'t put your main call to action only in the footer',
     ],
   },
 
@@ -75,7 +66,7 @@ Footer ships with two props that cover the most common layout tweaks. The \`bord
         <li><a href="#" style="color:var(--text-secondary);text-decoration:none;">Support</a></li>
       </ul>
     </div>
-    <div slot="legal">&copy; 2026 ARC UI. All rights reserved. &middot; <a href="#" style="color:var(--text-muted);text-decoration:none;">Privacy</a> &middot; <a href="#" style="color:var(--text-muted);text-decoration:none;">Terms</a></div>
+    <div slot="legal">&copy; ARC UI contributors. MIT licensed. &middot; <a href="#" style="color:var(--text-muted);text-decoration:none;">Privacy</a> &middot; <a href="#" style="color:var(--text-muted);text-decoration:none;">Terms</a></div>
   </arc-footer>
 </div>`,
 
