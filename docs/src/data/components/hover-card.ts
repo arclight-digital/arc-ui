@@ -8,7 +8,7 @@ export const hoverCard: ComponentDef = {
   interactivity: 'interactive',
   description: 'Floating card that opens after a delay when its trigger is hovered or focused.',
 
-  overview: `Hover Card shows a floating card when someone hovers over or focuses its trigger. Tooltip shows a short text label. Hover Card holds structured content, such as a profile preview, link metadata or a product summary, that opens without a click.
+  overview: `Hover Card shows a floating card when someone hovers over or focuses its trigger. Tooltip shows a short text label. Hover Card holds any markup and opens without a click.
 
 The card opens after \`open-delay\` (400ms by default) and closes \`close-delay\` (300ms by default) after the cursor leaves the trigger. Moving the cursor into the card cancels the close, so people can use links and buttons inside it. Escape closes it while focus is in the trigger or the card.
 
