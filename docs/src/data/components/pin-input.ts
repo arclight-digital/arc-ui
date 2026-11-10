@@ -7,43 +7,34 @@ export const pinInput: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'One-character-per-box input for PINs, OTPs, and verification codes with auto-advance, paste support, and optional masking.',
+    'One box per character for PINs, one-time passwords and verification codes, with auto-advance, paste and optional masking.',
 
-  overview: `PinInput renders a row of individual input boxes, one per character, for entering PINs, one-time passwords, and verification codes. Each box accepts a single character and automatically advances focus to the next box on entry, so typing is fast. The component supports backspace navigation (moving back to the previous box when the current one is empty), arrow key movement between boxes, and full clipboard paste that fills multiple boxes at once.
+  overview: `PinInput renders a row of single-character boxes. Typing a character moves focus to the next box. Backspace in an empty box moves back and clears the previous one, the left and right arrow keys move between boxes without changing them, and pasting fills the boxes from the focused one onward, skipping characters that \`type\` doesn't allow.
 
-The \`type\` prop controls character validation: \`"number"\` restricts input to digits 0-9, \`"alphanumeric"\` allows letters and digits, and \`"text"\` accepts any single character. When \`mask\` is enabled, entered characters are obscured with dots (using CSS \`-webkit-text-security: disc\`) for sensitive codes. An optional \`separator\` prop inserts a visual dash between groups of boxes. For example, setting \`separator="3"\` on a 6-digit code renders it as three boxes, a dash, and three more boxes.
+\`type\` sets what each box accepts: \`"number"\` takes digits 0-9, \`"alphanumeric"\` takes letters and digits, and \`"text"\` takes any character. \`type="number"\` also sets \`inputmode="numeric"\`, so phones show a number pad. \`mask\` hides entered characters as dots with \`-webkit-text-security: disc\`. \`separator\` draws a dash every N boxes, so \`separator="3"\` on a 6-digit code shows three boxes, a dash and three more.
 
-PinInput fires \`arc-input\` on every character entry or deletion, providing the current partial value. When all boxes are filled it fires \`arc-change\` (the commit for a fixed-length code) along with \`arc-complete\`, the more specific name kept for consumers that auto-submit. Listen to either one to trigger form submission or validation at the right moment, with no polling or length-checking.`,
+\`arc-input\` fires on every entry or deletion with the partial value. When every box is filled, \`arc-change\` fires (the commit for a fixed-length code) along with \`arc-complete\`, the more specific name kept for code that auto-submits. Listen to either to submit or validate.`,
 
   features: [
-    'Auto-advance focus to the next box after each valid character entry',
-    'Backspace navigates to and clears the previous box when the current box is empty',
-    'Arrow key navigation between boxes without modifying content',
-    'Clipboard paste support that fills multiple boxes from the cursor position',
-    'Configurable `type` validation: `"number"`, `"alphanumeric"`, or `"text"`',
-    'Mask mode via `mask` prop for obscuring sensitive codes with dots',
-    'Visual separator dashes between groups via the `separator` prop (e.g. every 3 boxes)',
-    'Split events: `arc-input` on every keystroke, `arc-change` and `arc-complete` when all boxes are filled',
+    'Each box is 42px wide at the default size, 34px at `sm` and 50px at `lg`',
   ],
 
   guidelines: {
     do: [
-      'Set `length` to match the expected code length: 4 for PINs, 6 for OTPs, etc.',
-      'Use `type="number"` for numeric-only codes and set `inputmode="numeric"` for mobile keyboards',
-      'Enable `mask` for sensitive codes like passwords or security PINs',
-      'Listen for `arc-complete` to auto-submit or validate once the full code is entered',
-      'Provide a `label` so users understand what code they are entering',
+      'Set `length` to the code length, for example 4 for a PIN or 6 for a one-time code',
+      'Use `type="number"` for codes that are digits only',
+      'Turn on `mask` for security PINs',
+      'Give it a `label` that names the code, unless the surrounding text already does',
     ],
     dont: [
-      'Do not use PinInput for general text entry: it is designed exclusively for fixed-length codes',
-      'Do not set `length` higher than ~8: long codes are better handled with a standard text input',
-      'Do not omit the `label` prop when the pin input is used standalone without surrounding context',
-      'Do not use `separator` values that produce uneven groups at the end (e.g. `separator="4"` on a 6-digit code)',
-      'Avoid placing PinInput in very narrow containers: each box needs at least 42px width plus gaps',
+      'Don\'t use it for free text. It\'s for fixed-length codes',
+      'Don\'t set `length` above about 8. Use a normal text input for longer codes',
+      'Don\'t pick a `separator` that leaves a short last group, like `separator="4"` on a 6-digit code',
+      'Don\'t put it in a container too narrow for its boxes and the gaps between them',
     ],
   },
 
-  previewHtml: `<arc-pin-input label="Verification Code" length="6" separator="3"></arc-pin-input>`,
+  previewHtml: `<arc-pin-input label="Verification code" length="6" separator="3"></arc-pin-input>`,
 
   tabs: [
     {
