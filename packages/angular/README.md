@@ -37,7 +37,7 @@ export class AppComponent {
 }
 ```
 
-Each tier also has its own subpath:
+TODO(copy): the sample below imports from tier subpaths, but the package has one entry point (`ng-package.json` builds only `src/index.ts`, and the export map lists only `.`), so these don't resolve. Add secondary entry points, or drop the sample? Until then, import from `@arclux/arc-ui-angular`.
 
 ```typescript
 import { Button } from '@arclux/arc-ui-angular/input';
@@ -47,7 +47,9 @@ import { AppShell } from '@arclux/arc-ui-angular/layout';
 
 ## Events
 
-Each component exposes its `arc-*` CustomEvents as camelCase `@Output()` emitters (`arc-input` → `(arcInput)`, `arc-select` → `(arcSelect)`, …). The emitted value is the original `CustomEvent`; payloads are on `event.detail`:
+Bind an `arc-*` event by its own name, the way you bind a DOM event: `(arc-input)="onInput($event)"`. `$event` is the `CustomEvent`, and the payload is on `event.detail`.
+
+When an event reports a property's new value, the wrapper also has a `<property>Change` output that emits the bare value (`valueChange` on Input, `checkedChange` on Toggle, `openChange` on Collapsible), so `[(value)]` and `[(checked)]` work. TODO(copy): the sample below binds `(arcInput)`, which no wrapper defines. It should read `(arc-input)`.
 
 ```html
 <arc-input label="Email" (arcInput)="onInput($event)"></arc-input>
