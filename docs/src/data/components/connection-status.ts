@@ -7,40 +7,28 @@ export const connectionStatus: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'Detects online/offline via the navigator API. Offline shows a persistent warning bar with an amber glow pulse. Reconnecting dismisses it with a success flash.',
+    'Shows a warning bar while the browser is offline and a short "Connection restored" message when it comes back.',
 
-  overview: `ConnectionStatus monitors the browser's network state via the Navigator online/offline API and surfaces a persistent notification bar when connectivity is lost. It needs no configuration: place it once in your layout.
+  overview: `ConnectionStatus listens for the browser's \`online\` and \`offline\` events. Going offline expands a warning-colored bar that reads "You are offline", with a pulsing dot, and it stays until the connection returns. Then the bar turns success-colored, reads "Connection restored" and collapses after 3 seconds. It has no props.
 
-When the browser goes offline, a warning bar slides down from the top of the viewport with an amber glow pulse animation, telling the user their connection has been lost. The bar persists until connectivity is restored, at which point it briefly flashes green (success variant) with a "Back online" message before auto-dismissing.
+The bar is in normal document flow, not fixed to the viewport, so it expands wherever you put it. Place it once near the top of your layout, or inside a fixed container if it has to stay on screen.
 
-The component fires \`arc-online\` and \`arc-offline\` events so your application can react to connectivity changes, for example by pausing sync, queuing mutations for retry, or showing extra UI. The bar uses \`aria-live="polite"\` so screen readers announce changes at the next pause instead of interrupting the user.`,
+\`arc-offline\` and \`arc-online\` fire on each change, so you can pause sync while offline and flush queued requests when the connection is back. The browser's online state only says there's a network connection. It doesn't tell you whether your API is reachable.`,
 
   features: [
-    'Automatic online/offline detection via Navigator API',
-    'Persistent warning bar with amber glow pulse when offline',
-    'Success flash with auto-dismiss when connectivity is restored',
-    'No configuration: place once, no props required',
-    '`arc-online` and `arc-offline` events for application-level reactions',
-    'Slide-down enter and collapse exit transitions',
-    'aria-live="polite" for non-disruptive screen-reader announcements',
-    'Full-width bar anchored to the top of the viewport',
-    'Respects `prefers-reduced-motion` by disabling the glow pulse',
+    'The bar has `role="status"` and `aria-live="polite"`, so screen readers announce the change without interrupting',
+    'If the page loads offline, the bar shows straight away, but `arc-offline` doesn\'t fire',
+    'Reduced motion turns off the expand transition and the dot\'s pulse',
+    'Safe to render on the server: it assumes it\'s online until the first client render reads `navigator.onLine`',
   ],
 
   guidelines: {
     do: [
-      'Place a single <arc-connection-status> at the root of your layout',
-      'Listen for arc-offline to pause background sync or queue operations',
-      'Listen for arc-online to retry failed requests or flush queued mutations',
-      'Let the component manage its own visibility; do not toggle it manually',
-      'Test with browser DevTools Network offline simulation',
+      'Test it with the Offline setting in your browser DevTools Network panel',
+      'Leave its visibility to the component. There\'s no prop to show or hide the bar',
     ],
     dont: [
-      'Do not create multiple <arc-connection-status> elements; one per application is enough',
-      "Do not override the component's internal visibility state; it manages itself",
-      'Do not rely on connection-status as a health check; it only detects browser-level offline',
-      'Do not use connection-status for API-level errors. Use toast or alert for those',
-      'Do not hide the component on specific pages; connectivity is always relevant',
+      'Don\'t use it for API errors. Use Toast or Alert',
     ],
   },
 
