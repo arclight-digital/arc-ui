@@ -7,55 +7,44 @@ export const form: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input, Textarea, and Button into a cohesive data-entry workflow.',
+    'Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input, Textarea, and Button into one data-entry workflow.',
 
-  overview: `Form is the top-level container that turns a collection of ARC UI input components into a coordinated, validatable unit. It intercepts the native submit event, runs constraint validation across every child field, surfaces per-field error messages, and emits a structured \`arc-submit\` event only when all rules pass.
+  overview: `Form wraps ARC UI inputs in a real \`<form>\`. On submit it checks every field, puts each failing field's message on that field, and fires \`arc-invalid\` with the list of errors. When everything passes it fires \`arc-submit\` with \`{ values, formData, valid }\`. Use it whenever you collect more than one field, so \`required\`, patterns and an error summary work without validation code of your own.
 
-Use Form whenever you collect more than a single field from the user: contact forms, login screens, settings panels, multi-step wizards. Wrapping fields in a Form gives you required-field enforcement, pattern matching, and an error summary without imperative validation code.
+**Validation comes from the controls.** Form doesn't decide whether a field is filled. It calls each control's \`checkValidity()\` and reads its \`validationMessage\`. A control that knows its own empty state, such as a multi-select with an empty array or a date range with one end set, is judged on its own terms, and a control you wrote yourself takes part as long as it's form-associated. Form only clears error text it wrote, so an error you set from a server response survives the next submit.
 
-**Validation comes from the controls.** Form does not re-derive whether a field is filled; it calls each control's \`checkValidity()\` and reads its \`validationMessage\`. So a control that understands its own emptiness (a multi-select with an empty array, a date range with one end set) is judged on its own terms, and a control you have written yourself participates as long as it is form-associated. Form only clears error text it wrote, so an error you set from a server response survives a later submit attempt.
+**Fields can be anywhere inside the form.** A control inside a Fieldset, a Card or any layout component is still found, validated, serialized and disabled with the form.
 
-**Fields can sit anywhere inside the form.** Nesting a control inside Fieldset, Card, or any layout component makes no difference to whether it is found, validated, serialized, or disabled along with the form.
+**\`submit()\` is for a submit control outside the form.** A button outside \`<arc-form>\` doesn't submit it: a wizard's Next button in a parent toolbar, a Save button in the app header, a keyboard shortcut. \`submit()\` goes through the real \`<form>\`, so validation runs and \`arc-submit\` fires as if a submit button inside had been pressed, and a form with an \`action\` still loads that URL. It doesn't skip validation.
 
-**\`submit()\` is for the submit control the form cannot own.** A button outside the \`<arc-form>\` does not trigger it: a wizard's Next in a parent toolbar, a Save in an app-level header, a keyboard shortcut. Calling \`submit()\` runs validation and fires \`arc-submit\` cancelably, exactly as pressing a submit button inside the form does, and it routes through the real \`<form>\` so action-mode submits still navigate. It is not a way to skip validation.
+**\`reset()\` restores, it doesn't empty.** Each control goes back to the state it had when it first connected, as reset does in HTML, so a field with a default value gets that value back. \`arc-reset\` fires after.
 
-**\`reset()\` restores, it does not empty.** Each control returns to the state it had when it first connected, which is what reset means in HTML. A field that shipped with a default value gets that value back, rather than being blanked.
-
-All ARC UI form controls (Input, Textarea, Select, Checkbox, Toggle, RadioGroup) implement the \`ElementInternals\` form-association API, so they participate in native \`FormData\` collection automatically. This means you can use them inside a plain \`<form action="/api/contact" method="POST">\` for zero-JS static site submissions, or wrap them in \`<arc-form>\` for the full JS validation + \`arc-submit\` experience. For completely framework-free sites, ARC UI ships a \`form.css\` stylesheet that applies the same design tokens to native HTML form elements.`,
+Input, Textarea, Select, Checkbox, Toggle and RadioGroup are form-associated through \`ElementInternals\`, so they also submit with a plain \`<form action="/api/contact" method="POST">\` once the components are loaded. With \`action\` set, \`<arc-form>\` validates, fires \`arc-submit\` and then lets the browser submit natively.`,
 
   features: [
-    'Intercepts native form submission and runs constraint validation on all associated fields',
-    'Aggregates per-field errors and displays an optional error summary above the submit button',
-    'Fires `arc-submit` with a serialized FormData payload only when validation passes',
-    'Supports `novalidate` to bypass built-in checks for custom validation flows',
-    'Coordinates `disabled` state: disabling the form disables every child field',
-    'Works with any form-associated element, including native inputs and ARC UI components',
-    'Prevents double-submission by disabling the submit button while `loading` is true',
-    'Reset support via `arc-reset` event and programmatic `.reset()` method; restores initial values rather than blanking fields',
-    '`submit()` submits from outside the form (a toolbar button or shortcut), with validation and `arc-submit` unchanged',
-    'Finds controls at any depth, including inside Fieldset and layout components',
-    'Delegates validity to each control, so custom form-associated elements participate',
-    'Keyboard-accessible: Enter inside a single-line input triggers submission',
-    'Pairs with Input, Textarea, Select, Checkbox, and RadioGroup without extra wiring',
+    'An error summary above the submit area lists what failed. Set `no-error-summary` to show errors your own way',
+    '`novalidate` skips the checks, and `arc-submit` then reports `valid: false` if any field failed',
+    '`disabled` disables every field in the form',
+    '`loading` dims the form to 70% opacity, blocks pointer input and ignores submits until it\'s cleared',
+    'Enter in a single-line input submits the form',
   ],
 
   guidelines: {
     do: [
-      'Wrap all related fields inside a single Form so validation and submission are coordinated',
-      'Give every field a unique `name` so FormData serialisation produces the correct key-value pairs',
-      'Set `required` on mandatory fields and let Form handle the validation messaging',
-      'Provide a clear submit Button with `type="submit"` as the last child of the Form',
-      'Use the `loading` prop to indicate an async submission in progress and prevent duplicate requests',
-      'Listen for `arc-submit` instead of native `submit` to receive validated, serialized data',
-      'Include meaningful labels on every field so the error summary is readable',
+      'Put all related fields in one Form, so they validate and submit together',
+      'Give every field a unique `name`. Without one, its key falls back to its label',
+      'Set `required` on mandatory fields and let Form show the messages',
+      'End the form with a Button that has `type="submit"`',
+      'Set `loading` while an async submit runs, to prevent duplicate requests',
+      'Listen for `arc-submit`, not the native `submit`, to get the validated values',
+      'Give every field a label, so the error summary reads well',
     ],
     dont: [
-      'Do not nest one Form inside another. HTML forbids nested forms and behavior is undefined',
-      'Do not handle validation manually when the built-in constraint API already covers your rules',
-      'Do not rely solely on client-side validation. Always validate on the server as well',
-      'Do not place the submit Button outside the Form; it will not trigger submission',
-      'Avoid calling `event.preventDefault()` on `arc-submit` unless you need to cancel the submission',
-      'Do not use `novalidate` as a permanent workaround for broken validation. Fix the constraints instead',
+      'Don\'t put one Form inside another. HTML doesn\'t allow nested forms',
+      'Don\'t write validation by hand for rules the constraint API already covers',
+      'Don\'t rely on client-side validation alone. Validate on the server too',
+      'Don\'t expect a button outside the Form to submit it. Call `submit()` from that button',
+      'Don\'t use `novalidate` to get around broken validation. Fix the constraints',
     ],
   },
 
