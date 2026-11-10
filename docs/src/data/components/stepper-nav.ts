@@ -7,41 +7,29 @@ export const stepperNav: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Wizard navigation with back/next/skip controls and step validation gates. Steps connected by gradient lines with interactive routing.',
+    'Wizard navigation with numbered step indicators and Back, Next and Skip buttons.',
 
-  overview: `StepperNav is a full wizard controller that pairs step indicators with built-in navigation buttons: Back, Next, and optional Skip. Unlike the display-only Stepper component, which only shows progress, StepperNav owns the routing logic: it tracks the active step, enforces linear or free-form progression, and dispatches events when the user advances, retreats, or completes the flow.
+  overview: `StepperNav runs a multi-step flow. It draws a numbered indicator for each step, puts your step content in its default slot, and adds Back, Next and Skip buttons below. On the last step, Next reads "Complete". Use Stepper when you only need to show progress.
 
-Each step is connected by gradient lines that fill as the user progresses, showing completed, active, and upcoming stages. The active step pulses with an accent-primary glow, while completed steps show a filled check indicator. When the \`linear\` prop is set, users cannot jump ahead without completing the current step, which suits checkout flows or onboarding wizards where order matters.
+\`active\` is the zero-based index of the current step. Completed steps turn \`--color-success\` with a check, the active step fills with \`--interactive\` and a glow, and the line leading to each completed step fills with the accent gradient. Clicking an indicator jumps to that step.
 
-The component dispatches \`arc-change\` on every step transition and \`arc-complete\` when the final step is confirmed, so your application can validate inputs, persist state, or redirect the user. StepperNav handles the navigation chrome and leaves step content to your application, so render whatever forms, media, or confirmation screens each stage needs.`,
+\`linear\` disables the indicators for steps ahead of the current one and removes Skip, so the reader can only move forward with Next. StepperNav doesn't validate step content, and Next always moves on. \`arc-change\` fires on every step change with the new index in \`detail.step\`, and \`arc-complete\` fires when the reader presses Complete.`,
 
   features: [
-    'Built-in Back, Next, and Skip navigation buttons',
-    'Linear mode enforces sequential step completion',
-    'Gradient connector lines fill as steps are completed',
-    'Active step with accent-primary glow indicator',
-    'Completed steps show filled check marks',
-    '`arc-change` event on every step transition',
-    '`arc-complete` event when the wizard finishes',
-    'Keyboard accessible navigation controls',
-    'Configurable step labels via the steps array',
-    'Token-driven theming via CSS custom properties',
+    'Labels from `steps` become each indicator\'s accessible name, such as "Step 2: Profile". They aren\'t drawn on screen',
+    'Skip appears only when `linear` is off and the reader isn\'t on the last step',
   ],
 
   guidelines: {
     do: [
-      'Use linear mode for checkout, onboarding, or any flow where step order matters',
-      'Provide clear, concise labels for each step: two to three words maximum',
-      'Validate the current step before allowing Next to proceed',
-      'Listen for arc-complete to redirect or show a confirmation screen',
-      'Keep the total number of steps between three and six',
+      'Use `linear` for checkout, onboarding or any flow where step order matters',
+      'Keep step labels to two or three words',
+      'Listen for `arc-complete` to redirect or show a confirmation screen',
+      'Keep a flow to three to six steps, and group a longer one into stages',
     ],
     dont: [
-      'Do not use StepperNav for display-only progress; use Stepper instead',
-      'Do not add more than seven steps: break long flows into grouped stages',
-      'Do not skip validation in linear mode: users expect gated progression',
-      'Do not mix StepperNav and Tabs for the same content; pick one navigation paradigm',
-      'Do not nest StepperNav inside another StepperNav',
+      'Don\'t use it for display-only progress. Use Stepper',
+      'Don\'t use StepperNav and Tabs for the same content',
     ],
   },
 
