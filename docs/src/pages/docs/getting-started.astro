@@ -1,7 +1,7 @@
 ---
 import DocsLayout from '../../layouts/DocsLayout.astro';
 import { components } from '../../data/components/index';
-import { version, tokenCount } from '../../data/site-stats';
+import { tokenCount } from '../../data/site-stats';
 
 const componentCount = components.length;
 
@@ -20,13 +20,6 @@ const headings = [
   { id: 'production', label: 'Going to production' },
   { id: 'next-steps', label: 'Next steps' },
 ];
-
-const cdnSnippet = `<link rel="stylesheet"
-  href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
-<script type="module"
-  src="https://unpkg.com/@arclux/arc-ui@${version}/register"><\/script>
-
-<arc-button variant="primary">Click Me</arc-button>`;
 
 /* The three reference faces base.css names, at the weights the roles ask for.
    A face that is not loaded falls back to system-ui silently, so this is a
@@ -89,15 +82,12 @@ await page.getByRole('radio', { name: 'Weekly' }).click();
         <arc-tab label="yarn">
           <arc-code-block language="bash" code="yarn add @arclux/arc-ui lit"></arc-code-block>
         </arc-tab>
-        <arc-tab label="CDN">
-          <arc-code-block language="html" code={cdnSnippet}></arc-code-block>
-        </arc-tab>
       </arc-tabs>
 
       <p class="docs-text">
-        Lit is a peer dependency, so you install it alongside ARC UI. TODO(copy): the CDN tab's
-        modules import <code>lit</code> by its bare name, which a browser can't resolve without an
-        import map. Fix the snippet or drop the tab?
+        Lit is a peer dependency, so you install it alongside ARC UI. ARC UI needs a bundler.
+        For pages with no build step, <a href="/docs/frameworks#vanilla">the HTML package</a> has
+        CSS-only versions of many components.
       </p>
     </section>
 
