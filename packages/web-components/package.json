@@ -1,7 +1,7 @@
 {
   "name": "@arclux/arc-ui",
   "version": "4.9.1",
-  "description": "ARC UI — Lit Web Components implementing the Arclight design system.",
+  "description": "ARC UI's Lit web components, the source every ARC UI framework package is generated from.",
   "type": "module",
   "main": "src/index.js",
   "module": "src/index.js",
