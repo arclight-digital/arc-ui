@@ -13,7 +13,7 @@ export const qrCode: ComponentDef = {
 
 The modules use \`--qr-fg\` if you set it and \`currentColor\` otherwise, which defaults to \`--text-primary\`. The background is \`--qr-bg\`, transparent by default. Set either custom property to change them.
 
-Scanners read dark modules on a light background more reliably than the reverse. On ARC's dark theme the default rendering is light modules on a dark surface, an inverted code. When a scan has to work (payment links, ticket check-in, device pairing), set \`contrast\`. It draws black modules on a white rounded card in both themes and ignores \`--qr-fg\` and \`--qr-bg\`.
+The QR standard draws dark modules on a light background, and not every scanner reads the reverse. On ARC's dark theme the default rendering is light modules on a dark surface, an inverted code. \`contrast\` draws black modules on a white rounded card in both themes and ignores \`--qr-fg\` and \`--qr-bg\`. Set it when the code has to scan on the dark theme.
 
 The code re-encodes whenever \`value\` or \`level\` changes, and renders nothing when \`value\` is empty or too long for a QR code at that level. The SVG has \`role="img"\` and takes its accessible name from \`label\`, or "QR code" without one. The value itself is never exposed to assistive technology, because it may be a secret like a 2FA URI or a token.`,
 
@@ -29,11 +29,11 @@ The code re-encodes whenever \`value\` or \`level\` changes, and renders nothing
       'Write a `label` that says what the code does ("Scan to open the event page"), not the value. Assistive technology reads the label, and the value may be a secret',
       'Use level M (the default) for most content. Step up to Q or H only when part of the code may be covered or worn, as with a logo overlay or a printed code',
       'Keep values short. Shorter strings make fewer modules, which scan faster and from further away',
-      'Render codes at 160px or larger when they\'re scanned from another device across a desk',
+      'Keep codes at the default 160px or larger when another device has to scan them',
       'Show the same link as text or with a copy button for people who can\'t scan',
     ],
     dont: [
-      'Don\'t encode strings over about 1KB. Capacity runs out, and dense codes don\'t scan reliably at usual sizes',
+      'Don\'t encode long strings. Level M holds about 2.3KB at most, and a code gets hard to scan at usual sizes well before that',
       'Don\'t set `--qr-fg` and `--qr-bg` to colors of similar lightness. Scanners need strong dark-on-light contrast',
       'Don\'t set `quiet-zone` below 2 when the code is next to busy content',
     ],
