@@ -7,13 +7,13 @@ export const numberInput: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'A number field between decrement and increment buttons, with min/max clamping, a step size and arrow-key shortcuts.',
+    'A number field with minus and plus buttons that keeps the value between `min` and `max`.',
 
   overview: `NumberInput puts decrement and increment buttons on either side of a text field and draws the three as one bordered control. Use it for an exact value like a quantity. For an approximate value or a wide range, use Slider.
 
 Set \`min\` and \`max\` and the value is clamped to them. The button at a limit disables itself. \`step\` sets how far a button click or arrow key moves the value, and Shift+Arrow moves it 10 steps.
 
-A \`label\` renders above the control and is tied to the field with a generated \`id\` and \`for\`. The events mirror the native control: typing fires \`arc-input\` on each keystroke, and the value commits with \`arc-change\` on blur or Enter. A button click or an arrow key fires both, because each is an edit and a commit in one gesture. Every event carries the new value in its detail.`,
+A \`label\` renders above the control and is tied to the field with a generated \`id\` and \`for\`. The events mirror the native control: typing fires \`arc-input\` on each keystroke, and the value commits with \`arc-change\` on blur or Enter. A button click or an arrow key fires both at once. Every event carries the new value in its detail.`,
 
   features: [
     '`spinbutton` role with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`',
