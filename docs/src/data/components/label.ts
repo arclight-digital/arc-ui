@@ -7,36 +7,28 @@ export const label: ComponentDef = {
   tier: 'input',
   interactivity: 'static',
   description:
-    'Form label with required indicator, optional description text, and tooltip slot. Pairs with any input component via the `for` attribute.',
+    'Form label with a required indicator, description text and a tooltip slot. Clicking it focuses the control whose id is in `for`.',
 
-  overview: `Label provides a styled, accessible label for form controls. It renders a \`<label>\` element that can target any input via the \`for\` prop, clicking the label to focus the associated control just like native HTML.
+  overview: `Label puts a styled label above a form control. Set \`for\` to the control's \`id\` and clicking the label focuses that control.
 
-The \`required\` prop appends a red asterisk next to the label text, signaling to users that the field is mandatory. A \`description\` slot renders smaller muted helper text below the label, useful for explaining expected formats or constraints without cluttering the label itself. A \`tooltip\` slot lets you place an info icon or tooltip trigger inline with the label.
+The \`<label>\` element is inside Label's shadow root, so it can't reach an input outside it. It doesn't give the input its accessible name. Use the input's own label for that, such as the \`label\` prop on \`<arc-input>\`.
 
-Three sizes (sm, md, lg) control the font size, and the disabled state reduces opacity and blocks pointer events, visually syncing with a disabled input below it.`,
+\`required\` adds a red asterisk after the text. The asterisk is hidden from screen readers, so set \`required\` on the input as well. The \`description\` slot puts smaller muted text under the label, and the \`tooltip\` slot puts an info icon or tooltip trigger beside it.`,
 
   features: [
-    'Native `<label>` element with `for` attribute for accessible input association',
-    'Required indicator (red asterisk) via the `required` prop',
-    'Description slot for helper text below the label',
-    'Tooltip slot for inline info icons or tooltip triggers',
-    'Three size presets: sm, md, lg',
-    'Disabled state with reduced opacity',
-    'Click-to-focus behavior matching native label semantics',
-    'Exposed CSS parts: label, description',
+    'Three sizes: sm, md, lg',
+    '`disabled` halves the opacity and blocks pointer events, to match a disabled input below it',
   ],
 
   guidelines: {
     do: [
-      'Always pair a label with its input. Every form control needs an accessible label',
-      "Set the `for` prop to match the target input's `id` attribute",
+      'Give every control an accessible name of its own. Label doesn\'t supply one',
       'Use the description slot for format hints like "MM/DD/YYYY" or character limits',
-      'Use the required indicator to clearly mark mandatory fields',
+      'Mark mandatory fields with `required`, on both the label and the input',
     ],
     dont: [
-      'Do not use Label as standalone text. It is a form element, not a heading or paragraph',
-      'Do not hide labels visually while keeping them only for screen readers. Visible labels help all users',
-      'Do not put interactive elements inside the label text. Use the tooltip slot instead',
+      'Don\'t use Label as standalone text. Use a heading or paragraph',
+      'Don\'t put interactive elements in the label text. Use the tooltip slot',
     ],
   },
 
