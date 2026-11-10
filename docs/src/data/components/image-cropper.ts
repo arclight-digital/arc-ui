@@ -34,7 +34,7 @@ Three methods read the result. \`getCrop()\` returns \`{ x, y, width, height }\`
     ],
     dont: [
       'Don\'t read crop coordinates from the rectangle on screen. `getCrop()` converts them to natural image pixels',
-      'Don\'t set `height` below about 160px. The rectangle and handles need room',
+      'Don\'t shrink `height` far below its 320px default. The rectangle and handles need room',
       'Don\'t use it to frame an image for display. Use CSS `object-fit` or an aspect-ratio container',
     ],
   },
