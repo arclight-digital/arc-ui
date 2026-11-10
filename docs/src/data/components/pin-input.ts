@@ -7,13 +7,13 @@ export const pinInput: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'One box per character for PINs, one-time passwords and verification codes, with auto-advance, paste and optional masking.',
+    'A row of one-character boxes for entering a PIN or a one-time code.',
 
   overview: `PinInput renders a row of single-character boxes. Typing a character moves focus to the next box. Backspace in an empty box moves back and clears the previous one, the left and right arrow keys move between boxes without changing them, and pasting fills the boxes from the focused one onward, skipping characters that \`type\` doesn't allow.
 
 \`type\` sets what each box accepts: \`"number"\` takes digits 0-9, \`"alphanumeric"\` takes letters and digits, and \`"text"\` takes any character. \`type="number"\` also sets \`inputmode="numeric"\`, so phones show a number pad. \`mask\` hides entered characters as dots with \`-webkit-text-security: disc\`. \`separator\` draws a dash every N boxes, so \`separator="3"\` on a 6-digit code shows three boxes, a dash and three more.
 
-\`arc-input\` fires on every entry or deletion with the partial value. When every box is filled, \`arc-change\` fires (the commit for a fixed-length code) along with \`arc-complete\`, the more specific name kept for code that auto-submits. Listen to either to submit or validate.`,
+\`arc-input\` fires on every entry or deletion with the partial value. When every box is filled, \`arc-change\` fires and then \`arc-complete\`, both with the full value. Listen to either to submit or validate.`,
 
   features: [
     'Each box is 42px wide at the default size, 34px at `sm` and 50px at `lg`',
