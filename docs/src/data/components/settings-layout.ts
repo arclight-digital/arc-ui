@@ -6,42 +6,27 @@ export const settingsLayout: ComponentDef = {
   tag: 'arc-settings-layout',
   tier: 'layout',
   interactivity: 'hybrid',
-  description: 'Settings page with side navigation and content area.',
+  description: 'A settings page frame: section links in a side or top nav, and the settings content beside or below them.',
 
-  overview: `SettingsLayout is a two-region layout for settings and preference pages. It pairs a navigation panel (where you place section links like "Profile", "Security", "Billing") with a content area that displays the active settings form. The \`nav-position\` prop lets you choose between a left sidebar (the classic settings pattern) and a top tab-bar style layout.
+  overview: `SettingsLayout splits a settings page into a nav of section links ("Profile", "Security", "Billing") and a content area for the forms. \`nav-position="left"\`, the default, puts the nav in a 220px sidebar on a raised background. \`nav-position="top"\` puts it in a bar above the content. Both use the same slots, so switching is one attribute.
 
-In \`left\` mode, the navigation renders as a 220px sidebar with a card-colored background and a right border, which separates it from the content. In \`top\` mode, the navigation appears as a horizontal bar above the content with a bottom border, which suits a few sections or tight horizontal space. Both modes use the same slot names, so switching between them requires changing a single attribute.
-
-On screens narrower than 768px, the left sidebar layout automatically collapses to a stacked column: the nav moves above the content with a bottom border instead of a right border. This needs no configuration. The component exposes CSS parts for the layout container, nav region, and content region.`,
+Use it for account settings, preferences and configuration. For other pages, use PageLayout.`,
 
   features: [
     '`arc-settings-nav-item` links with an active state that follows the URL hash, so a shared link or the back button lands on the right section',
     '`sections` shows only the section whose `id` matches the active item, for a tabbed settings page',
-    'On a phone the nav becomes a scrolling row of tabs above the content, instead of a stack that pushes it down',
-    'Two layout modes: left sidebar (220px) and top navigation bar',
-    'Card-colored nav background with subtle border separation',
-    'Automatic responsive collapse from sidebar to stacked layout at 768px',
-    'Named slots: nav (for section links) and default (for content)',
-    'CSS Grid layout in left mode, flexbox column in top mode',
-    'Exposed CSS parts (layout, nav, content) for targeted ::part() styling',
-    'Consistent padding via design tokens (`--space-lg` for nav, `--space-xl` for content)',
-    'Border swaps from right to bottom automatically on mobile collapse',
+    'Below 768px the nav becomes a scrolling row of tabs above the content, in either mode, instead of a stack that pushes the content down',
+    'CSS parts `layout`, `nav` and `content`',
   ],
 
   guidelines: {
     do: [
-      'Use SettingsLayout for account settings, preferences, and configuration pages',
-      'Place a vertical link list or tab group in the nav slot for section switching',
-      'Use nav-position="left" when you have more than four or five settings sections',
-      'Use nav-position="top" for compact settings pages with only two or three sections',
-      'Nest individual settings forms or panels in the default content slot',
+      'Use `nav-position="left"` for more than four or five sections',
+      'Use `nav-position="top"` for two or three sections',
     ],
     dont: [
-      'Do not use SettingsLayout for general page layout; use PageLayout for dashboard and content pages',
-      'Do not place primary application navigation in the nav slot; it is for settings-section switching only',
-      'Do not nest SettingsLayout inside another SettingsLayout or PageLayout with its own sidebar',
-      'Do not override the responsive breakpoint without testing the stacked layout on real mobile devices',
-      'Do not put heavy interactive content (tables, charts) in the nav slot; keep it lightweight',
+      'Don\'t put the app\'s main navigation in the nav slot. It\'s for switching settings sections',
+      'Don\'t put tables, charts or other heavy content in the nav. On a phone it\'s one scrolling row',
     ],
   },
 
