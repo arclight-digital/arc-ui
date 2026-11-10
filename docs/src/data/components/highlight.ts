@@ -6,7 +6,7 @@ export const highlight: ComponentDef = {
   tag: 'arc-highlight',
   tier: 'typography',
   interactivity: 'static',
-  description: 'Text highlighting with search query match markers.',
+  description: 'Shows a string with every match of a search query marked, for search results and filtered lists.',
 
   overview: `Highlight shows the string in \`text\` and wraps every occurrence of \`query\` in a \`<mark>\`. The query is matched as one literal string: regex characters such as \`.\`, \`(\` and \`*\` are escaped, and it isn't split into words. Matching ignores case unless you set \`case-sensitive\`, which suits code search.
 
