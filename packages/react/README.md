@@ -1,8 +1,8 @@
 # @arclux/arc-ui-react
 
-React wrappers for [ARC UI](https://arcui.dev) web components with full TypeScript support, built on [`@lit/react`](https://www.npmjs.com/package/@lit/react).
+React wrappers for [ARC UI](https://arcui.dev) web components, with TypeScript types, built on [`@lit/react`](https://www.npmjs.com/package/@lit/react).
 
-> **Auto-generated** — this package is produced by [Prism](https://www.npmjs.com/package/@arclux/prism) from the canonical source in [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). Do not edit by hand.
+> [Prism](https://www.npmjs.com/package/@arclux/prism) generates this package's code from [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). To change a component, edit its source in [`packages/web-components`](https://github.com/arclight-digital/arc-ui/tree/main/packages/web-components). Hand edits here are overwritten the next time `pnpm generate` runs.
 
 ## Installation
 
@@ -10,7 +10,7 @@ React wrappers for [ARC UI](https://arcui.dev) web components with full TypeScri
 npm install @arclux/arc-ui-react @arclux/arc-ui lit
 ```
 
-Requires `react >= 18.0.0` and `react-dom >= 18.0.0`.
+Requires `react` and `react-dom` ^18.0.0 or ^19.0.0.
 
 ## Usage
 
@@ -38,7 +38,7 @@ function App() {
 }
 ```
 
-Components are organized by tier and can be imported from subpaths:
+Each tier also has its own subpath:
 
 ```tsx
 import { Button } from '@arclux/arc-ui-react/input';
@@ -52,11 +52,13 @@ Each component's `arc-*` CustomEvents are exposed as typed `onArc*` props (`arc-
 
 ## Server-side rendering
 
-The wrappers register custom elements on import, which requires a DOM. In server-rendered React (e.g. Next.js App Router), use them from client components (`'use client'`).
+The wrappers are built on `@lit/react`, which uses React hooks, so in the Next.js App Router import them from client components (`'use client'`).
+
+To render the components on the server, pass your framework's HTML output through `renderDeclarativeShadowDOM` from `@arclux/arc-ui/ssr`. It renders each `<arc-*>` element into a declarative shadow root and needs the optional peer `@lit-labs/ssr`. On the client, import `@arclux/arc-ui/hydrate` before any component. The [server rendering guide](https://arcui.dev/docs/server-rendering) has the details.
 
 ## Theming
 
-Components read design tokens from CSS custom properties. Overriding the base accent tokens re-themes every component — see the [theming guide](https://arcui.dev/docs/theming):
+Components read design tokens from CSS custom properties. Gradients, glows and focus rings are built from the accent tokens, so overriding those changes them too. See the [theming guide](https://arcui.dev/docs/theming):
 
 ```css
 :root {
@@ -67,7 +69,7 @@ Components read design tokens from CSS custom properties. Overriding the base ac
 
 ## Links
 
-- [Documentation & interactive examples](https://arcui.dev)
+- [Documentation](https://arcui.dev)
 - [Canonical source (`@arclux/arc-ui`)](https://www.npmjs.com/package/@arclux/arc-ui)
 - [Repository](https://github.com/arclight-digital/arc-ui)
 - [License (MIT)](https://github.com/arclight-digital/arc-ui/blob/main/LICENSE)
