@@ -7,13 +7,13 @@ export const badge: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'Compact pill-shaped label for status indicators, category tags, and notification counts. Seven color variants encode meaning across dashboards, tables, and card layouts.',
+    'A small monospace pill that labels a status, a category or a count next to the thing it describes.',
 
   overview: `Badge is a small pill-shaped label for a status, a category or a count. It's small enough to annotate a table row, a card header or a sidebar item without pushing the layout around.
 
 Three of the seven variants are for labels that categorize: \`default\` (neutral gray) for categories and metadata, \`primary\` for an active or informational state such as "In progress", "New" or a notification count, and \`secondary\` for a separate category such as "Featured", "Beta" or "Archived".
 
-The other four (\`success\`, \`warning\`, \`error\` and \`info\`) are the library's status set. They use the semantic color tokens, so a badge reporting a state matches an Alert or a Tag reporting the same one. Use them for a build result, a health check or a severity. \`info\` is the newest, added so every status set in the library has the same four. If none of the seven fit, the \`color\` prop takes an RGB triplet and overrides the variant, for category colors that come from data.
+The other four (\`success\`, \`warning\`, \`error\` and \`info\`) are the library's status set. They use the semantic color tokens, so a badge reporting a state matches an Alert or a Tag reporting the same one. Use them for a build result, a health check or a severity. If none of the seven fit, the \`color\` prop takes an RGB triplet and overrides the variant, for category colors that come from data.
 
 Badge and Tag look different on purpose. Badge is monospace, sentence case and compact. Tag is uppercase in the label font with 2px tracking and a touch-sized minimum height. They were slated to merge in v4 and didn't, because merging would have reset every badge in Tag's uppercase face, turning \`v3.2.0\` into \`V3.2.0\` in a taller box. Use Badge for dense inline annotation and Tag for filter chips and categorical labels.
 
