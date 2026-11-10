@@ -6,7 +6,7 @@ export const dashboardGrid: ComponentDef = {
   tag: 'arc-dashboard-grid',
   tier: 'layout',
   interactivity: 'static',
-  description: 'Responsive grid for dashboard metric cards.',
+  description: 'Wraps dashboard cards into as many columns as fit, with no breakpoints to write.',
 
   overview: `DashboardGrid lays out metric cards in a CSS grid that wraps them into as many columns as fit. Each column is at least \`min-column-width\` wide (280px by default), so you don't need breakpoints. Lower it to fit more, smaller cards, or raise it for fewer, wider ones. \`gap\` sets the space between cards and takes any CSS length or spacing token. It defaults to \`var(--space-lg)\`, which is also the grid's padding.
 
