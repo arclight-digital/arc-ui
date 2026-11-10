@@ -8,42 +8,31 @@ export const timePicker: ComponentDef = {
   interactivity: 'interactive',
   description: 'Scrollable column-based time picker with 12h/24h format support.',
 
-  overview: `TimePicker provides a column-based time selection interface that combines a read-only text input with a dropdown panel containing scrollable hour and minute columns. In 12h mode a third AM/PM column is shown. Clicking the input toggles the dropdown where users can independently select hours and minutes by clicking options styled as buttons inside scrollable lists.
+  overview: `TimePicker is a read-only text input that opens a dropdown with scrollable hour and minute columns, plus an AM/PM column in 12h mode. The reader picks the hour and minute separately by clicking them.
 
-The selected time is displayed in the input in the chosen format (e.g. "2:30 PM" in 12h mode or "14:30" in 24h mode), while the underlying \`value\` property always stores the time in 24-hour "HH:MM" format for consistent data handling. The \`step\` property controls the minute increment (1, 5, 15, or 30) to reduce the number of options when fine-grained selection is unnecessary.
+The input shows the time in the chosen \`format\`, such as "2:30 PM" in \`12h\` or "14:30" in \`24h\`. \`value\` is always 24-hour "HH:MM", whatever the display. \`step\` sets the minute increment (1, 5, 15 or 30).
 
-The \`min\` and \`max\` properties constrain the selectable range: time options outside this range appear dimmed and are non-interactive. When a complete time is selected (both hour and minute), the component dispatches an \`arc-change\` event with the 24-hour time string in the detail. Clicking outside the component or pressing Escape closes the dropdown and returns focus to the input. The dropdown uses a slide-down entrance animation that respects \`prefers-reduced-motion\`. Arrow keys navigate within columns, Tab moves between columns, and Enter confirms a selection.`,
+\`min\` and \`max\` limit the range, and times outside it are dimmed and can't be picked. Once both an hour and a minute are picked, \`arc-change\` fires with the 24-hour time in \`detail.value\`. A click outside closes the dropdown, and Escape closes it and returns focus to the input. The arrow keys move within a column, Tab moves between columns, and Enter picks. The dropdown slides open, except under \`prefers-reduced-motion\`.`,
 
   features: [
-    'Scrollable hour and minute columns for picking a time',
-    '12-hour and 24-hour display format with automatic AM/PM column in 12h mode',
-    'Value always stored in 24-hour "HH:MM" format regardless of display format',
-    'Configurable minute step increment (1, 5, 15, 30) to control granularity',
-    'Min and max time constraints that disable out-of-range options visually',
-    'Full keyboard navigation: Arrow keys within columns, Tab between columns, Enter to select',
-    'Escape key and outside-click dismissal with focus restoration to the input',
-    'Animated dropdown entrance with `prefers-reduced-motion` support',
+    'The dropdown opens in the top layer, so a parent with `overflow: hidden` doesn\'t clip it',
   ],
 
   guidelines: {
     do: [
-      'Set step to 5 or 15 for most scheduling use cases to reduce cognitive load',
-      'Provide a descriptive label like "Start Time" or "Appointment Time" for accessibility',
-      'Use the 24h format value for form submission and API communication, not the display format',
-      'Set min and max to constrain the time range when context requires it (e.g. business hours only)',
-      'Listen to arc-change to capture the selected time and validate it against business rules',
-      'Set the initial value property when editing an existing record so the columns open to the correct selection',
+      'Set `step` to 5 or 15 for most scheduling, so there are fewer minutes to scroll',
+      'Give it a `label` that says which time, such as "Start time" or "Appointment time"',
+      'Send `value` (24-hour) to forms and APIs, not the displayed text',
+      'Set `min` and `max` when only part of the day is valid, such as business hours',
+      'Set `value` when editing an existing record, so the columns open on the saved time',
     ],
     dont: [
-      'Do not use TimePicker for duration input. Use a number input with minutes or a dedicated duration component instead',
-      'Do not allow the user to type directly into the input; it is read-only by design to ensure valid time formats',
-      'Do not set min greater than max, as this will disable all options and make the picker unusable',
-      'Do not forget to handle the arc-change event. Without it, the selected time is not captured',
-      'Do not place TimePicker inside a container with overflow: hidden, as the dropdown will be clipped',
+      'Don\'t use it for a duration. Use a number input that counts minutes',
+      'Don\'t set `min` later than `max`. Every option is disabled and the picker can\'t be used',
     ],
   },
 
-  previewHtml: `<arc-time-picker label="Start Time" placeholder="Pick a time" step="15" style="width:240px"></arc-time-picker>`,
+  previewHtml: `<arc-time-picker label="Start time" placeholder="Pick a time" step="15" style="width:240px"></arc-time-picker>`,
 
   tabs: [
     {
