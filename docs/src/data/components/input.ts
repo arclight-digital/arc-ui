@@ -10,7 +10,7 @@ export const input: ComponentDef = {
   description:
     'Text field with a built-in label, placeholder and validation states. Set `multiline` for a textarea.',
 
-  overview: `Input wraps a native \`<input>\` or \`<textarea>\` with a label, placeholder and validation feedback. Use it for freeform text: names, emails, passwords, search queries or longer messages.
+  overview: `Input wraps a native \`<input>\` or \`<textarea>\` with a label, placeholder and validation feedback.
 
 The \`multiline\` prop swaps the \`<input>\` for a \`<textarea>\` and keeps every other prop the same. The \`prefix\` and \`suffix\` slots put icons, unit labels or a clear button inside the field's border.
 
