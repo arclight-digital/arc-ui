@@ -9,11 +9,11 @@ export const popover: ComponentDef = {
   description:
     'A floating panel that opens when its trigger is clicked, placed on one of four sides and closed by an outside click or Escape.',
 
-  overview: `Popover opens a panel of any content when the reader clicks its trigger, and keeps them on the page. Use it for info cards, filter panels and small forms. For a panel that opens on hover, use HoverCard, and for a short hint, use Tooltip.
+  overview: `Popover opens a panel of any content when the reader clicks its trigger. Use it for info cards, filter panels and small forms. For a panel that opens on hover, use HoverCard, and for a short hint, use Tooltip.
 
 Put the trigger in the \`trigger\` slot and the content in the default slot. \`position\` (\`top\`, \`bottom\`, \`left\` or \`right\`, default \`bottom\`) picks the preferred side. The panel is drawn in the top layer, so \`overflow: hidden\` ancestors can't clip it, and it flips to the opposite side or shifts along the edge when it doesn't fit in the viewport. It scales in on \`--transition-base\`.
 
-Clicking outside or pressing Escape closes it. The component fires \`arc-open\` and \`arc-close\`, so you can load data on open or clean up on close. The panel has \`role="dialog"\` and the trigger gets \`aria-haspopup\` and \`aria-expanded\`.`,
+Clicking outside or pressing Escape closes it. The component fires \`arc-open\` and \`arc-close\`. The panel has \`role="dialog"\` and the trigger gets \`aria-haspopup\` and \`aria-expanded\`.`,
 
   features: [
     'Escape returns focus to the element that had it when the panel opened',
