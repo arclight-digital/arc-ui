@@ -9,37 +9,29 @@ export const multiSelect: ComponentDef = {
   description:
     'Multi-value select with tag chips, inline search filtering, and keyboard navigation.',
 
-  overview: `MultiSelect is a form control that allows users to choose multiple values from a predefined list of options. Selected items appear as removable tag chips inside the control, showing what has been chosen. The inline text input doubles as a filter: typing narrows the dropdown to matching options, so it stays quick to use with large option sets.
+  overview: `Multi Select lets people pick several values from a fixed list. Each selection shows as a removable tag chip inside the control. The text input is also a filter: typing narrows the dropdown to options whose label contains what you typed.
 
-Options are provided declaratively using \`<arc-option>\` child elements, each with a \`value\` and visible label. The dropdown opens on focus and filters in real time as the user types. Items can be toggled on and off by clicking or via keyboard navigation with ArrowUp/ArrowDown and Enter. Pressing Backspace when the text input is empty removes the last selected tag, providing a natural editing flow.
+Options are \`<arc-option>\` children, each with a \`value\` attribute and its text content as the label. The dropdown opens on focus. ArrowUp and ArrowDown move through the options, and Enter or a click toggles one. Backspace in an empty input removes the last tag.
 
-MultiSelect fires an \`arc-change\` event whenever the selection changes, with the current value array in the event detail. The component handles outside-click dismissal automatically and exposes CSS parts for \`control\`, \`tag\`, \`input\`, \`dropdown\`, and \`option\` to support targeted style customisation.`,
+\`arc-change\` fires whenever the selection changes, with the value array in \`detail.value\`. A click outside closes the dropdown.`,
 
   features: [
-    'Selected values rendered as removable pill-shaped tag chips inside the control area',
-    'Inline type-ahead filtering that narrows the dropdown options in real time',
-    'Full keyboard navigation: ArrowUp/Down to move, Enter to select, Escape to close, Backspace to remove the last tag',
-    'Check marks next to already-selected options in the dropdown for clear state indication',
-    'Declarative options via `<arc-option>` child elements with `value` and `label` attributes',
-    'Automatic outside-click dismissal of the dropdown panel',
-    'Focus glow on the control using the shared `--focus-glow` design token',
-    '"No results found" empty state when the filter query matches no options',
+    'Selected options show a check mark in the dropdown',
+    'Escape closes the dropdown',
+    '"No results found" shows when the filter matches no options',
   ],
 
   guidelines: {
     do: [
-      'Always provide a `label` so the field is accessible to screen readers',
-      'Use a descriptive `placeholder` to hint at expected input, such as "Choose languages..."',
-      'Keep option labels concise so they display well as tags inside the control',
-      'Listen to `arc-change` to react to selection changes and keep external state in sync',
-      'Pre-populate the `value` array when editing existing records to show current selections',
+      'Always set a `label` so screen readers can name the field',
+      'Use a `placeholder` that says what to pick, such as "Choose languages..."',
+      'Keep option labels short. They become tags inside the control',
+      'Set `value` to the current selections when editing an existing record',
     ],
     dont: [
-      'Do not use MultiSelect when only a single value is needed. Use Select instead',
-      'Do not provide more than ~50 options without also considering server-side filtering via arc-change',
-      'Do not use extremely long option labels. They will overflow the tag chips and the dropdown',
-      'Do not set both `disabled` and a pre-selected `value` without a clear visual explanation of why editing is blocked',
-      'Avoid nesting MultiSelect inside a popover or modal without testing z-index stacking for the dropdown',
+      'Don\'t use it when only one value is allowed. Use Select',
+      'Don\'t load more than about 50 options without considering server-side filtering. `arc-input` gives you the query on each keystroke',
+      'Don\'t disable a field that has selections without saying why it can\'t be edited',
     ],
   },
 
