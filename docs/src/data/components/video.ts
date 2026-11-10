@@ -10,7 +10,7 @@ export const video: ComponentDef = {
     'Video player with a glowing play button on the poster and a small set of custom controls over the native video element.',
   searchKeywords: ['player', 'media', 'movie', 'playback', 'mp4'],
 
-  overview: `Video wraps the native \`<video>\` element in ARC UI's own controls. Before the first play it shows the poster with a large, glowing play button. Once playback starts, a floating control bar takes over with play/pause, a monospace time readout, a scrub bar that seeks where you click, a mute toggle and a fullscreen button. After two seconds without input the bar dims, but it stays visible and clickable, so the reader never has to summon it. It returns to full strength when the pointer is over the player or a control has focus. Under reduced motion the fade is instant, but the bar still dims.
+  overview: `Video wraps the native \`<video>\` element in ARC UI's own controls. Before the first play it shows the poster with a large, glowing play button. Once playback starts, a floating control bar takes over with play/pause, a monospace time readout, a scrub bar that seeks where you click, a mute toggle and a fullscreen button. After two seconds without input the bar dims, but it stays visible and clickable. It returns to full strength when the pointer is over the player or a control has focus. Under reduced motion the fade is instant, but the bar still dims.
 
 When the player has focus, Space or K plays and pauses, the arrow keys seek five seconds back or forward, M mutes and F toggles fullscreen. \`arc-play\`, \`arc-pause\` and \`arc-ended\` fire on each change, with the current time in seconds on \`detail.value\`.
 
