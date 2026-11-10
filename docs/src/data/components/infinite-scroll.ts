@@ -9,7 +9,7 @@ export const infiniteScroll: ComponentDef = {
   description:
     'Container that fires a load event as the reader nears the bottom, with a loading spinner and an end-of-list state.',
 
-  overview: `Infinite Scroll wraps your items and puts an Intersection Observer sentinel after them. When the sentinel comes within \`threshold\` pixels (200 by default) of the bottom of the viewport, the component fires \`arc-load-more\`. Fetch the next batch and append it.
+  overview: `Infinite Scroll wraps your items and puts an Intersection Observer sentinel after them. When the sentinel comes within 200px of the bottom of the viewport, the component fires \`arc-load-more\`. Fetch the next batch and append it. The 200px is fixed for now, and setting \`threshold\` doesn't change it.
 
 Set \`loading\` to \`true\` while you fetch. A spinner shows in the footer, and no further \`arc-load-more\` fires until you set \`loading\` back to \`false\`.
 
@@ -24,13 +24,11 @@ When there's nothing left, set \`finished\` to \`true\`. The observer disconnect
     do: [
       'Set `loading` to `true` as soon as you start fetching, and back to `false` when the data arrives',
       'Set `finished` when the API says there are no more pages',
-      'Use a `threshold` of 100 to 300px so content arrives before people reach the bottom',
       'Put it inside a scrollable parent, or let the page scroll',
       'Append new items as direct children. They render in the default slot',
     ],
     dont: [
       'Don\'t use it for small, fixed datasets. Use pagination or a plain list',
-      'Don\'t set `threshold` to 0. Loading then starts only once the sentinel is on screen, so people see empty space first',
       'Don\'t put footer content below it without another way to reach it. The footer moves down every time items load',
     ],
   },
