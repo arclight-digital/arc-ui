@@ -6,39 +6,30 @@ export const resizable: ComponentDef = {
   tag: 'arc-resizable',
   tier: 'layout',
   interactivity: 'interactive',
-  description: 'Resizable panel with drag handle.',
+  description: 'A panel with a drag handle on one edge that changes its width or height.',
 
-  overview: `Resizable wraps a single content panel and exposes a drag handle on one edge that the user can pull to change the panel's width or height. It is the right building block for sidebars, property panels, console drawers, and any region where the user should be able to claim more or less screen space. The direction prop controls whether the handle appears on the right edge (horizontal) or bottom edge (vertical).
+  overview: `Resizable wraps one panel and puts a handle on one of its edges. Drag the handle to change the panel's width (\`direction="horizontal"\`) or height (\`direction="vertical"\`). Use it for sidebars, property panels and console drawers. The handle sits on the end edge by default, which is the right edge in a left-to-right page or the bottom. Set \`handle="start"\` for a panel docked against the far side of its container.
 
-Drag interaction uses the Pointer Events API with pointer capture, so it works with mouse, touch, and pen. As the user drags, the component clamps the new size between \`min-size\` and \`max-size\` and updates the \`--panel-size\` CSS custom property in real time, so resizing doesn't flicker. An \`arc-resize\` custom event fires on every size change so you can persist the user's preference or synchronize adjacent layout regions.
+Dragging uses Pointer Events with pointer capture, so mouse, touch and pen all work. The size is clamped between \`min-size\` and \`max-size\`, written to the \`--panel-size\` custom property as you drag, and reported in an \`arc-resize\` event on every change. Listen to that event to save the size.
 
-The handle is also keyboard-accessible. It renders with \`role="separator"\`, \`tabindex="0"\`, and ARIA value attributes (\`aria-valuenow\`, \`aria-valuemin\`, \`aria-valuemax\`). Arrow keys resize in 5px steps, or 20px steps when Shift is held. The handle highlights on hover and focus with the \`--accent-primary\` token, and an expanded invisible hit area (8px wider than the visible 4px bar) makes the handle easy to grab, even on high-density displays.`,
+The handle is a focusable \`role="separator"\` with \`aria-valuenow\`, \`aria-valuemin\` and \`aria-valuemax\`. Arrow keys resize in 5px steps, or 20px with Shift. The visible bar is 4px wide, with an invisible hit area 4px wider on each side, and it turns the accent color on hover and focus.`,
 
   features: [
-    'Horizontal and vertical resize directions via the direction prop',
-    'Pointer Events API with pointer capture for mouse, touch, and pen support',
-    'Configurable min-size and max-size constraints to prevent over-shrinking or over-expanding',
-    'Real-time `--panel-size` CSS custom property updates, so resizing does not flicker',
-    '`arc-resize` custom event dispatched on every size change',
-    'Keyboard-accessible handle with Arrow key steps (5px default, 20px with Shift)',
-    'ARIA separator role with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`',
-    'Expanded invisible hit area for easier grab targeting on the 4px handle',
+    '`arc-resize` carries `{ size }` in pixels',
+    'The handle\'s accessible name is "Resize handle"',
   ],
 
   guidelines: {
     do: [
-      'Use Resizable for sidebars, property panels, and console drawers that users should resize',
-      'Set min-size to prevent the panel from collapsing below a usable minimum (e.g. 150px for a sidebar)',
-      'Set max-size to prevent the panel from consuming the entire viewport',
-      'Listen for the arc-resize event to persist the user preference to localStorage or a database',
-      'Pair with SplitPane when you need two resizable regions that share a single divider',
+      'Set `min-size` so the panel can\'t shrink past usable, for example 150px for a sidebar',
+      'Set `max-size` so the panel can\'t take over the viewport',
+      'Save the size from `arc-resize` to localStorage or your backend so it survives a reload',
+      'Use SplitPane when two regions share one divider',
     ],
     dont: [
-      'Do not use Resizable for content that should never be resized; use a fixed-width Container instead',
-      'Do not set min-size and max-size to the same value: this effectively disables resizing',
-      'Do not forget to give the parent a defined height when using direction="vertical"',
-      'Do not place the Resizable handle adjacent to a scrollbar; users may confuse the two controls',
-      'Do not override the handle styles without preserving the expanded hit area pseudo-element',
+      'Don\'t set `min-size` and `max-size` to the same value. The panel then can\'t resize',
+      'Don\'t put the handle right next to a scrollbar, where people mistake one for the other',
+      'If you restyle the handle part, keep its `::before` hit area, or the 4px bar gets hard to grab',
     ],
   },
 
