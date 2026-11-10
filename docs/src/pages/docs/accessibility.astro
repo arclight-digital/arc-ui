@@ -5,20 +5,20 @@ import audit from '../../data/a11y-audit.json';
 const violationCount = audit.violations.length;
 
 const headings = [
-  { id: 'audit', label: 'Automated Audit' },
-  { id: 'aria', label: 'ARIA Attributes' },
-  { id: 'keyboard', label: 'Keyboard Navigation' },
-  { id: 'focus', label: 'Focus Management' },
-  { id: 'screen-readers', label: 'Screen Readers' },
-  { id: 'color-contrast', label: 'Color & Contrast' },
-  { id: 'reduced-motion', label: 'Reduced Motion' },
+  { id: 'audit', label: 'Automated audit' },
+  { id: 'aria', label: 'ARIA attributes' },
+  { id: 'keyboard', label: 'Keyboard' },
+  { id: 'focus', label: 'Focus' },
+  { id: 'screen-readers', label: 'Screen readers' },
+  { id: 'color-contrast', label: 'Color contrast' },
+  { id: 'reduced-motion', label: 'Reduced motion' },
   { id: 'no-javascript', label: 'Without JavaScript' },
 ];
 ---
 
 <DocsLayout
   title="Accessibility"
-  description="Accessibility features and best practices in ARC UI."
+  description="How ARC UI is checked against WCAG 2.1 AA, and how its components handle keyboard, focus, screen readers, contrast, reduced motion and pages without JavaScript."
   activeSlug="accessibility"
   headings={headings}
   breadcrumbs={[{ label: 'Accessibility' }]}
@@ -26,18 +26,19 @@ const headings = [
   <div class="a11y-page">
     <h1 class="page-title">Accessibility</h1>
     <p class="page-desc">
-      ARC UI targets WCAG 2.1 Level AA. Components ship with semantic HTML,
-      keyboard support, and ARIA attributes built in. This site is the test bed.
+      ARC UI targets WCAG 2.1 Level AA. Components render native elements where they
+      exist, such as a real <code>&lt;button&gt;</code>, and set ARIA roles where they don't.
     </p>
 
     <section id="audit">
-      <h2 class="docs-heading">Automated Audit</h2>
+      <h2 class="docs-heading">Automated audit</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Claims are cheap, so we audit. Every component documentation page, live demos
-        included, is checked with <a href="https://github.com/dequelabs/axe-core">axe-core</a>
-        against the fully rendered DOM, shadow roots included, in both themes. CI fails on
-        any serious or critical violation, color contrast included. No exclusions.
+        Every component page, live demos included, is checked with
+        <a href="https://github.com/dequelabs/axe-core">axe-core</a> against the rendered
+        DOM, shadow roots included, in both themes. CI fails on any serious or critical
+        violation, color contrast included, and no rules are switched off. Guide pages, the
+        home page and the Theme Synthesizer aren't part of the audit.
       </p>
       <div class="audit-stats">
         <div class="audit-stat">
@@ -46,7 +47,7 @@ const headings = [
         </div>
         <div class="audit-stat">
           <span class="audit-stat__value">2</span>
-          <span class="audit-stat__label">Themes audited (dark + light)</span>
+          <span class="audit-stat__label">Themes audited (dark and light)</span>
         </div>
         <div class="audit-stat">
           <span class="audit-stat__value">{violationCount}</span>
@@ -60,13 +61,20 @@ const headings = [
     </section>
 
     <section id="aria">
-      <h2 class="docs-heading">ARIA Attributes</h2>
+      <h2 class="docs-heading">ARIA attributes</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Roles are set automatically: <code>arc-dialog</code> is a <code>role="dialog"</code>
-        managing <code>aria-modal</code>; <code>arc-tabs</code> wires up
-        <code>tablist</code>/<code>tab</code>/<code>tabpanel</code>. Anything extra passes
-        through from the host element:
+        Components set their own roles. <code>arc-dialog</code> renders a native
+        <code>&lt;dialog&gt;</code> opened as a modal, and <code>arc-tabs</code> sets
+        <code>tablist</code>, <code>tab</code> and <code>tabpanel</code>.
+        ARIA attributes you put on a host element mostly stay on the host. They don't reach
+        the control inside the shadow root. <code>arc-icon-button</code> is the exception:
+        it moves a host <code>aria-label</code> onto its inner button. <code>arc-button</code> doesn't forward
+        <code>aria-label</code>, and <code>arc-input</code> can't pass
+        <code>aria-describedby</code> into its shadow root, so the first two snippets below
+        don't name or describe anything. <code>arc-alert</code> announces errors and
+        warnings assertively and success politely by default. Its <code>live</code> prop
+        overrides that.
       </p>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Labels -->
 <arc-button aria-label="Close dialog">
@@ -87,17 +95,17 @@ const headings = [
     </section>
 
     <section id="keyboard">
-      <h2 class="docs-heading">Keyboard Navigation</h2>
+      <h2 class="docs-heading">Keyboard</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Every interactive component is fully keyboard-driven. Don't take our word for it.
-        This one is live. <kbd>Tab</kbd> to it and drive it from the keyboard:
+        These tabs are live. <kbd>Tab</kbd> to them and try the keys each one describes.
+        The table below lists the keys for common components.
       </p>
       <div class="kbd-demo">
         <arc-tabs>
-          <arc-tab label="Arrows"><kbd>Arrow Left</kbd> and <kbd>Arrow Right</kbd> move between tabs; the panel follows focus.</arc-tab>
+          <arc-tab label="Arrows"><kbd>Arrow Left</kbd> and <kbd>Arrow Right</kbd> move between tabs. The panel follows focus.</arc-tab>
           <arc-tab label="Home / End"><kbd>Home</kbd> jumps to the first tab, <kbd>End</kbd> to the last.</arc-tab>
-          <arc-tab label="Tab"><kbd>Tab</kbd> leaves the tablist: one tab stop for the whole widget.</arc-tab>
+          <arc-tab label="Tab"><kbd>Tab</kbd> leaves the tablist. The whole widget is one tab stop.</arc-tab>
         </arc-tabs>
       </div>
       <div class="token-table-wrap">
@@ -107,12 +115,12 @@ const headings = [
           </thead>
           <tbody>
             <tr><td>Button</td><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Activate</td></tr>
-            <tr><td>Modal</td><td><kbd>Escape</kbd></td><td>Close</td></tr>
+            <tr><td>Dialog</td><td><kbd>Escape</kbd></td><td>Close</td></tr>
             <tr><td>Tabs</td><td><kbd>Arrow Left/Right</kbd>, <kbd>Home</kbd> / <kbd>End</kbd></td><td>Switch tab</td></tr>
             <tr><td>Accordion</td><td><kbd>Enter</kbd> / <kbd>Space</kbd></td><td>Toggle panel</td></tr>
-            <tr><td>Select</td><td><kbd>Arrow Up/Down</kbd></td><td>Navigate options</td></tr>
+            <tr><td>Select</td><td><kbd>Arrow Up/Down</kbd></td><td>Move between options</td></tr>
             <tr><td>Select</td><td><kbd>Enter</kbd></td><td>Select option</td></tr>
-            <tr><td>Select</td><td><kbd>Escape</kbd></td><td>Close dropdown</td></tr>
+            <tr><td>Select</td><td><kbd>Escape</kbd></td><td>Close the list</td></tr>
             <tr><td>Toggle</td><td><kbd>Space</kbd></td><td>Toggle on/off</td></tr>
             <tr><td>Checkbox</td><td><kbd>Space</kbd></td><td>Toggle checked</td></tr>
             <tr><td>Drawer</td><td><kbd>Escape</kbd></td><td>Close</td></tr>
@@ -123,26 +131,27 @@ const headings = [
     </section>
 
     <section id="focus">
-      <h2 class="docs-heading">Focus Management</h2>
+      <h2 class="docs-heading">Focus</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI ships two focus indicator styles as design tokens. <kbd>Tab</kbd> through
-        these to compare them:
+        There are two focus indicator tokens. <kbd>Tab</kbd> through these to compare them.
       </p>
       <div class="focus-demo-row">
         <button class="focus-card focus-card--ring">
           <code>--focus-ring</code>
-          <span class="focus-card__hint">Solid ring outline</span>
+          <span class="focus-card__hint">1px ring</span>
         </button>
         <button class="focus-card focus-card--glow">
           <code>--focus-glow</code>
-          <span class="focus-card__hint">Ring + ambient glow</span>
+          <span class="focus-card__hint">Ring and glow</span>
         </button>
       </div>
       <p class="docs-text">
-        Focus shows only on keyboard navigation (<code>:focus-visible</code>), never on mouse
-        clicks. Click the cards above and nothing appears. Overlays like <code>arc-dialog</code>
-        and <code>arc-drawer</code> trap focus while open.
+        Buttons and similar controls show focus on keyboard navigation
+        (<code>:focus-visible</code>), not on a mouse click, so clicking the cards above shows
+        nothing. Text fields show it on click as well. <code>arc-dialog</code> and a modal
+        <code>arc-drawer</code> trap focus while open. A <code>no-modal</code> drawer doesn't,
+        and opening one leaves focus where it was.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Customize focus styles globally */
 :root {
@@ -154,10 +163,11 @@ const headings = [
     </section>
 
     <section id="screen-readers">
-      <h2 class="docs-heading">Screen Readers</h2>
+      <h2 class="docs-heading">Screen readers</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Shadow DOM can complicate screen reader access; ARC UI's patterns avoid the traps:
+        ID references can't cross a shadow root, so a <code>&lt;label for&gt;</code> outside
+        a component can't point at the field inside it.
       </p>
       <ul class="docs-list">
         <li>
@@ -165,12 +175,8 @@ const headings = [
           reach it directly.
         </li>
         <li>
-          <strong>ARIA attributes</strong> set on the host element are reflected into the
-          shadow root where needed.
-        </li>
-        <li>
-          <strong>Form elements</strong> take a <code>label</code> attribute, so they are
-          always announced.
+          <strong>Form controls</strong> take a <code>label</code> attribute, which the
+          component ties to its inner field. Set it and the field is announced with its label.
         </li>
       </ul>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Use slot for screen-reader-accessible content -->
@@ -188,14 +194,16 @@ const headings = [
     </section>
 
     <section id="color-contrast">
-      <h2 class="docs-heading">Color & Contrast</h2>
+      <h2 class="docs-heading">Color contrast</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The audit above measures actual rendered ratios in both themes. These are results,
-        not targets:
+        The audit above measures rendered contrast in both themes. With the default tokens:
       </p>
       <ul class="docs-list">
-        <li><code>--text-primary</code> on <code>--bg-deep</code> exceeds 15:1.</li>
+        <li>
+          <code>--text-primary</code> on <code>--bg-deep</code> is above 15:1 in the dark
+          theme and above 13:1 in light.
+        </li>
         <li>
           <code>--text-muted</code> and <code>--text-ghost</code> meet the 4.5:1 ratio for
           normal text in both themes.
@@ -206,15 +214,15 @@ const headings = [
           light modes.
         </li>
       </ul>
-      <arc-alert variant="warning">When customizing themes, verify that your color overrides maintain sufficient contrast ratios. Use the <a href="/synth">Theme Synthesizer</a> to preview and test your custom themes for accessibility.</arc-alert>
+      <arc-alert variant="warning">If you override colors, check the contrast yourself. The <a href="/synth">Theme Synthesizer</a> shows the ratio for each text and background pair in both themes.</arc-alert>
     </section>
 
     <section id="reduced-motion">
-      <h2 class="docs-heading">Reduced Motion</h2>
+      <h2 class="docs-heading">Reduced motion</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        With <code>prefers-reduced-motion</code> set, every transition and animation collapses.
-        Functionality is unchanged; only the motion goes:
+        With <code>prefers-reduced-motion: reduce</code> set, every transition and animation
+        inside a component finishes almost instantly. Everything else works the same.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Built into ARC UI components */
 @media (prefers-reduced-motion: reduce) {
@@ -227,13 +235,13 @@ const headings = [
   }
 }`}></arc-code-block></div>
       <p class="docs-text">
-        The same rule reaches your own components if they adopt <code>tokenStyles</code>, and it
-        has one consequence worth designing for. A collapsed animation runs once, at once, and
-        then the element shows its <em>un-animated</em> styles. Whatever the base styles say is
-        what a reduced-motion user sees. So put the resting state there, and let the keyframes
-        move away from it. A two-frame sprite that swaps layers by opacity shows both frames
-        stacked if both are visible by default. Hide the second frame in the base styles, and
-        the keyframes that reveal it never get time to:
+        Your own components get the same rule if they include <code>tokenStyles</code>. A
+        collapsed animation runs once, immediately, and the element then shows its
+        <em>un-animated</em> styles, so a reduced-motion user sees whatever the base styles
+        say. Put the resting state in the base styles and let the keyframes move away from it.
+        A two-frame sprite that swaps layers by opacity shows both frames stacked if both are
+        visible by default. Hide the second frame in the base styles, and the keyframes that
+        reveal it never get time to.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`.frame-b { opacity: 0; }            /* resting state: frame A only */
 .frame-a { animation: swap-a 800ms steps(1) infinite; }
@@ -252,11 +260,11 @@ const headings = [
         light DOM. What you put inside the element is what everyone sees first.
       </p>
       <p class="docs-text">
-        This matters most for links. An <code>href</code> on the custom element itself
-        <strong>cannot</strong> produce a working link without JavaScript: the attribute sits
+        For links, an <code>href</code> on the custom element itself
+        <strong>cannot</strong> produce a working link without JavaScript. The attribute is
         on the element, and the real <code>&lt;a&gt;</code> only exists in a shadow root that
-        is never created. Slot a real anchor instead and the link is ordinary HTML from the
-        first byte:
+        never gets created. Slot a real anchor instead and the link is ordinary HTML from the
+        first byte.
       </p>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Works without JS, and before the element upgrades -->
 <arc-button variant="primary">
@@ -271,39 +279,36 @@ const headings = [
 <!-- Needs JS to become a link at all -->
 <arc-button variant="primary" href="/get-started">Get started</arc-button>`}></arc-code-block></div>
       <p class="docs-text">
-        On upgrade the component adopts that anchor as its control rather than rendering a
-        second one, so there is only ever one link in the accessibility tree. The
-        <code>href</code> form stays fully supported. Prefer it inside app shells where
-        JavaScript is guaranteed, and the slotted form on anything public, indexed, or
-        first-load critical. This applies to <code>arc-button</code>,
+        On upgrade the component uses that anchor as its control and doesn't render a second
+        one, so the accessibility tree has one link. The <code>href</code> form still works.
+        Use it in app shells where JavaScript always runs, and use the slotted form on public
+        pages. Slotted anchors work in <code>arc-button</code>,
         <code>arc-icon-button</code>, <code>arc-link</code>, <code>arc-card</code>,
         <code>arc-nav-item</code>, <code>arc-breadcrumb-item</code>, and
         <code>arc-sidebar-link</code>.
       </p>
       <p class="docs-text">
-        The stylesheet hides components only until they upgrade, and that hide is gated on
-        scripting being available, so with JS disabled your content stays visible rather
-        than being hidden forever waiting for an upgrade that never comes:
+        The stylesheet hides components until they upgrade, but only when scripting is
+        available, so with JavaScript disabled your content stays visible.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Shipped in base.css */
 @media (scripting: enabled) {
   :is(arc-button, arc-link /* … */):not(:defined) { opacity: 0; }
 }`}></arc-code-block></div>
       <p class="docs-text">
-        Components whose content comes from properties rather than slots, such as
-        <code>arc-feature-card</code> (which renders from <code>heading</code> and
-        <code>description</code>), have no light DOM to fall back to and stay blank without
-        JavaScript. Author their content as slotted markup, treat them as enhancement-only,
-        or <a href="/docs/server-rendering">server-render them</a>.
+        Components that render their content from properties, such as
+        <code>arc-feature-card</code> (<code>heading</code> and <code>description</code>),
+        have no light DOM to fall back to and stay blank without JavaScript. Treat them as
+        enhancement-only, or <a href="/docs/server-rendering">server-render them</a>.
       </p>
     </section>
 
     <section class="see-also">
-      <h2 class="docs-heading">See Also</h2>
+      <h2 class="docs-heading">See also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/server-rendering">Server Rendering</a>: content in the payload before JS runs</li>
-        <li><a href="/docs/getting-started">Getting Started</a>: installation and setup</li>
+        <li><a href="/docs/server-rendering">Server rendering</a>: content in the HTML before JavaScript runs</li>
+        <li><a href="/docs/getting-started">Getting started</a>: installation and setup</li>
       </ul>
     </section>
   </div>
