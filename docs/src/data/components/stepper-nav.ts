@@ -11,7 +11,7 @@ export const stepperNav: ComponentDef = {
 
   overview: `StepperNav runs a multi-step flow. It draws a numbered indicator for each step, puts your step content in its default slot, and adds Back, Next and Skip buttons below. On the last step, Next reads "Complete". Use Stepper when you only need to show progress.
 
-\`active\` is the zero-based index of the current step. Completed steps turn \`--color-success\` with a check, the active step fills with \`--interactive\` and a glow, and the line leading to each completed step fills with the accent gradient. Clicking an indicator jumps to that step.
+\`active\` is the zero-based index of the current step. Completed steps turn \`--color-success\` with a check, the active step fills with \`--interactive\` and a glow, and the lines leading up to the active step fill with the accent gradient. Clicking an indicator jumps to that step.
 
 \`linear\` disables the indicators for steps ahead of the current one and removes Skip, so the reader can only move forward with Next. StepperNav doesn't validate step content, and Next always moves on. \`arc-change\` fires on every step change with the new index in \`detail.step\`, and \`arc-complete\` fires when the reader presses Complete.`,
 
