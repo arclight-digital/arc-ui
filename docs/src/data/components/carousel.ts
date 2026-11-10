@@ -10,37 +10,29 @@ export const carousel: ComponentDef = {
   description:
     'A scrollable slide container with navigation arrows, dot indicators, auto-play, looping, and keyboard controls.',
 
-  overview: `Carousel presents a sequence of slotted elements as full-width slides within a scroll-snapping viewport. Users navigate between slides using circular arrow buttons on the left and right edges, clickable dot indicators below the viewport, or left/right arrow keys. Each slotted child becomes a slide that snaps into position, and the component tracks the current index to keep the arrows and dots in sync.
+  overview: `Carousel shows its children one at a time as full-width slides in a scroll-snapping viewport. Users move between slides with the round arrow buttons at the left and right edges, the dots under the viewport, or the left and right arrow keys. Arrows and dots are on by default, and \`no-arrows\` and \`no-dots\` turn them off.
 
-Auto-play mode advances slides on a configurable interval (default 5 seconds) and automatically pauses when the user hovers over the carousel or when any element inside receives keyboard focus, so content does not change while the user is interacting. Auto-play also respects \`prefers-reduced-motion\`: if the user has requested reduced motion, auto-play is disabled and scrolling falls back to instant jumps.
+\`auto-play\` advances the slides every \`interval\` milliseconds (default 5000). It pauses while the pointer is over the carousel or anything inside it has focus, so slides don't change while someone is using them. With reduced motion on, auto-play doesn't start.
 
-When \`loop\` is enabled (the default), navigating past the last slide wraps to the first and vice versa. The arrow buttons are disabled at the edges when looping is off. Dot indicators use a \`tablist\` ARIA role with individual \`tab\` roles and \`aria-selected\` state, so screen reader users can jump directly to any slide. The component fires \`arc-change\` with the new slide index whenever the active slide changes.`,
+With \`loop\` on (the default), going past the last slide wraps to the first and the reverse. With \`no-loop\`, the arrow buttons disable at the ends. The dots are a \`tablist\` of \`tab\` buttons with \`aria-selected\`, so screen reader users can jump to any slide. \`arc-change\` fires with \`{ index }\` whenever the slide changes.`,
 
   features: [
-    'Scroll-snap viewport with smooth scrolling and full-width slides from slotted children',
-    'Circular navigation arrows positioned at 50% height on the left and right edges',
-    'Dot indicators with `tablist` ARIA role for direct slide navigation',
-    'Auto-play mode with configurable interval, pausing on hover and focus',
-    'Loop mode wraps navigation at the edges; non-loop mode disables arrows at boundaries',
-    'Full keyboard navigation: left/right arrow keys move between slides',
-    'Respects `prefers-reduced-motion` by disabling auto-play and using instant scroll',
-    'Fires `arc-change` with `{ index }` in the event detail on every slide change',
+    'The arrow buttons sit at half the viewport\'s height',
+    'The viewport takes focus (`tabindex="0"`), so the arrow keys work once it\'s focused',
   ],
 
   guidelines: {
     do: [
-      'Use Carousel for image galleries, testimonial rotators, or feature highlights',
-      'Provide real content in each slide; avoid empty or placeholder slides',
-      'Set `auto-play` only when the content is supplementary and not time-sensitive',
-      'Include at least 2 slides; a single slide makes the navigation controls meaningless',
-      'Use the `arc-change` event to synchronize external indicators or captions with the current slide',
+      'Use it for image galleries, rotating testimonials or feature highlights',
+      'Turn on auto-play only for content that is extra and not time-sensitive',
+      'Use at least two slides. With one, the controls do nothing',
+      'Use arc-change to keep captions or other indicators outside the carousel in sync',
     ],
     dont: [
-      'Do not use Carousel for critical content that users must see; some users never advance past the first slide',
-      'Do not set `interval` below 3000ms; slides change too fast to read or interact with',
-      'Do not place form inputs inside carousel slides; the scrolling conflicts with input focus',
-      'Do not hide navigation arrows and dots simultaneously; the user needs at least one way to navigate',
-      'Avoid nesting a Carousel inside another Carousel; the scroll-snapping conflicts are unpredictable',
+      'Don\'t put content everyone must see in a carousel. Slides after the first are easy to miss',
+      'Don\'t set interval below 3000ms. Slides change too fast to read',
+      'Don\'t put form inputs in slides. Scrolling fights with input focus',
+      'Don\'t turn off both the arrows and the dots. Users need at least one way to move',
     ],
   },
 
