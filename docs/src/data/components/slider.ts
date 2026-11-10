@@ -7,7 +7,7 @@ export const slider: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'A range slider with a label, a live value readout, an accent-filled track, and min, max and step.',
+    'A one-thumb slider for picking a number from a range, with an optional label and value readout.',
 
   overview: `Slider picks a number from a range by dragging a thumb, for settings like volume or opacity. For an exact number someone types, use NumberInput. With a \`label\`, a header row shows the label on the left and the current value on the right in monospace, updating as the thumb moves. The track fills with the accent color up to the thumb.
 
