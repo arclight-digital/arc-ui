@@ -9,45 +9,32 @@ export const countdownTimer: ComponentDef = {
   description:
     'Live countdown to a target date/time with days, hours, minutes, and seconds segments.',
 
-  overview: `CountdownTimer renders a live countdown to a target date or time. The display is split into four card-like segments (days, hours, minutes, and seconds), each showing a large mono-spaced number with a gradient accent fill and an uppercase label beneath. Segments are separated by ghost-colored colons.
+  overview: `CountdownTimer counts down to the date in \`target\`, which takes an ISO 8601 string or anything \`new Date()\` can parse. A string without a time zone is read as the visitor's local time. The display is four segments, labeled Days, Hours, Min and Sec, with colons between them. Each number is two mono digits with \`tabular-nums\`, so the width doesn't change as it ticks.
 
-The component parses any valid ISO 8601 string or JavaScript-parseable date via the \`target\` attribute and recalculates the remaining time every second using \`setInterval\`. When the countdown reaches zero, an \`arc-expired\` event is dispatched and the display switches to a configurable expired message (default: "Expired"). The interval is cleared in \`disconnectedCallback\`.
+It recalculates every second and stops its interval when removed from the page. At zero it fires \`arc-expired\` once and replaces the segments with the \`expired\` text, which defaults to "Expired". Setting a new \`target\` starts it again.
 
-Numbers use \`font-variant-numeric: tabular-nums\` so digits keep a constant width as they tick down and the layout does not shift. The segment cards gain a subtle glow on hover via \`box-shadow: var(--glow-hover)\`, and all transitions respect \`prefers-reduced-motion\`. An optional \`label\` attribute renders gradient-accent text above the countdown for context like "Launch In" or "Sale Ends".
-
-The \`hide-zero-segments\` attribute suppresses leading zero-value segments, which helps when the countdown is under 24 hours and "00 Days" adds nothing.`,
+\`label\` adds an uppercase line above the countdown, such as "Sale ends". \`hide-zero-segments\` hides segments whose value is zero, so a countdown under a day drops the Days segment.`,
 
   features: [
-    'Live countdown updating every second via setInterval',
-    'Interval timer cleared in disconnectedCallback',
-    'Gradient-accent number text with tabular-nums for stable layout',
-    'Card-style segments with hover glow effect',
-    'Fires `arc-expired` custom event when countdown reaches zero',
-    'Configurable expired text via the expired attribute',
-    'Optional label with gradient accent text above the countdown',
-    'hide-zero-segments attribute to suppress leading zero segments',
-    'Respects `prefers-reduced-motion` by disabling transitions',
-    'CSS parts for container, segment, number, label, and separator',
+    'Numbers use the accent text gradient, and segments get the interactive hover shadow',
+    'CSS parts: `container`, `segment`, `number`, `label`, `separator`',
   ],
 
   guidelines: {
     do: [
-      'Use for event countdowns, product launches, and sale timers',
-      'Provide a meaningful label like "Launches In" or "Offer Ends"',
-      'Set a custom expired message relevant to the context (e.g. "Now Live!")',
-      'Use hide-zero-segments when the countdown is under 24 hours',
-      'Place inside a Section or Card for visual context',
+      'Use it for event countdowns, product launches and sale deadlines',
+      'Set a `label` that says what\'s being counted down to, such as "Launches in" or "Offer ends"',
+      'Set `expired` to text that fits, such as "Now live"',
     ],
     dont: [
-      'Do not use for elapsed time or stopwatch functionality; this counts down only',
-      'Do not set a target date in the past unless you want the expired state immediately',
-      'Do not place more than one or two countdowns on a single page; they compete for attention',
-      'Do not rely solely on the visual countdown for critical deadlines. Enforce them server-side',
-      'Do not use extremely short countdowns (under 10 seconds) as primary UI; the urgency feels manipulative',
+      'Don\'t use it for elapsed time or as a stopwatch. It only counts down',
+      'Don\'t set a target in the past unless you want the expired text straight away',
+      'Don\'t enforce deadlines with it. Check them on the server',
+      'Don\'t use very short countdowns, under 10 seconds, as the main UI. The pressure reads as manipulative',
     ],
   },
 
-  previewHtml: `<arc-countdown-timer target="2026-12-31T00:00:00" label="New Year"></arc-countdown-timer>`,
+  previewHtml: `<arc-countdown-timer target="2027-01-01T00:00:00" label="New Year"></arc-countdown-timer>`,
 
   tabs: [
     {
