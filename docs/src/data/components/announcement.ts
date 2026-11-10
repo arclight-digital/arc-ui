@@ -7,7 +7,7 @@ export const announcement: ComponentDef = {
   tier: 'feedback',
   interactivity: 'static',
   description:
-    'ARIA live-region wrapper with no visual output. Announces dynamic content changes to screen readers.',
+    'An invisible live region for announcing page changes to screen readers.',
 
   overview: `Announcement is a live region with nothing on screen. Set its \`message\` property and screen readers read the new text out. Use it for changes sighted users see but screen reader users would miss: route changes, live search result counts, form confirmations, timer updates, new chat messages.
 
@@ -25,7 +25,7 @@ export const announcement: ComponentDef = {
       'Keep messages short. Screen reader users can\'t skim an announcement',
     ],
     dont: [
-      'Don\'t announce content that is already in a live region, such as Toast or Alert',
+      'Don\'t announce content that is already in a live region, such as a Toast or an `error`, `warning` or `success` Alert',
       'Don\'t fire announcements in quick succession. Screen readers may drop the ones in between',
       'Don\'t use it in place of labels and semantic HTML',
     ],
