@@ -6,9 +6,9 @@ export const featureCard: ComponentDef = {
   tag: 'arc-feature-card',
   tier: 'content',
   interactivity: 'static',
-  description: 'Card with icon, heading, description, and animated hover effects.',
+  description: 'A card with an icon, a heading and a short description, for feature grids on landing pages.',
 
-  overview: `FeatureCard shows an icon, a \`heading\` and a \`description\` stacked in a card, for feature grids on landing pages and marketing sections. The border is a gradient, drawn as a 1px gap around the inner panel. On hover the icon lifts with an \`--accent-primary-glow\` shadow, the card gets the \`--glow-card-hover\` glow, and an accent rule grows along the bottom.
+  overview: `FeatureCard shows an icon, a \`heading\` and a \`description\` stacked in a card, for feature grids on landing pages and marketing sections. The border is the card's own background, \`--border-subtle\`, showing through a 1px gap around the inner panel. On hover the border turns into an accent gradient, the icon lifts with an \`--accent-primary-glow\` shadow, the card gets the \`--glow-card-hover\` glow, and an accent rule grows along the bottom.
 
 With an \`href\`, the whole card is a link, and \`action\` adds a label with an arrow at the bottom, such as "Read the guide". Without an \`href\` it's a plain \`<div>\` and \`action\` isn't shown. The heading renders as an \`<h3>\`.
 
@@ -30,7 +30,7 @@ The \`icon\` slot takes an SVG or other markup. Without it, the \`icon\` propert
     dont: [
       'Don\'t put buttons or links inside a card that has an `href`. The whole card is already a link',
       'Don\'t mix feature cards and value cards in one grid',
-      'Don\'t replace the gradient border with a flat color. The hover effect goes with it',
+      'Don\'t set `background` on `::part(card)`. That background is the border, and your value also replaces the hover gradient',
       'Don\'t use it to show data. Use ValueCard or Stat',
     ],
   },
