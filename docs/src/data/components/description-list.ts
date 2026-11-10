@@ -8,18 +8,17 @@ export const descriptionList: ComponentDef = {
   interactivity: 'static',
   searchKeywords: ['key value', 'metadata', 'definition list', 'dl', 'spec sheet'],
   description:
-    'Structured term/detail pair list in a responsive grid layout with optional dividers.',
+    'Lays out term and detail pairs, such as order details or a spec sheet, in one or more columns.',
 
   overview: `DescriptionList lays out term and detail pairs, for metadata, spec sheets and detail panels. Each child \`<arc-description-item>\` has a \`term\`, shown as an uppercase label, and its content is the detail.
 
-Two props control the arrangement, on different axes. \`columns\` is how many items sit across (1 by default). \`layout\` is how each item arranges its own term and detail: \`stacked\`, the default, puts the term above the detail, and \`horizontal\` puts them side by side on a shared grid so the terms line up down the list. They combine, so a three-column list can use horizontal items. Below 640px every list drops to one column.
+Two props control the arrangement, on different axes. \`columns\` is how many items sit across (1 by default). \`layout\` is how each item arranges its own term and detail: \`stacked\`, the default, puts the term above the detail, and \`horizontal\` puts them side by side, with the term at least 120px wide and the detail taking the rest of the row. Each item sizes its own term column, so terms line up down the list only when every term fits in 120px. They combine, so a three-column list can use horizontal items. Below 640px every list drops to one column.
 
 **\`layout\` came from \`arc-key-value\`, which merged into this component in v4.** Key Value put the term beside the detail by default, and this component defaults to \`stacked\`, so add \`layout="horizontal"\` to keep what you had. See [the Key Value removal note](/docs/components/key-value) for the full translation.
 
 Dividers between rows and between columns are on by default. Set \`no-dividers\` to remove them. The list has \`role="list"\` and each item \`role="listitem"\`.`,
 
   features: [
-    'Horizontal terms get at least 120px, and the detail takes the rest of the row',
     'CSS parts: `list`, `item`, `term`, `detail`',
   ],
 
@@ -32,7 +31,7 @@ Dividers between rows and between columns are on by default. Set \`no-dividers\`
     ],
     dont: [
       'Don\'t use it for tabular data with many rows. Use `arc-data-grid`',
-      'Don\'t combine `layout="horizontal"` with a high `columns` count. Each item needs room for two columns of its own, and both get squeezed to nothing',
+      'Don\'t combine `layout="horizontal"` with a high `columns` count. Each item keeps its 120px term column, so the detail gets squeezed',
       'Don\'t write paragraph-length terms. Put the long text in the detail',
       'Don\'t put anything but `arc-description-item` elements in the list. A `role="list"` should only contain list items',
     ],
