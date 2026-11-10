@@ -3,7 +3,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
   { id: 'overview', label: 'Overview' },
-  { id: 'browsers', label: 'Supported Browsers' },
+  { id: 'browsers', label: 'Supported browsers' },
   { id: 'web-components', label: 'Web Components APIs' },
   { id: 'polyfills', label: 'Polyfills' },
   { id: 'node', label: 'Node.js' },
@@ -11,58 +11,58 @@ const headings = [
 ---
 
 <DocsLayout
-  title="Browser Support"
-  description="Browser compatibility and polyfill guidance for ARC UI."
+  title="Browser support"
+  description="The browsers ARC UI supports, the platform features its components use, and what happens where a feature is missing."
   activeSlug="browser-support"
   headings={headings}
-  breadcrumbs={[{ label: 'Browser Support' }]}
+  breadcrumbs={[{ label: 'Browser support' }]}
 >
   <div class="browser-page">
-    <h1 class="page-title">Browser Support</h1>
+    <h1 class="page-title">Browser support</h1>
     <p class="page-desc">
-      ARC UI targets modern evergreen browsers. All components use native Web Components APIs
-      (Custom Elements v1 and Shadow DOM v1).
+      ARC UI components are built on Custom Elements v1 and Shadow DOM v1, and use a few
+      newer platform features listed below.
     </p>
 
     <section id="overview">
       <h2 class="docs-heading">Overview</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI is built on <strong>Lit 3</strong> and ships as ESM-only
-        (<code>type: "module"</code>). No ES5 or legacy module builds are provided.
+        ARC UI is built on <strong>Lit 3</strong> and ships as ES modules only
+        (<code>type: "module"</code>). There are no ES5 or legacy module builds.
       </p>
     </section>
 
     <section id="browsers">
-      <h2 class="docs-heading">Supported Browsers</h2>
+      <h2 class="docs-heading">Supported browsers</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <div class="browser-grid">
         <arc-card>
           <div class="browser-name">Chrome / Edge</div>
-          <div class="browser-version">90+</div>
-          <div class="browser-note">Full support including all CSS features</div>
+          <div class="browser-version">TODO(copy)</div>
+          <div class="browser-note">TODO(copy): minimum version? This page said 90+, which is older than the Popover API and @starting-style below.</div>
         </arc-card>
         <arc-card>
           <div class="browser-name">Firefox</div>
-          <div class="browser-version">100+</div>
-          <div class="browser-note">Full support</div>
+          <div class="browser-version">TODO(copy)</div>
+          <div class="browser-note">TODO(copy): minimum version? This page said 100+.</div>
         </arc-card>
         <arc-card>
           <div class="browser-name">Safari / iOS Safari</div>
-          <div class="browser-version">15.4+</div>
-          <div class="browser-note">Full support (Shadow DOM, Custom Elements, Constructable Stylesheets)</div>
+          <div class="browser-version">TODO(copy)</div>
+          <div class="browser-note">TODO(copy): minimum version? This page said 15.4+, but the table below puts Constructable Stylesheets at 16.4.</div>
         </arc-card>
         <arc-card>
           <div class="browser-name">Samsung Internet</div>
-          <div class="browser-version">15+</div>
-          <div class="browser-note">Full support (Chromium-based)</div>
+          <div class="browser-version">TODO(copy)</div>
+          <div class="browser-note">Chromium-based. TODO(copy): minimum version? This page said 15+.</div>
         </arc-card>
       </div>
 
       <arc-alert variant="info" style="margin-top:var(--space-md)">
-        <strong>Internet Explorer is not supported.</strong> Web Components APIs are not available in IE11 and
-        no polyfill is provided.
+        <strong>Internet Explorer isn't supported.</strong> IE11 has no Web Components APIs,
+        and no polyfill is provided.
       </arc-alert>
     </section>
 
@@ -89,10 +89,9 @@ const headings = [
       </div>
 
       <p class="docs-text">
-        The <code>scripting</code> media query is the one entry newer than the baseline, and
-        not a requirement. It gates the rule that hides components until they
-        upgrade; where unsupported, the query doesn't match and the hide switches <em>off</em>:
-        older browsers get a brief flash of unstyled content, never hidden content. See
+        The <code>scripting</code> media query gates the rule that hides components until
+        they upgrade. Where it isn't supported, the query doesn't match and nothing is hidden,
+        so older browsers get a brief flash of unstyled content and never hidden content. See
         <a href="/docs/accessibility#no-javascript">Without JavaScript</a>.
       </p>
     </section>
@@ -101,34 +100,33 @@ const headings = [
       <h2 class="docs-heading">Polyfills</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Evergreen browsers need <strong>no polyfills</strong>. For older browsers,
         <a href="https://github.com/webcomponents/polyfills" target="_blank" rel="noopener">@webcomponents/webcomponentsjs</a>
-        provides Custom Elements and Shadow DOM. Load it before any ARC UI imports:
+        adds Custom Elements and Shadow DOM to browsers without them. A browser old enough to
+        need it also lacks the Popover API and <code>@starting-style</code>, so the polyfill
+        doesn't bring it up to what the components use. TODO(copy): is there a supported
+        browser that needs this polyfill, or should this section go?
       </p>
       <div class="docs-code"><arc-code-block
         language="html"
         code='<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2/webcomponents-bundle.js"><\/script>'
       ></arc-code-block></div>
-      <arc-alert variant="warning" style="margin-top:var(--space-sm)">
-        The polyfill costs ~15 KB (gzipped) and may degrade performance. Prefer
-        targeting evergreen browsers.
-      </arc-alert>
     </section>
 
     <section id="node">
       <h2 class="docs-heading">Node.js</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The build tooling and development server require <strong>Node.js 24+</strong> (LTS)
-        and <strong>pnpm 10+</strong>. These are enforced via the <code>engines</code> field in the root <code>package.json</code>.
+        Building ARC UI and running the docs site need <strong>Node.js 24+</strong> (LTS) and
+        <strong>pnpm 10+</strong>, set in the <code>engines</code> field of the root
+        <code>package.json</code>.
       </p>
     </section>
 
     <section class="see-also">
-      <h2 class="docs-heading">See Also</h2>
+      <h2 class="docs-heading">See also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/getting-started">Getting Started</a>: installation and setup</li>
+        <li><a href="/docs/getting-started">Getting started</a>: installation and setup</li>
         <li><a href="/docs/frameworks">Frameworks</a>: framework-specific installation and usage</li>
       </ul>
     </section>
