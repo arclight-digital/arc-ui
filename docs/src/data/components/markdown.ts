@@ -7,40 +7,31 @@ export const markdown: ComponentDef = {
   tier: 'typography',
   interactivity: 'static',
   description:
-    'Renders markdown content as styled HTML with zero dependencies. Supports headings, lists, code blocks, blockquotes, links, images, and inline formatting.',
+    'Renders a markdown string as styled HTML with a built-in parser and no dependencies. Covers headings, lists, code blocks, blockquotes, links, images and inline formatting.',
 
-  overview: `Markdown parses a markdown string into styled HTML using a small built-in parser with zero external dependencies. Pass content via the \`content\` attribute or as slotted text, and the component renders it with design-token styling, so headings, code blocks, blockquotes, lists, links, and inline formatting match the rest of the ARC UI theme.
+  overview: `Markdown parses a markdown string with a small built-in parser and renders the result in ARC UI's type styles. Pass the string in the \`content\` attribute or as the element's text. \`content\` wins if you set both.
 
-The parser handles the most common markdown patterns: ATX headings (\`#\` through \`######\`), bold, italic, inline code, fenced code blocks with optional language hints, ordered and unordered lists, blockquotes, links, images, horizontal rules, and paragraph separation. It is small, built for documentation, changelogs, README rendering, and component descriptions rather than full CommonMark compliance.
+The parser handles ATX headings (\`#\` through \`######\`), bold, italic, inline code, fenced code blocks, ordered and unordered lists, blockquotes, links, images, horizontal rules and paragraphs. That covers documentation, changelogs and READMEs. It isn't CommonMark or GFM, so tables, strikethrough and other extensions don't render.
 
-All output is sanitized through a DOMParser pipeline that strips \`<script>\` elements and \`on*\` event handler attributes, making it safe to render user-provided markdown. The rendered HTML is injected into a styled shadow DOM container with proper spacing, typography, and color tokens applied to every element type.`,
+The parser escapes \`<\`, \`>\` and \`&\` before it emits any tags, so HTML in the source shows up as text. The output then goes through a sanitizer that drops \`<script>\`, \`<iframe>\` and other active elements, \`on*\` attributes, and link or image URLs that aren't relative, http(s), mailto or tel. Links get \`rel="noopener noreferrer"\`.`,
 
   features: [
-    'Zero-dependency markdown parser built into the component',
-    'Supports headings, bold, italic, code, lists, blockquotes, links, images, and HR',
-    'Fenced code blocks with optional language class for syntax highlighting hooks',
-    'Content via attribute or slotted text with automatic re-render on changes',
-    'XSS-safe: strips script tags and on* event handlers from rendered output',
-    'Full design-token styling for all rendered elements',
-    'Exposed "markdown" CSS part for external style customization',
+    'A fenced block\'s language hint becomes a `language-*` class on the code, for a highlighter to pick up',
+    'Re-renders when `content` changes',
   ],
 
   guidelines: {
     do: [
-      'Use the content attribute for dynamic markdown from APIs or state',
-      'Use slotted text for static markdown embedded in templates',
-      'Pair with CodeBlock for syntax-highlighted code when full highlighting is needed',
-      'Use for README rendering, changelogs, documentation, and component descriptions',
+      'Use the content attribute for markdown from an API or app state',
+      'Use the element\'s text for static markdown in a template',
+      'Use CodeBlock when code needs full syntax highlighting',
     ],
     dont: [
-      'Do not rely on it for full CommonMark or GFM compliance. It covers common patterns only',
-      'Do not render untrusted HTML directly. Always go through the markdown parser',
-      'Do not use it for rich text editing. Pair it with a dedicated editor component instead',
-      'Do not nest Markdown components inside each other',
+      'Don\'t use it for rich text editing. It only renders',
     ],
   },
 
-  previewHtml: `<arc-markdown content="# Hello World\n\nThis is a **markdown** component with *italic* text and \`inline code\`.\n\n## Features\n\n- Zero dependencies\n- Design token styling\n- XSS sanitization\n\n> Blockquotes work too, styled with the accent color.\n\n\`\`\`js\nconst greeting = 'Hello from ARC UI';\nconsole.log(greeting);\n\`\`\`\n\n---\n\nLinks like [ARC UI](https://arclight.build) are styled with the accent color."></arc-markdown>`,
+  previewHtml: `<arc-markdown content="# Hello world\n\nThis is a **markdown** component with *italic* text and \`inline code\`.\n\n## A list\n\n- First item\n- Second item\n- Third item\n\n> Blockquotes work too.\n\n\`\`\`js\nconst greeting = 'Hello from ARC UI';\nconsole.log(greeting);\n\`\`\`\n\n---\n\nLinks like [ARC UI](https://arcui.dev) are styled with the accent color."></arc-markdown>`,
 
   tabs: [
     {
