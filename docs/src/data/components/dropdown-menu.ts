@@ -6,7 +6,7 @@ export const dropdownMenu: ComponentDef = {
   tag: 'arc-dropdown-menu',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Menu dropdown triggered by a button with keyboard navigation.',
+  description: 'A menu of actions that opens from a button.',
 
   overview: `DropdownMenu opens a menu from the element in its \`trigger\` slot, which can be an \`<arc-button>\`, a plain \`<button>\` or an icon button. Items are \`<arc-menu-item>\` children with a label and an optional \`shortcut\` hint, \`<arc-menu-divider>\` separates groups, and \`<arc-menu-label>\` names the group after it. Clicking the trigger toggles the menu. A click outside or Escape closes it.
 
@@ -19,7 +19,7 @@ Use it for action menus on a button: a file menu, a "more actions" button or a p
     'Disabled items are muted and can\'t be chosen',
     'The trigger is shrink-to-fit. Give the host a width, or `display: block`, and the trigger fills it',
     'The trigger gets `aria-haspopup` and `aria-expanded`, and the component sets `role="menu"` and `role="menuitem"`',
-    'The `arc-select` detail also carries the item\'s `label`, `shortcut` and `index`',
+    'The `arc-select` detail also has `index`, and an `item` object with the item\'s `label`, `shortcut` and `value`',
   ],
 
   guidelines: {
