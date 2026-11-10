@@ -133,7 +133,7 @@ export const PRESETS: Preset[] = [
   {
     id: 'monochrome',
     name: 'Monochrome',
-    blurb: 'Neutral grays only, in both themes.',
+    blurb: 'Gray accents and backgrounds. Status colors keep their hues.',
     swatches: ['#e5e5e5', '#a3a3a3'],
     colors: {
       dark: {
@@ -161,7 +161,7 @@ export const PRESETS: Preset[] = [
   {
     id: 'orchid',
     name: 'Orchid',
-    blurb: 'Magenta into violet, deeper surfaces, tighter type.',
+    blurb: 'Magenta into violet, violet-tinted surfaces, tighter type.',
     swatches: ['#d946ef', '#7c3aed'],
     colors: {
       dark: {
