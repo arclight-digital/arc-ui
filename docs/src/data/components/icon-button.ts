@@ -7,39 +7,33 @@ export const iconButton: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Compact button that renders an icon with optional text label, supporting ghost, secondary, and primary variants.',
+    'Compact button that shows an icon, with an optional text label, in ghost, secondary or primary variants.',
 
-  overview: `IconButton is a versatile interactive element designed for actions where an icon is the primary affordance. It renders as a square button when used icon-only, or expands into a compact labeled button when the \`text\` prop is provided. Use it in toolbars, action bars, card headers, and anywhere space is limited but functionality needs to be discoverable.
+  overview: `Icon Button is a button whose main content is an icon. Icon-only, it's a circle. Set \`text\` and it becomes a small rounded rectangle with an uppercase label beside the icon. Use it in toolbars, action bars and card headers.
 
-The component supports three visual variants: \`ghost\` (transparent background, the default), \`secondary\` (bordered with accent glow on hover), and \`primary\` (solid accent-primary background with a glow effect). Four sizes are available (\`xs\`, \`sm\`, \`md\`, and \`lg\`), each with distinct dimensions for both icon-only and icon-plus-text modes. The icon-only mode enforces a 1:1 aspect ratio for visual consistency.
+There are three variants: \`ghost\` (transparent, the default), \`secondary\` (bordered, with a glow on hover) and \`primary\` (solid accent fill). Icon-only sizes are \`xs\` (28px), \`sm\` (32px), \`md\` (36px, the default) and \`lg\` (44px), and each size has its own padding when there's text.
 
-When an \`href\` is provided, IconButton renders as an anchor tag instead of a \`<button>\`, making it suitable for navigation links that should look like action buttons. The \`name\` prop references an icon from the arc-icon library, but you can also pass custom SVG content through the default slot if the built-in icon set does not cover your use case.`,
+With \`href\`, it renders an \`<a>\` in place of a \`<button>\`. \`name\` picks an icon from arc-icon. For your own SVG, leave \`name\` empty and put the SVG in the default slot.`,
 
   features: [
-    'Three visual variants: ghost (default transparent), secondary (bordered with blue glow), and primary (solid accent fill)',
-    'Four sizes (xs 28px, sm 32px, md 36px, lg 44px) with automatic icon size mapping',
-    'Optional `text` prop that expands the button from a square icon into a labeled action button with uppercase styling',
-    'Renders as an `<a>` tag when `href` is provided, enabling accessible navigation links',
-    'Active-press animation with `scale(0.93)` transform for tactile feedback',
-    'Built-in `arc-icon` integration via the `name` prop, or custom content via the default slot',
-    'Focus-visible glow ring using the shared `--focus-glow` token for keyboard navigation',
-    'Accessible `aria-label` derived automatically from `label`, `text`, or manual override',
+    'The icon scales with `size`',
+    'Pressing it scales the button to 0.93',
+    'A disabled link drops its `href` and gets `aria-disabled`, so it leaves the tab order',
+    'An `aria-label` set on the host moves to the inner button. If `label` is also set, `label` wins',
   ],
 
   guidelines: {
     do: [
-      'Always provide a `label` or `text` prop so the button has an accessible name for screen readers',
-      'Use the `ghost` variant for secondary or tertiary actions in toolbars to reduce visual noise',
-      'Use `href` for navigation actions so the element renders as a semantic anchor tag',
-      'Match the `size` to surrounding elements. Use `xs` or `sm` in dense UIs like table rows',
-      'Pair with `arc-tooltip` to explain icon-only buttons on hover',
+      'Give every icon-only button a `label`. Without one, screen readers have nothing to announce',
+      'Use `ghost` for secondary actions in toolbars',
+      'Use `href` for navigation so the button renders a real link',
+      'Use `xs` or `sm` in dense UIs such as table rows',
+      'Pair icon-only buttons with Tooltip so people can see what they do',
     ],
     dont: [
-      'Do not use IconButton for primary page actions that need a full-width call to action. Use Button instead',
-      'Do not omit the `label` prop on icon-only buttons. They will be invisible to assistive technology',
-      'Do not combine `disabled` with `href`. Anchor tags cannot be natively disabled',
-      'Do not use long `text` values. The uppercase styling and compact padding are designed for 1-2 word labels',
-      'Avoid placing many `primary` variant icon buttons in the same row. Reserve the solid fill for the single most important action',
+      'Don\'t use it for the main action on a page. Use Button',
+      'Don\'t use long `text`. The uppercase label and tight padding fit one or two words',
+      'Don\'t put several `primary` icon buttons in one row. Save the solid fill for the most important action',
     ],
   },
 
