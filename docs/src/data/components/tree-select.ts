@@ -8,11 +8,11 @@ export const treeSelect: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['dropdown', 'hierarchy', 'folder picker', 'nested', 'category'],
   description:
-    'Dropdown select whose panel is a hierarchical tree: categories, instrument banks, folder pickers. Group nodes expand and collapse; only leaf nodes are selectable.',
+    'A Select whose dropdown is a tree of expandable groups, where only the leaves can be chosen.',
 
-  overview: `TreeSelect has the trigger of Select and a tree in its panel. The dropdown shows groups that expand, and the leaves inside them are the choices: an instrument bank grouped by family, a category taxonomy, a folder structure. The trigger shows the chosen leaf after a muted path of its ancestors, so "Violin" reads as "Strings / Violin".
+  overview: `TreeSelect has the trigger of Select and a tree in its panel. The dropdown shows groups that expand, and the leaves inside them are the choices. The trigger shows the chosen leaf after a muted path of its ancestors, so "Violin" reads as "Strings / Violin".
 
-Only leaves can be selected. A node with children is a group header that expands and collapses but can't be chosen, so the submitted value is always one leaf, never a branch that might mean "everything under it". When the panel opens, the branches containing the current value expand, so the selection is in view.
+Only leaves can be selected. A node with children is a group header that expands and collapses but can't be chosen, so the submitted value is always a single leaf. When the panel opens, the branches containing the current value expand, so the selection is in view.
 
 TreeSelect follows the ARIA combobox pattern with a tree popup. Enter, Space or an arrow key opens the panel. Arrow Up and Down move between rows, Arrow Right and Left expand and collapse groups, Enter picks a leaf and Escape closes. Typing jumps to the row that starts with those letters, as in Select. It takes part in native forms through ElementInternals and submits the selected leaf's value under its \`name\`.`,
 
