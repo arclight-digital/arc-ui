@@ -170,7 +170,7 @@ const tokenGroupDescriptions: Record<string, string> = {
   border: 'border colors',
   divider: 'divider treatment',
   glow: 'accent glow effects (compound, derived from accents)',
-  gradient: 'gradients (compound, derived from accents)',
+  gradient: 'gradients (some built from the accents, some fixed, such as `--gradient-sunset`)',
   shadow: 'elevation shadows',
   focus: 'focus ring styles',
   font: 'font role slots (body/label/mono/display/quote): composed `--font-<role>` + `-family`/`-fallback`/`-weight`; `--font-accent` is a back-compat alias of `--font-label`',
@@ -225,7 +225,7 @@ export const GET: APIRoute = async () => {
   sections.push('');
   sections.push('Every component and token, for LLMs. For a short overview, see /llms.txt.');
   sections.push('');
-  sections.push('The APIs below are the Web Component surface. Framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) are generated from this source and expose the same props, methods, slots, and CSS parts. Events keep their `arc-*` names and are bound in each framework\'s own style: `onArcInput` in React, Solid and Preact, `@arc-input` in Vue, `onarc-input` in Svelte, `(arcInput)` in Angular.');
+  sections.push('The APIs below are the Web Component surface. Framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) are generated from this source and expose the same props, methods, slots, and CSS parts. Events keep their `arc-*` names and are bound in each framework\'s own style: `onArcInput` in React, Solid and Preact, `@arc-input` in Vue, `onarc-input` in Svelte, `(arc-input)` in Angular. Angular wrappers also have `<property>Change` outputs (`valueChange`, `checkedChange`) for two-way binding.');
   sections.push('');
 
   // Token reference
@@ -242,7 +242,7 @@ export const GET: APIRoute = async () => {
   sections.push('}');
   sections.push('```');
   sections.push('');
-  sections.push('Compound tokens (glows, gradients, focus rings, feedback tints) reference base tokens via `var()`, so overriding a base token changes every value derived from it. The theme is dark by default; set `data-theme="light"` on `<html>` for light mode, or `data-theme="auto"` to follow `prefers-color-scheme`.');
+  sections.push('Glows, focus rings, feedback tints and the accent gradients reference base tokens via `var()`, so overriding a base token changes every value derived from it. The theme is dark by default; set `data-theme="light"` on `<html>` for light mode, or `data-theme="auto"` to follow `prefers-color-scheme`.');
   sections.push('');
   sections.push(`### Token names by group (${allTokens.length} total)`);
   for (const [prefix, names] of tokenGroups) {
