@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui-html",
-  "version": "4.9.1",
+  "version": "4.9.2",
   "description": "ARC UI components as standalone CSS and copy-paste HTML, with no JavaScript.",
   "sideEffects": [
     "**/*.css"

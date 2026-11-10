@@ -1,6 +1,6 @@
 {
   "name": "@arclux/arc-ui",
-  "version": "4.9.1",
+  "version": "4.9.2",
   "description": "ARC UI's Lit web components, the source every ARC UI framework package is generated from.",
   "type": "module",
   "main": "src/index.js",
