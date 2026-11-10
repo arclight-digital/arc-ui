@@ -9,37 +9,31 @@ export const combobox: ComponentDef = {
   searchKeywords: ['autocomplete', 'typeahead'],
   description: 'Searchable dropdown with type-ahead filtering.',
 
-  overview: `Combobox combines a text input with a filterable dropdown list, so users can type and still pick from a known set of options. As the user types, the listbox narrows to options whose labels match the query. Use it where the option set is too large for a plain Select but must stay constrained to predefined values, such as country selectors, tag pickers, and user-mention fields.
+  overview: `Combobox is a text input over a list of \`<arc-option>\` elements. Typing narrows the list to options whose text contains the query, ignoring case. Picking an option, by click or by Enter on the highlighted one, closes the list, puts the option's text in the input and fires \`arc-change\` with its value. Every keystroke fires \`arc-input\` with the query.
 
-Options are provided declaratively via \`<arc-option>\` children, each carrying a \`value\` and a visible \`label\`. The component reads these from the default slot on connect and rebuilds the filtered list on every keystroke. When the user selects an option (by clicking it or pressing Enter on the highlighted item), the combobox closes, the input displays the chosen label, and an \`arc-change\` event fires with the selected value.
+Use it when the list is too long to scroll through but the value has to be one of the options, such as a country field. There's no free-text entry.
 
-Keyboard navigation follows the WAI-ARIA combobox pattern: Arrow Down/Up move the active highlight through the filtered list, Enter confirms the selection, and Escape dismisses the popup. The input carries \`role="combobox"\`, \`aria-expanded\`, \`aria-controls\`, and \`aria-activedescendant\` attributes so screen readers can announce the interaction. Clicking outside the component closes the listbox via a document-level click listener.`,
+Each \`<arc-option>\` needs a \`value\`, and its text content is the label that's shown and searched. The component renders its own copy of each option and hides the ones you wrote.`,
 
   features: [
-    'Type-ahead filtering that narrows options as the user types',
-    'Declarative option list via `<arc-option>` children with value and label attributes',
-    'Keyboard navigation: ArrowDown, ArrowUp, Enter to select, Escape to dismiss',
-    'WAI-ARIA combobox pattern with role, `aria-expanded`, `aria-controls`, and `aria-activedescendant`',
-    'Visual active highlight and selected-state accent color on the current option',
-    'Closes on outside click via a document-level event listener',
-    'Configurable label, placeholder, and disabled state',
-    '"No results found" empty state when the query matches zero options',
+    'The input has `role="combobox"` with `aria-expanded`, `aria-controls` and `aria-activedescendant`, and the list is a `listbox` of `option` elements',
+    'Arrow Down and Arrow Up move the highlight, Enter selects and Escape closes. Home and End move the highlight only while the input is empty',
+    'Disabled options are dimmed, skipped by the arrow keys and can\'t be selected',
+    'Shows "No results found" when nothing matches the query',
+    'Clicking outside or moving focus away closes the list',
+    'Form-associated: give it a `name` and the selected value submits with the form',
+    '`readonly` blocks typing and selection, but the input stays focusable, the list still opens and the value still submits',
   ],
 
   guidelines: {
     do: [
-      'Use Combobox when the option list exceeds 7-10 items and users benefit from filtering by typing',
-      'Provide clear, distinct labels on every <arc-option> so filtering produces meaningful results',
-      'Set a descriptive placeholder like "Search countries..." to indicate the field is searchable',
-      'Include a label attribute for accessibility; it renders a visible label above the input',
-      'Listen to arc-change to capture the selected value and sync it with your application state',
+      'Give every option a distinct `value`. Selection is tracked by value',
+      'Write a placeholder that says the field is searchable, such as "Search countries..."',
+      'Set `label`. It renders above the input and is the accessible name',
     ],
     dont: [
-      'Do not use Combobox for short lists (under 5 items) where a simple Select is faster',
-      'Do not omit the value attribute on <arc-option>; the component needs it to track selection',
-      'Do not place non-<arc-option> elements in the default slot; they will be ignored by the filter logic',
-      'Do not rely on Combobox for free-text entry; it only accepts values from the predefined option set',
-      'Do not disable the component without providing a visual explanation of why it is unavailable',
+      'Don\'t use it for a handful of options. A Select is quicker',
+      'Don\'t put anything but `<arc-option>` in the slot. Other elements are ignored',
     ],
   },
 
