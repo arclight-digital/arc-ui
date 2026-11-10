@@ -7,11 +7,11 @@ export const tag: ComponentDef = {
   tier: 'data',
   interactivity: 'hybrid',
   description:
-    'Compact pill-shaped label with color variants, custom color support and an optional remove button, for categories, filters and selections.',
+    'A small uppercase pill for a category or filter, with an optional button to remove it.',
 
-  overview: `Tag is a small pill-shaped label for a category, a filter or a piece of metadata. Its text is uppercase in the label font with wide letter spacing. You'll see it in filter bars, on resource cards and in the summary of a multi-select.
+  overview: `Tag is a small pill-shaped label for a category, a filter or a piece of metadata. Its text is uppercase in the label font with wide letter spacing.
 
-There are seven variants: \`default\` (neutral border and muted text), \`primary\` and \`secondary\` (accent tints), and the status colors \`success\` (green), \`warning\` (yellow), \`error\` (red) and \`info\` (blue). Each variant glows in its own color on hover, and \`default\` glows in the accent color.
+There are seven variants: \`default\` (neutral border and muted text), \`primary\` and \`secondary\` (accent tints), and the status colors \`success\` (green), \`warning\` (yellow), \`error\` (red) and \`info\` (blue). On hover a tag glows in its variant's color, except \`default\` and \`info\`, which glow in the accent color.
 
 When no variant fits, \`color\` takes an RGB triplet such as \`"77, 126, 247"\` and uses it for the border, text, background tint and hover glow. Use it for category colors that come from your data.
 
@@ -27,7 +27,7 @@ When no variant fits, \`color\` takes an RGB triplet such as \`"77, 126, 247"\` 
       'Use `primary` or `secondary` to group related categories',
       'Use `color` when category colors come from data, such as project or label colors',
       'Set `removable` on a filter the reader applied and can clear',
-      'Keep labels to one to three words. Uppercase makes long ones stand out',
+      'Keep labels to one to three words. Long uppercase labels are hard to read',
       'Listen for `arc-remove` once on the parent container, not on every tag',
       'Lay a set of tags out in a wrapping flex row with a small gap',
     ],
