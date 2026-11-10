@@ -32,7 +32,7 @@ The grid is one tab stop. Arrow keys move focus between cells, Home and End go t
 
   guidelines: {
     do: [
-      'For a display-only table, set `density="compact"` and `no-striped`. That\'s what the removed `arc-table` looked like',
+      'For a display-only table, set `no-striped`. That\'s what the removed `arc-table` looked like',
       'Set `manual-sort` and handle `arc-sort` when the data is paginated or sorted on the server',
       'Pin one or two identifying columns, such as an ID or a name',
       'Give pinned columns a `width`. Pinned offsets are computed from it',
