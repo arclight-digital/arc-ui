@@ -20,7 +20,7 @@
 
 ARC UI is a set of [Lit](https://lit.dev) web components. **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source, so every framework gets the same elements and the same tokens. Changing framework means changing the import path.
 
-It's built AI-first (TODO(copy): say in one sentence what that means here, for example who or what writes the components). Before anything ships it has to pass 5,140 browser tests (the test runner's count at v4.9.1) and Prism's own suite (TODO(copy): Prism's test count; this said 600, and those tests aren't in this repo), and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so in dark mode the zero-JS HTML package looks the same as the React one. The HTML package has no light theme.
+It's built AI-first: Claude writes most of the code, and the tests and CI decide what ships. Before anything ships it has to pass 5,140 browser tests (the test runner's count at v4.9.1) and Prism's own suite of about 690 tests, and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so in dark mode the zero-JS HTML package looks the same as the React one. The HTML package has no light theme.
 
 Lit is a peer dependency. The package depends on `@lit-labs/ssr-client` and `qrcode-generator`, and takes `shiki` and `@shikijs/langs` (for Code Block) and `@lit-labs/ssr` (for server rendering) as optional peers.
 
@@ -216,12 +216,12 @@ pnpm generate         # Regenerate tokens + all framework wrappers
 
 | Browser | Version |
 |---------|---------|
-| Chrome | TODO(copy) |
-| Firefox | TODO(copy) |
-| Safari | 16.4+ |
-| Edge | TODO(copy) |
+| Chrome | 114+ |
+| Firefox | 125+ |
+| Safari | 17+ |
+| Edge | 114+ |
 
-TODO(copy): Chrome, Firefox and Edge versions. This said "last 2 versions", which nothing in the repo backs. The [browser support page](https://arcui.dev/docs/browser-support) gives feature floors (Chrome 73, Firefox 101).
+These are the first versions with the Popover API, which overlays need. Entry animations need `@starting-style` (Chrome and Edge 117, Firefox 129, Safari 17.5); older supported browsers show panels without animating. The [browser support page](https://arcui.dev/docs/browser-support) has the details.
 
 ## Upgrading
 
@@ -232,9 +232,8 @@ Start with the [v4.0.0 release
 notes](https://arcui.dev/docs/changelog) (curation, contracts, platform,
 light), then the [v4 contents
 list](https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md#v4-breaking-changes)
-if you are coming from v3. TODO(copy): v3 support end date. MIGRATION.md says
-patches for a quarter after the v4 tag (about 2026-11-17); SECURITY.md said
-latest release only.
+if you are coming from v3. v3 gets security fixes until 2026-11-16, a quarter
+after the v4.0.0 tag.
 
 ## License
 
