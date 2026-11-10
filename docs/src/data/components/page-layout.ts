@@ -7,43 +7,33 @@ export const pageLayout: ComponentDef = {
   tier: 'layout',
   interactivity: 'hybrid',
   description:
-    'Page structure primitive that arranges content into sidebar-left, sidebar-right, centered, or wide layouts using CSS Grid. Handles responsive collapse, configurable gap and max-width, and exposes named slots for sidebar, main, and aside regions.',
+    'Lays out a page as sidebar-left, sidebar-right, centered or wide, with one attribute and CSS Grid.',
 
-  overview: `PageLayout sets the page structure. Instead of hand-coding grid columns and responsive breakpoints, you set one \`layout\` attribute and the component handles the rest: sidebar-left places a 240px navigation rail to the left of the main content, sidebar-right adds a 300px aside on the right for contextual panels, centered constrains content to a max-width with auto margins, and wide lets content stretch full-bleed.
+  overview: `PageLayout replaces hand-written grid columns and breakpoints with one \`layout\` attribute. \`sidebar-left\` puts the \`sidebar\` slot in a 240px column left of the main content. \`sidebar-right\` puts the \`aside\` slot in a 300px column on the right. \`centered\` (the default) caps the content at a max width with auto margins, and \`wide\` lets it run full width.
 
-The component doesn't care what goes inside each region. Drop a navigation menu, filter panel, or table of contents into the sidebar slot; place your primary content in the default slot; and optionally fill the aside slot with supplementary widgets. This separation of structure and content means you can swap layouts without touching the content itself. Switching from sidebar-left to centered takes one attribute.
+Main content goes in the default slot. A slot that the current layout doesn't use is hidden, so you can change layouts with one attribute and leave the content alone.
 
-PageLayout collapses on mobile. At 768px and below, sidebar-left and sidebar-right layouts flatten to a single stacked column so content remains readable on small screens. The \`gap\` and \`maxWidth\` properties let you fine-tune spacing and width constraints at the page level, which keeps layout tokens consistent with the rest of the design system.`,
+At 768px and below, both sidebar layouts collapse to one stacked column. \`gap\` sets the space between regions and \`maxWidth\` sets the cap for \`centered\`.`,
 
   features: [
-    'Four layout modes: sidebar-left, sidebar-right, centered, and wide',
-    'CSS Grid-based columns with fixed sidebar widths (240px left, 300px right)',
-    'Responsive collapse to single-column at 768px breakpoint',
-    'Configurable max-width for centered layouts (default 1120px)',
-    'Adjustable gap between regions via the gap property',
-    'Named slots for sidebar, default (main), and aside regions',
-    'CSS custom properties (`--max-width`, `--gap`) for runtime tuning',
-    'Exposed CSS parts (layout, sidebar, main, aside) for deep styling',
-    'Minimum-width protection on the main column to prevent content overflow',
+    '`maxWidth` defaults to 1120px and only applies to `centered`',
+    'Both props are also set as `--max-width` and `--gap` custom properties',
+    'The main column has `min-width: 0`, so wide content doesn\'t push it past its grid track',
+    'Parts: `base`, `layout`, `sidebar`, `main`, `aside`',
   ],
 
   guidelines: {
     do: [
-      'Use sidebar-left for primary navigation layouts like dashboards and admin panels',
-      'Use sidebar-right for contextual detail panels, table-of-contents, or filter drawers',
-      'Use centered for article pages, documentation, and content-heavy layouts',
-      'Set a meaningful maxWidth when using centered to maintain readable line lengths',
-      'Nest PageLayout inside AppShell to combine top bar, sidebar chrome, and page structure',
-      'Test the responsive breakpoint to verify sidebar content stacks correctly on mobile',
-      'Use the gap property to match the spacing scale defined in your design tokens',
+      'Use sidebar-left for navigation, as in dashboards and admin panels',
+      'Use sidebar-right for a detail panel, table of contents or filters',
+      'Use centered for articles and documentation, with a `maxWidth` that keeps lines readable',
+      'Put PageLayout inside AppShell to get a top bar and sidebar chrome around it',
+      'Set `gap` to a value from your spacing scale',
     ],
     dont: [
-      'Do not nest multiple PageLayouts: one per page is sufficient; use Container or Section for inner structure',
-      'Do not hard-code column widths with inline styles when the layout prop covers your use case',
-      'Do not place critical navigation in the aside slot: it is hidden in non-sidebar-right layouts',
-      'Do not forget to provide meaningful content in the sidebar slot when using sidebar-left or sidebar-right',
-      'Do not use wide layout without any internal max-width constraints: text becomes unreadable at large viewports',
-      'Do not override the responsive breakpoint without testing on real mobile devices',
+      'Don\'t hand-code column widths in inline styles when a `layout` value already gives you them',
+      'Don\'t put content in `aside` unless the layout is sidebar-right. It\'s hidden in every other layout',
+      'Don\'t use `wide` for text without a max width inside it. Lines get too long to read on large screens',
     ],
   },
 
