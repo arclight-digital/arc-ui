@@ -7,37 +7,27 @@ export const image: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'Enhanced image component with shimmer loading skeleton, smooth fade-in transition, error fallback, and aspect ratio presets.',
+    'Image with a shimmer skeleton while it loads, a fade-in, an error fallback and aspect ratio presets.',
 
-  overview: `Image wraps the native \`<img>\` element with loading states and error handling that would otherwise require custom boilerplate in every project. While the image loads, a shimmer skeleton animation fills the container, giving users immediate visual feedback. Once loaded, the image fades in smoothly via a CSS opacity transition.
+  overview: `Image wraps a native \`<img>\` with loading and error states. While the image loads, a shimmer skeleton fills the container, and the image fades in once it arrives. If it fails, the component shows the \`fallback\` image if you set one, or a placeholder icon if you didn't.
 
-If the image fails to load, the component switches to an error state that displays either a custom fallback image (via the \`fallback\` prop) or a default placeholder icon. This three-state lifecycle (loading, loaded, error) is automatic and requires no imperative code.
-
-Six aspect ratio presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\`) constrain the container dimensions before the image loads, preventing layout shift. The \`fit\` property maps directly to CSS \`object-fit\`, defaulting to \`cover\` for full-bleed cropping. Native lazy loading is enabled by default via the \`loading="lazy"\` attribute.`,
+\`aspect\` takes one of six presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\`) and sizes the container before the image loads, so the page doesn't jump. \`fit\` maps to CSS \`object-fit\` and defaults to \`cover\`. \`loading\` defaults to \`lazy\`.`,
 
   features: [
-    'Shimmer skeleton animation during image loading',
-    'Smooth opacity fade-in transition when the image loads',
-    'Automatic error fallback with placeholder icon or custom fallback image',
-    'Six aspect ratio presets to prevent layout shift: 1/1, 4/3, 16/9, 21/9, 3/4, 9/16',
-    'Five object-fit modes: cover (default), contain, fill, none, scale-down',
-    'Native lazy loading enabled by default',
-    'Respects `prefers-reduced-motion`: disables shimmer and fade when set',
-    'Exposed CSS parts: wrapper, image, fallback',
+    '`fit` values: `cover` (default), `contain`, `fill`, `none` and `scale-down`',
   ],
 
   guidelines: {
     do: [
-      'Always provide meaningful `alt` text for accessibility',
-      'Set an `aspect` ratio to prevent layout shift during loading',
-      'Use `fit="contain"` for logos or icons that should not be cropped',
-      'Provide a `fallback` image URL for critical images that must always display something',
+      'Write `alt` text that describes the image',
+      'Set `aspect` so the layout doesn\'t shift while the image loads',
+      'Use `fit="contain"` for logos and icons that shouldn\'t be cropped',
+      'Set `fallback` on images that must always show something',
     ],
     dont: [
-      'Do not use arc-image for decorative background images. Use CSS `background-image` instead',
-      'Do not set `loading="eager"` on below-the-fold images. Lazy is the default for a reason',
-      'Do not omit `alt` text. The image is semantically meaningful content',
-      'Do not use extremely large source images without server-side resizing',
+      'Don\'t use it for decorative backgrounds. Use CSS `background-image`',
+      'Don\'t set `loading="eager"` on images below the fold. Lazy loading waits until they\'re near the viewport',
+      'Don\'t serve very large source images without resizing them on the server',
     ],
   },
 
