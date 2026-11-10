@@ -11,9 +11,7 @@ export const sticky: ComponentDef = {
 
   overview: `Sticky is a wrapper with \`position: sticky\`. \`offset\` sets its \`top\` value. \`"0px"\`, the default, sticks it flush with the top edge, and \`"64px"\` sticks it under a 64px top bar.
 
-An IntersectionObserver, not a scroll listener, watches a 1px sentinel just above the wrapper. When the sentinel leaves view, Sticky sets the \`stuck\` attribute on the host, removes it when the sentinel comes back, and fires \`arc-stuck\` with \`{ stuck }\` in the detail each time. The stuck state adds \`--shadow-sm\` by default. Style \`[stuck]\` to change the background, border or anything else.
-
-The sentinel only leaves view at the default \`0px\` offset. With any other offset the wrapper still sticks, but \`stuck\` is never set and \`arc-stuck\` never fires.`,
+An IntersectionObserver, not a scroll listener, watches a 1px sentinel just above the wrapper. The observer's top edge sits at the offset, so the sentinel crosses it at the moment the wrapper sticks. Sticky then sets the \`stuck\` attribute on the host, removes it when the wrapper scrolls back down, and fires \`arc-stuck\` with \`{ stuck }\` in the detail each time. The stuck state adds \`--shadow-sm\` by default. Style \`[stuck]\` to change the background, border or anything else.`,
 
   features: [
     'The wrapper sits at `z-index: 10`, above the content that scrolls under it',

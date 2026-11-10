@@ -10,7 +10,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * @tag arc-sticky
  * @status stable
  * @prop {string} offset - The CSS `top` value for sticky positioning. Set to "64px" to stick below a 64px top bar, or "0px" to stick flush with the viewport/scroll container edge.
- * @prop {boolean} stuck - Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state.
+ * @prop {boolean} stuck - Read-only attribute set by the IntersectionObserver while the element is stuck at its `offset`, whatever the offset is. Use the `[stuck]` CSS selector to style the stuck state.
  * @fires arc-stuck - Fired when the stuck state changes. Event detail contains `{ stuck: boolean }` indicating whether the element is currently stuck.
  * @slot - Default content.
  * @csspart base - The root element.
@@ -67,32 +67,52 @@ export class ArcSticky extends DeclaredPropsMixin(LitElement) {
   updated(changed) {
     if (changed.has('offset')) {
       this.style.setProperty('--_offset', this.offset);
+      // The first observer is made in connectedCallback; this re-aims it.
+      if (this._observer) this._observe();
     }
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.updateComplete.then(() => {
-      const sentinel = this.shadowRoot.querySelector('.sentinel');
-      if (!sentinel) return;
-      this._observer = new IntersectionObserver(
-        ([entry]) => {
-          const isStuck = !entry.isIntersecting;
-          if (this.stuck !== isStuck) {
-            this.stuck = isStuck;
-            this.dispatchEvent(
-              new CustomEvent('arc-stuck', {
-                detail: { stuck: isStuck },
-                bubbles: true,
-                composed: true,
-              }),
-            );
-          }
-        },
-        { threshold: [1] },
-      );
-      this._observer.observe(sentinel);
-    });
+    this.updateComplete.then(() => this._observe());
+  }
+
+  /**
+   * (Re)create the observer for the current offset.
+   *
+   * The sentinel sits 1px above the host and moves with it, so once the host
+   * sticks at `top: 64px` the sentinel sits at 63px, still inside the
+   * viewport. Shrinking the root's top edge by the offset puts the line it
+   * crosses where the host actually sticks. It used to watch the plain
+   * viewport, which only worked at offset 0. rootMargin takes only px or %, so
+   * the offset is read back from the computed `top`, which resolves rem, em
+   * and calc() to px.
+   */
+  _observe() {
+    this._observer?.disconnect();
+    this._observer = null;
+    if (!this.isConnected) return;
+    const sentinel = this.shadowRoot?.querySelector('.sentinel');
+    if (!sentinel) return;
+    const top = getComputedStyle(this).top;
+    const inset = `${-(parseFloat(top) || 0)}${top.endsWith('%') ? '%' : 'px'}`;
+    this._observer = new IntersectionObserver(
+      ([entry]) => {
+        const isStuck = !entry.isIntersecting;
+        if (this.stuck !== isStuck) {
+          this.stuck = isStuck;
+          this.dispatchEvent(
+            new CustomEvent('arc-stuck', {
+              detail: { stuck: isStuck },
+              bubbles: true,
+              composed: true,
+            }),
+          );
+        }
+      },
+      { threshold: [1], rootMargin: `${inset} 0px 0px 0px` },
+    );
+    this._observer.observe(sentinel);
   }
 
   disconnectedCallback() {
