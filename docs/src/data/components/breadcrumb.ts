@@ -7,40 +7,31 @@ export const breadcrumb: ComponentDef = {
   tier: 'navigation',
   interactivity: 'hybrid',
   description:
-    "Navigation trail that shows the user's current location in a page hierarchy, with separator icons and current-page indication.",
+    "Navigation trail that shows the user's current location in a page hierarchy, with separator characters and current-page indication.",
 
-  overview: `Breadcrumbs are a secondary navigation pattern that reveals the user's position inside a site hierarchy. Each crumb is a clickable link back to a parent page, separated by a visual divider, with the final crumb representing the current page. Users can see where they are and jump several levels up without repeatedly hitting the browser back button.
+  overview: `Breadcrumb shows where the current page sits in the site's hierarchy. Each crumb links to a parent page, and the last crumb is the current page, so users can jump several levels up without pressing Back. Use it next to a sidebar or top bar, not in place of one.
 
-The component renders a \`<nav>\` landmark with \`aria-label="Breadcrumb"\` and marks the last item with \`aria-current="page"\`, following the WAI-ARIA Breadcrumb pattern. Separator characters are injected automatically and hidden from assistive technology with \`aria-hidden="true"\`, so screen readers announce a list of links instead of reading out each slash or chevron.
+Write the trail as \`<arc-breadcrumb-item>\` children. The component renders a \`<nav>\` with \`aria-label="Breadcrumb"\` (change it with \`label\`) and gives the last crumb \`aria-current="page"\`, following the WAI-ARIA Breadcrumb pattern. The \`separator\` character (default \`/\`) goes between crumbs and is hidden from screen readers, so they read a list of links, not the slashes.
 
-Breadcrumbs work best alongside a primary navigation element like a sidebar or top bar. They do not replace top-level navigation. They answer "where am I?" once the user has drilled into a deep page. In applications with a flat structure (fewer than two levels), breadcrumbs add clutter and should be omitted.`,
+Crumbs with an \`href\` render as ordinary \`<a>\` links. \`arc-navigate\` fires only from a crumb before the last that has no \`href\`, which renders as a button.`,
 
   features: [
-    'Automatic separator icons inserted between crumb items, with no manual markup',
-    'Current-page indication via `aria-current="page"` on the last item with distinct font weight',
-    'Fires `arc-navigate` custom event on crumb click, for SPA routing without full page reloads',
-    'Wraps on narrow viewports using flex-wrap so long trails never overflow',
-    'Renders a semantic `<nav>` landmark with `aria-label="Breadcrumb"` for assistive technology',
-    'Separator characters hidden from screen readers with `aria-hidden="true"`',
-    'Focus-visible ring on each link for keyboard-only users',
-    'Declarative slotted API: compose `<arc-breadcrumb-item>` children in any template language',
-    'CSS custom-property theming for text color, separator color, and spacing via design tokens',
+    'The current crumb is set apart by color alone: primary text against the muted links',
+    'Long trails wrap onto a second line on narrow screens',
   ],
 
   guidelines: {
     do: [
-      'Place breadcrumbs near the top of the page, above the main content heading, so users see their location before engaging with page content',
-      'Always include the root page (e.g. "Dashboard" or "Home") as the first crumb to anchor the trail',
-      'Keep crumb labels short: one or two words that match the actual page title so users can predict where each link goes',
-      'Use breadcrumbs in apps with three or more levels of hierarchy where users frequently navigate between depths',
-      'Listen for the `arc-navigate` event to handle route changes in single-page applications instead of relying on full page navigations',
+      'Put the trail near the top of the page, above the main heading',
+      'Start with the root page ("Dashboard" or "Home")',
+      'Keep crumb labels to one or two words that match the page titles',
+      'Use breadcrumbs in apps with three or more levels',
     ],
     dont: [
-      'Do not use breadcrumbs as a replacement for primary navigation; they are a supplementary wayfinding aid',
-      'Avoid making the current (last) crumb a clickable link; it represents the page the user is already on',
-      'Do not show breadcrumbs on top-level pages with no parent; a single crumb provides no navigational value',
-      'Avoid duplicating breadcrumbs and a back button in the same spot. Pick one pattern to reduce visual noise',
-      'Do not include more than five or six levels in a single trail; deep trails suggest an information architecture that is too nested',
+      'Don\'t make the last crumb a link. It is the page the user is already on',
+      'Don\'t show a trail on a top-level page. One crumb tells the user nothing',
+      'Don\'t put breadcrumbs and a back button in the same spot. Pick one',
+      'Don\'t go past five or six levels. A trail that deep means the site is nested too far',
     ],
   },
 
@@ -184,7 +175,7 @@ export default function BreadcrumbDemo() {
       name: 'BreadcrumbItem',
       tag: 'arc-breadcrumb-item',
       description:
-        'An individual crumb inside a Breadcrumb trail. Each item represents one level of the page hierarchy. Items with an `href` render as clickable links; the item without an `href` (typically the last one) is treated as the current page and displayed with stronger visual weight.',
+        'One crumb in a Breadcrumb trail. An item with an `href` renders as a link. The last item is always the current page, shown in the primary text color.',
     },
   ],
 
