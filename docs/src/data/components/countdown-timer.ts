@@ -7,9 +7,9 @@ export const countdownTimer: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   description:
-    'Live countdown to a target date/time with days, hours, minutes, and seconds segments.',
+    'Counts down to a date and time in days, hours, minutes and seconds, and fires an event at zero.',
 
-  overview: `CountdownTimer counts down to the date in \`target\`, which takes an ISO 8601 string or anything \`new Date()\` can parse. A string without a time zone is read as the visitor's local time. The display is four segments, labeled Days, Hours, Min and Sec, with colons between them. Each number is two mono digits with \`tabular-nums\`, so the width doesn't change as it ticks.
+  overview: `CountdownTimer counts down to the date in \`target\`, which takes an ISO 8601 string or anything \`new Date()\` can parse. A date and time without a time zone is read as the visitor's local time, but a date on its own, such as \`2027-01-01\`, is read as midnight UTC. The display is four segments, labeled Days, Hours, Min and Sec, with colons between them. Each number is at least two mono digits with \`tabular-nums\`, so the width doesn't change as it ticks. A countdown of 100 days or more shows three digits of days.
 
 It recalculates every second and stops its interval when removed from the page. At zero it fires \`arc-expired\` once and replaces the segments with the \`expired\` text, which defaults to "Expired". Setting a new \`target\` starts it again.
 
@@ -30,7 +30,6 @@ It recalculates every second and stops its interval when removed from the page. 
       'Don\'t use it for elapsed time or as a stopwatch. It only counts down',
       'Don\'t set a target in the past unless you want the expired text straight away',
       'Don\'t enforce deadlines with it. Check them on the server',
-      'Don\'t use very short countdowns, under 10 seconds, as the main UI. The pressure reads as manipulative',
     ],
   },
 
