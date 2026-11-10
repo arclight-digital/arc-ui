@@ -8,7 +8,7 @@ export const timeline: ComponentDef = {
   interactivity: 'static',
   description: 'Vertical timeline with dated events.',
 
-  overview: `Timeline lists events in a vertical column, each with a dot and a line down to the next. Use it for changelogs, activity feeds, project histories and audit logs. The last item has no line below it.
+  overview: `Timeline lists events in a vertical column, each with a dot and a line down to the next. The last item has no line below it.
 
 Each event is an \`<arc-timeline-item>\` with a \`heading\`, an optional \`date\` and an optional description in its text. Timeline reads the items as data and renders its own copy of each. The description is the item's \`textContent\`, so it renders as plain text, and links or other markup inside an item are lost.
 
