@@ -101,11 +101,15 @@ const PAIRS = [
   {
     name: 'subscriptions',
     source: 'packages/web-components/src/shared/subscriptions.js',
-    tests: 'packages/web-components/test/reconnect-sweep.test.js',
+    tests: 'packages/web-components/test/{reconnect-sweep,infinite-scroll}.test.js',
     // measured 83.33% (5/6) 2026-08-13; 87.50% (7/8) 2026-08-15 after
     // observeAttributes landed for finding #15. The floor stays at 80: a
     // ratchet guards against regression, and raising it on the strength of one
     // reading of a larger mutant set is how a gate becomes flaky.
+    // 4.9.2: observeIntersect's options can be a function of the host, rebuilt
+    // when its result changes (arc-infinite-scroll's threshold). Only
+    // infinite-scroll.test.js reaches that path, so it runs here too: 64.29%
+    // (9/14) with reconnect-sweep alone, 100.00% (14/14) with both.
     gate: 80,
     why: 'connection-scoped subscriptions — finding #55',
   },
