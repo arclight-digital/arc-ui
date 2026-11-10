@@ -72,7 +72,9 @@ const headings = [
         it moves a host <code>aria-label</code> onto its inner button. <code>arc-button</code> doesn't forward
         <code>aria-label</code>, and <code>arc-input</code> can't pass
         <code>aria-describedby</code> into its shadow root, so the first two snippets below
-        don't name or describe anything. <code>arc-alert</code> announces errors and
+        show what doesn't work. For an icon-only button, use <code>arc-icon-button</code>
+        and give it a <code>label</code>. <code>arc-input</code> has no prop for a description.
+        <code>arc-alert</code> announces errors and
         warnings assertively and success politely by default. Its <code>live</code> prop
         overrides that.
       </p>
@@ -222,7 +224,7 @@ const headings = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
         With <code>prefers-reduced-motion: reduce</code> set, every transition and animation
-        inside a component finishes almost instantly. Everything else works the same.
+        inside a component finishes almost instantly.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`/* Built into ARC UI components */
 @media (prefers-reduced-motion: reduce) {
@@ -240,8 +242,8 @@ const headings = [
         <em>un-animated</em> styles, so a reduced-motion user sees whatever the base styles
         say. Put the resting state in the base styles and let the keyframes move away from it.
         A two-frame sprite that swaps layers by opacity shows both frames stacked if both are
-        visible by default. Hide the second frame in the base styles, and the keyframes that
-        reveal it never get time to.
+        visible by default. Set <code>opacity: 0</code> on the second frame in the base styles,
+        as below, and a reduced-motion user sees only the first frame.
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`.frame-b { opacity: 0; }            /* resting state: frame A only */
 .frame-a { animation: swap-a 800ms steps(1) infinite; }
@@ -257,14 +259,14 @@ const headings = [
       <p class="docs-text">
         Web Components need JavaScript to upgrade. Until that happens (a failed script, a
         slow network, JS disabled), a custom element is an unknown tag rendering only its
-        light DOM. What you put inside the element is what everyone sees first.
+        light DOM.
       </p>
       <p class="docs-text">
         For links, an <code>href</code> on the custom element itself
         <strong>cannot</strong> produce a working link without JavaScript. The attribute is
         on the element, and the real <code>&lt;a&gt;</code> only exists in a shadow root that
-        never gets created. Slot a real anchor instead and the link is ordinary HTML from the
-        first byte.
+        never gets created. Slot a real anchor instead. It works as a link before the element
+        upgrades.
       </p>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Works without JS, and before the element upgrades -->
 <arc-button variant="primary">
