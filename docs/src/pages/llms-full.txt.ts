@@ -58,7 +58,7 @@ function renderApi(api: ComponentApi, h = '###'): string[] {
 
   if (api.cssParts.length) {
     lines.push('');
-    lines.push(`${h} CSS Parts`);
+    lines.push(`${h} CSS parts`);
     lines.push('');
     lines.push(api.cssParts.map((p) => `\`${p.name}\``).join(', '));
   }
@@ -219,19 +219,19 @@ export const GET: APIRoute = async () => {
   const sections: string[] = [];
 
   // Header
-  sections.push(`# ARC UI: Full Component & Token Reference`);
+  sections.push(`# ARC UI: full component and token reference`);
   sections.push('');
   sections.push(`> Version ${version} | ${components.length} components | ${frameworkCount} framework targets`);
   sections.push('');
-  sections.push('This is the complete reference for LLM consumption. For a concise overview, see /llms.txt.');
+  sections.push('Every component and token, for LLMs. For a short overview, see /llms.txt.');
   sections.push('');
-  sections.push('The APIs below are the Web Component surface. Framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) are generated from this source and expose the same props, methods, events, slots, and CSS parts.');
+  sections.push('The APIs below are the Web Component surface. Framework wrappers (React, Vue, Svelte, Angular, Solid, Preact) are generated from this source and expose the same props, methods, slots, and CSS parts. Events keep their `arc-*` names and are bound in each framework\'s own style: `onArcInput` in React, Solid and Preact, `@arc-input` in Vue, `onarc-input` in Svelte, `(arcInput)` in Angular.');
   sections.push('');
 
   // Token reference
-  sections.push('# Design Tokens');
+  sections.push('# Design tokens');
   sections.push('');
-  sections.push(`ARC UI defines ${allTokens.length} CSS custom properties. Override the base accent tokens to theme everything:`);
+  sections.push(`ARC UI defines ${allTokens.length} CSS custom properties. To theme it, override the two accent colors and their \`-rgb\` channels:`);
   sections.push('');
   sections.push('```css');
   sections.push(':root {');
@@ -242,9 +242,9 @@ export const GET: APIRoute = async () => {
   sections.push('}');
   sections.push('```');
   sections.push('');
-  sections.push('Compound tokens (glows, gradients, focus rings, feedback tints) reference base tokens via `var()`, so overriding a base token cascades through every derived value. The theme is dark by default; set `data-theme="light"` on `<html>` for light mode, or `data-theme="auto"` to follow `prefers-color-scheme`.');
+  sections.push('Compound tokens (glows, gradients, focus rings, feedback tints) reference base tokens via `var()`, so overriding a base token changes every value derived from it. The theme is dark by default; set `data-theme="light"` on `<html>` for light mode, or `data-theme="auto"` to follow `prefers-color-scheme`.');
   sections.push('');
-  sections.push(`### Token Names by Group (${allTokens.length} total)`);
+  sections.push(`### Token names by group (${allTokens.length} total)`);
   for (const [prefix, names] of tokenGroups) {
     const desc = tokenGroupDescriptions[prefix];
     sections.push('');
@@ -260,7 +260,7 @@ export const GET: APIRoute = async () => {
 
     sections.push('---');
     sections.push('');
-    sections.push(`# ${tier.charAt(0).toUpperCase() + tier.slice(1)} Components (${items.length})`);
+    sections.push(`# ${tier.charAt(0).toUpperCase() + tier.slice(1)} components (${items.length})`);
     sections.push('');
 
     for (const comp of items) {
