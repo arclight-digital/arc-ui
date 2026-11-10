@@ -7,34 +7,26 @@ export const inputGroup: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Combines an input with prefix and suffix addon slots for labels, icons, or buttons attached to the input border.',
+    'Wraps an input with prefix and suffix addons, such as labels, icons or buttons, that share its border.',
 
-  overview: `InputGroup wraps an input control with optional prefix and suffix addon areas that appear visually attached to the input. The addons share the input's border and focus glow, creating a single unified control that reads as one element.
+  overview: `InputGroup puts addons before and after an input inside one border, so a prefix like "https://", a suffix like ".com", a currency symbol, a unit or a button reads as part of the field. The group draws the box itself and takes the border, radius and shadow off the slotted input.
 
-Common patterns include protocol prefixes ("https://"), domain suffixes (".com"), currency symbols, unit labels, and action buttons. The component strips border, border-radius, and box-shadow from slotted inputs so the group's outer container provides the unified visual frame.
-
-The focus-within pseudo-class triggers the accent border and glow on the outer container, so the entire group lights up when the inner input receives focus. Three size presets (sm, md, lg) adjust the addon padding and font size to match the input scale.`,
+When the input inside has focus, the whole group gets the accent border and focus glow. Three sizes (sm, md, lg) set the addon padding and font size.`,
 
   features: [
-    'Prefix and suffix addon slots for labels, icons, or buttons',
-    'Unified border and focus glow across the entire group',
-    'Automatically strips border/radius/shadow from slotted inputs',
-    'Works with `arc-input`, `arc-select`, and native HTML inputs',
-    'Three size presets: sm, md, lg',
-    'Focus-within styling highlights the entire group on input focus',
-    'Exposed CSS parts: group, prefix, content, suffix',
+    'Works with `arc-input`, `arc-select` and native `<input>` and `<select>` elements',
+    'CSS parts: group, prefix, content, suffix',
   ],
 
   guidelines: {
     do: [
-      'Use for inputs that need contextual labels like "https://", "$", or ".com"',
-      'Place action buttons (copy, clear, search) in the suffix slot',
-      'Match the group `size` to the slotted input size for alignment',
+      'Use it for fixed context like "https://", "$" or ".com"',
+      'Put action buttons such as copy, clear or search in the suffix slot',
+      'Set the group\'s `size` to match the input inside it',
     ],
     dont: [
-      'Do not put multiple inputs inside a single input group. Use one input per group',
-      "Do not use input group for purely decorative icons. Use the input's own icon slot if available",
-      'Do not nest input groups inside each other',
+      'Don\'t put more than one input in a group',
+      'Don\'t use a group just for a decorative icon. `arc-input` has its own prefix and suffix slots',
     ],
   },
 
