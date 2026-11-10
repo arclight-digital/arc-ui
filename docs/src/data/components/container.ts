@@ -6,11 +6,11 @@ export const container: ComponentDef = {
   tag: 'arc-container',
   tier: 'layout',
   interactivity: 'static',
-  description: 'Max-width wrapper for page sections.',
+  description: 'Centers page content and caps its width, so sections share one line length and side margins.',
 
   overview: `Container constrains width. It centers its content with \`margin-inline: auto\`, caps it at the \`--max-width\` token (1120px by default) and adds \`--space-lg\` of inline padding. Use it around page sections so line lengths and side margins match across the page.
 
-\`size\` picks the cap: \`sm\` is \`--max-width-sm\` (720px), \`md\` is the default, \`lg\` is 1400px, \`xl\` is 1600px and \`full\` removes it. \`narrow\` is the same as \`size="sm"\`, for articles and single-column forms. \`padding\` sets the inline padding to \`none\`, \`sm\`, \`md\` (the default) or \`lg\`.
+\`size\` picks the cap: \`sm\` is \`--max-width-sm\` (720px), \`md\` is the default, \`lg\` is 1400px, \`xl\` is 1600px and \`full\` removes it. Use \`sm\` for articles and single-column forms. \`padding\` sets the inline padding to \`none\`, \`sm\`, \`md\` (the default) or \`lg\`.
 
 It sets only inline spacing, with logical properties, so it works in right-to-left layouts. Vertical spacing is up to the parent or a Section.`,
 
