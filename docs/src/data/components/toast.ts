@@ -8,7 +8,7 @@ export const toast: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['notification', 'progress', 'snackbar', 'action'],
   description:
-    'Stack-managed notification toasts with auto-dismiss, variant-colored indicators, configurable position, and enter/exit animations.',
+    'Short messages that stack at one edge of the screen and dismiss themselves.',
 
   overview: `Toast shows short messages that don't block the page and dismiss themselves, such as "File saved" or "Back online". Place one \`<arc-toast>\` in your layout and call its \`show()\` method whenever a message should appear. Toasts stack at one corner or edge of the viewport, set by \`position\`, and span the full width below 640px.
 
