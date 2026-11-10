@@ -8,37 +8,26 @@ export const timeAgo: ComponentDef = {
   interactivity: 'interactive',
   description: 'Relative time display that auto-updates ("3 minutes ago", "yesterday").',
 
-  overview: `TimeAgo renders a human-readable relative timestamp from an ISO date string ("3 minutes ago", "yesterday", "in 2 hours") and keeps it live by recalculating on an adaptive interval. Closer timestamps update more frequently (every 60 seconds within the first hour) while older ones settle to hourly checks.
+  overview: `TimeAgo shows how far a date is from now, as in "3 minutes ago", "yesterday" or "in 2 hours". \`datetime\` takes an ISO 8601 string, or anything \`new Date()\` can parse. The text is recalculated every minute while the date is within an hour, every 5 minutes within a day, and every hour after that. Set \`live="false"\` to stop the updates.
 
-The component outputs a semantic \`<time>\` element with the machine-readable \`datetime\` attribute preserved, so search engines, screen readers, and browser extensions can parse the exact date. A \`title\` attribute provides the full formatted date on hover for users who need precision. Future dates work too ("in 5 minutes", "in 3 days"), so TimeAgo suits countdowns, scheduled events and deploy timers.
-
-It uses \`Intl.RelativeTimeFormat\` for locale-aware formatting, so switching the \`locale\` prop from \`en-US\` to \`de-DE\` produces "vor 3 Minuten" without any extra configuration. The live update interval self-adjusts as time passes: sub-hour timestamps poll every minute, sub-day every 5 minutes, and everything else every hour. Set \`live="false"\` to disable auto-updates entirely for static snapshots.`,
+It renders a \`<time>\` element that keeps the exact \`datetime\` attribute, with the full formatted date in \`title\` for hover. Formatting uses \`Intl.RelativeTimeFormat\`, so \`locale="de-DE"\` gives "vor 3 Minuten". Under a minute it shows "just now", in English whatever the locale.`,
 
   features: [
-    'Semantic <time> element with machine-readable datetime attribute',
-    'Adaptive live updates: faster for recent timestamps, slower for old ones',
-    'Intl.RelativeTimeFormat for locale-aware output (BCP 47 locale prop)',
-    'Future date support ("in X minutes", "in X days")',
-    'Full formatted date in title attribute for hover tooltip',
-    '"Just now" threshold for sub-60-second differences to avoid flicker',
-    'Automatic interval cleanup on disconnect to prevent memory leaks',
-    'Monospace font (`--font-mono`) for consistent inline rendering',
-    'CSS part (time) for external style customization',
+    'Set in `--font-mono`, with the size and color of the surrounding text',
   ],
 
   guidelines: {
     do: [
-      'Use for timestamps in feeds, comments, commit logs, and activity streams',
-      'Provide valid ISO 8601 date strings in the datetime prop',
-      'Use alongside a tooltip or expandable detail for exact timestamps when precision matters',
-      'Set live="false" for static contexts like printed reports or export previews',
-      'Set the locale prop to match your app locale for correct relative formatting',
+      'Use it for timestamps in feeds, comments, commit logs and activity streams',
+      'Pass a valid ISO 8601 string in `datetime`',
+      'Set `live="false"` for printed reports or export previews',
+      'Set `locale` to your app\'s locale',
     ],
     dont: [
-      'Do not use TimeAgo for countdown timers with second-level precision. Use CountdownTimer instead',
-      'Do not pass unparseable date strings. The component renders empty for invalid dates',
-      'Do not rely on TimeAgo as the sole date display when exact timestamps are critical (e.g. legal, financial)',
-      'Do not use for dates that need a specific format like "Feb 16, 2026". Use a date formatter instead',
+      'Don\'t use it as a countdown with second-level precision. Use CountdownTimer',
+      'Don\'t pass a date `new Date()` can\'t parse. An invalid date renders nothing',
+      'Don\'t make it the only date shown where the exact time matters, such as legal or financial records. The full date is only in the hover title',
+      'Don\'t use it when you need a fixed format such as "Feb 16, 2026". Format the date yourself',
     ],
   },
 
