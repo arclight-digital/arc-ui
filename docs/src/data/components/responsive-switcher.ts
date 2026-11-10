@@ -7,38 +7,29 @@ export const responsiveSwitcher: ComponentDef = {
   tier: 'layout',
   interactivity: 'static',
   description:
-    'Container-query-based layout that flips between horizontal and vertical at a threshold width. No media queries needed.',
+    'A layout that lines its children up in a row when it\'s wide and stacks them when it\'s narrow, using a container query on its own width.',
 
-  overview: `ResponsiveSwitcher is a layout primitive that uses CSS container queries to automatically switch its children between a horizontal (row) and vertical (column) arrangement based on the component's own width, not the viewport width. When the container is wider than the threshold, children are laid out side by side; when it narrows below the threshold, they stack vertically.
+  overview: `ResponsiveSwitcher lays its children out in a row when its own width is at least \`threshold\`, and in a column below that. Because it measures itself with a container query, not the viewport, the same markup works in a full-width section, a narrow sidebar or a resizable split pane. Use it for two-column forms that should drop to one column, or a text-and-image pair that should stack.
 
-Container queries beat media queries for component-level responsiveness because the same ResponsiveSwitcher works whether it lives in a full-width page section, a narrow sidebar, or a resizable split pane. The breakpoint depends on the component's container, not the viewport, so it can be reused across layouts.
+\`threshold\` defaults to 600px. Each child gets \`flex: 1\`, so children share a row equally. \`gap\` takes the spacing tokens \`xs\` through \`xl\`, with \`md\` as the default.
 
-Common use cases include form layouts that go from two-column to single-column in narrow containers, card groups that stack when a sidebar is expanded, and hero sections with side-by-side text and image that stack on smaller screens. The \`threshold\` prop accepts any CSS length value (px, rem, ch), and the \`gap\` prop uses design system spacing tokens for consistent rhythm.`,
+A \`threshold\` below 600px works. One above 600px doesn't move the switch point: the built-in 600px rule stays in place, so the row layout still starts at 600px.`,
 
   features: [
-    'CSS container queries for intrinsic responsive behavior: no media queries',
-    'Flips between horizontal (row) and vertical (column) layout at a configurable threshold',
-    'Threshold prop accepts any CSS length value (px, rem, ch)',
-    'Design-token-based gap spacing (sm, md, lg) for consistent rhythm',
-    'Works correctly regardless of where the component is placed (sidebar, main, split pane)',
-    'Pure CSS: no JavaScript resize observers or breakpoint calculations',
-    'CSS part: `switcher` for targeted ::part() styling',
+    'A changed `threshold` is applied by adding a container-query stylesheet from JavaScript. There\'s no ResizeObserver',
+    'Parts: `base` and `switcher`, both on the flex container',
   ],
 
   guidelines: {
     do: [
-      'Use for form layouts that should go from multi-column to single-column in narrow containers',
-      'Use for hero sections with side-by-side text and image that stack on small screens',
-      'Set threshold to the minimum width at which horizontal layout is comfortable (e.g. "600px")',
-      'Combine with Container to get both width constraints and responsive switching',
-      'Use inside resizable panels or split panes where viewport media queries are unreliable',
+      'Set `threshold` to the narrowest width where the row still fits, at 600px or below',
+      'Combine it with Container to cap the width as well',
+      'Use it inside resizable panels and split panes, where viewport media queries can\'t see the space you have',
     ],
     dont: [
-      'Do not use ResponsiveSwitcher for complex multi-breakpoint layouts; use CSS Grid directly',
-      'Do not set threshold too low: the horizontal layout becomes cramped',
-      'Do not nest Responsive Switchers deeply: one level of switching is usually sufficient',
-      'Do not confuse ResponsiveSwitcher with Stack: Stack is always vertical, Switcher is conditional',
-      'Do not use for navigation menus; use a dedicated responsive navigation component instead',
+      'Don\'t use it for layouts with several breakpoints. Use CSS Grid',
+      'Don\'t set `threshold` so low that the row gets cramped',
+      'Don\'t reach for it when the direction never changes. Use Stack',
     ],
   },
 
