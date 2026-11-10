@@ -7,23 +7,23 @@ export const form: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Form wrapper with built-in validation, error aggregation, and submit handling. Composes Input, Textarea, and Button into one data-entry workflow.',
+    'Wraps ARC UI inputs in a form that validates them on submit and fires arc-submit with their values.',
 
   overview: `Form wraps ARC UI inputs in a real \`<form>\`. On submit it checks every field, puts each failing field's message on that field, and fires \`arc-invalid\` with the list of errors. When everything passes it fires \`arc-submit\` with \`{ values, formData, valid }\`. Use it whenever you collect more than one field, so \`required\`, patterns and an error summary work without validation code of your own.
 
-**Validation comes from the controls.** Form doesn't decide whether a field is filled. It calls each control's \`checkValidity()\` and reads its \`validationMessage\`. A control that knows its own empty state, such as a multi-select with an empty array or a date range with one end set, is judged on its own terms, and a control you wrote yourself takes part as long as it's form-associated. Form only clears error text it wrote, so an error you set from a server response survives the next submit.
+**Validation comes from the controls.** Form doesn't decide whether a field is filled. It calls each control's \`checkValidity()\` and reads its \`validationMessage\`. A control that knows its own empty state, such as a multi-select with an empty array or a date range with one end set, is judged on its own terms. Only form-associated elements whose tag starts with \`arc-\` take part, so a control you wrote yourself under another tag name isn't validated, serialized or disabled with the form. Form only clears error text it wrote, so an error you set from a server response survives the next submit.
 
 **Fields can be anywhere inside the form.** A control inside a Fieldset, a Card or any layout component is still found, validated, serialized and disabled with the form.
 
-**\`submit()\` is for a submit control outside the form.** A button outside \`<arc-form>\` doesn't submit it: a wizard's Next button in a parent toolbar, a Save button in the app header, a keyboard shortcut. \`submit()\` goes through the real \`<form>\`, so validation runs and \`arc-submit\` fires as if a submit button inside had been pressed, and a form with an \`action\` still loads that URL. It doesn't skip validation.
+**\`submit()\` is for a submit control outside the form.** A button outside \`<arc-form>\` doesn't submit it: a wizard's Next button in a parent toolbar, a Save button in the app header, a keyboard shortcut. \`submit()\` goes through the real \`<form>\`, so validation runs and \`arc-submit\` fires as if a submit button inside had been pressed.
 
-**\`reset()\` restores, it doesn't empty.** Each control goes back to the state it had when it first connected, as reset does in HTML, so a field with a default value gets that value back. \`arc-reset\` fires after.
+**\`reset()\` restores starting values.** Each control goes back to the state it had when it first connected, as reset does in HTML. \`arc-reset\` fires after.
 
-Input, Textarea, Select, Checkbox, Toggle and RadioGroup are form-associated through \`ElementInternals\`, so they also submit with a plain \`<form action="/api/contact" method="POST">\` once the components are loaded. With \`action\` set, \`<arc-form>\` validates, fires \`arc-submit\` and then lets the browser submit natively.`,
+Input, Textarea, Select, Checkbox, Toggle and RadioGroup are form-associated through \`ElementInternals\`, so they also submit with a plain \`<form action="/api/contact" method="POST">\` once the components are loaded.`,
 
   features: [
-    'An error summary above the submit area lists what failed. Set `no-error-summary` to show errors your own way',
-    '`novalidate` skips the checks, and `arc-submit` then reports `valid: false` if any field failed',
+    'An error summary at the top of the form, above the fields, lists what failed. Set `no-error-summary` to show errors your own way',
+    'With `novalidate`, failing fields still get their error messages, but the submit goes ahead and `arc-submit` reports `valid: false`',
     '`disabled` disables every field in the form',
     '`loading` dims the form to 70% opacity, blocks pointer input and ignores submits until it\'s cleared',
     'Enter in a single-line input submits the form',
