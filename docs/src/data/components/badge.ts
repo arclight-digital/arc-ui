@@ -9,41 +9,34 @@ export const badge: ComponentDef = {
   description:
     'Compact pill-shaped label for status indicators, category tags, and notification counts. Seven color variants encode meaning across dashboards, tables, and card layouts.',
 
-  overview: `Badge is a small, pill-shaped label designed to communicate status, category, or count at a glance. Its small size suits annotating another element (a table row, a card header, a sidebar item) without disrupting the surrounding layout.
+  overview: `Badge is a small pill-shaped label for a status, a category or a count. It's small enough to annotate a table row, a card header or a sidebar item without pushing the layout around.
 
-The seven color variants split into two groups. **Three are neutral lanes** for labels that categorise rather than report: \`default\` (neutral gray) for general-purpose labels like categories or metadata; \`primary\` for an active or informational state such as "In Progress", "New", or a notification count; and \`secondary\` for a distinct or highlighted category such as "Featured", "Beta", or "Archived", a third lane that stays visually separate from the other two.
+Three of the seven variants are for labels that categorize: \`default\` (neutral gray) for categories and metadata, \`primary\` for an active or informational state such as "In progress", "New" or a notification count, and \`secondary\` for a separate category such as "Featured", "Beta" or "Archived".
 
-**Four are the library's status set** (\`success\`, \`warning\`, \`error\` and \`info\`), mapping to the semantic color tokens, so a badge reporting a state matches an Alert or a Tag reporting the same one. Reach for these when the badge is a status rather than a label: a build result, a health indicator, a severity. \`info\` is the newest of them and exists so every status set in the library has the same four members. If none of the seven fit, the \`color\` prop takes an RGB triplet and overrides the variant, for category colors that come from data rather than design tokens.
+The other four (\`success\`, \`warning\`, \`error\` and \`info\`) are the library's status set. They use the semantic color tokens, so a badge reporting a state matches an Alert or a Tag reporting the same one. Use them for a build result, a health check or a severity. \`info\` is the newest, added so every status set in the library has the same four. If none of the seven fit, the \`color\` prop takes an RGB triplet and overrides the variant, for category colors that come from data.
 
-**Badge and Tag are two chip faces.** Badge is monospace, sentence case, and compact; Tag is the label face, uppercase with 2px tracking and a touch-sized minimum height. They were slated to merge in v4 and did not. Merging would have re-set every badge on every page in an uppercase label face, with \`v3.2.0\` becoming \`V3.2.0\` in a taller box, and a visual capability would have been lost. Use Badge for dense inline annotation and Tag for filter chips and categorical labels.
+Badge and Tag look different on purpose. Badge is monospace, sentence case and compact. Tag is uppercase in the label font with 2px tracking and a touch-sized minimum height. They were slated to merge in v4 and didn't, because merging would have reset every badge in Tag's uppercase face, turning \`v3.2.0\` into \`V3.2.0\` in a taller box. Use Badge for dense inline annotation and Tag for filter chips and categorical labels.
 
-Badge is a static content element, so it renders as a \`<span>\` and carries no ARIA roles beyond its text content. Badges inside table cells, list items, and cards add no focus stops.`,
+Badge renders a \`<span>\` with no ARIA role, so badges in table cells, list items and cards add no focus stops.`,
 
   features: [
-    'Seven color variants (default, primary, secondary, success, warning, error, info)',
-    'Small border radius (`--radius-sm`) for a compact, rectangular shape',
-    'Monospace typography (`--font-mono`) at medium weight for technical readability',
-    'Hover effect with a border highlight or glow per variant',
-    'Inline-flex layout that flows in text, tables, and flex containers',
-    'Transparent background with fine border for dark-theme harmony',
-    'No interactive ARIA roles, so it stays out of the tab order',
+    'Fully rounded corners (`--radius-full`)',
+    '`--font-mono` at the body weight',
+    'Colored variants get a 6% tint of their color and a matching 1px border. `default` uses `--surface-hover`. All of them glow on hover',
   ],
 
   guidelines: {
     do: [
-      'Use default (gray) for neutral metadata like categories, tags, or counts',
-      'Use primary for active or informational states like "In Progress" or "New"',
-      'Use secondary to distinguish a separate category such as "Archived", "Beta", or "Featured"',
-      'Keep badge labels to one or two words',
-      'Place badges inline next to the element they annotate (heading, table cell, nav item)',
-      'Combine multiple badge variants in a row to show compound status (e.g. category + state)',
+      'Keep labels to one or two words',
+      'Put a badge next to the thing it annotates: a heading, a table cell, a nav item',
+      'Put two badges side by side for a combined status, such as category plus state',
     ],
     dont: [
-      'Do not use badges for long descriptions. Use an Alert for multi-word messages',
-      'Do not rely on color alone to convey meaning; always include a text label alongside the color',
-      'Do not stack more than three or four badges in a single row; the density becomes unreadable',
-      'Do not use Badge as an interactive element; if users need to click it, use a Tag or Button instead',
-      'Do not mix badge variants inconsistently. Set a color convention and apply it throughout the app',
+      'Don\'t use a badge for a sentence. Use an Alert',
+      'Don\'t rely on color alone. The text should carry the meaning',
+      'Don\'t put more than three or four badges in a row',
+      'Don\'t make a badge clickable. Use a Tag or a Button',
+      'Don\'t change what each variant means from page to page. Pick a color convention and keep it',
     ],
   },
 
