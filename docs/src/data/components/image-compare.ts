@@ -7,38 +7,31 @@ export const imageCompare: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'Before/after comparison with two layered images and a draggable divider revealing one over the other.',
+    'Before-and-after comparison: two stacked images and a divider you drag to reveal one over the other.',
   searchKeywords: ['before after', 'comparison slider', 'juxtapose', 'reveal', 'diff'],
 
-  overview: `Image Compare layers two images and reveals the \`before\` slot over the \`after\` slot up to a draggable divider. The reveal is a pure CSS clip driven by the \`position\` property (0–100, defaulting to a centered 50), so the component server-renders at its initial position and never measures the images on load. Both slots accept a plain \`<img>\` or an \`arc-image\`; the two should share an aspect ratio, since the top layer is cropped to cover the frame.
+  overview: `Image Compare stacks two images and shows the \`before\` slot over the \`after\` slot up to a divider you drag. The reveal is a CSS clip driven by \`position\` (0 to 100, default 50), so the component server-renders at its starting position and never measures the images. Both slots take a plain \`<img>\` or an \`arc-image\`. The two images need the same aspect ratio, because the top layer is cropped to cover the frame.
 
-The divider carries a circular grab handle that is also the keyboard control: a focusable \`role="slider"\` that moves by 1 with the arrow keys, by 10 with Shift held, and jumps to either extreme with Home and End. Dragging emits \`arc-input\` continuously and \`arc-change\` once on release, so live readouts and expensive persistence can subscribe separately.
+The divider's round handle is also the keyboard control: a focusable \`role="slider"\` that moves by 1 with the arrow keys, by 10 with Shift, and to either end with Home and End. Dragging fires \`arc-input\` on every move and \`arc-change\` once on release.
 
-\`orientation\` is named for the axis the divider moves along: \`horizontal\` (the default) slides a vertical divider line left and right, while \`vertical\` slides a horizontal line up and down. The horizontal axis is logical. Position 0 is the inline-start edge, so the whole control mirrors in right-to-left documents along with the reading order. Optional \`before-label\` and \`after-label\` props float muted caption chips over the corners of each region.`,
+\`orientation\` names the axis the divider moves along: \`horizontal\` (the default) slides a vertical line left and right, and \`vertical\` slides a horizontal line up and down. Position 0 is the inline-start edge, so the control mirrors in right-to-left documents.`,
 
   features: [
-    'Two named slots, `before` and `after`, that accept `<img>` or `arc-image`',
-    'CSS clip-path reveal driven by `position` (0–100), so it server-renders at the initial split',
-    'Pointer dragging anywhere on the frame, with `arc-input` while moving and `arc-change` on release',
-    'Focusable divider handle with `role="slider"`: arrows step by 1, Shift+arrows by 10, Home/End to the extremes',
-    'Orientation named for the motion axis: `horizontal` (default) or `vertical`',
-    'Optional floating caption chips via `before-label` and `after-label`',
-    'Logical horizontal axis. The control mirrors automatically in RTL documents',
-    'Exposed CSS parts: container, before, after, divider, handle, label-before, label-after',
+    'A drag can start anywhere on the frame',
+    '`before-label` and `after-label` add caption chips in the corners of each image',
   ],
 
   guidelines: {
     do: [
-      'Slot two images of the same subject and aspect ratio. The point is the difference between them',
-      'Set `before-label` and `after-label` when the direction of the edit is not obvious from the images alone',
-      'Give the handle a descriptive `label` so screen reader users know what the slider compares',
-      'Use `arc-input` for cheap live readouts and `arc-change` for anything expensive or persisted',
+      'Use two images of the same subject at the same aspect ratio',
+      'Set `before-label` and `after-label` when the images don\'t make the direction of the edit obvious',
+      'Give the handle a `label` that says what\'s being compared, for screen readers',
+      'Use `arc-input` for cheap live readouts and `arc-change` for anything expensive or saved',
     ],
     dont: [
-      'Do not use it as a gallery for unrelated images. That is a job for arc-carousel',
-      'Do not compare text or code revisions with it. A rendered diff communicates changes precisely; sliding pixels does not',
-      'Do not slot images with different aspect ratios. The top layer is cropped to cover and the comparison stops being honest',
-      'Do not preset `position` near 0 or 100. A nearly hidden layer defeats the invitation to drag',
+      'Don\'t use it for unrelated images. Use Carousel',
+      'Don\'t compare text or code revisions with it. A rendered diff shows those changes exactly',
+      'Don\'t start `position` near 0 or 100. With one image almost hidden, people won\'t see there\'s anything to drag',
     ],
   },
 
