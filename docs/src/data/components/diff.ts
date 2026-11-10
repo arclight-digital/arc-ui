@@ -8,42 +8,28 @@ export const diff: ComponentDef = {
   interactivity: 'static',
   description: 'Line-based text diff viewer with inline and side-by-side display modes.',
 
-  overview: `Diff compares two blocks of text line by line and renders a color-coded visualization of the changes. Added lines appear with a green-tinted background and a \`+\` prefix, removed lines appear with a red-tinted background, strikethrough text, and a \`-\` prefix, and unchanged lines display in a muted secondary color with a blank prefix.
+  overview: `Diff compares the \`original\` and \`revised\` strings line by line and shows what changed. Added lines get a green tint and a \`+\` prefix, removed lines a red tint, strikethrough and a \`-\` prefix, and unchanged lines are muted with a blank prefix. The diff is a longest-common-subsequence computation inside the component, with no diff library.
 
-The component uses a longest-common-subsequence algorithm to compute the minimal diff between the \`before\` and \`after\` text props. No external diff libraries are required. The algorithm runs entirely inside the component.
+\`mode\` picks the layout. \`inline\`, the default, puts additions and removals in one column in reading order. \`side-by-side\` splits it into two equal panes: the original with its removals on the left, the revision with its additions on the right.
 
-Two display modes are available via the \`mode\` prop. The default \`inline\` mode renders all changes in a single scrollable column, interleaving additions and removals in reading order. The \`side-by-side\` mode splits the view into a CSS grid with two equal-width panes separated by a subtle border. The left pane shows the original text (with removals highlighted) and the right pane shows the modified text (with additions highlighted).
-
-Line numbers are displayed in a fixed-width gutter column. The entire viewer uses the monospace font stack and code-sized typography tokens for a terminal-like reading experience. The container supports horizontal scrolling for long lines with thin styled scrollbars.
-
-Diff is designed for code review panels, changelog overlays, configuration comparisons, and anywhere a developer-facing UI needs to show what changed between two versions of text content.`,
+It compares whole lines, so a one-character change shows as a removed line and an added one. Use it for code, config files and other line-based text.`,
 
   features: [
-    'LCS-based line diff algorithm with no external dependencies',
-    'Inline mode interleaves additions and removals in a single column',
-    'Side-by-side mode renders two panes in a CSS grid with a subtle divider',
-    'Color-coded lines: green for added, red with strikethrough for removed, muted for unchanged',
-    'Line number gutter with non-selectable numbers for clean copy-paste',
-    'Prefix markers (+, -, space) in a fixed-width column for scanning',
-    'Monospace font stack with code-size typography tokens',
-    'Horizontal scroll with thin styled scrollbars for long lines',
-    'Exposed CSS parts (container, line, line-number, prefix) for external style overrides',
-    'Respects `prefers-reduced-motion` for transitions',
+    'Line numbers are in a gutter and can\'t be selected, so copied text doesn\'t include them',
+    'Uses the mono font and code text size, and scrolls sideways for long lines',
+    'CSS parts: `container`, `line`, `line-number`, `prefix`',
   ],
 
   guidelines: {
     do: [
-      'Use short, focused text snippets. Diffs work best with fewer than 100 lines',
-      'Set mode="side-by-side" when horizontal space allows for easier comparison',
-      'Pair with a heading or label to describe what is being compared',
-      'Use for code snippets, configuration files, or any line-oriented text',
-      'Wrap in a container with a max-height and overflow-y: auto for very long diffs',
+      'Set `mode="side-by-side"` when there\'s room for two panes',
+      'Add a heading or label that says what\'s being compared',
+      'Put long diffs in a container with a `max-height` and `overflow-y: auto`',
     ],
     dont: [
-      'Do not pass binary or non-text content as before/after values',
-      'Do not use Diff for single-character or word-level highlighting. It operates on whole lines',
-      'Do not embed interactive elements inside the before or after strings',
-      'Do not use side-by-side mode in narrow containers where columns would be too cramped',
+      'Don\'t pass binary or other non-text content as `original` or `revised`',
+      'Don\'t use it for word-level or character-level highlighting',
+      'Don\'t use side-by-side mode in narrow containers',
     ],
   },
 
