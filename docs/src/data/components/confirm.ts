@@ -7,46 +7,36 @@ export const confirm: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'Programmatic confirmation API that wraps dialog. Call ArcConfirm.open() and await the returned promise. Looks the same as dialog.',
+    'Confirmation prompt built on Dialog. Call ArcConfirm.open() and await a true or false answer.',
 
-  overview: `Confirm is a promise-based API for confirmation dialogs. Instead of managing dialog open/close state and listening for button clicks, you call \`ArcConfirm.open()\` with a heading and message, and \`await\` the returned promise. The promise resolves to \`true\` if the user confirms and \`false\` if they cancel, which makes it easy to gate destructive actions behind user consent.
+  overview: `Confirm asks a yes-or-no question in a small dialog with a cancel button and a confirm button. It comes in two shapes. \`await ArcConfirm.open({ heading, message, ... })\` creates a prompt, resolves to \`true\` on confirm and \`false\` on cancel, then removes the element. Use it at a call site that has to decide before it continues. The \`<arc-confirm>\` element is for templates: bind \`open\` and listen for \`arc-confirm\` and \`arc-cancel\`. Its default slot takes body markup the \`message\` string can't carry, such as a filename in \`<code>\`.
 
-Confirm renders a dialog with the same visual treatment (backdrop blur, surface-raised panel, and focus trap) but with a fixed two-button layout: a cancel button (ghost variant) and a confirm button styled by the \`variant\` prop. The \`error\` variant recolors the confirm button with the error color to mark the action as destructive.
+It's built on Dialog, so it has the same blurred backdrop, raised panel and focus trap. Escape, a backdrop click and the X button all count as cancel. \`variant="error"\` turns the confirm button the error color.
 
-The component has two shapes, and they do different jobs: \`ArcConfirm.open()\` for a call site that has to decide something before continuing, and the element itself as \`<arc-confirm>\` for a template, with a default slot for body markup the \`message\` string cannot carry. A single \`<arc-confirm>\` element in the layout can be reused for all confirmation prompts in the application.
-
-**Coming from v3?** The tag \`arc-dialog\` used to be this confirm prompt. In v4 it is the overlay primitive (renamed from \`arc-modal\`), and the prompt (\`heading\`, \`message\`, \`confirm-label\`, \`cancel-label\`, \`variant\`) lives here. The props are unchanged; only the tag name moved.`,
+**Upgrading from v3:** the \`arc-dialog\` tag used to be this prompt. In v4, \`arc-dialog\` is the overlay primitive (renamed from \`arc-modal\`), and the prompt's props (\`heading\`, \`message\`, \`confirm-label\`, \`cancel-label\`, \`variant\`) moved here unchanged. Only the tag name changed.`,
 
   features: [
-    'Promise-based ArcConfirm.open() API: await user confirmation in one line',
-    'Resolves true on confirm, false on cancel, with no event listeners needed',
-    'Two variants: default (primary confirm button) and error (error-colored confirm button)',
-    'Customizable heading, message, confirm label, and cancel label',
-    'Same visual treatment as dialog: backdrop blur, surface-raised panel, focus trap',
-    'Focus trap keeps keyboard navigation within the dialog while open',
-    'Escape key and backdrop click trigger cancel',
-    '`arc-confirm` and `arc-cancel` events for declarative usage',
-    '`role="alertdialog"`, `aria-modal`, and auto-focus on the confirm button',
+    '`ArcConfirm.open()` takes `heading`, `message`, `confirmLabel`, `cancelLabel` and `variant`. Its body can only be the `message` string',
+    'Button labels default to "Confirm" and "Cancel"',
+    'In the slot, `<code>` gets the mono font and `<strong>` the primary text color',
   ],
 
   guidelines: {
     do: [
-      'Use the error variant for destructive actions like delete, remove, or revoke',
-      'Write a clear heading that states the action: "Delete project?" not "Are you sure?"',
-      'Provide specific confirm/cancel labels: "Delete" and "Keep" instead of "OK" and "Cancel"',
-      'Use the imperative API for cleaner async flows: const ok = await ArcConfirm.open(...)',
-      'Place a single <arc-confirm> at the root of your layout for reuse across the application',
+      'Use `variant="error"` when the action deletes something',
+      'Write a heading that names the action: "Delete project?", not "Are you sure?"',
+      'Label the buttons with what they do, such as "Delete" and "Keep", not "OK" and "Cancel"',
+      'With the element, one `<arc-confirm>` can serve every prompt. Set its props before you open it',
     ],
     dont: [
-      "Do not use confirm for informational messages that don't require a decision. Use alert or dialog",
-      'Do not chain multiple confirmations. If the action needs more context, use a full dialog or form',
-      'Do not use vague labels like "OK" and "Cancel". Be specific about what each button does',
-      'Do not fire a confirmation for every action. Reserve it for destructive or irreversible operations',
-      'Do not rely on the default browser confirm(); it blocks the thread and cannot be styled',
+      'Don\'t use it for a message that needs no decision. Use Alert or Dialog',
+      'Don\'t chain confirmations. If the action needs more context, use a Dialog with a form',
+      'Don\'t confirm every action. Save it for ones that are destructive or can\'t be undone',
+      'Don\'t use the browser\'s `confirm()`. It blocks the page and can\'t be styled',
     ],
   },
 
-  previewHtml: `<div style="width:100%;display:flex;gap:8px;flex-wrap:wrap"><arc-confirm id="demo-confirm"></arc-confirm><arc-button id="demo-confirm-error" variant="primary">Delete Item</arc-button><arc-button id="demo-confirm-default" variant="secondary">Confirm Action</arc-button></div>`,
+  previewHtml: `<div style="width:100%;display:flex;gap:8px;flex-wrap:wrap"><arc-confirm id="demo-confirm"></arc-confirm><arc-button id="demo-confirm-error" variant="primary">Delete item</arc-button><arc-button id="demo-confirm-default" variant="secondary">Confirm action</arc-button></div>`,
 
   previewSetup: `
       const confirmEl = document.getElementById('demo-confirm');
