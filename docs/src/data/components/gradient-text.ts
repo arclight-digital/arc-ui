@@ -8,44 +8,37 @@ export const gradientText: ComponentDef = {
   interactivity: 'static',
   description: 'Inline text wrapper that applies gradient fills to text declaratively.',
 
-  overview: `GradientText wraps any inline text in a gradient fill using \`background-clip: text\`, giving headings, labels, and hero copy color transitions without manual CSS. Choose from the built-in variants (accent, the standard blue-to-violet; display, the display heading gradient; sunset; and ocean) or supply a fully custom CSS gradient string via the \`gradient\` prop.
+  overview: `GradientText fills inline text with a gradient using \`background-clip: text\`. Pick a \`variant\`: \`accent\` (the default, \`--gradient-accent-text\`), \`display\` (\`--gradient-display-text\`), \`sunset\` or \`ocean\`. For your own gradient, set \`variant="custom"\` and pass any CSS gradient in \`gradient\`. \`gradient\` is ignored with the other variants.
 
-The component is fully inline and inherits the parent's font size, weight, and line height, so it can be dropped into any typographic context (a heading, a paragraph, a button label) without breaking layout. A subtle drop-shadow glow is applied by default using \`var(--accent-primary-rgb)\`.
+It's inline and inherits the parent's font size, weight and line height, so it works inside a heading, a paragraph or a button label. Every variant adds a faint drop-shadow glow in \`--accent-primary-rgb\`. The paint box extends a little above and below the text so descenders aren't clipped under a tight line height.
 
-Set \`animated\` to enable a smooth background-position cycle that shifts the gradient back and forth. The animation respects \`prefers-reduced-motion\` and disables itself automatically for users who prefer no motion. The \`text\` CSS part allows external overrides for filters, opacity, or additional styling.`,
+\`animated\` slides the gradient back and forth on a 4-second loop, and stops under reduced motion.`,
 
   features: [
-    'Five built-in gradient variants: accent, display, sunset, ocean, and custom',
-    'Custom gradient support. Pass any CSS gradient string via the gradient prop',
-    'Optional gradient animation with automatic `prefers-reduced-motion` handling',
-    'Fully inline: inherits parent font-size, weight, and line-height',
-    'Subtle accent glow via drop-shadow filter',
-    'CSS ::part(text) exposed for external styling overrides',
-    'Token-driven accent and display gradients cascade with theme overrides',
+    '`accent` and `display` read theme tokens, so they follow theme overrides',
+    'CSS part: `text`',
   ],
 
   guidelines: {
     do: [
-      'Use GradientText for hero headings, feature labels, and marketing copy',
-      'Pair with large font sizes (24px+) where gradient fills are most visible',
-      'Use the accent variant for UI elements that should match the brand palette',
-      'Use the custom variant to match campaign-specific or one-off color schemes',
-      'Prefer the display variant for page headings and section titles',
+      'Use it for hero headings, feature labels and marketing copy',
+      'Use it at 24px and up, where the gradient is easy to see',
+      'Use `accent` where the text should match the brand colors, and `display` for page headings and section titles',
+      'Use `custom` for one-off or campaign colors',
     ],
     dont: [
-      'Do not use GradientText for body copy or long paragraphs. Gradients lose impact at small sizes',
-      'Do not animate every gradient on the page. Reserve animation for a single focal element',
-      'Do not use the sunset or ocean variants in contexts that need to match the brand accent tokens',
-      'Do not nest GradientText inside another GradientText. Only the innermost gradient will be visible',
+      'Don\'t use it for body copy or long paragraphs. At small sizes the gradient is hard to see',
+      'Don\'t animate every gradient on the page. Animate one focal element at most',
+      'Don\'t use `sunset` or `ocean` where the text has to match the brand accent tokens',
     ],
   },
 
   previewHtml: `<div style="display:flex;flex-direction:column;gap:var(--space-md);font-size:24px;font-weight:500">
-  <arc-gradient-text variant="accent">Accent Gradient</arc-gradient-text>
-  <arc-gradient-text variant="display">Display Gradient</arc-gradient-text>
-  <arc-gradient-text variant="sunset">Sunset Gradient</arc-gradient-text>
-  <arc-gradient-text variant="ocean">Ocean Gradient</arc-gradient-text>
-  <arc-gradient-text variant="accent" animated>Animated Gradient</arc-gradient-text>
+  <arc-gradient-text variant="accent">Accent gradient</arc-gradient-text>
+  <arc-gradient-text variant="display">Display gradient</arc-gradient-text>
+  <arc-gradient-text variant="sunset">Sunset gradient</arc-gradient-text>
+  <arc-gradient-text variant="ocean">Ocean gradient</arc-gradient-text>
+  <arc-gradient-text variant="accent" animated>Animated gradient</arc-gradient-text>
 </div>`,
 
   tabs: [
