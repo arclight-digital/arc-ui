@@ -7,45 +7,32 @@ export const sparkline: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat cards, and dashboards. Renders from a simple comma-separated data string with no external charting dependencies.',
+    'A small inline SVG line or bar chart for tables, stat cards and dashboards, drawn from a comma-separated data string with no charting library.',
 
-  overview: `Sparkline is a miniature inline chart that shows a trend at a glance without a full charting library. Put it in a table cell next to a metric, pair it with a stat card, or place it in a dashboard grid, wherever a compact visual summary beats a wall of numbers.
+  overview: `Sparkline is a small trend chart, 120 by 32 pixels by default. Put it in a table cell next to a metric, beside a stat card, or in a dashboard grid. It has no axes, labels or tooltips. For those, use a full chart.
 
-The component accepts data as a plain comma-separated string, parses it into a normalized SVG path, and renders either a line or a series of bars depending on the \`type\` prop. Line mode draws a polyline with rounded joins and an optional filled area beneath the curve; bar mode renders evenly spaced rectangles that respond to hover with a fill transition.
+Pass the values as a comma-separated string in \`data\`. \`type="line"\` draws a line with rounded joins, and \`fill\` adds a shaded area under it. \`type="bar"\` draws evenly spaced bars that fill in more strongly on hover. The line draws itself in over 800ms when it first renders, and not at all under \`prefers-reduced-motion\`.
 
-A draw-in animation on the line type plays once on mount (respecting \`prefers-reduced-motion\`), with no JavaScript animation library. The component uses only CSS custom properties and SVG primitives, so the DOM stays light even when dozens of sparklines appear on a page.
-
-Color defaults to \`var(--accent-primary)\` so the chart matches the rest of the design system. Override the \`color\` prop to use a custom CSS color value when you need a specific semantic color (e.g. green for revenue, red for error rate).`,
+The color is \`--accent-primary\` by default. \`color\` takes another CSS color for the line, such as green for revenue or red for an error rate. The bar and area fills don't use \`color\` correctly yet, so keep the default color for those.`,
 
   features: [
-    'Two chart types: line and evenly spaced bars',
-    'Optional area fill beneath the line with semi-transparent accent color',
-    'Draw-in stroke animation on mount (800ms, respects `prefers-reduced-motion`)',
-    'Bar hover state with a fill transition',
-    'Configurable width, height, and color via props',
-    'Baseline rule using `--border-subtle`',
-    'CSS parts (svg, line, area, bar) for external style overrides',
-    'Inline-block display with vertical-align: middle so it sits inline in text',
-    'No external charting dependencies: pure SVG rendered by Lit',
-    'Aria-hidden SVG: decorative by design, pair with visible text for accessibility',
+    'A baseline rule in `--border-subtle`',
+    'CSS parts `svg`, `line`, `area` and `bar`',
+    '`display: inline-block` with `vertical-align: middle`, so it lines up with surrounding text',
+    'The SVG is `aria-hidden`, so screen readers skip it. Put the number it illustrates in visible text',
   ],
 
   guidelines: {
     do: [
-      'Use sparklines alongside a numeric value to give context: "42 requests" with a trend line is more useful than either alone',
-      'Keep data sets short (5-20 points) for clarity at small sizes',
-      'Use the line type for continuous trends (revenue over time, request latency)',
-      'Use the bar type for discrete comparisons (daily counts, category breakdowns)',
-      'Set fill=true when you want to emphasize the magnitude of a trend, not just its direction',
-      'Use the color prop to match semantic meaning (green for growth, red for errors) when context demands it',
-      'Pair with Stat, AnimatedNumber, or Badge for metric displays',
+      'Show it next to the number it illustrates: "42 requests" with a trend line says more than either alone',
+      'Keep data short, 5 to 20 points. Past about 30 the chart becomes an unreadable blob',
+      'Use a line for continuous trends like revenue over time or request latency',
+      'Use bars for discrete counts like daily totals or categories',
+      'Set `fill` to stress how large a trend is, not only its direction',
     ],
     dont: [
-      'Do not use sparklines as the sole data representation for critical decisions: they lack axes, labels, and precision',
-      'Do not pass more than ~30 data points: the chart becomes an unreadable blob at small sizes',
-      'Do not rely on sparkline color alone to convey meaning; always include a text label or value nearby',
-      'Do not animate sparklines in a long list or table: the draw-in effect becomes distracting at scale; consider disabling animation via CSS',
-      'Do not use sparklines for interactive data exploration; reach for a full chart component when users need tooltips, zoom, or click-to-drill-down',
+      'Don\'t base important decisions on a sparkline alone. It has no axes, labels or precision',
+      'Don\'t animate dozens of sparklines in a long table. The draw-in is distracting at that count, so turn it off with CSS',
     ],
   },
 
@@ -56,7 +43,7 @@ Color defaults to \`var(--accent-primary)\` so the chart matches the rest of the
   </div>
   <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
     <arc-sparkline data="10,25,18,30,22,35,28,40,32" type="line" fill></arc-sparkline>
-    <span style="font-size: 12px; color: var(--text-muted);">Line + Fill</span>
+    <span style="font-size: 12px; color: var(--text-muted);">Line + fill</span>
   </div>
   <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
     <arc-sparkline data="10,25,18,30,22,35,28,40,32" type="bar"></arc-sparkline>
