@@ -18,7 +18,7 @@ export const pageHeader: ComponentDef = {
   description:
     'The title block at the top of a page: an `<h1>`, an optional description, and slots for breadcrumbs, actions and tabs.',
 
-  overview: `PageHeader renders a heading as an \`<h1>\`, an optional description under it, and slots around both. Use one at the top of a settings screen, detail view or dashboard.
+  overview: `PageHeader renders a heading as an \`<h1>\`, an optional description under it, and slots around both.
 
 \`above\` renders above the heading row, \`aside\` to the right of the heading, \`below\` between the description and the default content, and the default slot at the bottom. A typical page puts breadcrumbs in \`above\`, action buttons in \`aside\` and a tab strip in \`below\`.
 
