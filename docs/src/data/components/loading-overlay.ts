@@ -13,7 +13,9 @@ export const loadingOverlay: ComponentDef = {
 
 By default the overlay uses \`position: absolute\` and covers its nearest positioned ancestor. With \`global\`, it's fixed to the viewport and covers the whole page. Use it for a region that can't be used until loading finishes. For a small inline indicator, use Spinner.
 
-The overlay stops clicks reaching the content under it. It doesn't stop the keyboard: there's no focus trap and nothing behind it is made inert, so Tab still reaches the covered controls. The overlay is a \`role="status"\` live region.`,
+The spinner and message are a \`role="status"\` live region.
+
+A contained overlay stops clicks reaching the content under it, but not the keyboard: Tab still reaches the covered controls. A \`global\` overlay is a modal \`<dialog>\`, so while it's active the browser makes the rest of the page inert: Tab, clicks and a screen reader's own navigation can't reach it, and focus returns to where it was when the overlay closes. Escape doesn't close it, and the page doesn't scroll while it's up.`,
 
   features: [
     'Fades in and out. With `prefers-reduced-motion`, it appears and disappears without the fade, and the blur stays',
@@ -25,7 +27,7 @@ The overlay stops clicks reaching the content under it. It doesn't stop the keyb
       'Set a message that says what\'s happening, like "Saving changes..."',
       'Save `global` for operations that block the whole page, like an initial data load',
       'Remove the overlay as soon as loading finishes. Don\'t add a delay',
-      'Disable the covered controls yourself if keyboard users mustn\'t reach them',
+      'In contained mode, disable the covered controls yourself if keyboard users mustn\'t reach them',
     ],
     dont: [
       'Don\'t use it for background work that doesn\'t block the UI. Use Spinner',
