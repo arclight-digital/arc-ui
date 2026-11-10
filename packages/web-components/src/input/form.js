@@ -7,6 +7,7 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  * Textarea, and Button into one data-entry workflow.
  *
  * @tag arc-form
+ * @child arc-button
  * @status stable
  * @prop {string} action - Form action URL for native form submission. When set, a valid submit navigates to this URL with the browser's own form submission, carrying the same entries as `arc-submit`'s `formData`.
  * @prop {string} method - HTTP method for native form submission (GET or POST). Only applies when action is set.

@@ -2502,7 +2502,7 @@
                 "text": "number"
               },
               "default": "200",
-              "description": "Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.",
+              "description": "How far below the bottom of the viewport, in pixels, the sentinel after the content can be when `arc-load-more` fires. Defaults to 200. Read when the observer attaches and again whenever it changes.",
               "attribute": "threshold"
             },
             {
@@ -2558,7 +2558,7 @@
                 "text": "number"
               },
               "default": "200",
-              "description": "Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.",
+              "description": "How far below the bottom of the viewport, in pixels, the sentinel after the content can be when `arc-load-more` fires. Defaults to 200. Read when the observer attaches and again whenever it changes.",
               "fieldName": "threshold"
             },
             {
@@ -7964,7 +7964,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set.",
+              "description": "Color for the line, the area under it and the bars. Takes any CSS color (`#16a34a`, `green`, `var(--color-success)`) or an `\"r, g, b\"` triplet. The area fill is the color at 10% opacity and bars at 30% (60% on hover). Defaults to `var(--accent-primary)` when not set.",
               "attribute": "color"
             },
             {
@@ -8008,7 +8008,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true and type is \"line\", fills the area beneath the curve with a semi-transparent accent color.",
+              "description": "When true and type is \"line\", fills the area beneath the curve with `color` at 10% opacity.",
               "attribute": "fill",
               "default": "false"
             }
@@ -8038,7 +8038,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set.",
+              "description": "Color for the line, the area under it and the bars. Takes any CSS color (`#16a34a`, `green`, `var(--color-success)`) or an `\"r, g, b\"` triplet. The area fill is the color at 10% opacity and bars at 30% (60% on hover). Defaults to `var(--accent-primary)` when not set.",
               "fieldName": "color"
             },
             {
@@ -8064,7 +8064,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true and type is \"line\", fills the area beneath the curve with a semi-transparent accent color.",
+              "description": "When true and type is \"line\", fills the area beneath the curve with `color` at 10% opacity.",
               "fieldName": "fill",
               "default": "false"
             }
@@ -11116,7 +11116,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Semi-transparent surface-overlay with backdrop blur covering a container or page. Centers a\nspinner with optional progress text.",
+          "description": "Semi-transparent surface-overlay with backdrop blur covering a container or page. Centers a\nspinner with optional progress text.\n\nIn global mode the overlay is a modal `<dialog>`, opened with `showModal()` through the same\nOverlayController arc-dialog uses. The browser makes the rest of the page inert, so Tab, a click\nand a screen reader's own navigation can't reach it, and focus goes back where it was when the\noverlay closes. Escape doesn't close it, and the page doesn't scroll while it's up. Contained\nmode blocks clicks only: the keyboard still reaches the covered content.",
           "name": "ArcLoadingOverlay",
           "cssParts": [
             {
@@ -11153,7 +11153,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.",
+              "description": "Controls whether the loading overlay is visible. When true, the overlay fades in, blocks clicks on the content behind it.",
               "attribute": "active",
               "default": "false",
               "reflects": true
@@ -11165,7 +11165,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.",
+              "description": "When true, the overlay covers the whole viewport instead of its parent container, as a modal dialog: while active, everything else on the page is inert, so the keyboard can't reach it either.",
               "attribute": "global",
               "default": "false",
               "reflects": true
@@ -11177,7 +11177,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it.",
+              "description": "Controls whether the loading overlay is visible. When true, the overlay fades in, blocks clicks on the content behind it.",
               "fieldName": "active",
               "default": "false"
             },
@@ -11195,7 +11195,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode.",
+              "description": "When true, the overlay covers the whole viewport instead of its parent container, as a modal dialog: while active, everything else on the page is inert, so the keyboard can't reach it either.",
               "fieldName": "global",
               "default": "false"
             }
@@ -15936,7 +15936,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Grouped form section with legend, description, error message, and optional card variant. Wraps\nrelated inputs with native fieldset semantics.",
+          "description": "Grouped form section with legend, description, error message, and optional card variant. Wraps\nrelated inputs with native fieldset semantics.\n\n`disabled` reaches the controls by attribute. The native `<fieldset disabled>` is in the shadow\nroot and the controls are slotted, not its descendants, so the platform's own cascade never gets\nto them. The fieldset sets `disabled` on every form-associated element it holds (every ARC form\ncontrol, at any depth), and on re-enable removes it only from the ones it disabled.",
           "name": "ArcFieldset",
           "cssParts": [
             {
@@ -16012,7 +16012,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Disables all child controls and dims the fieldset.",
+              "description": "Dims the fieldset and disables every ARC form control inside it, at any depth, and a control slotted in directly while it is disabled. Re-enabling it re-enables only the controls it disabled, so a control that was already disabled stays disabled.",
               "attribute": "disabled",
               "default": "false",
               "reflects": true
@@ -16054,7 +16054,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Disables all child controls and dims the fieldset.",
+              "description": "Dims the fieldset and disables every ARC form control inside it, at any depth, and a control slotted in directly while it is disabled. Re-enabling it re-enables only the controls it disabled, so a control that was already disabled stays disabled.",
               "fieldName": "disabled",
               "default": "false"
             },
@@ -16321,7 +16321,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Form action URL for native form submission. When set, the form submits to this URL using the browser's built-in mechanism.",
+              "description": "Form action URL for native form submission. When set, a valid submit navigates to this URL with the browser's own form submission, carrying the same entries as `arc-submit`'s `formData`.",
               "attribute": "action"
             },
             {
@@ -16366,7 +16366,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.",
+              "description": "Marks an asynchronous submission in progress. Submits are ignored, the form dims and stops taking pointer input, and every `arc-button` with `type=\"submit\"` inside it shows its spinner and is disabled. Clearing it releases only the buttons it set.",
               "attribute": "loading",
               "default": "false",
               "reflects": true
@@ -16414,7 +16414,7 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "Form action URL for native form submission. When set, the form submits to this URL using the browser's built-in mechanism.",
+              "description": "Form action URL for native form submission. When set, a valid submit navigates to this URL with the browser's own form submission, carrying the same entries as `arc-submit`'s `formData`.",
               "fieldName": "action"
             },
             {
@@ -16440,7 +16440,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.",
+              "description": "Marks an asynchronous submission in progress. Submits are ignored, the form dims and stops taking pointer input, and every `arc-button` with `type=\"submit\"` inside it shows its spinner and is disabled. Clearing it releases only the buttons it set.",
               "fieldName": "loading",
               "default": "false"
             },
@@ -16476,7 +16476,12 @@
           "tagName": "arc-form",
           "customElement": true,
           "group": null,
-          "status": "stable"
+          "status": "stable",
+          "children": [
+            {
+              "tagName": "arc-button"
+            }
+          ]
         }
       ],
       "exports": [
@@ -21324,7 +21329,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys.",
+              "description": "When true, the option is dimmed and announced as disabled, the arrow keys skip it, it is never the group's Tab stop, and a click or Space does not select it. Setting it does not clear a group `value` that already names this option.",
               "attribute": "disabled",
               "default": "false",
               "reflects": true
@@ -21345,7 +21350,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys.",
+              "description": "When true, the option is dimmed and announced as disabled, the arrow keys skip it, it is never the group's Tab stop, and a click or Space does not select it. Setting it does not clear a group `value` that already names this option.",
               "fieldName": "disabled",
               "default": "false"
             }
@@ -24142,7 +24147,7 @@
               "type": {
                 "text": "CustomEvent"
               },
-              "description": "Fired when items are reordered, with updated order in detail"
+              "description": "Fired when a drag or keyboard move is dropped, with updated order in detail. Escape during a keyboard move restores the order from pick-up and fires nothing."
             }
           ],
           "attributes": [
@@ -26020,7 +26025,7 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "On/off switch with smooth animation, glow effect, and ARIA switch role.",
+          "description": "On/off switch with smooth animation, glow effect, and ARIA switch role. Space or Enter toggles it\nfrom the keyboard; Enter does not submit a surrounding form.",
           "name": "ArcToggle",
           "cssParts": [
             {
@@ -27767,7 +27772,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Use the narrow max-width (720px vs 1120px)",
+              "description": "Caps the width at `--max-width-sm` (720px by default), the same as `size=\"sm\"`. Applies while `size` is the default `md`; a `size` of `lg`, `xl` or `full` wins over it.",
               "attribute": "narrow",
               "default": "false",
               "reflects": true
@@ -27803,7 +27808,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Use the narrow max-width (720px vs 1120px)",
+              "description": "Caps the width at `--max-width-sm` (720px by default), the same as `size=\"sm\"`. Applies while `size` is the default `md`; a `size` of `lg`, `xl` or `full` wins over it.",
               "fieldName": "narrow",
               "default": "false"
             },
@@ -29391,7 +29396,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state.",
+              "description": "Read-only attribute set by the IntersectionObserver while the element is stuck at its `offset`, whatever the offset is. Use the `[stuck]` CSS selector to style the stuck state.",
               "attribute": "stuck",
               "default": "false",
               "reflects": true
@@ -29421,7 +29426,7 @@
               "type": {
                 "text": "boolean"
               },
-              "description": "Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state.",
+              "description": "Read-only attribute set by the IntersectionObserver while the element is stuck at its `offset`, whatever the offset is. Use the `[stuck]` CSS selector to style the stuck state.",
               "fieldName": "stuck",
               "default": "false"
             }
@@ -35356,7 +35361,7 @@
               "name": "options"
             }
           ],
-          "description": "Observe a rendered element's intersection with the viewport for as long as the\nhost is connected.\n\nSame contract as `observeResize`, with one addition worth knowing: a `target`\nresolver that returns `null` releases the observation without tearing the\nsubscription down, and returning an element again re-attaches it. That is how\na component turns the observer off for a state rather than a lifecycle:\narc-infinite-scroll stops watching once `finished` or `disabled`, without\nhand-rolling a second teardown path that then has to pair correctly.\n\n`options` are captured when the observer is first created, so a component\nwhose rootMargin depends on a reactive prop needs its own handling; none does\ntoday, and the previous hand-rolled version did not either."
+          "description": "Observe a rendered element's intersection with the viewport for as long as the\nhost is connected.\n\nSame contract as `observeResize`, with one addition worth knowing: a `target`\nresolver that returns `null` releases the observation without tearing the\nsubscription down, and returning an element again re-attaches it. That is how\na component turns the observer off for a state rather than a lifecycle:\narc-infinite-scroll stops watching once `finished` or `disabled`, without\nhand-rolling a second teardown path that then has to pair correctly.\n\n`options` is either an options object, used as is for the life of the\nsubscription, or a function of the host that returns one. The function form\nis for options built from a reactive prop: it is read at attach time, so an\nattribute set before connection counts, and again after every host update,\nand when the result differs the observer is rebuilt and re-attached.\narc-infinite-scroll's `threshold` is the case: it once built its rootMargin\nin the constructor, where `threshold` was still the default, and an object\nread once could not follow it."
         },
         {
           "kind": "function",

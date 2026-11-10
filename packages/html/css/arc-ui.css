@@ -2239,19 +2239,21 @@
         fill: none;
       }
 
+      /* color-mix() rather than rgba(var(...), a): the latter is valid only
+         for an "r, g, b" triplet, and `color` takes any CSS color. */
       .arc-sparkline .sparkline-area {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.1);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 10%, transparent);
         stroke: none;
       }
 
       .arc-sparkline .sparkline-bar {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.3);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 30%, transparent);
         rx: 1;
         transition: fill var(--transition-fast);
       }
 
       .arc-sparkline .sparkline-bar:hover {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.6);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 60%, transparent);
       }
 
       .arc-sparkline .sparkline-baseline {
@@ -6076,9 +6078,12 @@
         padding-inline: var(--space-lg);
       }
 
-      .arc-container[narrow] .container,
       .arc-container[data-size="sm"] .container { max-width: var(--max-width-sm); }
       .arc-container[data-size="md"] .container { max-width: var(--max-width); }
+      /* `size` defaults to md and reflects, so [size="md"] is always present
+         when size was left alone. narrow narrows that default only; any other
+         size the author set still wins. */
+      .arc-container[narrow][data-size="md"] .container { max-width: var(--max-width-sm); }
       .arc-container[data-size="lg"] .container { max-width: 1400px; }
       .arc-container[data-size="xl"] .container { max-width: 1600px; }
       .arc-container[data-size="full"] .container { max-width: none; }
@@ -6815,6 +6820,27 @@
         position: fixed;
         z-index: var(--z-overlay);
       }
+
+      /* Global mode's <dialog>. A closed dialog is display:none by UA
+         stylesheet; the base rule's display:flex overrides that, so it paints
+         while closed exactly as the old div did (the server paint, and the fade
+         out). showModal() only adds the top layer and the inert page. The rest
+         undoes the UA dialog box. */
+      .arc-loading-overlay dialog.loading-overlay {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        overflow: visible;
+        color: inherit;
+      }
+
+      .arc-loading-overlay dialog.loading-overlay::backdrop { background: transparent; }
+
+      .arc-loading-overlay .loading-overlay__status { display: contents; }
 
       .arc-loading-overlay .loading-overlay__message {
         font-family: var(--font-body);

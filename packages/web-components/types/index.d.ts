@@ -702,7 +702,7 @@ export declare class ArcConnectionStatus extends LitElement {
  * `<arc-container>`
  */
 export declare class ArcContainer extends LitElement {
-  /** Use the narrow max-width (720px vs 1120px) @default false */
+  /** Caps the width at `--max-width-sm` (720px by default), the same as `size="sm"`. Applies while `size` is the default `md`; a `size` of `lg`, `xl` or `full` wins over it. @default false */
   narrow: boolean;
   /** Controls the maximum width. @default 'md' */
   size: 'sm' | 'md' | 'lg' | 'xl' | 'full';
@@ -1067,7 +1067,7 @@ export declare class ArcFieldset extends LitElement {
   description: string;
   /** Error message displayed below the content with `role="alert"`. @default '' */
   error: string;
-  /** Disables all child controls and dims the fieldset. @default false */
+  /** Dims the fieldset and disables every ARC form control inside it, at any depth, and a control slotted in directly while it is disabled. Re-enabling it re-enables only the controls it disabled, so a control that was already disabled stays disabled. @default false */
   disabled: boolean;
   /** Visual style. Card adds a surface background and shadow. @default 'default' */
   variant: 'default' | 'card';
@@ -1118,7 +1118,7 @@ export declare class ArcFooter extends LitElement {
  * Events: arc-invalid, arc-submit, arc-reset
  */
 export declare class ArcForm extends LitElement {
-  /** Form action URL for native form submission. When set, the form submits to this URL using the browser's built-in mechanism. @default '' */
+  /** Form action URL for native form submission. When set, a valid submit navigates to this URL with the browser's own form submission, carrying the same entries as `arc-submit`'s `formData`. @default '' */
   action: string;
   /** HTTP method for native form submission (GET or POST). Only applies when action is set. @default '' */
   method: string;
@@ -1126,7 +1126,7 @@ export declare class ArcForm extends LitElement {
   disabled: boolean;
   /** When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still using Form for data serialisation. @default false */
   novalidate: boolean;
-  /** Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests. @default false */
+  /** Marks an asynchronous submission in progress. Submits are ignored, the form dims and stops taking pointer input, and every `arc-button` with `type="submit"` inside it shows its spinner and is disabled. Clearing it releases only the buttons it set. @default false */
   loading: boolean;
   /** When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually. @default true */
   errorSummary: boolean;
@@ -1343,7 +1343,7 @@ export declare class ArcImageHotspots extends LitElement {
  * Events: arc-load-more
  */
 export declare class ArcInfiniteScroll extends LitElement {
-  /** Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested. @default 200 */
+  /** How far below the bottom of the viewport, in pixels, the sentinel after the content can be when `arc-load-more` fires. Defaults to 200. Read when the observer attaches and again whenever it changes. @default 200 */
   threshold: number;
   /** When true, displays a spinner in the footer and suppresses additional `arc-load-more` events. @default false */
   loading: boolean;
@@ -1676,9 +1676,9 @@ export declare class ArcListItem extends LitElement {
 export declare class ArcLoadingOverlay extends LitElement {
   /** Optional text displayed below the spinner. Use it to communicate what is loading or the current progress step. @default '' */
   message: string;
-  /** Controls whether the loading overlay is visible. When true, the overlay fades in and blocks interaction with the content behind it. @default false */
+  /** Controls whether the loading overlay is visible. When true, the overlay fades in, blocks clicks on the content behind it. @default false */
   active: boolean;
-  /** When true, the overlay uses fixed positioning to cover the entire viewport instead of just its parent container. Includes a focus trap in this mode. @default false */
+  /** When true, the overlay covers the whole viewport instead of its parent container, as a modal dialog: while active, everything else on the page is inert, so the keyboard can't reach it either. @default false */
   global: boolean;
 }
 
@@ -2192,7 +2192,7 @@ export declare class ArcRadio extends LitElement {
   label: unknown;
   /** The value submitted when this option is selected. Must be unique within the parent RadioGroup. @default '' */
   value: string;
-  /** When true, dims this individual option and removes it from keyboard navigation. The option cannot be selected by click or arrow keys. @default false */
+  /** When true, the option is dimmed and announced as disabled, the arrow keys skip it, it is never the group's Tab stop, and a click or Space does not select it. Setting it does not clear a group `value` that already names this option. @default false */
   disabled: boolean;
 }
 
@@ -2718,7 +2718,7 @@ export declare class ArcSortableList extends LitElement {
 export declare class ArcSparkline extends LitElement {
   /** Comma-separated numeric values that define the chart data points (e.g. "10,25,18,30,22,35,28"). Parsed into a number array at render time. Non-numeric entries are silently dropped. @default '' */
   data: string;
-  /** CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set. @default '' */
+  /** Color for the line, the area under it and the bars. Takes any CSS color (`#16a34a`, `green`, `var(--color-success)`) or an `"r, g, b"` triplet. The area fill is the color at 10% opacity and bars at 30% (60% on hover). Defaults to `var(--accent-primary)` when not set. @default '' */
   color: string;
   /** Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles. @default 'line' */
   type: 'line' | 'bar';
@@ -2726,7 +2726,7 @@ export declare class ArcSparkline extends LitElement {
   width: number;
   /** SVG viewport height in pixels. @default 32 */
   height: number;
-  /** When true and type is "line", fills the area beneath the curve with a semi-transparent accent color. @default false */
+  /** When true and type is "line", fills the area beneath the curve with `color` at 10% opacity. @default false */
   fill: boolean;
 }
 
@@ -2850,7 +2850,7 @@ export declare class ArcStepperNav extends LitElement {
 export declare class ArcSticky extends LitElement {
   /** The CSS `top` value for sticky positioning. Set to "64px" to stick below a 64px top bar, or "0px" to stick flush with the viewport/scroll container edge. @default '0px' */
   offset: string;
-  /** Read-only attribute set by the IntersectionObserver when the element is currently stuck. Use the `[stuck]` CSS selector to style the stuck state. @default false */
+  /** Read-only attribute set by the IntersectionObserver while the element is stuck at its `offset`, whatever the offset is. Use the `[stuck]` CSS selector to style the stuck state. @default false */
   stuck: boolean;
 }
 

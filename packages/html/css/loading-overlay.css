@@ -29,6 +29,27 @@
         z-index: var(--z-overlay);
       }
 
+      /* Global mode's <dialog>. A closed dialog is display:none by UA
+         stylesheet; the base rule's display:flex overrides that, so it paints
+         while closed exactly as the old div did (the server paint, and the fade
+         out). showModal() only adds the top layer and the inert page. The rest
+         undoes the UA dialog box. */
+      .arc-loading-overlay dialog.loading-overlay {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: auto;
+        height: auto;
+        max-width: none;
+        max-height: none;
+        overflow: visible;
+        color: inherit;
+      }
+
+      .arc-loading-overlay dialog.loading-overlay::backdrop { background: transparent; }
+
+      .arc-loading-overlay .loading-overlay__status { display: contents; }
+
       .arc-loading-overlay .loading-overlay__message {
         font-family: var(--font-body);
         font-size: var(--_text-sm);

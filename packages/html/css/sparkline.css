@@ -19,19 +19,21 @@
         fill: none;
       }
 
+      /* color-mix() rather than rgba(var(...), a): the latter is valid only
+         for an "r, g, b" triplet, and `color` takes any CSS color. */
       .arc-sparkline .sparkline-area {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.1);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 10%, transparent);
         stroke: none;
       }
 
       .arc-sparkline .sparkline-bar {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.3);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 30%, transparent);
         rx: 1;
         transition: fill var(--transition-fast);
       }
 
       .arc-sparkline .sparkline-bar:hover {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.6);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 60%, transparent);
       }
 
       .arc-sparkline .sparkline-baseline {

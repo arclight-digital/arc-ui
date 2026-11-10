@@ -10,9 +10,12 @@
         padding-inline: var(--space-lg);
       }
 
-      .arc-container[narrow] .container,
       .arc-container[data-size="sm"] .container { max-width: var(--max-width-sm); }
       .arc-container[data-size="md"] .container { max-width: var(--max-width); }
+      /* `size` defaults to md and reflects, so [size="md"] is always present
+         when size was left alone. narrow narrows that default only; any other
+         size the author set still wins. */
+      .arc-container[narrow][data-size="md"] .container { max-width: var(--max-width-sm); }
       .arc-container[data-size="lg"] .container { max-width: 1400px; }
       .arc-container[data-size="xl"] .container { max-width: 1600px; }
       .arc-container[data-size="full"] .container { max-width: none; }
