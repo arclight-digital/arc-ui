@@ -8,36 +8,29 @@ export const link: ComponentDef = {
   interactivity: 'static',
   description: 'Styled anchor with nav, muted, and default variants.',
 
-  overview: `Link wraps a native \`<a>\` element with consistent styling across three variants. The default variant renders in the accent-primary color with an underline-on-hover behavior. The "muted" variant starts in the muted text color and transitions to primary on hover, useful for footer links or secondary navigation. The "nav" variant renders at 14px with an inline-flex layout and gap, designed for navigation menus where links sit alongside icons.
+  overview: `Link styles an anchor in one of three variants. \`default\` uses the accent color and underlines on hover. \`muted\` starts in the muted text color and turns to the primary text color on hover, for footer links and secondary navigation. \`nav\` is 14px with an inline-flex layout and a gap, for menus where links have icons beside them.
 
-When the \`external\` property is set, Link automatically appends a small external-link SVG icon, sets \`target="_blank"\`, and applies \`rel="noopener noreferrer"\` for security. This eliminates the need to manually manage external link attributes across your application. The icon renders at 12px with 60% opacity to avoid visual clutter.
+Set \`href\` and Link renders its own \`<a>\`. Or put a single \`<a>\` inside it, and Link styles that anchor instead, which works before hydration and without JavaScript. With \`href\`, \`external\` sets \`target="_blank"\` and \`rel="noopener noreferrer"\` and adds a 12px external-link icon at 60% opacity. With your own \`<a>\`, \`external\` adds only the icon, so put \`target\` and \`rel\` on the anchor yourself.
 
-The \`active\` boolean property highlights the current link in accent-primary, useful for indicating the active page in navigation contexts. All variants include a focus-visible ring using the system's \`--focus-ring\` token, which shows for keyboard users and not for mouse clicks.`,
+\`active\` colors the link in the accent color to mark the current page. Keyboard focus shows a ring from the \`--interactive-focus-ring\` token, and mouse clicks don't.`,
 
   features: [
-    'Three variants: default (accent blue), muted (subtle with hover reveal), and nav (compact navigation style)',
-    'Automatic external link handling with target="_blank", rel="noopener noreferrer", and an external icon',
-    'Active state via the "active" boolean property for current-page indication',
-    'Focus-visible ring using the system focus-ring token for keyboard accessibility',
-    'Smooth color transitions using `--transition-fast` for hover and focus states',
-    'Inline external-link SVG icon at 12px with reduced opacity to avoid clutter',
-    'Exposed "link" CSS part for external style customization',
+    'Exposes a `link` CSS part. It doesn\'t apply when you slot your own `<a>`',
   ],
 
   guidelines: {
     do: [
-      'Use the default variant for inline content links within body text',
-      'Use the nav variant for navigation menus, sidebars, and header link groups',
-      'Set the external prop for any link that navigates away from your domain',
-      'Use the active prop to indicate the current page in navigation link lists',
-      'Provide meaningful link text that describes the destination, not "click here"',
+      'Use the default variant for links in body text',
+      'Use the nav variant for navigation menus, sidebars and header link groups',
+      'Set `external` on links that leave your domain',
+      'Set `active` on the current page\'s link in a navigation list',
+      'Write link text that names the destination, not "click here"',
     ],
     dont: [
-      'Do not use Link as a button substitute. If the action does not navigate, use arc-button instead',
-      'Do not apply the muted variant to primary navigation links; they are too subtle for main wayfinding',
-      'Do not omit the external prop for cross-origin links. Users expect the external icon and new-tab behavior',
-      'Do not nest block-level elements inside Link; it renders as inline by default',
-      'Do not override the focus-visible ring without providing an equivalent alternative for keyboard users',
+      'Don\'t use Link for an action that stays on the page. Use Button',
+      'Don\'t use the muted variant for primary navigation. It\'s too faint to find your way by',
+      'Don\'t put block-level elements inside Link. It renders inline',
+      'Don\'t remove the focus ring without giving keyboard users an equivalent',
     ],
   },
 
