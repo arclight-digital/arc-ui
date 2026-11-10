@@ -7,11 +7,11 @@ export const numberFormat: ComponentDef = {
   tier: 'typography',
   interactivity: 'static',
   description:
-    'Locale-aware number, currency, percentage, and compact formatter using Intl.NumberFormat.',
+    'Displays a number, price or percentage formatted for a locale by the browser\'s Intl.NumberFormat.',
 
   overview: `Number Format renders a number formatted by the browser's \`Intl.NumberFormat\`. Pass a raw \`value\` and a \`type\` (\`number\`, \`currency\`, \`percent\` or \`compact\`), and it adds thousands separators, currency symbols, percent signs or compact suffixes like "12.3K" and "1.2M".
 
-It sets \`font-variant-numeric: tabular-nums\` and the monospace font, so numbers line up in tables, stat grids and dashboards. The \`locale\` prop takes a BCP 47 tag, and \`Intl.NumberFormat\` applies that locale's conventions: decimal commas in German, lakh grouping in Indian English, yen symbol placement in Japanese. Without it, the locale is \`en-US\`.
+It sets \`font-variant-numeric: tabular-nums\` and the monospace font, so numbers line up in tables, stat grids and dashboards. The \`locale\` prop takes a BCP 47 tag, and \`Intl.NumberFormat\` applies that locale's conventions: with \`de-DE\`, 1234.5 shows as "1.234,5". Without it, the locale is \`en-US\`.
 
 For the \`percent\` type, pass the percentage itself: \`50\` displays "50%". Plain \`Intl.NumberFormat\` multiplies by 100, so it would want \`0.5\`.`,
 
