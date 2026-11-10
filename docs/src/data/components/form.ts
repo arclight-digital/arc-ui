@@ -17,6 +17,8 @@ export const form: ComponentDef = {
 
 **\`submit()\` is for a submit control outside the form.** A button outside \`<arc-form>\` doesn't submit it: a wizard's Next button in a parent toolbar, a Save button in the app header, a keyboard shortcut. \`submit()\` goes through the real \`<form>\`, so validation runs and \`arc-submit\` fires as if a submit button inside had been pressed.
 
+**\`action\` submits natively.** With \`action\` (and \`method\`) set, a valid submit fires \`arc-submit\` and then lets the browser submit the form and navigate. The request carries the same entries as \`arc-submit\`'s \`formData\`, including fields nested in a Fieldset or a layout component.
+
 **\`reset()\` restores starting values.** Each control goes back to the state it had when it first connected, as reset does in HTML. \`arc-reset\` fires after.
 
 Input, Textarea, Select, Checkbox, Toggle and RadioGroup are form-associated through \`ElementInternals\`, so they also submit with a plain \`<form action="/api/contact" method="POST">\` once the components are loaded.`,
@@ -25,7 +27,7 @@ Input, Textarea, Select, Checkbox, Toggle and RadioGroup are form-associated thr
     'An error summary at the top of the form, above the fields, lists what failed. Set `no-error-summary` to show errors your own way',
     'With `novalidate`, failing fields still get their error messages, but the submit goes ahead and `arc-submit` reports `valid: false`',
     '`disabled` disables every field in the form',
-    '`loading` dims the form to 70% opacity, blocks pointer input and ignores submits until it\'s cleared',
+    '`loading` dims the form to 70% opacity, blocks pointer input and ignores submits until it\'s cleared. Each `arc-button` with `type="submit"` inside it shows its spinner and is disabled meanwhile',
     'Enter in a single-line input submits the form',
   ],
 

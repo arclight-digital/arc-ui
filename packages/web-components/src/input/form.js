@@ -8,10 +8,10 @@ import { DeclaredPropsMixin, flag } from '../shared/props.js';
  *
  * @tag arc-form
  * @status stable
- * @prop {string} action - Form action URL for native form submission. When set, the form submits to this URL using the browser's built-in mechanism.
+ * @prop {string} action - Form action URL for native form submission. When set, a valid submit navigates to this URL with the browser's own form submission, carrying the same entries as `arc-submit`'s `formData`.
  * @prop {string} method - HTTP method for native form submission (GET or POST). Only applies when action is set.
  * @prop {boolean} novalidate - When true, skips built-in constraint validation on submit. Use this when you need to implement a fully custom validation flow while still using Form for data serialisation.
- * @prop {boolean} loading - Indicates an asynchronous submission is in progress. Disables the submit button and shows a loading indicator to prevent duplicate requests.
+ * @prop {boolean} loading - Marks an asynchronous submission in progress. Submits are ignored, the form dims and stops taking pointer input, and every `arc-button` with `type="submit"` inside it shows its spinner and is disabled. Clearing it releases only the buttons it set.
  * @prop {boolean} disabled - Disables the entire form, propagating the disabled state to every child field. Useful for read-only previews or while awaiting permissions.
  * @prop {boolean} errorSummary - When true, renders an aggregated list of validation errors above the submit area after a failed submission attempt. Set to false to handle error display manually.
  * @fires arc-submit - Fired on valid form submission with serialized form data
@@ -109,6 +109,12 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
     // Controls this form has written an error onto, so it can clear its own
     // messages without clobbering ones the consumer set.
     this._flagged = new WeakSet();
+    // Submit buttons this form put in their loading state, so clearing
+    // `loading` releases only those and leaves a button's own state alone.
+    this._loadingButtons = new WeakSet();
+    // The entries an action-mode submit validated, held for the `formdata`
+    // event that follows it.
+    this._pendingFormData = null;
     this._onKeyDown = this._onKeyDown.bind(this);
   }
 
@@ -183,6 +189,54 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
         }
       }
     }
+
+    if (changed.has('loading')) this._syncLoading();
+  }
+
+  /**
+   * Put every slotted `arc-button type="submit"` in its loading state while the
+   * form is loading: spinner shown, button disabled. A server-rendered button
+   * that hasn't hydrated waits for its own first update, so its first client
+   * render matches the server's.
+   */
+  _syncLoading() {
+    for (const button of this.querySelectorAll('arc-button')) {
+      if ((button.type ?? button.getAttribute('type')) !== 'submit') continue;
+      if (button.shadowRoot && !button.hasUpdated) {
+        customElements
+          .whenDefined('arc-button')
+          .then(() => button.updateComplete)
+          .then(() => this._syncLoadingButton(button));
+      } else {
+        this._syncLoadingButton(button);
+      }
+    }
+  }
+
+  _syncLoadingButton(button) {
+    if (this.loading) {
+      if (button.hasAttribute('loading')) return;
+      this._loadingButtons.add(button);
+      button.setAttribute('loading', '');
+    } else if (this._loadingButtons.has(button)) {
+      this._loadingButtons.delete(button);
+      button.removeAttribute('loading');
+    }
+  }
+
+  /**
+   * Action mode: add the fields to the native submission.
+   *
+   * The controls are light DOM and the `<form>` is in the shadow root, so none
+   * of them is associated with it, and the browser's own entry list is empty.
+   * `formdata` fires while the browser builds that list, after `submit` was not
+   * cancelled, so the entries appended here are exactly what `arc-submit`
+   * reported.
+   */
+  _onFormData(e) {
+    const data = this._pendingFormData ?? this._collectValues().formData;
+    this._pendingFormData = null;
+    for (const [name, value] of data) e.formData.append(name, value);
   }
 
   _collectValues() {
@@ -251,8 +305,10 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
 
     this._errors = [];
 
-    // Native form submission: let the browser handle it
+    // Native form submission: let the browser handle it. _onFormData adds
+    // these entries to what it sends.
     if (this.action) {
+      this._pendingFormData = formData;
       this.dispatchEvent(
         new CustomEvent('arc-submit', {
           detail: { values, formData, valid },
@@ -341,6 +397,7 @@ export class ArcForm extends DeclaredPropsMixin(LitElement) {
         method=${this.method || undefined}
         ?novalidate=${this.novalidate}
         @submit=${this._handleSubmit}
+        @formdata=${this._onFormData}
       >
         <div class="form-layout" part="layout">
           ${

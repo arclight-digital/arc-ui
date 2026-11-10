@@ -2,6 +2,7 @@ import { expect } from '@esm-bundle/chai';
 import '../src/input/form.register.js';
 import '../src/input/button.register.js';
 import '../src/input/input.register.js';
+import '../src/input/checkbox.register.js';
 import { mount, cleanup, tick } from './helpers.js';
 
 async function mountForm(inner) {
@@ -148,5 +149,79 @@ describe('arc-form submission wiring', () => {
     });
     form.submit();
     expect(submitFired).to.equal(false);
+  });
+});
+
+describe('arc-form action mode', () => {
+  afterEach(cleanup);
+
+  /**
+   * Submit for real and read back what the browser sent. The shadow <form> is
+   * pointed at a named iframe so the navigation lands there instead of
+   * replacing the test page; method GET puts the entries in the iframe's URL.
+   */
+  async function nativeSubmit(form) {
+    const frame = document.createElement('iframe');
+    frame.name = 'arc-form-sink';
+    document.body.append(frame);
+    form.shadowRoot.querySelector('form').target = 'arc-form-sink';
+    const loaded = new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
+    form.submit();
+    await loaded;
+    return new URLSearchParams(frame.contentWindow.location.search);
+  }
+
+  it('sends every slotted field with the native submission', async () => {
+    const form = await mountForm(`
+      <arc-input name="email" value="a@b.c"></arc-input>
+      <div><arc-input name="name" value="Ada"></arc-input></div>
+      <arc-checkbox name="news" checked></arc-checkbox>
+      <arc-checkbox name="spam"></arc-checkbox>
+    `);
+    form.action = '/__arc-form-sink';
+    form.method = 'get';
+    await form.updateComplete;
+
+    let detail = null;
+    form.addEventListener('arc-submit', (e) => {
+      detail = e.detail;
+    });
+    const sent = await nativeSubmit(form);
+
+    expect([...sent]).to.deep.equal([...detail.formData]);
+    expect(sent.get('email')).to.equal('a@b.c');
+    expect(sent.get('name')).to.equal('Ada');
+    expect(sent.get('news')).to.equal('on');
+    expect(sent.has('spam')).to.equal(false);
+  });
+});
+
+describe('arc-form loading', () => {
+  afterEach(cleanup);
+
+  it('puts slotted submit buttons in their loading state, and only those it set', async () => {
+    const form = await mountForm(`
+      <arc-input name="email" value="a@b.c"></arc-input>
+      <div><arc-button type="submit" id="send">Send</arc-button></div>
+      <arc-button type="submit" id="busy" loading>Busy</arc-button>
+      <arc-button id="plain">Plain</arc-button>
+    `);
+    const send = form.querySelector('#send');
+    const busy = form.querySelector('#busy');
+    const plain = form.querySelector('#plain');
+
+    form.loading = true;
+    await form.updateComplete;
+    await send.updateComplete;
+    expect(send.loading, 'submit button loading').to.equal(true);
+    expect(innerButton(send).disabled, 'submit button disabled').to.equal(true);
+    expect(send.shadowRoot.querySelector('.btn__spinner'), 'spinner').to.exist;
+    expect(plain.loading, 'non-submit button untouched').to.equal(false);
+
+    form.loading = false;
+    await form.updateComplete;
+    await send.updateComplete;
+    expect(send.loading, 'released').to.equal(false);
+    expect(busy.loading, 'own loading kept').to.equal(true);
   });
 });
