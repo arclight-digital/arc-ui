@@ -6,39 +6,29 @@ export const fileUpload: ComponentDef = {
   tag: 'arc-file-upload',
   tier: 'input',
   interactivity: 'interactive',
-  description: 'Drag-and-drop file upload zone with preview.',
+  description: 'Drag-and-drop file picker that lists the chosen files.',
 
-  overview: `FileUpload provides a drag-and-drop zone for selecting files, with a built-in file list that displays each selected file's name, size, and a remove button. Users can either drag files onto the dashed-border dropzone or click "browse" to open the native file picker. The component handles both interaction methods identically, validating files against the \`accept\` and \`max-size\` constraints before adding them to the list.
+  overview: `FileUpload is a dashed dropzone for choosing files. People drop files on it, or click it (or press Enter or Space on it) to open the native file picker. Chosen files appear in a list below with their name, size in B, KB, MB or GB, and a remove button. It only selects files: uploading them, and showing progress, is up to you.
 
-When \`multiple\` is enabled, users can add several files across multiple interactions. Each drop or browse appends to the existing list. In single-file mode (the default), selecting a new file replaces the previous one. Files that exceed the \`max-size\` limit are rejected with an inline error message below the dropzone, while accepted files are displayed in a styled list with their formatted size (B, KB, MB, GB). Each file item has a remove button that dispatches an \`arc-remove\` event and updates the file list.
+\`accept\` is passed to the native picker, which filters what can be chosen there. Dropped files aren't checked against it, so check the type yourself before uploading. \`max-size\` is in bytes. Larger files are left out, with an error under the dropzone naming them, and \`0\` (the default) means no limit. The dropzone shows both limits as hints.
 
-The component dispatches an \`arc-change\` event whenever the file list changes, on add or remove, with the current file array in the detail. The dropzone provides visual feedback during drag operations: the border color shifts to the accent blue and the background gains a subtle tint. The disabled state reduces opacity and blocks all pointer events. Keyboard users can activate the file picker by pressing Enter or Space while the dropzone is focused.`,
+With \`multiple\`, each drop or browse adds to the list. Without it, a new file replaces the old one, and only the first of several dropped files is kept. \`arc-change\` fires with the whole file array whenever the list changes, and removing a file also fires \`arc-remove\` with that file and its \`index\`. It isn't a form control, so the files don't submit with a form. Read them from \`arc-change\`.`,
 
   features: [
-    'Drag-and-drop zone with visual feedback (border color and background change) during drag-over',
-    'Click-to-browse fallback that opens the native file picker dialog',
-    'File type filtering via the accept attribute (e.g. "image/*", ".pdf,.docx")',
-    'Maximum file size validation with automatic rejection and inline error message',
-    'Multiple file selection mode that appends files across interactions',
-    'Styled file list showing name, formatted size, and a remove button per file',
-    '`arc-change` event on every file list mutation and `arc-remove` event on individual file removal',
-    'Keyboard accessible: Enter and Space activate the file picker from the focused dropzone',
+    'The border turns the accent color and the background tints while files are dragged over it',
+    '`disabled` lowers the opacity and blocks clicks, drops and the keyboard',
   ],
 
   guidelines: {
     do: [
-      'Set the accept attribute to restrict file types and communicate expectations (e.g. accept="image/*")',
-      'Set max-size to prevent oversized uploads before they reach the server',
-      'Use the multiple attribute when the use case requires batch uploads (e.g. photo galleries)',
-      'Listen to arc-change to sync the file list with your form state or upload handler',
-      'Display the upload zone at a reasonable width so the hint text and file list are readable',
+      'Set `accept` to say which file types you want, such as `accept="image/*"`',
+      'Set `max-size` so oversized files are stopped before they reach your server',
+      'Set `multiple` when people need to add several files, as for a photo gallery',
+      'Give it enough width for the hint text and the file names',
     ],
     dont: [
-      'Do not use FileUpload as a general file manager. It handles selection, not uploading or progress',
-      'Do not set max-size to 0 and expect it to enforce a limit; 0 means no limit',
-      'Do not forget to handle the arc-change event. Without it, selected files are not captured by your application',
-      'Do not place FileUpload inside a container with overflow: hidden, as the error message may be clipped',
-      'Do not disable the component without explaining why uploads are unavailable',
+      'Don\'t rely on `accept` to block other file types. It only filters the native picker',
+      'Don\'t set `max-size` to 0 and expect a limit. 0 means no limit',
     ],
   },
 
