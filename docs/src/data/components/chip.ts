@@ -9,37 +9,28 @@ export const chip: ComponentDef = {
   description:
     'A toggleable pill-shaped element for filters, tags, or multi-select options, with a selected state highlighted in accent-primary.',
 
-  overview: `Chip is a pill-shaped interactive element that toggles between selected and unselected. It suits picking one or more options from a visible set, such as filter chips, tag selectors, or interest pickers. The default appearance uses a bordered pill with muted uppercase text, and toggling to the selected state transitions the chip to an accent-primary border, matching text color, and a subtle blue-tinted background with a glow effect.
+  overview: `Chip is a pill that toggles between selected and unselected. Use a set of chips to pick zero or more options from a visible list: filters, tag pickers, interest pickers. It renders an \`arc-tag\`, so it has Tag's uppercase label. Unselected, it's a default Tag. Selected, it's a primary Tag: accent-primary border and text on an \`--accent-primary-subtle\` background.
 
-Standalone chips expose the \`button\` ARIA role with \`aria-pressed\` reflecting the toggle state. When placed inside an ancestor with \`role="listbox"\` or \`role="group"\`, chips switch to the \`option\` role with \`aria-selected\`, so they fit listbox accessibility patterns when grouped. Keyboard interaction is handled with Enter and Space keys for toggling, and the chip is focusable via the \`tabindex\` attribute (automatically set to -1 when disabled). The slot accepts any inline content, though plain text labels suit the uppercase styling best.
+On its own, a chip has the \`button\` role with \`aria-pressed\`. Inside an ancestor with \`role="listbox"\` or \`role="group"\`, it switches to the \`option\` role with \`aria-selected\`. Enter and Space toggle it. A disabled chip leaves the tab order (\`tabindex="-1"\`). The slot takes any inline content, but plain text suits the uppercase styling best.
 
-Chip fires an \`arc-change\` event on every toggle, including both the \`value\` and \`selected\` state in the event detail. To manage a chip group, listen to \`arc-change\` on each chip and keep a set of selected values in your application state. The \`value\` prop is a machine-readable identifier separate from the visible label text.`,
+Each toggle fires \`arc-change\` with \`{ value, selected }\`. There's no chip group component, so to manage a set, listen to \`arc-change\` on each chip and keep the selected values in your own state. \`value\` is an identifier for your code, separate from the visible label.`,
 
   features: [
-    'Pill-shaped toggle with `border-radius: full` and uppercase accent-font label styling',
-    'Selected state: accent-primary border, matching text color, tinted background, and glow shadow',
-    'Hover state brightens the border and elevates the background for unselected chips',
-    'Focus-visible glow that layers over the selection glow',
-    'ARIA `button` role with `aria-pressed` standalone; `option` role with `aria-selected` inside a listbox or group',
-    'Fires `arc-change` with `{ value, selected }` detail on every toggle interaction',
-    'Keyboard toggle via Enter and Space with automatic tabindex management',
-    'Disabled state at 40% opacity with pointer events blocked',
+    'Glows on hover, in the variant color',
+    'Disabled chips drop to 50% opacity and ignore the pointer',
   ],
 
   guidelines: {
     do: [
-      'Use Chip for multi-select filter sets where users can pick zero or more options',
-      'Set a unique `value` on each chip for programmatic identification distinct from the label',
-      'Group related chips together and listen to `arc-change` on each to maintain a selection set',
-      'Keep chip labels to one or two words to preserve the compact pill appearance',
-      'Combine with a clear/reset action when using chips as active filters',
+      'Give each chip a unique value',
+      'Keep labels to one or two words',
+      'Add a clear or reset action when chips act as active filters',
     ],
     dont: [
-      'Do not use Chip for mutually exclusive choices. Use SegmentedControl or RadioGroup instead',
-      'Do not place long sentences inside a Chip; it breaks the compact pill layout',
-      'Do not use Chip as a navigation element; it is an input control, not a link',
-      'Do not nest interactive elements (buttons, links) inside the chip slot',
-      'Avoid using chips without `value` props in a group; the change event needs identifiers to be useful',
+      'Don\'t use chips for mutually exclusive choices. Use SegmentedControl or RadioGroup',
+      'Don\'t put a sentence in a chip',
+      'Don\'t use a chip for navigation. It is an input, not a link',
+      'Don\'t put buttons or links inside a chip',
     ],
   },
 
