@@ -6,7 +6,7 @@ export const copyButton: ComponentDef = {
   tag: 'arc-copy-button',
   tier: 'input',
   interactivity: 'interactive',
-  description: 'One-click copy-to-clipboard button with confirmation.',
+  description: 'A button that copies a string to the clipboard and shows "Copied!" when the copy works.',
 
   overview: `CopyButton writes its \`value\` to the clipboard when clicked. It shows a clipboard icon and the word "Copy". After a successful copy it turns success-colored with a check mark and "Copied!" for 2 seconds, then goes back, and fires \`arc-copy\` with the copied value.
 
