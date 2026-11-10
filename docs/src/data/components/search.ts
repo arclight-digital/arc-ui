@@ -7,39 +7,32 @@ export const search: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Search input with a magnifying glass icon, clear button, loading spinner, and autocomplete suggestions dropdown.',
+    'A search field with a magnifying glass icon, a clear button, a loading spinner and an optional suggestions dropdown.',
 
-  overview: `Search is an input for search and filter interactions. It wraps a text input with a leading magnifying glass icon, an optional clear button, and a loading spinner that can be toggled while results are being fetched. When \`<arc-suggestion>\` child elements are provided, the component displays a dropdown of autocomplete suggestions that the user can navigate with the keyboard or mouse.
+  overview: `Search is a text field for search and filtering. It has a magnifying glass icon at the start, a clear button that shows once there's text, and a spinner that takes the clear button's place while \`loading\` is set. A \`label\` renders above the field. Without one, the \`placeholder\` becomes the accessible name.
 
-The component fires three events: \`arc-input\` on every keystroke for live filtering, \`arc-change\` when the user presses Enter to submit, and \`arc-select\` when a suggestion is chosen. The clear button (visible when the input has content) resets the field and dispatches \`arc-clear\`, then returns focus to the input so the user can keep editing.
+Typing fires \`arc-input\` on every keystroke. Enter fires \`arc-change\` to submit. The clear button empties the field, fires \`arc-clear\` and puts focus back in the field.
 
-Suggestions are provided declaratively with \`<arc-suggestion>\` elements, each carrying a \`value\` and a visible label. The dropdown opens on focus when suggestions exist and supports ArrowUp/ArrowDown navigation, Enter to select, and Escape to dismiss. The search input uses \`role="searchbox"\` and connects to the suggestion listbox with ARIA attributes for screen readers.`,
+Add \`<arc-suggestion>\` children for a dropdown of suggestions. Each one's \`value\` is what you get back, and its text is the label. The dropdown opens on focus or typing, ArrowUp and ArrowDown move through it, Enter picks the highlighted one, and Escape or a click outside closes it. Picking one fills the field with its label and fires \`arc-select\` with \`{ value: { label, value } }\`, then \`arc-change\`. Search doesn't filter the list as you type. To narrow it, replace the children from your \`arc-input\` handler.
+
+The field is a \`searchbox\`. With suggestions it becomes a \`combobox\` with \`aria-expanded\`, wired to a \`listbox\` of \`option\`s.`,
 
   features: [
-    'Built-in magnifying glass search icon positioned inside the input field',
-    'Clear button that appears when the input has a value, with `arc-clear` event on click',
-    'Loading spinner toggled via the `loading` prop, replacing the clear button while active',
-    'Autocomplete suggestions dropdown via `<arc-suggestion>` child elements',
-    'Full keyboard navigation: ArrowUp/Down through suggestions, Enter to select or submit, Escape to close',
-    'Three event types: `arc-input` (keystrokes), `arc-change` (submit), `arc-select` (suggestion picked)',
-    'Automatic outside-click dismissal of the suggestion dropdown',
-    'Accessible `role="searchbox"` with `aria-expanded` and `role="listbox"` for suggestions',
+    'The dropdown renders in the top layer, so a parent with `overflow: hidden` doesn\'t clip it',
+    '`open` reflects whether the dropdown is showing, and you can set it yourself',
   ],
 
   guidelines: {
     do: [
-      'Provide a `label` for accessibility even if you visually hide it with CSS',
-      'Use `placeholder` to describe what the user can search for, e.g. "Search components..."',
-      'Set `loading` to true while fetching results to give the user visual feedback',
-      'Provide `<arc-suggestion>` elements for common or recent queries to speed up discovery',
-      'Listen to `arc-input` for debounced live search, and `arc-change` for explicit submission',
+      'Give it a `label`. Hide it with `::part(label)` if the design has no room for it',
+      'Use `placeholder` to say what can be searched, for example "Search components..."',
+      'Set `loading` while results are being fetched',
+      'Debounce your `arc-input` handler for live search, and use `arc-change` for an explicit submit',
     ],
     dont: [
-      'Do not use Search for generic text input; use Input or Textarea for non-search fields',
-      'Do not populate suggestions with hundreds of items; keep the list to 8-10 for usability',
-      'Do not rely solely on the clear button for resetting: also handle programmatic value clearing',
-      'Do not use `loading` without actually fetching data: it misleads users about system activity',
-      'Avoid placing Search inside a container with `overflow: hidden` that would clip the suggestion dropdown',
+      'Don\'t use it for ordinary text fields. Use Input or Textarea',
+      'Don\'t show hundreds of suggestions. Keep the list to 8 to 10',
+      'Don\'t set `loading` when nothing is being fetched',
     ],
   },
 
@@ -149,7 +142,7 @@ export default function Example() {
     {
       name: 'Suggestion',
       tag: 'arc-suggestion',
-      description: 'Autocomplete suggestion item inside a Search component.',
+      description: 'One suggestion in a Search dropdown. `value` is what the events report, and the text is the label.',
     },
   ],
 
