@@ -7,9 +7,9 @@ const previewMarkup = `<arc-navigation-menu label="Example menu">
     <arc-nav-item href="#" description="Role-based access and SSO">Security</arc-nav-item>
   </arc-nav-item>
   <arc-nav-item>Solutions
-    <arc-nav-item href="#" description="Ship faster with integrated tooling">Engineering Teams</arc-nav-item>
-    <arc-nav-item href="#" description="Unified observability stack">Platform Teams</arc-nav-item>
-    <arc-nav-item href="#" description="SOC 2 and HIPAA compliance">Enterprise</arc-nav-item>
+    <arc-nav-item href="#" description="Shared tooling for product teams">Engineering teams</arc-nav-item>
+    <arc-nav-item href="#" description="Infrastructure and monitoring">Platform teams</arc-nav-item>
+    <arc-nav-item href="#" description="Support plans and procurement">Enterprise</arc-nav-item>
   </arc-nav-item>
   <arc-nav-item href="#" variant="primary">Pricing</arc-nav-item>
   <arc-nav-item href="#">Docs</arc-nav-item>
@@ -24,43 +24,36 @@ export const navigationMenu: ComponentDef = {
   tier: 'navigation',
   interactivity: 'hybrid',
   description:
-    'Horizontal navigation bar with hover-triggered dropdown sub-menus and full keyboard accessibility. Designed for marketing sites, documentation hubs, and product landing pages where top-level sections expand into categorised link lists.',
+    'Horizontal navigation bar whose top-level items open dropdowns of links on hover or click. Each link can carry a one-line description.',
 
-  overview: `NavigationMenu is a horizontal nav bar that pairs top-level links with hover-triggered dropdown panels. It is the right choice whenever a site needs to expose multiple content categories (products, solutions, resources) without cluttering the header with dozens of links. Each top-level item can be a simple link or a parent that reveals a dropdown on hover (and on click for touch devices).
+  overview: `Navigation Menu is a horizontal nav bar for a site header. Each top-level \`<arc-nav-item>\` is either a link or a parent whose nested items open in a dropdown on hover, or on click for touch screens and keyboards. Use it when a site has several sections (products, solutions, resources) and listing every link in the header would crowd it.
 
-Dropdown items support an optional description line, turning each link into a mini feature card. This "mega-menu" pattern helps users scan a large information architecture at a glance rather than drilling through nested pages. Because descriptions are optional, the same component works for both full marketing navs and lean documentation menus.
+A dropdown item can have a \`description\`, shown as a line of text under its label. With descriptions it works as a mega-menu, and without them it's a plain list of links.
 
-Keyboard support is built in. Arrow keys move between top-level items, Enter and Space toggle dropdowns, and Escape closes any open panel and returns focus to the trigger. The component manages all ARIA attributes (\`aria-expanded\`, \`aria-haspopup\`, and \`role="menu"\` / \`role="menuitem"\`) automatically. When a link is navigated, the component dispatches an \`arc-navigate\` custom event so frameworks can intercept client-side routing without full page reloads.`,
+Triggers are buttons, so Enter or Space opens a dropdown, and Escape closes it and returns focus to its trigger. Triggers carry \`aria-expanded\` and \`aria-haspopup\`, and dropdowns use \`role="menu"\` and \`role="menuitem"\`. Following a link fires a cancelable \`arc-navigate\` event with the \`href\`, so a client-side router can call \`preventDefault()\` and handle the route itself.
+
+When its container is 480px wide or narrower, the bar hides. The same items then open in a modal panel when a Top Bar with \`mobile-menu="nav"\` fires \`arc-mobile-menu-toggle\` from its menu button.`,
 
   features: [
-    'Hover-triggered dropdowns with a fade-and-slide transition',
-    'Click fallback for touch devices and assistive tech',
-    'Full keyboard navigation with Arrow, Enter, Space, and Escape keys',
-    'Automatic ARIA attributes (`aria-expanded`, `aria-haspopup`, `role="menu"`)',
-    'Optional description text per dropdown item for mega-menu layouts',
-    'Active state indicator via accent-colored bottom border',
-    '`arc-navigate` custom event for client-side routing integration',
-    'Short close delay prevents accidental dismissal on mouse exit',
-    'CSS custom-property theming via design tokens',
-    'Shadow DOM encapsulation with ::part() hooks for targeted styling',
+    'Dropdowns fade and slide in',
+    'A dropdown waits 150ms before closing when the pointer leaves, so moving from the trigger to the panel doesn\'t close it',
+    '`active` on a NavItem gives it a tinted background, border and glow',
   ],
 
   guidelines: {
     do: [
-      'Keep top-level items to five or fewer so the bar remains scannable',
-      'Add description text to dropdown items when categories need extra context',
-      'Use simple href links (no dropdown) for single-destination items like "Pricing"',
-      'Set the active attribute on the NavItem that matches the current route',
-      'Listen for the arc-navigate event to integrate with client-side routers',
-      'Place NavigationMenu inside a TopBar or sticky header for consistent positioning',
+      'Keep top-level items to five or fewer',
+      'Add descriptions to dropdown items when a label needs context',
+      'Make single-destination items like "Pricing" plain links with no dropdown',
+      'Set `active` on the NavItem that matches the current route',
+      'Put it inside a Top Bar or a sticky header',
     ],
     dont: [
-      'Do not nest dropdowns more than one level deep: the component is flat by design',
-      'Do not mix NavigationMenu and Sidebar in the same viewport; pick one navigation pattern',
-      'Do not use NavigationMenu for in-page section links; use ScrollSpy or Tabs instead',
-      'Do not omit href on leaf items; every clickable link should have a destination',
-      'Do not add more than six or seven items per dropdown; group into separate top-level categories instead',
-      'Do not rely on hover alone for critical paths; ensure click and keyboard access too',
+      'Don\'t nest NavItems more than one level deep. A dropdown renders only its direct children',
+      'Don\'t use it alongside a Sidebar in the same view. Pick one navigation pattern',
+      'Don\'t use it for links within a page. Use ScrollSpy or Tabs',
+      'Don\'t leave out `href` on leaf items',
+      'Don\'t put more than six or seven items in one dropdown. Split them into more top-level categories',
     ],
   },
 
@@ -90,9 +83,9 @@ export function SiteNav() {
         <NavItem href="/security" description="Role-based access and SSO">Security</NavItem>
       </NavItem>
       <NavItem>Solutions
-        <NavItem href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</NavItem>
-        <NavItem href="/platform" description="Unified observability stack">Platform Teams</NavItem>
-        <NavItem href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</NavItem>
+        <NavItem href="/engineering" description="Shared tooling for product teams">Engineering teams</NavItem>
+        <NavItem href="/platform" description="Infrastructure and monitoring">Platform teams</NavItem>
+        <NavItem href="/enterprise" description="Support plans and procurement">Enterprise</NavItem>
       </NavItem>
       <NavItem href="/pricing">Pricing</NavItem>
       <NavItem href="/docs">Docs</NavItem>
@@ -115,9 +108,9 @@ import { NavigationMenu, NavItem } from '@arclux/arc-ui-vue';
       <NavItem href="/security" description="Role-based access and SSO">Security</NavItem>
     </NavItem>
     <NavItem>Solutions
-      <NavItem href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</NavItem>
-      <NavItem href="/platform" description="Unified observability stack">Platform Teams</NavItem>
-      <NavItem href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</NavItem>
+      <NavItem href="/engineering" description="Shared tooling for product teams">Engineering teams</NavItem>
+      <NavItem href="/platform" description="Infrastructure and monitoring">Platform teams</NavItem>
+      <NavItem href="/enterprise" description="Support plans and procurement">Enterprise</NavItem>
     </NavItem>
     <NavItem href="/pricing">Pricing</NavItem>
     <NavItem href="/docs">Docs</NavItem>
@@ -138,9 +131,9 @@ import { NavigationMenu, NavItem } from '@arclux/arc-ui-vue';
     <NavItem href="/security" description="Role-based access and SSO">Security</NavItem>
   </NavItem>
   <NavItem>Solutions
-    <NavItem href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</NavItem>
-    <NavItem href="/platform" description="Unified observability stack">Platform Teams</NavItem>
-    <NavItem href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</NavItem>
+    <NavItem href="/engineering" description="Shared tooling for product teams">Engineering teams</NavItem>
+    <NavItem href="/platform" description="Infrastructure and monitoring">Platform teams</NavItem>
+    <NavItem href="/enterprise" description="Support plans and procurement">Enterprise</NavItem>
   </NavItem>
   <NavItem href="/pricing">Pricing</NavItem>
   <NavItem href="/docs">Docs</NavItem>
@@ -187,9 +180,9 @@ export function SiteNav() {
         <NavItem href="/security" description="Role-based access and SSO">Security</NavItem>
       </NavItem>
       <NavItem>Solutions
-        <NavItem href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</NavItem>
-        <NavItem href="/platform" description="Unified observability stack">Platform Teams</NavItem>
-        <NavItem href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</NavItem>
+        <NavItem href="/engineering" description="Shared tooling for product teams">Engineering teams</NavItem>
+        <NavItem href="/platform" description="Infrastructure and monitoring">Platform teams</NavItem>
+        <NavItem href="/enterprise" description="Support plans and procurement">Enterprise</NavItem>
       </NavItem>
       <NavItem href="/pricing">Pricing</NavItem>
       <NavItem href="/docs">Docs</NavItem>
@@ -211,9 +204,9 @@ export function SiteNav() {
         <NavItem href="/security" description="Role-based access and SSO">Security</NavItem>
       </NavItem>
       <NavItem>Solutions
-        <NavItem href="/engineering" description="Ship faster with integrated tooling">Engineering Teams</NavItem>
-        <NavItem href="/platform" description="Unified observability stack">Platform Teams</NavItem>
-        <NavItem href="/enterprise" description="SOC 2 and HIPAA compliance">Enterprise</NavItem>
+        <NavItem href="/engineering" description="Shared tooling for product teams">Engineering teams</NavItem>
+        <NavItem href="/platform" description="Infrastructure and monitoring">Platform teams</NavItem>
+        <NavItem href="/enterprise" description="Support plans and procurement">Enterprise</NavItem>
       </NavItem>
       <NavItem href="/pricing">Pricing</NavItem>
       <NavItem href="/docs">Docs</NavItem>
@@ -238,7 +231,7 @@ export function SiteNav() {
       name: 'NavItem',
       tag: 'arc-nav-item',
       description:
-        'A single entry inside NavigationMenu. When used at the top level and containing nested NavItem children, it becomes a dropdown trigger. When used without children, it renders as a direct navigation link. Nest one level deep to populate a dropdown panel.',
+        'One entry in a Navigation Menu. At the top level, a NavItem with NavItem children becomes a dropdown trigger, and one without children is a link.',
     },
   ],
 
