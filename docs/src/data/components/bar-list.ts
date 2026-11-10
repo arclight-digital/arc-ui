@@ -6,29 +6,26 @@ export const barList: ComponentDef = {
   tag: 'arc-bar-list',
   tier: 'data',
   interactivity: 'static',
-  description: 'Labelled horizontal bars with their values, ranked.',
+  description: 'Labeled horizontal bars with their values, ranked.',
 
-  overview: `BarList shows "which of these, and by how much" in less room than a chart: one row per item, a label and a value above a bar whose length is the value's share of the largest. It suits a top-N breakdown in a tile, a card or a sidebar, where \`arc-chart\` is dashboard-sized and \`arc-sparkline\` has no labels.
+  overview: `BarList shows "which of these, and by how much" in less room than a chart: one row per item, a label and a value above a bar whose length is the value's share of the largest. Use it for a top-N breakdown in a tile, a card or a sidebar, where \`arc-chart\` is dashboard-sized and \`arc-sparkline\` has no labels.
 
-Rows are ranked largest first unless you set \`unsorted\`, and \`limit\` keeps the top few. Set \`max\` to put several lists on one scale. The list is a real ordered list: each row reads as its label and value, and the bar is decoration hidden from assistive tech, so nothing depends on seeing its length.`,
+Rows are ranked largest first unless you set \`unsorted\`, and \`limit\` keeps the top few. Set \`max\` to put several lists on one scale. The list is a real ordered list: each row reads as its label and value, and the bar is hidden from assistive tech, so nothing depends on seeing its length.`,
 
   features: [
-    'Ranked by value, largest first, or in the given order with `unsorted`',
-    '`limit` for a top-N view, and `max` to share one scale across lists',
-    'Per-row `display` text for formatted values, rendered identically on server and client',
-    'Rows can link (`href`), and the fill colour comes from `--bar-list-fill`',
-    'An ordered list with a label per row: accessible without seeing the bars',
+    'Values show as given, without locale formatting, so server and client render the same text. Per-row `display` text sets the formatted version',
+    'Rows can link (`href`), and the fill color comes from `--bar-list-fill`',
   ],
 
   guidelines: {
     do: [
       'Give the list a `label` naming what is being compared',
       'Use `display` for formatted numbers ("1.2k", "38%") and keep `value` numeric for the bar',
-      'Use `limit` and a "see all" link rather than a long list in a small tile',
+      'In a small tile, set `limit` and put a "see all" link in the `more` slot',
     ],
     dont: [
-      'Do not use it for values that can be negative; a diverging arc-meter shows a lean either way',
-      'Do not rely on bar length alone to carry the number; keep the value visible',
+      'Don\'t use it for values that can be negative. A diverging arc-meter shows a lean either way',
+      'Don\'t rely on bar length alone to carry the number. Keep the value visible',
     ],
   },
 
