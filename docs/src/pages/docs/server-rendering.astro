@@ -135,7 +135,7 @@ import '@arclux/arc-ui/register';`}></arc-code-block>
         <code>hostConnected</code>. Browser work belongs in those.
       </p>
       <p>
-        All {elementCount} pass, so none are client-only, and you opt in per page.
+        All {elementCount} pass, so none of them has to be client-only.
       </p>
       <p>
         A second test checks that every component's docs preview, server-rendered, looks the
@@ -168,8 +168,7 @@ document.addEventListener('astro:before-swap', (e) => attachShadowRoots(e.newDoc
       <h2 class="docs-heading">Framework support</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p>
-        Lit's framework SSR integrations work from the framework's component graph, and React
-        is the only framework with one. <code>@arclux/arc-ui/ssr</code> doesn't need the graph.
+        <code>@arclux/arc-ui/ssr</code> doesn't need a framework's component graph.
         A framework's server render produces HTML, and every <code>&lt;arc-*&gt;</code> in it
         can be rendered to a declarative shadow root from the markup alone. So it takes HTML
         and returns HTML, whatever produced it.
@@ -196,9 +195,8 @@ const { html, stylesheets } = await renderDeclarativeShadowDOM(pageHtml);
       </p>
       <p>
         It needs <code>@lit-labs/ssr</code>, an optional peer dependency. Install it in the
-        project that server-renders. Two things are up to you: serve the returned
-        stylesheets from the path they were linked with, and import
-        <code>@arclux/arc-ui/hydrate</code> on the client <em>before any component is
+        project that server-renders. You serve the returned stylesheets from the path they
+        were linked with, and you import <code>@arclux/arc-ui/hydrate</code> on the client <em>before any component is
         defined</em>. On a bundler that usually means forcing it into its own chunk, since an
         import statement alone does not control evaluation order.
       </p>
