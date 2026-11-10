@@ -7,23 +7,23 @@ export const icon: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Renders icons by name from any registered library. Phosphor (1,500+) and Lucide (1,900+) ship in `@arclux/arc-ui-icons`, with one-line library switching and custom icon registration.',
+    'Renders an icon by name from a registered library. `@arclux/arc-ui-icons` ships Phosphor (1,512 icons) and Lucide (1,896), and you can switch libraries in one line or register your own icons.',
 
-  overview: `Icon renders SVG icons from a centralized icon registry by name. When the \`name\` property is set, the component dynamically imports the matching icon file, parses it through a DOMParser-based sanitizer that strips all \`<script>\` elements and \`on*\` event handler attributes, and injects the cleaned SVG into the shadow DOM. Parsed SVGs are cached in a module-level Map for efficient re-renders.
+  overview: `Icon looks up \`name\` in the icon registry, runs the SVG through a sanitizer that strips \`<script>\` elements and \`on*\` handler attributes, and renders the result in its shadow root. Sanitized SVGs are cached, so each one is processed once.
 
-**Icons are loaded per-icon on demand.** Each of the 3,400+ icons is its own module (~500 bytes). When \`<arc-icon name="star">\` renders, only \`star.js\` is fetched, not the entire library. Importing \`arc-icon\` adds **0KB** of icon data to your bundle upfront, and each icon you actually use costs only ~500 bytes. Bundlers automatically tree-shake unused icons out of production builds.
+**Icons load on demand.** Each of the 3,400+ icons is its own module, 500 to 650 bytes on average. \`<arc-icon name="star">\` fetches only \`star.js\`. Importing \`arc-icon\` brings no icon library with it, only the nine glyphs ARC UI's own buttons draw (close, chevrons, overflow, edit, play and pause).
 
-**Icons live in their own package.** \`@arclux/arc-ui-icons\` carries two libraries: **Phosphor Icons** (phosphoricons.com), a consistent set of over 1,500 glyphs with a clean filled style that works at any size, and **Lucide** (lucide.dev), a community fork of Feather Icons with over 1,900 stroke-based glyphs that pair well with lighter UI. Use the icon browser below to explore both and click any icon to copy its name.
+**The icons are in their own package.** \`@arclux/arc-ui-icons\` has two libraries: **Phosphor Icons** (phosphoricons.com), 1,512 glyphs drawn as filled paths, and **Lucide** (lucide.dev), a community fork of Feather Icons with 1,896 stroke-based glyphs. Click any icon in the browser below to copy its name.
 
-Install it and import a pack. One line registers it, and if nothing else has been selected it becomes the active library. So \`<arc-icon name="star">\` works on the next line:
+Install it and import a pack. One line registers it, and if nothing else has been selected it becomes the active library, so \`<arc-icon name="star">\` works on the next line:
 
 \`\`\`js
 import '@arclux/arc-ui-icons/phosphor';
 \`\`\`
 
-Nothing is selected by default. Until a pack registers, every named icon renders its slot fallback and the registry logs one line saying so. It will not fail silently, but it will not guess either. Prior to v4 both packs were vendored inside \`@arclux/arc-ui\`, where they were 88% of the published files and 44% of the unpacked bytes of every install, icons or no icons.
+Nothing is selected by default. Until a pack registers, a named icon renders its slot fallback (unless it's one of the nine built-in glyphs) and the registry logs a warning saying why. Before v4 both packs were vendored inside \`@arclux/arc-ui\`, where they were 88% of the published files and 44% of the unpacked bytes of every install, icons or no icons.
 
-To switch libraries globally, use the \`iconRegistry\` API or the declarative \`<arc-icon-library>\` component:
+To switch libraries for the whole page, use the \`iconRegistry\` API or the \`<arc-icon-library>\` element:
 
 \`\`\`js
 // JavaScript API
@@ -36,7 +36,7 @@ iconRegistry.use('lucide'); // switch all icons to Lucide (no data loaded until 
 <arc-icon-library name="lucide"></arc-icon-library>
 \`\`\`
 
-You can also register custom icons on top of the active library. Custom icons are merged into the current set, so you can mix library icons with your own brand marks. Custom icons registered via \`set()\` resolve instantly with no network request:
+You can register your own icons, such as a logo, on top of the active library and use them alongside its icons. Icons registered with \`set()\` resolve with no network request:
 
 \`\`\`js
 iconRegistry.set({
@@ -45,7 +45,7 @@ iconRegistry.set({
 });
 \`\`\`
 
-If your app uses a handful of icons, skip the pack registration and import those glyphs directly. This pulls in one module per icon and no resolver at all:
+If your app uses a handful of icons, skip the pack registration and import those glyphs directly. That pulls in one module per icon and no resolver at all:
 
 \`\`\`js
 import { iconRegistry } from '@arclux/arc-ui';
@@ -55,44 +55,33 @@ import x from '@arclux/arc-ui-icons/phosphor/x';
 iconRegistry.set({ check, x });
 \`\`\`
 
-And if you need a whole library as a single import (an icon picker is the usual reason), that is still one line:
+To load a whole library in one import, for an icon picker say, use the \`all\` entry points:
 
 \`\`\`js
 import phosphor from '@arclux/arc-ui-icons/all/phosphor'; // loads all ~1,500 icons
 import lucide from '@arclux/arc-ui-icons/all/lucide';     // loads all ~1,900 icons
-\`\`\`
-
-Five size presets control the rendered dimensions: xs (12px), sm (16px), md (20px), lg (24px), and xl (32px). The component inherits color from its parent via \`currentColor\`, so icon color naturally follows the surrounding text or container styling. When no matching name is found in the registry, the component falls back to rendering its default slot, allowing you to pass inline SVGs or custom content directly.
-
-The \`label\` property controls accessibility behavior: when a label is provided, the icon wrapper receives \`role="img"\` and \`aria-label\` with the given text; when omitted, the icon is marked as \`role="presentation"\` with \`aria-hidden="true"\`, hiding it from assistive technology.`,
+\`\`\``,
 
   features: [
-    'Per-icon lazy loading. Only icons you use are fetched (~500 bytes each); 0KB upfront',
-    'Two icon packs in `@arclux/arc-ui-icons`: Phosphor (1,500+ filled) and Lucide (1,900+ stroke-based)',
-    'Registered, not bundled: core ships no icon data, and any library can register itself',
-    'One-line library switching via iconRegistry.use() or `<arc-icon-library>`',
-    'Custom icon registration: merge your own SVGs on top of any library (renders instantly)',
-    'Five size presets: xs (12px), sm (16px), md (20px), lg (24px), xl (32px)',
-    'Inherits color via currentColor for natural parent-driven styling',
-    'Slot fallback when no registry name matches, allowing inline SVG passthrough',
-    'Accessible role switching: `role="img"` with label, `role="presentation"` without',
-    'XSS-safe: strips <script> tags and on* event handlers from SVG content',
+    'Sizes: `xs` (12px), `sm` (16px, the default), `md` (20px), `lg` (24px) and `xl` (32px)',
+    'Takes its color from the parent through `currentColor`',
+    'Renders its default slot when the registry has no icon by that name, so an inline SVG works as a fallback',
+    'With `label`, the icon gets `role="img"` and that `aria-label`. Without it, `role="presentation"` and `aria-hidden="true"`',
   ],
 
   guidelines: {
     do: [
-      'Provide a label for icons that convey meaning (e.g. status indicators, action icons)',
-      'Omit the label for purely decorative icons so they are hidden from screen readers',
-      'Use the size prop rather than CSS overrides to maintain consistent icon dimensions',
-      'Register custom icons via the iconRegistry before first render',
-      'Use currentColor inheritance by setting color on the parent element',
+      'Give an icon a `label` when it carries meaning, such as a status or an action',
+      'Leave `label` off decorative icons so screen readers skip them',
+      'Size icons with the `size` prop, not CSS',
+      'Register custom icons with `iconRegistry.set()` before they first render',
     ],
     dont: [
-      'Do not pass unsanitized SVG strings from user input. The component strips scripts, but defense in depth is wise',
-      'Do not use the xl size for inline text icons; sm or md integrates better with body copy',
-      'Do not set both a name and slot content simultaneously. The name lookup takes precedence',
-      'Do not rely on the icon alone to communicate critical information; pair with visible text',
-      'Do not hardcode fill or stroke colors in registered SVGs. Use currentColor so they adapt to context',
+      'Don\'t render SVG strings from user input. The sanitizer is a second line of defense, not a trust boundary',
+      'Don\'t use `xl` for icons in running text. `sm` or `md` matches body copy',
+      'Don\'t set both `name` and slot content. When the name resolves, the slot is ignored',
+      'Don\'t let an icon carry critical information on its own. Pair it with visible text',
+      'Don\'t hardcode fill or stroke colors in registered SVGs. Use `currentColor` so they follow the text color',
     ],
   },
 
