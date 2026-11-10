@@ -8,44 +8,38 @@ export const keyboardMap: ComponentDef = {
   interactivity: 'static',
   searchKeywords: ['shortcut diagram', 'cheat sheet', 'keycap', 'keyboard layout', 'hotkey map'],
   description:
-    'A rendered keyboard with highlighted keys and chords: the visual big sibling of Kbd and Hotkey, for shortcut documentation and editor cheat sheets.',
+    'A rendered keyboard with highlighted keys and chords, for shortcut documentation and editor cheat sheets.',
 
-  overview: `Keyboard Map draws a full keyboard as a grid of keycaps and lights up the keys named in its \`highlight\` prop. Where Kbd names a key inline and Hotkey listens for one invisibly, Keyboard Map shows a chord in its physical context. Cmd+Shift+P stops being three tokens in a sentence and becomes three glowing caps on a board, which is how people remember shortcuts. Highlighted keys carry the house state marking: accent tint, glow, and accent legend text.
+  overview: `Keyboard Map draws a keyboard as a grid of keycaps and highlights the keys named in its \`highlight\` prop. Kbd names a key inline and Hotkey listens for one, while Keyboard Map shows where a chord's keys are on the board. Highlighted keys get an accent tint, a glow and accent legend text.
 
-The \`highlight\` prop accepts chords as an array property (\`["mod+z", "mod+shift+z"]\`) or as a comma- or space-separated attribute string. Chord syntax follows Hotkey's conventions: keys join with "+", \`cmd\`/\`command\` normalize to meta, \`option\` to alt, and \`mod\` resolves to Cmd on Mac and Ctrl on Windows so one chord string documents both platforms. The \`platform\` prop controls modifier legends and \`mod\` resolution: "auto" detects the visitor's platform in the browser (and renders the Mac board on the server), while "mac" and "win" pin it. Two layouts cover the documentation cases: \`compact\` (the default) is a 60%-style block without nav cluster or numpad, and \`ansi\` adds the F-row and nav cluster. The board is a stylised diagram. It has no ISO/JIS machinery, because chasing physical-layout fidelity would trade legibility for configuration surface.
+Chords use Hotkey's syntax: keys join with "+", \`cmd\`/\`command\` normalize to meta, \`option\` to alt, and \`mod\` resolves to Cmd on Mac and Ctrl on Windows, so one chord string documents both. \`platform\` sets the modifier legends and how \`mod\` resolves: "auto" detects the visitor's platform in the browser (and renders the Mac board on the server), and "mac" or "win" pins it.
 
-The component is pure display typography: no slots, no click events, nothing focusable. A shortcut diagram that responded to clicks would imply the keys do something, and wiring real shortcuts is Hotkey's job. The two compose naturally, one listening while the other documents. Accessibility follows the diagram model: the board is a single \`role="img"\` whose label is computed from the chords ("Keyboard diagram highlighting Cmd+Shift+P"), and the individual key legends are hidden from assistive technology. The board scales to its container; \`--keyboard-map-key\` overrides the key size, and legends step out below ~340px where they would be unreadable noise.`,
+The board is a stylized diagram with two layouts. \`compact\` (the default) is a 60%-style block with no nav cluster or numpad, and \`ansi\` adds the F-row and nav cluster. There's no ISO or JIS layout.
+
+It's display only: no slots, no click events, nothing focusable. Wiring up a shortcut is Hotkey's job. The board is one \`role="img"\` whose label is computed from the chords ("Keyboard diagram highlighting Cmd+Shift+P"), and the key legends are hidden from assistive technology.`,
 
   features: [
-    'Chord highlighting with accent tint, glow, and accent legend text (the house state marking)',
-    'Platform-aware `mod` (Cmd on Mac, Ctrl on Windows) and modifier legends (⌘ ⌥ ⇧ ⌃ vs Ctrl/Alt/Shift/Win), following Hotkey’s normalization',
-    'Two layouts: compact (60%-style, the default) and ansi (adds F-row and nav cluster)',
-    'Highlight as an array property or a comma/space-separated attribute string; unknown key names are ignored',
-    'Optional caption below the board in muted text',
-    'role="img" with an aria-label computed from the chords; key legends hidden from assistive tech',
-    'Scales to its container; `--keyboard-map-key` and `--keyboard-map-gap` tune the geometry',
-    'Server-renders deterministically: platform detection waits for the browser, defaulting to Mac',
+    'Modifier legends: ⌘ ⌥ ⇧ ⌃ on Mac, Ctrl/Alt/Shift/Win on Windows',
+    '`highlight` takes an array property or a comma- or space-separated attribute string. Unknown key names are ignored',
+    'Optional `caption` below the board in muted text',
+    'Scales to its container. `--keyboard-map-key` and `--keyboard-map-gap` set the geometry, and the legends drop out below about 340px',
+    'Unknown `layout` values fall back to compact',
   ],
 
   guidelines: {
     do: [
-      'Use Keyboard Map for cheat sheets and settings pages where seeing a chord on the board beats reading it. Kbd stays the right tool for a shortcut mentioned inline in a sentence',
-      'Write chords with `mod` (mod+shift+p) so one string documents Cmd on Mac and Ctrl on Windows',
-      'Pair it with Hotkey: Hotkey wires the shortcut, Keyboard Map documents it',
-      'Group related chords on one board (undo and redo together) and give each board a caption naming the group',
-      'Prefer the compact layout. Reach for ansi only when a chord actually uses the F-row or nav cluster',
+      'Use it for cheat sheets and settings pages. For a shortcut mentioned in a sentence, use Kbd',
+      'Put related chords on one board, such as undo and redo, and give it a caption naming the group',
+      'Use the compact layout unless a chord uses the F-row or nav cluster',
     ],
     dont: [
-      'Do not use it as an input device or key tester. It is documentation typography: non-interactive, and it renders no click events',
-      'Do not put one board per shortcut in running prose. That is Kbd’s job; a board earns its space by showing several related chords in context',
-      'Do not expect ISO, JIS, or numpad geometry. The diagram is stylised, and unknown layout values fall back to compact',
-      'Do not rely on the highlight alone to document a shortcut for screen reader users. The computed label names the chords, but the surrounding text should too',
+      'Don\'t make the board the only place a shortcut is written down. The computed label names the chords, but the surrounding text should too',
     ],
   },
 
   previewHtml: `<div style="display: flex; flex-direction: column; gap: 28px; width: min(540px, 100%);">
-  <arc-keyboard-map highlight="mod+z, mod+shift+z" caption="Edit — undo and redo history"></arc-keyboard-map>
-  <arc-keyboard-map highlight="space" caption="Transport — play / pause"></arc-keyboard-map>
+  <arc-keyboard-map highlight="mod+z, mod+shift+z" caption="Edit: undo and redo history"></arc-keyboard-map>
+  <arc-keyboard-map highlight="space" caption="Transport: play/pause"></arc-keyboard-map>
 </div>`,
 
   tabs: [
