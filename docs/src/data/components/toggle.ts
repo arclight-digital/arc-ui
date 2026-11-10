@@ -8,37 +8,31 @@ export const toggle: ComponentDef = {
   interactivity: 'hybrid',
   description: 'On/off switch with animation, glow effect, and ARIA switch role.',
 
-  overview: `The Toggle component provides a binary on/off control that mirrors the behavior of a physical switch. Use it for a setting that takes immediate effect: turning a feature on or off, enabling a preference, activating a mode. Unlike a checkbox, which typically submits with a form, a toggle communicates instant state change to the user.
+  overview: `Toggle is an on/off switch for a setting that takes effect at once, such as turning on notifications. Use a checkbox when the choice waits for the reader to submit a form.
 
-Internally, Toggle renders with \`role="switch"\` and manages \`aria-checked\` automatically, giving assistive technology a clear picture of the current state. The thumb slides between positions with a spring-timed CSS transition, and the active state lights up with a subtle glow drawn from the current theme's accent color. Both the track and the thumb inherit design tokens so the component stays consistent across light, dark, and high-contrast modes.
+It renders with \`role="switch"\` and keeps \`aria-checked\` in step with \`checked\`. The thumb slides across in 300ms, and when the toggle is on, the track and thumb glow in the \`--interactive\` color.
 
-Toggle works equally well as an uncontrolled element (set \`checked\` once and let the component manage its own state) or as a fully controlled input driven by framework reactivity. It also participates in native form submission when given a \`name\`, emitting a boolean value alongside other form fields.`,
+Set \`checked\` once and let the toggle keep its own state, or drive \`checked\` from your framework's state. With a \`name\`, it takes part in native form submission like a checkbox: it submits "on" when checked and nothing when off.`,
 
   features: [
-    'Binary on/off state with animated thumb slide and glow transition',
-    'Built-in `role="switch"` and automatic `aria-checked` management',
-    'Keyboard accessible: Space and Enter keys toggle state',
-    'Paired label rendered inline, with click-to-toggle support',
-    'Disabled state with reduced opacity and blocked pointer events',
-    'Participates in native `<form>` submission when `name` is set',
-    'Theme-aware glow color derived from accent design tokens',
-    'Works as controlled or uncontrolled input across all frameworks',
+    'Space toggles it from the keyboard',
+    'Clicking the `label` text toggles it too',
+    'A disabled toggle is dimmed and ignores pointer and keyboard input',
+    'Fires `arc-change` with `detail.checked`',
   ],
 
   guidelines: {
     do: [
-      'Use a toggle for settings that take effect immediately (e.g. enable notifications)',
-      'Provide a clear, concise label describing what the toggle controls',
-      'Place toggles in a vertical list when presenting multiple related settings',
-      'Use the `checked` attribute to set a sensible default for each option',
-      'Pair with descriptive helper text when the label alone may be ambiguous',
+      'Give it a short `label` that says what it controls',
+      'Stack related toggles in a vertical list',
+      'Set `checked` on the options that should start on',
+      'Add helper text when the label alone could be read two ways',
     ],
     dont: [
-      'Do not use a toggle when the change requires an explicit "Save" action. Use a checkbox instead',
-      'Avoid wrapping a toggle inside a clickable card or button. The double action confuses users',
-      'Do not disable a toggle without explaining why the option is unavailable',
-      'Avoid placing more than 8-10 toggles in a single group. Consider grouping into sections',
-      'Do not use a toggle for mutually exclusive options. Use a radio group instead',
+      'Don\'t put a toggle inside a clickable card or button. One click would trigger both',
+      'Don\'t disable a toggle without saying why the option is unavailable',
+      'Don\'t put more than 8 to 10 toggles in one group. Split them into sections',
+      'Don\'t use toggles for mutually exclusive options. Use RadioGroup',
     ],
   },
 
