@@ -2,19 +2,19 @@
 import DocsLayout from '../../layouts/DocsLayout.astro';
 
 const headings = [
-  { id: 'how-themes-work', label: 'How Themes Work' },
-  { id: 'dark-mode', label: 'Dark Mode' },
-  { id: 'light-mode', label: 'Light Mode' },
-  { id: 'auto-mode', label: 'Auto Mode' },
-  { id: 'fixed-regions', label: 'Fixed Regions' },
-  { id: 'custom-themes', label: 'Custom Themes' },
+  { id: 'how-themes-work', label: 'How themes work' },
+  { id: 'dark-mode', label: 'Dark mode' },
+  { id: 'light-mode', label: 'Light mode' },
+  { id: 'auto-mode', label: 'Auto mode' },
+  { id: 'fixed-regions', label: 'Fixed regions' },
+  { id: 'custom-themes', label: 'Custom themes' },
   { id: 'synthesizer', label: 'Theme Synthesizer' },
 ];
 ---
 
 <DocsLayout
   title="Theming"
-  description="Customize ARC UI with themes, dark/light mode, and CSS custom properties."
+  description="Switch ARC UI between dark, light and auto modes, pin regions to one scheme, and override tokens for a theme of your own."
   activeSlug="theming"
   headings={headings}
   breadcrumbs={[{ label: 'Theming' }]}
@@ -22,51 +22,51 @@ const headings = [
   <div class="theming-page">
     <h1 class="page-title">Theming</h1>
     <p class="page-desc">
-      Every surface, glow, and gradient resolves from CSS custom properties.
-      Switch modes with one attribute, or retheme by overriding tokens.
+      ARC UI's colors come from CSS custom properties. One attribute switches the mode, and
+      overriding tokens gives you a theme of your own.
     </p>
 
     <section id="how-themes-work">
-      <h2 class="docs-heading">How Themes Work</h2>
+      <h2 class="docs-heading">How themes work</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Themes are controlled by the <code>data-theme</code> attribute on the <code>&lt;html&gt;</code>
-        element. ARC UI ships three modes:
+        The <code>data-theme</code> attribute on <code>&lt;html&gt;</code> sets the mode. There
+        are three:
       </p>
       <div class="theme-modes">
         <arc-card>
           <span class="theme-mode-card__label">Dark</span>
           <code>data-theme="dark"</code>
-          <span class="theme-mode-card__desc">Default. Deep blacks with blue/violet accent glows.</span>
+          <span class="theme-mode-card__desc">The default. Near-black surfaces with blue and violet accents.</span>
         </arc-card>
         <arc-card>
           <span class="theme-mode-card__label">Light</span>
           <code>data-theme="light"</code>
-          <span class="theme-mode-card__desc">Bright backgrounds with stronger accent colors.</span>
+          <span class="theme-mode-card__desc">Light backgrounds, with darker accents for contrast.</span>
         </arc-card>
         <arc-card>
           <span class="theme-mode-card__label">Auto</span>
           <code>data-theme="auto"</code>
-          <span class="theme-mode-card__desc">Follows OS <code>prefers-color-scheme</code> preference.</span>
+          <span class="theme-mode-card__desc">Follows the OS setting through <code>prefers-color-scheme</code>.</span>
         </arc-card>
       </div>
       <p class="docs-text">
-        Every component adapts on the spot when the theme changes, with no configuration needed.
-        Try it: flip the toggle in the top bar.
+        Components restyle as soon as the attribute changes. On this site, the toggle in the top
+        bar changes it.
       </p>
     </section>
 
     <section id="dark-mode">
-      <h2 class="docs-heading">Dark Mode</h2>
+      <h2 class="docs-heading">Dark mode</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Dark mode is the default: near-black surfaces with blue and violet accent glows.
+        Dark is the default, so the attribute is optional.
       </p>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Dark mode is the default — no attribute needed -->
 <html>
   <!-- or explicitly: -->
 <html data-theme="dark">`}></arc-code-block></div>
-      <p class="docs-text">The surface stack, rendered live:</p>
+      <p class="docs-text">The background tokens, rendered on this page:</p>
       <div class="token-preview-grid">
         <arc-card class="token-preview" style="--bg-card: var(--bg-deep)">
           <code>--bg-deep</code>
@@ -84,21 +84,20 @@ const headings = [
     </section>
 
     <section id="light-mode">
-      <h2 class="docs-heading">Light Mode</h2>
+      <h2 class="docs-heading">Light mode</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Light mode shifts backgrounds to soft whites and strengthens the accents for contrast
-        on light surfaces. Shadows become blue/violet-tinted instead of black.
+        In light mode, shadows are tinted with the accent colors instead of black.
       </p>
       <div class="docs-code"><arc-code-block language="html" code={`<html data-theme="light">`}></arc-code-block></div>
     </section>
 
     <section id="auto-mode">
-      <h2 class="docs-heading">Auto Mode</h2>
+      <h2 class="docs-heading">Auto mode</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Auto mode follows the user's OS preference via <code>prefers-color-scheme</code>.
-        To persist an explicit choice across visits, store it and restore on load:
+        Auto follows the OS setting through <code>prefers-color-scheme</code>. To keep a
+        visitor's own choice across visits, store it and restore it on load:
       </p>
       <div class="docs-code"><arc-code-block language="js" code={`// Set theme and persist
 function setTheme(theme) {
@@ -109,18 +108,17 @@ function setTheme(theme) {
 // Restore on page load
 const saved = localStorage.getItem('arc-theme') || 'auto';
 document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block></div>
-      <arc-alert variant="tip">The <code>arc-theme-toggle</code> component handles this automatically. Drop it into your layout.</arc-alert>
+      <arc-alert variant="tip"><code>arc-theme-toggle</code> does this for you. It stores the choice in <code>localStorage</code> under <code>arc-theme</code>.</arc-alert>
     </section>
 
     <section id="fixed-regions">
-      <h2 class="docs-heading">Fixed Regions</h2>
+      <h2 class="docs-heading">Fixed regions</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Some regions (navs, footers, a command bar) should hold their appearance regardless
-        of the page theme. <code>.theme-fixed-dark</code> and <code>.theme-fixed-light</code>
-        pin a subtree to one scheme. Not a separate palette: the same scheme the library
-        generates for <code>:root</code>, applied to a subtree instead. So a pinned region
-        carries exactly the contrast that scheme was tuned for.
+        <code>.theme-fixed-dark</code> and <code>.theme-fixed-light</code> keep a subtree in one
+        scheme whatever the page theme is, for regions like a nav, a footer or a command bar.
+        The class applies the same scheme the library generates for <code>:root</code>, so a
+        pinned region has the contrast that scheme was tuned for.
       </p>
       <div class="docs-code"><arc-code-block language="html" code={`<div class="theme-fixed-dark">
   <arc-top-bar fixed>
@@ -132,28 +130,26 @@ document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block><
   <!-- and the reverse, for a light panel on a dark page -->
 </aside>`}></arc-code-block></div>
       <p class="docs-text">
-        Each class has two landing points. On a page of its own scheme a pinned region is
-        that scheme: a dark nav on a dark page is plain near-black. On a page of the
-        other scheme it is not allowed to go all the way, because a black slab against
-        near-white is a harder boundary than anything else on the page; it lands instead on a
-        deep colour derived from your accent. The top bar and footer here do exactly that:
-        flip to light mode and watch them land on blue rather than black.
+        On a page in the same scheme, a pinned region matches the page: a dark nav on a dark
+        page is near-black. On a page in the other scheme it stops short, because near-black
+        against near-white would be the hardest edge on the page. It uses a deep color derived
+        from your accent instead. This site's top bar and footer work this way, and in light
+        mode they're deep blue.
       </p>
       <arc-alert variant="tip">
-        The lifted colour takes its hue from <code>--accent-primary</code> and its lightness
-        from the scheme, so overriding your accent re-colours pinned regions with it. A teal
-        brand gives a deep teal nav; a monochrome one stays grey. There is no second palette
-        to keep in step.
+        That color takes its hue from <code>--accent-primary</code> and its lightness from the
+        scheme, so overriding your accent recolors pinned regions too. A teal accent gives a
+        deep teal nav, and a gray one stays gray.
       </arc-alert>
     </section>
 
     <section id="custom-themes">
-      <h2 class="docs-heading">Custom Themes</h2>
+      <h2 class="docs-heading">Custom themes</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Compound tokens (gradients, glows, focus rings) reference the base accent tokens via
-        <code>var()</code>. Override the base pair (plus their <code>-rgb</code> channel variants,
-        which alpha compositing needs) and everything downstream follows:
+        Gradients, glows and focus rings read the accent tokens through <code>var()</code>.
+        Override the two accents and their <code>-rgb</code> triplets (used for transparency)
+        and those follow:
       </p>
       <div class="docs-code"><arc-code-block language="css" code={`:root {
   --accent-primary: rgb(0, 150, 136);
@@ -163,36 +159,37 @@ document.documentElement.setAttribute('data-theme', saved);`}></arc-code-block><
   /* That's it. Glows, gradients, and focus rings recompose from these. */
 }`}></arc-code-block></div>
       <p class="docs-text">
-        Here are those four lines applied to this page, live: every button, glow, gradient,
-        and divider follows:
+        The button below applies those four lines to this page:
       </p>
       <div class="cascade-demo">
         <arc-button id="cascade-toggle" variant="primary">Apply the override</arc-button>
       </div>
-      <arc-alert variant="info">Keep contrast ratios when overriding accent or background tokens: 4.5:1 for text, 3:1 for UI elements.</arc-alert>
+      <arc-alert variant="info">When you override accent or background tokens, keep text at 4.5:1 contrast and UI elements at 3:1.</arc-alert>
     </section>
 
     <section id="synthesizer">
       <h2 class="docs-heading">Theme Synthesizer</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The <a href="/synth">Theme Synthesizer</a> lets you tweak every token,
-        preview the result in real time, and download a ready-to-use <code>base.css</code>.
+        The <a href="/synth">Theme Synthesizer</a> edits colors, fonts, type sizes, spacing,
+        radii, layout sizes and durations with a live preview. It exports
+        <code>arc-theme.css</code> with only the tokens you changed, to load after
+        <code>base.css</code>.
       </p>
       <div class="synth-cta">
         <a href="/synth">
-          <arc-button variant="primary">Open Theme Synthesizer</arc-button>
+          <arc-button variant="primary">Open the Theme Synthesizer</arc-button>
         </a>
       </div>
     </section>
 
     <section class="see-also">
-      <h2 class="docs-heading">See Also</h2>
+      <h2 class="docs-heading">See also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/tokens">Tokens</a>: design token reference</li>
-        <li><a href="/synth">Theme Synthesizer</a>: visually build a custom theme</li>
-        <li><a href="/docs/components/theme-toggle">Theme Toggle</a>: component for switching themes</li>
+        <li><a href="/docs/tokens">Design tokens</a>: every token group, with values</li>
+        <li><a href="/synth">Theme Synthesizer</a>: build a theme with a live preview</li>
+        <li><a href="/docs/components/theme-toggle">Theme toggle</a>: a button that cycles through the three modes</li>
       </ul>
     </section>
   </div>
