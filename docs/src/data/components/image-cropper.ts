@@ -9,40 +9,33 @@ export const imageCropper: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Crop-before-upload control with a draggable, resizable crop rectangle, aspect-ratio locking, zoom, and canvas export at natural image resolution.',
+    'Crop-before-upload control: drag and resize a crop rectangle, lock its aspect ratio, zoom, and export the crop at the image\'s natural resolution.',
 
-  overview: `ImageCropper renders an image letterboxed inside a fixed-height stage and overlays a crop rectangle that users drag to reposition and resize via eight handles (four corners, four edges). Everything outside the rectangle is darkened, and rule-of-thirds guides inside the rectangle aid composition. A labeled zoom slider below the stage scales the image around its center (1x-4x) while the crop rectangle stays put, letting users crop into fine detail.
+  overview: `Image Cropper shows an image letterboxed in a fixed-height stage with a crop rectangle over it. People drag the rectangle to move it and pull its eight handles (four corners, four edges) to resize it. Everything outside the rectangle is darkened, and rule-of-thirds lines sit inside it. A zoom slider under the stage scales the image around its center from 1x to 4x while the rectangle stays put.
 
-Setting the \`aspect\` prop (width/height, e.g. \`1\` for square avatars or \`16/9\`) locks the rectangle to that ratio through every drag, resize, and keyboard interaction. Leave it at \`0\` for free-form cropping. The rectangle is always clamped to the visible image and never shrinks below 32px.
+\`aspect\` (width/height, such as \`1\` for a square avatar or \`16/9\`) locks the rectangle to that ratio through every drag, resize, zoom and key press. Leave it at \`0\` for a free-form crop. The rectangle always stays inside the image and never gets smaller than 32px.
 
-The component exposes three methods: \`getCrop()\` returns \`{ x, y, width, height }\` in natural image pixel coordinates (letterbox scale and zoom are accounted for precisely); \`getCroppedBlob(type, quality)\` and \`getCroppedDataUrl(type, quality)\` draw the crop to an offscreen canvas at natural resolution. Canvas export requires \`src\` to be same-origin or served with CORS headers. A cross-origin image taints the canvas and the methods throw a descriptive error. The \`arc-crop-change\` event fires with natural-pixel coordinates, debounced to animation frames during drags.`,
+Three methods read the result. \`getCrop()\` returns \`{ x, y, width, height }\` in the image's natural pixels, with letterboxing and zoom already accounted for. \`getCroppedBlob(type, quality)\` and \`getCroppedDataUrl(type, quality)\` draw the crop to an offscreen canvas at natural resolution. Export only works when \`src\` is same-origin or served with CORS headers. A cross-origin image taints the canvas, and the methods throw an error that says so. \`arc-crop-change\` fires with the same natural-pixel coordinates, at most once per animation frame during a drag.`,
 
   features: [
-    'Draggable crop rectangle with 8 resize handles (corners + edges) and touch-friendly hit areas',
-    'Aspect-ratio locking via the `aspect` prop, enforced through drag, resize, zoom, and keyboard',
-    'Zoom slider (1x-4x) scales the image around its center under a stationary crop rectangle',
-    'Rule-of-thirds guide lines inside the crop rectangle for composition',
-    'Darkened overlay outside the crop area with the image letterboxed in a fixed-height stage',
-    '`getCrop()` returns natural image pixel coordinates; `getCroppedBlob()` / `getCroppedDataUrl()` export at full resolution',
-    'Full keyboard support: focus the rectangle, arrows move 2px, Shift+arrows resize from the bottom-right',
-    'Position and size announced to screen readers on keyup via a polite live region',
-    'Skeleton shimmer while the image loads; inline error state on load failure',
-    'Crop rectangle clamped to image bounds at all times with a 32px minimum size',
+    'Handles have touch-sized hit areas',
+    'Keyboard: focus the rectangle, then arrows move it 2px and Shift+arrows resize it from the bottom-right corner',
+    'Position and size are announced in a polite live region when a key is released',
+    'A skeleton shimmer shows while the image loads, and an inline error if it fails',
   ],
 
   guidelines: {
     do: [
-      'Set `aspect="1"` for avatar flows so the exported crop is always square',
-      'Use an object URL (`URL.createObjectURL(file)`) as `src` when cropping a just-picked file from `arc-file-upload`',
-      'Listen for `arc-crop-change` to show a live preview or persist crop coordinates',
+      'Set `aspect="1"` for avatars so the exported crop is always square',
+      'Use an object URL (`URL.createObjectURL(file)`) as `src` when cropping a file just picked in `arc-file-upload`',
+      'Listen for `arc-crop-change` to show a live preview or save the crop coordinates',
       'Call `getCroppedBlob()` at upload time to send the cropped region at natural resolution',
-      'Serve remote images from the same origin or with CORS headers so canvas export works',
+      'Serve remote images from the same origin or with CORS headers so export works',
     ],
     dont: [
-      'Do not pass a cross-origin `src` without CORS headers if you need `getCroppedBlob()` / `getCroppedDataUrl()`. The canvas will be tainted and the methods throw',
-      'Do not read crop coordinates from the rectangle position on screen. Use `getCrop()` instead, which converts to natural image pixels',
-      'Do not set `height` smaller than ~160px. The crop rectangle and handles need room to operate',
-      'Do not use ImageCropper for simple display-only image framing. Use CSS `object-fit` or an aspect-ratio container instead',
+      'Don\'t read crop coordinates from the rectangle on screen. `getCrop()` converts them to natural image pixels',
+      'Don\'t set `height` below about 160px. The rectangle and handles need room',
+      'Don\'t use it to frame an image for display. Use CSS `object-fit` or an aspect-ratio container',
     ],
   },
 
