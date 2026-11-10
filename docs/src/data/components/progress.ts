@@ -8,41 +8,33 @@ export const progress: ComponentDef = {
   interactivity: 'static',
   replayable: true,
   description:
-    'Progress indicator as a bar or spinner, with determinate and indeterminate modes. Shows completion state for uploads, installations, and long-running operations.',
+    'A progress bar or spinner, determinate or indeterminate, for uploads, installs and other long-running work.',
 
-  overview: `Progress communicates that work is happening and, when possible, how close it is to completion. It is the right component whenever a user triggers an operation whose duration is noticeable: file uploads, data imports, multi-step wizards, or background processing. A clear progress signal reduces perceived wait time and shows users the application has not stalled.
+  overview: `Progress shows that work is running and, when you know it, how far along it is. Use it for any operation long enough for someone to notice: uploads, imports, multi-step wizards, background jobs.
 
-The component has two variants. The bar variant fills a horizontal track from left to right, for operations where percentage complete is known, such as file transfers, form completion scores, or quota usage. The spinner variant renders a circular animation suited to compact spaces like buttons, table cells, or inline loading states where a full-width bar would feel out of proportion.
+The bar variant fills a horizontal track from left to right. Use it when you know the percentage, as with a file transfer or quota usage. The spinner variant is a circle sized for buttons, table cells and inline loading states, where a full-width bar doesn't fit.
 
-Both variants support an indeterminate mode for operations whose total duration is unknown. In indeterminate mode the bar pulses or the spinner loops continuously, signaling activity without committing to a completion estimate. Switch from indeterminate to determinate as soon as the total is known, for example once the server responds with a Content-Length header during an upload.`,
+Both variants have an indeterminate mode for work of unknown length: a 30% segment slides across the bar, or the spinner loops. Switch to determinate as soon as you know the total, for example once the server sends a Content-Length header during an upload.`,
 
   features: [
-    'Bar variant with horizontal fill track for determinate completion',
-    'Spinner variant with circular animation for compact contexts',
-    'Indeterminate mode for unknown-duration operations',
-    'Three size presets (sm, md, lg) for different layout contexts',
-    'Accessible label text announced by screen readers via `aria-label`',
-    'ARIA progressbar role with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`',
-    'Respects `prefers-reduced-motion` by disabling animations',
-    'Fill transition when the value updates on a determinate bar',
+    '`value` is a percentage, clamped to 0-100, and the bar\'s fill animates when it changes',
+    'Three sizes (`sm`, `md`, `lg`) set the bar\'s thickness or the spinner\'s diameter',
+    '`progressbar` role with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`. `label` is shown above the indicator and used as its `aria-label`',
+    'Without a `label`, the accessible name falls back to "Progress" for the bar and "Loading" for the spinner',
+    'Under `prefers-reduced-motion`, the indeterminate and spinner animations stop',
   ],
 
   guidelines: {
     do: [
-      'Use the bar variant when you can report a numeric percentage (e.g. file uploads, multi-step forms)',
-      'Switch from indeterminate to determinate as soon as the total work is known',
-      'Always provide a label prop so screen readers can announce the purpose of the indicator',
-      'Use the spinner variant inside buttons or inline contexts where a bar would be too wide',
-      'Pair with descriptive text nearby (e.g. "Uploading project files...") to add context beyond the bar alone',
-      'Use the sm size for inline or table-cell indicators and lg for full-width page loaders',
+      'Give every indicator a `label` that says what\'s loading, like "Uploading report.pdf". The fallback names don\'t',
+      'Use `sm` in table cells and inline spots, and `lg` for full-page loaders',
     ],
     dont: [
-      'Do not show a determinate bar stuck at 0%; use indeterminate until real progress data is available',
-      'Do not use a spinner when you have percentage data; bars are more informative for known-length tasks',
-      'Do not omit the label prop: without it the progress indicator is invisible to assistive technology',
-      'Do not animate progress backwards; if the total changes, reset to indeterminate rather than decreasing the value',
-      'Do not stack multiple progress bars in view simultaneously: consolidate into a single indicator or use a stepper',
-      'Do not use progress for instant actions that complete in under 300ms; a brief delay feels faster without a loader',
+      'Don\'t leave a determinate bar at 0%. Use indeterminate until real progress data arrives',
+      'Don\'t use a spinner when you have a percentage. Show the bar',
+      'Don\'t move a bar backwards. If the total changes, go back to indeterminate',
+      'Don\'t stack several progress bars on one screen. Combine them into one, or use a Stepper',
+      'Don\'t show a loader for actions that finish almost at once',
     ],
   },
 
