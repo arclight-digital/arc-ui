@@ -7,40 +7,29 @@ export const rail: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    "Ultra-narrow icon-only vertical navigation like VS Code's activity bar. Icons use text-muted at rest, accent-primary glow on active. Expands on hover.",
+    "A 48px column of icon buttons for switching top-level sections, like VS Code's activity bar.",
 
-  overview: `Rail is an ultra-narrow vertical navigation strip, typically 48 to 56 pixels wide, that displays icon-only items in a single column. It is modeled on the activity bar in VS Code and similar IDEs, and switches top-level sections without the horizontal space a full Sidebar needs. Icons render in text-muted at rest and light up with an accent-primary glow when active.
+  overview: `Rail renders its \`items\` as a single column of icon buttons, 48px wide. Use it for top-level sections in an app that has room for a strip but not for a labelled Sidebar. Pair it with a Sidebar that shows the detail for the active section, the way VS Code pairs its activity bar with Explorer, Search and Source Control.
 
-On hover, the Rail can optionally expand to reveal text labels beside each icon, sitting between icon-only navigation and a full labeled sidebar. The \`expanded\` prop controls this and can also be toggled programmatically, since some users prefer the labels visible at all times.
+Icons are \`text-muted\` at rest. The item whose \`value\` matches the Rail's \`value\` gets the primary button style, an accent glow and \`aria-current="page"\`. Selecting an item fires \`arc-change\` with the new value, so your app can swap the content next to it.
 
-Rail sits at the far-left edge of an AppShell as a fixed vertical strip from top to bottom. It works alongside a contextual Sidebar: the Rail handles top-level section switching (e.g. Explorer, Search, Source Control) while the Sidebar shows the detail panel for the active section. The component dispatches \`arc-change\` on item selection so your application can swap the adjacent content area accordingly.`,
+Each item's \`label\` is the button's accessible name, not visible text. Setting \`expanded\` widens the strip to 200px, but the labels still don't show, and nothing sets \`expanded\` on hover.`,
 
   features: [
-    'Ultra-narrow icon-only vertical navigation strip',
-    'Accent-primary glow on active item, text-muted at rest',
-    'Optional expand-on-hover to reveal text labels',
-    'Controlled expanded prop for programmatic label visibility',
-    '`arc-change` event on item selection',
-    'Designed for far-left positioning in AppShell layouts',
-    'Keyboard navigable with arrow keys and Enter activation',
-    'Pairs with Sidebar for section-detail navigation patterns',
-    'Token-driven theming via CSS custom properties',
+    'Items are plain buttons: Tab moves between them and Enter or Space selects one. There are no arrow-key shortcuts',
+    'The inner `<nav>` carries `aria-label="Rail navigation"`',
+    'The width change on `expanded` animates',
   ],
 
   guidelines: {
     do: [
-      'Limit items to four to seven for a scannable icon column',
-      'Use universally recognizable icons: Rail has no visible labels by default',
-      'Place Rail at the far-left edge of the viewport inside an AppShell',
-      'Pair with a Sidebar to show detail content for the active Rail section',
-      'Provide aria-label on the Rail for screen-reader context',
+      'Keep it to about four to seven items, so the column doesn\'t overflow',
+      'Pick icons people recognize without a label, since none is shown',
+      'Put it at the far-left edge of an AppShell',
     ],
     dont: [
-      'Do not use Rail as the only navigation on a content-heavy site: it is too compact',
-      'Do not add more than seven items: vertical overflow will be confusing',
-      'Do not rely solely on icon recognition; ensure tooltips or expand-on-hover labels are available',
-      'Do not use Rail on mobile viewports; switch to BottomNav instead',
-      'Do not nest a Rail inside a Sidebar: Rail replaces the sidebar for top-level switching',
+      'Don\'t make it the only navigation on a content-heavy site. Icons alone can\'t carry many destinations',
+      'Don\'t use it on phone-width screens. Use BottomNav',
     ],
   },
 
