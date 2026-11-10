@@ -7,7 +7,7 @@ export const authShell: ComponentDef = {
   tier: 'layout',
   interactivity: 'hybrid',
   description:
-    'Authentication page layout with centered and split variants for sign-in, sign-up, password-reset, and other credential flows. Provides logo, form card, footer, and optional aside slots.',
+    'A page layout for sign-in, sign-up and password reset, with the form in a centered card or beside an aside panel.',
 
   overview: `AuthShell is the page layout for sign-in, sign-up and password reset. It has slots for your logo, the form (default slot), footer links and an optional aside panel.
 
