@@ -7,7 +7,7 @@ export const search: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'A search field with a magnifying glass icon, a clear button, a loading spinner and an optional suggestions dropdown.',
+    'A search field with an optional dropdown of suggestions that you supply.',
 
   overview: `Search is a text field for search and filtering. It has a magnifying glass icon at the start, a clear button that shows once there's text, and a spinner that takes the clear button's place while \`loading\` is set. A \`label\` renders above the field. Without one, the \`placeholder\` becomes the accessible name.
 
