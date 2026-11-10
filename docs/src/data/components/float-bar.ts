@@ -7,41 +7,30 @@ export const floatBar: ComponentDef = {
   tier: 'layout',
   interactivity: 'interactive',
   description:
-    'Viewport-bottom floating toolbar with surface-overlay background, backdrop blur, and spring easing. For bulk actions, unsaved-changes prompts.',
+    'Floating toolbar fixed to the bottom of the viewport, with a blurred overlay background. For bulk actions and unsaved-changes prompts.',
 
-  overview: `FloatBar is a floating action bar that appears at the bottom (or top) of the viewport to present contextual actions in response to a user selection or state change. It slides into view with spring easing, overlaying page content with a surface-overlay background and backdrop blur that keeps it visually distinct without fully obscuring the page beneath.
+  overview: `FloatBar is a toolbar fixed near the bottom of the viewport, or the top with \`position="top"\`, that holds actions for whatever the user is doing right now. It's centered, on the \`--surface-overlay\` background with a 12px backdrop blur. Setting \`open\` slides it in from its edge, and clearing it slides it back out. \`arc-open\` and \`arc-close\` fire on each change.
 
-The most common pattern is a bulk-action bar that appears when one or more items are selected in a data table or list: "3 items selected, Delete | Archive | Export." FloatBar also works well as an unsaved-changes prompt ("You have unsaved changes, Save | Discard") or a cookie consent banner. The bar fires arc-open and arc-close events so your application can track its visibility state.
+The usual case is a bulk-action bar that shows while rows in a table or list are selected: "3 items selected" with Archive and Delete. It also suits an unsaved-changes prompt with Save and Discard. Show it from your application state, such as a selection or a dirty form, and hide it when that state clears.
 
-FloatBar is explicitly controlled via the \`open\` prop. It appears in response to application state (e.g. items selected, form dirty) and disappears when the triggering condition resolves. That makes it the right choice for a transient contextual toolbar. For a bar that is always there, use Toolbar; for a panel the user opens and closes, use Drawer.`,
+It doesn't block the page: there's no backdrop, no scroll lock and no focus trap. For a bar that's always there, use Toolbar, and for a panel the user opens and closes, use Drawer.`,
 
   features: [
-    'Viewport-fixed floating bar with spring easing slide-in animation',
-    'Surface-overlay background with backdrop-filter blur for visual layering',
-    'Configurable position: bottom (default) or top of the viewport',
-    'Controlled via the `open` prop; appears in response to application state changes',
-    'Fires `arc-open` and `arc-close` events for state synchronization',
-    'Non-blocking overlay. Does not lock body scroll or trap focus',
-    'Rounded corners and subtle shadow for floating appearance',
-    'CSS part: `bar` for targeted ::part() styling',
+    'Slides and fades with the `--ease-out-expo` easing',
+    'CSS part: `bar`',
   ],
 
   guidelines: {
     do: [
-      'Use for bulk-action bars that appear when items are selected in a table or list',
-      'Use for unsaved-changes prompts at the bottom of forms',
-      'Keep the content concise: a status message plus 2-3 action buttons',
-      'Dismiss the FloatBar automatically when the triggering condition resolves (e.g. selection cleared)',
-      'Combine with Button components for clear primary/secondary action hierarchy',
-      'Use position="bottom" for most cases; position="top" for cookie/consent banners',
+      'Keep it short: a status message and two or three buttons',
+      'Close it as soon as the reason for it goes away, for example when the selection is cleared',
+      'Use the default bottom position for most bars, and `position="top"` for consent banners',
     ],
     dont: [
-      'Do not use FloatBar for permanent toolbars. Use Toolbar instead',
-      'Do not put navigation links in a FloatBar. Use TopBar or Sidebar',
-      'Do not leave the FloatBar open indefinitely. It should be transient and context-dependent',
-      'Do not place complex forms or multi-step flows inside a FloatBar',
-      'Do not show multiple Float Bars simultaneously at the same position',
-      'Do not use it as a toast replacement. FloatBar is for actions; Toast is for notifications',
+      'Don\'t put navigation links in it. Use TopBar or Sidebar',
+      'Don\'t put forms or multi-step flows in it',
+      'Don\'t show two at the same edge at once. They overlap',
+      'Don\'t use it in place of a toast. It\'s for actions, and Toast is for notifications',
     ],
   },
 
