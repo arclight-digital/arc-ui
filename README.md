@@ -20,7 +20,7 @@
 
 ARC UI is a set of [Lit](https://lit.dev) web components. **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source, so every framework gets the same elements and the same tokens. Changing framework means changing the import path.
 
-It's built AI-first. Before anything ships it has to pass 2,687 browser tests (as of v4.9.1) and Prism's own suite (TODO(copy): Prism's test count; this said 600, and those tests aren't in this repo), and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so the zero-JS HTML package looks the same as the React one.
+It's built AI-first. Before anything ships it has to pass 5,140 browser tests (the test runner's count at v4.9.1) and Prism's own suite (TODO(copy): Prism's test count; this said 600, and those tests aren't in this repo), and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so the zero-JS HTML package looks the same as the React one.
 
 Lit is a peer dependency. The package depends on `@lit-labs/ssr-client` and `qrcode-generator`, and takes `shiki` and `@shikijs/langs` (for Code Block) and `@lit-labs/ssr` (for server rendering) as optional peers.
 
