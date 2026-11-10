@@ -30,7 +30,7 @@ This policy applies to the ARC UI packages published under `@arclux/` on npm:
 
 ## Supported versions
 
-TODO(copy): which versions get security updates? This said only the latest release, but README.md and MIGRATION.md say v3 gets patches for a quarter after the v4 tag (about 2026-11-17).
+TODO(copy): which versions get security updates? This said only the latest release, but MIGRATION.md says v3 gets patches for a quarter after the v4 tag (about 2026-11-17).
 
 ---
 
