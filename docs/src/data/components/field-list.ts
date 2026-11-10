@@ -8,30 +8,30 @@ export const fieldList: ComponentDef = {
   interactivity: 'interactive',
   description: 'A repeating set of form rows the user can add to, remove from and reorder.',
 
-  overview: `FieldList is for a form field that repeats: the options of a poll, the levels of a scale, a list of email addresses. Each row is an \`<arc-field-row>\` holding whatever inputs it needs, with a handle to reorder it and a button to remove it, and the list adds an Add button below.
+  overview: `FieldList is for a form field that repeats: the options of a poll, the levels of a scale, a list of email addresses. Each row is an \`<arc-field-row>\` holding whatever inputs it needs, with a handle to reorder it and a button to remove it, and the list puts an Add button below.
 
-**Your application owns the rows.** Render them from your own array. The list never adds, removes or moves an element itself: it fires \`arc-add\`, \`arc-remove\` (with the \`index\`) and \`arc-move\` (with \`from\` and \`to\`), and you update your array. Keeping a single copy of the data means nothing can drift out of step. Everything around the data is the list's job: \`min\` and \`max\`, reordering by keyboard (the arrow keys on a row's handle) and by dragging, putting focus back where the user expects after each change, and a spoken confirmation of every change for screen reader users.
+**Your application owns the rows.** Render them from your own array. The list never adds, removes or moves an element itself. It fires \`arc-add\`, \`arc-remove\` (with the \`index\`) and \`arc-move\` (with \`from\` and \`to\`), and you update your array. The list handles the rest: \`min\` and \`max\`, reordering by keyboard and by dragging, moving focus after each change, and a spoken confirmation of every change for screen reader users.
 
-The rows are plain light DOM, so their inputs submit with the surrounding form as they are named.`,
+The rows are plain light DOM, so their inputs submit with the surrounding form under whatever names you give them, such as \`option-0\` or a repeated \`option\`.`,
 
   features: [
-    'Add, remove and reorder rows of any inputs',
-    'Reorder with the arrow keys on a row handle, or by dragging it',
-    '`min` and `max`, which disable Remove and Add at the limits',
-    "Focus follows the change: into a new row, onto a moved row, onto the row that took a removed one's place",
-    'Each change announced in a polite live region; each control named after its row',
-    'Your array stays the only copy: the list asks, your code changes it',
+    'Reorder with the arrow keys on a row\'s handle, or by dragging it',
+    '`min` disables Remove at the lower limit, and `max` disables Add at the upper one',
+    'Focus follows the change: into a new row, onto a moved row, or onto the row that took a removed one\'s place',
+    'Changes are announced in a polite live region, and each control is named after its row',
+    '`add-label` sets the Add button\'s text. The plus sign beside it is an icon',
+    '`readonly` shows the rows without the Add button, handles or Remove buttons',
   ],
 
   guidelines: {
     do: [
-      'Give the list a `label` and each row a `label` ("Option 2") so controls read as "Remove Option 2"',
-      'Update your array on arc-add, arc-remove and arc-move; the rows follow when you re-render',
-      'Set `min` to the fewest rows the form can accept, so the last required row cannot be removed',
+      'Give the list a `label` and each row a `label` ("Option 2"), so the controls read as "Remove Option 2"',
+      'Update your array on `arc-add`, `arc-remove` and `arc-move`. The rows follow when you re-render',
+      'Set `min` to the fewest rows the form accepts, so the last required row can\'t be removed',
     ],
     dont: [
-      "Do not add, remove or reorder rows in the DOM behind the list's back while a change it asked for is pending",
-      'Do not use it for a fixed number of fields; plain inputs are clearer',
+      'Don\'t add, remove or reorder rows in the DOM yourself while a change the list asked for is still pending',
+      'Don\'t use it for a fixed number of fields. Plain inputs are clearer',
     ],
   },
 
