@@ -10,45 +10,37 @@ export const alert: ComponentDef = {
   description:
     'Contextual alert banner with five semantic variants and an optional dismiss button.',
 
-  overview: `Alerts communicate contextual messages without interrupting the user's workflow. They appear inline in the page content, and a color-coded variant conveys the meaning at a glance: \`info\`, \`tip\`, \`success\`, \`warning\`, or \`error\`.
+  overview: `Alert shows a message inline in the page. The variant sets the color and icon: \`info\`, \`tip\`, \`success\`, \`warning\` or \`error\`.
 
-Use alerts when the user needs to be aware of a state change, a completed action, or a potential problem. Unlike toasts, alerts persist on the page until the user dismisses them or navigates away, which suits messages that need acknowledgement or continued visibility.
+Unlike a toast, an alert stays on the page until the user dismisses it or leaves, so use it for messages the user has to acknowledge or keep seeing: a state change, a finished action, a problem. The body slot takes any inline or block content, including links, lists and buttons.
 
-Alerts support an optional heading for a scannable summary and a dismiss button so users can clear the message once they have read it. The body slot accepts any inline or block content, so you can include links, lists, or follow-up actions inside the alert.
+**Alert absorbed \`arc-callout\` in v4.** Callout was an emphasized aside that differed from an \`info\` alert only in styling. It brought three things with it: the \`tip\` variant for advice that is neither a status nor a problem, an \`icon\` slot that replaces the built-in status glyph, and the \`live\` prop below. Callout's derived uppercase label has no equivalent, so pass \`heading\` if you want one. See [the tombstone](/docs/components/callout) for the full translation.
 
-**Absorbed \`arc-callout\` in v4.** Callout was an emphasised aside, and the only difference between it and an \`info\` alert was styling. It brought three things with it, which is why this component covers both jobs: the \`tip\` variant for advice that is neither a status nor a problem; an \`icon\` slot that replaces the built-in status glyph with anything you like; and the \`live\` prop below. Callout's derived uppercase label has no equivalent; pass \`heading\` if you want one. See [the tombstone](/docs/components/callout) for the full translation.
+The role and announcement follow \`variant\` by default. \`error\` and \`warning\` are \`role="alert"\` and assertive, \`success\` is \`role="status"\` and polite, and \`info\` and \`tip\` are \`role="note"\` and aren't announced. That last one changed from v3, where \`info\` was a polite live region. \`info\` is the variant most likely to be static content, and announcing every informational box on load is noise.
 
-**Severity and urgency are different things, and \`live\` is where they separate.** The role and announcement follow \`variant\` by default: \`error\` and \`warning\` are \`role="alert"\` and assertive, \`success\` is \`role="status"\` and polite, and \`info\` and \`tip\` are \`role="note"\` and are not announced. That last one is a change from v3, where \`info\` was a polite live region: \`info\` is the variant most likely to be static page furniture, and announcing every informational box on load is noise. So when severity and urgency disagree, say so: an \`info\` alert injected after a background save wants \`live="polite"\`, and a \`warning\` rendered in the initial HTML probably wants \`live="off"\`. And \`density="compact"\` tightens the padding and type for alerts sitting inline in a form or a dense panel.`,
+Severity and urgency don't always agree, and \`live\` sets the announcement on its own. An \`info\` alert inserted after a background save wants \`live="polite"\`, and a \`warning\` in the initial HTML probably wants \`live="off"\`.`,
 
   features: [
-    'Five semantic variants (`info`, `tip`, `success`, `warning`, and `error`) with distinct color palettes',
-    'Optional heading for a scannable summary above the body text',
-    'Dismissible mode adds a close button and fires an event on dismiss',
-    'ARIA role follows severity: `alert` for error and warning, `status` for success, `note` for info and tip',
-    '`live` overrides the announcement independently of severity: `auto`, `off`, `polite`, or `assertive`',
-    '`density="compact"` reduces padding and type size for inline or tight spaces',
-    '`icon` slot replaces the built-in status glyph (absorbed from `arc-callout`)',
-    'Slots for custom body content including links, lists, or action buttons',
-    'Enter/exit transitions when dismissed',
+    '`dismissible` adds a close button. Clicking it fires a cancelable `arc-close` event, then hides the alert',
+    '`density="compact"` reduces padding and type size for forms and dense panels',
   ],
 
   guidelines: {
     do: [
-      'Use the variant that matches the semantic meaning of the message (e.g. success for confirmations, error for failures)',
-      'Keep alert text concise: lead with the outcome, then give a brief explanation',
-      'Include a heading when the alert body is longer than a single sentence',
-      'Make alerts dismissible when the information is transient and does not need to persist',
-      'Place alerts near the content they relate to, or at the top of the page for global messages',
-      'Use `tip` for advice and asides: guidance that is neither a status report nor a problem',
-      'Set `live` explicitly on an alert you insert after page load; the default derives announcement from severity, which cannot know the alert just appeared',
-      'Use the `icon` slot when the glyph carries meaning the variant does not, such as a brand mark, a product icon, or a specific action',
+      'Keep the text short: lead with the outcome, then explain',
+      'Add a heading when the body runs longer than one sentence',
+      'Make an alert dismissible when the message is temporary',
+      'Put an alert next to the content it\'s about, or at the top of the page for page-wide messages',
+      'Use `tip` for advice that is neither a status report nor a problem',
+      'Set `live` on an alert you insert after page load. The default goes by severity and can\'t know the alert just appeared',
+      'Use the `icon` slot when the glyph should say something the variant doesn\'t, such as a product icon or a specific action',
     ],
     dont: [
-      'Do not use the `info` variant to get a live region. It is `role="note"` and is not announced; set `live="polite"` instead',
-      'Do not stack more than two or three alerts at a time; consolidate or use a toast queue',
-      'Do not use the error variant for warnings. Reserve it for genuine failures',
-      'Do not rely solely on color to convey meaning; the heading and text should stand alone',
-      'Do not make every alert dismissible. Persistent alerts suit critical errors',
+      'Don\'t use `info` to get a live region. It is `role="note"` and isn\'t announced, so set `live="polite"`',
+      'Don\'t stack more than two or three alerts. Combine them, or use toasts',
+      'Don\'t use `error` for warnings. Keep it for failures',
+      'Don\'t rely on color alone. The heading and text should make sense without it',
+      'Don\'t make every alert dismissible. Leave critical errors on screen',
     ],
   },
 
