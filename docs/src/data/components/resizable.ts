@@ -8,11 +8,11 @@ export const resizable: ComponentDef = {
   interactivity: 'interactive',
   description: 'A panel with a drag handle on one edge that changes its width or height.',
 
-  overview: `Resizable wraps one panel and puts a handle on one of its edges. Drag the handle to change the panel's width (\`direction="horizontal"\`) or height (\`direction="vertical"\`). Use it for sidebars, property panels and console drawers. The handle sits on the end edge by default, which is the right edge in a left-to-right page or the bottom. Set \`handle="start"\` for a panel docked against the far side of its container.
+  overview: `Resizable wraps one panel and puts a handle on one of its edges. Drag the handle to change the panel's width (\`direction="horizontal"\`) or height (\`direction="vertical"\`). The handle sits on the end edge by default, which is the right edge in a left-to-right page or the bottom. Set \`handle="start"\` for a panel docked against the far side of its container.
 
 Dragging uses Pointer Events with pointer capture, so mouse, touch and pen all work. The size is clamped between \`min-size\` and \`max-size\`, written to the \`--panel-size\` custom property as you drag, and reported in an \`arc-resize\` event on every change. Listen to that event to save the size.
 
-The handle is a focusable \`role="separator"\` with \`aria-valuenow\`, \`aria-valuemin\` and \`aria-valuemax\`. Arrow keys resize in 5px steps, or 20px with Shift. The visible bar is 4px wide, with an invisible hit area 4px wider on each side, and it turns the accent color on hover and focus.`,
+The handle is a focusable \`role="separator"\` with \`aria-valuenow\` and \`aria-valuemin\`, plus \`aria-valuemax\` when \`max-size\` is set. Arrow keys resize in 5px steps, or 20px with Shift. The visible bar is 4px wide, with an invisible hit area 4px wider on each side, and it turns the accent color on hover and focus.`,
 
   features: [
     '`arc-resize` carries `{ size }` in pixels',
