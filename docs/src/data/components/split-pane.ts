@@ -8,37 +8,29 @@ export const splitPane: ComponentDef = {
   interactivity: 'interactive',
   description: 'Resizable split layout with two panes.',
 
-  overview: `SplitPane divides a container into two resizable regions separated by a draggable handle. It is the standard pattern for code editors (source + preview), email clients (list + reader), and file managers (tree + detail) where both panels need to share a finite amount of space. The \`orientation\` prop controls whether the split runs horizontally (side by side) or vertically (stacked top and bottom).
+  overview: `SplitPane divides its container into two panes with a handle between them. Use it when the reader should decide how two panes share the space. \`orientation="horizontal"\` puts the panes side by side, and \`vertical\` stacks them.
 
-The divider position is expressed as a \`ratio\` between 0 and 1, where 0.5 means an even 50/50 split. As the user drags the handle, the component clamps the ratio between \`min-ratio\` and \`max-ratio\` to prevent either pane from collapsing to an unusable size. When the drag ends, an \`arc-resize\` custom event fires with the final ratio so you can persist the user's layout preference.
+\`ratio\` sets the primary pane's share, from 0 to 1. Dragging the handle or pressing the arrow keys on it changes the ratio, and \`min-ratio\` and \`max-ratio\` (0.15 and 0.85 by default) stop either pane from collapsing. \`arc-resize\` fires on every drag step and every key press, with the new ratio in \`detail.ratio\`.
 
-Content is distributed through two named slots: \`primary\` (the region whose size is controlled by the ratio) and \`secondary\` (which flexes to fill the remaining space). Both panes have \`overflow: auto\` by default so independently scrollable content works without extra CSS. The handle renders as a 4px bar that brightens on hover to \`--border-bright\`, and user-select is disabled during drag to prevent text selection artifacts.`,
+The \`primary\` slot gets the ratio's share, and \`secondary\` fills the rest. Each pane scrolls on its own (\`overflow: auto\`).`,
 
   features: [
-    'Horizontal and vertical split orientations via the orientation prop',
-    'Ratio-based sizing (0-1) with configurable min-ratio and max-ratio constraints',
-    'Draggable 4px divider handle with hover and active visual states',
-    '`arc-resize` custom event with final ratio on drag end',
-    'Named primary and secondary slots for clear content assignment',
-    'Both panes have overflow: auto for independently scrollable content',
-    'User-select disabled during drag to prevent text selection artifacts',
-    'CSS parts (base, primary, handle, secondary) for targeted ::part() styling',
+    'The handle is a 4px bar that turns `--border-bright` on hover and during a drag',
+    'Text selection is off while the handle is being dragged',
   ],
 
   guidelines: {
     do: [
-      'Use SplitPane for editor/preview, list/detail, and tree/content layouts',
-      'Set min-ratio to at least 0.15 and max-ratio to at most 0.85 to keep both panes usable',
-      'Listen for the arc-resize event to save the user preferred ratio to localStorage',
-      'Give the SplitPane parent a defined height (e.g. 100vh or flex: 1) so the panes can fill it',
-      'Use orientation="vertical" for top/bottom splits like console panels or diff views',
+      'Use it for editor and preview, list and detail, or tree and content layouts',
+      'Keep `min-ratio` at 0.15 or more and `max-ratio` at 0.85 or less (the defaults) so both panes stay usable',
+      'Save the ratio from `arc-resize` to keep the reader\'s layout. It fires on every step, so debounce the write',
+      'Give the parent a set height, such as `100vh` or `flex: 1`. SplitPane takes 100% of it',
+      'Use `orientation="vertical"` for top and bottom splits, such as a console under an editor',
     ],
     dont: [
-      'Do not use SplitPane for static two-column layouts; use PageLayout with sidebar-left or sidebar-right instead',
-      'Do not set min-ratio and max-ratio so close that the drag range is negligible',
-      'Do not nest multiple SplitPanes more than two levels deep: the interaction becomes confusing',
-      'Do not forget to set a height on the SplitPane container; without it the panes collapse to content height',
-      'Do not place critical controls in the secondary pane if min-ratio could hide it on narrow viewports',
+      'Don\'t use it for a fixed two-column layout. Use PageLayout with `sidebar-left` or `sidebar-right`',
+      'Don\'t set `min-ratio` and `max-ratio` so close together that the handle barely moves',
+      'Don\'t put controls the reader needs in the secondary pane if `max-ratio` lets it get too narrow to show them',
     ],
   },
 
@@ -49,7 +41,7 @@ Content is distributed through two named slots: \`primary\` (the region whose si
   previewHtml: `<div style="width:100%;height:100%;border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--bg-surface)">
   <arc-split-pane orientation="horizontal" ratio="0.4" style="height:100%">
     <div slot="primary" style="padding:var(--space-md);font-family:var(--font-body);font-size:13px;color:var(--text-secondary);height:100%;box-sizing:border-box">
-      <div style="font-weight:600;color:var(--text-primary);margin-bottom:var(--space-sm)">File Tree</div>
+      <div style="font-weight:600;color:var(--text-primary);margin-bottom:var(--space-sm)">File tree</div>
       <div style="display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--text-muted);font-family:var(--font-mono)">
         <span>src/</span>
         <span style="padding-left:12px;color:var(--accent-primary)">index.ts</span>
