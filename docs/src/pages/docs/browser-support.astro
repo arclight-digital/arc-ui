@@ -5,7 +5,6 @@ const headings = [
   { id: 'overview', label: 'Overview' },
   { id: 'browsers', label: 'Supported browsers' },
   { id: 'web-components', label: 'Web Components APIs' },
-  { id: 'polyfills', label: 'Polyfills' },
   { id: 'node', label: 'Node.js' },
 ];
 ---
@@ -40,23 +39,23 @@ const headings = [
       <div class="browser-grid">
         <arc-card>
           <div class="browser-name">Chrome / Edge</div>
-          <div class="browser-version">TODO(copy)</div>
-          <div class="browser-note">TODO(copy): minimum version? This page said 90+, which is older than the Popover API and @starting-style below.</div>
+          <div class="browser-version">114+</div>
+          <div class="browser-note">Popover API from 114. Entry animations need 117.</div>
         </arc-card>
         <arc-card>
           <div class="browser-name">Firefox</div>
-          <div class="browser-version">TODO(copy)</div>
-          <div class="browser-note">TODO(copy): minimum version? This page said 100+.</div>
+          <div class="browser-version">125+</div>
+          <div class="browser-note">Popover API from 125. Entry animations need 129.</div>
         </arc-card>
         <arc-card>
           <div class="browser-name">Safari / iOS Safari</div>
-          <div class="browser-version">TODO(copy)</div>
-          <div class="browser-note">TODO(copy): minimum version? This page said 15.4+, but the table below puts Constructable Stylesheets at 16.4.</div>
+          <div class="browser-version">17+</div>
+          <div class="browser-note">Popover API from 17. Entry animations need 17.5.</div>
         </arc-card>
         <arc-card>
           <div class="browser-name">Samsung Internet</div>
-          <div class="browser-version">TODO(copy)</div>
-          <div class="browser-note">Chromium-based. TODO(copy): minimum version? This page said 15+.</div>
+          <div class="browser-version">23+</div>
+          <div class="browser-note">Chromium-based. Popover API from 23.</div>
         </arc-card>
       </div>
 
@@ -94,22 +93,6 @@ const headings = [
         so older browsers get a brief flash of unstyled content and never hidden content. See
         <a href="/docs/accessibility#no-javascript">Without JavaScript</a>.
       </p>
-    </section>
-
-    <section id="polyfills">
-      <h2 class="docs-heading">Polyfills</h2>
-      <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">
-        <a href="https://github.com/webcomponents/polyfills" target="_blank" rel="noopener">@webcomponents/webcomponentsjs</a>
-        adds Custom Elements and Shadow DOM to browsers without them. A browser old enough to
-        need it also lacks the Popover API and <code>@starting-style</code>, so the polyfill
-        doesn't bring it up to what the components use. TODO(copy): is there a supported
-        browser that needs this polyfill, or should this section go?
-      </p>
-      <div class="docs-code"><arc-code-block
-        language="html"
-        code='<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2/webcomponents-bundle.js"><\/script>'
-      ></arc-code-block></div>
     </section>
 
     <section id="node">
