@@ -7,11 +7,11 @@ export const breadcrumb: ComponentDef = {
   tier: 'navigation',
   interactivity: 'hybrid',
   description:
-    "Navigation trail that shows the user's current location in a page hierarchy, with separator characters and current-page indication.",
+    'A trail of links from the site root down to the current page.',
 
   overview: `Breadcrumb shows where the current page sits in the site's hierarchy. Each crumb links to a parent page, and the last crumb is the current page, so users can jump several levels up without pressing Back. Use it next to a sidebar or top bar, not in place of one.
 
-Write the trail as \`<arc-breadcrumb-item>\` children. The component renders a \`<nav>\` with \`aria-label="Breadcrumb"\` (change it with \`label\`) and gives the last crumb \`aria-current="page"\`, following the WAI-ARIA Breadcrumb pattern. The \`separator\` character (default \`/\`) goes between crumbs and is hidden from screen readers, so they read a list of links, not the slashes.
+Write the trail as \`<arc-breadcrumb-item>\` children. The component renders a \`<nav>\` with \`aria-label="Breadcrumb"\` (change it with \`label\`) and gives the last crumb \`aria-current="page"\`. The \`separator\` character (default \`/\`) goes between crumbs and is hidden from screen readers. The crumbs aren't in an \`<ol>\` as the WAI-ARIA Breadcrumb pattern has them, so screen readers don't announce them as a list.
 
 Crumbs with an \`href\` render as ordinary \`<a>\` links. \`arc-navigate\` fires only from a crumb before the last that has no \`href\`, which renders as a button.`,
 
