@@ -9,37 +9,29 @@ export const anchorNav: ComponentDef = {
   description:
     'Vertical or horizontal in-page link bar. The active link gets an accent-primary background pill or an underline glow.',
 
-  overview: `AnchorNav is an in-page navigation component that renders a list of section links in either a vertical column or horizontal row. The active link is highlighted with an accent-primary background pill (vertical) or underline glow (horizontal), so users can see where they are in a long-scrolling page. It suits single-page documentation, landing pages with sections, and settings screens with distinct panels.
+  overview: `AnchorNav is a table of contents for one long page: a row or column of links to its sections, with the section in view highlighted. Use it on pages with named sections, such as a docs page or a settings screen split into panels.
 
-The component manages its own selection state via the \`value\` prop and dispatches \`arc-change\` when the user clicks a link. For automatic scroll-position tracking, pair AnchorNav with ScrollSpy. The scroll spy updates the active value as the user scrolls, and AnchorNav reflects the change, which gives you a "table of contents" with minimal wiring.
+Each item's \`value\` is the \`id\` of the section it points to. Clicking an item scrolls smoothly to the section, and an IntersectionObserver moves the highlight as the reader scrolls, so you don't need ScrollSpy. Both set \`value\` and fire \`arc-change\`.
 
-AnchorNav supports both orientations. Vertical mode is best for sidebars and narrow rails, and horizontal mode works as a sub-header beneath a TopBar. Both modes scroll smoothly when a link is clicked, and all items are keyboard navigable with arrow keys and Enter.`,
+Pass items as the \`items\` array (\`{ label, value }\`) or as slotted children with a \`value\` attribute. Array items render as \`<button>\` elements, so Tab and Enter reach them. Slotted children stay the element you wrote, and a slotted \`<span>\` can't take focus. There are no arrow-key bindings.`,
 
   features: [
-    'Vertical and horizontal orientations',
-    'Accent-primary background pill (vertical) or underline glow (horizontal) on active link',
-    '`arc-change` event on link selection',
-    'Controlled value prop for external state management',
-    'Smooth scroll to the target section on click',
-    'Keyboard navigation with arrow keys',
-    'Pairs with ScrollSpy for automatic scroll tracking',
-    'Token-driven theming via CSS custom properties',
+    '`arc-change` fires with `{ value }` on click and when scrolling changes the active section',
+    'The active array item gets `aria-current="true"`',
   ],
 
   guidelines: {
     do: [
-      'Pair with ScrollSpy for automatic active-link tracking on scroll',
       'Use vertical orientation in sidebars and horizontal under a TopBar',
-      'Keep link labels short: two to four words that match section headings',
-      'Ensure each link target has a matching ID on the page',
-      'Place AnchorNav in a sticky container so it remains visible during scroll',
+      'Keep link labels to two to four words that match the section headings',
+      'Give every section an `id` that matches its item\'s value',
+      'Put AnchorNav in a sticky container so it stays visible while the page scrolls',
+      'Use the `items` array when keyboard users need to reach the links',
     ],
     dont: [
-      'Do not use AnchorNav for multi-page navigation. Use Sidebar or NavigationMenu instead',
-      'Do not add more than eight to ten links. Split long pages into separate routes instead',
-      'Do not mix orientations on the same page',
-      'Do not forget to set matching IDs on the sections the links point to',
-      'Do not use AnchorNav without sticky positioning; it loses its wayfinding value if it scrolls away',
+      'Don\'t use it to link between pages. Use Sidebar or NavigationMenu',
+      'Don\'t add more than eight to ten links. Split a page that long into separate routes',
+      'Don\'t mix orientations on the same page',
     ],
   },
 
@@ -48,7 +40,7 @@ AnchorNav supports both orientations. Vertical mode is best for sidebars and nar
     <span value="overview">Overview</span>
     <span value="installation">Installation</span>
     <span value="theming">Theming</span>
-    <span value="api">API Reference</span>
+    <span value="api">API reference</span>
   </arc-anchor-nav>
 </div>`,
 
