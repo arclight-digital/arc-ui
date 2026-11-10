@@ -7,39 +7,28 @@ export const appShell: ComponentDef = {
   tier: 'layout',
   interactivity: 'hybrid',
   description:
-    'Full-page layout scaffold that composes a TopBar, Sidebar, and scrollable content area into an application frame. Handles responsive collapse, sidebar toggling, and an optional table-of-contents rail.',
+    'Full-page layout that puts a TopBar, a Sidebar and a scrolling content area into one frame, with a mobile sidebar toggle and an optional table-of-contents rail.',
 
-  overview: `AppShell is the outermost structural component for any ARC UI application. It establishes the three-zone layout (a fixed top bar, a collapsible sidebar, and a flexible main content area) so every page in your app shares the same chrome without duplicating layout logic.
+  overview: `AppShell is the page frame for an app: a fixed top bar, a collapsible sidebar and a scrolling main area. Put an \`arc-top-bar\` in the \`topbar\` slot, an \`arc-sidebar\` (or any nav markup) in \`sidebar\`, and the page content in the default slot. The shell handles the flex layout, scroll containment and z-index layering.
 
-The component manages responsive behavior automatically. On screens narrower than 768 px the sidebar collapses out of view and can be toggled back with the \`sidebar-open\` attribute, so it suits both desktop dashboards and mobile-first admin panels. A fourth optional slot, \`toc\`, provides a right-hand rail for table-of-contents or contextual widgets; it hides below 1280 px to keep the content area readable.
-
-Because AppShell is slot-based, it composes with other ARC UI primitives. Put an \`arc-top-bar\` into the \`topbar\` slot, an \`arc-sidebar\` (or any nav markup) into \`sidebar\`, and your page content into the default slot. The shell handles the flex math, scroll containment, and z-index layering, so you only decide what goes inside each zone.`,
+At 900 px and below (the \`breakpoint\` prop, default \`navCollapse\`), the sidebar collapses out of view, and the \`sidebar-open\` attribute brings it back. A fourth slot, \`toc\`, is a right-hand rail for a table of contents or other side content. It hides below 1280 px.`,
 
   features: [
-    'Three-zone layout: fixed top bar, collapsible sidebar, scrollable main content',
-    'Optional fourth "toc" slot for a right-hand table-of-contents rail',
-    'Responsive sidebar collapse at 768 px with toggle via sidebar-open attribute',
-    'Table-of-contents rail auto-hides below 1280 px',
-    'Slot-based composition works with any TopBar, Sidebar, or custom markup',
-    'Full-viewport min-height so the shell always fills the screen',
-    'CSS custom property integration for consistent spacing and color tokens',
-    'Exposed CSS parts (shell, body, sidebar, main, content, toc) for deep style overrides',
+    'At least `100vh` tall by default, so the shell fills the screen',
   ],
 
   guidelines: {
     do: [
-      'Use one AppShell as the root layout wrapper for each page or route',
-      'Place an arc-top-bar in the "topbar" slot for a consistent fixed header',
-      'Provide a sidebar toggle button in the top bar that sets sidebar-open on mobile',
-      'Use the "toc" slot for table-of-contents navigation on documentation pages',
-      'Combine with Container or Section components inside the default slot for consistent content widths',
+      'Use one AppShell as the root layout of each page or route',
+      'Put a button in the top bar that sets sidebar-open on small screens',
+      'Use the "toc" slot for the table of contents on documentation pages',
+      'Use Container or Section inside the default slot to set content widths',
     ],
     dont: [
-      'Do not nest one AppShell inside another; it is a singleton page frame',
-      'Do not put scrollable content directly in the sidebar slot without its own overflow handling',
-      'Do not rely on the toc slot for critical navigation; it hides on narrower viewports',
-      'Do not override min-height: 100vh on the host unless you are embedding a preview or iframe',
-      'Do not use AppShell for simple marketing pages that do not need a persistent sidebar or top bar',
+      'Don\'t put scrolling content in the sidebar slot without giving it its own overflow',
+      'Don\'t put anything users need in the toc slot. It hides on narrower screens',
+      'Don\'t override the min-height to fit a shell inside a card or preview. Set `embedded`',
+      'Don\'t use AppShell for marketing pages with no persistent sidebar or top bar',
     ],
   },
 
