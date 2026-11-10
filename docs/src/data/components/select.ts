@@ -8,41 +8,30 @@ export const select: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['dropdown', 'picker'],
   description:
-    'Dropdown select with searchable options, keyboard navigation, and full ARIA listbox semantics for accessible form inputs.',
+    'A single-choice dropdown for forms, with arrow-key navigation, type-to-jump and ARIA listbox semantics.',
 
-  overview: `The Select component replaces the native \`<select>\` element with a styled, accessible dropdown that uses ARC UI's design tokens. It includes type-ahead search filtering, so users can find options in long lists without scrolling.
+  overview: `Select replaces the native \`<select>\` with a dropdown styled by ARC UI's tokens. Its options are \`<arc-option>\` children. Use it for one choice from a list in a form: a person to assign, a category, a status, a locale. For several choices use MultiSelect. For three or fewer options, RadioGroup shows them all at once. To filter a long list as you type, use Combobox.
 
-Select implements the ARIA listbox pattern, so screen readers announce the current selection, available options, and navigation cues. Keyboard users can open the dropdown with Enter or Space, navigate with arrow keys, filter by typing, and confirm a choice with Enter, all without a mouse.
-
-Use Select any time you need a single-choice dropdown in a form: assigning a team member, choosing a category, picking a status, or selecting a locale. For multi-choice scenarios, reach for MultiSelect instead. For short lists of three or fewer visible options, consider RadioGroup for faster scanning.`,
+Enter, Space or an arrow key opens the list. The arrows move through it and wrap at the ends, Home and End jump to the first and last option, Enter picks, and Escape closes. Typing letters jumps to the first option that starts with them, and pressing the same letter again cycles through the matches, as in a native select.`,
 
   features: [
-    'Type-ahead search filtering narrows options as the user types',
-    'Full keyboard navigation: Arrow keys, Home, End, Enter, Escape',
-    'ARIA listbox role with active-descendant tracking for screen readers',
-    'Supports placeholder text for empty-state guidance',
-    'Controlled and uncontrolled value modes',
-    'Disabled state prevents interaction and conveys unavailability visually',
-    'Automatic scroll-into-view for the highlighted option in long lists',
-    'Works with dynamic option lists: update the options array at any time',
-    'Consistent styling across browsers via Shadow DOM encapsulation',
+    'Focus stays on the trigger while `aria-activedescendant` tracks the highlighted option, so screen readers announce it',
+    'The highlighted option scrolls into view in a long list',
+    'An `<arc-option>` with `disabled` stays visible but is skipped by the keyboard and can\'t be picked',
+    'Disabled drops the control to 50% opacity and blocks pointer events',
   ],
 
   guidelines: {
     do: [
-      'Always provide a visible label so users understand what they are selecting',
-      'Use a meaningful placeholder like "Choose a team member..." rather than generic "Select..."',
-      'Keep option labels concise: ideally under 40 characters',
-      'Order options logically (alphabetical, by frequency, or by workflow step)',
-      'Pre-select a sensible default when one exists to reduce interaction cost',
-      'Use the disabled state to indicate temporarily unavailable choices (e.g. permissions)',
+      'Give it a visible `label`. The placeholder disappears once a value is chosen',
+      'Write a placeholder that names the choice, like "Choose a team member...", not "Select..."',
+      'Keep option labels short, ideally under 40 characters',
+      'Order options alphabetically, by frequency, or by workflow step',
+      'Pre-select a default when there is a sensible one',
     ],
     dont: [
-      'Do not use Select for fewer than 3 options; use RadioGroup for better scannability',
-      'Do not nest selects inside other selects: flatten the hierarchy or use a staged flow',
-      'Do not rely solely on placeholder text as a label: placeholders disappear once a value is chosen',
-      'Do not use Select for navigation; use NavigationMenu or tabs for moving between views',
-      'Do not disable the component without explaining why; pair disabled state with a tooltip or helper text',
+      'Don\'t use it to move between views. Use NavigationMenu or Tabs',
+      'Don\'t disable it without saying why in helper text or a tooltip',
     ],
   },
 
@@ -244,7 +233,7 @@ function LocalePicker() {
       name: 'Option',
       tag: 'arc-option',
       description:
-        'Individual option rendered inside a Select or MultiSelect. Each Option provides a value for form submission and displays its text content as the label in the dropdown.',
+        'One choice in a Select or MultiSelect. Its `value` is what the form submits and its text content is the label.',
     },
   ],
 
