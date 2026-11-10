@@ -7,7 +7,7 @@ export const sheet: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'A panel that slides in from the bottom or right edge of the viewport, over a blurred backdrop, with a header, a scrolling body and a footer slot.',
+    'A panel that slides in from the bottom or right edge of the screen over a blurred backdrop.',
 
   overview: `Sheet slides a panel in from the bottom (the default) or the right edge, set with \`side\`. Use it for filters, a detail view or a short form that doesn't need its own page. The bottom sheet has a drag-handle bar at the top. The right sheet doesn't.
 
