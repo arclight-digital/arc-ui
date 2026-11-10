@@ -7,43 +7,34 @@ export const passwordInput: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Password entry field with a built-in visibility toggle and an optional four-segment strength meter. Shares its styling and form behavior with Input, so mixed forms stay visually uniform.',
+    'A password field with a show/hide button and an optional four-segment strength meter. Styled and form-wired like Input.',
 
-  overview: `PasswordInput is Input specialized for secret entry. It wraps a native \`<input type="password">\` with the same label, placeholder, validation, and size treatment as Input, and adds two password-specific affordances: an inline eye button that toggles the field between masked and plain text, and an optional strength meter driven by a self-contained heuristic.
+  overview: `PasswordInput wraps a native \`<input type="password">\` with the same label, placeholder, validation and sizes as Input, and adds two things: an eye button that switches the field between masked and plain text, and an optional strength meter.
 
-The visibility toggle persists the user's choice. Revealing the password does not revert on blur, which matches platform conventions and avoids surprising users mid-edit. The toggle is a real button with \`aria-pressed\` state and an accessible name, so screen-reader users get the same control.
+A revealed password stays revealed until the button is pressed again. Blur doesn't re-mask it, which matches platform conventions. The button is a real \`<button>\` with \`aria-pressed\` and an accessible name.
 
-When \`show-strength\` is set, a four-segment meter and text label ("Weak" through "Strong") render under the field. The score considers length thresholds, character-class variety, and penalises repeated characters, sequential runs like "abcd" or "1234", and the most common leaked passwords. The heuristic runs entirely client-side with no network calls. The meter exposes \`role="meter"\` semantics and announces changes politely for assistive technology.
+With \`show-strength\`, a four-segment meter and a label ("Weak" through "Strong") render under the field. The score rewards length and a mix of character classes, and penalizes repeated characters, runs like "abcd" or "1234", and 20 of the most common leaked passwords. It runs in the browser with no network calls. The meter has \`role="meter"\` and announces changes politely.
 
-PasswordInput participates in native forms through ElementInternals just like Input: it submits its value under \`name\`, supports \`required\` constraint validation, and resets with \`form.reset()\`. Use \`autocomplete="new-password"\` on registration and change-password forms so password managers offer to generate a credential.`,
+PasswordInput joins native forms through ElementInternals, like Input: it submits its value under \`name\`, supports \`required\`, and resets with \`form.reset()\`. Use \`autocomplete="new-password"\` on sign-up and change-password forms so password managers offer to generate one.`,
 
   features: [
-    'Visibility toggle button with `aria-pressed` state and eye / eye-off icons',
-    'User choice persists: the field does not re-mask on blur',
-    'Optional four-segment strength meter with Weak / Fair / Good / Strong label',
-    'Self-contained strength heuristic: length, character variety, common-password and pattern penalties',
-    '`arc-strength-change` event exposes the 0-4 score for custom policy UI',
-    'Native form participation via `ElementInternals`: submission, reset, and required validation',
-    '`autocomplete` pass-through (defaults to `current-password`) for password-manager integration',
-    'Identical field styling to Input: labels, sizes, error state, and focus rings match',
-    'Meter uses `role="meter"` with aria value semantics and polite live announcements',
+    '`arc-strength-change` fires with the 0-4 score, for your own policy UI',
+    '`autocomplete` passes through to the native field and defaults to `current-password`',
+    'Labels, sizes, error state and focus rings match Input',
   ],
 
   guidelines: {
     do: [
-      'Always provide a `label` so the field is accessible to screen readers',
-      'Set `autocomplete="new-password"` on sign-up and change-password forms so password managers can generate credentials',
-      'Enable `show-strength` on password-creation flows to give users live feedback',
-      'Listen to `arc-strength-change` if you gate submission on a minimum score',
-      'Pair with Form for coordinated validation and an error summary',
-      'Keep the `error` prop for server-side or policy failures (e.g. "Password was found in a breach")',
+      'Give it a `label`. Placeholder text alone isn\'t one',
+      'Turn on `show-strength` where people create a password, and leave it off on login forms',
+      'Listen to `arc-strength-change` if you block submission below a minimum score',
+      'Pair it with Form for coordinated validation and an error summary',
+      'Use the `error` prop for server or policy failures, for example "Password was found in a breach"',
     ],
     dont: [
-      'Do not show the strength meter on login forms: it only makes sense when creating a password',
-      'Do not treat the heuristic score as a security guarantee; enforce real policy on the server',
-      'Do not force the field back to masked while the user is typing: the toggle state is theirs',
-      'Do not use placeholder text as the only label',
-      'Do not block paste into the field: pasting from a password manager is a best practice',
+      'Don\'t treat the score as a security check. Enforce your real policy on the server',
+      'Don\'t re-mask the field while someone is typing. The toggle state is theirs',
+      'Don\'t block paste. People paste from password managers',
     ],
   },
 
