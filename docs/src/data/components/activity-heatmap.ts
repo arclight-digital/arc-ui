@@ -7,14 +7,14 @@ export const activityHeatmap: ComponentDef = {
   tier: 'data',
   interactivity: 'hybrid',
   description:
-    'GitHub-style contribution calendar: a year of day cells, one column per week, each tinted by intensity on a five-step accent ramp, with hover and keyboard detail.',
+    'A GitHub-style contribution calendar that shades one cell per day by how much happened that day.',
   searchKeywords: ['contribution', 'calendar', 'commits', 'punch card', 'github graph', 'streak'],
 
-  overview: `Activity Heatmap draws a contribution calendar: 52 columns of seven cells, one cell per day, tinted deeper as the day gets busier. Month labels run along the top, Mon, Wed and Fri labels down the side, and a Less to More legend sits underneath. Hovering a cell, or focusing the grid and using the arrow keys, raises it with the glow and shows the date and the day's label or value in a small bubble.
+  overview: `Activity Heatmap draws a contribution calendar: 52 week columns, one cell per day, tinted deeper as the day gets busier. Month labels run along the top, Mon, Wed and Fri labels down the side, and a Less to More legend sits underneath. Hovering a cell, or focusing the grid and using the arrow keys, raises it with the glow and shows the date and the day's label or value in a small bubble.
 
 The \`data\` property takes one entry per day with activity: an ISO \`date\`, a numeric \`value\`, and an optional \`label\` that replaces the bare number in the detail ("7 commits" instead of "7"). Days without an entry render as empty cells, so you don't need to fill in zeros. By default the grid ends today and runs back \`weeks\` columns (52). Set \`end-date\` to show a fixed window. When \`end-date\` is unset, the server render and the first client render anchor on the newest date in the data, and the browser switches to today one render later. Set \`end-date\` when server and client must match exactly.
 
-Intensity is relative by default. The nonzero values are split into quartiles, one per step of the ramp, so a quiet repository and a busy one both use the full range. Set \`max\` to get a linear scale from zero to that value instead. The ramp is built from \`--accent-primary-rgb\` at five alphas, so overriding that one token recolors the calendar.
+Intensity is relative by default. The nonzero values are split into quartiles, one per step of the ramp, so a quiet repository and a busy one both use the full range. Set \`max\` to get a linear scale from zero to that value instead. Empty days use \`--surface-overlay\`, and the four active steps are \`--accent-primary-rgb\` at rising alpha, so overriding that one token recolors every step but the empty one.
 
 Screen readers get the grid as one image with a summary label (day count, end date, total and active days), not 364 tab stops. The grid takes focus once: up and down move a day, left and right move a week, Home and End jump to the first and last day, and a live region reads out each cell.`,
 
