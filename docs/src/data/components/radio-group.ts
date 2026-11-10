@@ -7,7 +7,7 @@ export const radioGroup: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'A set of options where exactly one can be chosen, all visible at once, with arrow-key selection and radiogroup semantics.',
+    'A set of radio options, all visible at once, where exactly one can be chosen.',
 
   overview: `RadioGroup shows every option up front and lets the reader pick exactly one. Select hides the options in a dropdown. RadioGroup suits two to six options that people compare before choosing, like pricing tiers, shipping methods or account types.
 
