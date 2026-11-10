@@ -22,11 +22,11 @@ import {
 } from '../../data/site-stats';
 
 const headings = [
-  { id: 'library', label: 'The Library' },
+  { id: 'library', label: 'The library' },
   { id: 'shape', label: 'Shape' },
-  { id: 'surface', label: 'Surface Area' },
-  { id: 'build', label: 'The Build' },
-  { id: 'method', label: 'How These Are Counted' },
+  { id: 'surface', label: 'Surface area' },
+  { id: 'build', label: 'The build' },
+  { id: 'method', label: 'How these are counted' },
 ];
 
 const fmt = (n: number) => n.toLocaleString('en-US');
@@ -46,7 +46,7 @@ const tierLabels: Record<string, string> = {
 
 <DocsLayout
   title="Stats"
-  description="What ARC UI is made of, counted from the source at build time."
+  description="Counts of ARC UI's components, elements, tokens, props, tests and packages, read from the source when the site builds."
   activeSlug="stats"
   headings={headings}
   breadcrumbs={[{ label: 'Stats' }]}
@@ -54,20 +54,19 @@ const tierLabels: Record<string, string> = {
   <div class="stats-page">
     <h1 class="page-title">Stats</h1>
     <p class="page-desc">
-      Every number on this page is read out of the repository when the site builds. Nothing here
-      is typed by hand, so nothing here can quietly go stale. If a count looks wrong, the source
-      changed and this page already knows.
+      These numbers are counted from the repository when the site builds. The one exception
+      is the runtime dependency count, which is typed by hand.
     </p>
 
     <!-- The Library -->
     <section id="library">
-      <h2 class="docs-heading">The Library</h2>
+      <h2 class="docs-heading">The library</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <div class="stat-grid">
         <arc-stat value={fmt(componentCount)} label="Components"></arc-stat>
         <arc-stat value={fmt(elementCount)} label="Custom elements"></arc-stat>
-        <arc-stat value={fmt(frameworkCount)} label="Targets"></arc-stat>
+        <arc-stat value={fmt(frameworkCount)} label="Frameworks"></arc-stat>
         <arc-stat value={fmt(packageCount)} label="Packages"></arc-stat>
         <arc-stat value={fmt(tokenCount)} label="Design tokens"></arc-stat>
         <arc-stat value={fmt(iconCount)} label="Icons"></arc-stat>
@@ -75,10 +74,10 @@ const tierLabels: Record<string, string> = {
 
       <p class="docs-text">
         {componentCount} documented components, but {elementCount} custom elements. The
-        difference is child items like <code>arc-tab</code> and <code>arc-menu-item</code>, which
-        are part of a parent's API rather than components you reach for on their own. The
-        {frameworkCount} targets are {frameworks.slice(0, -1).join(', ')} and {frameworks.at(-1)},
-        each generated from the same Lit source rather than maintained by hand.
+        difference is child items like <code>arc-tab</code> and <code>arc-menu-item</code>,
+        which you only use inside their parent. The {frameworkCount} frameworks are
+        {frameworks.slice(0, -1).join(', ')} and {frameworks.at(-1)}, each generated from the
+        same Lit source.
       </p>
     </section>
 
@@ -88,8 +87,7 @@ const tierLabels: Record<string, string> = {
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        Components by tier. A library's proportions say what it is for. This one is mostly
-        content and input, which suits a documentation-heavy product interface.
+        Components by tier.
       </p>
 
       <ul class="tier-chart">
@@ -105,13 +103,13 @@ const tierLabels: Record<string, string> = {
 
     <!-- Surface Area -->
     <section id="surface">
-      <h2 class="docs-heading">Surface Area</h2>
+      <h2 class="docs-heading">Surface area</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <p class="docs-text">
-        Everything a consumer can touch, counted from the JSDoc the components declare it in.
-        These same annotations generate the API tables, the editor autocomplete data and the
-        typed wrapper packages, so a number being wrong here would mean all three are wrong too.
+        Props, events, parts and slots are counted from the JSDoc tags in the component
+        source. The same tags generate the API tables, the editor autocomplete data and the
+        typed wrapper packages, so a wrong number here would mean all three are wrong.
       </p>
 
       <div class="stat-grid">
@@ -124,16 +122,14 @@ const tierLabels: Record<string, string> = {
       </div>
 
       <p class="docs-text">
-        That is roughly {Math.round(propCount / componentCount)} props and
-        {' '}{Math.round(partCount / componentCount)} styleable parts per component. The parts
-        matter more than they look, since a shadow root is otherwise a closed door to a
-        consumer's stylesheet.
+        That's roughly {Math.round(propCount / componentCount)} props and
+        {' '}{Math.round(partCount / componentCount)} CSS parts per component.
       </p>
     </section>
 
     <!-- The Build -->
     <section id="build">
-      <h2 class="docs-heading">The Build</h2>
+      <h2 class="docs-heading">The build</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <div class="stat-grid">
@@ -141,22 +137,23 @@ const tierLabels: Record<string, string> = {
         <arc-stat value={fmt(testSuiteCount)} label="Suites"></arc-stat>
         <arc-stat value={fmt(buildSteps)} label="Generate steps"></arc-stat>
         <arc-stat value={fmt(elementCount)} label="Server-render"></arc-stat>
-        <arc-stat value="1" label="Runtime dependency"></arc-stat>
+        <arc-stat value="2" label="Runtime dependencies"></arc-stat>
         <arc-stat value={`v${version}`} label="Current release"></arc-stat>
       </div>
 
       <p class="docs-text">
         All {elementCount} elements server-render to declarative shadow DOM, and a build check
-        fails if that stops being true. The single runtime
-        dependency is Lit. Everything else in the {packageCount} packages is generated by the
-        {' '}{buildSteps}-step pipeline described in
-        {' '}<a href="/docs/contributing">Contributing</a>.
+        fails if that stops being true. Lit is a peer dependency, and the runtime
+        dependencies are <code>@lit-labs/ssr-client</code> and <code>qrcode-generator</code>.
+        The framework packages are generated by <code>pnpm generate</code>, a
+        {' '}{buildSteps}-step pipeline. <a href="/docs/contributing">Contributing</a> covers
+        when to run it.
       </p>
     </section>
 
     <!-- Method -->
     <section id="method">
-      <h2 class="docs-heading">How These Are Counted</h2>
+      <h2 class="docs-heading">How these are counted</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
 
       <div class="method-list">
@@ -188,7 +185,7 @@ const tierLabels: Record<string, string> = {
 
       <p class="docs-text">
         The counts live in one module, <code>site-stats.ts</code>, shared by this page, the
-        landing page and the social card, so the number on a link preview cannot disagree with
+        landing page and the social card, so the number on a link preview can't disagree with
         the number on the page it previews.
       </p>
     </section>
