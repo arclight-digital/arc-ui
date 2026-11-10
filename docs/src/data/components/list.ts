@@ -7,38 +7,32 @@ export const list: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   description:
-    'Structured list container with optional selection, keyboard navigation, and multiple visual variants. Pairs with arc-list-item for rich content rows.',
+    'List container with optional selection, keyboard navigation and three visual variants. Holds arc-list-item rows.',
 
-  overview: `List provides a semantic container for ordered collections of items. It handles keyboard navigation (arrow keys, Home, End), optional single or multi-select behavior, and visual variants that control border and separator styles.
+  overview: `List holds a column of \`<arc-list-item>\` rows. Arrow Up and Down move between rows and wrap at the ends, and Home and End jump to the first and last.
 
-When \`selectable\` is set, the list renders with \`role="listbox"\` and manages \`aria-selected\` states across its child \`arc-list-item\` elements. Selection state is tracked via a comma-separated \`value\` string, making it easy to bind in any framework. The \`arc-change\` event fires on each selection change with the current value in \`event.detail\`.
+Set \`selectable\` and the list becomes a \`role="listbox"\` that manages \`aria-selected\` on its items. Add \`multiple\` for multi-select, which also sets \`aria-multiselectable\`. The selection is a \`value\` string, comma-separated in multi-select, and \`arc-change\` fires on each change with the new value in \`event.detail.value\`. Without \`selectable\`, the list is a plain \`role="list"\`.
 
-Three visual variants cover the common list presentations: default (plain), bordered (outlined container), and separated (bottom borders between items). A size prop controls the base font size for the entire list, cascading down to child items.`,
+\`variant\` is default (plain), bordered (an outlined container) or separated (a bottom border between items). \`size\` (sm, md, lg) scales each row's text, padding and height.`,
 
   features: [
-    'Full keyboard navigation with Arrow Up/Down, Home, End, Enter, and Space',
-    'Single and multi-select modes with `value` binding and `arc-change` events',
-    'Three visual variants: default, bordered, separated',
-    'Three size presets (sm, md, lg) that cascade to child items',
-    'Semantic `role="listbox"` when selectable, `role="list"` otherwise',
-    'Automatic `aria-multiselectable` when `multiple` is set',
-    'Row actions: an `actions` slot on arc-list-item, revealed on hover or focus and always shown without hover, that never selects the row',
-    'Exposed CSS part: list',
+    'Enter and Space select the focused row in a selectable list',
+    'Row actions: an `actions` slot on arc-list-item, shown on hover or focus (always shown on devices without hover). Clicking an action never selects the row',
   ],
 
   guidelines: {
     do: [
-      'Use arc-list-item as direct children for consistent styling and keyboard navigation',
+      'Use arc-list-item as direct children',
       'Put per-row buttons (rename, delete) in the `actions` slot of a plain list, and give each one a label naming its row: "Rename Weekly review", not "Rename"',
-      'Mark the current row of an actionable list with `href` and `selected`, which sets aria-current; a selectable list is a listbox and cannot hold row actions',
-      'Set `selectable` when items represent choices the user needs to pick from',
-      'Use the bordered variant inside cards or panels that need visual containment',
-      'Use the separated variant for long lists where row boundaries improve scannability',
+      'Mark the current row of a list with actions using `href` and `selected`, which sets aria-current. A selectable list is a listbox and can\'t hold row actions',
+      'Set `selectable` when the rows are choices to pick from',
+      'Use the bordered variant inside cards or panels',
+      'Use the separated variant for long lists, where a line between rows makes them easier to scan',
     ],
     dont: [
-      'Do not use List for navigation menus. Use `arc-navigation-menu` or `arc-dropdown-menu` instead',
-      'Do not mix arc-list-item with raw HTML elements inside a selectable list',
-      'Do not nest lists more than one level deep. Consider a tree view for hierarchical data',
+      'Don\'t use List for navigation menus. Use Navigation Menu or Dropdown Menu',
+      'Don\'t mix arc-list-item with other elements inside a selectable list',
+      'Don\'t nest lists more than one level deep. Use a tree view for hierarchical data',
     ],
   },
 
