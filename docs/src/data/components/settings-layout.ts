@@ -10,12 +10,12 @@ export const settingsLayout: ComponentDef = {
 
   overview: `SettingsLayout splits a settings page into a nav of section links ("Profile", "Security", "Billing") and a content area for the forms. \`nav-position="left"\`, the default, puts the nav in a 220px sidebar on a raised background. \`nav-position="top"\` puts it in a bar above the content. Both use the same slots, so switching is one attribute.
 
-Use it for account settings, preferences and configuration. For other pages, use PageLayout.`,
+For pages that aren't settings, use PageLayout.`,
 
   features: [
     '`arc-settings-nav-item` links with an active state that follows the URL hash, so a shared link or the back button lands on the right section',
     '`sections` shows only the section whose `id` matches the active item, for a tabbed settings page',
-    'Below 768px the nav becomes a scrolling row of tabs above the content, in either mode, instead of a stack that pushes the content down',
+    'Below 768px the nav becomes a scrolling row of tabs above the content, in either mode',
     'CSS parts `layout`, `nav` and `content`',
   ],
 
