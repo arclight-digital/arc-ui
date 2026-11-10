@@ -42,11 +42,14 @@
  * subscription should be added here rather than by hand-rolling a controller.
  */
 class ConnectedSubscription {
-  constructor(host, resolve, attach, detach) {
+  constructor(host, resolve, attach, detach, stale) {
     this.host = host;
     this._resolve = resolve;
     this._attach = attach;
     this._detach = detach;
+    // Optional: true when the subscription must be redone on the same target
+    // (observeIntersect options that changed). Absent for everything else.
+    this._stale = stale;
     this._target = null;
     host.addController(this);
   }
@@ -70,7 +73,7 @@ class ConnectedSubscription {
 
   _sync() {
     const next = this._resolve();
-    if (next === this._target) return;
+    if (next === this._target && !(next && this._stale?.())) return;
     this._release();
     if (!next) return;
     this._target = next;
@@ -127,22 +130,40 @@ export function observeResize(host, target, callback) {
  * arc-infinite-scroll stops watching once `finished` or `disabled`, without
  * hand-rolling a second teardown path that then has to pair correctly.
  *
- * `options` are captured when the observer is first created, so a component
- * whose rootMargin depends on a reactive prop needs its own handling; none does
- * today, and the previous hand-rolled version did not either.
+ * `options` is either an options object, used as is for the life of the
+ * subscription, or a function of the host that returns one. The function form
+ * is for options built from a reactive prop: it is read at attach time, so an
+ * attribute set before connection counts, and again after every host update,
+ * and when the result differs the observer is rebuilt and re-attached.
+ * arc-infinite-scroll's `threshold` is the case: it once built its rootMargin
+ * in the constructor, where `threshold` was still the default, and an object
+ * read once could not follow it.
  */
 export function observeIntersect(host, target, callback, options) {
   if (typeof IntersectionObserver === 'undefined') return null;
   const resolve = targetResolver(host, target);
+  const dynamic = typeof options === 'function';
+  const read = dynamic ? () => options(host) : () => options;
   let observer = null;
+  let key = null;
   return new ConnectedSubscription(
     host,
     resolve,
     (el) => {
-      observer ??= new IntersectionObserver((entries) => callback(entries, el), options);
+      const opts = read();
+      if (dynamic) {
+        const next = JSON.stringify(opts ?? {});
+        if (observer && next !== key) {
+          observer.disconnect();
+          observer = null;
+        }
+        key = next;
+      }
+      observer ??= new IntersectionObserver((entries) => callback(entries, el), opts);
       observer.observe(el);
     },
     (el) => observer?.unobserve(el),
+    dynamic ? () => JSON.stringify(read() ?? {}) !== key : undefined,
   );
 }
 

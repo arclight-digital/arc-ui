@@ -9,7 +9,7 @@ export const infiniteScroll: ComponentDef = {
   description:
     'Container that fires a load event as the reader nears the bottom, with a loading spinner and an end-of-list state.',
 
-  overview: `Infinite Scroll wraps your items and puts an Intersection Observer sentinel after them. When the sentinel comes within 200px of the bottom of the viewport, the component fires \`arc-load-more\`. Fetch the next batch and append it. The 200px is fixed for now, and setting \`threshold\` doesn't change it.
+  overview: `Infinite Scroll wraps your items and puts an Intersection Observer sentinel after them. When the sentinel comes within \`threshold\` pixels of the bottom of the viewport (200 by default), the component fires \`arc-load-more\`. Fetch the next batch and append it. A larger \`threshold\` asks for the next batch earlier. Changing it on a mounted component takes effect at once, and fires \`arc-load-more\` straight away if the sentinel is already inside the new distance.
 
 Set \`loading\` to \`true\` while you fetch. A spinner shows in the footer, and no further \`arc-load-more\` fires until you set \`loading\` back to \`false\`.
 

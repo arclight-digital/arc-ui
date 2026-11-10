@@ -11,7 +11,7 @@ import { observeIntersect } from '../shared/subscriptions.js';
  * @tag arc-infinite-scroll
  * @status stable
  * @requires arc-spinner
- * @prop {number} threshold - Distance in pixels from the bottom of the content at which `arc-load-more` fires. Controls how eagerly new data is requested.
+ * @prop {number} threshold - How far below the bottom of the viewport, in pixels, the sentinel after the content can be when `arc-load-more` fires. Defaults to 200. Read when the observer attaches and again whenever it changes.
  * @prop {boolean} loading - When true, displays a spinner in the footer and suppresses additional `arc-load-more` events.
  * @prop {boolean} finished - When true, disconnects the observer and displays "No more items" text in the footer.
  * @prop {boolean} disabled - Disables the component, disconnects the observer, and reduces opacity to 40%.
@@ -102,7 +102,13 @@ export class ArcInfiniteScroll extends DeclaredPropsMixin(LitElement) {
           );
         }
       },
-      { rootMargin: `0px 0px ${this.threshold}px 0px` },
+      // A function, not an object: read when the observer attaches and again
+      // after each update. An object built here used the constructor's 200
+      // forever, so `threshold` did nothing. A non-number would make
+      // IntersectionObserver throw, so it falls back to the default.
+      () => ({
+        rootMargin: `0px 0px ${Number.isFinite(this.threshold) ? this.threshold : 200}px 0px`,
+      }),
     );
   }
 
