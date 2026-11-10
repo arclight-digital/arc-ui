@@ -10,7 +10,7 @@ export const splitPane: ComponentDef = {
 
   overview: `SplitPane divides its container into two panes with a handle between them. Use it when the reader should decide how two panes share the space. \`orientation="horizontal"\` puts the panes side by side, and \`vertical\` stacks them.
 
-\`ratio\` sets the primary pane's share, from 0 to 1. Dragging the handle or pressing the arrow keys on it changes the ratio, and \`min-ratio\` and \`max-ratio\` (0.15 and 0.85 by default) stop either pane from collapsing. \`arc-resize\` fires on every drag step and every key press, with the new ratio in \`detail.ratio\`.
+\`ratio\` sets the primary pane's share, from 0 to 1. Dragging the handle, or pressing the arrow keys, Home or End on it, changes the ratio, and \`min-ratio\` and \`max-ratio\` (0.15 and 0.85 by default) stop either pane from collapsing. \`arc-resize\` fires each time the ratio changes, with the new ratio in \`detail.ratio\`. A key press at a limit changes nothing and fires nothing.
 
 The \`primary\` slot gets the ratio's share, and \`secondary\` fills the rest. Each pane scrolls on its own (\`overflow: auto\`).`,
 
@@ -23,7 +23,7 @@ The \`primary\` slot gets the ratio's share, and \`secondary\` fills the rest. E
     do: [
       'Use it for editor and preview, list and detail, or tree and content layouts',
       'Keep `min-ratio` at 0.15 or more and `max-ratio` at 0.85 or less (the defaults) so both panes stay usable',
-      'Save the ratio from `arc-resize` to keep the reader\'s layout. It fires on every step, so debounce the write',
+      'Save the ratio from `arc-resize` to keep the reader\'s layout. It fires on every drag step, so debounce the write',
       'Give the parent a set height, such as `100vh` or `flex: 1`. SplitPane takes 100% of it',
       'Use `orientation="vertical"` for top and bottom splits, such as a console under an editor',
     ],
