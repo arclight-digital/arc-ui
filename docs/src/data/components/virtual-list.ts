@@ -9,48 +9,40 @@ export const virtualList: ComponentDef = {
   description:
     'Windowed list that renders only visible items for efficient scrolling through thousands of rows. Fixed item height with configurable overscan.',
 
-  overview: `VirtualList renders only the rows that are on screen. A spacer div stands in for the full list height (\`items.length × itemHeight\`), so the scrollbar behaves as if every row existed, while the DOM holds a screenful plus a configurable overscan buffer. Scroll handling is throttled with \`requestAnimationFrame\`. DOM node count stays constant whether the array holds a hundred rows or a million.
+  overview: `VirtualList renders only the rows on screen. A spacer stands in for the full list height (\`items.length × itemHeight\`), so the scrollbar behaves as if every row existed, while the DOM holds one screenful plus an \`overscan\` buffer. Scroll handling is throttled with \`requestAnimationFrame\`, and the number of DOM nodes stays the same however long the array is. The tests run it with 10,000 rows.
 
-**Rows come from one of two places**, because "render a row" means something different inside a framework than outside one.
+Rows come from one of two places, because rendering a row means something different inside a framework than outside one.
 
-In plain JS, HTML or Lit, give it a \`renderItem\` callback. It is called only for rows currently on screen, and can return anything Lit can render: a template, a DOM node, a string:
+In plain JS, HTML or Lit, give it a \`renderItem\` callback. It's called only for rows on screen and can return anything Lit can render, such as a template, a DOM node or a string.
 
 \`\`\`js
 list.items = data;
 list.renderItem = (item, index) => \`\${index + 1}. \${item.name}\`;
 \`\`\`
 
-In a framework, use the wrapper's own idiom: a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, a \`rowTemplate\` in Angular. These wrappers are not thin pass-throughs like the rest of the library: each listens for \`arc-range-change\`, tracks the visible range itself, and renders exactly those rows. The element owns the scroll geometry; your framework owns the rows, so a React row is a real React element.
+In a framework, use the wrapper's own idiom: a \`renderItem\` prop in React, Preact and Solid, a \`row\` scoped slot in Vue, a \`row\` snippet in Svelte, and a \`rowTemplate\` in Angular. Each of these wrappers listens for \`arc-range-change\`, tracks the visible range and renders exactly those rows. The library's other wrappers pass props straight through. The element owns the scroll geometry and your framework owns the rows, so a React row is a real React element.
 
-Working directly with the element, you can also drive it yourself: it renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` (with \`{ start, end }\`, \`end\` exclusive) whenever that range moves (once per row crossed, not once per frame). \`visibleRange\` reads the same values on demand, and \`scrollToIndex(n)\` jumps to a row. The index is clamped to the list rather than ignored, so an index past the end scrolls to the last row instead of doing nothing.`,
+Working with the element directly, you can also drive it yourself. It renders an \`item-N\` slot for each index in the visible range and fires \`arc-range-change\` with \`{ start, end }\` (\`end\` exclusive) each time the range moves. That's once per row crossed, not once per frame. \`visibleRange\` returns the same values on demand, and \`scrollToIndex(n)\` jumps to a row. An index past the end is clamped and scrolls to the last row.`,
 
   features: [
-    'Windowed rendering: a row does not exist until it is on screen',
-    'Handles hundreds of thousands of items with constant DOM node count',
-    '`renderItem` callback for plain JS, HTML and Lit',
-    'Framework wrappers render rows natively: real React elements, real Svelte markup',
-    '`arc-range-change` fires once per row crossed, not once per frame',
-    'rAF-throttled scroll handler for 60fps performance',
-    'Configurable overscan buffer to prevent flicker during fast scrolling',
-    'Fixed item height for predictable layout calculations',
-    '`visibleRange` getter and `scrollToIndex(index)` for driving it yourself; the index is clamped, never ignored',
-    'Exposed CSS parts: spacer, item',
+    'All rows share one height, `item-height` (40px by default)',
+    '`overscan` (5 by default) sets how many extra rows render above and below the window, to cover fast scrolling',
   ],
 
   guidelines: {
     do: [
-      'Use for lists with 100+ items where full DOM rendering would cause jank',
-      'Set `item-height` to match the actual rendered height of each item',
-      'Use overscan of 3-10 items. Higher values reduce flicker but increase DOM nodes',
-      'Combine with arc-list-item for consistent styling within the virtual container',
-      'Set `items` as a property, not an attribute. An array stringifies as an attribute',
+      'Use it for lists of 100 or more items, where rendering every row would make scrolling stutter',
+      'Set `item-height` to the height each row actually renders at',
+      'Keep `overscan` between 3 and 10. More rows cut flicker but add DOM nodes',
+      'Use arc-list-item inside rows to match the styling of List',
+      'Set `items` as a property. A JSON attribute also works, but it puts the whole array in your markup',
     ],
     dont: [
-      'Do not use for short lists under 50 items. The overhead is not worth it',
-      'Do not mix different item heights. virtual-list requires fixed row height',
-      'Do not nest scrollable containers inside virtual-list items',
-      'Do not forget to set a fixed height on the virtual-list host element',
-      'Do not put all N items in the light DOM and let the component hide them. That is what this component exists to avoid',
+      'Don\'t use it for lists under 50 items. It isn\'t worth the overhead',
+      'Don\'t mix row heights. Every row must be `item-height` tall',
+      'Don\'t put scrollable containers inside rows',
+      'Don\'t leave the host without a fixed height',
+      'Don\'t put all the items in the light DOM and let the component hide them. That\'s the cost this component exists to avoid',
     ],
   },
 
