@@ -7,13 +7,13 @@ export const passwordInput: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'A password field with a show/hide button and an optional four-segment strength meter. Styled and form-wired like Input.',
+    'A password field with a show/hide button and an optional strength meter, styled and form-wired like Input.',
 
-  overview: `PasswordInput wraps a native \`<input type="password">\` with the same label, placeholder, validation and sizes as Input, and adds two things: an eye button that switches the field between masked and plain text, and an optional strength meter.
+  overview: `PasswordInput wraps a native \`<input type="password">\` with the same label, placeholder, validation and sizes as Input. An eye button switches the field between masked and plain text, and \`show-strength\` adds a strength meter.
 
-A revealed password stays revealed until the button is pressed again. Blur doesn't re-mask it, which matches platform conventions. The button is a real \`<button>\` with \`aria-pressed\` and an accessible name.
+A revealed password stays revealed until the button is pressed again. Blur doesn't re-mask it. The button is a real \`<button>\` with \`aria-pressed\` and an accessible name.
 
-With \`show-strength\`, a four-segment meter and a label ("Weak" through "Strong") render under the field. The score rewards length and a mix of character classes, and penalizes repeated characters, runs like "abcd" or "1234", and 20 of the most common leaked passwords. It runs in the browser with no network calls. The meter has \`role="meter"\` and announces changes politely.
+The meter is a four-segment bar under the field with a label from "Weak" to "Strong". The score rewards length and a mix of character classes, and penalizes repeated characters, runs like "abcd" or "1234", and a built-in list of 20 common passwords. It runs in the browser with no network calls. The meter has \`role="meter"\` and announces changes politely.
 
 PasswordInput joins native forms through ElementInternals, like Input: it submits its value under \`name\`, supports \`required\`, and resets with \`form.reset()\`. Use \`autocomplete="new-password"\` on sign-up and change-password forms so password managers offer to generate one.`,
 
