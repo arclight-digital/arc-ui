@@ -7,42 +7,33 @@ export const comparison: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'A comparison table for pricing tiers, feature breakdowns, or before/after comparisons. Each column is defined with an arc-comparison-column child element.',
+    'Table that compares plans or options feature by feature. Each column is an arc-comparison-column child element.',
 
-  overview: `Comparison renders a structured grid of feature rows and value columns, for pricing tables, plan comparisons, and feature matrices. The parent \`arc-comparison\` element accepts a JSON array of feature labels, while each slotted \`arc-comparison-column\` child provides a heading and a matching JSON array of values.
+  overview: `Comparison draws a grid with one row per feature and one column per plan. Pass the row labels to \`features\` as a JSON array. Each \`<arc-comparison-column>\` adds a column with a \`heading\` and a \`values\` array in the same order as the features.
 
-Boolean values render as check marks or crosses: pass \`"true"\` or \`"false"\` as string values and the component renders accessible SVG icons in success/ghost colors. Any other string value is displayed as-is, so you can mix comparison data (e.g. "5 GB", "Unlimited", "true").
-
-The \`highlight\` attribute on a column adds a subtle accent background to both the header and all cells in that column, to draw the eye to the recommended tier. The component uses CSS Grid for column sizing and has row hover states.`,
+A value of \`"true"\` renders a check mark and \`"false"\` a cross, each with an accessible name of "Yes" or "No". Any other string, such as "5 GB" or "Unlimited", is shown as text. A missing value leaves the cell blank. Use it for pricing tables and plan comparisons. For data people sort and filter, use DataGrid.`,
 
   features: [
-    'CSS Grid layout with automatic column count based on slotted children',
-    'JSON-driven features and values, with no complex DOM nesting',
-    'Boolean rendering: "true" becomes a green check, "false" becomes a ghost X',
-    'Column highlighting with accent background for featured/recommended tiers',
-    'Row hover states for horizontal scanning',
-    'Accessible table roles (table, row, rowheader, columnheader, cell)',
-    'CSS parts for customization: table, header, cell, feature',
-    'Respects `prefers-reduced-motion` for transitions',
+    '`highlight` on a column gives its header and every cell an accent background',
+    'Rows highlight on hover',
+    'Uses `table`, `row`, `rowheader`, `columnheader` and `cell` roles',
+    'The feature column is at least 140px wide, and the value columns share the rest equally',
+    'A malformed `features` value falls back to an empty list without throwing',
+    'CSS parts: `table`, `header`, `feature`, `cell`',
   ],
 
   guidelines: {
     do: [
-      'Use for pricing tables, feature matrices, and plan comparisons',
-      'Keep feature labels concise; long labels compress the value columns',
-      'Highlight at most one column (the recommended tier) to guide user attention',
-      'Use boolean values ("true"/"false") for feature presence to get automatic check/cross icons',
-      "Ensure the features array and each column's values array have the same length",
+      'Keep feature labels short. Long ones squeeze the value columns',
+      'Highlight one column at most, usually the plan you recommend',
+      'Give `features` and every column\'s `values` the same length',
     ],
     dont: [
-      'Do not use for arbitrary data tables. Use data-table for sortable/filterable data',
-      'Do not add more than 4-5 columns; the grid gets too compressed on smaller screens',
-      'Do not mix boolean and text values in the same row. Pick one format per feature',
-      'Do not forget to provide the features prop; without it, no rows will render',
+      'Don\'t mix check marks and text in one row. Pick one format per feature',
     ],
   },
 
-  previewHtml: `<arc-comparison features='["Storage","Bandwidth","Custom Domain","Priority Support"]'>
+  previewHtml: `<arc-comparison features='["Storage","Bandwidth","Custom domain","Priority support"]'>
   <arc-comparison-column heading="Free" values='["5 GB","10 GB","false","false"]'></arc-comparison-column>
   <arc-comparison-column heading="Pro" highlight values='["100 GB","Unlimited","true","true"]'></arc-comparison-column>
   <arc-comparison-column heading="Enterprise" values='["Unlimited","Unlimited","true","true"]'></arc-comparison-column>
@@ -53,7 +44,7 @@ The \`highlight\` attribute on a column adds a subtle accent background to both 
       name: 'ComparisonColumn',
       tag: 'arc-comparison-column',
       description:
-        'Data-holder child element that defines a single column in the comparison grid. Renders nothing visible; it provides heading, highlight, and values data to the parent.',
+        'One column of a Comparison. It renders nothing itself: the parent reads its heading, highlight and values.',
     },
   ],
 
