@@ -8,41 +8,31 @@ export const datePicker: ComponentDef = {
   interactivity: 'interactive',
   description: 'Calendar-based date picker with keyboard navigation.',
 
-  overview: `DatePicker provides a calendar-based date selection interface that combines a read-only text input with a dropdown calendar grid. Clicking the input toggles a 6-row calendar showing the current month with previous/next month navigation arrows. The selected date is displayed in a human-readable format (e.g. "Jan 15, 2026") inside the input, while the underlying \`value\` property stores the date as an ISO string (YYYY-MM-DD).
+  overview: `DatePicker is a read-only text field that opens a calendar. Clicking the field toggles a six-week grid for one month, with buttons for the previous and next month. Clicking the month title switches to a grid of months, and again to a grid of years, for longer jumps. The field shows the chosen date as "Jan 15, 2026", and \`value\` holds it as \`YYYY-MM-DD\`. Picking a date fires \`arc-change\` with that string.
 
-The calendar grid highlights today's date with an inset ring, the currently selected date with a filled accent-primary circle, and outside-month dates with reduced opacity. The \`min\` and \`max\` properties constrain the selectable range: dates outside it appear dimmed and are non-interactive. Previous and next month buttons in the calendar header allow quick navigation without changing the selected value.
+\`min\` and \`max\` take ISO dates. Days outside the range are dimmed and can't be picked. Today has an inset ring and the selected day a filled accent circle. Month and weekday names follow \`locale\`, which defaults to the page's \`lang\`, and the week starts on the locale's usual first day unless you set \`first-day-of-week\` (1 is Monday, 7 is Sunday).
 
-When a date is selected, the component dispatches an \`arc-change\` event with the ISO date string in the detail. Clicking outside the component or pressing Escape closes the dropdown and returns focus to the input. The dropdown uses a slide-down entrance animation that respects \`prefers-reduced-motion\`. A configurable \`label\` renders above the input as an uppercase accent-font heading, consistent with other ARC UI form controls.`,
+Escape closes the calendar and puts focus back in the field, and a click outside closes it too. The calendar renders in the top layer, so an \`overflow: hidden\` ancestor doesn't clip it. For a start and end date, use DateRangePicker.`,
 
   features: [
-    'Calendar dropdown with 6-row grid showing current, previous, and next month days',
-    'ISO string value format (YYYY-MM-DD) for consistent data handling',
-    'Human-readable date display in the input (e.g. "Jan 15, 2026")',
-    'Min and max date constraints that disable out-of-range dates visually',
-    'Today highlight with an inset border ring for orientation',
-    'Previous/next month navigation arrows in the calendar header',
-    'Escape key and outside-click dismissal with focus restoration to the input',
-    'Animated dropdown entrance with `prefers-reduced-motion` support',
+    'The day grid is one tab stop. Arrow keys move by a day or a week, and Home and End go to the start and end of the week',
+    'Form-associated: with a `name`, the ISO value submits with the form',
+    'Set `open` to open the calendar from code. It stays closed while `disabled`',
   ],
 
   guidelines: {
     do: [
-      'Set min and max to constrain the date range when the context requires it (e.g. future-only booking dates)',
-      'Provide a descriptive label like "Start Date" or "Date of Birth" for accessibility',
-      'Use the ISO string value for form submission and API communication, not the display format',
-      'Listen to arc-change to capture the selected date and validate it against business rules',
-      'Set the initial value property when editing an existing record so the calendar opens to the correct month',
+      'Set `min` and `max` when only some dates make sense, such as future-only booking dates',
+      'Set a `label`, such as "Start date" or "Date of birth". Without one, the field is named "Choose date"',
+      'Send the ISO `value` to forms and APIs, not the displayed text',
+      'Set `value` when editing an existing record, so the calendar opens on the right month',
     ],
     dont: [
-      'Do not use DatePicker for date ranges. Use two DatePicker instances with coordinated min/max instead',
-      'Do not allow the user to type directly into the input; it is read-only by design to ensure valid date formats',
-      'Do not set min greater than max, as this will disable all dates and make the picker unusable',
-      'Do not forget to handle the arc-change event. Without it, the selected date is not captured',
-      'Do not place DatePicker inside a container with overflow: hidden, as the calendar dropdown will be clipped',
+      'Don\'t set `min` later than `max`. Every date is disabled',
     ],
   },
 
-  previewHtml: `<arc-date-picker label="Start Date" placeholder="Choose a date" style="width:240px"></arc-date-picker>`,
+  previewHtml: `<arc-date-picker label="Start date" placeholder="Choose a date" style="width:240px"></arc-date-picker>`,
 
   tabs: [
     {
