@@ -7,7 +7,7 @@ export const waveform: ComponentDef = {
   tier: 'data',
   interactivity: 'hybrid',
   description:
-    'Audio waveform visualization that doubles as a scrubber. Renders a consumer-computed peaks array as an SVG waveform with an accent played region and glowing playhead, and becomes a full seek control when interactive.',
+    'Draws an audio clip\'s shape from peak values you supply, and doubles as a seek control.',
   searchKeywords: ['audio', 'scrubber', 'seek', 'peaks', 'player', 'sound', 'playhead'],
 
   overview: `Waveform draws an audio clip's shape from an array of peak amplitudes (one number per bar, 0 to 1) and marks playback progress on it. The played region is in the accent color with a soft glow, the unplayed region is muted, and a thin glowing playhead sits at the current position. Set \`interactive\` and the same element becomes a scrubber, with pointer dragging, keyboard seeking and slider semantics for assistive technology. \`variant="bars"\` draws one bar per peak, centered on the middle line, and \`mirror\` draws a filled min/max envelope.
