@@ -7,13 +7,13 @@ export const treeView: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard navigation, and indentation guide lines.',
+    'Shows nested items as a tree whose branches open and close, with one selected item at a time.',
 
   overview: `TreeView shows nested data as a tree whose branches open and close, such as a file browser, a navigation menu or a documentation outline. Each node is an \`<arc-tree-item>\`, nested to any depth, with a \`label\`, an optional \`icon\` (rendered as text) and an \`expanded\` attribute for its starting state.
 
 Clicking a branch selects it and opens or closes it. Clicking a leaf selects it. The selected row is tinted and drawn in \`--interactive\`, a vertical guide line runs beside each nested group, and the chevron turns as a branch opens or closes.
 
-Keyboard support follows the WAI-ARIA tree pattern. ArrowDown and ArrowUp move between visible rows, ArrowRight opens a branch, ArrowLeft closes it, and Enter or Space selects. \`arc-select\` fires with the item and its \`path\`, the chain of labels from the root, and \`arc-toggle\` fires when a branch opens or closes.`,
+ArrowDown and ArrowUp move between visible rows, ArrowRight opens a branch, ArrowLeft closes it, and Enter or Space selects. Home, End and typeahead from the WAI-ARIA tree pattern aren't supported, and ArrowRight and ArrowLeft don't move to a child or back to the parent. \`arc-select\` fires with the item and its \`path\`, the chain of labels from the root, and \`arc-toggle\` fires when a branch opens or closes.`,
 
   features: [
     'Roles `tree`, `treeitem` and `group`, with `aria-expanded` on branches',
