@@ -8,37 +8,24 @@ export const blockquote: ComponentDef = {
   interactivity: 'static',
   description: 'Styled pull-quote with optional citation for editorial emphasis.',
 
-  overview: `Blockquote presents quotations, testimonials, and editorial callouts. It renders a semantic \`<blockquote>\` element wrapped in a dark-themed container with a subtle gradient accent line across the top edge and a large decorative opening-quote glyph.
+  overview: `Blockquote is a pull-quote: a semantic \`<blockquote>\` with a gradient line across the top, a large opening-quote glyph and a faint accent tint behind it. Use it for quotations and testimonials.
 
-The default variant displays quote text in the primary text color with an italic style, while the \`accent\` variant renders the quote text with a gradient fill derived from the accent token system. Both variants include an optional citation footer that appears beneath the quote in small, uppercase, accented type prefixed with an em dash.
-
-The component uses CSS parts (\`blockquote\`, \`quote\`, \`cite\`) for external style overrides. The top gradient line and decorative quote mark are rendered with pseudo-elements, keeping the DOM minimal and the markup semantic.`,
+The quote text is italic. The default variant sets it in the primary text color, and the \`accent\` variant fills it with the accent gradient. Set \`cite\` and the attribution appears underneath in a \`<footer>\`, in small uppercase muted type after an em dash.`,
 
   features: [
-    'Semantic <blockquote> element with optional <footer> citation',
-    'Top gradient accent line via ::before pseudo-element (no left-border pattern)',
-    'Decorative opening-quote glyph rendered with ::after pseudo-element',
-    'Two variants: default (standard text) and accent (gradient text fill)',
-    'Optional cite prop for attribution with em dash prefix and uppercase styling',
-    'CSS parts (blockquote, quote, cite) for external style overrides',
-    'Subtle rgba background tint derived from accent-primary token',
-    '`prefers-reduced-motion` support disables transitions and animations',
+    'The top line and the quote glyph are `::before` and `::after` pseudo-elements, so the markup is just the blockquote, the quote and the citation',
   ],
 
   guidelines: {
     do: [
-      'Use for editorial pull-quotes, testimonials, and highlighted excerpts',
-      'Provide a cite attribute when the source or author is known',
-      'Use the accent variant sparingly to highlight a single key quote on a page',
-      'Keep quote content concise: one to three sentences works best',
-      'Pair with Text and Card components for editorial layouts',
+      'Set cite whenever you know who said it',
+      'Use the accent variant for one key quote on a page',
+      'Keep quotes to one to three sentences',
+      'Combine with Text and Card in editorial layouts',
     ],
     dont: [
-      'Do not use Blockquote for generic content boxes. Use an Alert (`variant="tip"`) or Card instead',
-      'Do not stack multiple accent-variant blockquotes on the same page',
-      'Do not use overly long quotations that would work better as inline text',
-      'Do not remove the cite attribute if the quote has a known author',
-      'Do not nest blockquotes inside other blockquotes',
+      'Don\'t use it as a general content box. Use Alert (`variant="tip"`) or Card',
+      'Don\'t put several accent-variant quotes on one page',
     ],
   },
 
