@@ -8,42 +8,35 @@ export const valueCard: ComponentDef = {
   interactivity: 'static',
   description: 'Horizontal card with icon and text, for values or features lists.',
 
-  overview: `ValueCard presents an icon beside a heading and description in a horizontal layout, making it ideal for company values, principle lists, and benefit grids. Unlike FeatureCard's vertical stacking, ValueCard places the icon to the left of the text block, producing a more compact and scannable layout that works well in tighter spaces or when you have many items to display.
+  overview: `ValueCard puts an icon to the left of a heading and a description, for lists of company values, principles or benefits. FeatureCard stacks its icon above the text. ValueCard's side-by-side layout is shorter, so it fits tighter spaces and longer lists.
 
-The card uses a subtle border with a hover effect that brightens the border via \`--border-bright\` and adds a soft violet box shadow. The icon is rendered in \`--accent-secondary\` by default, giving it a distinct visual identity that separates it from the blue-accented FeatureCard. This color distinction helps maintain visual hierarchy when both card types appear on the same page.
+The icon is drawn in \`--accent-secondary\`, where FeatureCard's uses \`--accent-primary\`, so the two read differently on the same page. On hover the border brightens to \`--border-bright\` and a faint \`--accent-secondary\` glow appears.
 
-Like FeatureCard, ValueCard exposes an \`icon\` named slot for custom icon content alongside the string \`icon\` property for simple text. CSS parts (\`card\`, \`icon\`, \`title\`, \`description\`) enable targeted styling from outside the shadow DOM.`,
+The \`icon\` slot takes an SVG or other markup, and the \`icon\` property takes plain text when the slot is empty.`,
 
   features: [
-    'Horizontal icon-beside-text layout for compact, scannable presentation',
-    'Violet-accented icon area using `--accent-secondary` for visual distinction',
-    'Subtle hover border brightening with a soft violet glow shadow',
-    'Icon slot with fallback to the icon string property',
-    'Full-height flex layout that equalises card heights in a grid',
-    'CSS parts (card, icon, title, description) for external style customization',
-    'Clean typographic hierarchy with 17px heading and 14px body text',
+    'The card fills the height of its grid cell, so cards in a row line up',
+    'The heading renders as an `<h3>`',
   ],
 
   guidelines: {
     do: [
-      'Use for lists of values, principles, or benefits where compact layout matters',
-      'Place in a 2-column grid for a balanced presentation of 4-6 items',
-      'Use the icon slot to insert SVG icons for consistent sizing and theming',
-      'Keep headings short (2-4 words) since horizontal space is limited',
-      'Pair with a section heading above the grid for context',
+      'Put four to six cards in a two-column grid',
+      'Use the `icon` slot for SVG icons',
+      'Keep headings to two to four words',
+      'Put a section heading above the grid',
     ],
     dont: [
-      'Do not add an href. Value cards are not linkable; use FeatureCard for navigation',
-      'Do not use excessively long descriptions that break the horizontal balance',
-      'Do not mix value cards and feature cards in the same grid row',
-      'Do not override the violet icon color without updating the hover glow to match',
-      'Do not use value cards for single items. They are designed for grouped lists',
+      'Don\'t use it as a link. It has no `href`, so use FeatureCard for navigation',
+      'Don\'t write descriptions so long that the text column dwarfs the icon',
+      'Don\'t mix value cards and feature cards in the same grid row',
+      'Don\'t change the icon color without changing the hover glow to match',
     ],
   },
 
   previewHtml: `<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; max-width: 600px;">
-  <arc-value-card icon="&#10003;" heading="Quality First" description="Every component built with accessibility in mind."></arc-value-card>
-  <arc-value-card icon="&#9733;" heading="Open Source" description="MIT licensed with an active community."></arc-value-card>
+  <arc-value-card icon="&#10003;" heading="Ship small" description="Release in pieces a reviewer can read in one sitting."></arc-value-card>
+  <arc-value-card icon="&#9733;" heading="Write it down" description="Decisions go in the doc, not only in chat."></arc-value-card>
 </div>`,
 
   tabs: [
