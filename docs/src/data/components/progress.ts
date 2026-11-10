@@ -8,9 +8,9 @@ export const progress: ComponentDef = {
   interactivity: 'static',
   replayable: true,
   description:
-    'A progress bar or spinner, determinate or indeterminate, for uploads, installs and other long-running work.',
+    'A progress bar or spinner for long-running work, with or without a known percentage.',
 
-  overview: `Progress shows that work is running and, when you know it, how far along it is. Use it for any operation long enough for someone to notice: uploads, imports, multi-step wizards, background jobs.
+  overview: `Progress shows that work is running and, when you know it, how far along it is.
 
 The bar variant fills a horizontal track from left to right. Use it when you know the percentage, as with a file transfer or quota usage. The spinner variant is a circle sized for buttons, table cells and inline loading states, where a full-width bar doesn't fit.
 
