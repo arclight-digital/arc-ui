@@ -8,43 +8,32 @@ export const dashboardGrid: ComponentDef = {
   interactivity: 'static',
   description: 'Responsive grid for dashboard metric cards.',
 
-  overview: `DashboardGrid is a responsive CSS Grid wrapper purpose-built for arranging metric cards, stat widgets, and KPI panels in a dashboard layout. By default it uses \`auto-fill\` with a configurable minimum column width (280px), so cards automatically wrap into as many columns as fit the available space without any manual breakpoints. Drop in three cards or twelve and the grid adapts.
+  overview: `DashboardGrid lays out metric cards in a CSS grid that wraps them into as many columns as fit. Each column is at least \`min-column-width\` wide (280px by default), so you don't need breakpoints. Lower it to fit more, smaller cards, or raise it for fewer, wider ones. \`gap\` sets the space between cards and takes any CSS length or spacing token. It defaults to \`var(--space-lg)\`, which is also the grid's padding.
 
-When you need a fixed column count instead of fluid wrapping, set the \`columns\` attribute explicitly. The component detects the explicit attribute and switches from \`auto-fill\` to a \`repeat(N, 1fr)\` grid, giving you precise control for layouts where card count is predictable. The \`gap\` prop accepts any CSS length or spacing token for consistent gutter sizing across your dashboard.
-
-The \`min-column-width\` attribute controls the minimum width of each column in the fluid layout. Lowering it to 200px lets you pack more smaller cards; raising it to 360px forces fewer, wider cards. All three props (\`columns\`, \`gap\`, \`min-column-width\`) map to CSS custom properties (\`--columns\`, \`--gap\`, \`--min-col\`), so they can also be set from external stylesheets or media queries for advanced responsive control.`,
+\`columns\` caps the count. With \`columns="3"\`, a wide container shows three columns, and a narrow one still wraps once a column would get narrower than \`min-column-width\`.`,
 
   features: [
-    'Fluid auto-fill grid that wraps cards based on available width',
-    'Explicit columns mode via the columns attribute for fixed-count layouts',
-    'Configurable min-column-width for controlling when columns wrap',
-    'Gap property accepts any CSS length or spacing design token',
-    'CSS custom properties (`--columns`, `--gap`, `--min-col`) for external override',
-    'Built-in padding via `--space-lg` for comfortable card spacing',
-    'Exposes a grid CSS part for targeted ::part() styling',
-    'Zero JavaScript layout logic: pure CSS Grid',
+    'The column minimum and gap are also set as `--min-col` and `--gap` on the host, where page code can read them',
+    'Columns and gap are in the server-rendered markup, so the grid doesn\'t reflow when the script loads',
+    'The inner grid is exposed as the `grid` CSS part',
   ],
 
   guidelines: {
     do: [
-      'Use DashboardGrid for metric cards, stat panels, and KPI widgets at the top of dashboards',
-      'Let the default auto-fill behavior handle responsiveness unless you need a fixed column count',
-      'Set min-column-width to match the natural minimum width of your card components',
-      'Pair with ValueCard or Card components for consistent card sizing',
-      'Use spacing tokens like var(--space-md) for the gap prop to stay on the design system grid',
+      'Set `min-column-width` to the narrowest your cards can be',
+      'Put each metric in a Card or ValueCard so the cards match',
+      'Use spacing tokens such as `var(--space-md)` for `gap`',
     ],
     dont: [
-      'Do not use DashboardGrid for general page layout. Use PageLayout for sidebar/main structures',
-      'Do not set columns to a high number without testing on narrow viewports; cards will crush',
-      'Do not nest DashboardGrid inside another DashboardGrid. Use a single grid with appropriate min-column-width',
-      'Do not mix radically different card heights in the same grid without aligning their internal content',
-      'Do not override the grid CSS with inline flex or float styles. Let the component manage the layout',
+      'Don\'t use it for page layout. Use PageLayout for sidebar and main areas',
+      'Don\'t nest one inside another. The padding doubles. Adjust `min-column-width` on a single grid',
+      'Don\'t restyle the grid with flex or floats',
     ],
   },
 
   previewHtml: `<arc-dashboard-grid columns="3" gap="var(--space-md)">
   <arc-card><arc-stat value="$45,231" label="Revenue"></arc-stat></arc-card>
-  <arc-card><arc-stat value="2,345" label="Active Users"></arc-stat></arc-card>
+  <arc-card><arc-stat value="2,345" label="Active users"></arc-stat></arc-card>
   <arc-card><arc-stat value="99.98%" label="Uptime"></arc-stat></arc-card>
 </arc-dashboard-grid>`,
 
