@@ -22,7 +22,7 @@ By default the dots are read-only and something else, such as a Carousel or your
   guidelines: {
     do: [
       'Set `clickable` when readers should be able to jump straight to a page',
-      'Keep it to seven dots or fewer, so the row stays quick to scan',
+      'Keep it to seven dots or fewer',
       'Place it below or over the content it pages',
       'Update `value` whenever the parent\'s active page changes',
     ],
