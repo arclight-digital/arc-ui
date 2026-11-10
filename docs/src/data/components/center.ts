@@ -9,43 +9,33 @@ export const center: ComponentDef = {
   description:
     'Content centering primitive with max-width, intrinsic centering, and text-center options.',
 
-  overview: `Center is a layout primitive that horizontally centers its children within the available space. By default it applies \`margin-inline: auto\` with a configurable \`max-width\`, the standard block-level pattern for keeping a content column centered at a readable width.
+  overview: `Center centers its children horizontally. By default it's a block with \`margin-inline: auto\`, a \`max-width\` (default \`60ch\`) and \`--space-lg\` of padding on each side. Use it to keep a content column at a readable width in the middle of the page.
 
-The \`intrinsic\` prop switches to intrinsic centering mode, which uses \`display: flex\` with \`align-items: center\` and \`justify-content: center\` to center children based on their natural (intrinsic) size rather than stretching them to the max-width. Use it for buttons, icons, or short labels that should not stretch to fill a column.
-
-The \`text\` prop adds \`text-align: center\` for centering inline text content within the block. The three modes (block, intrinsic, and text centering) can be combined, which covers most centering cases without custom CSS.`,
+\`intrinsic\` makes it a flex column with \`align-items: center\`, so children keep their natural width and don't stretch to the column. Use it for buttons, icons and short labels. \`text\` adds \`text-align: center\` for inline text. The three modes can be combined.`,
 
   features: [
-    'Block-level centering with `margin-inline: auto` and configurable `max-width`',
-    'Intrinsic centering mode with flexbox for natural-width children',
-    'Text centering mode with `text-align: center` for inline content',
-    'Configurable max-width via the `max-width` prop (defaults to --max-width token)',
-    'Modes can be combined: intrinsic + text for centered buttons with centered labels',
-    'Pure CSS, with no JavaScript',
-    'CSS part: `center` for targeted ::part() styling',
+    'Combine intrinsic and text for a centered button with a centered label',
+    'The max-width applies in every mode, intrinsic included',
   ],
 
   guidelines: {
     do: [
-      'Use default mode for centering page content columns with a max-width',
-      'Use intrinsic mode for centering buttons, icons, or small elements by their natural width',
-      'Use text mode for centering heading text or short descriptive paragraphs',
-      'Combine intrinsic and text modes for centered call-to-action sections',
-      'Override max-width to match your layout needs (e.g. "480px" for narrow forms)',
+      'Use the default mode for a page content column',
+      'Use text mode for centered headings and short paragraphs',
+      'Combine intrinsic and text for call-to-action sections',
+      'Change max-width to fit the layout, for example "480px" for a narrow form',
     ],
     dont: [
-      'Do not use Center as a substitute for Container. Container adds padding; Center only centers',
-      'Do not use Center for vertical centering; it handles horizontal centering only',
-      'Do not apply Center to elements that should be full-width (like navigation bars)',
-      'Do not set max-width to 100%, which makes the centering constraint meaningless',
-      'Do not nest multiple Centers; a single Center wrapper is enough',
+      'Don\'t use it for vertical centering. It centers horizontally only',
+      'Don\'t wrap anything that should run full width, like a navigation bar',
+      'Don\'t set max-width to 100%. Then there is nothing to center',
     ],
   },
 
   previewHtml: `<div style="width:100%;display:flex;flex-direction:column;gap:var(--space-lg)">
   <div style="border:1px dashed var(--accent-primary);border-radius:var(--radius-sm);padding:var(--space-sm)">
     <div style="max-width:280px;margin-inline:auto;background:rgba(77,126,247,0.08);border-radius:var(--radius-sm);padding:var(--space-md);text-align:center;color:var(--text-secondary);font-size:13px;font-family:var(--font-body)">
-      Block centering — max-width: 280px
+      Block centering (max-width: 280px)
     </div>
   </div>
   <div style="border:1px dashed var(--accent-secondary);border-radius:var(--radius-sm);padding:var(--space-sm);display:flex;justify-content:center;align-items:center">
@@ -54,7 +44,7 @@ The \`text\` prop adds \`text-align: center\` for centering inline text content 
     </div>
   </div>
   <div style="border:1px dashed var(--accent-primary);border-radius:var(--radius-sm);padding:var(--space-md);text-align:center;color:var(--text-secondary);font-size:13px;font-family:var(--font-body)">
-    Text centering — text-align: center
+    Text centering (text-align: center)
   </div>
 </div>`,
 
