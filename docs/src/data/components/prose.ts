@@ -7,48 +7,36 @@ export const prose: ComponentDef = {
   tier: 'typography',
   interactivity: 'static',
   description:
-    'Long-form content container that applies typographic rhythm and styling to slotted HTML elements.',
+    'A wrapper that styles the headings, paragraphs, lists, code, tables and images inside it for long-form reading.',
 
-  overview: `Prose is a wrapper that applies consistent typography to long-form content. Instead of styling each heading, paragraph, list, and code block yourself, wrap the content in arc-prose and every child element gets spacing, font sizing, and color.
+  overview: `Prose styles long-form HTML so you don't have to style each element yourself. Wrap an article, a docs page or rendered Markdown in \`<arc-prose>\` and its contents get spacing, font sizes and colors from the ARC UI tokens. It's for reading content, not for UI like navigation, forms or dashboards.
 
-The component styles slotted HTML elements: headings (h1–h4), paragraphs, links, lists, blockquotes, code blocks, images, tables, horizontal rules, and inline elements like strong and code. It uses the ARC UI design tokens, so your long-form content matches the rest of your application with no extra CSS.
+It styles h1 to h4 (not h5 or h6), paragraphs, lists, blockquotes, \`<pre>\` blocks, images, tables and horizontal rules. These get their styles through \`::slotted()\`, which only reaches direct children of \`<arc-prose>\`, so a heading or paragraph inside a wrapper \`<div>\` stays unstyled. Links, list items, inline code, \`<strong>\`, \`<em>\` and table cells are styled at any depth by a stylesheet the component adds to the page.
 
-The \`size\` property controls the base font size of the container, with "sm", "md", and "lg" variants. Headings, code blocks, and other elements scale relative to the chosen size. The same content can render at different densities: compact sidebar documentation, standard article views, or large-format reading.`,
+\`size\` (\`sm\`, \`md\` or \`lg\`) sets the base text size. Headings and code blocks keep their own sizes at every setting.`,
 
   features: [
-    'Automatic typographic styling for all common HTML elements via ::slotted()',
-    'Three size variants (sm, md, lg) for different content density needs',
-    'Heading hierarchy with distinct sizes, weights, and spacing for h1–h4',
-    'Pretty text wrapping on paragraphs for improved readability',
-    'Styled links with accent-colored underlines and hover transitions',
-    'Blockquotes with subtle accent background and italic treatment',
-    'Code and pre-formatted blocks with monospace font and surface backgrounds',
-    'Responsive images with max-width containment and border radius',
-    'Full-width tables with collapsed borders and appropriate spacing',
-    'Horizontal rules rendered as subtle divider lines',
-    'Prefers-reduced-motion support for link transitions',
+    'Paragraphs use `text-wrap: pretty`',
+    'Links have a faint accent-colored underline that turns solid on hover',
+    'Blockquotes are italic on a faint accent background',
+    '`<pre>` blocks use the monospace font on a surface background and scroll sideways when too wide',
+    'Images are capped at the container\'s width with rounded corners, and tables run full width with collapsed borders',
   ],
 
   guidelines: {
     do: [
-      'Use Prose for article content, documentation pages, blog posts, and rendered Markdown',
-      'Choose the size variant based on reading context: sm for sidebars, md for main content, lg for focused reading',
-      'Place semantic HTML directly inside arc-prose as slotted children',
-      'Combine with the Markdown component to style rendered Markdown output',
-      'Use for any long-form content that includes mixed heading levels, paragraphs, and lists',
+      'Use `sm` in sidebars, `md` for main content and `lg` for focused reading',
+      'Put headings, paragraphs and lists directly inside `<arc-prose>`, not inside a wrapper element',
+      'Pair it with the Markdown component to style rendered Markdown',
     ],
     dont: [
-      'Do not nest arc-prose inside another arc-prose: a single wrapper is sufficient',
-      'Do not use Prose for UI chrome like navigation, forms, or dashboards: it is designed for reading content',
-      'Do not wrap individual short text snippets in Prose; use the Text component instead',
-      'Do not override slotted element styles with inline styles when token-level customization is available',
-      'Do not use Prose as a substitute for a CSS reset: it specifically targets content typography',
+      'Don\'t wrap a single short line in Prose. Use Text',
     ],
   },
 
   previewHtml: `<arc-prose>
-  <h2>Getting Started</h2>
-  <p>ARC UI provides a comprehensive set of components for building modern interfaces. Each component follows the design token system for consistent theming.</p>
+  <h2>Getting started</h2>
+  <p>To add the library to an existing project:</p>
   <ul>
     <li>Install the package from npm</li>
     <li>Import the components you need</li>
