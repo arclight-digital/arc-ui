@@ -9,36 +9,29 @@ export const spinner: ComponentDef = {
   searchKeywords: ['loader', 'loading'],
   description: 'Animated loading spinner in three sizes.',
 
-  overview: `Spinner is a rotating loading indicator for actions where content shape is unknown or a skeleton layout is impractical. It renders a circular border element with one transparent edge that spins continuously at 0.75-second intervals, the classic loading ring. Use it for button loading states, inline status indicators, and overlay loading screens.
+  overview: `Spinner is a ring with one transparent edge that turns once every 0.75 seconds. Use it while something loads. If you know the layout of what's coming, use Skeleton to show it.
 
-Three size presets control the spinner dimensions: \`sm\` (16px, 2px border) is compact enough for inline use next to text or inside buttons, \`md\` (24px, 2.5px border) is the default for general loading states, and \`lg\` (40px, 3px border) suits page-level or overlay loading indicators. The border width scales proportionally with size to maintain visual balance.
-
-Three color variants (\`primary\`, \`secondary\`, and \`white\`) let you match the spinner to its context. Primary uses the accent-primary color, secondary aligns with accent-secondary areas, and white works on dark backgrounds or inside filled buttons. The component includes \`role="status"\` and \`aria-label="Loading"\` for screen reader users.`,
+The \`white\` variant draws the ring in \`--text-primary\`, the body text color. That's light in the dark theme and dark in the light theme, so it only reads as white on dark surfaces.`,
 
   features: [
-    'Three size presets: sm (16px), md (24px), lg (40px) with proportional border widths',
-    'Three color variants: primary (`--accent-primary`), secondary (`--accent-secondary`), white (`--text-primary`)',
-    'Continuous 0.75s linear rotation',
-    'Inline-flex display for placing beside text or inside buttons',
-    '`role="status"` and aria-label="Loading" for accessibility',
-    'CSS part (spinner) for custom animation or color overrides',
-    'Lightweight implementation: single div element with border animation',
+    'Sizes: `sm` is 16px with a 2px border, `md` (the default) is 24px with 2.5px, and `lg` is 40px with 3px',
+    'Variants: `primary` uses `--accent-primary`, `secondary` uses `--accent-secondary`, and `white` uses `--text-primary`',
+    'Displays as `inline-flex`, so it lines up with text and button labels',
+    'Has `role="status"` and `aria-label="Loading"`',
   ],
 
   guidelines: {
     do: [
-      'Use sm size inside buttons to indicate a pending action',
-      'Use lg size for full-page or overlay loading states',
-      'Choose the white variant when placing a spinner on a filled or dark background',
-      'Pair with a text label ("Loading...") for screen readers and sighted users alike',
-      'Remove the spinner immediately when loading completes; avoid artificial delays',
+      'Use `sm` inside a button to show a pending action',
+      'Use `lg` for a full-page or overlay loading state',
+      'Check the `white` variant in both themes before putting it on a filled background',
+      'Add a visible label such as "Loading..." when there\'s room for one',
+      'Remove the spinner as soon as loading finishes, with no added delay',
     ],
     dont: [
-      'Do not use a spinner when the content shape is predictable; prefer skeleton placeholders',
-      'Do not place multiple spinners on the same screen simultaneously',
-      'Do not use the lg spinner inline with text: it overwhelms surrounding content',
-      'Do not rely solely on the spinner for status; combine with aria-live regions when appropriate',
-      'Do not use the primary variant on a primary-colored background: it becomes invisible',
+      'Don\'t show several spinners on one screen at once',
+      'Don\'t put `lg` inline with text. It\'s taller than the line',
+      'Don\'t use `primary` on a primary-colored background. The ring disappears',
     ],
   },
 
