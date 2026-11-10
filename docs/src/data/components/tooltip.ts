@@ -8,24 +8,23 @@ export const tooltip: ComponentDef = {
   interactivity: 'hybrid',
   searchKeywords: ['hint'],
   description:
-    'Short hint that appears on hover or focus. Supports four placement positions and a configurable show delay.',
+    'A short text hint shown next to a control on hover or keyboard focus.',
 
   overview: `Tooltip shows a short plain-text hint when the pointer rests on its trigger or the trigger gets focus. Use it when a control's purpose isn't clear from how it looks, as with icon-only buttons, truncated labels, abbreviations and keyboard shortcuts. For formatted or interactive content, use Popover.
 
 \`position\` puts it above, below, left or right of the trigger. It waits \`delay\` milliseconds (200 by default) before showing, so a pointer sweeping across a dense toolbar doesn't set off every tooltip.
 
-The trigger points to the popup with \`aria-describedby\`, the popup has \`role="tooltip"\`, and Escape dismisses it. The popup has \`pointer-events: none\`, so it never blocks clicks on what's around it.`,
+The trigger gets the tooltip text as \`aria-description\`, the popup has \`role="tooltip"\`, and Escape dismisses it. The popup has \`pointer-events: none\`, so it never blocks clicks on what's around it.`,
 
   features: [
     'Shows on `mouseenter` and `focusin`',
-    'An arrow points at the trigger',
+    'An arrow points at the trigger, and the tooltip flips to the opposite side when `position` doesn\'t fit in the viewport',
   ],
 
   guidelines: {
     do: [
       'Use tooltips on icon-only buttons to name the action, such as "Edit" or "Delete"',
       'Keep the text to one line, ideally under eight words',
-      'Start with `top`, and switch only when the tooltip is clipped by the edge of the viewport',
       'Set a longer delay (400 to 600ms) in dense toolbars',
       'Give the trigger an `aria-label` when the tooltip is its only name',
     ],
