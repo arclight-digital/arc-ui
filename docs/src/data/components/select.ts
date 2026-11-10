@@ -8,7 +8,7 @@ export const select: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['dropdown', 'picker'],
   description:
-    'A single-choice dropdown for forms, with arrow-key navigation, type-to-jump and ARIA listbox semantics.',
+    'A dropdown for choosing one option from a list in a form.',
 
   overview: `Select replaces the native \`<select>\` with a dropdown styled by ARC UI's tokens. Its options are \`<arc-option>\` children. Use it for one choice from a list in a form: a person to assign, a category, a status, a locale. For several choices use MultiSelect. For three or fewer options, RadioGroup shows them all at once. To filter a long list as you type, use Combobox.
 
