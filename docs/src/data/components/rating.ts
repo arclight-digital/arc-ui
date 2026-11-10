@@ -7,7 +7,7 @@ export const rating: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'A row of SVG stars for picking a score from 1 to max, with a hover preview and keyboard control.',
+    'A row of stars for picking a score from 1 to `max`.',
 
   overview: `Rating renders \`max\` stars (5 by default) for scores like a product review or a satisfaction survey. Filled stars use the accent color with a glow, and empty stars are outlines. Hovering fills every star up to the one under the pointer, so you see the score before you click.
 
