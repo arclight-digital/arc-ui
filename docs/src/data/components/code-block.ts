@@ -9,13 +9,13 @@ export const codeBlock: ComponentDef = {
   description:
     'Syntax-highlighted code with a title, a copy button, line numbers, line emphasis, diff tints, a shell prompt and a collapsed height.',
 
-  overview: `CodeBlock shows source code in a framed block. A slim header carries a title (\`label\`, in the body font), an optional \`filename\` in monospace, the \`language\` as a quiet tag, and an icon-only copy button that writes the code to the clipboard and turns into a green check for a moment. Code goes in through the \`code\` property; there is no default slot.
+  overview: `CodeBlock shows source code in a framed block. The header has a title (\`label\`, in the body font), an optional \`filename\` in monospace, the \`language\` as a small tag, and an icon-only copy button that copies the code and shows a green check for a moment. Code goes in through the \`code\` property. There is no default slot.
 
-Code renders line by line whether or not it is highlighted, so every reading aid works without the highlighter: \`line-numbers\` adds a gutter, \`highlight="2,4-6"\` emphasizes lines, \`diff\` (or \`language="diff"\`) tints added and removed lines, \`wrap\` soft-wraps long lines instead of scrolling them, and \`max-lines\` collapses a tall block behind a "Show all" button. None of this reaches the clipboard: the copy button copies \`code\` exactly as given.
+Code renders line by line whether or not it's highlighted, so every reading aid works without the highlighter: \`line-numbers\` adds a gutter, \`highlight="2,4-6"\` emphasizes lines, \`diff\` (or \`language="diff"\`) tints added and removed lines, \`wrap\` soft-wraps long lines, and \`max-lines\` collapses a tall block behind a "Show all" button. None of this reaches the clipboard. The copy button copies \`code\` exactly as given.
 
-**Shell blocks.** Set \`prompt\` to put a \`$\` (or your own prompt, such as \`#\`) before each command. Continuation lines after a trailing backslash and blank lines get none, and the prompt can't be selected or copied. Shell highlighting separates the parts of a command: a wrapper like \`sudo\` is muted, the command is bold, its subcommand takes the accent, and paths, URLs and image references read as values. For variants of the same command (npm, pnpm and yarn, or two editions of a product), put the blocks in an [arc-code-group](/docs/components/code-group) for one block with tabs.
+**Shell blocks.** Set \`prompt\` to put a \`$\` (or your own prompt, such as \`#\`) before each command. Continuation lines after a trailing backslash and blank lines get none, and the prompt can't be selected or copied. Shell highlighting tells the parts of a command apart: a wrapper like \`sudo\` is muted, the command is bold, its subcommand takes the accent, and paths, URLs and image references read as values. For variants of one command (npm, pnpm and yarn, or two editions of a product), put the blocks in an [arc-code-group](/docs/components/code-group) to get one block with tabs.
 
-**Highlighting is opt-in.** CodeBlock is the one component in ARC UI with a heavy dependency: shiki and its grammars are around 13.6 MB, which no other component touches. So shiki is an *optional peer dependency*, and CodeBlock is the one component the main barrel does not re-export. A bundler resolves the dynamic imports of everything it can reach, so being in the barrel would have made shiki everyone's install. Import it by its own subpath and install shiki alongside:
+**Highlighting is opt-in.** CodeBlock is the one component in ARC UI with a heavy dependency: shiki and its grammars, at TODO(copy): current install size of shiki plus @shikijs/langs (the page said about 13.6 MB, and nothing in the repo measures it). So shiki is an *optional peer dependency*, and the main barrel doesn't re-export CodeBlock. A bundler resolves the dynamic imports of everything it can reach, so a barrel export would have put shiki in everyone's install. (Components in a domain group and experimental components are left out of the barrel too, for other reasons.) Import CodeBlock by its own subpath and install shiki alongside:
 
 \`\`\`
 npm install shiki @shikijs/langs
@@ -25,39 +25,31 @@ npm install shiki @shikijs/langs
 import '@arclux/arc-ui/code-block';
 \`\`\`
 
-Without shiki, CodeBlock still renders: the header, the copy button, the reading aids and the code itself all work. The code is not colored, and the console says so once. With shiki, the colors fade in when the grammar loads and no line moves. \`@arclux/arc-ui/register\` does not register CodeBlock for the same reason; import the subpath.
+Without shiki, CodeBlock still renders: the header, the copy button, the reading aids and the code all work. The code isn't colored, and the console says so once. With shiki, the colors fade in when the grammar loads and no line moves. \`@arclux/arc-ui/register\` doesn't register CodeBlock either, so import the subpath.
 
-CodeBlock is a hybrid component: the code display works without JavaScript, but copying needs JS and a secure context (HTTPS). Copy failures are caught, so it degrades without errors on HTTP or in restricted environments.`,
+The code shows without JavaScript, but copying needs JavaScript and a secure context (HTTPS). Copy failures are caught, so on HTTP or in a restricted environment the button fails without throwing errors.`,
 
   features: [
-    'Slim header: a `label` title in the body font, an optional `filename` in mono, the language as a quiet tag, and an icon-only copy',
-    'Copies `code` exactly: prompts and line numbers are never selected or copied',
-    'Shell prompt with `prompt`, skipping continuation and blank lines',
-    'Shell colors that separate the wrapper, command, subcommand, flags, variables, operators and values',
-    '`line-numbers`, `highlight="2,4-6"` line emphasis, and `diff` tints for added and removed lines',
-    '`wrap` for soft-wrapped lines, aligned after the gutter and prompt',
-    '`max-lines` collapses a tall block with a fade and a "Show all N lines" button',
-    'Syntax highlighting via shiki, an optional peer dependency imported only by this component; colors fade in without moving a line',
-    'Every reading aid works without shiki installed',
-    'Window variant with a title bar and a line count; basic variant with no chrome',
+    'Shell colors also set apart flags, variables and operators',
+    'Wrapped lines align after the gutter and the prompt',
+    '`max-lines` fades the cut-off edge, and its button reads "Show all N lines"',
+    'A `window` variant with a title bar and a line count, and a `basic` variant with no chrome',
   ],
 
   guidelines: {
     do: [
-      'Give a block a `label` when it is one of several on a page, so a reader can tell them apart',
+      'Give a block a `label` when it\'s one of several on a page, so readers can tell them apart',
       'Use `prompt` for commands a reader will paste into a terminal, and leave it off for scripts and output',
-      'Use arc-code-group for variants of the same command instead of stacking near-identical blocks',
+      'Use arc-code-group for variants of one command, not a stack of near-identical blocks',
       'Use `highlight` to point at the lines the surrounding text talks about',
-      'Set `max-lines` on long samples in running text, so the page keeps its shape',
-      'Install shiki and @shikijs/langs when you want highlighting; the component works without them, uncolored',
-      'Import `@arclux/arc-ui/code-block` directly; the main barrel and `/register` exclude it',
+      'Set `max-lines` on long samples in running text',
     ],
     dont: [
-      'Do not pass content between the tags. There is no default slot; use the `code` prop',
-      "Do not type a `$` into the code itself. It ends up in the reader's clipboard; use `prompt`",
-      'Do not use `wrap` for code where indentation matters to the reader, such as Python or YAML, unless the lines are short',
-      'Do not use CodeBlock for single-line inline code; use arc-text variant="code" instead',
-      'Do not assume copy will always work; it requires HTTPS and a user gesture in modern browsers',
+      'Don\'t put content between the tags. There is no default slot, so use the `code` prop',
+      "Don't type a `$` into the code. It ends up in the reader's clipboard, so use `prompt`",
+      'Don\'t use `wrap` where indentation matters to the reader, such as Python or YAML, unless the lines are short',
+      'Don\'t use CodeBlock for inline code. Use arc-text variant="code"',
+      'Don\'t count on copy working everywhere. It needs HTTPS and a user gesture',
     ],
   },
 
