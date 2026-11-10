@@ -9,7 +9,7 @@ export const responsiveSwitcher: ComponentDef = {
   description:
     'A layout that lines its children up in a row when it\'s wide and stacks them when it\'s narrow, using a container query on its own width.',
 
-  overview: `ResponsiveSwitcher lays its children out in a row when its own width is at least \`threshold\`, and in a column below that. Because it measures itself with a container query, not the viewport, the same markup works in a full-width section, a narrow sidebar or a resizable split pane. Use it for two-column forms that should drop to one column, or a text-and-image pair that should stack.
+  overview: `ResponsiveSwitcher lays its children out in a row when its own width is at least \`threshold\`, and in a column below that. It uses a container query, not a media query, so it switches at the same width wherever you put it. Use it for two-column forms that should drop to one column, or a text-and-image pair that should stack.
 
 \`threshold\` defaults to 600px. Each child gets \`flex: 1\`, so children share a row equally. \`gap\` takes the spacing tokens \`xs\` through \`xl\`, with \`md\` as the default.
 
