@@ -7,7 +7,7 @@ export const inset: ComponentDef = {
   tier: 'layout',
   interactivity: 'static',
   description:
-    'Padding primitive consuming spacing tokens with optional negative-margin bleed mode.',
+    'Pads its content on all four sides with one spacing token.',
 
   overview: `Inset pads its content on all four sides with one spacing token. Use it for the space around a block of content, and Stack for the gaps between siblings.
 
