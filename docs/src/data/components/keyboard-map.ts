@@ -8,15 +8,15 @@ export const keyboardMap: ComponentDef = {
   interactivity: 'static',
   searchKeywords: ['shortcut diagram', 'cheat sheet', 'keycap', 'keyboard layout', 'hotkey map'],
   description:
-    'A rendered keyboard with highlighted keys and chords, for shortcut documentation and editor cheat sheets.',
+    'Draws a keyboard with the keys of one or more shortcuts lit up, for shortcut docs and cheat sheets.',
 
-  overview: `Keyboard Map draws a keyboard as a grid of keycaps and highlights the keys named in its \`highlight\` prop. Kbd names a key inline and Hotkey listens for one, while Keyboard Map shows where a chord's keys are on the board. Highlighted keys get an accent tint, a glow and accent legend text.
+  overview: `Keyboard Map draws a keyboard as a grid of keycaps and highlights the keys named in its \`highlight\` prop. For a key name in a sentence, use Kbd. Highlighted keys get an accent tint, a glow and accent legend text.
 
-Chords use Hotkey's syntax: keys join with "+", \`cmd\`/\`command\` normalize to meta, \`option\` to alt, and \`mod\` resolves to Cmd on Mac and Ctrl on Windows, so one chord string documents both. \`platform\` sets the modifier legends and how \`mod\` resolves: "auto" detects the visitor's platform in the browser (and renders the Mac board on the server), and "mac" or "win" pins it.
+Chords are written the way Hotkey writes them: keys join with "+", \`cmd\`/\`command\` normalize to meta and \`option\` to alt. Keyboard Map also takes \`mod\`, which Hotkey doesn't. It resolves to Cmd on Mac and Ctrl on Windows, so one chord string documents both. \`platform\` sets the modifier legends and how \`mod\` resolves: "auto" detects the visitor's platform in the browser (and renders the Mac board on the server), and "mac" or "win" pins it.
 
 The board is a stylized diagram with two layouts. \`compact\` (the default) is a 60%-style block with no nav cluster or numpad, and \`ansi\` adds the F-row and nav cluster. There's no ISO or JIS layout.
 
-It's display only: no slots, no click events, nothing focusable. Wiring up a shortcut is Hotkey's job. The board is one \`role="img"\` whose label is computed from the chords ("Keyboard diagram highlighting Cmd+Shift+P"), and the key legends are hidden from assistive technology.`,
+Nothing on the board is clickable or focusable. To make a shortcut work, use Hotkey. The board is one \`role="img"\` whose label is computed from the chords ("Keyboard diagram highlighting Cmd+Shift+P"), and the key legends are hidden from assistive technology.`,
 
   features: [
     'Modifier legends: ⌘ ⌥ ⇧ ⌃ on Mac, Ctrl/Alt/Shift/Win on Windows',
