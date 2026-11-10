@@ -10,39 +10,31 @@ export const descriptionList: ComponentDef = {
   description:
     'Structured term/detail pair list in a responsive grid layout with optional dividers.',
 
-  overview: `DescriptionList renders term/detail pairs in a grid layout for metadata displays, specification tables, and detail panels. Each child \`arc-description-item\` contains a term label and a detail slot, with the term displayed as an uppercase accent label and the detail rendered below it.
+  overview: `DescriptionList lays out term and detail pairs, for metadata, spec sheets and detail panels. Each child \`<arc-description-item>\` has a \`term\`, shown as an uppercase label, and its content is the detail.
 
-**Two props control arrangement and they are about different axes.** \`columns\` is how many *items* sit across; set it to 2, 3, or 4 to arrange pairs side by side. \`layout\` is how each item arranges its own term and detail: \`stacked\` (the default) puts the term above the detail, and \`horizontal\` puts them side by side on a shared two-column grid so terms align down the list. They compose: one item can be horizontal inside a three-column list. Vertical dividers appear automatically between columns when \`dividers\` is enabled, and on screens narrower than 640px the grid collapses to a single column for readability.
+Two props control the arrangement, on different axes. \`columns\` is how many items sit across (1 by default). \`layout\` is how each item arranges its own term and detail: \`stacked\`, the default, puts the term above the detail, and \`horizontal\` puts them side by side on a shared grid so the terms line up down the list. They combine, so a three-column list can use horizontal items. Below 640px every list drops to one column.
 
-**\`layout\` arrived with \`arc-key-value\`, which merged in here in v4.** A term beside its detail was that component's whole reason to exist as a separate element, so absorbing it meant absorbing the arrangement. One thing to watch when migrating: Key Value defaulted to the horizontal arrangement and this component defaults to \`stacked\`, so add \`layout="horizontal"\` to keep what you had. The survivor's default stays unchanged, because a merge is not the place to restyle the component that survived. See [the tombstone](/docs/components/key-value) for the full translation.
+**\`layout\` came from \`arc-key-value\`, which merged into this component in v4.** Key Value put the term beside the detail by default, and this component defaults to \`stacked\`, so add \`layout="horizontal"\` to keep what you had. See [the Key Value removal note](/docs/components/key-value) for the full translation.
 
-Dividers (bottom borders between items, and right borders between columns) are enabled by default and can be toggled off with the \`dividers\` attribute. The container uses \`role="list"\` and each item uses \`role="listitem"\` for assistive technology support.`,
+Dividers between rows and between columns are on by default. Set \`no-dividers\` to remove them. The list has \`role="list"\` and each item \`role="listitem"\`.`,
 
   features: [
-    'ARIA list/listitem roles for assistive technology support',
-    'Responsive grid layout with configurable column count',
-    '`layout="horizontal"` puts each term beside its detail on a shared grid, so terms align down the list',
-    'Automatic single-column fallback below 640px',
-    'Optional horizontal and vertical dividers between items',
-    'Uppercase accent-font term labels for visual hierarchy',
-    'CSS parts: `list`, `item`, `term`, `detail` for deep customization',
-    'Follows `prefers-reduced-motion` for reduced-motion users',
+    'Horizontal terms get at least 120px, and the detail takes the rest of the row',
+    'CSS parts: `list`, `item`, `term`, `detail`',
   ],
 
   guidelines: {
     do: [
-      'Use for structured key/value metadata such as profile details, order summaries, or spec sheets',
-      'Set `columns` to 2 or 3 for wider layouts where items are short and scannable',
-      'Use `layout="horizontal"` when terms are short and you want them to align down a single column of pairs',
-      'Pair with cards or panels for contained metadata displays',
-      'Keep term labels concise. One to three words is ideal',
+      'Use it for key and value metadata, such as profile details, order summaries or spec sheets',
+      'Set `columns` to 2 or 3 when items are short',
+      'Use `layout="horizontal"` when terms are short and you want them lined up in one column',
+      'Keep terms to one to three words',
     ],
     dont: [
-      'Do not use for tabular data with many rows. Use `arc-data-grid` instead',
-      'Do not nest description lists inside each other',
-      'Do not combine `layout="horizontal"` with a high `columns` count. Each item then needs room for two columns of its own, and both collapse to nothing',
-      'Do not use long paragraph-length terms. Move verbose content to the detail slot',
-      'Do not mix description items with non-`arc-description-item` children',
+      'Don\'t use it for tabular data with many rows. Use `arc-data-grid`',
+      'Don\'t combine `layout="horizontal"` with a high `columns` count. Each item needs room for two columns of its own, and both get squeezed to nothing',
+      'Don\'t write paragraph-length terms. Put the long text in the detail',
+      'Don\'t put anything but `arc-description-item` elements in the list. A `role="list"` should only contain list items',
     ],
   },
 
@@ -65,7 +57,7 @@ Dividers (bottom borders between items, and right borders between columns) are e
       name: 'Description Item',
       tag: 'arc-description-item',
       description:
-        'A single term/detail pair within a description list. The term is rendered as an uppercase label, and the default slot holds the detail content.',
+        'One term and detail pair in a description list. `term` is the uppercase label, and the default slot is the detail.',
     },
   ],
 
