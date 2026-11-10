@@ -12,7 +12,7 @@ export const dataGrid: ComponentDef = {
 
   overview: `DataGrid renders \`rows\`, an array of objects, under \`columns\`, an array of \`{ key, label }\` entries. Both are set as JavaScript properties, not child elements. Each column can add \`sortable\`, \`editable\`, \`pinned\`, a fixed \`width\` and \`align\`. With none of those and \`selectable\` off, it's a plain read-only table.
 
-**It replaced \`arc-table\` and \`arc-data-table\` in v4.** Three props came from them. \`density="compact"\` tightens cell padding. \`striped\` draws alternating row backgrounds and is on by default, so a plain Table migrates with \`no-striped\`. \`overscan\` sets how many rows render above and below the visible window when \`virtual\` is on (5 by default).
+**It absorbed \`arc-table\` and \`arc-data-table\` in v4.** Three props came from them. \`density="compact"\` tightens cell padding. \`striped\` draws alternating row backgrounds and is on by default, so a plain Table migrates with \`no-striped\`. \`overscan\` sets how many rows render above and below the visible window when \`virtual\` is on (5 by default).
 
 Migrating: Table's positional \`columns: ["A"]\` and \`rows: [["1"]]\` become named keys (\`[{ key, label }]\`) and one object per row, so a column can move without every row moving with it. Data Table's slotted \`<arc-column>\` children become one \`columns\` entry each with the same field names, and its \`sort-column\`/\`sort-direction\` pair becomes a single entry in the multi-sort \`sort\` array, which behaves the same. Selection, virtual scrolling and \`overscan\` are unchanged. See the removal notes for [Table](/docs/components/table), [Data Table](/docs/components/data-table) and [Column](/docs/components/column).
 
@@ -32,7 +32,7 @@ The grid is one tab stop. Arrow keys move focus between cells, Home and End go t
 
   guidelines: {
     do: [
-      'For a display-only table, set `density="compact"` and `no-striped`. That\'s what a plain `arc-table` looked like',
+      'For a display-only table, set `density="compact"` and `no-striped`. That\'s what the removed `arc-table` looked like',
       'Set `manual-sort` and handle `arc-sort` when the data is paginated or sorted on the server',
       'Pin one or two identifying columns, such as an ID or a name',
       'Give pinned columns a `width`. Pinned offsets are computed from it',
