@@ -8,7 +8,7 @@ export const lightbox: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['gallery', 'image viewer', 'zoom', 'photo', 'pinch'],
   description:
-    'Full-screen image viewer. Open it from a thumbnail, step through a gallery, zoom up to 4x, and close it with Escape, a backdrop click or a swipe down.',
+    'A full-screen viewer for a gallery of images, opened from a thumbnail and zoomable up to 4x.',
 
   overview: `Lightbox shows a gallery of images at full screen, above the page behind a blurred backdrop. It shares the overlay infrastructure with Dialog and Sheet: focus is trapped while open, page scroll is locked, Escape and a backdrop click dismiss, and focus returns to the trigger on close. Open it from a thumbnail with \`show(index)\`, or set \`open\` and \`index\` directly.
 
@@ -18,7 +18,7 @@ Stepping wraps at both ends. Move with the arrow buttons, the arrow keys, Home a
 
 Zoom runs from 1x to 4x. Pinch or Ctrl + wheel zooms toward the fingers or the pointer, a double-click or double-tap zooms to 2x at that spot, and \`+\`, \`-\` and \`0\` step and reset it. While zoomed, dragging and the arrow keys pan, and the image's edges never come inside the frame. Stepping to another image or closing resets the zoom.
 
-Opened from a thumbnail, the picture grows out of it, and on close it shrinks back into the thumbnail of whichever image is showing. Each step slides the picture a short way in the direction of travel. Under reduced motion both become a plain fade. A gallery link is its own origin; for the \`images\` property, the element clicked or focused when \`show()\` ran is the origin for the image it opened on, and an entry's \`origin\` (an element or a selector) names one for any image.
+Opened from a thumbnail, the picture grows out of it, and on close it shrinks back into the thumbnail of whichever image is showing. Each step slides the picture a short way in the direction of travel. Under reduced motion both become a plain fade. A gallery link is the thumbnail for its own image. With the \`images\` property, the first image grows from whatever was clicked or focused when \`show()\` ran, and an entry's \`origin\` (an element or a selector) sets the thumbnail for any image.
 
 Add \`thumbnails\` for a filmstrip under the picture. It stays faint until you point at it or tab into it, marks the current image with a short glowing bar, and jumps on click. An entry's \`thumb\` gives it a small source; otherwise the strip uses \`src\`, loaded lazily.
 
