@@ -7,11 +7,11 @@ export const aspectRatio: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Container that enforces a width-to-height ratio on its content, for images, videos, and embedded media.',
+    'A box that holds its content to a fixed width-to-height ratio.',
 
   overview: `AspectRatio keeps its content at a fixed width-to-height ratio with the CSS \`aspect-ratio\` property. Pass a \`W/H\` string like \`"16/9"\`, \`"4/3"\` or \`"1/1"\`. The container is as wide as its parent and takes its height from the ratio, so it reserves the space for an image or video before the media loads and the page doesn't shift (CLS).
 
-Slotted images, videos and iframes fill the box with \`object-fit: cover\`, so they're cropped, never letterboxed or stretched. Text that doesn't fit is clipped, with no scrolling.`,
+Every slotted child is sized to fill the box. Images and videos get \`object-fit: cover\`, so they're cropped, never letterboxed or stretched. Text that doesn't fit is clipped, with no scrolling.`,
 
   features: [
     'Decimal ratios work, such as `2.35/1` for cinematic widescreen',
