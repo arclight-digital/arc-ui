@@ -8,49 +8,42 @@ export const dialog: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['modal', 'popup', 'overlay'],
   description:
-    'General-purpose focus-trapping overlay on the platform <dialog>, with backdrop blur, a slide-up entrance, and Escape-to-dismiss. For forms, settings, and content that needs full user attention.',
+    'General-purpose focus-trapping overlay on the native <dialog>, with a blurred backdrop, a slide-up entrance and Escape to close. For forms, settings and other content that blocks the page.',
 
-  overview: `Dialog is the general-purpose overlay primitive, built on the platform's native \`<dialog>\` element. It floats above the page behind a blurred backdrop, moves focus inside on open, and returns focus to the trigger element on close. Use it when you need a container for forms, settings panels, content previews, or multi-step workflows where background interaction must be blocked. The native top layer and \`::backdrop\` handle stacking and modality.
+  overview: `Dialog is the general overlay, built on the native \`<dialog>\` element, so the browser handles the top layer, \`::backdrop\` and modality. It opens over a blurred backdrop, moves focus inside, and returns focus to where it came from when it closes. Use it for forms, settings, previews and multi-step flows where the page behind shouldn't be usable.
 
-**Renamed in v4.** This component was \`arc-modal\` through v3; the element is a dialog, the platform calls it a dialog, and *modal* named one of its behaviours rather than what it is. The old tag is gone in v4.0.0, removed rather than aliased, since v4 never shipped and an alias would have served nobody. The reverse also bites: the v3 tag \`arc-dialog\` was a small confirm prompt, and that component is now \`arc-confirm\`. Handing this Dialog the old prompt props (\`message\`, \`confirm-label\`, \`cancel-label\`) logs a \`console.error\` naming \`arc-confirm\` rather than silently ignoring them.
+**Renamed in v4.** This component was \`arc-modal\` through v3. That tag was removed in v4.0.0, not aliased. The v3 \`arc-dialog\` tag was a small confirm prompt, and that component is now \`arc-confirm\`. If you pass this Dialog the old prompt props (\`message\`, \`confirm-label\`, \`cancel-label\`), it logs a \`console.error\` that points you to \`arc-confirm\`.
 
-The component ships with three width presets (\`sm\`/\`md\`/\`lg\`), a \`fullscreen\` mode, and a slide-up entrance. Dismissal is governed by one prop: \`dismissible\` renders the built-in close button and enables Escape and backdrop click, and it defaults to on. A dialog is dismissible unless you say otherwise. Set it to \`false\` for decisions the user must resolve through the footer buttons. The \`arc-close\` event is cancelable, so \`preventDefault()\` can veto a close while a form inside is mid-save.`,
+\`dismissible\` is on by default. It shows the X button and lets Escape and a backdrop click close the dialog. Set it to \`false\` for decisions the user has to make with the footer buttons. \`arc-close\` is cancelable, so \`preventDefault()\` keeps the dialog open, for example while a form inside it is saving.`,
 
   features: [
-    'Built on the native `<dialog>` element: top layer, `::backdrop`, and modality come from the platform',
-    'Automatic focus trap: focus moves inside on open and returns to the trigger on close',
-    'Backdrop blur and dim, styled via `--dialog-backdrop` and `--dialog-backdrop-filter`',
-    'Slide-up entry and fade-out exit animations',
-    '`dismissible` (default on): built-in close button, Escape key, and backdrop click',
-    'Cancelable `arc-close` event: `preventDefault()` vetoes the close',
-    'Three width presets: sm (400px), md (560px), lg (720px), plus `fullscreen`',
-    '`header` and `footer` slots around arbitrary body content',
-    '`heading` doubles as the dialog’s accessible name',
+    'The backdrop\'s dim and blur come from `--dialog-backdrop` and `--dialog-backdrop-filter`',
+    'Slides up on open and fades out on close',
+    '`size` sets the max width: `sm` is 400px, `md` 560px and `lg` 720px. `fullscreen` fills the viewport',
+    '`header` and `footer` slots around the body',
+    '`heading` is the text in the header bar and the dialog\'s accessible name',
   ],
 
   guidelines: {
     do: [
-      'Use Dialog for rich content that blocks the page: edit forms, creation wizards, detail views, settings panels',
-      'Keep `dismissible` on unless abandoning the dialog would lose meaningful user state',
-      'Put primary actions in the `footer` slot, with the confirming action last',
-      'Use `size="sm"` for short single-purpose dialogs and `lg` only for genuinely dense content',
-      'Cancel the `arc-close` event to hold the dialog open while an in-flight save completes',
+      'Keep `dismissible` on unless closing by accident would lose the user\'s work',
+      'Put actions in the `footer` slot, with the confirming action last',
+      'Use `size="sm"` for short single-purpose dialogs, and `lg` only for dense content',
     ],
     dont: [
-      'Do not use Dialog for a yes/no prompt. That is `arc-confirm`, which exists so you never rebuild the two-button layout',
-      'Do not stack dialogs. Resolve one before opening another',
-      'Do not use Dialog for passive notifications. Use Alert or Toast, which do not steal focus',
-      'Do not disable `dismissible` for convenience; an inescapable overlay must be earning that severity',
+      'Don\'t use it for a yes-or-no question. Use `arc-confirm`, which already has the two buttons',
+      'Don\'t stack dialogs. Close one before opening another',
+      'Don\'t use it for passive notices. Use Alert or Toast, which don\'t take focus',
     ],
   },
 
-  previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Edit Profile</arc-button>
-<arc-dialog heading="Edit Profile" size="sm">
-  <arc-input label="Display Name" value="Ada Lovelace"></arc-input>
+  previewHtml: `<arc-button onclick="this.nextElementSibling.open = true" variant="secondary">Edit profile</arc-button>
+<arc-dialog heading="Edit profile" size="sm">
+  <arc-input label="Display name" value="Ada Lovelace"></arc-input>
   <arc-input label="Email" type="email" value="ada@example.com" style="margin-top:var(--space-md)"></arc-input>
   <div slot="footer" style="display:flex;gap:var(--space-sm);justify-content:flex-end">
     <arc-button variant="ghost" onclick="this.closest('arc-dialog').open = false">Cancel</arc-button>
-    <arc-button variant="primary" onclick="this.closest('arc-dialog').open = false">Save Changes</arc-button>
+    <arc-button variant="primary" onclick="this.closest('arc-dialog').open = false">Save changes</arc-button>
   </div>
 </arc-dialog>`,
 
