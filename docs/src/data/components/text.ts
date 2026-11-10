@@ -8,47 +8,40 @@ export const text: ComponentDef = {
   interactivity: 'static',
   description: 'Typography component with variants matching the arclight type scale.',
 
-  overview: `Text is the foundational typography primitive in ARC UI. It maps nine named variants to the design system's type scale, each with pre-configured font-size, weight, letter-spacing, line-height, and color. The "display" variant renders a large gradient-clipped headline, "heading" provides balanced section titles, and "body" covers standard paragraph content with the secondary text color.
+  overview: `Text sets type from ARC UI's type scale. Each of its nine variants fixes the font size, weight, letter spacing, line height and color.
 
-For specialized contexts, "accent" applies the accent gradient with a glow drop-shadow, "label" renders uppercase section titles using the Tomorrow font, and "wordmark" produces all-caps branding text with a blue glow text-shadow. The "code" variant switches to the monospace font stack with a violet color and subtle text-shadow, ideal for inline code references. "muted" and "ghost" provide progressively dimmer text colors for de-emphasized content.
+\`display\` is a large headline with a gradient fill, \`heading\` is a section title, and \`body\` (the default) is paragraph text in the secondary text color. \`muted\` and \`ghost\` are dimmer text for supporting content. \`accent\` fills short text with the accent gradient and a glow, \`label\` is an uppercase section title in Tomorrow, \`wordmark\` is uppercase branding text with an accent glow, and \`code\` is monospace in \`--accent-secondary\`, for inline code.
 
-The \`as\` property controls the rendered HTML element (h1 through h6, span, or the default p), allowing you to maintain correct document heading hierarchy independently from the visual variant. This separation of semantic tag from visual style is essential for accessibility and SEO.`,
+\`as\` sets the element: \`h1\` to \`h6\`, \`span\`, or \`p\` (the default). The variant sets the look, so a section can be an \`h2\` for the outline and still look like \`display\`.`,
 
   features: [
-    'Nine typography variants: display, heading, body, muted, ghost, accent, label, wordmark, and code',
-    'Gradient-clipped text rendering on display and accent variants',
-    'Configurable HTML element via the "as" prop (h1-h6, span, p) for semantic control',
-    'Balanced text wrapping on heading and body variants via text-wrap: balance',
-    'Monospace code variant with violet color and subtle glow text-shadow',
-    'Uppercase Tomorrow-font treatment for label and wordmark variants',
-    'Accent variant includes a drop-shadow glow filter for visual emphasis',
-    'Inline display for accent and code variants; block display for all others',
+    '`heading` and `body` use `text-wrap: balance`',
+    '`accent` and `code` display inline, and every other variant displays as a block',
   ],
 
   guidelines: {
     do: [
-      'Use the "as" prop to match heading hierarchy (h1, h2, etc.) even when using a different visual variant',
-      'Use display for hero headlines and heading for section titles to establish clear hierarchy',
-      'Use muted or ghost for supporting text that should not compete with primary content',
-      'Pair the label variant with section containers to create clear content groupings',
-      'Use the code variant for inline code references within body text',
+      'Set `as` to keep the heading outline right, whatever the variant',
+      'Use `display` for hero headlines and `heading` for section titles',
+      'Use `muted` or `ghost` for supporting text',
+      'Use `label` to title a group of content',
+      'Use `code` for code references inside body text',
     ],
     dont: [
-      'Do not render display or heading variants inside a <span>. They are block-level content',
-      'Skip heading levels (e.g. h1 to h3) only to get a particular visual size; use "as" and "variant" independently',
-      'Do not use the accent variant for large blocks of text. The gradient and glow are meant for short highlights',
-      'Do not apply the wordmark variant outside of branding contexts; it is specifically designed for product names',
-      'Do not nest multiple Text components when a single one with the right variant suffices',
+      'Don\'t render `display` or `heading` with `as="span"`. They\'re headings and should use a heading element',
+      'Don\'t skip heading levels (such as h1 to h3) to get a size. Set `as` and `variant` separately',
+      'Don\'t use `accent` for long text. The gradient and glow are for short highlights',
+      'Don\'t use `wordmark` for anything but a product or brand name',
     ],
   },
 
   previewHtml: `<div style="display: flex; flex-direction: column; gap: 16px;">
-  <arc-text variant="display" as="h1">Display Headline</arc-text>
-  <arc-text variant="heading" as="h2">Section Heading</arc-text>
+  <arc-text variant="display" as="h1">Display headline</arc-text>
+  <arc-text variant="heading" as="h2">Section heading</arc-text>
   <arc-text variant="body">Body paragraph text with balanced wrapping for readability.</arc-text>
   <arc-text variant="muted">Muted supporting text</arc-text>
   <arc-text variant="accent" as="span">Accent highlight</arc-text>
-  <arc-text variant="label" as="span">Section Label</arc-text>
+  <arc-text variant="label" as="span">Section label</arc-text>
   <arc-text variant="code" as="span">const x = 42;</arc-text>
 </div>`,
 
