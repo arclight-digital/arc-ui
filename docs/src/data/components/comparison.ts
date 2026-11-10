@@ -17,7 +17,7 @@ A value of \`"true"\` renders a check mark and \`"false"\` a cross, each with an
     '`highlight` on a column gives its header and every cell an accent background',
     'Rows highlight on hover',
     'Uses `table`, `row`, `rowheader`, `columnheader` and `cell` roles',
-    'The feature column is at least 140px wide, and the value columns share the rest equally',
+    'Every column gets an equal share of the width, and the feature column never goes below 140px',
     'A malformed `features` value falls back to an empty list without throwing',
     'CSS parts: `table`, `header`, `feature`, `cell`',
   ],
