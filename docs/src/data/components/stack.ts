@@ -9,41 +9,34 @@ export const stack: ComponentDef = {
   description:
     'Flexbox layout component for vertical or horizontal stacking with token-based spacing.',
 
-  overview: `Stack is a layout primitive that arranges child elements in a vertical or horizontal flex container with token-based spacing. Instead of writing flexbox CSS for every layout, you set \`direction\`, \`gap\`, \`align\`, and \`justify\` attributes, which map to the design system's spacing scale.
+  overview: `Stack lays out its children in a column or a row with a gap from the spacing scale. You set \`direction\`, \`gap\`, \`align\` and \`justify\` as attributes in place of writing flexbox CSS.
 
-The component renders no inner wrapper. The \`:host\` element is the flex container, and \`render()\` returns a bare \`<slot>\`, so Stack adds no extra DOM nodes. Gap values (\`xs\` through \`2xl\`) map to \`var(--space-*)\` tokens, so spacing stays consistent without magic numbers.
+The host element is the flex container, and \`render()\` returns a bare \`<slot>\`, so Stack adds no DOM nodes of its own. With no attributes it's a column with a \`md\` gap and children stretched to its width.
 
-Stack suits form layouts, card groups, button rows, and any composition where items need uniform spacing. The \`wrap\` attribute enables flex wrapping for responsive grids, and combining \`direction="horizontal"\` with \`justify="between"\` creates common toolbar-style layouts.`,
+\`wrap\` lets a row wrap onto more lines. Use it for a set of tags or small cards. For columns that line up across rows, use CSS Grid.`,
 
   features: [
-    'Vertical and horizontal flex direction via attribute',
-    'Token-based gap scale: xs, sm, md, lg, xl, 2xl mapping to `--space-`* tokens',
-    'Alignment control with start, center, end, and stretch options',
-    'Justification control including space-between and space-around',
-    'Flex wrap support for responsive layouts',
-    'Zero inner DOM: host element is the flex container directly',
+    'Gap scale: `xs`, `sm`, `md`, `lg`, `xl` and `2xl`, mapped to the `--space-*` tokens',
+    '`align` takes `start`, `center`, `end` or `stretch`',
+    '`justify` takes `start`, `center`, `end`, `between` or `around`',
   ],
 
   guidelines: {
     do: [
-      'Use Stack to replace inline flexbox styles for consistent spacing',
-      'Combine direction="horizontal" with justify="between" for toolbar layouts',
-      'Use the wrap attribute for responsive card or tag grids',
-      'Nest stacks for complex layouts: horizontal inside vertical',
-      'Use gap tokens instead of margins on child elements',
+      'Combine `direction="horizontal"` with `justify="between"` for a toolbar-style row',
+      'Nest a horizontal stack inside a vertical one for rows within a column',
+      'Space children with `gap`, not margins',
     ],
     dont: [
-      'Do not use Stack when CSS Grid is more appropriate (2D layouts with column alignment)',
-      'Do not add margin to Stack children; use gap instead',
-      'Do not use gap="xs" for major layout sections; reserve xs for tight clusters like icon+text',
-      'Do not nest more than 3 levels deep; consider a dedicated layout component instead',
+      'Don\'t use it for two-dimensional layouts where columns must line up. Use CSS Grid',
+      'Don\'t use `gap="xs"` between major sections. Keep it for tight clusters such as an icon and its label',
     ],
   },
 
   previewHtml: `<arc-stack direction="vertical" gap="md" style="max-width: 280px;">
   <arc-stack direction="horizontal" gap="sm" align="center">
     <arc-badge variant="info">NEW</arc-badge>
-    <arc-text variant="label">Stack Layout</arc-text>
+    <arc-text variant="label">Stack layout</arc-text>
   </arc-stack>
   <arc-divider></arc-divider>
   <arc-stack direction="horizontal" gap="sm" justify="between" align="center">
