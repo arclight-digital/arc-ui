@@ -8,44 +8,37 @@ export const featureCard: ComponentDef = {
   interactivity: 'static',
   description: 'Card with icon, heading, description, and animated hover effects.',
 
-  overview: `FeatureCard is a promotional content block designed for landing pages, feature grids, and marketing sections. It presents an icon, heading, and description in a vertical layout with a gradient border hover effect. The card's animated hover state includes an icon lift, a subtle glow from \`--glow-card-hover\`, and an expanding accent rule.
+  overview: `FeatureCard shows an icon, a \`heading\` and a \`description\` stacked in a card, for feature grids on landing pages and marketing sections. The border is a gradient, drawn as a 1px gap around the inner panel. On hover the icon lifts with an \`--accent-primary-glow\` shadow, the card gets the \`--glow-card-hover\` glow, and an accent rule grows along the bottom.
 
-When an \`href\` is provided, the entire card renders as an anchor element, making it a natural fit for feature grids that link to detail pages. Without an href, it renders as a static \`<div>\`, suitable for purely informational feature lists. The card uses a 1px padding trick with a gradient background to produce a border effect that transitions smoothly on hover.
+With an \`href\`, the whole card is a link, and \`action\` adds a label with an arrow at the bottom, such as "Read the guide". Without an \`href\` it's a plain \`<div>\` and \`action\` isn't shown. The heading renders as an \`<h3>\`.
 
-The icon slot accepts custom content (SVG icons, emoji, or any markup) via the \`icon\` named slot, falling back to the \`icon\` string property for simple text or emoji icons. CSS parts (\`card\`, \`inner\`, \`icon\`, \`title\`, \`description\`) are exposed for deep style customization when needed.`,
+The \`icon\` slot takes an SVG or other markup. Without it, the \`icon\` property is shown as text, which suits an emoji.`,
 
   features: [
-    'Gradient border hover effect using a 1px padding technique for smooth transitions',
-    'Icon slot with fallback to the icon string property for simple emoji or text',
-    'Renders as an <a> when href is set, or a <div> for static display',
-    'Animated icon lift with glow shadow (`--accent-primary-glow`) on hover',
-    'Expanding accent rule that fades in on hover for visual polish',
-    'Focus-visible outline using `--focus-glow` for keyboard navigation',
-    'Responsive padding that adjusts at the 768px breakpoint',
-    'CSS parts (card, inner, icon, title, description) for external styling',
+    'Fills the height of its grid cell, so cards in a row match',
+    'Padding shrinks below 768px',
+    'CSS parts: `card`, `inner`, `icon`, `title`, `description`, `action`',
   ],
 
   guidelines: {
     do: [
-      'Use in a CSS grid for feature grids. The card fills its height via flex layout',
-      'Provide an href when the card should navigate to a detail or docs page',
-      'Keep descriptions concise (one to two sentences) for scannable feature lists',
-      'Use the icon slot for SVG icons when you need precise sizing and color control',
-      'Combine multiple feature cards in a 2- or 3-column grid for landing page sections',
+      'Put several in a 2- or 3-column grid for a landing page section',
+      'Set an `href` when the card leads to a detail or docs page',
+      'Keep descriptions to one or two sentences',
+      'Use the icon slot for SVG icons when you need control over size and color',
     ],
     dont: [
-      'Do not nest interactive elements (buttons, links) inside a feature card that already has an href',
-      'Do not use long paragraph-length descriptions. The card is designed for brief summaries',
-      'Do not mix feature cards with value cards in the same grid. Choose one style per section',
-      'Do not override the gradient border with a flat color. It loses the signature hover effect',
-      'Do not use feature cards for data display. Use value cards or stat components instead',
+      'Don\'t put buttons or links inside a card that has an `href`. The whole card is already a link',
+      'Don\'t mix feature cards and value cards in one grid',
+      'Don\'t replace the gradient border with a flat color. The hover effect goes with it',
+      'Don\'t use it to show data. Use ValueCard or Stat',
     ],
   },
 
   previewHtml: `<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 720px;">
-  <arc-feature-card icon="&#9889;" heading="Performance" description="Optimized builds for lightning-fast load times." href="#" action="Learn more"></arc-feature-card>
-  <arc-feature-card icon="&#9881;" heading="Themeable" description="Design tokens let you customize every detail." href="#" action="Customize"></arc-feature-card>
-  <arc-feature-card icon="&#9878;" heading="Accessible" description="WCAG-compliant focus and keyboard support."></arc-feature-card>
+  <arc-feature-card icon="&#9889;" heading="Automations" description="Run a task when someone submits a form." href="#" action="Set up automations"></arc-feature-card>
+  <arc-feature-card icon="&#9881;" heading="Settings" description="Change your workspace name, logo and time zone." href="#" action="Open settings"></arc-feature-card>
+  <arc-feature-card icon="&#9878;" heading="Billing" description="See your invoices and change your plan."></arc-feature-card>
 </div>`,
 
   tabs: [
