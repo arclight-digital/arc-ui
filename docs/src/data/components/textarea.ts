@@ -10,49 +10,39 @@ export const textarea: ComponentDef = {
   description:
     'Multi-line text input with integrated label, placeholder, resize control, and live character count that turns red at the limit.',
 
-  overview: `Textarea is the dedicated multi-line text-entry component in ARC UI. It wraps a native \`<textarea>\` element with consistent styling, an integrated uppercase label, placeholder support, optional character counting, and validation feedback, all exposed through a declarative attribute API that works identically across every framework.
+  overview: `Textarea wraps a native \`<textarea>\` with an uppercase label, a placeholder, an optional character counter and an error message. Use it for anything longer than one line, such as a support request, a comment or a bio.
 
-Use Textarea whenever you need to collect more than a single line of freeform text: support ticket descriptions, comments, feedback forms, bio fields, or any content where the user benefits from seeing multiple lines at once. The \`rows\` prop controls the initial visible height, while the \`resize\` prop determines whether the user can drag the handle to expand the field vertically, horizontally, both, or not at all.
+\`rows\` sets the starting height (4 by default). \`resize\` sets which way the reader can drag the field: \`vertical\` (the default), \`horizontal\`, \`both\` or \`none\`.
 
-When a \`maxlength\` is set, a live character counter appears below the field and automatically switches to an error color as the user approaches the limit. This gives immediate, accessible feedback without requiring any JavaScript on the consumer side. Pair Textarea with the Form component for coordinated validation, submission handling, and error summary across an entire form.`,
+Set \`maxlength\` and a live counter appears below the field. It turns red when the text reaches the limit, and screen readers hear the count through a polite live region. Pair Textarea with Form for validation, submission and an error summary across the whole form.`,
 
   features: [
-    'Integrated uppercase label rendered above the field with automatic `aria-labelledby` association',
-    'Live character counter that appears when `maxlength` is set and turns red at the limit',
-    'Configurable resize behavior via the `resize` prop: vertical, horizontal, both, or none',
-    'Adjustable initial height through the `rows` prop (defaults to 4)',
-    'Error state with a red border and an inline error message displayed below the field',
-    'Readonly mode that allows selection and copying but prevents edits',
-    'Disabled state that greys out the field and blocks all interaction',
-    'Keyboard-accessible with a visible focus ring following design tokens',
-    'Fires `arc-input` on every keystroke and `arc-change` on blur for flexible data binding',
-    'CSS custom properties for theming via shared design tokens',
+    'The label is linked to the field with `aria-labelledby`',
+    '`error` turns the border red and shows the message below the field with `role="alert"`',
+    '`readonly` allows selecting and copying but not editing, and `disabled` blocks all interaction',
+    'Fires `arc-input` on every keystroke and `arc-change` on blur',
   ],
 
   guidelines: {
     do: [
-      'Always provide a `label` so the field is accessible to screen readers',
-      'Set `placeholder` to show an example value, not as a replacement for the label',
-      'Use `maxlength` when there is a backend or UX limit so users get immediate feedback',
-      'Choose an appropriate `rows` value that reflects the expected content length',
-      'Use `resize="none"` when the textarea sits inside a fixed-height layout that cannot reflow',
-      'Pair with the Form component for coordinated validation and submission',
-      'Use the `error` prop to surface server-side validation messages after submission',
+      'Set a `label`. It\'s the field\'s accessible name',
+      'Use `placeholder` for an example value, never in place of the label. It disappears once the reader types',
+      'Set `maxlength` when the backend or the design has a limit, so the reader sees it as they type',
+      'Choose `rows` to match the length you expect',
+      'Use `resize="none"` when the field sits in a fixed-height layout',
+      'Use the `error` prop to show server-side validation messages after submission',
     ],
     dont: [
-      'Do not use Textarea for single-line fields like names or emails. Use Input instead',
-      'Do not use placeholder text as the only label. It disappears on focus and fails accessibility',
-      'Do not set both `disabled` and `error` at the same time. The user cannot act on the error',
-      'Do not set extremely low `maxlength` values (under ~20). Use Input for short values instead',
-      'Avoid overriding the built-in border and focus styles with custom CSS. Use design tokens instead',
-      'Do not hide the character counter when a maxlength is enforced. Users need that feedback',
+      'Don\'t use Textarea for single-line values such as a name, an email or anything under about 20 characters. Use Input',
+      'Don\'t set `disabled` and `error` together. The reader can\'t act on the error',
+      'Don\'t restyle the border and focus ring with custom CSS. Change the design tokens',
     ],
   },
 
   previewHtml: `<div style="width:100%;">
   <arc-textarea
     label="Describe your issue"
-    placeholder="Please provide as much detail as possible so our support team can help you quickly..."
+    placeholder="The export button does nothing after I pick a date range."
     rows="5"
     maxlength="500"
   ></arc-textarea>
