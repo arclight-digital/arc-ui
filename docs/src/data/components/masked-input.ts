@@ -20,7 +20,7 @@ export const maskedInput: ComponentDef = {
 
   overview: `Masked Input is a single-line text field for values with a fixed shape. The \`mask\` prop describes the shape with four slot characters: \`#\` for a digit, \`A\` for a letter (lowercase input is uppercased), \`a\` for any letter, and \`*\` for a letter or digit. Every other character is a literal the field types for you. With a mask of \`##/##/####\`, the user types eight digits, the slashes appear on their own, and the caret always lands on the next position that takes a character.
 
-\`value\` holds only the raw characters. A completed date field reports \`12042026\`, and that's also what it submits with a form. The formatted \`12/04/2026\` is in the read-only \`formattedValue\` and in the \`formatted\` key of every event detail. Switching a card mask from spaces to dashes changes nothing downstream, and your backend never strips formatting.
+\`value\` holds only the raw characters. A completed date field reports \`12042026\`, and that's also what it submits with a form. The formatted \`12/04/2026\` is in the read-only \`formattedValue\` and in the \`formatted\` key of every event detail.
 
 Typing inserts at the caret and skips past literals. Backspace deletes the previous typed character, skipping literals backward. Pasting drops characters that don't fit and fills the remaining positions, so a card number pasted with dashes lands in a space-grouped mask. A character that doesn't fit its slot is rejected and the caret stays put. Before typing starts, the native placeholder shows the mask shape. After that, the unfilled rest shows in the field as a muted hint, such as \`12/__/____\`.
 
