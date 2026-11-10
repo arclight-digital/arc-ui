@@ -25,29 +25,30 @@ const headings = [
   <div class="frameworks-page">
     <h1 class="page-title">Frameworks</h1>
     <p class="page-desc">
-      Use ARC UI in React, Vue, Svelte, Angular, Solid, Preact, or no framework at all.
+      Install and use ARC UI in React, Vue, Svelte, Angular, Solid and Preact, or with no
+      framework.
     </p>
 
     <section id="overview">
       <h2 class="docs-heading">Overview</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The core <code>@arclux/arc-ui</code> package contains Lit-based custom elements
-        that work in any environment. Our code generator, <strong>Prism</strong>, parses
-        the Lit source and produces a framework-native wrapper package for each framework:
+        The core <code>@arclux/arc-ui</code> package is Lit custom elements, which work with any
+        framework or none. <strong>Prism</strong>, the project's code generator, reads the Lit
+        source and writes a wrapper package for each of the six frameworks below. A wrapper
+        adds:
       </p>
       <ul class="docs-list">
-        <li>Proper event binding (e.g. React's synthetic events)</li>
-        <li>TypeScript type definitions</li>
-        <li>Idiomatic imports for each framework</li>
-        <li>SSR compatibility where supported</li>
+        <li>Events bound the framework's way, such as React's <code>onClick</code> and Vue's <code>@click</code></li>
+        <li>TypeScript types for every prop</li>
+        <li>Named imports per component, such as <code>{'{'} Button, Card {'}'}</code></li>
       </ul>
     </section>
 
     <section id="react">
       <h2 class="docs-heading">React</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-react</arc-badge>. Install it alongside the base stylesheet:</p>
+      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-react</arc-badge>. Install it with the core package and Lit:</p>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui-react @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="jsx" code={`import '@arclux/arc-ui/base.css';
 import { Button, Card, Input } from '@arclux/arc-ui-react';
@@ -64,7 +65,7 @@ function App() {
   );
 }`}></arc-code-block></div>
       <p class="docs-text">
-        React wrappers use <code>@lit/react</code> <code>createComponent</code>,
+        The React wrappers are built with <code>@lit/react</code>'s <code>createComponent</code>,
         which handles event binding and ref forwarding.
       </p>
     </section>
@@ -72,7 +73,7 @@ function App() {
     <section id="vue">
       <h2 class="docs-heading">Vue</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-vue</arc-badge>. Install it alongside the base stylesheet:</p>
+      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-vue</arc-badge>. Install it with the core package and Lit:</p>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui-vue @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="vue" code={`<script setup>
 import '@arclux/arc-ui/base.css';
@@ -92,7 +93,7 @@ import { Button, Card } from '@arclux/arc-ui-vue';
     <section id="svelte">
       <h2 class="docs-heading">Svelte</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-svelte</arc-badge>. Install it alongside the base stylesheet:</p>
+      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-svelte</arc-badge>. Install it with the core package and Lit:</p>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui-svelte @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="svelte" code={`<script>
   import '@arclux/arc-ui/base.css';
@@ -110,7 +111,7 @@ import { Button, Card } from '@arclux/arc-ui-vue';
     <section id="angular">
       <h2 class="docs-heading">Angular</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-angular</arc-badge>. Install it alongside the base stylesheet:</p>
+      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-angular</arc-badge>. Install it with the core package and Lit:</p>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui-angular @arclux/arc-ui lit"></arc-code-block></div>
       <p class="docs-text">Add the stylesheet to your global styles, then import the standalone components:</p>
       <div class="docs-code"><arc-code-block language="css" code={`/* styles.css */
@@ -140,7 +141,7 @@ export class HelloComponent {
     <section id="solid">
       <h2 class="docs-heading">Solid</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-solid</arc-badge>. Install it alongside the base stylesheet:</p>
+      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-solid</arc-badge>. Install it with the core package and Lit:</p>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui-solid @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="jsx" code={`import '@arclux/arc-ui/base.css';
 import { Button, Card } from '@arclux/arc-ui-solid';
@@ -160,7 +161,7 @@ function App() {
     <section id="preact">
       <h2 class="docs-heading">Preact</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-preact</arc-badge>. Install it alongside the base stylesheet:</p>
+      <p class="docs-text">Published as <arc-badge variant="primary">@arclux/arc-ui-preact</arc-badge>. Install it with the core package and Lit:</p>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui-preact @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="jsx" code={`import '@arclux/arc-ui/base.css';
 import { Button, Card } from '@arclux/arc-ui-preact';
@@ -181,11 +182,10 @@ function App() {
       <h2 class="docs-heading">Without a wrapper</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        The wrappers are a convenience, not a requirement. Every component is a
-        standard custom element, so <code>&lt;arc-button&gt;</code> works inside a
-        framework template the moment the element is registered. This path has shipped
-        since v3 and was documented nowhere; it is the right one if you would rather not
-        add a dependency, or if you are already writing custom elements elsewhere in the app.
+        You don't need a wrapper. Every component is a standard custom element, so
+        <code>&lt;arc-button&gt;</code> works in a framework template as soon as the element is
+        registered. Use this path if you'd rather not add a dependency, or if you already write
+        custom elements elsewhere in the app.
       </p>
       <p class="docs-text">Register what you use, with a side-effect import per component or the whole catalog at once:</p>
       <div class="docs-code"><arc-code-block language="js" code={`import '@arclux/arc-ui/base.css';
@@ -194,8 +194,8 @@ import '@arclux/arc-ui/register'; // or every element`}></arc-code-block></div>
 
       <h3 class="docs-subheading">Telling your framework the tag is real</h3>
       <p class="docs-text">
-        Most frameworks need one line so the compiler stops treating an unknown tag as a
-        typo or a component of its own. Svelte and Solid need nothing.
+        Vue and Angular need one setting so the compiler doesn't treat an unknown tag as a
+        mistake or as one of its own components. Svelte and Solid need nothing.
       </p>
       <div class="docs-code"><arc-code-block language="js" code={`// Vue — vite.config.js
 export default {
@@ -215,12 +215,11 @@ export class AppComponent {}`}></arc-code-block></div>
       <h3 class="docs-subheading">Typed tags in JSX</h3>
       <p class="docs-text">
         React, Preact and Solid each get a generated declaration file that types every
-        ARC tag, with the same props and enum unions as the wrapper packages.
-        <strong>Add it to your program as a file.</strong> A
-        <code>types</code> entry looks like the natural way to do it and silently does
-        nothing: TypeScript resolves <code>types</code> as a package name and never follows
-        an export subpath, so the name matches nothing, nothing is included, and every tag
-        stays untyped without a diagnostic.
+        ARC UI tag, with the same props and enum unions as the wrapper packages.
+        <strong>Add it to your program as a file.</strong> A <code>types</code> entry in
+        <code>compilerOptions</code> does nothing here. TypeScript resolves <code>types</code>
+        as a package name and doesn't follow an export subpath, so nothing is included, every
+        tag stays untyped, and you get no error.
       </p>
       <div class="docs-code"><arc-code-block language="json" code={`{
   "include": [
@@ -236,26 +235,25 @@ export class AppComponent {}`}></arc-code-block></div>
 
       <h3 class="docs-subheading">What you give up</h3>
       <p class="docs-text">
-        Custom events are the whole difference, and it is not the same in every framework.
-        Solid binds them natively (<code>on:arc-change=&#123;handler&#125;</code>), and the
-        declaration file types it. React 19 forwards unknown props to the element, so an
-        event needs a ref and a listener. Preact is the strictest case: it lowercases the
-        name after <code>on</code>, so a dashed event like <code>arc-change</code> cannot be
-        reached from a plain prop at all, and a ref with
-        <code>addEventListener</code> is the only route.
-        <strong>That listener wiring is what the wrapper packages are for</strong>. If you
-        use custom events heavily in React or Preact, take the wrapper.
+        The difference is custom events, and it varies by framework. Solid binds them natively
+        (<code>on:arc-change=&#123;handler&#125;</code>), and the declaration file types it.
+        React 19 forwards unknown props to the element, so an event needs a ref and a listener.
+        Preact lowercases the name after <code>on</code>, so a dashed event like
+        <code>arc-change</code> can't be reached from a prop at all, and a ref with
+        <code>addEventListener</code> is the only way.
+        <strong>The wrapper packages do that listener wiring for you</strong>. If you use custom
+        events a lot in React or Preact, use the wrapper.
       </p>
     </section>
 
     <section id="vanilla">
       <h2 class="docs-heading">Vanilla JS / CDN</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
-      <p class="docs-text">No framework needed. Use the core Web Component package directly:</p>
+      <p class="docs-text">Install the core package and import components directly:</p>
       <div class="docs-code"><arc-code-block language="bash" code="npm install @arclux/arc-ui lit"></arc-code-block></div>
       <div class="docs-code"><arc-code-block language="js" code={`import '@arclux/arc-ui/button';
 import '@arclux/arc-ui/card';`}></arc-code-block></div>
-      <p class="docs-text">Or via CDN with no build step:</p>
+      <p class="docs-text">Or load it from a CDN with no build step:</p>
       <div class="docs-code"><arc-code-block language="html" code={`<link rel="stylesheet"
   href="https://unpkg.com/@arclux/arc-ui@${version}/base.css">
 <script type="module"
@@ -267,7 +265,7 @@ import '@arclux/arc-ui/card';`}></arc-code-block></div>
   <h3>Hello World</h3>
   <p>Pure HTML, no framework needed.</p>
 </arc-card>`}></arc-code-block></div>
-      <arc-alert variant="tip">For projects that can't use JavaScript, ARC UI also provides standalone CSS files.</arc-alert>
+      <arc-alert variant="tip">For pages that can't run JavaScript, <code>@arclux/arc-ui-html</code> has CSS-only versions of many components, applied as classes on plain HTML.</arc-alert>
       <div class="docs-code"><arc-code-block language="html" code={`<!-- Full bundle -->
 <link rel="stylesheet" href="https://unpkg.com/@arclux/arc-ui-html@${version}/css/arc-ui.css">
 
@@ -278,12 +276,12 @@ import '@arclux/arc-ui/card';`}></arc-code-block></div>
     </section>
 
     <section class="see-also">
-      <h2 class="docs-heading">See Also</h2>
+      <h2 class="docs-heading">See also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/getting-started">Getting Started</a>: installation and setup</li>
-        <li><a href="/docs/theming">Theming</a>: dark/light mode and custom themes</li>
-        <li><a href="/docs/browser-support">Browser Support</a>: supported browsers and polyfills</li>
+        <li><a href="/docs/getting-started">Getting started</a>: install ARC UI and render a first component</li>
+        <li><a href="/docs/theming">Theming</a>: dark, light and auto modes, and custom themes</li>
+        <li><a href="/docs/browser-support">Browser support</a>: supported browsers and polyfills</li>
       </ul>
     </section>
   </div>
