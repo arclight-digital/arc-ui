@@ -7,14 +7,13 @@ export const center: ComponentDef = {
   tier: 'layout',
   interactivity: 'static',
   description:
-    'Content centering primitive with max-width, intrinsic centering, and text-center options.',
+    'A wrapper that centers its children horizontally and caps their width, 60ch by default.',
 
   overview: `Center centers its children horizontally. By default it's a block with \`margin-inline: auto\`, a \`max-width\` (default \`60ch\`) and \`--space-lg\` of padding on each side. Use it to keep a content column at a readable width in the middle of the page.
 
 \`intrinsic\` makes it a flex column with \`align-items: center\`, so children keep their natural width and don't stretch to the column. Use it for buttons, icons and short labels. \`text\` adds \`text-align: center\` for inline text. The three modes can be combined.`,
 
   features: [
-    'Combine intrinsic and text for a centered button with a centered label',
     'The max-width applies in every mode, intrinsic included',
   ],
 
