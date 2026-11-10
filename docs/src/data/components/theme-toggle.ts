@@ -7,7 +7,7 @@ export const themeToggle: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Three-state theme toggle cycling through dark, light, and auto modes with animated icon transitions and localStorage persistence.',
+    'One button that cycles the page theme through dark, light and auto, and remembers the choice.',
 
   overview: `ThemeToggle is one button that cycles through dark, light and auto (the system setting). Each mode has its own icon (a moon, a sun or a monitor), and the icons scale and rotate as they change. The chosen mode is written to \`data-theme\` on the document root and to \`localStorage\` under \`arc-theme\`, so it persists across page loads.
 
@@ -30,9 +30,8 @@ By default the button shows the current mode's name next to the icon. \`icon-onl
       'Set `data-theme` on the HTML element during server rendering, so the page doesn\'t flash the wrong theme',
     ],
     dont: [
-      'Don\'t change the theme by writing the `arc-theme` key in `localStorage`. The toggle doesn\'t watch storage. Set its `theme` property or the root\'s `data-theme`. Every toggle on the page follows `data-theme`',
+      'Don\'t change the theme by writing the `arc-theme` key in `localStorage`. The toggle doesn\'t watch storage. Set a toggle\'s `theme` property or the root\'s `data-theme`, and every toggle on the page picks it up',
       'Don\'t use it for settings other than the theme. Use Toggle',
-      'Don\'t use it in an iframe unless the parent page also applies the theme attribute',
     ],
   },
 
