@@ -7,9 +7,9 @@ export const scrollArea: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'A scrolling container with a thin themed scrollbar, a choice of scroll direction and an optional max height.',
+    'A container that scrolls its content in one or both directions, with a thin scrollbar in the theme\'s colors.',
 
-  overview: `ScrollArea wraps content that might outgrow its space, like a sidebar list, a modal body or a dropdown, and scrolls it with a thin scrollbar in the theme's colors. In Chromium and Safari the scrollbar is 6px with a rounded thumb that lightens from \`border-bright\` to \`text-ghost\` on hover. Firefox gets \`scrollbar-width: thin\` in the same colors.
+  overview: `ScrollArea wraps content that might outgrow its space, like a sidebar list, a modal body or a dropdown, and scrolls it with a thin scrollbar: a \`border-bright\` thumb on a \`surface-overlay\` track.
 
 \`orientation\` picks the direction. \`vertical\` is the default and hides horizontal overflow. \`horizontal\` does the reverse, for galleries or wide code blocks, and \`both\` scrolls both ways, for data grids. \`max-height\` takes any CSS length and caps the height so the content scrolls.
 
