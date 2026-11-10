@@ -9,7 +9,7 @@ export const skeleton: ComponentDef = {
   searchKeywords: ['placeholder', 'loading'],
   description: 'A placeholder shape with a shimmer, shown where content will appear once it loads.',
 
-  overview: `Skeleton stands in for content that hasn't loaded yet, in roughly the size and shape of that content, so the page doesn't jump when it arrives. A gradient sweeps left to right across it every 1.8 seconds. Unlike a spinner, it shows the layout that's coming.
+  overview: `Skeleton stands in for content that hasn't loaded yet, in roughly the size and shape of that content, so the page doesn't jump when it arrives. A gradient sweeps across it every 1.8 seconds. Unlike a spinner, it shows the layout that's coming.
 
 \`variant\` sets the shape. \`text\` is a full-width bar 1em tall, for lines of a paragraph. \`circle\` is round, for avatars, and takes its height from \`width\` when you don't set one. \`rect\` is a block with rounded corners, for images, cards and thumbnails. \`width\` and \`height\` take any CSS length, so you can match the content you're waiting for.
 
@@ -27,7 +27,7 @@ The shimmer runs from \`--surface-overlay\` through a 4% tint of the accent colo
       'Remove skeletons as soon as the content loads, with no added delay',
     ],
     dont: [
-      'Don\'t show a skeleton for anything that finishes in under 200ms. It flashes and disappears',
+      'Don\'t show a skeleton for loads that finish almost at once. It flashes and disappears',
       'Don\'t stack more than five or six text lines. A tall block of bars looks like a broken page',
       'Don\'t leave a rect skeleton without a `height`. It has no height of its own and collapses',
       'Don\'t mix skeletons and spinners on one screen',
