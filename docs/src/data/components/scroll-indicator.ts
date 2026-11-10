@@ -7,36 +7,26 @@ export const scrollIndicator: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Thin progress bar that tracks scroll position of the page or a target container. Sticks to the top or bottom edge with accent or gradient fill.',
+    'A thin bar along the top or bottom edge that fills as you scroll the page or a container.',
 
-  overview: `ScrollIndicator renders a slim progress bar that fills left-to-right as the user scrolls through content. It attaches to the nearest scroll container or the window, updating via \`requestAnimationFrame\`-throttled scroll events, so rendering stays smooth.
+  overview: `ScrollIndicator shows how far a reader has scrolled through a long article, doc page or settings panel. The bar fills left to right. It tracks the window by default, or the element matched by the \`target\` selector. A selector that matches nothing falls back to the window. Progress updates from a scroll listener throttled to one \`requestAnimationFrame\` per frame.
 
-The bar sticks to the top or bottom edge using \`position: sticky\` and stays out of the pointer-event flow so it never blocks clicks or text selection. Two color modes (solid accent, or a primary-to-secondary gradient) let you match the bar to your theme.
+The bar uses \`position: sticky\` on the top edge, or the bottom with \`position="bottom"\`, and has \`pointer-events: none\`, so it never blocks clicks or text selection. \`color="accent"\` fills it with \`--accent-primary\`, and \`color="gradient"\` blends primary to secondary. \`size\` sets the thickness: \`sm\` 2px (the default), \`md\` 3px or \`lg\` 4px.
 
-Three size presets (sm: 2px, md: 3px, lg: 4px) keep the indicator unobtrusive at the default small size while offering slightly bolder options for reading-focused layouts like blog posts or documentation. The component sets \`role="progressbar"\` with \`aria-valuenow\` for accessibility.`,
+The bar is a \`role="progressbar"\` labelled "Scroll progress", with \`aria-valuenow\` from 0 to 100.`,
 
   features: [
-    'Tracks scroll progress of the window or a specific CSS-selector target',
-    'rAF-throttled scroll listener',
-    'Sticky positioning at top or bottom edge',
-    'Two color modes: solid accent and primary-to-secondary gradient',
-    'Three size presets: sm (2px), md (3px), lg (4px)',
-    'Accessible `role="progressbar"` with live `aria-valuenow`',
-    'Non-interactive: `pointer-events: none` so it never blocks content',
-    'Respects `prefers-reduced-motion` by disabling transitions',
+    'Parts: `base`, `bar` and `fill`',
   ],
 
   guidelines: {
     do: [
-      'Place at the top of long-form content like articles, docs, or settings pages',
-      'Use the gradient color for branded reading experiences',
-      'Use the sm size (default) for subtle progress indication',
-      'Set a `target` selector when tracking a scrollable panel instead of the full page',
+      'Set `target` when the scrolling happens in a panel, not the page',
     ],
     dont: [
-      'Do not use scroll indicator on short pages where scrolling is minimal',
-      'Do not stack multiple scroll indicators: one per scroll context is sufficient',
-      'Do not use as a loading indicator; use `arc-progress` for async operations instead',
+      'Don\'t add it to short pages that barely scroll',
+      'Don\'t put more than one on the same scroll container',
+      'Don\'t use it for loading. Use Progress',
     ],
   },
 
