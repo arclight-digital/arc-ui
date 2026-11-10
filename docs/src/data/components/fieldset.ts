@@ -9,34 +9,25 @@ export const fieldset: ComponentDef = {
   description:
     'Grouped form section with legend, description, error message, and optional card variant. Wraps related inputs with native fieldset semantics.',
 
-  overview: `Fieldset wraps a group of related form controls inside a native \`<fieldset>\` element with a styled legend, optional description text, and error messaging. It provides the semantic grouping that screen readers use to announce related fields as a unit.
+  overview: `Fieldset groups related form controls inside a native \`<fieldset>\` with a \`<legend>\`, so screen readers announce them as one named group. Set the legend with the \`legend\` prop, or with the \`legend\` slot for markup. \`description\` adds helper text under the legend.
 
-Two variants control the visual treatment: the default variant renders a bordered container with rounded corners, while the card variant adds a surface background and subtle shadow for raised form sections. The \`error\` prop renders a red alert message below the content area, useful for group-level validation like "At least one option must be selected."
+The default variant is a bordered box with rounded corners, and \`variant="card"\` adds a surface background and a small shadow. \`error\` shows a message below the controls with \`role="alert"\`, for group-level problems such as "Select at least one option". The \`actions\` slot puts buttons or links, such as "Select all" or "Reset", on the legend's line.
 
-An \`actions\` slot in the legend area lets you place buttons or links (like "Select all" or "Reset") inline with the group heading. The \`disabled\` prop cascades to all child controls via the native fieldset disabled behavior, dimming the entire group at once.`,
+\`disabled\` dims the group to 50% opacity and sets \`disabled\` on the inner \`<fieldset>\`. Your controls are slotted, not inside that element, so disable them as well.`,
 
   features: [
-    'Native `<fieldset>` and `<legend>` elements for proper form semantics',
-    'Two variants: default (bordered) and card (raised surface)',
-    'Legend text via prop or slot for flexible heading content',
-    'Description text for group-level helper context',
-    'Error message with `role="alert"` for group validation feedback',
-    'Actions slot for inline legend controls (Select all, Reset, etc.)',
-    'Disabled state cascades to all child controls via native fieldset behavior',
-    'Exposed CSS parts: fieldset, legend, description, content, error',
+    'CSS parts: `fieldset`, `legend`, `description`, `content`, `error`',
   ],
 
   guidelines: {
     do: [
-      'Group related inputs that share a common label, e.g. "Shipping Address" fields',
-      'Use the card variant for visually distinct form sections in settings pages',
-      'Use the error prop for group-level validation like "Select at least one option"',
-      'Provide a legend for every fieldset. It is the accessible group label',
+      'Group inputs that share one label, such as the fields of a shipping address',
+      'Use the card variant to set sections apart on a settings page',
+      'Give every fieldset a legend. It\'s the group\'s accessible name',
     ],
     dont: [
-      'Do not nest fieldsets more than one level deep. It creates confusing screen reader announcements',
-      'Do not use Fieldset for visual-only grouping. Use a `div` or `arc-card` instead',
-      'Do not put field-level errors in the fieldset error slot. Attach those to individual inputs',
+      'Don\'t use it only for looks. Use a `div` or `arc-card`',
+      'Don\'t put a single field\'s error in the fieldset\'s `error`. Attach it to that input',
     ],
   },
 
