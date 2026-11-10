@@ -115,9 +115,9 @@ const spacingTokens = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
         The series colors for <code>arc-chart</code> and other data visualization. Assign them in
-        order of series position, and don't cycle or reshuffle them. The set is validated for
-        color-vision-deficiency separation and at least 3:1 contrast against <code>--bg-card</code>
-        in both themes. Series 1, 4 and 6 change in light mode. Status colors are for state and
+        order of series position, and don't cycle or reshuffle them. Every series has at least 3:1
+        contrast against <code>--bg-card</code> in both themes. Adjacent series were also chosen to
+        stay apart under color-vision deficiency, but no test re-checks that. Series 1, 4 and 6 change in light mode. Status colors are for state and
         aren't part of this palette.
       </p>
       <p class="docs-text">
