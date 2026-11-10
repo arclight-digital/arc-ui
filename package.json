@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "version": "4.9.1",
-  "description": "ARC UI — ARC Radiant Components. A framework-agnostic design system built with Lit Web Components.",
+  "description": "ARC UI (ARC Radiant Components): Lit web components with generated packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML.",
   "engines": {
     "node": ">=24.0.0",
     "pnpm": ">=10.0.0"
