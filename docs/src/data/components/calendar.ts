@@ -7,7 +7,7 @@ export const calendar: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Month-view calendar grid for date selection, with min/max constraints, keyboard navigation, and today highlighting.',
+    'A month of days in a grid, for picking one date.',
 
   overview: `Calendar shows one month as a grid of days, with previous and next month buttons in the header. Use it on its own or inside a date picker or scheduling screen.
 
