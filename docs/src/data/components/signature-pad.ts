@@ -12,7 +12,7 @@ export const signaturePad: ComponentDef = {
 
   overview: `SignaturePad is a bordered canvas for a handwritten signature. While it's blank, a muted "Sign here" baseline shows, and it disappears with the first stroke. The line width follows stroke speed (slow movement thickens it, fast flicks thin it), so a mouse or finger signature reads as handwriting. The pen color defaults to \`--text-primary\` and \`pen-color\` takes any CSS color, including a \`var()\` reference.
 
-It's a form control. Each completed stroke serializes the whole canvas to a PNG data-URL and submits it under \`name\`. A blank pad submits nothing, and \`required\` on a blank pad reports \`valueMissing\` like any other input. The stroke is the edit unit: \`arc-input\` and \`arc-change\` fire together once per completed stroke, never per point, each with the data-URL in \`event.detail.value\`. Once signed, a small ghost clear button appears in the top corner. Clearing empties the value, fires \`arc-clear\` and brings the placeholder back. \`clear()\` does the same from script, for your own "start over" control or after a failed submit that shouldn't leave a stale signature in a form the user is about to retry. \`toDataURL(type)\` exports the image in a format other than PNG.
+It's a form control. Each completed stroke serializes the whole canvas to a PNG data-URL and submits it under \`name\`. A blank pad submits nothing, and \`required\` on a blank pad reports \`valueMissing\` like any other input. The stroke is the edit unit: \`arc-input\` and \`arc-change\` fire together once per completed stroke, never per point, each with the data-URL in \`event.detail.value\`. Once signed, a small ghost clear button appears in the top corner. Clearing empties the value, fires \`arc-clear\` and brings the placeholder back. \`clear()\` does the same from script. \`toDataURL(type)\` exports the image in a format other than PNG.
 
 Signing is a pointer gesture, and the pad has no keyboard way to produce a signature. The canvas has \`role="img"\` with an accessible name that says whether it's signed or empty, it stays focusable, and the clear button is reachable by keyboard. If your form must be completable without a pointer, offer an equivalent next to the pad, such as a type-to-sign text field or a file upload. The component doesn't provide one.`,
 
@@ -21,7 +21,7 @@ Signing is a pointer gesture, and the pad has no keyboard way to produce a signa
     'Pen width varies up to 40% either side of the `pen-width` base, with midpoint-smoothed curves',
     '`form.reset()` restores the initial state',
     'Pen color resolves CSS custom properties at stroke time, so it follows theme changes',
-    'The backing store tracks `devicePixelRatio`, so strokes stay sharp on high-DPI screens, and completed strokes survive a resize',
+    'The backing store is sized to `devicePixelRatio` on setup and on every resize, so strokes are sharp on high-DPI screens, and completed strokes survive a resize',
     'Setting `value` from script draws the image back onto the canvas, so a saved signature can be shown for review',
   ],
 
