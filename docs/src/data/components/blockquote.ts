@@ -6,7 +6,7 @@ export const blockquote: ComponentDef = {
   tag: 'arc-blockquote',
   tier: 'typography',
   interactivity: 'static',
-  description: 'Styled pull-quote with optional citation for editorial emphasis.',
+  description: 'A styled `<blockquote>` for pull-quotes, with an optional citation.',
 
   overview: `Blockquote is a pull-quote: a semantic \`<blockquote>\` with a gradient line across the top, a large opening-quote glyph and a faint accent tint behind it. Use it for quotations and testimonials.
 
