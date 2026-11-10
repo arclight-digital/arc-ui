@@ -7,41 +7,35 @@ export const transferList: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Dual-listbox for moving items between an available and a selected pane, ideal for permissions and settings UIs.',
+    'Dual listbox for moving items between an available and a selected pane, for permission and settings screens.',
 
-  overview: `TransferList presents the full universe of options split across two panes: everything not yet chosen on the left ("Available") and the current value on the right ("Selected"). Users mark items with a checkbox-style highlight, then move them across with the center controls, or move a single item instantly with a double-click or the Enter key. Pane titles are customisable via \`sourceLabel\` and \`targetLabel\`, and each pane header shows a live "checked of total" count.
+  overview: `TransferList shows every option in two panes: the ones not chosen on the left ("Available") and the current value on the right ("Selected"). The reader checks items, then moves them across with the buttons between the panes, or moves one item at once with a double-click or Enter. \`sourceLabel\` and \`targetLabel\` rename the panes, and each pane header shows a live "checked of total" count.
 
-Options are supplied as an array of \`{ value, label, disabled? }\` objects and the component's \`value\` is the array of values currently in the Selected pane, kept in options order. With the \`searchable\` flag each pane gains its own case-insensitive filter input that narrows only that pane, and the move-all buttons respect the active filter. Disabled options render dimmed and can never be moved.
+\`options\` is an array of \`{ value, label, disabled? }\` objects, and \`value\` is the array of values in the Selected pane, in options order. With \`searchable\`, each pane gets its own case-insensitive filter, and the move-all buttons move only what the filter shows. Disabled options are dimmed and can't be moved.
 
-The component is form-associated: give it a \`name\` and it submits one form entry per selected value, participates in \`form.reset()\`, and honours \`<fieldset disabled>\`. Both listboxes follow the WAI-ARIA multi-select listbox pattern (one tab stop each with a roving tabindex, arrow-key navigation, Space to toggle, Ctrl+A to check every visible item), and moves are announced through a polite live region.`,
+It's form-associated. Give it a \`name\` and it submits one entry per selected value, resets with \`form.reset()\`, and is disabled by \`<fieldset disabled>\`. Both panes follow the WAI-ARIA multi-select listbox pattern, and moves are announced through a polite live region.`,
 
   features: [
-    'Two labeled panes with live "checked of total" counts and customisable titles',
-    'Checkbox-style multi-highlight: mark any number of items, then transfer them in one action',
-    'Center controls to move checked items or all (filtered) items in either direction, auto-disabled when inapplicable',
-    'Double-click or Enter moves a single item across instantly',
-    'Optional per-pane case-insensitive filtering via the `searchable` flag',
-    'Full APG listbox keyboard support: roving tabindex, ArrowUp/Down, Home/End, Space to check, Ctrl+A to check all visible items',
-    'Focus stays in the same pane on the nearest remaining item after a move; moves are announced via a polite live region',
-    'Form-associated: submits one entry per selected value under `name` and supports form reset',
-    'Disabled options render dimmed and are excluded from every move operation',
-    'Responsive: panes stack vertically and controls rotate horizontal below ~560px container width',
+    'Keyboard: one tab stop per pane with a roving tabindex, ArrowUp and ArrowDown, Home and End, Space to check, and Ctrl+A to check every visible item',
+    'After a move, focus stays in the same pane on the nearest remaining item',
+    'The move buttons turn off when there\'s nothing for them to move',
+    'Below a container width of about 560px the panes stack and the controls turn horizontal',
   ],
 
   guidelines: {
     do: [
-      'Use for medium-sized sets (roughly 5-100 items) where users assign a subset, such as role permissions or report columns',
-      'Enable `searchable` whenever a pane can hold more than a dozen items',
-      'Keep option labels short, one line each, so they do not truncate in narrow panes',
-      'Override `sourceLabel`/`targetLabel` with domain terms ("All permissions" / "Granted") for clearer context',
-      'Listen to `arc-change` to persist the selection; the detail carries the full value array after every move',
+      'Use it for sets of about 5 to 100 items where the reader picks a subset, such as role permissions or report columns',
+      'Set `searchable` when a pane can hold more than a dozen items',
+      'Keep option labels to one short line so they don\'t truncate in narrow panes',
+      'Rename the panes with terms from your domain, such as "All permissions" and "Granted"',
+      'Listen to `arc-change` to save the selection. Its detail carries the full value array after every move',
     ],
     dont: [
-      'Do not use for a handful of options. A checkbox group or multi-select is lighter',
-      'Do not use for thousands of items without server-side narrowing; all options render in the panes',
-      'Do not repurpose the checked highlight as the selection itself. Only items in the right pane are the value',
-      'Do not disable options without conveying elsewhere why they cannot be moved',
-      'Avoid placing two transfer lists side by side; each already spans two panes and needs the width',
+      'Don\'t use it for a handful of options. Use a checkbox group or MultiSelect',
+      'Don\'t give it thousands of items without narrowing them on the server first. Every option renders',
+      'Don\'t treat checked items as the selection. Only items in the right pane are the value',
+      'Don\'t disable options without saying somewhere why they can\'t be moved',
+      'Don\'t put two transfer lists side by side. Each one needs the width for its two panes',
     ],
   },
 
