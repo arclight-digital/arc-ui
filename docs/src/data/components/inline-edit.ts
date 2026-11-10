@@ -8,7 +8,7 @@ export const inlineEdit: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['rename', 'click to edit', 'editable text', 'editable title'],
   description:
-    'Click-to-edit text. It renders as plain text until activated, then swaps to a pre-filled field. Enter or blur commits, and Escape cancels.',
+    'Text that turns into a pre-filled field when clicked, for renaming titles and labels in place.',
 
   overview: `Inline Edit shows its value as plain text, with no field chrome and only a faint pencil on hover or focus. Clicking it, or pressing Enter, Space or F2 while it's focused, swaps in a field with the current value selected, ready to type over. Enter or clicking away commits, and Escape throws the edit away.
 
@@ -16,7 +16,7 @@ The display text inherits the surrounding typography and the field matches it, s
 
 While someone types, the draft streams out as \`arc-input\` events. \`value\`, and the value a surrounding form submits, change only on commit, which fires one \`arc-change\`. Committing an unchanged value fires nothing. Cancelling fires \`arc-cancel\` and restores the previous text.
 
-**The same three transitions work from script.** \`edit()\` enters edit mode with the field focused and its text selected, for a "Rename" menu item or a freshly added row. \`commit()\` and \`cancel()\` leave edit mode the two ways the keyboard does and fire the same events. Call \`commit()\` when something outside the component ends the edit (a toolbar Save, a route change), and \`cancel()\` when a save fails and the old text should come back. \`edit()\` does nothing when the component is disabled, readonly or already editing, so you can call it without checking first.`,
+From script, \`edit()\` enters edit mode with the field focused and its text selected, for a "Rename" menu item or a freshly added row. \`commit()\` and \`cancel()\` leave edit mode the two ways the keyboard does and fire the same events. Call \`commit()\` when something outside the component ends the edit (a toolbar Save, a route change), and \`cancel()\` when a save fails and the old text should come back. \`edit()\` does nothing when the component is disabled, readonly or already editing, so you can call it without checking first.`,
 
   features: [
     'Takes part in forms through ElementInternals, like Input: the committed value submits under `name`, and `form.reset()` restores the initial text',
@@ -26,7 +26,6 @@ While someone types, the draft streams out as \`arc-input\` events. \`value\`, a
 
   guidelines: {
     do: [
-      'Use it where the text is content first and a field second: titles, track names, table cells, sidebar labels',
       'Always set `label`. It names both the display button ("Edit Track title") and the field',
       'Listen for `arc-change` to save a rename',
       'Use `multiline` for short notes that may wrap, and tell people that Cmd/Ctrl+Enter saves',
