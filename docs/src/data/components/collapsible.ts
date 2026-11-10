@@ -9,41 +9,31 @@ export const collapsible: ComponentDef = {
   description:
     'A disclosure widget with a clickable heading that toggles the visibility of its slotted content with a CSS grid animation.',
 
-  overview: `Collapsible provides a single-section disclosure pattern where clicking the heading row expands or collapses the body content below it. Unlike Accordion, which manages multiple panels with mutual exclusion, Collapsible is a standalone toggle, suited to optional details, advanced settings, or supplementary information the user may not need immediately.
+  overview: `Collapsible is one section that opens and closes when you click its heading. Accordion manages several panels and closes the others. Collapsible stands alone, for optional details, advanced settings or extra information the user may not need straight away. Unlike Accordion, its body is a real slot, so it takes any markup.
 
-The expand/collapse animation uses a CSS \`grid-template-rows\` transition from \`0fr\` to \`1fr\`, which animates the height without JavaScript measurement. A chevron on the right side of the heading rotates from 0 to 90 degrees when the section opens. The heading row highlights on hover with an elevated background and gains an inset accent-primary ring on focus-visible.
-
-The component fires an \`arc-toggle\` event with an \`open\` boolean in the detail whenever the state changes, so parent components can track or persist it. The \`open\` attribute is reflected, so it can be set declaratively in HTML or toggled programmatically. The content region uses an ARIA \`region\` role with the heading text as its label for screen readers.`,
+The heading is a \`<button>\` with \`aria-expanded\`, so Enter and Space toggle it. The body is a \`region\` labeled with the heading text. \`open\` is reflected, so you can set it in HTML or change it from code, and every change fires \`arc-toggle\` with \`{ open }\`.`,
 
   features: [
-    'Expand/collapse animation using a CSS `grid-template-rows` transition (no JS measurement)',
-    'Chevron rotates from 0 to 90 degrees to signal open/closed state',
-    'Heading row with hover highlight and inset accent-primary focus ring',
-    'Reflected `open` attribute for declarative or programmatic state control',
-    'ARIA `aria-expanded` on the trigger button and `role="region"` on the content area',
-    'Fires `arc-toggle` event with `{ open: boolean }` detail on every state change',
-    'Keyboard support: Enter and Space toggle the disclosure from the heading button',
-    'Respects `prefers-reduced-motion` by disabling all transitions',
+    'Height animates with a `grid-template-rows` transition from `0fr` to `1fr`, with no JavaScript measuring',
+    'The chevron at the right of the heading turns 90 degrees when the section opens',
+    'The heading row takes the `--surface-overlay` background on hover and gets an inset focus ring when focused from the keyboard',
   ],
 
   guidelines: {
     do: [
-      'Use Collapsible for optional or secondary content that does not need to be visible by default',
-      'Provide a clear, descriptive `heading` so users know what the hidden content contains',
-      'Set `open` declaratively when the content should be visible on initial render',
-      'Use multiple Collapsibles in a stack for FAQ-style sections without mutual exclusion',
-      'Listen to `arc-toggle` to persist the open/closed state across sessions if needed',
+      'Write a heading that says what\'s inside',
+      'Set open in the HTML when the content should show on first render',
+      'Stack several Collapsibles for FAQ sections where more than one can be open',
+      'Listen to arc-toggle if you want to remember the state between visits',
     ],
     dont: [
-      'Do not use Collapsible for primary content that users must see. Keep it visible instead',
-      'Do not nest Collapsibles more than one level deep; it creates confusing disclosure hierarchies',
-      'Do not use Collapsible when you need only-one-open-at-a-time behavior. Use Accordion instead',
-      'Do not leave the `heading` empty; the trigger button needs visible text for usability and accessibility',
-      'Avoid placing very tall content inside a Collapsible without a scrollable wrapper; it can push the page layout around',
+      'Don\'t hide content users must see',
+      'Don\'t use it when only one section should be open at a time. Use Accordion',
+      'Don\'t put very tall content inside without a scrolling wrapper. Opening it pushes the page around',
     ],
   },
 
-  previewHtml: `<arc-collapsible heading="Advanced Options" open>
+  previewHtml: `<arc-collapsible heading="Advanced options" open>
   <p>These settings control fine-grained behavior that most users will not need to change.</p>
 </arc-collapsible>`,
 
