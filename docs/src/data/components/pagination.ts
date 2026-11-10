@@ -8,38 +8,28 @@ export const pagination: ComponentDef = {
   interactivity: 'interactive',
   searchKeywords: ['pager', 'page numbers'],
   description:
-    'Page navigation control with previous/next arrows, numbered page buttons, and smart ellipsis truncation.',
+    'Previous and next buttons around numbered page buttons, with ellipses when there are too many pages to show.',
 
-  overview: `Pagination provides a compact navigation strip for moving between pages of content. It renders previous/next arrow buttons flanking a row of numbered page buttons, with ellipsis markers automatically inserted when the total page count exceeds what can be displayed. The first and last pages are always visible, and the \`siblings\` prop controls how many pages appear adjacent to the currently active page.
+  overview: `Pagination renders previous and next buttons around a row of page numbers. The first and last pages always show, \`siblings\` sets how many pages show on each side of the current one, and an ellipsis stands in for the rest.
 
-The component is declarative. Set \`total\` for the number of pages, \`current\` for the active page, and \`siblings\` for the visible range. When the user clicks a page or arrow, an \`arc-change\` event fires with the new page number, letting you update your data source and re-render. Previous and next buttons are automatically disabled at the boundaries.
+Set \`total\` to the number of pages and \`current\` to the active page (1-based). Clicking a page or an arrow fires \`arc-change\` with the new page number, and you load that page's data. Previous disables itself on the first page and next on the last.
 
-Pagination follows the WAI-ARIA pattern for navigation landmarks with \`role="navigation"\` and \`aria-label="Pagination"\`. Each page button carries \`aria-current="page"\` when active, and the arrow buttons include descriptive aria-labels. The active page gets an accent-primary highlight with a soft glow.`,
+The control is a \`<nav>\` landmark labelled "Pagination". The active page button has \`aria-current="page"\`, and the arrow buttons are labelled "Previous page" and "Next page".`,
 
   features: [
-    'Smart ellipsis truncation that always shows the first page, last page, and siblings around the current page',
-    'Configurable `siblings` prop to control how many page numbers appear next to the active page',
-    'Previous and next arrow buttons that auto-disable at page boundaries',
-    'Active page highlighted with accent-primary background and a subtle box-shadow glow',
-    'Accessible navigation landmark with `role="navigation"` and `aria-current="page"` on the active button',
-    'Hover and focus-visible states with border brightening and focus glow ring',
-    'Fires `arc-change` with the new page number on every navigation action',
+    'The active page has an accent-primary background and a glow',
+    '`current` is clamped to 1 through `total`, and lowering `total` re-clamps it',
   ],
 
   guidelines: {
     do: [
-      'Always set `total` to reflect the actual number of pages in your dataset',
-      'Use `siblings="1"` for compact layouts or `siblings="2"` when space allows for easier scanning',
-      'Listen to `arc-change` and update your data source to load the corresponding page',
-      'Place Pagination below or adjacent to the content it controls for clear spatial association',
-      'Combine with a page-size selector when users should control how many items appear per page',
+      'Use `siblings="1"` where space is tight and `siblings="2"` where it isn\'t',
+      'Place it directly below or beside the content it pages',
+      'Add a page-size selector when readers should choose how many items a page shows',
     ],
     dont: [
-      'Do not use Pagination for fewer than 3 pages: inline previous/next links are simpler',
-      'Do not set `current` to a value outside the 1..total range: the component clamps internally but the intent is unclear',
-      'Do not nest Pagination inside other interactive controls like buttons or links',
-      'Do not use Pagination to navigate between unrelated sections; use Tabs instead',
-      'Avoid hiding the component when there is only one page: instead disable or show a single page indicator so users understand the data scope',
+      'Don\'t use it for fewer than 3 pages. Plain previous and next links are simpler',
+      'Don\'t use it to move between unrelated sections. Use Tabs',
     ],
   },
 
