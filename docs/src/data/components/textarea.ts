@@ -25,7 +25,7 @@ Set \`maxlength\` and a live counter appears below the field. It turns red when 
 
   guidelines: {
     do: [
-      'Set a `label`. It\'s the field\'s accessible name',
+      "Set a `label`. It's the field's accessible name",
       'Use `placeholder` for an example value, never in place of the label. It disappears once the reader types',
       'Set `maxlength` when the backend or the design has a limit, so the reader sees it as they type',
       'Choose `rows` to match the length you expect',
@@ -33,9 +33,9 @@ Set \`maxlength\` and a live counter appears below the field. It turns red when 
       'Use the `error` prop to show server-side validation messages after submission',
     ],
     dont: [
-      'Don\'t use Textarea for single-line values such as a name or an email. Use Input',
-      'Don\'t set `disabled` and `error` together. The reader can\'t act on the error',
-      'Don\'t restyle the border and focus ring with custom CSS. Change the design tokens',
+      "Don't use Textarea for single-line values such as a name or an email. Use Input",
+      "Don't set `disabled` and `error` together. The reader can't act on the error",
+      "Don't restyle the border and focus ring with custom CSS. Change the design tokens",
     ],
   },
 

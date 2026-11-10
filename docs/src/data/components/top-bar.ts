@@ -25,21 +25,21 @@ Outside AppShell, set \`fixed\` yourself to pin it to the viewport, and add top 
 
   guidelines: {
     do: [
-      'Place it in AppShell\'s `topbar` slot to get fixed positioning and sidebar coordination',
+      "Place it in AppShell's `topbar` slot to get fixed positioning and sidebar coordination",
       'Keep the heading to one or two words that name the app',
       'Use the `logo` slot for an SVG or image mark next to the heading',
       'Put primary navigation links in the `center` slot',
       'Keep the `actions` slot for user controls such as an avatar, settings, notifications or sign-in',
-      'Listen for `arc-sidebar-toggle` to keep your sidebar\'s open state in step',
+      "Listen for `arc-sidebar-toggle` to keep your sidebar's open state in step",
       'If your CSS hides every action at some width, hide `::part(actions)` in the same rule. The bar only notices an empty actions slot after it hydrates, so without it the server render and first paint keep a gap there',
     ],
     dont: [
-      'Don\'t put more than one TopBar on a page',
-      'Don\'t put long text in `heading`. It\'s for a brand name',
-      'Don\'t put form fields or search inputs in the brand area. Use the `center` or `actions` slot',
-      'Don\'t rely on the hamburger for primary navigation on desktop. It\'s hidden above 900px',
-      'Don\'t change the z-index without checking that dialogs and drawers still layer above it',
-      'Don\'t leave out both `heading` and the `logo` slot. The brand should never be empty',
+      "Don't put more than one TopBar on a page",
+      "Don't put long text in `heading`. It's for a brand name",
+      "Don't put form fields or search inputs in the brand area. Use the `center` or `actions` slot",
+      "Don't rely on the hamburger for primary navigation on desktop. It's hidden above 900px",
+      "Don't change the z-index without checking that dialogs and drawers still layer above it",
+      "Don't leave out both `heading` and the `logo` slot. The brand should never be empty",
     ],
   },
 

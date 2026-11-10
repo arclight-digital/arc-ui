@@ -7,7 +7,7 @@ export const responsiveSwitcher: ComponentDef = {
   tier: 'layout',
   interactivity: 'static',
   description:
-    'A layout that lines its children up in a row when it\'s wide and stacks them when it\'s narrow, using a container query on its own width.',
+    "A layout that lines its children up in a row when it's wide and stacks them when it's narrow, using a container query on its own width.",
 
   overview: `ResponsiveSwitcher lays its children out in a row when its own width is at least \`threshold\`, and in a column below that. It uses a container query, not a media query, so it switches at the same width wherever you put it. Use it for two-column forms that should drop to one column, or a text-and-image pair that should stack.
 
@@ -16,7 +16,7 @@ export const responsiveSwitcher: ComponentDef = {
 A \`threshold\` below 600px works. One above 600px doesn't move the switch point: the built-in 600px rule stays in place, so the row layout still starts at 600px.`,
 
   features: [
-    'A changed `threshold` is applied by adding a container-query stylesheet from JavaScript. There\'s no ResizeObserver',
+    "A changed `threshold` is applied by adding a container-query stylesheet from JavaScript. There's no ResizeObserver",
     'Parts: `base` and `switcher`, both on the flex container',
   ],
 
@@ -24,12 +24,12 @@ A \`threshold\` below 600px works. One above 600px doesn't move the switch point
     do: [
       'Set `threshold` to the narrowest width where the row still fits, at 600px or below',
       'Combine it with Container to cap the width as well',
-      'Use it inside resizable panels and split panes, where viewport media queries can\'t see the space you have',
+      "Use it inside resizable panels and split panes, where viewport media queries can't see the space you have",
     ],
     dont: [
-      'Don\'t use it for layouts with several breakpoints. Use CSS Grid',
-      'Don\'t set `threshold` so low that the row gets cramped',
-      'Don\'t reach for it when the direction never changes. Use Stack',
+      "Don't use it for layouts with several breakpoints. Use CSS Grid",
+      "Don't set `threshold` so low that the row gets cramped",
+      "Don't reach for it when the direction never changes. Use Stack",
     ],
   },
 

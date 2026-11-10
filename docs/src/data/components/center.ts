@@ -13,9 +13,7 @@ export const center: ComponentDef = {
 
 \`intrinsic\` makes it a flex column with \`align-items: center\`, so children keep their natural width and don't stretch to the column. Use it for buttons, icons and short labels. \`text\` adds \`text-align: center\` for inline text. The three modes can be combined.`,
 
-  features: [
-    'The max-width applies in every mode, intrinsic included',
-  ],
+  features: ['The max-width applies in every mode, intrinsic included'],
 
   guidelines: {
     do: [
@@ -25,9 +23,9 @@ export const center: ComponentDef = {
       'Change max-width to fit the layout, for example "480px" for a narrow form',
     ],
     dont: [
-      'Don\'t use it for vertical centering. It centers horizontally only',
-      'Don\'t wrap anything that should run full width, like a navigation bar',
-      'Don\'t set max-width to 100%. Then there is nothing to center',
+      "Don't use it for vertical centering. It centers horizontally only",
+      "Don't wrap anything that should run full width, like a navigation bar",
+      "Don't set max-width to 100%. Then there is nothing to center",
     ],
   },
 

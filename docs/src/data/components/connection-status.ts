@@ -17,19 +17,17 @@ The bar is in normal document flow, not fixed to the viewport, so it expands whe
 
   features: [
     'The bar has `role="status"` and `aria-live="polite"`, so screen readers announce the change without interrupting',
-    'If the page loads offline, the bar shows straight away, but `arc-offline` doesn\'t fire',
-    'Reduced motion turns off the expand transition and the dot\'s pulse',
-    'Safe to render on the server: it assumes it\'s online until the first client render reads `navigator.onLine`',
+    "If the page loads offline, the bar shows straight away, but `arc-offline` doesn't fire",
+    "Reduced motion turns off the expand transition and the dot's pulse",
+    "Safe to render on the server: it assumes it's online until the first client render reads `navigator.onLine`",
   ],
 
   guidelines: {
     do: [
       'Test it with the Offline setting in your browser DevTools Network panel',
-      'Leave its visibility to the component. There\'s no prop to show or hide the bar',
+      "Leave its visibility to the component. There's no prop to show or hide the bar",
     ],
-    dont: [
-      'Don\'t use it for API errors. Use Toast or Alert',
-    ],
+    dont: ["Don't use it for API errors. Use Toast or Alert"],
   },
 
   previewHtml: `<arc-connection-status></arc-connection-status><p style="color:var(--text-secondary);font-size:var(--font-size-sm)">Toggle your network connection in browser DevTools to see the status bar appear.</p>`,

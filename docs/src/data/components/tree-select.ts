@@ -18,7 +18,7 @@ TreeSelect follows the ARIA combobox pattern with a tree popup. Enter, Space or 
 
   features: [
     '`expanded-values` lists the groups to show expanded at first',
-    'Disabled nodes render, but the keyboard skips them and they can\'t be selected. A disabled group hides its children',
+    "Disabled nodes render, but the keyboard skips them and they can't be selected. A disabled group hides its children",
     'Supports `required` validation',
     'Neutral rails show nesting depth and carry no state',
   ],
@@ -29,13 +29,13 @@ TreeSelect follows the ARIA combobox pattern with a tree popup. Enter, Space or 
       'Give every node a stable value, group headers included. Group values drive `expanded-values` and appear in the `path` of `arc-change`',
       'Keep the tree to two or three levels. A deeper tree belongs in a picker dialog',
       'Use `expanded-values` to open the branches readers need most',
-      'Set a visible `label`. It\'s also the accessible name',
-      'Disable a node that\'s temporarily unavailable instead of removing it, so the structure stays recognizable',
+      "Set a visible `label`. It's also the accessible name",
+      "Disable a node that's temporarily unavailable instead of removing it, so the structure stays recognizable",
     ],
     dont: [
-      'Don\'t use it for a flat list. Use Select',
-      'Don\'t use it when readers need to type to filter a large set. Use Combobox, whose text field takes the keystrokes',
-      'Don\'t use it for browsing or navigation outside a form. Use TreeView, a standalone tree with no trigger or form value',
+      "Don't use it for a flat list. Use Select",
+      "Don't use it when readers need to type to filter a large set. Use Combobox, whose text field takes the keystrokes",
+      "Don't use it for browsing or navigation outside a form. Use TreeView, a standalone tree with no trigger or form value",
       'Don\'t expect group headers to be selectable. If a branch must be a valid choice, add a leaf such as "All strings" inside it',
     ],
   },

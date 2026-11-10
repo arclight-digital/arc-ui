@@ -6,8 +6,7 @@ export const radioGroup: ComponentDef = {
   tag: 'arc-radio-group',
   tier: 'input',
   interactivity: 'hybrid',
-  description:
-    'A set of radio options, all visible at once, where exactly one can be chosen.',
+  description: 'A set of radio options, all visible at once, where exactly one can be chosen.',
 
   overview: `RadioGroup shows every option up front and lets the reader pick exactly one. Select hides the options in a dropdown. RadioGroup suits two to six options that people compare before choosing, like pricing tiers, shipping methods or account types.
 
@@ -23,19 +22,19 @@ Add \`disabled\` to one \`<arc-radio>\` to rule out that option and leave the re
     '`radiogroup` role, with `role="radio"` and `aria-checked` on each option',
     '`disabled` on the group blocks clicks and keys and drops it to 50% opacity',
     '`disabled` on one `<arc-radio>` gives that option `aria-disabled="true"` and 50% opacity, and takes it out of selection and arrow-key order',
-    'The group\'s `aria-label` is its `name` attribute',
+    "The group's `aria-label` is its `name` attribute",
   ],
 
   guidelines: {
     do: [
       'Select the most common or recommended option by default, unless the choice is optional',
-      'Put a visible label or heading above the group so readers know what they\'re choosing',
+      "Put a visible label or heading above the group so readers know what they're choosing",
       'Group related radio groups under one fieldset or section heading',
     ],
     dont: [
-      'Don\'t use it for more than six or seven options. Use Select or Combobox',
-      'Don\'t put radio groups and checkboxes in the same row. They select in different ways',
-      'Don\'t use `horizontal` with long labels. They wrap badly on small screens',
+      "Don't use it for more than six or seven options. Use Select or Combobox",
+      "Don't put radio groups and checkboxes in the same row. They select in different ways",
+      "Don't use `horizontal` with long labels. They wrap badly on small screens",
     ],
   },
 

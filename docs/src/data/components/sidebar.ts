@@ -30,9 +30,9 @@ Put Sidebar in the left column of an AppShell or PageLayout, with TopBar above. 
       'Put the most-used sections first',
     ],
     dont: [
-      'Don\'t nest Sidebars. Use sections, and the link `level` attribute for indentation',
-      'Don\'t use it for top-level, site-wide navigation. Use TopBar',
-      'Don\'t put more than eight to ten links in a section. Split it',
+      "Don't nest Sidebars. Use sections, and the link `level` attribute for indentation",
+      "Don't use it for top-level, site-wide navigation. Use TopBar",
+      "Don't put more than eight to ten links in a section. Split it",
     ],
   },
 
@@ -240,8 +240,7 @@ export function DocsSidebar() {
     {
       name: 'SidebarLink',
       tag: 'arc-sidebar-link',
-      description:
-        'One link in a SidebarSection. `active` marks it as the current page.',
+      description: 'One link in a SidebarSection. `active` marks it as the current page.',
     },
   ],
 

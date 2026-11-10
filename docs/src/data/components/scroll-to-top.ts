@@ -7,7 +7,7 @@ export const scrollToTop: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'A floating button that shows up once you\'ve scrolled down and takes you back to the top of the page.',
+    "A floating button that shows up once you've scrolled down and takes you back to the top of the page.",
 
   overview: `ScrollToTop is a round, fixed-position button with an up chevron. It fades and slides in once the window has scrolled past \`threshold\` pixels (300 by default), and clicking it scrolls the window back to the top. It watches the window with its own passive scroll listener, throttled to one check per animation frame, so all you do is put the element on the page.
 
@@ -25,8 +25,8 @@ The button is labelled "Scroll to top". With \`prefers-reduced-motion\` set, the
       'Pair it with ScrollSpy on long docs pages',
     ],
     dont: [
-      'Don\'t put more than one on a page',
-      'Don\'t set `threshold` so low that the button shows up after a flick of the wheel',
+      "Don't put more than one on a page",
+      "Don't set `threshold` so low that the button shows up after a flick of the wheel",
     ],
   },
 

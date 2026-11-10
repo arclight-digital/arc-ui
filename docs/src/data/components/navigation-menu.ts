@@ -36,7 +36,7 @@ When its container is 480px wide or narrower, the bar hides. The same items then
 
   features: [
     'Dropdowns fade and slide in',
-    'A dropdown waits 150ms before closing when the pointer leaves, so moving from the trigger to the panel doesn\'t close it',
+    "A dropdown waits 150ms before closing when the pointer leaves, so moving from the trigger to the panel doesn't close it",
     '`active` on a NavItem gives it a tinted background, border and glow',
   ],
 
@@ -49,11 +49,11 @@ When its container is 480px wide or narrower, the bar hides. The same items then
       'Put it inside a Top Bar or a sticky header',
     ],
     dont: [
-      'Don\'t nest NavItems more than one level deep. A dropdown renders only its direct children',
-      'Don\'t use it alongside a Sidebar in the same view. Pick one navigation pattern',
-      'Don\'t use it for links within a page. Use ScrollSpy or Tabs',
-      'Don\'t leave out `href` on leaf items',
-      'Don\'t put more than six or seven items in one dropdown. Split them into more top-level categories',
+      "Don't nest NavItems more than one level deep. A dropdown renders only its direct children",
+      "Don't use it alongside a Sidebar in the same view. Pick one navigation pattern",
+      "Don't use it for links within a page. Use ScrollSpy or Tabs",
+      "Don't leave out `href` on leaf items",
+      "Don't put more than six or seven items in one dropdown. Split them into more top-level categories",
     ],
   },
 

@@ -6,8 +6,7 @@ export const virtualList: ComponentDef = {
   tag: 'arc-virtual-list',
   tier: 'content',
   interactivity: 'interactive',
-  description:
-    'A scrolling list of fixed-height rows that renders only the rows on screen.',
+  description: 'A scrolling list of fixed-height rows that renders only the rows on screen.',
 
   overview: `VirtualList renders only the rows on screen. A spacer stands in for the full list height (\`items.length × itemHeight\`), so the scrollbar behaves as if every row existed, while the DOM holds one screenful plus an \`overscan\` buffer. Scroll handling is throttled with \`requestAnimationFrame\`, and the number of DOM nodes stays the same however long the array is. The tests run it with 10,000 rows.
 
@@ -36,11 +35,11 @@ Working with the element directly, you can also drive it yourself. It renders an
       'Set `items` as a property. A JSON attribute also works, but it puts the whole array in your markup',
     ],
     dont: [
-      'Don\'t use it for lists under 50 items. It isn\'t worth the overhead',
-      'Don\'t mix row heights. Every row must be `item-height` tall',
-      'Don\'t put scrollable containers inside rows',
-      'Don\'t leave the host without a fixed height',
-      'Don\'t put all the items in the light DOM and let the component hide them. That\'s the cost this component exists to avoid',
+      "Don't use it for lists under 50 items. It isn't worth the overhead",
+      "Don't mix row heights. Every row must be `item-height` tall",
+      "Don't put scrollable containers inside rows",
+      "Don't leave the host without a fixed height",
+      "Don't put all the items in the light DOM and let the component hide them. That's the cost this component exists to avoid",
     ],
   },
 

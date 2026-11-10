@@ -6,15 +6,14 @@ export const buttonGroup: ComponentDef = {
   tag: 'arc-button-group',
   tier: 'input',
   interactivity: 'hybrid',
-  description:
-    'Joins related buttons into one strip, in a row or a column.',
+  description: 'Joins related buttons into one strip, in a row or a column.',
 
   overview: `ButtonGroup joins adjacent buttons into one strip. The inner corners go square, the outer ends keep the buttons' pill shape, and each button still clicks on its own. It works horizontally (the default) or vertically.
 
 Set \`size\` and \`variant\` on the group and it copies them onto every child button. \`arc-button\` has three variants: primary, secondary and ghost.`,
 
   features: [
-    'Items overlap by 1px so neighboring borders don\'t double up',
+    "Items overlap by 1px so neighboring borders don't double up",
     'The wrapper has `role="group"`',
     'Takes `arc-button`, `arc-icon-button` or any other slotted element',
   ],
@@ -27,8 +26,8 @@ Set \`size\` and \`variant\` on the group and it copies them onto every child bu
       'Set size and variant on the group, not on each button',
     ],
     dont: [
-      'Don\'t use a button group for navigation. Use Tabs or SegmentedControl',
-      'Don\'t put a destructive action in the same group as other actions unless it looks clearly different',
+      "Don't use a button group for navigation. Use Tabs or SegmentedControl",
+      "Don't put a destructive action in the same group as other actions unless it looks clearly different",
     ],
   },
 

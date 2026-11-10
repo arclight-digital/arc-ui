@@ -6,7 +6,8 @@ export const settingsLayout: ComponentDef = {
   tag: 'arc-settings-layout',
   tier: 'layout',
   interactivity: 'hybrid',
-  description: 'A settings page frame: section links in a side or top nav, and the settings content beside or below them.',
+  description:
+    'A settings page frame: section links in a side or top nav, and the settings content beside or below them.',
 
   overview: `SettingsLayout splits a settings page into a nav of section links ("Profile", "Security", "Billing") and a content area for the forms. \`nav-position="left"\`, the default, puts the nav in a 220px sidebar on a raised background. \`nav-position="top"\` puts it in a bar above the content. Both use the same slots, so switching is one attribute.
 
@@ -25,8 +26,8 @@ For pages that aren't settings, use PageLayout.`,
       'Use `nav-position="top"` for two or three sections',
     ],
     dont: [
-      'Don\'t put the app\'s main navigation in the nav slot. It\'s for switching settings sections',
-      'Don\'t put tables, charts or other heavy content in the nav. On a phone it\'s one scrolling row',
+      "Don't put the app's main navigation in the nav slot. It's for switching settings sections",
+      "Don't put tables, charts or other heavy content in the nav. On a phone it's one scrolling row",
     ],
   },
 

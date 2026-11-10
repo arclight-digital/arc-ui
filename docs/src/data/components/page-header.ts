@@ -38,8 +38,8 @@ The \`heading\` and \`description\` props render plain text. To put markup there
       'Use `below` for tab strips or secondary controls between the heading and the content',
     ],
     dont: [
-      'Don\'t use it as a divider between sections of a long page. Use Section or Divider',
-      'Don\'t put more than two or three buttons in `aside`. Move the rest into a DropdownMenu',
+      "Don't use it as a divider between sections of a long page. Use Section or Divider",
+      "Don't put more than two or three buttons in `aside`. Move the rest into a DropdownMenu",
     ],
   },
 

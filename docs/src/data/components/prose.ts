@@ -20,7 +20,7 @@ It styles h1 to h4 (not h5 or h6), paragraphs, lists, blockquotes, \`<pre>\` blo
     'Links have a faint accent-colored underline that turns solid on hover',
     'Blockquotes are italic on a faint accent background',
     '`<pre>` blocks use the monospace font on a surface background and scroll sideways when too wide',
-    'Images are capped at the container\'s width with rounded corners, and tables run full width with collapsed borders',
+    "Images are capped at the container's width with rounded corners, and tables run full width with collapsed borders",
   ],
 
   guidelines: {
@@ -29,9 +29,7 @@ It styles h1 to h4 (not h5 or h6), paragraphs, lists, blockquotes, \`<pre>\` blo
       'Put headings, paragraphs and lists directly inside `<arc-prose>`, not inside a wrapper element',
       'Pair it with the Markdown component to style rendered Markdown',
     ],
-    dont: [
-      'Don\'t wrap a single short line in Prose. Use Text',
-    ],
+    dont: ["Don't wrap a single short line in Prose. Use Text"],
   },
 
   previewHtml: `<arc-prose>

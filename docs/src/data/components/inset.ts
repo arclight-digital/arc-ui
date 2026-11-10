@@ -6,8 +6,7 @@ export const inset: ComponentDef = {
   tag: 'arc-inset',
   tier: 'layout',
   interactivity: 'static',
-  description:
-    'Pads its content on all four sides with one spacing token.',
+  description: 'Pads its content on all four sides with one spacing token.',
 
   overview: `Inset pads its content on all four sides with one spacing token. Use it for the space around a block of content, and Stack for the gaps between siblings.
 
@@ -21,12 +20,12 @@ The \`space\` prop picks the token. The \`bleed\` prop adds a negative margin eq
     do: [
       'Use it for card bodies, dialog content and section interiors',
       'Use `space="lg"` or `space="xl"` for main content areas and `space="sm"` for compact UI',
-      'Use `bleed` when a block\'s background should reach past its parent\'s padding',
+      "Use `bleed` when a block's background should reach past its parent's padding",
     ],
     dont: [
-      'Don\'t use Inset in place of Container. Container limits width, Inset adds padding',
-      'Don\'t use `bleed` without a padded parent. The negative margin pushes the box outside it',
-      'Don\'t hard-code pixel padding. Change the spacing tokens instead',
+      "Don't use Inset in place of Container. Container limits width, Inset adds padding",
+      "Don't use `bleed` without a padded parent. The negative margin pushes the box outside it",
+      "Don't hard-code pixel padding. Change the spacing tokens instead",
     ],
   },
 

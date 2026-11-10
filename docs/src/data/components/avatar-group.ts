@@ -26,8 +26,8 @@ The overlap alone would work as plain CSS. Hiding the extra avatars and counting
       'Use it for team members, comment threads and who-is-here indicators',
     ],
     dont: [
-      'Don\'t slot anything but arc-avatar. The margin and z-index logic assumes avatars',
-      'Don\'t use it for one avatar. It only adds wrapper markup',
+      "Don't slot anything but arc-avatar. The margin and z-index logic assumes avatars",
+      "Don't use it for one avatar. It only adds wrapper markup",
     ],
   },
 

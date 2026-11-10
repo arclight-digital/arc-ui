@@ -7,8 +7,7 @@ export const alert: ComponentDef = {
   tier: 'feedback',
   interactivity: 'hybrid',
   searchKeywords: ['callout', 'notice', 'tip', 'banner', 'aside'],
-  description:
-    'An inline message box colored by severity, with an optional close button.',
+  description: 'An inline message box colored by severity, with an optional close button.',
 
   overview: `Alert shows a message inline in the page. The variant sets the color and icon: \`info\`, \`tip\`, \`success\`, \`warning\` or \`error\`.
 
@@ -30,17 +29,17 @@ Severity and urgency don't always agree, and \`live\` sets the announcement on i
       'Keep the text short: lead with the outcome, then explain',
       'Add a heading when the body runs longer than one sentence',
       'Make an alert dismissible when the message is temporary',
-      'Put an alert next to the content it\'s about, or at the top of the page for page-wide messages',
+      "Put an alert next to the content it's about, or at the top of the page for page-wide messages",
       'Use `tip` for advice that is neither a status report nor a problem',
-      'Set `live` on an alert you insert after page load. The default goes by severity and can\'t know the alert just appeared',
-      'Use the `icon` slot when the glyph should say something the variant doesn\'t, such as a product icon or a specific action',
+      "Set `live` on an alert you insert after page load. The default goes by severity and can't know the alert just appeared",
+      "Use the `icon` slot when the glyph should say something the variant doesn't, such as a product icon or a specific action",
     ],
     dont: [
       'Don\'t use `info` to get a live region. It is `role="note"` and isn\'t announced, so set `live="polite"`',
-      'Don\'t stack more than two or three alerts. Combine them, or use toasts',
-      'Don\'t use `error` for warnings. Keep it for failures',
-      'Don\'t rely on color alone. The heading and text should make sense without it',
-      'Don\'t make every alert dismissible. Leave critical errors on screen',
+      "Don't stack more than two or three alerts. Combine them, or use toasts",
+      "Don't use `error` for warnings. Keep it for failures",
+      "Don't rely on color alone. The heading and text should make sense without it",
+      "Don't make every alert dismissible. Leave critical errors on screen",
     ],
   },
 

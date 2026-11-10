@@ -6,7 +6,8 @@ export const copyButton: ComponentDef = {
   tag: 'arc-copy-button',
   tier: 'input',
   interactivity: 'interactive',
-  description: 'A button that copies a string to the clipboard and shows "Copied!" when the copy works.',
+  description:
+    'A button that copies a string to the clipboard and shows "Copied!" when the copy works.',
 
   overview: `CopyButton writes its \`value\` to the clipboard when clicked. It shows a clipboard icon and the word "Copy". After a successful copy it turns success-colored with a check mark and "Copied!" for 2 seconds, then goes back, and fires \`arc-copy\` with the copied value.
 
@@ -28,7 +29,7 @@ It uses \`navigator.clipboard.writeText\`, which needs a secure context (HTTPS o
       'Set `disabled` until the value exists, for example while it loads',
     ],
     dont: [
-      'Don\'t put it inside another button or interactive element. HTML doesn\'t allow nested interactive content',
+      "Don't put it inside another button or interactive element. HTML doesn't allow nested interactive content",
       'Don\'t rely on the "Copied!" state alone. Pair it with a toast from `arc-copy` for people who look away',
     ],
   },

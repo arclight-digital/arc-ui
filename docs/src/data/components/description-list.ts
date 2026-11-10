@@ -18,9 +18,7 @@ Two props control the arrangement, on different axes. \`columns\` is how many it
 
 Dividers between rows and between columns are on by default. Set \`no-dividers\` to remove them. The list has \`role="list"\` and each item \`role="listitem"\`.`,
 
-  features: [
-    'CSS parts: `list`, `item`, `term`, `detail`',
-  ],
+  features: ['CSS parts: `list`, `item`, `term`, `detail`'],
 
   guidelines: {
     do: [
@@ -30,9 +28,9 @@ Dividers between rows and between columns are on by default. Set \`no-dividers\`
       'Keep terms to one to three words',
     ],
     dont: [
-      'Don\'t use it for tabular data with many rows. Use `arc-data-grid`',
+      "Don't use it for tabular data with many rows. Use `arc-data-grid`",
       'Don\'t combine `layout="horizontal"` with a high `columns` count. Each item keeps its 120px term column, so the detail gets squeezed',
-      'Don\'t write paragraph-length terms. Put the long text in the detail',
+      "Don't write paragraph-length terms. Put the long text in the detail",
       'Don\'t put anything but `arc-description-item` elements in the list. A `role="list"` should only contain list items',
     ],
   },

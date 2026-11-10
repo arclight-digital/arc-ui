@@ -18,9 +18,7 @@ The tabs follow the ARIA tabs pattern: one tab stop, the arrow keys move and sel
 
 CodeGroup doesn't import arc-code-block, so it's in the main barrel. Import \`@arclux/arc-ui/code-block\` for the blocks themselves, and shiki if you want them colored.`,
 
-  features: [
-    'The copy button is icon-only',
-  ],
+  features: ['The copy button is icon-only'],
 
   guidelines: {
     do: [
@@ -30,9 +28,9 @@ CodeGroup doesn't import arc-code-block, so it's in the main barrel. Import \`@a
       'Keep the blocks parallel, so switching tabs changes only what differs',
     ],
     dont: [
-      'Don\'t use it for steps a reader runs in order. Those go in separate blocks, one after another',
-      'Don\'t put anything but `arc-code-block` elements inside. Other children are ignored',
-      'Don\'t give tabs in synced groups different names for the same thing, or they won\'t follow each other',
+      "Don't use it for steps a reader runs in order. Those go in separate blocks, one after another",
+      "Don't put anything but `arc-code-block` elements inside. Other children are ignored",
+      "Don't give tabs in synced groups different names for the same thing, or they won't follow each other",
     ],
   },
 

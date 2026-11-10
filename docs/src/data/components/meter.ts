@@ -17,7 +17,7 @@ In the default \`zones\` mode, the fill color follows the HTML meter algorithm w
 
   features: [
     '`role="meter"` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`',
-    'Fill width and color animate with the theme\'s base transition',
+    "Fill width and color animate with the theme's base transition",
     '`value` is clamped between `min` and `max`',
   ],
 
@@ -29,9 +29,9 @@ In the default \`zones\` mode, the fill color follows the HTML meter algorithm w
       'Explain what the color zones mean nearby, in text or a tooltip',
     ],
     dont: [
-      'Don\'t use it for indeterminate progress or task completion. Use Progress',
-      'Don\'t set `min` equal to or above `max`. The fill stays at 0%',
-      'Don\'t use it for pass/fail states. Use a Badge or status indicator',
+      "Don't use it for indeterminate progress or task completion. Use Progress",
+      "Don't set `min` equal to or above `max`. The fill stays at 0%",
+      "Don't use it for pass/fail states. Use a Badge or status indicator",
     ],
   },
 

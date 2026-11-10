@@ -17,23 +17,23 @@ export const dialog: ComponentDef = {
 \`dismissible\` is on by default. It shows the X button and lets Escape and a backdrop click close the dialog. Set it to \`false\` for decisions the user has to make with the footer buttons. \`arc-close\` is cancelable, so \`preventDefault()\` keeps the dialog open, for example while a form inside it is saving.`,
 
   features: [
-    'The backdrop\'s dim and blur come from `--dialog-backdrop` and `--dialog-backdrop-filter`',
+    "The backdrop's dim and blur come from `--dialog-backdrop` and `--dialog-backdrop-filter`",
     'Slides up and fades in on open, and reverses on close',
     '`size` sets the max width: `sm` is 400px, `md` 560px and `lg` 720px. `fullscreen` fills the viewport',
     '`header` and `footer` slots around the body',
-    '`heading` is the text in the header bar and the dialog\'s accessible name',
+    "`heading` is the text in the header bar and the dialog's accessible name",
   ],
 
   guidelines: {
     do: [
-      'Keep `dismissible` on unless closing by accident would lose the user\'s work',
+      "Keep `dismissible` on unless closing by accident would lose the user's work",
       'Put actions in the `footer` slot, with the confirming action last',
       'Use `size="sm"` for short single-purpose dialogs, and `lg` only for dense content',
     ],
     dont: [
-      'Don\'t use it for a yes-or-no question. Use `arc-confirm`, which already has the two buttons',
-      'Don\'t stack dialogs. Close one before opening another',
-      'Don\'t use it for passive notices. Use Alert or Toast, which don\'t take focus',
+      "Don't use it for a yes-or-no question. Use `arc-confirm`, which already has the two buttons",
+      "Don't stack dialogs. Close one before opening another",
+      "Don't use it for passive notices. Use Alert or Toast, which don't take focus",
     ],
   },
 

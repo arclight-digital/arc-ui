@@ -33,17 +33,17 @@ There's no streaming API. A message's body is its default slot, so you stream a 
   guidelines: {
     do: [
       'Use it for a dialogue between the user and a responder, where who said what and the scroll behavior matter',
-      'Stream a reply by updating the message\'s text, for example its `textContent`, as tokens arrive',
+      "Stream a reply by updating the message's text, for example its `textContent`, as tokens arrive",
       'Add a `pending` assistant message as soon as the request goes out, then fill its slot and remove `pending` when tokens arrive',
       'Pass timestamps as ISO strings',
       'Set the height with the `--conversation-height` custom property, or let it fill a parent that has a height',
     ],
     dont: [
-      'Don\'t use it for an activity feed or event history. Use Timeline, where entries mark moments, not speakers',
-      'Don\'t use it as a general list of items. Use List',
-      'Don\'t scroll to the bottom yourself on new messages. The component already follows, and only while the reader is at the bottom',
-      'Don\'t put critical status in a system message alone. It scrolls away with the transcript',
-      'Don\'t add avatars by reflex. The slot is there for products that need them',
+      "Don't use it for an activity feed or event history. Use Timeline, where entries mark moments, not speakers",
+      "Don't use it as a general list of items. Use List",
+      "Don't scroll to the bottom yourself on new messages. The component already follows, and only while the reader is at the bottom",
+      "Don't put critical status in a system message alone. It scrolls away with the transcript",
+      "Don't add avatars by reflex. The slot is there for products that need them",
     ],
   },
 

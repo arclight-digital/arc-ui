@@ -17,22 +17,20 @@ export const divider: ComponentDef = {
 
 \`vertical\` turns any variant into a top-to-bottom rule for a flex row, with \`aria-orientation="vertical"\`. \`label\` puts text in the middle of a horizontal divider, like the "OR" between two options. \`align="left"\` or \`"right"\` makes a gradient fade from one edge instead of both. The divider is a \`<div>\` with \`role="separator"\`.`,
 
-  features: [
-    'CSS parts: `divider`, plus `line` and `label` on a labeled divider',
-  ],
+  features: ['CSS parts: `divider`, plus `line` and `label` on a labeled divider'],
 
   guidelines: {
     do: [
       'Use `subtle` as the everyday separator between sections',
       'Use `dashed` or `dotted` where the rule marks a boundary instead of decorating one, such as a drop zone, an optional section or a cut line',
-      'Use `line` for a plain flat rule. It\'s the closest variant to a bare `<hr>`',
+      "Use `line` for a plain flat rule. It's the closest variant to a bare `<hr>`",
       'Use `line-gradient` or `line-primary` as decorative breaks in hero and feature sections',
       'Save `glow` for major section breaks',
     ],
     dont: [
-      'Don\'t put several glow dividers close together. The shimmers compete',
-      'Don\'t use the centered line variants in dense layouts. Their capped width leaves empty space on both sides',
-      'Don\'t rely on a divider alone to separate content. Use headings too',
+      "Don't put several glow dividers close together. The shimmers compete",
+      "Don't use the centered line variants in dense layouts. Their capped width leaves empty space on both sides",
+      "Don't rely on a divider alone to separate content. Use headings too",
     ],
   },
 

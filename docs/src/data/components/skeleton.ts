@@ -15,9 +15,7 @@ export const skeleton: ComponentDef = {
 
 The shimmer runs from \`--surface-overlay\` through a 4% tint of the accent color, so it follows the theme. The component sets \`role="status"\`, \`aria-label="Loading"\` and \`aria-busy="true"\` for screen reader users.`,
 
-  features: [
-    'CSS part `skeleton` on the shape, for overriding its style or animation',
-  ],
+  features: ['CSS part `skeleton` on the shape, for overriding its style or animation'],
 
   guidelines: {
     do: [
@@ -27,11 +25,11 @@ The shimmer runs from \`--surface-overlay\` through a 4% tint of the accent colo
       'Remove skeletons as soon as the content loads, with no added delay',
     ],
     dont: [
-      'Don\'t show a skeleton for loads that finish almost at once. It flashes and disappears',
-      'Don\'t stack more than five or six text lines. A tall block of bars looks like a broken page',
-      'Don\'t leave a rect skeleton without a `height`. It has no height of its own and collapses',
-      'Don\'t mix skeletons and spinners on one screen',
-      'Don\'t animate a skeleton\'s opacity on top of its shimmer',
+      "Don't show a skeleton for loads that finish almost at once. It flashes and disappears",
+      "Don't stack more than five or six text lines. A tall block of bars looks like a broken page",
+      "Don't leave a rect skeleton without a `height`. It has no height of its own and collapses",
+      "Don't mix skeletons and spinners on one screen",
+      "Don't animate a skeleton's opacity on top of its shimmer",
     ],
   },
 

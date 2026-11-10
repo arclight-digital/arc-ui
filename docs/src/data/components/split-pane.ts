@@ -23,14 +23,14 @@ The \`primary\` slot gets the ratio's share, and \`secondary\` fills the rest. E
     do: [
       'Use it for editor and preview, list and detail, or tree and content layouts',
       'Keep `min-ratio` at 0.15 or more and `max-ratio` at 0.85 or less (the defaults) so both panes stay usable',
-      'Save the ratio from `arc-resize` to keep the reader\'s layout. It fires on every drag step, so debounce the write',
+      "Save the ratio from `arc-resize` to keep the reader's layout. It fires on every drag step, so debounce the write",
       'Give the parent a set height, such as `100vh` or `flex: 1`. SplitPane takes 100% of it',
       'Use `orientation="vertical"` for top and bottom splits, such as a console under an editor',
     ],
     dont: [
-      'Don\'t use it for a fixed two-column layout. Use PageLayout with `sidebar-left` or `sidebar-right`',
-      'Don\'t set `min-ratio` and `max-ratio` so close together that the handle barely moves',
-      'Don\'t put controls the reader needs in the secondary pane if `max-ratio` lets it get too narrow to show them',
+      "Don't use it for a fixed two-column layout. Use PageLayout with `sidebar-left` or `sidebar-right`",
+      "Don't set `min-ratio` and `max-ratio` so close together that the handle barely moves",
+      "Don't put controls the reader needs in the secondary pane if `max-ratio` lets it get too narrow to show them",
     ],
   },
 

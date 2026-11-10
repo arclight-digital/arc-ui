@@ -28,9 +28,9 @@ For items of different heights that should pack tightly, use Masonry. For dashbo
       'Set object-fit: cover on images so they fill their cells',
     ],
     dont: [
-      'Don\'t use it for content of different heights. Use Masonry',
-      'Don\'t mix ratios in one grid. Use separate grids',
-      'Don\'t put long text in a cell. It overflows and gets clipped',
+      "Don't use it for content of different heights. Use Masonry",
+      "Don't mix ratios in one grid. Use separate grids",
+      "Don't put long text in a cell. It overflows and gets clipped",
     ],
   },
 

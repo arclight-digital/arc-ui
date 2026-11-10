@@ -28,8 +28,8 @@ The \`white\` variant draws the ring in \`--text-primary\`, the body text color.
       'Add a visible label such as "Loading..." when there\'s room for one',
     ],
     dont: [
-      'Don\'t put `lg` inline with text. It\'s taller than the line',
-      'Don\'t use `primary` on a primary-colored background. The ring disappears',
+      "Don't put `lg` inline with text. It's taller than the line",
+      "Don't use `primary` on a primary-colored background. The ring disappears",
     ],
   },
 

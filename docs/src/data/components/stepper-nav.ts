@@ -6,8 +6,7 @@ export const stepperNav: ComponentDef = {
   tag: 'arc-stepper-nav',
   tier: 'navigation',
   interactivity: 'interactive',
-  description:
-    'Wizard navigation with numbered step indicators and Back, Next and Skip buttons.',
+  description: 'Wizard navigation with numbered step indicators and Back, Next and Skip buttons.',
 
   overview: `StepperNav runs a multi-step flow. It draws a numbered indicator for each step, puts your step content in its default slot, and adds Back, Next and Skip buttons below. On the last step, Next reads "Complete". Use Stepper when you only need to show progress.
 
@@ -17,7 +16,7 @@ export const stepperNav: ComponentDef = {
 
   features: [
     'Labels from `steps` become each indicator\'s accessible name, such as "Step 2: Profile". They aren\'t drawn on screen',
-    'Skip appears only when `linear` is off and the reader isn\'t on the last step',
+    "Skip appears only when `linear` is off and the reader isn't on the last step",
   ],
 
   guidelines: {
@@ -28,8 +27,8 @@ export const stepperNav: ComponentDef = {
       'Keep a flow to three to six steps, and group a longer one into stages',
     ],
     dont: [
-      'Don\'t use it for display-only progress. Use Stepper',
-      'Don\'t use StepperNav and Tabs for the same content',
+      "Don't use it for display-only progress. Use Stepper",
+      "Don't use StepperNav and Tabs for the same content",
     ],
   },
 

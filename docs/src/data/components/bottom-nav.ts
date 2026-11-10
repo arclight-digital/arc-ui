@@ -28,7 +28,7 @@ Use TopBar on desktop and swap in BottomNav at mobile widths. The bar's backdrop
       'Set value to match the current route so the right item is highlighted',
     ],
     dont: [
-      'Don\'t show BottomNav and TopBar navigation at the same time',
+      "Don't show BottomNav and TopBar navigation at the same time",
       'Don\'t use it for actions like "Create" or "Delete". It is for navigation only',
     ],
   },

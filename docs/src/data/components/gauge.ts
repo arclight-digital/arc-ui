@@ -21,23 +21,23 @@ The arc sweeps in on first paint and again on every change. It uses \`role="mete
   features: [
     '`value` is clamped between `min` and `max`',
     '`no-value` hides the reading in the middle',
-    'A custom color\'s glow reads the matching `-rgb` property, such as `--gauge-fill-rgb`',
+    "A custom color's glow reads the matching `-rgb` property, such as `--gauge-fill-rgb`",
   ],
 
   guidelines: {
     do: [
       'Use it for a single reading that should stand out on a dashboard, such as CPU load, battery or a health score',
       'Set `low`, `high` and `optimum` to match what your numbers mean, as you would on Meter',
-      'Set a `label`. It\'s shown under the reading and is the accessible name',
+      "Set a `label`. It's shown under the reading and is the accessible name",
       'Set `unit` when the number alone is ambiguous: "72" means different things as %, ms or GB',
       'Use the `half` variant when vertical space is tight, as in a stat row or a card header',
     ],
     dont: [
-      'Don\'t use it in dense layouts or lists of readings. Meter shows the same data in a fraction of the height',
-      'Don\'t use it for a number with no meaningful range. Use Stat',
-      'Don\'t use it for task progress. Use Progress',
-      'Don\'t set `min` equal to or greater than `max`. The arc renders empty',
-      'Don\'t rely on color alone for the zone. Keep the value and label visible, or add text beside it',
+      "Don't use it in dense layouts or lists of readings. Meter shows the same data in a fraction of the height",
+      "Don't use it for a number with no meaningful range. Use Stat",
+      "Don't use it for task progress. Use Progress",
+      "Don't set `min` equal to or greater than `max`. The arc renders empty",
+      "Don't rely on color alone for the zone. Keep the value and label visible, or add text beside it",
     ],
   },
 

@@ -6,8 +6,7 @@ export const segmentedControl: ComponentDef = {
   tag: 'arc-segmented-control',
   tier: 'input',
   interactivity: 'interactive',
-  description:
-    'A row of buttons where exactly one is selected, built from arc-option children.',
+  description: 'A row of buttons where exactly one is selected, built from arc-option children.',
 
   overview: `SegmentedControl draws its \`<arc-option>\` children as buttons in one rounded, bordered bar. The selected button gets the accent background and a glow. Use it for two to five short options where exactly one must be picked, like a daily, weekly or monthly view. For more options, use Select or RadioGroup.
 
@@ -16,17 +15,15 @@ The bar is a \`radiogroup\` and each button a \`radio\` with \`aria-checked\`. A
 With no \`value\` set, the first option is selected, so the control always has a value. \`arc-change\` fires with the new value each time the selection changes.`,
 
   features: [
-    'Each option\'s label is its text content, so markup inside an `<arc-option>` is dropped',
+    "Each option's label is its text content, so markup inside an `<arc-option>` is dropped",
     'Disabled drops the whole control to 50% opacity and blocks pointer events',
   ],
 
   guidelines: {
-    do: [
-      'Keep labels to one or two words so the bar doesn\'t overflow',
-    ],
+    do: ["Keep labels to one or two words so the bar doesn't overflow"],
     dont: [
-      'Don\'t use it to switch between views. Use Tabs',
-      'Don\'t use it for a single on/off setting. Use Toggle',
+      "Don't use it to switch between views. Use Tabs",
+      "Don't use it for a single on/off setting. Use Toggle",
     ],
   },
 

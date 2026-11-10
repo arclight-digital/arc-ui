@@ -16,7 +16,7 @@ export const maskedInput: ComponentDef = {
     'license key',
   ],
   description:
-    'Text field that types a mask\'s literals for you, for dates, card numbers, phone numbers and license keys. `value` holds only the raw characters.',
+    "Text field that types a mask's literals for you, for dates, card numbers, phone numbers and license keys. `value` holds only the raw characters.",
 
   overview: `Masked Input is a single-line text field for values with a fixed shape. The \`mask\` prop describes the shape with four slot characters: \`#\` for a digit, \`A\` for a letter (lowercase input is uppercased), \`a\` for any letter, and \`*\` for a letter or digit. Every other character is a literal the field types for you. With a mask of \`##/##/####\`, the user types eight digits, the slashes appear on their own, and the caret always lands on the next position that takes a character.
 
@@ -36,16 +36,16 @@ Typing inserts at the caret and skips past literals. Backspace deletes the previ
     do: [
       'Use a mask when the value has one fixed shape: dates, card numbers, phone numbers in a single locale, license or serial keys',
       'Store `value` and use `formattedValue` only for display',
-      'Listen for `arc-change` to validate or submit. It fires when the mask completes, so the user doesn\'t have to leave the field',
+      "Listen for `arc-change` to validate or submit. It fires when the mask completes, so the user doesn't have to leave the field",
       'Set `autocomplete` to the matching token, such as `cc-number` on a card field, so browser autofill keeps working',
       'Always set a `label`. The mask shape in the placeholder is a hint, not a name for the field',
       'Use `A` over `a` for license and product keys, so the stored value is always uppercase',
     ],
     dont: [
-      'Don\'t mask free-form values like names, email addresses or search queries. Use Input',
-      'Don\'t use it for short verification codes. Pin Input gives each character its own box and advances on its own',
-      'Don\'t mask international phone numbers with one pattern. Lengths vary by country, and a wrong mask stops people entering their own number',
-      'Don\'t treat the mask as validation. `##/##/####` accepts 99/99/9999, so check that a date is real before accepting it',
+      "Don't mask free-form values like names, email addresses or search queries. Use Input",
+      "Don't use it for short verification codes. Pin Input gives each character its own box and advances on its own",
+      "Don't mask international phone numbers with one pattern. Lengths vary by country, and a wrong mask stops people entering their own number",
+      "Don't treat the mask as validation. `##/##/####` accepts 99/99/9999, so check that a date is real before accepting it",
     ],
   },
 

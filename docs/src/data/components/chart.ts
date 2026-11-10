@@ -32,12 +32,12 @@ On hover, line and area charts show a vertical crosshair with a tooltip listing 
       'Use arc-mark-click for drill-down or a detail panel',
     ],
     dont: [
-      'Don\'t plot two measures with different scales on one chart. There is one y-axis and no second one',
-      'Don\'t use a donut for more than about six segments or for precise comparison. Use bars',
-      'Don\'t hide the legend on a multi-series chart unless the series are labeled right next to the lines',
-      'Don\'t color marks yourself to carry meaning. The fixed palette keeps each series the same color everywhere',
-      'Don\'t use hide-axis where readers need to look up values. It is for compact trend panels',
-      'Don\'t give stacked bars negative values. Stacking assumes non-negative data',
+      "Don't plot two measures with different scales on one chart. There is one y-axis and no second one",
+      "Don't use a donut for more than about six segments or for precise comparison. Use bars",
+      "Don't hide the legend on a multi-series chart unless the series are labeled right next to the lines",
+      "Don't color marks yourself to carry meaning. The fixed palette keeps each series the same color everywhere",
+      "Don't use hide-axis where readers need to look up values. It is for compact trend panels",
+      "Don't give stacked bars negative values. Stacking assumes non-negative data",
     ],
   },
 

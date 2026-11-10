@@ -26,12 +26,12 @@ The server renders the complete transcript, so the content never depends on Java
       'Put any command the reader needs in a CodeBlock as well. Terminal has no copy button or syntax highlighting',
       'Use Typewriter for a single line of prose, such as a headline',
       'Keep transcripts to five to eight lines. Thirty reads as a log file',
-      'Set a line\'s `delay` to stand in for real latency, such as a build step that runs for a beat before its output appears',
+      "Set a line's `delay` to stand in for real latency, such as a build step that runs for a beat before its output appears",
     ],
     dont: [
-      'Don\'t put critical instructions behind the animation. A reader scrolling fast shouldn\'t have to wait for the typing',
-      'Don\'t animate several terminals in the same viewport',
-      'Don\'t loop a long transcript. Clearing and replaying more than a few lines is distracting',
+      "Don't put critical instructions behind the animation. A reader scrolling fast shouldn't have to wait for the typing",
+      "Don't animate several terminals in the same viewport",
+      "Don't loop a long transcript. Clearing and replaying more than a few lines is distracting",
     ],
   },
 

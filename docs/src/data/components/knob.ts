@@ -26,15 +26,15 @@ It works like the knobs in audio software. Drag vertically to turn it: the full 
   guidelines: {
     do: [
       'Use it where horizontal space is short and controls stack in columns: mixer strips, effect panels, tool palettes',
-      'Give it a `label`. A bare dial doesn\'t say what it controls',
+      "Give it a `label`. A bare dial doesn't say what it controls",
       'Set `format` to include the unit, so the readout and screen readers say "440 Hz" and not "440"',
       'Put a detent at the neutral point of a two-sided parameter: 0 on a pan knob, unity on a gain knob',
     ],
     dont: [
-      'Don\'t use a knob for a single value in a wide layout. A slider shows its whole range at a size a knob can\'t',
-      'Don\'t use it for exact numbers. Pair it with Number Input, or use Number Input alone, when people need to type a value',
-      'Don\'t put a detent every few units. Smooth dragging becomes impossible',
-      'Don\'t hide the readout. It\'s part of the control',
+      "Don't use a knob for a single value in a wide layout. A slider shows its whole range at a size a knob can't",
+      "Don't use it for exact numbers. Pair it with Number Input, or use Number Input alone, when people need to type a value",
+      "Don't put a detent every few units. Smooth dragging becomes impossible",
+      "Don't hide the readout. It's part of the control",
     ],
   },
 

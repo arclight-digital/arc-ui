@@ -6,8 +6,7 @@ export const collapsible: ComponentDef = {
   tag: 'arc-collapsible',
   tier: 'content',
   interactivity: 'interactive',
-  description:
-    'A heading that shows and hides the content under it when clicked.',
+  description: 'A heading that shows and hides the content under it when clicked.',
 
   overview: `Collapsible is one section that opens and closes when you click its heading. Accordion manages several panels and closes the others. Collapsible stands alone, for optional details, advanced settings or extra information the user may not need straight away. Unlike Accordion, its body is a real slot, so it takes any markup.
 
@@ -21,15 +20,15 @@ The heading is a \`<button>\` with \`aria-expanded\`, so Enter and Space toggle 
 
   guidelines: {
     do: [
-      'Write a heading that says what\'s inside',
+      "Write a heading that says what's inside",
       'Set open in the HTML when the content should show on first render',
       'Stack several Collapsibles for FAQ sections where more than one can be open',
       'Listen to arc-toggle if you want to remember the state between visits',
     ],
     dont: [
-      'Don\'t hide content users must see',
-      'Don\'t use it when only one section should be open at a time. Use Accordion',
-      'Don\'t put very tall content inside without a scrolling wrapper. Opening it pushes the page around',
+      "Don't hide content users must see",
+      "Don't use it when only one section should be open at a time. Use Accordion",
+      "Don't put very tall content inside without a scrolling wrapper. Opening it pushes the page around",
     ],
   },
 

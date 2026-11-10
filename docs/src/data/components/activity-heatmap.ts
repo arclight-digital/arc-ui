@@ -29,7 +29,7 @@ Screen readers get the grid as one image with a summary label (day count, end da
       'Use it for daily counts over months: commits, deploys, workouts, practice sessions',
       'Give each entry a label ("7 commits"). The hover detail and the live region read it out',
       'Set end-date when the window is a fixed report ("2025 in review") or when server and client must render the same grid',
-      'Set max when readers compare two heatmaps or there\'s a known ceiling. Quartile ramps are relative to each dataset, so side by side they mislead',
+      "Set max when readers compare two heatmaps or there's a known ceiling. Quartile ramps are relative to each dataset, so side by side they mislead",
       'Match week-start to your readers: Sunday is the GitHub convention, Monday the ISO one',
       'Keep the legend unless the page already explains the ramp. It is the only key to the colors',
     ],

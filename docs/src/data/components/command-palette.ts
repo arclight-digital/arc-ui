@@ -17,9 +17,9 @@ Picking an item fires \`arc-select\` with its \`value\`, or its label if it has 
   features: [
     'Opens with a scale-in transition. The search input takes focus and the query clears on every open',
     'Arrow Up and Arrow Down move the highlight, Enter selects and Escape closes',
-    'Body scroll is locked while it\'s open, and focus returns to where it was when it closes',
+    "Body scroll is locked while it's open, and focus returns to where it was when it closes",
     'When nothing matches, the empty state repeats the query',
-    'The backdrop is `::backdrop`, which can\'t be a CSS part. Style it with `--palette-backdrop`',
+    "The backdrop is `::backdrop`, which can't be a CSS part. Style it with `--palette-backdrop`",
   ],
 
   guidelines: {
@@ -29,7 +29,7 @@ Picking an item fires \`arc-select\` with its \`value\`, or its label if it has 
       'Give items a `value` when two of them could share a label, so your `arc-select` handler can tell them apart',
     ],
     dont: [
-      'Don\'t put forms or other interactive content in an item. The palette renders its own copy of each item from its text, so anything else is lost',
+      "Don't put forms or other interactive content in an item. The palette renders its own copy of each item from its text, so anything else is lost",
     ],
   },
 

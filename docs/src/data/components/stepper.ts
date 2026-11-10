@@ -27,8 +27,8 @@ Each step is an \`<arc-step>\` child with a \`label\`. Stepper reads the childre
       'Put the stepper at the top of the form or wizard',
     ],
     dont: [
-      'Don\'t use it as navigation. Use StepperNav',
-      'Don\'t rename steps partway through. Readers lose track of where they are',
+      "Don't use it as navigation. Use StepperNav",
+      "Don't rename steps partway through. Readers lose track of where they are",
     ],
   },
 

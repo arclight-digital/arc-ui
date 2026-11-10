@@ -33,8 +33,8 @@ Dragging fires \`arc-input\` continuously and \`arc-change\` when you let go. A 
       'Start `low` and `high` at the range most people want',
     ],
     dont: [
-      'Don\'t make `step` so small that the thumbs are hard to pull apart with a mouse',
-      'Don\'t use it for non-numeric choices. Use MultiSelect or a group of checkboxes',
+      "Don't make `step` so small that the thumbs are hard to pull apart with a mouse",
+      "Don't use it for non-numeric choices. Use MultiSelect or a group of checkboxes",
     ],
   },
 

@@ -27,9 +27,9 @@ It recalculates every second and stops its interval when removed from the page. 
       'Set `expired` to text that fits, such as "Now live"',
     ],
     dont: [
-      'Don\'t use it for elapsed time or as a stopwatch. It only counts down',
-      'Don\'t set a target in the past unless you want the expired text straight away',
-      'Don\'t enforce deadlines with it. Check them on the server',
+      "Don't use it for elapsed time or as a stopwatch. It only counts down",
+      "Don't set a target in the past unless you want the expired text straight away",
+      "Don't enforce deadlines with it. Check them on the server",
     ],
   },
 

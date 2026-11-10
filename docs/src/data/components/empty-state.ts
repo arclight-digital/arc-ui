@@ -22,14 +22,14 @@ It's quiet by default. Set \`announce\` to make it a polite live region (\`role=
   guidelines: {
     do: [
       'Give it at least one action, so people know what to do next',
-      'Pick an icon that hints at what\'s missing, such as a search or folder icon',
+      "Pick an icon that hints at what's missing, such as a search or folder icon",
       'Write a specific heading, such as "No results found", not "Empty"',
-      'Use the description to say why it\'s empty or how to fill it',
+      "Use the description to say why it's empty or how to fill it",
     ],
     dont: [
-      'Don\'t use it as a general card. It\'s for places with no content',
-      'Don\'t use more than two action buttons',
-      'Don\'t show it while data is loading. Use a skeleton until you know the result is empty',
+      "Don't use it as a general card. It's for places with no content",
+      "Don't use more than two action buttons",
+      "Don't show it while data is loading. Use a skeleton until you know the result is empty",
     ],
   },
 

@@ -15,10 +15,7 @@ The usual case is a bulk-action bar that shows while rows in a table or list are
 
 It doesn't block the page: there's no backdrop, no scroll lock and no focus trap. For a bar that's always there, use Toolbar, and for a panel the user opens and closes, use Drawer.`,
 
-  features: [
-    'Slides and fades with the `--ease-out-expo` easing',
-    'CSS part: `bar`',
-  ],
+  features: ['Slides and fades with the `--ease-out-expo` easing', 'CSS part: `bar`'],
 
   guidelines: {
     do: [
@@ -27,10 +24,10 @@ It doesn't block the page: there's no backdrop, no scroll lock and no focus trap
       'Use the default bottom position for most bars, and `position="top"` for consent banners',
     ],
     dont: [
-      'Don\'t put navigation links in it. Use TopBar or Sidebar',
-      'Don\'t put forms or multi-step flows in it',
-      'Don\'t show two at the same edge at once. They overlap',
-      'Don\'t use it in place of a toast. It\'s for actions, and Toast is for notifications',
+      "Don't put navigation links in it. Use TopBar or Sidebar",
+      "Don't put forms or multi-step flows in it",
+      "Don't show two at the same edge at once. They overlap",
+      "Don't use it in place of a toast. It's for actions, and Toast is for notifications",
     ],
   },
 

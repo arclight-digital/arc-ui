@@ -7,7 +7,7 @@ export const markdown: ComponentDef = {
   tier: 'typography',
   interactivity: 'static',
   description:
-    'Renders a markdown string as HTML in ARC UI\'s type styles, using a small built-in parser with no dependencies.',
+    "Renders a markdown string as HTML in ARC UI's type styles, using a small built-in parser with no dependencies.",
 
   overview: `Markdown parses a markdown string with a small built-in parser and renders the result in ARC UI's type styles. Pass the string in the \`content\` attribute or as the element's text. \`content\` wins if you set both.
 
@@ -16,19 +16,17 @@ The parser handles ATX headings (\`#\` through \`######\`), bold, italic, inline
 The parser escapes \`<\`, \`>\` and \`&\` before it emits any tags, so HTML in the source shows up as text. The output then goes through a sanitizer that drops \`<script>\`, \`<iframe>\` and other active elements, \`on*\` attributes, and link or image URLs that aren't relative, http(s), mailto or tel. Links get \`rel="noopener noreferrer"\`.`,
 
   features: [
-    'A fenced block\'s language hint becomes a `language-*` class on the code, for a highlighter to pick up',
+    "A fenced block's language hint becomes a `language-*` class on the code, for a highlighter to pick up",
     'Re-renders when `content` changes',
   ],
 
   guidelines: {
     do: [
       'Use the content attribute for markdown from an API or app state',
-      'Use the element\'s text for static markdown in a template',
+      "Use the element's text for static markdown in a template",
       'Use CodeBlock when code needs full syntax highlighting',
     ],
-    dont: [
-      'Don\'t use it for rich text editing. It only renders',
-    ],
+    dont: ["Don't use it for rich text editing. It only renders"],
   },
 
   previewHtml: `<arc-markdown content="# Hello world\n\nThis is a **markdown** component with *italic* text and \`inline code\`.\n\n## A list\n\n- First item\n- Second item\n- Third item\n\n> Blockquotes work too.\n\n\`\`\`js\nconst greeting = 'Hello from ARC UI';\nconsole.log(greeting);\n\`\`\`\n\n---\n\nLinks like [ARC UI](https://arcui.dev) are styled with the accent color."></arc-markdown>`,

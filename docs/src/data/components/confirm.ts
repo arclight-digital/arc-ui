@@ -29,10 +29,10 @@ It's built on Dialog, so it has the same blurred backdrop, raised panel and focu
       'With the element, one `<arc-confirm>` can serve every prompt. Set its props before you open it',
     ],
     dont: [
-      'Don\'t use it for a message that needs no decision. Use Alert or Dialog',
-      'Don\'t chain confirmations. If the action needs more context, use a Dialog with a form',
-      'Don\'t confirm every action. Save it for ones that are destructive or can\'t be undone',
-      'Don\'t use the browser\'s `confirm()`. It blocks the page and can\'t be styled',
+      "Don't use it for a message that needs no decision. Use Alert or Dialog",
+      "Don't chain confirmations. If the action needs more context, use a Dialog with a form",
+      "Don't confirm every action. Save it for ones that are destructive or can't be undone",
+      "Don't use the browser's `confirm()`. It blocks the page and can't be styled",
     ],
   },
 

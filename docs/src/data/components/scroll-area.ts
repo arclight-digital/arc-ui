@@ -7,7 +7,7 @@ export const scrollArea: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'A container that scrolls its content in one or both directions, with a thin scrollbar in the theme\'s colors.',
+    "A container that scrolls its content in one or both directions, with a thin scrollbar in the theme's colors.",
 
   overview: `ScrollArea wraps content that might outgrow its space, like a sidebar list, a modal body or a dropdown, and scrolls it with a thin scrollbar: a \`border-bright\` thumb on a \`surface-overlay\` track.
 
@@ -15,9 +15,7 @@ export const scrollArea: ComponentDef = {
 
 The container is a focusable \`role="region"\` labelled "Scrollable content", so keyboard users can Tab to it and scroll with the arrow keys. It inherits the host's border-radius, and \`scroll-behavior\` is \`smooth\`.`,
 
-  features: [
-    'Parts: `base` and `scroll-area`, both on the scrolling element',
-  ],
+  features: ['Parts: `base` and `scroll-area`, both on the scrolling element'],
 
   guidelines: {
     do: [
@@ -26,9 +24,9 @@ The container is a focusable \`role="region"\` labelled "Scrollable content", so
       'Keep `orientation="both"` for content that really is two-dimensional, like a data grid',
     ],
     dont: [
-      'Don\'t nest scroll areas. The wheel scrolls the inner one until it hits its end, then the outer one',
-      'Don\'t set a `max-height` so small that most of the content is hidden with nothing to say it\'s there',
-      'Don\'t use it for the main page scroll. Let the page scroll itself',
+      "Don't nest scroll areas. The wheel scrolls the inner one until it hits its end, then the outer one",
+      "Don't set a `max-height` so small that most of the content is hidden with nothing to say it's there",
+      "Don't use it for the main page scroll. Let the page scroll itself",
     ],
   },
 

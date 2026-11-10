@@ -18,7 +18,7 @@ It takes a single \`src\`, with no \`<source>\` list for multiple formats. Serve
 
   features: [
     '`preload` is passed to the native element and defaults to `metadata`',
-    'The fullscreen button does nothing where the Fullscreen API isn\'t available',
+    "The fullscreen button does nothing where the Fullscreen API isn't available",
   ],
 
   guidelines: {
@@ -28,8 +28,8 @@ It takes a single \`src\`, with no \`<source>\` list for multiple formats. Serve
       'Use `controls="false"` with `autoplay`, `muted` and `loop` for an ambient background video',
     ],
     dont: [
-      'Don\'t use it for a still frame. Use arc-image for anything that doesn\'t play',
-      'Don\'t use it to page through a set of clips or mixed media. Use arc-carousel',
+      "Don't use it for a still frame. Use arc-image for anything that doesn't play",
+      "Don't use it to page through a set of clips or mixed media. Use arc-carousel",
       'Don\'t leave ambient video unmuted. With `controls="false"` the reader has no way to turn the sound off',
     ],
   },

@@ -15,9 +15,7 @@ export const skipLink: ComponentDef = {
 
 WCAG 2.1 Success Criterion 2.4.1 (Bypass Blocks, Level A) asks for a way to skip blocks that repeat on every page. A skip link is the usual way to meet it. Landmarks and headings count too.`,
 
-  features: [
-    '`position: fixed` at `--z-max`, the top of the z-index scale',
-  ],
+  features: ['`position: fixed` at `--z-max`, the top of the z-index scale'],
 
   guidelines: {
     do: [
@@ -27,10 +25,10 @@ WCAG 2.1 Success Criterion 2.4.1 (Bypass Blocks, Level A) asks for a way to skip
       'Include it on every page',
     ],
     dont: [
-      'Don\'t hide it with `display: none` or `visibility: hidden`. It has to stay focusable',
-      'Don\'t put other focusable elements before it',
-      'Don\'t point it at an `id` that isn\'t on the page',
-      'Don\'t add more than one unless the page has separate content regions to skip to',
+      "Don't hide it with `display: none` or `visibility: hidden`. It has to stay focusable",
+      "Don't put other focusable elements before it",
+      "Don't point it at an `id` that isn't on the page",
+      "Don't add more than one unless the page has separate content regions to skip to",
     ],
   },
 

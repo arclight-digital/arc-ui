@@ -23,15 +23,15 @@ It wraps a native \`<input type="range">\`, so it keeps the browser's keyboard c
 
   guidelines: {
     do: [
-      'Give it a `label`, so people see what it controls and its current value. Without one the value isn\'t shown',
+      "Give it a `label`, so people see what it controls and its current value. Without one the value isn't shown",
       'Match `step` to your data: 1 for integers, 0.01 for fractions',
       'Set `min` and `max` to the real valid range',
       'Make it at least 200px wide so the thumb is easy to drag',
     ],
     dont: [
-      'Don\'t make `step` so small that the track has thousands of positions. A mouse can\'t hit them precisely',
-      'Don\'t use it for an on/off choice. Use Toggle',
-      'Don\'t stack several sliders in a narrow column without vertical space between them',
+      "Don't make `step` so small that the track has thousands of positions. A mouse can't hit them precisely",
+      "Don't use it for an on/off choice. Use Toggle",
+      "Don't stack several sliders in a narrow column without vertical space between them",
     ],
   },
 

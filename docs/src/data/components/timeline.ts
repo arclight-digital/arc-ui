@@ -27,10 +27,10 @@ The heading and date are uppercase in the label font, with the date in \`--text-
       'Put it in a card or sidebar for an activity feed',
     ],
     dont: [
-      'Don\'t use it for content that isn\'t in time order. The line implies a sequence',
+      "Don't use it for content that isn't in time order. The line implies a sequence",
       'Don\'t show more than 10 to 15 items without pagination or a "show more" control',
-      'Don\'t use it for progress through a workflow. Use Stepper',
-      'Don\'t put links, buttons or forms in an item. Only its text is rendered',
+      "Don't use it for progress through a workflow. Use Stepper",
+      "Don't put links, buttons or forms in an item. Only its text is rendered",
     ],
   },
 

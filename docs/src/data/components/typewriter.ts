@@ -17,23 +17,20 @@ export const typewriter: ComponentDef = {
 
 A blinking \`|\` cursor in \`--accent-primary\` is on by default, and \`no-cursor\` turns it off. Once typing finishes, the cursor fades out after about 3 seconds, or keeps blinking with \`loop\`. Under \`prefers-reduced-motion\` the full text shows at once.`,
 
-  features: [
-    'Fires `arc-complete` when typing finishes',
-    'Inherits its font from the parent',
-  ],
+  features: ['Fires `arc-complete` when typing finishes', 'Inherits its font from the parent'],
 
   guidelines: {
     do: [
       'Use it in hero sections and on landing pages',
       'Set `speed` between 30 and 80ms for typing that looks natural',
       'Use `delay` to run several typewriters one after another',
-      'Put the important text in a static heading as well. A screen reader that reaches the typewriter mid-animation reads only what\'s typed so far',
+      "Put the important text in a static heading as well. A screen reader that reaches the typewriter mid-animation reads only what's typed so far",
     ],
     dont: [
-      'Don\'t use it for text readers need to read right away. The animation holds it back',
-      'Don\'t run more than two or three typewriters at once',
-      'Don\'t set `speed` below 20ms. It reads as a flash, not typing',
-      'Don\'t loop long paragraphs',
+      "Don't use it for text readers need to read right away. The animation holds it back",
+      "Don't run more than two or three typewriters at once",
+      "Don't set `speed` below 20ms. It reads as a flash, not typing",
+      "Don't loop long paragraphs",
     ],
   },
 

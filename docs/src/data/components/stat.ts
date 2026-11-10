@@ -27,9 +27,9 @@ export const stat: ComponentDef = {
       'Use `::part(value)` to give a value a different gradient',
     ],
     dont: [
-      'Don\'t use Stat for long text. It\'s sized for short numbers',
-      'Don\'t make the value bold. The display is built around weight 200',
-      'Don\'t put links or buttons in `value` or `label`. Both render as plain text',
+      "Don't use Stat for long text. It's sized for short numbers",
+      "Don't make the value bold. The display is built around weight 200",
+      "Don't put links or buttons in `value` or `label`. Both render as plain text",
     ],
   },
 

@@ -6,7 +6,8 @@ export const highlight: ComponentDef = {
   tag: 'arc-highlight',
   tier: 'typography',
   interactivity: 'static',
-  description: 'Shows a string with every match of a search query marked, for search results and filtered lists.',
+  description:
+    'Shows a string with every match of a search query marked, for search results and filtered lists.',
 
   overview: `Highlight shows the string in \`text\` and wraps every occurrence of \`query\` in a \`<mark>\`. The query is matched as one literal string: regex characters such as \`.\`, \`(\` and \`*\` are escaped, and it isn't split into words. Matching ignores case unless you set \`case-sensitive\`, which suits code search.
 
@@ -15,17 +16,15 @@ Marks have the \`--accent-primary-subtle\` background, accent-colored text and s
 Use it in search results and filtered lists, next to Search or CommandPalette, to show why each item matched.`,
 
   features: [
-    'It\'s inline, so you can use it inside a sentence or a list item',
+    "It's inline, so you can use it inside a sentence or a list item",
     'CSS parts: `text` for the whole string, `mark` for each match',
   ],
 
   guidelines: {
-    do: [
-      'Update `query` as the user types for live highlighting',
-    ],
+    do: ['Update `query` as the user types for live highlighting'],
     dont: [
       'Don\'t use it for static emphasis. Use `<strong>` or Text with `variant="label"`',
-      'Don\'t pass HTML in `text`. It renders as plain text, so tags show up literally',
+      "Don't pass HTML in `text`. It renders as plain text, so tags show up literally",
     ],
   },
 

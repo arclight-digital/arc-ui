@@ -15,7 +15,7 @@ The input shows the time in the chosen \`format\`, such as "2:30 PM" in \`12h\` 
 \`min\` and \`max\` limit the range, and times outside it are dimmed and can't be picked. Once both an hour and a minute are picked, \`arc-change\` fires with the 24-hour time in \`detail.value\`. A click outside closes the dropdown, and Escape closes it and returns focus to the input. The arrow keys move within a column, Tab moves between columns, and Enter picks. The dropdown slides open, except under \`prefers-reduced-motion\`.`,
 
   features: [
-    'The dropdown opens in the top layer, so a parent with `overflow: hidden` doesn\'t clip it',
+    "The dropdown opens in the top layer, so a parent with `overflow: hidden` doesn't clip it",
   ],
 
   guidelines: {
@@ -27,8 +27,8 @@ The input shows the time in the chosen \`format\`, such as "2:30 PM" in \`12h\` 
       'Set `value` when editing an existing record, so the columns open on the saved time',
     ],
     dont: [
-      'Don\'t use it for a duration. Use a number input that counts minutes',
-      'Don\'t set `min` later than `max`. Every option is disabled and the picker can\'t be used',
+      "Don't use it for a duration. Use a number input that counts minutes",
+      "Don't set `min` later than `max`. Every option is disabled and the picker can't be used",
     ],
   },
 

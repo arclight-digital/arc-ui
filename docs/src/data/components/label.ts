@@ -22,13 +22,13 @@ The \`<label>\` element is inside Label's shadow root, so it can't reach an inpu
 
   guidelines: {
     do: [
-      'Give every control an accessible name of its own. Label doesn\'t supply one',
+      "Give every control an accessible name of its own. Label doesn't supply one",
       'Use the description slot for format hints like "MM/DD/YYYY" or character limits',
       'Mark mandatory fields with `required`, on both the label and the input',
     ],
     dont: [
-      'Don\'t use Label as standalone text. Use a heading or paragraph',
-      'Don\'t put interactive elements in the label text. Use the tooltip slot',
+      "Don't use Label as standalone text. Use a heading or paragraph",
+      "Don't put interactive elements in the label text. Use the tooltip slot",
     ],
   },
 

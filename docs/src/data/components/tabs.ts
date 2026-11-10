@@ -23,13 +23,13 @@ Switching tabs moves one indicator between them: the underline in the default va
   guidelines: {
     do: [
       'Keep tab labels to one or two words so the whole bar fits without scrolling',
-      'Disable a tab that\'s temporarily unavailable instead of hiding it',
+      "Disable a tab that's temporarily unavailable instead of hiding it",
     ],
     dont: [
-      'Don\'t use Tabs for sequential steps. Use StepperNav',
-      'Don\'t nest Tabs inside Tabs. Two tab bars are hard to follow with a keyboard or screen reader',
-      'Don\'t put a Save button or other key action in a tab that isn\'t open by default',
-      'Don\'t put more than five or six tabs in one group. Use a dropdown or sidebar navigation for more',
+      "Don't use Tabs for sequential steps. Use StepperNav",
+      "Don't nest Tabs inside Tabs. Two tab bars are hard to follow with a keyboard or screen reader",
+      "Don't put a Save button or other key action in a tab that isn't open by default",
+      "Don't put more than five or six tabs in one group. Use a dropdown or sidebar navigation for more",
     ],
   },
 

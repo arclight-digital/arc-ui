@@ -7,8 +7,7 @@ export const toast: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   searchKeywords: ['notification', 'progress', 'snackbar', 'action'],
-  description:
-    'Short messages that stack at one edge of the screen and dismiss themselves.',
+  description: 'Short messages that stack at one edge of the screen and dismiss themselves.',
 
   overview: `Toast shows short messages that don't block the page and dismiss themselves, such as "File saved" or "Back online". Place one \`<arc-toast>\` in your layout and call its \`show()\` method whenever a message should appear. Toasts stack at one corner or edge of the viewport, set by \`position\`, and span the full width below 640px.
 
@@ -21,13 +20,13 @@ For long-running work, pass a numeric \`progress\` to \`show()\`. The toast draw
 \`actionLabel\` adds a button for an undo or a retry. Clicking it runs the \`action\` callback, fires \`arc-action\` and dismisses the toast.`,
 
   features: [
-    '`show({ message, variant, duration })` returns the toast\'s id, and `dismiss(id)` removes it whether it\'s visible or queued',
-    '`duration` defaults to 4000ms, and 0 keeps a toast until it\'s closed',
+    "`show({ message, variant, duration })` returns the toast's id, and `dismiss(id)` removes it whether it's visible or queued",
+    "`duration` defaults to 4000ms, and 0 keeps a toast until it's closed",
     'Positions: `top-right`, `top-left`, `top-center`, `bottom-right`, `bottom-left` and `bottom-center`',
     'Four variants (info, success, warning and error), each with an icon and a colored bottom edge',
     '`updateToast()` can change the message in the same call as the progress',
     '`arc-queue-change` reports the visible and queued counts, and `arc-queue-overflow` fires when the queue is full and the oldest waiting toast is dropped',
-    '`arc-close` fires with the toast\'s id when it\'s removed',
+    "`arc-close` fires with the toast's id when it's removed",
     'The container has `role="status"` and `aria-live="polite"`, so screen readers announce new messages without moving focus',
   ],
 
@@ -43,14 +42,14 @@ For long-running work, pass a numeric \`progress\` to \`show()\`. The toast draw
       'Call `complete(id)` when the work finishes',
     ],
     dont: [
-      'Don\'t use a toast for anything that needs a decision or input. Use Dialog, or Confirm for a yes or no',
-      'Don\'t show passwords, tokens or other secrets. Anyone nearby can see them',
-      'Don\'t set a duration under 2000ms. Readers may not finish the message',
-      'Don\'t rely on color alone. The icon and the text must carry the meaning',
-      'Don\'t fire one toast per item in a batch. Summarize the batch in one',
-      'Don\'t use progress mode for work of unknown length. Use Spinner',
-      'Don\'t leave a progress toast open after the work ends. It never dismisses itself, so call `complete(id)` or `dismiss(id)`',
-      'Don\'t make an action button the only way to reach an irreversible action. The toast dismisses on its own',
+      "Don't use a toast for anything that needs a decision or input. Use Dialog, or Confirm for a yes or no",
+      "Don't show passwords, tokens or other secrets. Anyone nearby can see them",
+      "Don't set a duration under 2000ms. Readers may not finish the message",
+      "Don't rely on color alone. The icon and the text must carry the meaning",
+      "Don't fire one toast per item in a batch. Summarize the batch in one",
+      "Don't use progress mode for work of unknown length. Use Spinner",
+      "Don't leave a progress toast open after the work ends. It never dismisses itself, so call `complete(id)` or `dismiss(id)`",
+      "Don't make an action button the only way to reach an irreversible action. The toast dismisses on its own",
     ],
   },
 

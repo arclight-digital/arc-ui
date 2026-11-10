@@ -13,21 +13,19 @@ export const image: ComponentDef = {
 
 \`aspect\` takes one of six presets (\`1/1\`, \`4/3\`, \`16/9\`, \`21/9\`, \`3/4\`, \`9/16\`) and sizes the container before the image loads, so the page doesn't jump. \`fit\` maps to CSS \`object-fit\` and defaults to \`cover\`. \`loading\` defaults to \`lazy\`.`,
 
-  features: [
-    '`fit` values: `cover` (default), `contain`, `fill`, `none` and `scale-down`',
-  ],
+  features: ['`fit` values: `cover` (default), `contain`, `fill`, `none` and `scale-down`'],
 
   guidelines: {
     do: [
       'Write `alt` text that describes the image',
-      'Set `aspect` so the layout doesn\'t shift while the image loads',
+      "Set `aspect` so the layout doesn't shift while the image loads",
       'Use `fit="contain"` for logos and icons that shouldn\'t be cropped',
       'Set `fallback` on images that must always show something',
     ],
     dont: [
-      'Don\'t use it for decorative backgrounds. Use CSS `background-image`',
+      "Don't use it for decorative backgrounds. Use CSS `background-image`",
       'Don\'t set `loading="eager"` on images below the fold. Lazy loading waits until they\'re near the viewport',
-      'Don\'t serve very large source images without resizing them on the server',
+      "Don't serve very large source images without resizing them on the server",
     ],
   },
 

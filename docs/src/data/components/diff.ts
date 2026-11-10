@@ -6,7 +6,8 @@ export const diff: ComponentDef = {
   tag: 'arc-diff',
   tier: 'data',
   interactivity: 'static',
-  description: 'Shows the lines added and removed between two strings, in one column or side by side.',
+  description:
+    'Shows the lines added and removed between two strings, in one column or side by side.',
 
   overview: `Diff compares the \`original\` and \`revised\` strings line by line and shows what changed. Added lines get a green tint and a \`+\` prefix, removed lines a red tint, strikethrough and a \`-\` prefix, and unchanged lines are muted with a blank prefix. The diff is a longest-common-subsequence computation inside the component, with no diff library.
 
@@ -15,7 +16,7 @@ export const diff: ComponentDef = {
 It compares whole lines, so a one-character change shows as a removed line and an added one. Use it for code, config files and other line-based text.`,
 
   features: [
-    'Line numbers are in a gutter and can\'t be selected, so copied text doesn\'t include them',
+    "Line numbers are in a gutter and can't be selected, so copied text doesn't include them",
     'Uses the mono font and code text size, and scrolls sideways for long lines',
     'CSS parts: `container`, `line`, `line-number`, `prefix`',
   ],
@@ -23,13 +24,13 @@ It compares whole lines, so a one-character change shows as a removed line and a
   guidelines: {
     do: [
       'Set `mode="side-by-side"` when there\'s room for two panes',
-      'Add a heading or label that says what\'s being compared',
+      "Add a heading or label that says what's being compared",
       'Put long diffs in a container with a `max-height` and `overflow-y: auto`',
     ],
     dont: [
-      'Don\'t pass binary or other non-text content as `original` or `revised`',
-      'Don\'t use it for word-level or character-level highlighting',
-      'Don\'t use side-by-side mode in narrow containers',
+      "Don't pass binary or other non-text content as `original` or `revised`",
+      "Don't use it for word-level or character-level highlighting",
+      "Don't use side-by-side mode in narrow containers",
     ],
   },
 

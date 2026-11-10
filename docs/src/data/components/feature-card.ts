@@ -6,7 +6,8 @@ export const featureCard: ComponentDef = {
   tag: 'arc-feature-card',
   tier: 'content',
   interactivity: 'static',
-  description: 'A card with an icon, a heading and a short description, for feature grids on landing pages.',
+  description:
+    'A card with an icon, a heading and a short description, for feature grids on landing pages.',
 
   overview: `FeatureCard shows an icon, a \`heading\` and a \`description\` stacked in a card, for feature grids on landing pages and marketing sections. The border is the card's own background, \`--border-subtle\`, showing through a 1px gap around the inner panel. On hover the border turns into an accent gradient, the icon lifts with an \`--accent-primary-glow\` shadow, the card gets the \`--glow-card-hover\` glow, and an accent rule grows along the bottom.
 
@@ -28,10 +29,10 @@ The \`icon\` slot takes an SVG or other markup. Without it, the \`icon\` propert
       'Use the icon slot for SVG icons when you need control over size and color',
     ],
     dont: [
-      'Don\'t put buttons or links inside a card that has an `href`. The whole card is already a link',
-      'Don\'t mix feature cards and value cards in one grid',
-      'Don\'t set `background` on `::part(card)`. That background is the border, and your value also replaces the hover gradient',
-      'Don\'t use it to show data. Use ValueCard or Stat',
+      "Don't put buttons or links inside a card that has an `href`. The whole card is already a link",
+      "Don't mix feature cards and value cards in one grid",
+      "Don't set `background` on `::part(card)`. That background is the border, and your value also replaces the hover gradient",
+      "Don't use it to show data. Use ValueCard or Stat",
     ],
   },
 

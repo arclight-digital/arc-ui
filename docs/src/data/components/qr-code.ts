@@ -30,12 +30,12 @@ The code re-encodes whenever \`value\` or \`level\` changes, and renders nothing
       'Use level M (the default) for most content. Step up to Q or H only when part of the code may be covered or worn, as with a logo overlay or a printed code',
       'Keep values short. Shorter strings make fewer modules, which scan faster and from further away',
       'Keep codes at the default 160px or larger when another device has to scan them',
-      'Show the same link as text or with a copy button for people who can\'t scan',
+      "Show the same link as text or with a copy button for people who can't scan",
     ],
     dont: [
-      'Don\'t encode long strings. Level M holds about 2.3KB at most, and a code gets hard to scan at usual sizes well before that',
-      'Don\'t set `--qr-fg` and `--qr-bg` to colors of similar lightness. Scanners need strong dark-on-light contrast',
-      'Don\'t set `quiet-zone` below 2 when the code is next to busy content',
+      "Don't encode long strings. Level M holds about 2.3KB at most, and a code gets hard to scan at usual sizes well before that",
+      "Don't set `--qr-fg` and `--qr-bg` to colors of similar lightness. Scanners need strong dark-on-light contrast",
+      "Don't set `quiet-zone` below 2 when the code is next to busy content",
     ],
   },
 

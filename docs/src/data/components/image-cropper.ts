@@ -9,7 +9,7 @@ export const imageCropper: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Crop-before-upload control: drag and resize a crop rectangle, lock its aspect ratio, zoom, and export the crop at the image\'s natural resolution.',
+    "Crop-before-upload control: drag and resize a crop rectangle, lock its aspect ratio, zoom, and export the crop at the image's natural resolution.",
 
   overview: `Image Cropper shows an image letterboxed in a fixed-height stage with a crop rectangle over it. People drag the rectangle to move it and pull its eight handles (four corners, four edges) to resize it. Everything outside the rectangle is darkened, and rule-of-thirds lines sit inside it. A zoom slider under the stage scales the image around its center from 1x to 4x while the rectangle stays put.
 
@@ -33,9 +33,9 @@ Three methods read the result. \`getCrop()\` returns \`{ x, y, width, height }\`
       'Serve remote images from the same origin or with CORS headers so export works',
     ],
     dont: [
-      'Don\'t read crop coordinates from the rectangle on screen. `getCrop()` converts them to natural image pixels',
-      'Don\'t shrink `height` far below its 320px default. The rectangle and handles need room',
-      'Don\'t use it to frame an image for display. Use CSS `object-fit` or an aspect-ratio container',
+      "Don't read crop coordinates from the rectangle on screen. `getCrop()` converts them to natural image pixels",
+      "Don't shrink `height` far below its 320px default. The rectangle and handles need room",
+      "Don't use it to frame an image for display. Use CSS `object-fit` or an aspect-ratio container",
     ],
   },
 

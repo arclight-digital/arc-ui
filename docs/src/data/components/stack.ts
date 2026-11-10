@@ -28,7 +28,7 @@ The host element is the flex container, and \`render()\` returns a bare \`<slot>
       'Space children with `gap`, not margins',
     ],
     dont: [
-      'Don\'t use it for two-dimensional layouts where columns must line up. Use CSS Grid',
+      "Don't use it for two-dimensional layouts where columns must line up. Use CSS Grid",
       'Don\'t use `gap="xs"` between major sections. Keep it for tight clusters such as an icon and its label',
     ],
   },

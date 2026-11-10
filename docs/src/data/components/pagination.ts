@@ -28,8 +28,8 @@ The control is a \`<nav>\` landmark labelled "Pagination". The active page butto
       'Add a page-size selector when readers should choose how many items a page shows',
     ],
     dont: [
-      'Don\'t use it for fewer than 3 pages. Plain previous and next links are simpler',
-      'Don\'t use it to move between unrelated sections. Use Tabs',
+      "Don't use it for fewer than 3 pages. Plain previous and next links are simpler",
+      "Don't use it to move between unrelated sections. Use Tabs",
     ],
   },
 

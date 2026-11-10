@@ -24,11 +24,9 @@ Use it where people search all the time, as in an admin dashboard or a docs site
     do: [
       'Write a placeholder that names the scope, such as "Search docs..."',
       'If there\'s more than one on a page, give each a different `label`. Otherwise they\'re all announced as "Search"',
-      'Give it a max-width so it doesn\'t take over the toolbar',
+      "Give it a max-width so it doesn't take over the toolbar",
     ],
-    dont: [
-      'Don\'t use it as a general text input. It\'s styled and labeled for search',
-    ],
+    dont: ["Don't use it as a general text input. It's styled and labeled for search"],
   },
 
   previewHtml: `<div style="width:100%;max-width:480px;padding:var(--space-lg);background:var(--bg-surface);border:1px solid var(--border-subtle);border-radius:var(--radius-md)">

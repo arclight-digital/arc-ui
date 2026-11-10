@@ -14,7 +14,7 @@ export const dashboardGrid: ComponentDef = {
 
   features: [
     'The column minimum and gap are also set as `--min-col` and `--gap` on the host, where page code can read them',
-    'Columns and gap are in the server-rendered markup, so the grid doesn\'t reflow when the script loads',
+    "Columns and gap are in the server-rendered markup, so the grid doesn't reflow when the script loads",
     'The inner grid is exposed as the `grid` CSS part',
   ],
 
@@ -25,9 +25,9 @@ export const dashboardGrid: ComponentDef = {
       'Use spacing tokens such as `var(--space-md)` for `gap`',
     ],
     dont: [
-      'Don\'t use it for page layout. Use PageLayout for sidebar and main areas',
-      'Don\'t nest one inside another. The padding doubles. Adjust `min-column-width` on a single grid',
-      'Don\'t restyle the grid with flex or floats',
+      "Don't use it for page layout. Use PageLayout for sidebar and main areas",
+      "Don't nest one inside another. The padding doubles. Adjust `min-column-width` on a single grid",
+      "Don't restyle the grid with flex or floats",
     ],
   },
 

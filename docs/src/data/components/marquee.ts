@@ -7,8 +7,7 @@ export const marquee: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   replayable: true,
-  description:
-    'A strip of content that scrolls sideways in a loop, such as a row of logos.',
+  description: 'A strip of content that scrolls sideways in a loop, such as a row of logos.',
 
   overview: `Marquee scrolls its children horizontally in a loop. It copies them into a second group in its shadow DOM, and a CSS keyframe animation moves both groups, so the copy takes the original's place as it scrolls out with no visible seam.
 
@@ -16,9 +15,7 @@ export const marquee: ComponentDef = {
 
 \`pause-on-hover\` is on by default and stops the animation while the pointer is over it. With \`prefers-reduced-motion\`, the animation stays paused. \`direction\` is \`"left"\` (the default) or \`"right"\`, and \`gap\` takes any CSS length for the space between items.`,
 
-  features: [
-    'The track sets `will-change: transform`',
-  ],
+  features: ['The track sets `will-change: transform`'],
 
   guidelines: {
     do: [
@@ -29,10 +26,10 @@ export const marquee: ComponentDef = {
       'Turn on reduced motion and check that the paused strip looks right',
     ],
     dont: [
-      'Don\'t put anything people must read in a marquee. Scrolling text is easy to miss',
-      'Don\'t put buttons or links in it with `pause-on-hover` off. They\'re hard to click while they move',
-      'Don\'t use it in place of a notification or an alert banner',
-      'Don\'t stack marquees that move in different directions',
+      "Don't put anything people must read in a marquee. Scrolling text is easy to miss",
+      "Don't put buttons or links in it with `pause-on-hover` off. They're hard to click while they move",
+      "Don't use it in place of a notification or an alert banner",
+      "Don't stack marquees that move in different directions",
     ],
   },
 

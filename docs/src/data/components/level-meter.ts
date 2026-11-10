@@ -30,10 +30,10 @@ One element is one channel. There's no stereo mode, so put two meters side by si
       'Set `warn` and `clip` to your headroom. The defaults (0.75 and 0.9) suit a linear 0 to 1 signal',
     ],
     dont: [
-      'Don\'t use it for a static value like disk usage or a score. Use Meter, which has low, high and optimum',
-      'Don\'t use it for task completion. Use Progress',
-      'Don\'t feed `value` from slow polling and expect a useful peak line. The tracker only sees the values you give it',
-      'Don\'t rely on segment color alone to show clipping. Add a clip indicator or text where it matters',
+      "Don't use it for a static value like disk usage or a score. Use Meter, which has low, high and optimum",
+      "Don't use it for task completion. Use Progress",
+      "Don't feed `value` from slow polling and expect a useful peak line. The tracker only sees the values you give it",
+      "Don't rely on segment color alone to show clipping. Add a clip indicator or text where it matters",
     ],
   },
 

@@ -6,8 +6,7 @@ export const aspectRatio: ComponentDef = {
   tag: 'arc-aspect-ratio',
   tier: 'content',
   interactivity: 'static',
-  description:
-    'A box that holds its content to a fixed width-to-height ratio.',
+  description: 'A box that holds its content to a fixed width-to-height ratio.',
 
   overview: `AspectRatio keeps its content at a fixed width-to-height ratio with the CSS \`aspect-ratio\` property. Pass a \`W/H\` string like \`"16/9"\`, \`"4/3"\` or \`"1/1"\`. The container is as wide as its parent and takes its height from the ratio, so it reserves the space for an image or video before the media loads and the page doesn't shift (CLS).
 
@@ -27,9 +26,9 @@ Every slotted child is sized to fill the box. Images and videos get \`object-fit
       'Use it with lazy-loaded images, since the space is reserved before the image arrives',
     ],
     dont: [
-      'Don\'t use it when the content has its own fixed dimensions and layout shift isn\'t a problem',
-      'Don\'t put a lot of text in it',
-      'Don\'t set a fixed height on the same element. The two conflict',
+      "Don't use it when the content has its own fixed dimensions and layout shift isn't a problem",
+      "Don't put a lot of text in it",
+      "Don't set a fixed height on the same element. The two conflict",
     ],
   },
 

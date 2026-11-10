@@ -7,7 +7,7 @@ export const waveform: ComponentDef = {
   tier: 'data',
   interactivity: 'hybrid',
   description:
-    'Draws an audio clip\'s shape from peak values you supply, and doubles as a seek control.',
+    "Draws an audio clip's shape from peak values you supply, and doubles as a seek control.",
   searchKeywords: ['audio', 'scrubber', 'seek', 'peaks', 'player', 'sound', 'playhead'],
 
   overview: `Waveform draws an audio clip's shape from an array of peak amplitudes (one number per bar, 0 to 1) and marks playback progress on it. The played region is in the accent color with a soft glow, the unplayed region is muted, and a thin glowing playhead sits at the current position. Set \`interactive\` and the same element becomes a scrubber, with pointer dragging, keyboard seeking and slider semantics for assistive technology. \`variant="bars"\` draws one bar per peak, centered on the middle line, and \`mirror\` draws a filled min/max envelope.
@@ -31,15 +31,15 @@ While the reader scrubs, \`arc-input\` fires on every pointer move with the live
     do: [
       'Compute peaks once per clip and cache them. A few dozen to a few hundred values is plenty, and each is clamped to 0 to 1',
       'Set `duration` whenever you know it',
-      'Give every waveform a `label`. It names the slider, or describes the image when the waveform isn\'t interactive',
+      "Give every waveform a `label`. It names the slider, or describes the image when the waveform isn't interactive",
       'Use `bars` for scrubbers and player UI, and `mirror` for dense timeline lanes where separate bars would shimmer',
-      'Set the height with `--waveform-height` when the default doesn\'t suit its row',
+      "Set the height with `--waveform-height` when the default doesn't suit its row",
     ],
     dont: [
-      'Don\'t use it for general trend data. Use Sparkline. The mirrored geometry distorts ordinary series',
-      'Don\'t use it as a level indicator or progress bar. Meter shows one current value against a range',
-      'Don\'t feed it raw sample data. Downsample to peaks first. In `bars`, every peak is its own SVG element',
-      'Don\'t seek your audio source on `arc-input`. It fires on every pointer move',
+      "Don't use it for general trend data. Use Sparkline. The mirrored geometry distorts ordinary series",
+      "Don't use it as a level indicator or progress bar. Meter shows one current value against a range",
+      "Don't feed it raw sample data. Downsample to peaks first. In `bars`, every peak is its own SVG element",
+      "Don't seek your audio source on `arc-input`. It fires on every pointer move",
     ],
   },
 

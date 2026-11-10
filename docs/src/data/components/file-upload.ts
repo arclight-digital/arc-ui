@@ -27,8 +27,8 @@ With \`multiple\`, each drop or browse adds to the list. Without it, a new file 
       'Give it enough width for the hint text and the file names',
     ],
     dont: [
-      'Don\'t rely on `accept` to block other file types. It only filters the native picker',
-      'Don\'t set `max-size` to 0 and expect a limit. 0 means no limit',
+      "Don't rely on `accept` to block other file types. It only filters the native picker",
+      "Don't set `max-size` to 0 and expect a limit. 0 means no limit",
     ],
   },
 

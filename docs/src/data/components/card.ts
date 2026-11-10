@@ -14,7 +14,7 @@ export const card: ComponentDef = {
 To make the whole card a link, set \`href\`, or wrap the content in a single \`<a>\`. The slotted anchor works before the script loads and with JavaScript off, so use it on public pages. Either way, on hover the border turns to a gradient from the accent-primary to the accent-secondary color and the inner surface lifts with a shadow. Linked cards suit navigation grids, project lists and dashboard tiles.`,
 
   features: [
-    'A footer slot for actions, links or metadata. It stays outside a slotted anchor, so its buttons click on their own, and it\'s hidden when empty',
+    "A footer slot for actions, links or metadata. It stays outside a slotted anchor, so its buttons click on their own, and it's hidden when empty",
     'Padding tightens at 768 px and below',
     'The card fills its grid cell (`height: 100%`), so cards in a row come out the same height',
   ],
@@ -26,10 +26,10 @@ To make the whole card a link, set \`href\`, or wrap the content in a single \`<
       'Use arc-badge or arc-tag inside a card to show status or category',
     ],
     dont: [
-      'Don\'t put buttons or links in a card with href. The whole card, footer included, is one link. With a slotted anchor, put them in the footer slot',
-      'Don\'t use a card for a single line of text. Use a list',
-      'Don\'t fill a card until it needs scrolling. Split the content into sections',
-      'Don\'t mix linked and plain cards in one grid unless they look different',
+      "Don't put buttons or links in a card with href. The whole card, footer included, is one link. With a slotted anchor, put them in the footer slot",
+      "Don't use a card for a single line of text. Use a list",
+      "Don't fill a card until it needs scrolling. Split the content into sections",
+      "Don't mix linked and plain cards in one grid unless they look different",
     ],
   },
 

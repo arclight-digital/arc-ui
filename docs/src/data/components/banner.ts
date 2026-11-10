@@ -6,8 +6,7 @@ export const banner: ComponentDef = {
   tag: 'arc-banner',
   tier: 'feedback',
   interactivity: 'hybrid',
-  description:
-    'A full-width message strip for news about the whole app, in four status colors.',
+  description: 'A full-width message strip for news about the whole app, in four status colors.',
 
   overview: `Banner is a one-line message strip that takes the full width of its container, usually the viewport or a major section. Use it for messages about the whole app: maintenance windows, version updates, cookie consent, account warnings. For feedback about one part of a page, use Alert.
 
@@ -28,9 +27,9 @@ The four variants (info, success, warning, error) set a gradient wash and an ico
       'Put the banner at the very top of the layout, above the top bar if you can',
     ],
     dont: [
-      'Don\'t stack banners. Combine the messages or show them one after another',
-      'Don\'t make every banner dismissible. Some system messages should stay',
-      'Don\'t use the error variant for warnings. Keep it for outages and failures',
+      "Don't stack banners. Combine the messages or show them one after another",
+      "Don't make every banner dismissible. Some system messages should stay",
+      "Don't use the error variant for warnings. Keep it for outages and failures",
     ],
   },
 

@@ -14,20 +14,18 @@ The card opens after \`open-delay\` (400ms by default) and closes \`close-delay\
 
 \`position\` sets the preferred side: \`bottom\` (default), \`top\`, \`left\` or \`right\`. If the card doesn't fit there, it flips to the opposite side and shifts along the edge to stay in the viewport. It opens with a fade and a scale from 0.96 to 1. Put the trigger in the default slot and the card's content in the \`content\` slot.`,
 
-  features: [
-    '`arc-open` and `arc-close` fire when the card shows and hides',
-  ],
+  features: ['`arc-open` and `arc-close` fire when the card shows and hides'],
 
   guidelines: {
     do: [
       'Keep the content short: a heading, a few lines of text, and at most a link or an action',
-      'Raise `open-delay` in dense layouts so the card doesn\'t open as the cursor passes over',
+      "Raise `open-delay` in dense layouts so the card doesn't open as the cursor passes over",
     ],
     dont: [
-      'Don\'t put anything people must see in a hover card. Touch screens have no hover',
-      'Don\'t put forms in the card. Use Popover or Dialog',
-      'Don\'t set `open-delay` to 0. The card flashes open on every passing hover',
-      'Don\'t leave the `content` slot empty. The card opens as an empty panel',
+      "Don't put anything people must see in a hover card. Touch screens have no hover",
+      "Don't put forms in the card. Use Popover or Dialog",
+      "Don't set `open-delay` to 0. The card flashes open on every passing hover",
+      "Don't leave the `content` slot empty. The card opens as an empty panel",
     ],
   },
 

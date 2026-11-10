@@ -24,13 +24,13 @@ By default the sheet is modal. A backdrop with a 4px blur covers the page, and c
     do: [
       'Use the bottom sheet for filters or share menus on a phone',
       'Use the right sheet for detail panes, settings forms or property inspectors on a desktop',
-      'Set `heading`. It\'s also the panel\'s `aria-label`, so screen readers announce it',
+      "Set `heading`. It's also the panel's `aria-label`, so screen readers announce it",
       'Put the primary and secondary actions in the `footer` slot',
     ],
     dont: [
-      'Don\'t use it for a quick confirmation or a status message. Use Confirm or Toast',
-      'Don\'t put navigation people need in a sheet. It can be dismissed, so keep its content optional',
-      'Don\'t put a long, complex form in a sheet. Give it a page',
+      "Don't use it for a quick confirmation or a status message. Use Confirm or Toast",
+      "Don't put navigation people need in a sheet. It can be dismissed, so keep its content optional",
+      "Don't put a long, complex form in a sheet. Give it a page",
     ],
   },
 

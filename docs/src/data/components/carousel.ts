@@ -7,8 +7,7 @@ export const carousel: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   replayable: true,
-  description:
-    'Shows its children one at a time as full-width slides in a scroll-snapping strip.',
+  description: 'Shows its children one at a time as full-width slides in a scroll-snapping strip.',
 
   overview: `Carousel shows its children one at a time as full-width slides in a scroll-snapping viewport. Users move between slides with the round arrow buttons at the left and right edges, the dots under the viewport, or the left and right arrow keys. Arrows and dots are on by default, and \`no-arrows\` and \`no-dots\` turn them off.
 
@@ -17,7 +16,7 @@ export const carousel: ComponentDef = {
 With \`loop\` on (the default), going past the last slide wraps to the first and the reverse. With \`no-loop\`, the arrow buttons disable at the ends. The dots are a \`tablist\` of \`tab\` buttons with \`aria-selected\`, so screen reader users can jump to any slide. \`arc-change\` fires with \`{ index }\` whenever the slide changes.`,
 
   features: [
-    'The arrow buttons sit at half the viewport\'s height',
+    "The arrow buttons sit at half the viewport's height",
     'The viewport takes focus (`tabindex="0"`), so the arrow keys work once it\'s focused',
   ],
 
@@ -29,10 +28,10 @@ With \`loop\` on (the default), going past the last slide wraps to the first and
       'Use arc-change to keep captions or other indicators outside the carousel in sync',
     ],
     dont: [
-      'Don\'t put content everyone must see in a carousel. Slides after the first are easy to miss',
-      'Don\'t set interval below 3000ms. Slides change too fast to read',
-      'Don\'t put form inputs in slides. Scrolling fights with input focus',
-      'Don\'t turn off both the arrows and the dots. Users need at least one way to move',
+      "Don't put content everyone must see in a carousel. Slides after the first are easy to miss",
+      "Don't set interval below 3000ms. Slides change too fast to read",
+      "Don't put form inputs in slides. Scrolling fights with input focus",
+      "Don't turn off both the arrows and the dots. Users need at least one way to move",
     ],
   },
 

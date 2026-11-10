@@ -23,13 +23,13 @@ Each item's \`label\` is the button's accessible name, not visible text. Setting
 
   guidelines: {
     do: [
-      'Keep it to about four to seven items, so the column doesn\'t overflow',
+      "Keep it to about four to seven items, so the column doesn't overflow",
       'Pick icons people recognize without a label, since none is shown',
       'Put it at the far-left edge of an AppShell',
     ],
     dont: [
-      'Don\'t make it the only navigation on a content-heavy site. Icons alone can\'t carry many destinations',
-      'Don\'t use it on phone-width screens. Use BottomNav',
+      "Don't make it the only navigation on a content-heavy site. Icons alone can't carry many destinations",
+      "Don't use it on phone-width screens. Use BottomNav",
     ],
   },
 

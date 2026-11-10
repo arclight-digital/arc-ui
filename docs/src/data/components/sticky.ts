@@ -13,21 +13,19 @@ export const sticky: ComponentDef = {
 
 An IntersectionObserver, not a scroll listener, watches a 1px sentinel just above the wrapper. The observer's top edge sits at the offset, so the sentinel crosses it at the moment the wrapper sticks. Sticky then sets the \`stuck\` attribute on the host, removes it when the wrapper scrolls back down, and fires \`arc-stuck\` with \`{ stuck }\` in the detail each time. The stuck state adds \`--shadow-sm\` by default. Style \`[stuck]\` to change the background, border or anything else.`,
 
-  features: [
-    'The wrapper sits at `z-index: 10`, above the content that scrolls under it',
-  ],
+  features: ['The wrapper sits at `z-index: 10`, above the content that scrolls under it'],
 
   guidelines: {
     do: [
       'Use it for section headers in long lists',
-      'Use it for a toolbar row under a fixed top bar, with `offset` set to the top bar\'s height',
+      "Use it for a toolbar row under a fixed top bar, with `offset` set to the top bar's height",
       'Style the stuck state with the `[stuck]` selector',
       'Listen for `arc-stuck` when app state needs to change on stick or unstick',
     ],
     dont: [
-      'Don\'t use it for something that must stay on screen at all times. It scrolls away with its parent, so use `position: fixed`',
-      'Don\'t set a negative offset. The element sticks above the top edge',
-      'Don\'t expect it to stick past the end of its parent. A sticky element stays inside its parent\'s box',
+      "Don't use it for something that must stay on screen at all times. It scrolls away with its parent, so use `position: fixed`",
+      "Don't set a negative offset. The element sticks above the top edge",
+      "Don't expect it to stick past the end of its parent. A sticky element stays inside its parent's box",
     ],
   },
 

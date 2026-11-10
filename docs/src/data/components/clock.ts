@@ -16,23 +16,21 @@ Screen readers ignore the face. The time, with the label and zone when present, 
 
 The server renders a valid static face (a dash on the digital face, hands at twelve on the dial), and hydration swaps in the live time without a layout shift.`,
 
-  features: [
-    'The second hand\'s color and glow come from the base accent tokens',
-  ],
+  features: ["The second hand's color and glow come from the base accent tokens"],
 
   guidelines: {
     do: [
       'Use it for the current time in a dashboard header, a status bar or a row of world clocks',
-      'Label each clock when there\'s more than one on screen',
+      "Label each clock when there's more than one on screen",
       'Set timezone for team or ops views where "local" is ambiguous',
       'Turn on show-seconds when the seconds matter, as on an ops console, and leave it off otherwise',
       'Use the analog face where the time is background information and the digital face where people read it exactly',
     ],
     dont: [
-      'Don\'t use it to count down to a deadline. Use CountdownTimer, which fires an event at zero',
+      "Don't use it to count down to a deadline. Use CountdownTimer, which fires an event at zero",
       'Don\'t use it to say when something happened. Use TimeAgo, which renders phrases like "3 minutes ago"',
-      'Don\'t put many clocks with seconds on one page. Each ticks every second and they compete for attention',
-      'Don\'t force hour12 for a mixed-locale audience without a reason. The locale default is usually right',
+      "Don't put many clocks with seconds on one page. Each ticks every second and they compete for attention",
+      "Don't force hour12 for a mixed-locale audience without a reason. The locale default is usually right",
       "Don't rely on the displayed time for anything transactional. It is the viewer's device clock, not a server clock",
     ],
   },

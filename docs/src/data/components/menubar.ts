@@ -31,9 +31,9 @@ Interaction follows the WAI-ARIA menubar pattern. The bar is a single tab stop w
       'Route commands by the label path in `arc-select`',
     ],
     dont: [
-      'Don\'t use it for site navigation. Use Navigation Menu or Top Bar. A menubar is for application commands',
-      'Don\'t put destructive actions right next to common ones without a divider between them',
-      'Don\'t use more than 7 or 8 top-level menus. Move rare commands into a submenu',
+      "Don't use it for site navigation. Use Navigation Menu or Top Bar. A menubar is for application commands",
+      "Don't put destructive actions right next to common ones without a divider between them",
+      "Don't use more than 7 or 8 top-level menus. Move rare commands into a submenu",
     ],
   },
 

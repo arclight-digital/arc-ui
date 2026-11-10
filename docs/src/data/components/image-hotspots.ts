@@ -18,9 +18,7 @@ Every close goes through \`close()\`, including the parent's. It fires a cancela
 
 Pins server-render at their coordinates because positioning is plain CSS from attributes. Only the popovers need JavaScript. Every hotspot fires \`arc-open\` and \`arc-close\`, which bubble to the parent with \`detail.value\` set to the hotspot's label, or its index if it has no label.`,
 
-  features: [
-    'Pins pulse, and their glow rises on hover and focus',
-  ],
+  features: ['Pins pulse, and their glow rises on hover and focus'],
 
   guidelines: {
     do: [
@@ -31,9 +29,9 @@ Pins server-render at their coordinates because positioning is plain CSS from at
       'Give the component a width that keeps the pins far enough apart to tap',
     ],
     dont: [
-      'Don\'t put pins so close that their popovers cover each other\'s pins',
-      'Don\'t put critical information only in a popover. People miss pins',
-      'Don\'t use it for step-by-step onboarding. Pins have no order, and nothing here sequences them (`arc-guided-tour` was cut in v4, and `arc-tour` is the planned rebuild)',
+      "Don't put pins so close that their popovers cover each other's pins",
+      "Don't put critical information only in a popover. People miss pins",
+      "Don't use it for step-by-step onboarding. Pins have no order, and nothing here sequences them (`arc-guided-tour` was cut in v4, and `arc-tour` is the planned rebuild)",
     ],
   },
 

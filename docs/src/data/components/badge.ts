@@ -32,11 +32,11 @@ Badge renders a \`<span>\` with no ARIA role, so badges in table cells, list ite
       'Put two badges side by side for a combined status, such as category plus state',
     ],
     dont: [
-      'Don\'t use a badge for a sentence. Use an Alert',
-      'Don\'t rely on color alone. The text should carry the meaning',
-      'Don\'t put more than three or four badges in a row',
-      'Don\'t make a badge clickable. Use a Tag or a Button',
-      'Don\'t change what each variant means from page to page. Pick a color convention and keep it',
+      "Don't use a badge for a sentence. Use an Alert",
+      "Don't rely on color alone. The text should carry the meaning",
+      "Don't put more than three or four badges in a row",
+      "Don't make a badge clickable. Use a Tag or a Button",
+      "Don't change what each variant means from page to page. Pick a color convention and keep it",
     ],
   },
 

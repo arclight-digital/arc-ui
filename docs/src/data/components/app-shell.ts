@@ -13,9 +13,7 @@ export const appShell: ComponentDef = {
 
 At 900 px and below (the \`breakpoint\` prop, default \`navCollapse\`), the sidebar collapses out of view, and the \`sidebar-open\` attribute brings it back. A fourth slot, \`toc\`, is a right-hand rail for a table of contents or other side content. It hides at 1280 px and below.`,
 
-  features: [
-    'At least `100vh` tall by default, so the shell fills the screen',
-  ],
+  features: ['At least `100vh` tall by default, so the shell fills the screen'],
 
   guidelines: {
     do: [
@@ -25,10 +23,10 @@ At 900 px and below (the \`breakpoint\` prop, default \`navCollapse\`), the side
       'Use Container or Section inside the default slot to set content widths',
     ],
     dont: [
-      'Don\'t put scrolling content in the sidebar slot without giving it its own overflow',
-      'Don\'t put anything users need in the toc slot. It hides on narrower screens',
-      'Don\'t override the min-height to fit a shell inside a card or preview. Set `embedded`',
-      'Don\'t use AppShell for marketing pages with no persistent sidebar or top bar',
+      "Don't put scrolling content in the sidebar slot without giving it its own overflow",
+      "Don't put anything users need in the toc slot. It hides on narrower screens",
+      "Don't override the min-height to fit a shell inside a card or preview. Set `embedded`",
+      "Don't use AppShell for marketing pages with no persistent sidebar or top bar",
     ],
   },
 

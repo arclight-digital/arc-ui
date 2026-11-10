@@ -31,9 +31,9 @@ With \`href\`, it renders an \`<a>\` in place of a \`<button>\`. \`name\` picks 
       'Pair icon-only buttons with Tooltip so people can see what they do',
     ],
     dont: [
-      'Don\'t use it for the main action on a page. Use Button',
-      'Don\'t use long `text`. The uppercase label and tight padding fit one or two words',
-      'Don\'t put several `primary` icon buttons in one row. Save the solid fill for the most important action',
+      "Don't use it for the main action on a page. Use Button",
+      "Don't use long `text`. The uppercase label and tight padding fit one or two words",
+      "Don't put several `primary` icon buttons in one row. Save the solid fill for the most important action",
     ],
   },
 

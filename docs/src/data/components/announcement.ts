@@ -6,8 +6,7 @@ export const announcement: ComponentDef = {
   tag: 'arc-announcement',
   tier: 'feedback',
   interactivity: 'static',
-  description:
-    'An invisible live region for announcing page changes to screen readers.',
+  description: 'An invisible live region for announcing page changes to screen readers.',
 
   overview: `Announcement is a live region with nothing on screen. Set its \`message\` property and screen readers read the new text out. Use it for changes sighted users see but screen reader users would miss: route changes, live search result counts, form confirmations, timer updates, new chat messages.
 
@@ -15,19 +14,19 @@ export const announcement: ComponentDef = {
 
   features: [
     'Renders one `role="status"` element with `aria-atomic="true"`, clipped to a 1px box',
-    'Setting the same message twice in a row doesn\'t announce it again, because nothing changed',
+    "Setting the same message twice in a row doesn't announce it again, because nothing changed",
   ],
 
   guidelines: {
     do: [
       'Use polite for routine updates like search result counts',
       'Use assertive for errors, timeouts and session expiry warnings',
-      'Keep messages short. Screen reader users can\'t skim an announcement',
+      "Keep messages short. Screen reader users can't skim an announcement",
     ],
     dont: [
-      'Don\'t announce content that is already in a live region, such as a Toast or an `error`, `warning` or `success` Alert',
-      'Don\'t fire announcements in quick succession. Screen readers may drop the ones in between',
-      'Don\'t use it in place of labels and semantic HTML',
+      "Don't announce content that is already in a live region, such as a Toast or an `error`, `warning` or `success` Alert",
+      "Don't fire announcements in quick succession. Screen readers may drop the ones in between",
+      "Don't use it in place of labels and semantic HTML",
     ],
   },
 

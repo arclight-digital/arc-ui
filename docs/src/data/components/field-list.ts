@@ -15,11 +15,11 @@ export const fieldList: ComponentDef = {
 The rows are plain light DOM, so their inputs submit with the surrounding form under whatever names you give them, such as \`option-0\` or a repeated \`option\`.`,
 
   features: [
-    'Reorder with the arrow keys on a row\'s handle, or by dragging it',
+    "Reorder with the arrow keys on a row's handle, or by dragging it",
     '`min` disables Remove at the lower limit, and `max` disables Add at the upper one',
-    'Focus follows the change: into a new row, onto a moved row, or onto the row that took a removed one\'s place',
+    "Focus follows the change: into a new row, onto a moved row, or onto the row that took a removed one's place",
     'Changes are announced in a polite live region, and each control is named after its row',
-    '`add-label` sets the Add button\'s text. The plus sign beside it is an icon',
+    "`add-label` sets the Add button's text. The plus sign beside it is an icon",
     '`readonly` shows the rows without the Add button, handles or Remove buttons',
   ],
 
@@ -27,11 +27,11 @@ The rows are plain light DOM, so their inputs submit with the surrounding form u
     do: [
       'Give the list a `label` and each row a `label` ("Option 2"), so the controls read as "Remove Option 2"',
       'Update your array on `arc-add`, `arc-remove` and `arc-move`. The rows follow when you re-render',
-      'Set `min` to the fewest rows the form accepts, so the last required row can\'t be removed',
+      "Set `min` to the fewest rows the form accepts, so the last required row can't be removed",
     ],
     dont: [
-      'Don\'t add, remove or reorder rows in the DOM yourself while a change the list asked for is still pending',
-      'Don\'t use it for a fixed number of fields. Plain inputs are clearer',
+      "Don't add, remove or reorder rows in the DOM yourself while a change the list asked for is still pending",
+      "Don't use it for a fixed number of fields. Plain inputs are clearer",
     ],
   },
 

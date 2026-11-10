@@ -26,10 +26,10 @@ The sizes \`sm\`, \`md\` and \`lg\` are 32px, 48px and 64px squares, with corner
       'Use hex values throughout token reference docs',
     ],
     dont: [
-      'Don\'t use it to pick a color. It only displays one. Use ColorPicker',
-      'Don\'t show a transparent or semi-transparent color without a visible background behind it',
-      'Don\'t mix swatch sizes in one row',
-      'Don\'t write labels longer than about 10 characters. Longer ones are cut off',
+      "Don't use it to pick a color. It only displays one. Use ColorPicker",
+      "Don't show a transparent or semi-transparent color without a visible background behind it",
+      "Don't mix swatch sizes in one row",
+      "Don't write labels longer than about 10 characters. Longer ones are cut off",
     ],
   },
 

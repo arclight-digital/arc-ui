@@ -21,7 +21,7 @@ The first click, or Enter on a focused day, sets the start. Until you pick the e
     'A polite live region announces progress, such as "Start date set. Choose end date."',
     'Escape closes the popup and puts focus back in the field. A click outside also closes it',
     '`min` and `max` dim and disable days outside the range, and `required` keeps the field invalid until both dates are set',
-    'The popup renders in the top layer, so an `overflow: hidden` ancestor doesn\'t clip it',
+    "The popup renders in the top layer, so an `overflow: hidden` ancestor doesn't clip it",
   ],
 
   guidelines: {
@@ -32,10 +32,10 @@ The first click, or Enter on a focused day, sets the start. Until you pick the e
       'Set `months="1"` in narrow places, such as a filter popover, where two panels would overflow',
     ],
     dont: [
-      'Don\'t use it for a single date. Use DatePicker',
-      'Don\'t treat the first click as a value. `arc-change` only fires once the end date is chosen',
-      'Don\'t build your own preset buttons when `presets` does the job',
-      'Don\'t set `min` later than `max`. Every day is disabled',
+      "Don't use it for a single date. Use DatePicker",
+      "Don't treat the first click as a value. `arc-change` only fires once the end date is chosen",
+      "Don't build your own preset buttons when `presets` does the job",
+      "Don't set `min` later than `max`. Every day is disabled",
     ],
   },
 

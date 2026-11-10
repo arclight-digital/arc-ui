@@ -38,18 +38,18 @@ The code shows without JavaScript, but copying needs JavaScript and a secure con
 
   guidelines: {
     do: [
-      'Give a block a `label` when it\'s one of several on a page, so readers can tell them apart',
+      "Give a block a `label` when it's one of several on a page, so readers can tell them apart",
       'Use `prompt` for commands a reader will paste into a terminal, and leave it off for scripts and output',
       'Use arc-code-group for variants of one command, not a stack of near-identical blocks',
       'Use `highlight` to point at the lines the surrounding text talks about',
       'Set `max-lines` on long samples in running text',
     ],
     dont: [
-      'Don\'t put content between the tags. There is no default slot, so use the `code` prop',
+      "Don't put content between the tags. There is no default slot, so use the `code` prop",
       "Don't type a `$` into the code. It ends up in the reader's clipboard, so use `prompt`",
-      'Don\'t use `wrap` where indentation matters to the reader, such as Python or YAML, unless the lines are short',
+      "Don't use `wrap` where indentation matters to the reader, such as Python or YAML, unless the lines are short",
       'Don\'t use CodeBlock for inline code. Use arc-text variant="code"',
-      'Don\'t count on copy working everywhere. It needs HTTPS and a user gesture',
+      "Don't count on copy working everywhere. It needs HTTPS and a user gesture",
     ],
   },
 

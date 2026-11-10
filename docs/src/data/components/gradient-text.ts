@@ -27,9 +27,9 @@ It's inline and inherits the parent's font size, weight and line height, so it w
       'Use `custom` for one-off or campaign colors',
     ],
     dont: [
-      'Don\'t use it for body copy or long paragraphs. At small sizes the gradient is hard to see',
-      'Don\'t animate every gradient on the page. Animate one focal element at most',
-      'Don\'t use `sunset` or `ocean` where the text has to match the brand accent tokens',
+      "Don't use it for body copy or long paragraphs. At small sizes the gradient is hard to see",
+      "Don't animate every gradient on the page. Animate one focal element at most",
+      "Don't use `sunset` or `ocean` where the text has to match the brand accent tokens",
     ],
   },
 

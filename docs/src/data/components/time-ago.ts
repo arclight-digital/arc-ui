@@ -12,21 +12,19 @@ export const timeAgo: ComponentDef = {
 
 It renders a \`<time>\` element that keeps the exact \`datetime\` attribute, with the full formatted date in \`title\` for hover. Formatting uses \`Intl.RelativeTimeFormat\`, so \`locale="de-DE"\` gives "vor 3 Minuten". Under a minute it shows "just now", in English whatever the locale.`,
 
-  features: [
-    'Set in `--font-mono`, with the size and color of the surrounding text',
-  ],
+  features: ['Set in `--font-mono`, with the size and color of the surrounding text'],
 
   guidelines: {
     do: [
       'Use it for timestamps in feeds, comments, commit logs and activity streams',
       'Pass a valid ISO 8601 string in `datetime`',
       'Set `live="false"` for printed reports or export previews',
-      'Set `locale` to your app\'s locale',
+      "Set `locale` to your app's locale",
     ],
     dont: [
-      'Don\'t use it as a countdown with second-level precision. Use CountdownTimer',
-      'Don\'t pass a date `new Date()` can\'t parse. An invalid date renders nothing',
-      'Don\'t make it the only date shown where the exact time matters, such as legal or financial records. The full date is only in the hover title',
+      "Don't use it as a countdown with second-level precision. Use CountdownTimer",
+      "Don't pass a date `new Date()` can't parse. An invalid date renders nothing",
+      "Don't make it the only date shown where the exact time matters, such as legal or financial records. The full date is only in the hover title",
       'Don\'t use it when you need a fixed format such as "Feb 16, 2026". Format the date yourself',
     ],
   },

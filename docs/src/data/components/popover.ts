@@ -26,9 +26,7 @@ Clicking outside or pressing Escape closes it. The component fires \`arc-open\` 
       'Keep the content short. Use Dialog or Drawer for complex forms, tables or long lists',
       'Links, buttons and small forms are fine inside the panel',
     ],
-    dont: [
-      'Don\'t put information readers must see in a popover. It\'s easy to close by accident',
-    ],
+    dont: ["Don't put information readers must see in a popover. It's easy to close by accident"],
   },
 
   previewHtml: `<arc-popover position="bottom">

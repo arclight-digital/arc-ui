@@ -6,8 +6,7 @@ export const colorPicker: ComponentDef = {
   tag: 'arc-color-picker',
   tier: 'input',
   interactivity: 'interactive',
-  description:
-    'Picks any color from a drag area or a typed hex value.',
+  description: 'Picks any color from a drag area or a typed hex value.',
 
   overview: `ColorPicker has a saturation/lightness area where users click or drag a crosshair, a hue slider across the full 360 degrees under it, and a hex input with a preview swatch for typing a known color. Pass a \`presets\` array and a row of swatches appears under the hex input, with the active one outlined in the primary text color. Use presets for a brand palette or frequent colors. The area still allows any color.
 
@@ -22,15 +21,15 @@ export const colorPicker: ComponentDef = {
 
   guidelines: {
     do: [
-      'Set a `label`, especially when there\'s more than one picker on the page',
+      "Set a `label`, especially when there's more than one picker on the page",
       'Set the initial color with `value` in 6-digit hex (for example `#4d7ef7`)',
       'Put the picker in a popover or dropdown when horizontal space is tight',
     ],
     dont: [
-      'Don\'t pass 3-digit hex shorthand (`#f00`). The component expects all six digits',
-      'Don\'t use it when users choose from a fixed set. Use a select or a radio group',
-      'Don\'t give it more than about 20 presets. The row wraps and gets crowded',
-      'Don\'t put it in a container narrower than 260px. The area and the slider need the room',
+      "Don't pass 3-digit hex shorthand (`#f00`). The component expects all six digits",
+      "Don't use it when users choose from a fixed set. Use a select or a radio group",
+      "Don't give it more than about 20 presets. The row wraps and gets crowded",
+      "Don't put it in a container narrower than 260px. The area and the slider need the room",
     ],
   },
 

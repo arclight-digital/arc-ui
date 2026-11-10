@@ -15,11 +15,11 @@ Arrow Down and Arrow Up move through the items, skipping dividers and disabled i
 Use it for action menus on a button: a file menu, a "more actions" button or a profile menu. ContextMenu opens on right-click instead, and Select is a form control that keeps a value.`,
 
   features: [
-    'The menu renders in the top layer and flips above the trigger when there\'s no room below',
-    'Disabled items are muted and can\'t be chosen',
+    "The menu renders in the top layer and flips above the trigger when there's no room below",
+    "Disabled items are muted and can't be chosen",
     'The trigger is shrink-to-fit. Give the host a width, or `display: block`, and the trigger fills it',
     'The trigger gets `aria-haspopup` and `aria-expanded`, and the component sets `role="menu"` and `role="menuitem"`',
-    'The `arc-select` detail also has `index`, and an `item` object with the item\'s `label`, `shortcut` and `value`',
+    "The `arc-select` detail also has `index`, and an `item` object with the item's `label`, `shortcut` and `value`",
   ],
 
   guidelines: {
@@ -31,9 +31,9 @@ Use it for action menus on a button: a file menu, a "more actions" button or a p
       'Move long lists of commands to a CommandPalette',
     ],
     dont: [
-      'Don\'t use it in place of a Select. It doesn\'t keep a selected value',
-      'Don\'t put the trigger outside the component. It has to be in the `trigger` slot',
-      'Don\'t nest a DropdownMenu inside a menu item. There are no submenus',
+      "Don't use it in place of a Select. It doesn't keep a selected value",
+      "Don't put the trigger outside the component. It has to be in the `trigger` slot",
+      "Don't nest a DropdownMenu inside a menu item. There are no submenus",
       'Don\'t add `role="menu"` or `role="menuitem"` yourself',
     ],
   },
@@ -162,7 +162,8 @@ export default function Example() {
     {
       name: 'MenuItem',
       tag: 'arc-menu-item',
-      description: 'One action in the menu. Its label is the `label` attribute or, without one, its text content.',
+      description:
+        'One action in the menu. Its label is the `label` attribute or, without one, its text content.',
     },
     {
       name: 'MenuDivider',

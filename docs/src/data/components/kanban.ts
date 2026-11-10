@@ -27,12 +27,12 @@ From the keyboard, each column's card list is one tab stop. ArrowUp and ArrowDow
       'Give every column and card a stable, unique id. Rendering and moves are keyed on it',
       'Set a `limit` on columns that have a work-in-progress cap',
       'Keep card labels short and put detail in the description',
-      'Use tag variants (primary, success, error and so on) to show a card\'s category',
+      "Use tag variants (primary, success, error and so on) to show a card's category",
     ],
     dont: [
-      'Don\'t mutate the `columns` array in place. Assign a new array to re-render',
-      'Don\'t use it for a single list. Use arc-sortable-list or arc-list',
-      'Don\'t expect many columns to fit without horizontal scrolling. Each one is a fixed 280px wide',
+      "Don't mutate the `columns` array in place. Assign a new array to re-render",
+      "Don't use it for a single list. Use arc-sortable-list or arc-list",
+      "Don't expect many columns to fit without horizontal scrolling. Each one is a fixed 280px wide",
     ],
   },
 

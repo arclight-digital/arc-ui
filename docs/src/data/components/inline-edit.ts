@@ -30,13 +30,13 @@ From script, \`edit()\` enters edit mode with the field focused and its text sel
       'Listen for `arc-change` to save a rename',
       'Use `multiline` for short notes that may wrap, and tell people that Cmd/Ctrl+Enter saves',
       'Set a `placeholder` that fits the content, such as "Untitled track", so an empty value still looks clickable',
-      'Use `readonly` when a value is temporarily locked. The text stays in the reading order but can\'t be edited',
+      "Use `readonly` when a value is temporarily locked. The text stays in the reading order but can't be edited",
     ],
     dont: [
-      'Don\'t use it in a conventional form layout. A labeled Input tells people there\'s something to fill in, and Inline Edit hides that',
-      'Don\'t use it for values that need heavy validation or structured entry, such as emails, dates and numbers. Use Input, Date Picker or Number Input',
-      'Don\'t treat `arc-input` as a save signal. It carries the draft, which Escape can still throw away',
-      'Don\'t rely on the pencil to show that text is editable on touch screens. It appears on hover and focus, and touch has no hover',
+      "Don't use it in a conventional form layout. A labeled Input tells people there's something to fill in, and Inline Edit hides that",
+      "Don't use it for values that need heavy validation or structured entry, such as emails, dates and numbers. Use Input, Date Picker or Number Input",
+      "Don't treat `arc-input` as a save signal. It carries the draft, which Escape can still throw away",
+      "Don't rely on the pencil to show that text is editable on touch screens. It appears on hover and focus, and touch has no hover",
     ],
   },
 

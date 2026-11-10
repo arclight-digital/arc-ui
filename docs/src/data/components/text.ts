@@ -29,9 +29,9 @@ export const text: ComponentDef = {
     ],
     dont: [
       'Don\'t render `display` or `heading` with `as="span"`. They\'re headings and should use a heading element',
-      'Don\'t skip heading levels (such as h1 to h3) to get a size. Set `as` and `variant` separately',
-      'Don\'t use `accent` for long text. The gradient and glow are for short highlights',
-      'Don\'t use `wordmark` for anything but a product or brand name',
+      "Don't skip heading levels (such as h1 to h3) to get a size. Set `as` and `variant` separately",
+      "Don't use `accent` for long text. The gradient and glow are for short highlights",
+      "Don't use `wordmark` for anything but a product or brand name",
     ],
   },
 

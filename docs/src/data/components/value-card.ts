@@ -27,10 +27,10 @@ The \`icon\` slot takes an SVG or other markup, and the \`icon\` property takes 
       'Put a section heading above the grid',
     ],
     dont: [
-      'Don\'t use it as a link. It has no `href`, so use FeatureCard for navigation',
-      'Don\'t write descriptions so long that the text column dwarfs the icon',
-      'Don\'t mix value cards and feature cards in the same grid row',
-      'Don\'t change the icon color without changing the hover glow to match',
+      "Don't use it as a link. It has no `href`, so use FeatureCard for navigation",
+      "Don't write descriptions so long that the text column dwarfs the icon",
+      "Don't mix value cards and feature cards in the same grid row",
+      "Don't change the icon color without changing the hover glow to match",
     ],
   },
 

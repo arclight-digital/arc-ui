@@ -28,8 +28,8 @@ When there's nothing left, set \`finished\` to \`true\`. The observer disconnect
       'Append new items as direct children. They render in the default slot',
     ],
     dont: [
-      'Don\'t use it for small, fixed datasets. Use pagination or a plain list',
-      'Don\'t put footer content below it without another way to reach it. The footer moves down every time items load',
+      "Don't use it for small, fixed datasets. Use pagination or a plain list",
+      "Don't put footer content below it without another way to reach it. The footer moves down every time items load",
     ],
   },
 

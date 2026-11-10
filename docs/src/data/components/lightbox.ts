@@ -42,10 +42,10 @@ The top bar and the arrows fade after a few seconds without movement, and come b
       'Use `caption` for attribution or context that should travel with the image',
     ],
     dont: [
-      'Don\'t use it for anything but images. Use Dialog',
-      'Don\'t open it on page load. Let the reader choose a full-screen view',
-      'Don\'t pass small thumbnails as `src`. Use full-size sources, or a `srcset` that includes them',
-      'Don\'t open a second overlay on top of it. Close one before opening another',
+      "Don't use it for anything but images. Use Dialog",
+      "Don't open it on page load. Let the reader choose a full-screen view",
+      "Don't pass small thumbnails as `src`. Use full-size sources, or a `srcset` that includes them",
+      "Don't open a second overlay on top of it. Close one before opening another",
     ],
   },
 

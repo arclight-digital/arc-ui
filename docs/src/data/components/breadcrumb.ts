@@ -6,8 +6,7 @@ export const breadcrumb: ComponentDef = {
   tag: 'arc-breadcrumb',
   tier: 'navigation',
   interactivity: 'hybrid',
-  description:
-    'A trail of links from the site root down to the current page.',
+  description: 'A trail of links from the site root down to the current page.',
 
   overview: `Breadcrumb shows where the current page sits in the site's hierarchy. Each crumb links to a parent page, and the last crumb is the current page, so users can jump several levels up without pressing Back. Use it next to a sidebar or top bar, not in place of one.
 
@@ -28,10 +27,10 @@ Crumbs with an \`href\` render as ordinary \`<a>\` links. \`arc-navigate\` fires
       'Use breadcrumbs in apps with three or more levels',
     ],
     dont: [
-      'Don\'t make the last crumb a link. It is the page the user is already on',
-      'Don\'t show a trail on a top-level page. One crumb tells the user nothing',
-      'Don\'t put breadcrumbs and a back button in the same spot. Pick one',
-      'Don\'t go past five or six levels. A trail that deep means the site is nested too far',
+      "Don't make the last crumb a link. It is the page the user is already on",
+      "Don't show a trail on a top-level page. One crumb tells the user nothing",
+      "Don't put breadcrumbs and a back button in the same spot. Pick one",
+      "Don't go past five or six levels. A trail that deep means the site is nested too far",
     ],
   },
 

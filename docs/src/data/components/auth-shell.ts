@@ -15,7 +15,7 @@ The \`centered\` variant puts one card in the middle of the viewport, for sign-i
 
   features: [
     'At 768 px and below, the split layout collapses to one column and hides the aside',
-    'The card is at most 420px wide, so inputs don\'t stretch across a large monitor',
+    "The card is at most 420px wide, so inputs don't stretch across a large monitor",
   ],
 
   guidelines: {
@@ -27,10 +27,10 @@ The \`centered\` variant puts one card in the middle of the viewport, for sign-i
       'Ask only for credentials, plus an optional remember-me toggle',
     ],
     dont: [
-      'Don\'t put AuthShell inside AppShell. Auth pages stand on their own, outside the app\'s chrome',
-      'Don\'t use the split variant in a mobile-only app, where the aside never shows',
-      'Don\'t put navigation bars or sidebars inside it',
-      'Don\'t pack the card with fields. Split long registration forms into steps',
+      "Don't put AuthShell inside AppShell. Auth pages stand on their own, outside the app's chrome",
+      "Don't use the split variant in a mobile-only app, where the aside never shows",
+      "Don't put navigation bars or sidebars inside it",
+      "Don't pack the card with fields. Split long registration forms into steps",
     ],
   },
 

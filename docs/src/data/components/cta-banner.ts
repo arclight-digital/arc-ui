@@ -31,9 +31,9 @@ The \`eyebrow\` and \`headline\` slots take markup in place of the prop's text, 
       'Use the eyebrow to set context before the headline',
     ],
     dont: [
-      'Don\'t put more than one on a page',
-      'Don\'t use it for information. Use an Alert or a Card',
-      'Don\'t leave out the headline',
+      "Don't put more than one on a page",
+      "Don't use it for information. Use an Alert or a Card",
+      "Don't leave out the headline",
     ],
   },
 

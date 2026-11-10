@@ -30,8 +30,8 @@ The color is \`--accent-primary\` by default. \`color\` takes any CSS color, suc
       'Set `fill` to stress how large a trend is, not only its direction',
     ],
     dont: [
-      'Don\'t base important decisions on a sparkline alone. It has no axes, labels or precision',
-      'Don\'t put dozens of line sparklines in one table. Each one draws itself in, and there\'s no setting to turn that off',
+      "Don't base important decisions on a sparkline alone. It has no axes, labels or precision",
+      "Don't put dozens of line sparklines in one table. Each one draws itself in, and there's no setting to turn that off",
     ],
   },
 

@@ -25,16 +25,16 @@ PasswordInput joins native forms through ElementInternals, like Input: it submit
 
   guidelines: {
     do: [
-      'Give it a `label`. Placeholder text alone isn\'t one',
+      "Give it a `label`. Placeholder text alone isn't one",
       'Turn on `show-strength` where people create a password, and leave it off on login forms',
       'Listen to `arc-strength-change` if you block submission below a minimum score',
       'Pair it with Form for coordinated validation and an error summary',
       'Use the `error` prop for server or policy failures, for example "Password was found in a breach"',
     ],
     dont: [
-      'Don\'t treat the score as a security check. Enforce your real policy on the server',
-      'Don\'t re-mask the field while someone is typing. The toggle state is theirs',
-      'Don\'t block paste. People paste from password managers',
+      "Don't treat the score as a security check. Enforce your real policy on the server",
+      "Don't re-mask the field while someone is typing. The toggle state is theirs",
+      "Don't block paste. People paste from password managers",
     ],
   },
 

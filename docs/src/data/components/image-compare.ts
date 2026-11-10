@@ -24,14 +24,14 @@ The divider's round handle is also the keyboard control: a focusable \`role="sli
   guidelines: {
     do: [
       'Use two images of the same subject at the same aspect ratio',
-      'Set `before-label` and `after-label` when the images don\'t make the direction of the edit obvious',
-      'Give the handle a `label` that says what\'s being compared, for screen readers',
+      "Set `before-label` and `after-label` when the images don't make the direction of the edit obvious",
+      "Give the handle a `label` that says what's being compared, for screen readers",
       'Use `arc-input` for cheap live readouts and `arc-change` for anything expensive or saved',
     ],
     dont: [
-      'Don\'t use it for unrelated images. Use Carousel',
-      'Don\'t compare text or code revisions with it. A rendered diff shows those changes exactly',
-      'Don\'t start `position` near 0 or 100. With one image almost hidden, people won\'t see there\'s anything to drag',
+      "Don't use it for unrelated images. Use Carousel",
+      "Don't compare text or code revisions with it. A rendered diff shows those changes exactly",
+      "Don't start `position` near 0 or 100. With one image almost hidden, people won't see there's anything to drag",
     ],
   },
 

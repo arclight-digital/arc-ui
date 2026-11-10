@@ -23,16 +23,16 @@ TagInput is form-associated and submits one FormData entry per tag under its \`n
   guidelines: {
     do: [
       'Set a `label`. It renders as a `<label>` for the text input, so screen readers announce it',
-      'Provide `suggestions` when there\'s a known vocabulary, to speed up entry and cut typos',
+      "Provide `suggestions` when there's a known vocabulary, to speed up entry and cut typos",
       'Set `allowCustom` to false when values must come from that vocabulary',
       'Set `max-tags` when the system receiving the values accepts only so many',
       'Listen to `arc-input` to fetch suggestions from a server as the reader types',
     ],
     dont: [
-      'Don\'t use TagInput when readers pick from a fixed list and want to browse it. Use MultiSelect',
-      'Don\'t pick a delimiter that can appear inside a value',
-      'Don\'t use very long tag values. They overflow the chips',
-      'Don\'t rely on the shake alone to explain a rejected value where it matters. Set an `error` message too',
+      "Don't use TagInput when readers pick from a fixed list and want to browse it. Use MultiSelect",
+      "Don't pick a delimiter that can appear inside a value",
+      "Don't use very long tag values. They overflow the chips",
+      "Don't rely on the shake alone to explain a rejected value where it matters. Set an `error` message too",
     ],
   },
 

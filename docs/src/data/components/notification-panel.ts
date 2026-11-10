@@ -6,7 +6,8 @@ export const notificationPanel: ComponentDef = {
   tag: 'arc-notification-panel',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Dropdown panel for notifications. A trigger slot opens a panel with a header, a scrolling body and a footer.',
+  description:
+    'Dropdown panel for notifications. A trigger slot opens a panel with a header, a scrolling body and a footer.',
 
   overview: `Notification Panel puts a list of notifications or activity behind a trigger, usually a bell icon. Put the trigger in the \`trigger\` slot. Clicking it opens a panel with a \`header\` slot, the default slot for the list, and a \`footer\` slot.
 
@@ -14,9 +15,7 @@ The panel closes when you click the trigger again, click outside, or move focus 
 
 The panel always opens below the trigger. \`position\` picks which edge lines up with it: \`top-right\` (the default) aligns the right edges and \`top-left\` the left edges. Near a viewport edge, the panel shifts to stay on screen. \`max-height\` (400px by default) caps the body, which scrolls past that.`,
 
-  features: [
-    'Opens and closes with a fade and a short slide',
-  ],
+  features: ['Opens and closes with a fade and a short slide'],
 
   guidelines: {
     do: [
@@ -26,8 +25,8 @@ The panel always opens below the trigger. \`position\` picks which edge lines up
       'Listen for `arc-open` to load or refresh notifications, and update a badge count or mark items read',
     ],
     dont: [
-      'Don\'t use it for general dropdown menus. Use Dropdown Menu or Select',
-      'Don\'t put complex forms in the panel. Keep it to a list of items people can act on',
+      "Don't use it for general dropdown menus. Use Dropdown Menu or Select",
+      "Don't put complex forms in the panel. Keep it to a list of items people can act on",
     ],
   },
 

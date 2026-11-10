@@ -23,15 +23,15 @@ By default the button shows the current mode's name next to the icon. \`icon-onl
 
   guidelines: {
     do: [
-      'Put it somewhere that\'s always on screen, such as the top bar or a settings panel',
+      "Put it somewhere that's always on screen, such as the top bar or a settings panel",
       'Use `icon-only` where space is tight',
       'Listen to `arc-change` to save the choice to a backend preference',
       'Make sure your styles follow the `data-theme` attribute on the document root, or switching does nothing',
-      'Set `data-theme` on the HTML element during server rendering, so the page doesn\'t flash the wrong theme',
+      "Set `data-theme` on the HTML element during server rendering, so the page doesn't flash the wrong theme",
     ],
     dont: [
-      'Don\'t change the theme by writing the `arc-theme` key in `localStorage`. The toggle doesn\'t watch storage. Set a toggle\'s `theme` property or the root\'s `data-theme`, and every toggle on the page picks it up',
-      'Don\'t use it for settings other than the theme. Use Toggle',
+      "Don't change the theme by writing the `arc-theme` key in `localStorage`. The toggle doesn't watch storage. Set a toggle's `theme` property or the root's `data-theme`, and every toggle on the page picks it up",
+      "Don't use it for settings other than the theme. Use Toggle",
     ],
   },
 

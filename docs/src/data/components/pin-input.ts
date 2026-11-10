@@ -6,8 +6,7 @@ export const pinInput: ComponentDef = {
   tag: 'arc-pin-input',
   tier: 'input',
   interactivity: 'interactive',
-  description:
-    'A row of one-character boxes for entering a PIN or a one-time code.',
+  description: 'A row of one-character boxes for entering a PIN or a one-time code.',
 
   overview: `PinInput renders a row of single-character boxes. Typing a character moves focus to the next box. Backspace in an empty box moves back and clears the previous one, the left and right arrow keys move between boxes without changing them, and pasting fills the boxes from the focused one onward, skipping characters that \`type\` doesn't allow.
 
@@ -15,9 +14,7 @@ export const pinInput: ComponentDef = {
 
 \`arc-input\` fires on every entry or deletion with the partial value. When every box is filled, \`arc-change\` fires and then \`arc-complete\`, both with the full value. Listen to either to submit or validate.`,
 
-  features: [
-    'Each box is 42px wide at the default size, 34px at `sm` and 50px at `lg`',
-  ],
+  features: ['Each box is 42px wide at the default size, 34px at `sm` and 50px at `lg`'],
 
   guidelines: {
     do: [
@@ -27,10 +24,10 @@ export const pinInput: ComponentDef = {
       'Give it a `label` that names the code, unless the surrounding text already does',
     ],
     dont: [
-      'Don\'t use it for free text. It\'s for fixed-length codes',
-      'Don\'t set `length` above about 8. Use a normal text input for longer codes',
+      "Don't use it for free text. It's for fixed-length codes",
+      "Don't set `length` above about 8. Use a normal text input for longer codes",
       'Don\'t pick a `separator` that leaves a short last group, like `separator="4"` on a 6-digit code',
-      'Don\'t put it in a container too narrow for its boxes and the gaps between them',
+      "Don't put it in a container too narrow for its boxes and the gaps between them",
     ],
   },
 

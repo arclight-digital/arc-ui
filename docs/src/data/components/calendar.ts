@@ -6,8 +6,7 @@ export const calendar: ComponentDef = {
   tag: 'arc-calendar',
   tier: 'input',
   interactivity: 'interactive',
-  description:
-    'A month of days in a grid, for picking one date.',
+  description: 'A month of days in a grid, for picking one date.',
 
   overview: `Calendar shows one month as a grid of days, with previous and next month buttons in the header. Use it on its own or inside a date picker or scheduling screen.
 
@@ -33,9 +32,9 @@ Arrow keys move a focus ring through the grid and cross into the next or previou
       'Give it at least 280px of width so the days are easy to tap',
     ],
     dont: [
-      'Don\'t use it to pick a time. It handles dates only',
-      'Don\'t set min later than max. Every day ends up disabled',
-      'Don\'t use it to pick a range. It selects one date, so use DateRangePicker',
+      "Don't use it to pick a time. It handles dates only",
+      "Don't set min later than max. Every day ends up disabled",
+      "Don't use it to pick a range. It selects one date, so use DateRangePicker",
     ],
   },
 

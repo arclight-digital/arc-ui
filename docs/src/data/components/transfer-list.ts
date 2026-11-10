@@ -18,7 +18,7 @@ It's form-associated. Give it a \`name\` and it submits one entry per selected v
   features: [
     'Keyboard: one tab stop per pane with a roving tabindex, ArrowUp and ArrowDown, Home and End, Space to check, and Ctrl+A to check every visible item',
     'After a move, focus stays in the same pane on the nearest remaining item',
-    'The move buttons turn off when there\'s nothing for them to move',
+    "The move buttons turn off when there's nothing for them to move",
     'Below a container width of about 560px the panes stack and the controls turn horizontal',
   ],
 
@@ -26,16 +26,16 @@ It's form-associated. Give it a \`name\` and it submits one entry per selected v
     do: [
       'Use it for sets of about 5 to 100 items where the reader picks a subset, such as role permissions or report columns',
       'Set `searchable` when a pane can hold more than a dozen items',
-      'Keep option labels to one short line so they don\'t truncate in narrow panes',
+      "Keep option labels to one short line so they don't truncate in narrow panes",
       'Rename the panes with terms from your domain, such as "All permissions" and "Granted"',
       'Listen to `arc-change` to save the selection. Its detail carries the full value array after every move',
     ],
     dont: [
-      'Don\'t use it for a handful of options. Use a checkbox group or MultiSelect',
-      'Don\'t give it thousands of items without narrowing them on the server first. Every option renders',
-      'Don\'t treat checked items as the selection. Only items in the right pane are the value',
-      'Don\'t disable options without saying somewhere why they can\'t be moved',
-      'Don\'t put two transfer lists side by side. Each one needs the width for its two panes',
+      "Don't use it for a handful of options. Use a checkbox group or MultiSelect",
+      "Don't give it thousands of items without narrowing them on the server first. Every option renders",
+      "Don't treat checked items as the selection. Only items in the right pane are the value",
+      "Don't disable options without saying somewhere why they can't be moved",
+      "Don't put two transfer lists side by side. Each one needs the width for its two panes",
     ],
   },
 

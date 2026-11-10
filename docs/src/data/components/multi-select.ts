@@ -6,8 +6,7 @@ export const multiSelect: ComponentDef = {
   tag: 'arc-multi-select',
   tier: 'input',
   interactivity: 'interactive',
-  description:
-    'A dropdown for picking several options, shown as removable chips.',
+  description: 'A dropdown for picking several options, shown as removable chips.',
 
   overview: `Multi Select lets people pick several values from a fixed list. Each selection shows as a removable tag chip inside the control. The text input is also a filter: typing narrows the dropdown to options whose label contains what you typed.
 
@@ -29,9 +28,9 @@ Options are \`<arc-option>\` children, each with a \`value\` attribute and its t
       'Set `value` to the current selections when editing an existing record',
     ],
     dont: [
-      'Don\'t use it when only one value is allowed. Use Select',
-      'Don\'t load a long option list. Every matching option renders, so filter on the server instead. `arc-input` gives you the query on each keystroke',
-      'Don\'t disable a field that has selections without saying why it can\'t be edited',
+      "Don't use it when only one value is allowed. Use Select",
+      "Don't load a long option list. Every matching option renders, so filter on the server instead. `arc-input` gives you the query on each keystroke",
+      "Don't disable a field that has selections without saying why it can't be edited",
     ],
   },
 

@@ -20,20 +20,20 @@ Choose Drawer over Dialog for navigation, for tall content that needs to scroll,
 
   features: [
     '300px wide by default and never more than 85vw, so some of the page always shows',
-    '`heading` is also the panel\'s accessible name',
-    'The backdrop is `::backdrop`, which can\'t be a CSS part. Style it with `--drawer-backdrop`',
+    "`heading` is also the panel's accessible name",
+    "The backdrop is `::backdrop`, which can't be a CSS part. Style it with `--drawer-backdrop`",
   ],
 
   guidelines: {
     do: [
       'Use `position="left"` for navigation menus and `position="right"` for details, filters and settings',
-      'Write a short heading that says what\'s in the panel',
+      "Write a short heading that says what's in the panel",
       'Listen for `arc-close` and update your own open state',
     ],
     dont: [
-      'Don\'t use it for critical confirmations. Use Dialog',
-      'Don\'t put long multi-step forms in it. Use a full page or a Dialog',
-      'Don\'t open it on page load. Open it when someone asks for it',
+      "Don't use it for critical confirmations. Use Dialog",
+      "Don't put long multi-step forms in it. Use a full page or a Dialog",
+      "Don't open it on page load. Open it when someone asks for it",
     ],
   },
 

@@ -22,7 +22,7 @@ Clicking the toggle fires \`arc-toggle\` with \`{ expanded }\` in the detail, an
     ],
     dont: [
       'Don\'t use it for single-line text, `lines="1"` included. Use CSS `text-overflow: ellipsis`',
-      'Don\'t put forms, buttons or other controls inside it. It\'s for text',
+      "Don't put forms, buttons or other controls inside it. It's for text",
     ],
   },
 

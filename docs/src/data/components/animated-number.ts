@@ -29,10 +29,10 @@ Each change starts from the previous \`value\`, not from the number on screen. I
       'Use about 500ms for small changes on a live dashboard and up to 2000ms for a headline number',
     ],
     dont: [
-      'Don\'t animate more than four or five numbers at once',
-      'Don\'t feed it values that change faster than the duration. Each change restarts the count from the previous value, so the number jumps',
-      'Don\'t set duration below 200ms, where the count is too fast to see',
-      'Don\'t animate between very different magnitudes (1 to 1,000,000), where the count means nothing',
+      "Don't animate more than four or five numbers at once",
+      "Don't feed it values that change faster than the duration. Each change restarts the count from the previous value, so the number jumps",
+      "Don't set duration below 200ms, where the count is too fast to see",
+      "Don't animate between very different magnitudes (1 to 1,000,000), where the count means nothing",
     ],
   },
 

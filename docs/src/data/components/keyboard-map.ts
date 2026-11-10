@@ -33,7 +33,7 @@ Nothing on the board is clickable or focusable. To make a shortcut work, use Hot
       'Use the compact layout unless a chord uses the F-row or nav cluster',
     ],
     dont: [
-      'Don\'t make the board the only place a shortcut is written down. The computed label names the chords, but the surrounding text should too',
+      "Don't make the board the only place a shortcut is written down. The computed label names the chords, but the surrounding text should too",
     ],
   },
 

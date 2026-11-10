@@ -24,8 +24,8 @@ export const switchGroup: ComponentDef = {
       'Set `label` to say what the toggles control',
     ],
     dont: [
-      'Don\'t mix in children other than `arc-toggle`. Only toggles get the shared size and disabled state',
-      'Don\'t use it for mutually exclusive options. Use RadioGroup',
+      "Don't mix in children other than `arc-toggle`. Only toggles get the shared size and disabled state",
+      "Don't use it for mutually exclusive options. Use RadioGroup",
     ],
   },
 

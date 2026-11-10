@@ -7,7 +7,7 @@ export const numberFormat: ComponentDef = {
   tier: 'typography',
   interactivity: 'static',
   description:
-    'Displays a number, price or percentage formatted for a locale by the browser\'s Intl.NumberFormat.',
+    "Displays a number, price or percentage formatted for a locale by the browser's Intl.NumberFormat.",
 
   overview: `Number Format renders a number formatted by the browser's \`Intl.NumberFormat\`. Pass a raw \`value\` and a \`type\` (\`number\`, \`currency\`, \`percent\` or \`compact\`), and it adds thousands separators, currency symbols, percent signs or compact suffixes like "12.3K" and "1.2M".
 
@@ -16,7 +16,7 @@ It sets \`font-variant-numeric: tabular-nums\` and the monospace font, so number
 For the \`percent\` type, pass the percentage itself: \`50\` displays "50%". Plain \`Intl.NumberFormat\` multiplies by 100, so it would want \`0.5\`.`,
 
   features: [
-    '`decimals` sets decimal places, 0 to 20. Unset, it\'s 0 for numbers, 2 for currency and 1 for percent',
+    "`decimals` sets decimal places, 0 to 20. Unset, it's 0 for numbers, 2 for currency and 1 for percent",
     '`currency` takes an ISO 4217 code and defaults to USD',
     'Inherits size and color from its parent',
   ],
@@ -29,8 +29,8 @@ For the \`percent\` type, pass the percentage itself: \`50\` displays "50%". Pla
       'Set `locale` in multi-language apps',
     ],
     dont: [
-      'Don\'t use it for animated counting. Use Animated Number',
-      'Don\'t add your own monospace styling. It already sets the mono font and tabular-nums',
+      "Don't use it for animated counting. Use Animated Number",
+      "Don't add your own monospace styling. It already sets the mono font and tabular-nums",
       'Don\'t leave out `currency` with `type="currency"` unless you mean USD',
     ],
   },

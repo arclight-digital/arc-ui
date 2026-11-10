@@ -24,8 +24,8 @@ Rows are ranked largest first unless you set \`unsorted\`, and \`limit\` keeps t
       'In a small tile, set `limit` and put a "see all" link in the `more` slot',
     ],
     dont: [
-      'Don\'t use it for values that can be negative. A diverging arc-meter shows a lean either way',
-      'Don\'t rely on bar length alone to carry the number. Keep the value visible',
+      "Don't use it for values that can be negative. A diverging arc-meter shows a lean either way",
+      "Don't rely on bar length alone to carry the number. Keep the value visible",
     ],
   },
 

@@ -27,9 +27,7 @@ Escape closes the calendar and puts focus back in the field, and a click outside
       'Send the ISO `value` to forms and APIs, not the displayed text',
       'Set `value` when editing an existing record, so the calendar opens on the right month',
     ],
-    dont: [
-      'Don\'t set `min` later than `max`. Every date is disabled',
-    ],
+    dont: ["Don't set `min` later than `max`. Every date is disabled"],
   },
 
   previewHtml: `<arc-date-picker label="Start date" placeholder="Choose a date" style="width:240px"></arc-date-picker>`,

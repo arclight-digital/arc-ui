@@ -14,23 +14,21 @@ Set \`href\` and Link renders its own \`<a>\`. Or put a single \`<a>\` inside it
 
 \`active\` colors the link in the accent color to mark the current page. Keyboard focus shows a ring from the \`--interactive-focus-ring\` token, and mouse clicks don't.`,
 
-  features: [
-    'Exposes a `link` CSS part. It doesn\'t apply when you slot your own `<a>`',
-  ],
+  features: ["Exposes a `link` CSS part. It doesn't apply when you slot your own `<a>`"],
 
   guidelines: {
     do: [
       'Use the default variant for links in body text',
       'Use the nav variant for navigation menus, sidebars and header link groups',
       'Set `external` on links that leave your domain',
-      'Set `active` on the current page\'s link in a navigation list',
+      "Set `active` on the current page's link in a navigation list",
       'Write link text that names the destination, not "click here"',
     ],
     dont: [
-      'Don\'t use Link for an action that stays on the page. Use Button',
-      'Don\'t use the muted variant for primary navigation. It\'s too faint to find your way by',
-      'Don\'t put block-level elements inside Link. It renders inline',
-      'Don\'t remove the focus ring without giving keyboard users an equivalent',
+      "Don't use Link for an action that stays on the page. Use Button",
+      "Don't use the muted variant for primary navigation. It's too faint to find your way by",
+      "Don't put block-level elements inside Link. It renders inline",
+      "Don't remove the focus ring without giving keyboard users an equivalent",
     ],
   },
 

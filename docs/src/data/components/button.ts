@@ -30,11 +30,11 @@ The sizes (sm, md, lg) change the padding. The font size and the minimum touch t
       'Write labels that say what happens, in two or three words: "Create project", "Read the API docs"',
     ],
     dont: [
-      'Don\'t put two primary buttons side by side. Use one primary per group of actions',
-      'Don\'t use ghost for the most important action. It is too faint',
-      'Don\'t make a navigation link a plain button. Screen readers and search engines need a real link',
-      'Don\'t put a second link inside a slotted anchor. The adopted anchor is already the control',
-      'Don\'t disable a button without saying why the action is unavailable',
+      "Don't put two primary buttons side by side. Use one primary per group of actions",
+      "Don't use ghost for the most important action. It is too faint",
+      "Don't make a navigation link a plain button. Screen readers and search engines need a real link",
+      "Don't put a second link inside a slotted anchor. The adopted anchor is already the control",
+      "Don't disable a button without saying why the action is unavailable",
     ],
   },
 

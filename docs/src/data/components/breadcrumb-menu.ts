@@ -6,8 +6,7 @@ export const breadcrumbMenu: ComponentDef = {
   tag: 'arc-breadcrumb-menu',
   tier: 'navigation',
   interactivity: 'interactive',
-  description:
-    'A breadcrumb trail where a segment can open a dropdown of its sibling pages.',
+  description: 'A breadcrumb trail where a segment can open a dropdown of its sibling pages.',
 
   overview: `BreadcrumbMenu is a breadcrumb trail where a segment can open a dropdown of its sibling pages, so users can move sideways at any level without going up to the parent first. It's for deep hierarchies where people switch between items at the same depth. The dropdowns use DropdownMenu's styling.
 
@@ -15,9 +14,7 @@ Give an item in \`items\` a \`siblings\` array and its segment becomes a button 
 
 Segments and dropdown items are buttons, not links. Clicking one fires \`arc-navigate\` with \`{ href }\` and does nothing else, so you need a listener that does the navigation. Tab and Enter reach every button. A click outside closes an open dropdown. There are no arrow keys and no Escape to close.`,
 
-  features: [
-    'The last segment gets `aria-current="page"`',
-  ],
+  features: ['The last segment gets `aria-current="page"`'],
 
   guidelines: {
     do: [
@@ -26,8 +23,8 @@ Segments and dropdown items are buttons, not links. Clicking one fires \`arc-nav
       'Keep each sibling list to ten items or fewer',
     ],
     dont: [
-      'Don\'t use it for a flat hierarchy (two levels or fewer). Use Breadcrumb',
-      'Don\'t use it in place of TopBar or Sidebar navigation',
+      "Don't use it for a flat hierarchy (two levels or fewer). Use Breadcrumb",
+      "Don't use it in place of TopBar or Sidebar navigation",
     ],
   },
 

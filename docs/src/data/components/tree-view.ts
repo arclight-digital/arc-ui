@@ -30,11 +30,11 @@ ArrowDown and ArrowUp move between visible rows, ArrowRight opens a branch, Arro
       'Keep the tree to three or four levels. Deeper trees are hard to scan',
     ],
     dont: [
-      'Don\'t use it for flat lists. Use List or NavigationMenu',
-      'Don\'t load hundreds of top-level nodes at once. Load them in pages or on demand',
-      'Don\'t use it to select several items. It tracks one selection',
-      'Don\'t rely on icons alone. Every item needs a text label',
-      'Don\'t use very long labels. They truncate and can\'t be read in full',
+      "Don't use it for flat lists. Use List or NavigationMenu",
+      "Don't load hundreds of top-level nodes at once. Load them in pages or on demand",
+      "Don't use it to select several items. It tracks one selection",
+      "Don't rely on icons alone. Every item needs a text label",
+      "Don't use very long labels. They truncate and can't be read in full",
     ],
   },
 

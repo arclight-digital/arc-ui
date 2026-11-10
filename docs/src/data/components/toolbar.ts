@@ -14,10 +14,7 @@ It has \`role="toolbar"\`, so screen readers treat its controls as one group. \`
 
 With \`overflow\` set, items that don't fit the width are hidden from the end and listed in a "More" menu, whose icon button follows \`size\`. With \`sticky\` set, the toolbar sticks to \`top: 0\` at \`z-index: 50\` as the content scrolls.`,
 
-  features: [
-    'Background is `--surface-raised`',
-    'Slotted controls are spaced by `--space-sm`',
-  ],
+  features: ['Background is `--surface-raised`', 'Slotted controls are spaced by `--space-sm`'],
 
   guidelines: {
     do: [
@@ -28,10 +25,10 @@ With \`overflow\` set, items that don't fit the width are hidden from the end an
       'Group related buttons in the same slot',
     ],
     dont: [
-      'Don\'t use it as the main site navigation. Use TopBar or NavigationMenu',
-      'Don\'t put more than five or six controls in it. Move the rest into a DropdownMenu',
-      'Don\'t turn off the border when the toolbar sits on content with the same background color',
-      'Don\'t use it for status information. Use StatusBar',
+      "Don't use it as the main site navigation. Use TopBar or NavigationMenu",
+      "Don't put more than five or six controls in it. Move the rest into a DropdownMenu",
+      "Don't turn off the border when the toolbar sits on content with the same background color",
+      "Don't use it for status information. Use StatusBar",
     ],
   },
 

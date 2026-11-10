@@ -24,7 +24,7 @@ Branches page at 100 children, and every row you reveal stays in the DOM, so for
     'A collapsed branch shows a muted summary, such as "3 keys" or "12 items"',
     'Strings longer than 100 characters truncate in the row, with the full value in the `title` tooltip',
     'A branch with more than 100 children shows the first 100 and a "show N more" row that reveals the next 100',
-    'WAI-ARIA tree pattern with TreeView\'s keymap: ArrowDown and ArrowUp move between visible rows, ArrowRight expands, ArrowLeft collapses, and Enter or Space toggles',
+    "WAI-ARIA tree pattern with TreeView's keymap: ArrowDown and ArrowUp move between visible rows, ArrowRight expands, ArrowLeft collapses, and Enter or Space toggles",
   ],
 
   guidelines: {
@@ -35,9 +35,9 @@ Branches page at 100 children, and every row you reveal stays in the DOM, so for
       'Set `keys-quoted` when the output should read as strict JSON. Keys are bare by default, as in dev tools',
     ],
     dont: [
-      'Don\'t use it to show source code. CodeBlock highlights whole files in any language',
-      'Don\'t use it for navigation like file browsers or menus. TreeView handles selection and custom labels',
-      'Don\'t rely on the hover tooltip for string content people need. Show long values another way too',
+      "Don't use it to show source code. CodeBlock highlights whole files in any language",
+      "Don't use it for navigation like file browsers or menus. TreeView handles selection and custom labels",
+      "Don't rely on the hover tooltip for string content people need. Show long values another way too",
     ],
   },
 

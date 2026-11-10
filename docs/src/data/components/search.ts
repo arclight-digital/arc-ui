@@ -6,8 +6,7 @@ export const search: ComponentDef = {
   tag: 'arc-search',
   tier: 'input',
   interactivity: 'interactive',
-  description:
-    'A search field with an optional dropdown of suggestions that you supply.',
+  description: 'A search field with an optional dropdown of suggestions that you supply.',
 
   overview: `Search is a text field for search and filtering. It has a magnifying glass icon at the start, a clear button that shows once there's text, and a spinner that takes the clear button's place while \`loading\` is set. A \`label\` renders above the field. Without one, the \`placeholder\` becomes the accessible name.
 
@@ -18,7 +17,7 @@ Add \`<arc-suggestion>\` children for a dropdown of suggestions. Each one's \`va
 The field is a \`searchbox\`. With suggestions it becomes a \`combobox\` with \`aria-expanded\`, wired to a \`listbox\` of \`option\`s.`,
 
   features: [
-    'The dropdown renders in the top layer, so a parent with `overflow: hidden` doesn\'t clip it',
+    "The dropdown renders in the top layer, so a parent with `overflow: hidden` doesn't clip it",
     '`open` reflects whether the dropdown is showing, and you can set it yourself',
   ],
 
@@ -30,9 +29,9 @@ The field is a \`searchbox\`. With suggestions it becomes a \`combobox\` with \`
       'Debounce your `arc-input` handler for live search, and use `arc-change` for an explicit submit',
     ],
     dont: [
-      'Don\'t use it for ordinary text fields. Use Input or Textarea',
-      'Don\'t show hundreds of suggestions. Keep the list to 8 to 10',
-      'Don\'t set `loading` when nothing is being fetched',
+      "Don't use it for ordinary text fields. Use Input or Textarea",
+      "Don't show hundreds of suggestions. Keep the list to 8 to 10",
+      "Don't set `loading` when nothing is being fetched",
     ],
   },
 
@@ -142,7 +141,8 @@ export default function Example() {
     {
       name: 'Suggestion',
       tag: 'arc-suggestion',
-      description: 'One suggestion in a Search dropdown. `value` is what the events report, and the text is the label.',
+      description:
+        'One suggestion in a Search dropdown. `value` is what the events report, and the text is the label.',
     },
   ],
 

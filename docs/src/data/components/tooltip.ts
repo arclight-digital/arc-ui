@@ -7,8 +7,7 @@ export const tooltip: ComponentDef = {
   tier: 'feedback',
   interactivity: 'hybrid',
   searchKeywords: ['hint'],
-  description:
-    'A short text hint shown next to a control on hover or keyboard focus.',
+  description: 'A short text hint shown next to a control on hover or keyboard focus.',
 
   overview: `Tooltip shows a short plain-text hint when the pointer rests on its trigger or the trigger gets focus. Use it when a control's purpose isn't clear from how it looks, as with icon-only buttons, truncated labels, abbreviations and keyboard shortcuts. For formatted or interactive content, use Popover.
 
@@ -18,7 +17,7 @@ The trigger gets the tooltip text as \`aria-description\`, the popup has \`role=
 
   features: [
     'Shows on `mouseenter` and `focusin`',
-    'An arrow points at the trigger, and the tooltip flips to the opposite side when `position` doesn\'t fit in the viewport',
+    "An arrow points at the trigger, and the tooltip flips to the opposite side when `position` doesn't fit in the viewport",
   ],
 
   guidelines: {
@@ -29,11 +28,11 @@ The trigger gets the tooltip text as \`aria-description\`, the popup has \`role=
       'Give the trigger an `aria-label` when the tooltip is its only name',
     ],
     dont: [
-      'Don\'t put links or buttons in a tooltip. Use Popover',
-      'Don\'t repeat what the trigger\'s label already says',
-      'Don\'t put information the reader needs to finish a task in a tooltip',
-      'Don\'t set `delay` to 0. Tooltips then flash up during ordinary pointer movement',
-      'Don\'t rely on tooltips for touch users. There\'s no hover to trigger them',
+      "Don't put links or buttons in a tooltip. Use Popover",
+      "Don't repeat what the trigger's label already says",
+      "Don't put information the reader needs to finish a task in a tooltip",
+      "Don't set `delay` to 0. Tooltips then flash up during ordinary pointer movement",
+      "Don't rely on tooltips for touch users. There's no hover to trigger them",
     ],
   },
 

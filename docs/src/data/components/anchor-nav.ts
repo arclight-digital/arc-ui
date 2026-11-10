@@ -6,8 +6,7 @@ export const anchorNav: ComponentDef = {
   tag: 'arc-anchor-nav',
   tier: 'navigation',
   interactivity: 'interactive',
-  description:
-    'Links to the sections of one page, with the section in view highlighted.',
+  description: 'Links to the sections of one page, with the section in view highlighted.',
 
   overview: `AnchorNav is a table of contents for one long page: a row or column of links to its sections, with the section in view highlighted. Use it on pages with named sections, such as a docs page or a settings screen split into panels.
 
@@ -25,14 +24,14 @@ Pass items as the \`items\` array (\`{ label, value }\`) or as slotted children 
     do: [
       'Use vertical orientation in sidebars and horizontal under a TopBar',
       'Keep link labels to two to four words that match the section headings',
-      'Give every section an `id` that matches its item\'s value',
+      "Give every section an `id` that matches its item's value",
       'Put AnchorNav in a sticky container so it stays visible while the page scrolls',
       'Use the `items` array when keyboard users need to reach the links',
     ],
     dont: [
-      'Don\'t use it to link between pages. Use Sidebar or NavigationMenu',
-      'Don\'t add more than eight to ten links. Split a page that long into separate routes',
-      'Don\'t mix orientations on the same page',
+      "Don't use it to link between pages. Use Sidebar or NavigationMenu",
+      "Don't add more than eight to ten links. Split a page that long into separate routes",
+      "Don't mix orientations on the same page",
     ],
   },
 

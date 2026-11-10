@@ -25,7 +25,7 @@ The quote text is italic. The default variant sets it in the primary text color,
     ],
     dont: [
       'Don\'t use it as a general content box. Use Alert (`variant="tip"`) or Card',
-      'Don\'t put several accent-variant quotes on one page',
+      "Don't put several accent-variant quotes on one page",
     ],
   },
 

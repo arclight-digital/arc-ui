@@ -17,8 +17,8 @@ The bar variant fills a horizontal track from left to right. Use it when you kno
 Both variants have an indeterminate mode for work of unknown length: a 30% segment slides across the bar, or the spinner loops. Switch to determinate as soon as you know the total, for example once the server sends a Content-Length header during an upload.`,
 
   features: [
-    '`value` is a percentage, clamped to 0-100, and the bar\'s fill animates when it changes',
-    'Three sizes (`sm`, `md`, `lg`) set the bar\'s thickness or the spinner\'s diameter',
+    "`value` is a percentage, clamped to 0-100, and the bar's fill animates when it changes",
+    "Three sizes (`sm`, `md`, `lg`) set the bar's thickness or the spinner's diameter",
     '`progressbar` role with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`. `label` is shown above the indicator and used as its `aria-label`',
     'Without a `label`, the accessible name falls back to "Progress" for the bar and "Loading" for the spinner',
     'Under `prefers-reduced-motion`, the indeterminate and spinner animations stop',
@@ -30,11 +30,11 @@ Both variants have an indeterminate mode for work of unknown length: a 30% segme
       'Use `sm` in table cells and inline spots, and `lg` for full-page loaders',
     ],
     dont: [
-      'Don\'t leave a determinate bar at 0%. Use indeterminate until real progress data arrives',
-      'Don\'t use a spinner when you have a percentage. Show the bar',
-      'Don\'t move a bar backwards. If the total changes, go back to indeterminate',
-      'Don\'t stack several progress bars on one screen. Combine them into one, or use a Stepper',
-      'Don\'t show a loader for actions that finish almost at once',
+      "Don't leave a determinate bar at 0%. Use indeterminate until real progress data arrives",
+      "Don't use a spinner when you have a percentage. Show the bar",
+      "Don't move a bar backwards. If the total changes, go back to indeterminate",
+      "Don't stack several progress bars on one screen. Combine them into one, or use a Stepper",
+      "Don't show a loader for actions that finish almost at once",
     ],
   },
 

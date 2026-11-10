@@ -14,7 +14,7 @@ export const kbd: ComponentDef = {
   features: [
     'Keycap look: a `--surface-overlay` background and a 1px `--border-default` border with a 2px bottom edge',
     'Monospace text (`--font-mono`) at the small text size (`--text-sm`)',
-    '`user-select: none`, so a key isn\'t caught up when someone selects the surrounding text',
+    "`user-select: none`, so a key isn't caught up when someone selects the surrounding text",
   ],
 
   guidelines: {
@@ -23,10 +23,10 @@ export const kbd: ComponentDef = {
       'Use standard key names: Ctrl, Shift, Alt, Cmd, Enter, Esc, Tab',
     ],
     dont: [
-      'Don\'t use it for mouse actions or touch gestures',
-      'Don\'t put words or long strings in a Kbd',
-      'Don\'t style it to look like a button. It isn\'t interactive',
-      'Don\'t use it for code. Use CodeBlock',
+      "Don't use it for mouse actions or touch gestures",
+      "Don't put words or long strings in a Kbd",
+      "Don't style it to look like a button. It isn't interactive",
+      "Don't use it for code. Use CodeBlock",
     ],
   },
 

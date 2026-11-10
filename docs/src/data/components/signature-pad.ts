@@ -27,16 +27,16 @@ Signing is a pointer gesture, and the pad has no keyboard way to produce a signa
 
   guidelines: {
     do: [
-      'Give the pad a `label`. It is also the canvas\'s accessible name',
+      "Give the pad a `label`. It is also the canvas's accessible name",
       'Listen for `arc-change` to save or preview the signature. Each stroke delivers the full current image',
-      'Use `readonly` to show a captured signature that still submits but can\'t be changed',
+      "Use `readonly` to show a captured signature that still submits but can't be changed",
       'Call `clear()` when your own flow invalidates the signature: a changed name field, a rejected submission, a different signer',
     ],
     dont: [
-      'Don\'t store the value in an attribute. A data-URL is far too large, so read the `value` property or the event detail',
-      'Don\'t treat a signature image as proof of identity on its own. Pair it with real authentication when it matters legally',
-      'Don\'t hide the clear button behind your own chrome. A signer who slips needs an obvious way to start over',
-      'Don\'t make the pad narrower than about 240px. There isn\'t room for a natural signing motion',
+      "Don't store the value in an attribute. A data-URL is far too large, so read the `value` property or the event detail",
+      "Don't treat a signature image as proof of identity on its own. Pair it with real authentication when it matters legally",
+      "Don't hide the clear button behind your own chrome. A signer who slips needs an obvious way to start over",
+      "Don't make the pad narrower than about 240px. There isn't room for a natural signing motion",
     ],
   },
 

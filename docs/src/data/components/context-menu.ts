@@ -6,7 +6,8 @@ export const contextMenu: ComponentDef = {
   tag: 'arc-context-menu',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Replaces the browser\'s right-click menu inside one element with a menu of your own items.',
+  description:
+    "Replaces the browser's right-click menu inside one element with a menu of your own items.",
 
   overview: `ContextMenu replaces the browser's right-click menu inside one element. It listens for \`contextmenu\` on its parent, so a right-click anywhere in the parent opens the menu at the pointer, flipped away from the viewport edges. Items are \`<arc-menu-item>\` children with an optional \`icon\`, \`shortcut\` hint and \`disabled\`. \`<arc-menu-divider>\` separates them and \`<arc-menu-label>\` heads a named group.
 
@@ -15,8 +16,8 @@ Choosing an item fires \`arc-select\` with its \`value\`, or its label if it has
 The menu takes focus when it opens. Arrow Down and Arrow Up move through the items, skipping dividers and disabled ones, Home and End jump to the first and last, and Enter or Space chooses. Closing from the keyboard returns focus to where it was. A click elsewhere leaves focus where you clicked.`,
 
   features: [
-    'A second right-click while it\'s open moves the menu to the new spot',
-    'The `arc-select` detail also has `index`, and an `item` object with the item\'s `label`, `shortcut`, `icon` and `value`',
+    "A second right-click while it's open moves the menu to the new spot",
+    "The `arc-select` detail also has `index`, and an `item` object with the item's `label`, `shortcut`, `icon` and `value`",
     'Opens with a scale-in animation',
   ],
 
@@ -25,13 +26,13 @@ The menu takes focus when it opens. Arrow Down and Arrow Up move through the ite
       'Make it a direct child of the element that should get the menu',
       'Group related items with `<arc-menu-divider>` or `<arc-menu-label>`, such as clipboard actions and then navigation',
       'Show shortcut hints on items that also have a key binding',
-      'Disable items that don\'t apply right now instead of removing them, so people learn what the menu offers',
+      "Disable items that don't apply right now instead of removing them, so people learn what the menu offers",
       'Give items a `value` when two of them could share a label',
       'Move long lists of actions to a CommandPalette',
     ],
     dont: [
-      'Don\'t put it on `<body>`. That replaces the browser\'s menu everywhere on the page',
-      'Don\'t put forms or other complex UI in an item. The menu renders its own copy of each item, so only the label, icon and shortcut survive',
+      "Don't put it on `<body>`. That replaces the browser's menu everywhere on the page",
+      "Don't put forms or other complex UI in an item. The menu renders its own copy of each item, so only the label, icon and shortcut survive",
     ],
   },
 
@@ -155,7 +156,8 @@ export default function Example() {
     {
       name: 'MenuItem',
       tag: 'arc-menu-item',
-      description: 'One action in the menu. Its label is the `label` attribute or, without one, its text content.',
+      description:
+        'One action in the menu. Its label is the `label` attribute or, without one, its text content.',
     },
     {
       name: 'MenuDivider',

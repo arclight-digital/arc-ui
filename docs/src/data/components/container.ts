@@ -6,7 +6,8 @@ export const container: ComponentDef = {
   tag: 'arc-container',
   tier: 'layout',
   interactivity: 'static',
-  description: 'Centers page content and caps its width, so sections share one line length and side margins.',
+  description:
+    'Centers page content and caps its width, so sections share one line length and side margins.',
 
   overview: `Container constrains width. It centers its content with \`margin-inline: auto\`, caps it at the \`--max-width\` token (1120px by default) and adds \`--space-lg\` of inline padding. Use it around page sections so line lengths and side margins match across the page.
 
@@ -25,10 +26,10 @@ It sets only inline spacing, with logical properties, so it works in right-to-le
       'Use DashboardGrid or another grid inside it for the inner layout',
     ],
     dont: [
-      'Don\'t nest Containers. The inline padding doubles',
-      'Don\'t override `padding-inline` with fixed pixels. Use the `padding` prop or the `--space-*` tokens',
-      'Don\'t make it a flex or grid parent. Its children are inside the inner wrapper, so `display` on the host doesn\'t lay them out',
-      'Don\'t use it for column structure. That\'s PageLayout',
+      "Don't nest Containers. The inline padding doubles",
+      "Don't override `padding-inline` with fixed pixels. Use the `padding` prop or the `--space-*` tokens",
+      "Don't make it a flex or grid parent. Its children are inside the inner wrapper, so `display` on the host doesn't lay them out",
+      "Don't use it for column structure. That's PageLayout",
     ],
   },
 

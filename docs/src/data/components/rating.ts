@@ -6,8 +6,7 @@ export const rating: ComponentDef = {
   tag: 'arc-rating',
   tier: 'input',
   interactivity: 'interactive',
-  description:
-    'A row of stars for picking a score from 1 to `max`.',
+  description: 'A row of stars for picking a score from 1 to `max`.',
 
   overview: `Rating renders \`max\` stars (5 by default) for scores like a product review or a satisfaction survey. Filled stars use the accent color with a glow, and empty stars are outlines. Hovering fills every star up to the one under the pointer, so you see the score before you click.
 
@@ -29,9 +28,9 @@ The star group is one tab stop with the \`slider\` role. Arrow right or up adds 
       'Give each rating its own `label` when a page has more than one',
     ],
     dont: [
-      'Don\'t use it for yes-or-no choices. Use Toggle or Checkbox',
-      'Don\'t set `max` above 10. Past that, people can\'t count the stars without reading them one by one',
-      'Don\'t use it for exact numbers. Use Slider or NumberInput',
+      "Don't use it for yes-or-no choices. Use Toggle or Checkbox",
+      "Don't set `max` above 10. Past that, people can't count the stars without reading them one by one",
+      "Don't use it for exact numbers. Use Slider or NumberInput",
     ],
   },
 

@@ -21,14 +21,14 @@ The handle is a focusable \`role="separator"\` with \`aria-valuenow\` and \`aria
 
   guidelines: {
     do: [
-      'Set `min-size` so the panel can\'t shrink past usable, for example 150px for a sidebar',
-      'Set `max-size` so the panel can\'t take over the viewport',
+      "Set `min-size` so the panel can't shrink past usable, for example 150px for a sidebar",
+      "Set `max-size` so the panel can't take over the viewport",
       'Save the size from `arc-resize` to localStorage or your backend so it survives a reload',
       'Use SplitPane when two regions share one divider',
     ],
     dont: [
-      'Don\'t set `min-size` and `max-size` to the same value. The panel then can\'t resize',
-      'Don\'t put the handle right next to a scrollbar, where people mistake one for the other',
+      "Don't set `min-size` and `max-size` to the same value. The panel then can't resize",
+      "Don't put the handle right next to a scrollbar, where people mistake one for the other",
       'If you restyle the handle part, keep its `::before` hit area, or the 4px bar gets hard to grab',
     ],
   },

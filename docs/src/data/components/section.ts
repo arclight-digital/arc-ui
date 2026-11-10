@@ -6,7 +6,8 @@ export const section: ComponentDef = {
   tag: 'arc-section',
   tier: 'layout',
   interactivity: 'static',
-  description: 'A page section with vertical padding, a centered max width and an optional uppercase label.',
+  description:
+    'A page section with vertical padding, a centered max width and an optional uppercase label.',
 
   overview: `Section wraps one band of a page, like a features block or a pricing table, in a \`<section>\` element. It centers its content at \`--max-width\` and pads it with \`--space-3xl\` above and below and \`--space-lg\` at the sides. At 768px and narrower the padding drops to \`--space-2xl\` and \`--space-md\`.
 
@@ -14,9 +15,7 @@ export const section: ComponentDef = {
 
 Use Section on its own in a full-bleed layout, since it centers itself, or inside Container on a page that already has a width limit.`,
 
-  features: [
-    'Parts: `base` and `section` on the `<section>`, and `label`',
-  ],
+  features: ['Parts: `base` and `section` on the `<section>`, and `label`'],
 
   guidelines: {
     do: [
@@ -25,8 +24,8 @@ Use Section on its own in a full-bleed layout, since it centers itself, or insid
       'Put Container inside a full-bleed section when the content needs a narrower width',
     ],
     dont: [
-      'Don\'t use it as a general flex container. It only pads, centers and labels',
-      'Don\'t put form fields straight into it without a Container to limit their width',
+      "Don't use it as a general flex container. It only pads, centers and labels",
+      "Don't put form fields straight into it without a Container to limit their width",
     ],
   },
 

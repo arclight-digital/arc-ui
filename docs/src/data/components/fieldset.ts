@@ -15,19 +15,17 @@ The default variant is a bordered box with rounded corners, and \`variant="card"
 
 \`disabled\` dims the group to 50% opacity and sets \`disabled\` on every ARC form control inside it, however deeply nested. A control added as a direct child while it's disabled is disabled too; one added inside a wrapper element is only picked up the next time \`disabled\` changes. Re-enabling it removes \`disabled\` only from the controls it set, so a control you disabled yourself stays disabled. Buttons aren't covered, \`arc-button\` or native, and neither are native inputs: the inner \`<fieldset>\` is in the shadow root and slotted children aren't its descendants, so disable those yourself.`,
 
-  features: [
-    'CSS parts: `fieldset`, `legend`, `description`, `content`, `error`',
-  ],
+  features: ['CSS parts: `fieldset`, `legend`, `description`, `content`, `error`'],
 
   guidelines: {
     do: [
       'Group inputs that share one label, such as the fields of a shipping address',
       'Use the card variant to set sections apart on a settings page',
-      'Give every fieldset a legend. It\'s the group\'s accessible name',
+      "Give every fieldset a legend. It's the group's accessible name",
     ],
     dont: [
-      'Don\'t use it only for looks. Use a `div` or `arc-card`',
-      'Don\'t put a single field\'s error in the fieldset\'s `error`. Attach it to that input',
+      "Don't use it only for looks. Use a `div` or `arc-card`",
+      "Don't put a single field's error in the fieldset's `error`. Attach it to that input",
     ],
   },
 

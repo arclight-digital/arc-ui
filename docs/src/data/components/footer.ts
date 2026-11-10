@@ -6,8 +6,7 @@ export const footer: ComponentDef = {
   tag: 'arc-footer',
   tier: 'navigation',
   interactivity: 'static',
-  description:
-    'Page footer with slots for a logo, link columns, social icons and legal text.',
+  description: 'Page footer with slots for a logo, link columns, social icons and legal text.',
 
   overview: `Footer is the page's \`<footer>\` landmark. It has four slots: \`logo\`, the default slot for link columns, \`social\` and \`legal\`. The legal slot gets its own thin rule above it.
 
@@ -30,9 +29,9 @@ Link columns go in the default slot, usually a \`<div>\` each with a heading and
       'Keep column headings short, with the same casing',
     ],
     dont: [
-      'Don\'t put forms, modals or other interactive widgets in it. Keep it to navigation',
-      'Don\'t repeat the main navigation word for word. Pick the links people look for at the bottom of a page',
-      'Don\'t put your main call to action only in the footer',
+      "Don't put forms, modals or other interactive widgets in it. Keep it to navigation",
+      "Don't repeat the main navigation word for word. Pick the links people look for at the bottom of a page",
+      "Don't put your main call to action only in the footer",
     ],
   },
 

@@ -21,15 +21,15 @@ The current link gets \`aria-current="location"\` and the accent background, and
 
   guidelines: {
     do: [
-      'Give every section a unique `id` that matches a spy link\'s `target`',
+      "Give every section a unique `id` that matches a spy link's `target`",
       'Set `offset` to the height of your sticky header or TopBar',
       'Listen for `arc-change` to follow the section being read as the reader scrolls',
       'Keep link labels short, matching or abbreviating the section headings',
     ],
     dont: [
-      'Don\'t use it for site navigation. It only tracks sections on the current page',
-      'Don\'t forget to import `arc-spy-link`. ScrollSpy reads its links from it',
-      'Don\'t give it more than 10 to 12 links. A longer list is hard to scan',
+      "Don't use it for site navigation. It only tracks sections on the current page",
+      "Don't forget to import `arc-spy-link`. ScrollSpy reads its links from it",
+      "Don't give it more than 10 to 12 links. A longer list is hard to scan",
     ],
   },
 
@@ -142,7 +142,8 @@ export default function Example() {
     {
       name: 'SpyLink',
       tag: 'arc-spy-link',
-      description: 'One entry in a ScrollSpy. `target` names the section id, `level` sets the indent, and the text is the label.',
+      description:
+        'One entry in a ScrollSpy. `target` names the section id, `level` sets the indent, and the text is the label.',
     },
   ],
 

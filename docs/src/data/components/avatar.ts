@@ -27,9 +27,9 @@ The container has \`role="img"\` and uses \`name\` as its \`aria-label\`, so scr
       'Use arc-avatar-group for a row of avatars',
     ],
     dont: [
-      'Don\'t use Avatar for logos or product icons. It is announced as a person\'s image',
-      'Don\'t point src at a full-size photo. The component doesn\'t resize images, so resize them on the server',
-      'Don\'t treat the hover glow as a sign it can be clicked. Avatar has no click behavior',
+      "Don't use Avatar for logos or product icons. It is announced as a person's image",
+      "Don't point src at a full-size photo. The component doesn't resize images, so resize them on the server",
+      "Don't treat the hover glow as a sign it can be clicked. Avatar has no click behavior",
     ],
   },
 

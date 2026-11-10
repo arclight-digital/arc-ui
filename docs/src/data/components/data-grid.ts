@@ -32,7 +32,7 @@ The grid is one tab stop. Arrow keys move focus between cells, Home and End go t
 
   guidelines: {
     do: [
-      'For a display-only table, set `no-striped`. That\'s what the removed `arc-table` looked like',
+      "For a display-only table, set `no-striped`. That's what the removed `arc-table` looked like",
       'Set `manual-sort` and handle `arc-sort` when the data is paginated or sorted on the server',
       'Pin one or two identifying columns, such as an ID or a name',
       'Give pinned columns a `width`. Pinned offsets are computed from it',
@@ -40,11 +40,11 @@ The grid is one tab stop. Arrow keys move focus between cells, Home and End go t
       'Raise `overscan` if fast scrolling shows blank rows, and lower it if the number of rows in the DOM is the problem',
     ],
     dont: [
-      'Don\'t make every column editable. Limit editing to fields people need to change in place',
-      'Don\'t pin so many columns that the rest have no room on narrow screens',
-      'Don\'t use `virtual` with rows of different heights. It assumes every row is `row-height` tall',
-      'Don\'t raise `overscan` to cover a wrong `row-height`. The blank rows go away, but every scroll position stays slightly off',
-      'Don\'t use it for a list of one thing per row. Use `arc-list`, since grid semantics are wrong for that',
+      "Don't make every column editable. Limit editing to fields people need to change in place",
+      "Don't pin so many columns that the rest have no room on narrow screens",
+      "Don't use `virtual` with rows of different heights. It assumes every row is `row-height` tall",
+      "Don't raise `overscan` to cover a wrong `row-height`. The blank rows go away, but every scroll position stays slightly off",
+      "Don't use it for a list of one thing per row. Use `arc-list`, since grid semantics are wrong for that",
     ],
   },
 

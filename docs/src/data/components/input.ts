@@ -21,7 +21,7 @@ Inside a Form, each Input's \`name\` and value are collected on submit, and \`re
     'Types: text, email, tel, url and password',
     'The multiline textarea resizes vertically',
     'An empty `required` field is invalid, with the message "Please fill out this field."',
-    'A disabled field can\'t be edited and its value isn\'t submitted',
+    "A disabled field can't be edited and its value isn't submitted",
   ],
 
   guidelines: {
@@ -35,11 +35,11 @@ Inside a Form, each Input's \`name\` and value are collected on submit, and \`re
       'Mark required fields with `required`',
     ],
     dont: [
-      'Don\'t use the placeholder as the only label. It disappears once someone types',
+      "Don't use the placeholder as the only label. It disappears once someone types",
       'Don\'t set `type` on a multiline input. A textarea ignores it, so `type="password"` would show the text',
-      'Don\'t disable a field without telling the user why',
-      'Don\'t restyle the error state with custom CSS. Change the design tokens',
-      'Don\'t use Input for dates or a fixed set of choices. Use DatePicker or Select',
+      "Don't disable a field without telling the user why",
+      "Don't restyle the error state with custom CSS. Change the design tokens",
+      "Don't use Input for dates or a fixed set of choices. Use DatePicker or Select",
     ],
   },
 

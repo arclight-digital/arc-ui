@@ -77,11 +77,11 @@ import lucide from '@arclux/arc-ui-icons/all/lucide';     // loads all ~1,900 ic
       'Register custom icons with `iconRegistry.set()` before they first render',
     ],
     dont: [
-      'Don\'t render SVG strings from user input without sanitizing them yourself first',
-      'Don\'t use `xl` for icons in running text. `sm` or `md` matches body copy',
-      'Don\'t set both `name` and slot content. When the name resolves, the slot is ignored',
-      'Don\'t let an icon carry critical information on its own. Pair it with visible text',
-      'Don\'t hardcode fill or stroke colors in registered SVGs. Use `currentColor` so they follow the text color',
+      "Don't render SVG strings from user input without sanitizing them yourself first",
+      "Don't use `xl` for icons in running text. `sm` or `md` matches body copy",
+      "Don't set both `name` and slot content. When the name resolves, the slot is ignored",
+      "Don't let an icon carry critical information on its own. Pair it with visible text",
+      "Don't hardcode fill or stroke colors in registered SVGs. Use `currentColor` so they follow the text color",
     ],
   },
 

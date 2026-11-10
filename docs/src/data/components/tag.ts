@@ -32,10 +32,10 @@ When no variant fits, \`color\` takes an RGB triplet such as \`"77, 126, 247"\` 
       'Lay a set of tags out in a wrapping flex row with a small gap',
     ],
     dont: [
-      'Don\'t use Tag for long text',
-      'Don\'t use the close button for destructive actions such as deleting a resource. It should only remove the tag',
-      'Don\'t use more than two variants in one group of tags',
-      'Don\'t use Tag as a button. It has no button role or button focus handling',
+      "Don't use Tag for long text",
+      "Don't use the close button for destructive actions such as deleting a resource. It should only remove the tag",
+      "Don't use more than two variants in one group of tags",
+      "Don't use Tag as a button. It has no button role or button focus handling",
     ],
   },
 

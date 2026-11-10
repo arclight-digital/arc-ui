@@ -17,7 +17,7 @@ By default, Hotkey ignores keys typed into a text input, textarea, select or con
 
   features: [
     '`disabled` suspends the shortcut without removing the element',
-    'The event\'s `detail.keys` holds the pattern that matched',
+    "The event's `detail.keys` holds the pattern that matched",
   ],
 
   guidelines: {
@@ -27,9 +27,9 @@ By default, Hotkey ignores keys typed into a text input, textarea, select or con
       'Set `disabled` while a modal or dialog is open',
     ],
     dont: [
-      'Don\'t bind shortcuts the browser reserves, like Ctrl+T, Ctrl+W and Ctrl+N. They won\'t fire',
-      'Don\'t make chords longer than two or three keys. People won\'t remember them',
-      'Don\'t make a hotkey the only way to reach a feature. Give it a button or menu item too',
+      "Don't bind shortcuts the browser reserves, like Ctrl+T, Ctrl+W and Ctrl+N. They won't fire",
+      "Don't make chords longer than two or three keys. People won't remember them",
+      "Don't make a hotkey the only way to reach a feature. Give it a button or menu item too",
     ],
   },
 

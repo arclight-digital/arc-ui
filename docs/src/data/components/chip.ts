@@ -27,10 +27,10 @@ Each toggle fires \`arc-change\` with \`{ value, selected }\`. There's no chip g
       'Add a clear or reset action when chips act as active filters',
     ],
     dont: [
-      'Don\'t use chips for mutually exclusive choices. Use SegmentedControl or RadioGroup',
-      'Don\'t put a sentence in a chip',
-      'Don\'t use a chip for navigation. It is an input, not a link',
-      'Don\'t put buttons or links inside a chip',
+      "Don't use chips for mutually exclusive choices. Use SegmentedControl or RadioGroup",
+      "Don't put a sentence in a chip",
+      "Don't use a chip for navigation. It is an input, not a link",
+      "Don't put buttons or links inside a chip",
     ],
   },
 

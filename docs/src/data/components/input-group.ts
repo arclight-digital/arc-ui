@@ -22,11 +22,11 @@ When the input inside has focus, the whole group gets the accent border and focu
     do: [
       'Use it for fixed context like "https://", "$" or ".com"',
       'Put action buttons such as copy, clear or search in the suffix slot',
-      'Set the group\'s `size` to match the input inside it',
+      "Set the group's `size` to match the input inside it",
     ],
     dont: [
-      'Don\'t put more than one input in a group',
-      'Don\'t use a group just for a decorative icon. `arc-input` has its own prefix and suffix slots',
+      "Don't put more than one input in a group",
+      "Don't use a group just for a decorative icon. `arc-input` has its own prefix and suffix slots",
     ],
   },
 

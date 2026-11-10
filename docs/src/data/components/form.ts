@@ -42,11 +42,11 @@ Input, Textarea, Select, Checkbox, Toggle and RadioGroup are form-associated thr
       'Give every field a label, so the error summary reads well',
     ],
     dont: [
-      'Don\'t put one Form inside another. HTML doesn\'t allow nested forms',
-      'Don\'t write validation by hand for rules the constraint API already covers',
-      'Don\'t rely on client-side validation alone. Validate on the server too',
-      'Don\'t expect a button outside the Form to submit it. Call `submit()` from that button',
-      'Don\'t use `novalidate` to get around broken validation. Fix the constraints',
+      "Don't put one Form inside another. HTML doesn't allow nested forms",
+      "Don't write validation by hand for rules the constraint API already covers",
+      "Don't rely on client-side validation alone. Validate on the server too",
+      "Don't expect a button outside the Form to submit it. Call `submit()` from that button",
+      "Don't use `novalidate` to get around broken validation. Fix the constraints",
     ],
   },
 

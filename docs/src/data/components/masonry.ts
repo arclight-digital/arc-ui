@@ -6,8 +6,7 @@ export const masonry: ComponentDef = {
   tag: 'arc-masonry',
   tier: 'layout',
   interactivity: 'static',
-  description:
-    'Packs variable-height children into columns with CSS columns, Pinterest-style.',
+  description: 'Packs variable-height children into columns with CSS columns, Pinterest-style.',
 
   overview: `Masonry packs children of different heights into columns. It uses CSS \`column-count\` and \`column-gap\`, so the browser does the layout and no script measures or positions items. Children fill the first column top to bottom, then the next, and the browser picks the break points so the columns end at similar heights.
 
@@ -25,9 +24,9 @@ export const masonry: ComponentDef = {
       'Use `gap="md"` for most card layouts and `gap="sm"` for dense image grids',
     ],
     dont: [
-      'Don\'t use it for items of the same height. Use a CSS grid or AspectGrid',
-      'Don\'t set more than five columns. They get too narrow to read',
-      'Don\'t use it where items must read left to right. Order runs down each column, and where a column breaks depends on item heights',
+      "Don't use it for items of the same height. Use a CSS grid or AspectGrid",
+      "Don't set more than five columns. They get too narrow to read",
+      "Don't use it where items must read left to right. Order runs down each column, and where a column breaks depends on item heights",
     ],
   },
 

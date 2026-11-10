@@ -15,18 +15,14 @@ The bar uses \`position: sticky\` on the top edge, or the bottom with \`position
 
 The bar is a \`role="progressbar"\` labelled "Scroll progress", with \`aria-valuenow\` from 0 to 100.`,
 
-  features: [
-    'Parts: `base`, `bar` and `fill`',
-  ],
+  features: ['Parts: `base`, `bar` and `fill`'],
 
   guidelines: {
-    do: [
-      'Set `target` when the scrolling happens in a panel, not the page',
-    ],
+    do: ['Set `target` when the scrolling happens in a panel, not the page'],
     dont: [
-      'Don\'t add it to short pages that barely scroll',
-      'Don\'t put more than one on the same scroll container',
-      'Don\'t use it for loading. Use Progress',
+      "Don't add it to short pages that barely scroll",
+      "Don't put more than one on the same scroll container",
+      "Don't use it for loading. Use Progress",
     ],
   },
 

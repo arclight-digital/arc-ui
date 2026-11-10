@@ -17,8 +17,8 @@ A \`label\` renders above the control and is tied to the field with a generated 
 
   features: [
     '`spinbutton` role with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`',
-    'Hides the browser\'s own spin buttons so the control looks the same on every platform',
-    'Focus colors the whole control\'s border with `accent-primary` and a focus ring',
+    "Hides the browser's own spin buttons so the control looks the same on every platform",
+    "Focus colors the whole control's border with `accent-primary` and a focus ring",
     'Disabled drops to 50% opacity and blocks pointer events',
   ],
 
@@ -29,8 +29,8 @@ A \`label\` renders above the control and is tied to the field with a generated 
       'Give every number input a `label`, so screen readers announce it and stacked inputs can be told apart',
     ],
     dont: [
-      'Don\'t set `step` to 0. The buttons and arrow keys then can\'t change the value',
-      'Don\'t use it for digits that aren\'t quantities, like phone numbers. Use Input',
+      "Don't set `step` to 0. The buttons and arrow keys then can't change the value",
+      "Don't use it for digits that aren't quantities, like phone numbers. Use Input",
     ],
   },
 

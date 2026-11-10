@@ -18,7 +18,7 @@ At 768px and below, both sidebar layouts collapse to one stacked column. \`gap\`
   features: [
     '`maxWidth` defaults to 1120px and only applies to `centered`',
     'Both props are also set as `--max-width` and `--gap` custom properties',
-    'The main column has `min-width: 0`, so wide content doesn\'t push it past its grid track',
+    "The main column has `min-width: 0`, so wide content doesn't push it past its grid track",
     'Parts: `base`, `layout`, `sidebar`, `main`, `aside`',
   ],
 
@@ -31,9 +31,9 @@ At 768px and below, both sidebar layouts collapse to one stacked column. \`gap\`
       'Set `gap` to a value from your spacing scale',
     ],
     dont: [
-      'Don\'t hand-code column widths in inline styles when a `layout` value already gives you them',
-      'Don\'t put content in `aside` unless the layout is sidebar-right. It\'s hidden in every other layout',
-      'Don\'t use `wide` for text without a max width inside it. Lines get too long to read on large screens',
+      "Don't hand-code column widths in inline styles when a `layout` value already gives you them",
+      "Don't put content in `aside` unless the layout is sidebar-right. It's hidden in every other layout",
+      "Don't use `wide` for text without a max width inside it. Lines get too long to read on large screens",
     ],
   },
 

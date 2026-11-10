@@ -14,9 +14,7 @@ It has three slots. \`prefix\` is pinned to the start edge, \`suffix\` to the en
 
 \`position="static"\` (the default) keeps the bar in the page flow. \`position="fixed"\` pins it to the bottom of the viewport with \`z-index: 100\`. The bar has \`role="status"\`, so screen readers announce changes to its text.`,
 
-  features: [
-    '`--surface-base` background with a `--divider` border on top',
-  ],
+  features: ['`--surface-base` background with a `--divider` border on top'],
 
   guidelines: {
     do: [
@@ -26,10 +24,10 @@ It has three slots. \`prefix\` is pinned to the start edge, \`suffix\` to the en
       'Set `position="fixed"` when the bar should stay in view while the page scrolls, and pad the bottom of the page by 28px so it doesn\'t cover content',
     ],
     dont: [
-      'Don\'t use it as primary navigation. Use TopBar or Toolbar',
-      'Don\'t put buttons or form controls in it. Keep it to information',
-      'Don\'t change the 28px height',
-      'Don\'t use it for notifications the reader must see. Use Toast or Alert',
+      "Don't use it as primary navigation. Use TopBar or Toolbar",
+      "Don't put buttons or form controls in it. Keep it to information",
+      "Don't change the 28px height",
+      "Don't use it for notifications the reader must see. Use Toast or Alert",
     ],
   },
 

@@ -29,9 +29,9 @@ After every drop, \`arc-change\` fires with \`detail.order\`: the original indic
       'Listen for `arc-change` and save the new order',
     ],
     dont: [
-      'Don\'t put buttons or links inside items. Each row is already a focusable `option` and a drag source, so a control inside it is nested interactive content',
-      'Don\'t use it for a long list people would rather search or filter',
-      'Don\'t place two sortable lists side by side without clear separation between them',
+      "Don't put buttons or links inside items. Each row is already a focusable `option` and a drag source, so a control inside it is nested interactive content",
+      "Don't use it for a long list people would rather search or filter",
+      "Don't place two sortable lists side by side without clear separation between them",
     ],
   },
 

@@ -29,10 +29,10 @@ Set \`checked\` once and let the toggle keep its own state, or drive \`checked\`
       'Add helper text when the label alone could be read two ways',
     ],
     dont: [
-      'Don\'t put a toggle inside a clickable card or button. One click would trigger both',
-      'Don\'t disable a toggle without saying why the option is unavailable',
-      'Don\'t put more than 8 to 10 toggles in one group. Split them into sections',
-      'Don\'t use toggles for mutually exclusive options. Use RadioGroup',
+      "Don't put a toggle inside a clickable card or button. One click would trigger both",
+      "Don't disable a toggle without saying why the option is unavailable",
+      "Don't put more than 8 to 10 toggles in one group. Split them into sections",
+      "Don't use toggles for mutually exclusive options. Use RadioGroup",
     ],
   },
 

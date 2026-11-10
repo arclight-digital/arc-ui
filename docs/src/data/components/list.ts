@@ -24,15 +24,15 @@ Set \`selectable\` and the list becomes a \`role="listbox"\` that manages \`aria
     do: [
       'Use arc-list-item as direct children',
       'Put per-row buttons (rename, delete) in the `actions` slot of a plain list, and give each one a label naming its row: "Rename Weekly review", not "Rename"',
-      'Mark the current row of a list with actions using `href` and `selected`, which sets aria-current. A selectable list is a listbox and can\'t hold row actions',
+      "Mark the current row of a list with actions using `href` and `selected`, which sets aria-current. A selectable list is a listbox and can't hold row actions",
       'Set `selectable` when the rows are choices to pick from',
       'Use the bordered variant inside cards or panels',
       'Use the separated variant for long lists, where a line between rows makes them easier to scan',
     ],
     dont: [
-      'Don\'t use List for navigation menus. Use Navigation Menu or Dropdown Menu',
-      'Don\'t mix arc-list-item with other elements inside a selectable list',
-      'Don\'t nest lists more than one level deep. Use a tree view for hierarchical data',
+      "Don't use List for navigation menus. Use Navigation Menu or Dropdown Menu",
+      "Don't mix arc-list-item with other elements inside a selectable list",
+      "Don't nest lists more than one level deep. Use a tree view for hierarchical data",
     ],
   },
 

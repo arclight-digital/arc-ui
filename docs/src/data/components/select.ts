@@ -7,8 +7,7 @@ export const select: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   searchKeywords: ['dropdown', 'picker'],
-  description:
-    'A dropdown for choosing one option from a list in a form.',
+  description: 'A dropdown for choosing one option from a list in a form.',
 
   overview: `Select replaces the native \`<select>\` with a dropdown styled by ARC UI's tokens. Its options are \`<arc-option>\` children. Use it for one choice from a list in a form: a person to assign, a category, a status, a locale. For several choices use MultiSelect. For three or fewer options, RadioGroup shows them all at once. To filter a long list as you type, use Combobox.
 
@@ -17,7 +16,7 @@ Enter, Space or an arrow key opens the list. The arrows move through it and wrap
   features: [
     'Focus stays on the trigger while `aria-activedescendant` tracks the highlighted option, so screen readers announce it',
     'The highlighted option scrolls into view in a long list',
-    'An `<arc-option>` with `disabled` stays visible but is skipped by the keyboard and can\'t be picked',
+    "An `<arc-option>` with `disabled` stays visible but is skipped by the keyboard and can't be picked",
     'Disabled drops the control to 50% opacity and blocks pointer events',
   ],
 
@@ -30,8 +29,8 @@ Enter, Space or an arrow key opens the list. The arrows move through it and wrap
       'Pre-select a default when there is a sensible one',
     ],
     dont: [
-      'Don\'t use it to move between views. Use NavigationMenu or Tabs',
-      'Don\'t disable it without saying why in helper text or a tooltip',
+      "Don't use it to move between views. Use NavigationMenu or Tabs",
+      "Don't disable it without saying why in helper text or a tooltip",
     ],
   },
 

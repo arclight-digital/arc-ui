@@ -26,11 +26,9 @@ A value of \`"true"\` renders a check mark and \`"false"\` a cross, each with an
     do: [
       'Keep feature labels short. Long ones squeeze the value columns',
       'Highlight one column at most, usually the plan you recommend',
-      'Give `features` and every column\'s `values` the same length',
+      "Give `features` and every column's `values` the same length",
     ],
-    dont: [
-      'Don\'t mix check marks and text in one row. Pick one format per feature',
-    ],
+    dont: ["Don't mix check marks and text in one row. Pick one format per feature"],
   },
 
   previewHtml: `<arc-comparison features='["Storage","Bandwidth","Custom domain","Priority support"]'>
