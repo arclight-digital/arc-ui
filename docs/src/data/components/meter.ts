@@ -7,46 +7,37 @@ export const meter: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'Semantic gauge display with color-coded fill zones (success, warning, error) based on configurable low/high/optimum thresholds.',
+    'Gauge with color-coded fill zones (success, warning, error) set by `low`, `high` and `optimum` thresholds.',
 
-  overview: `Meter is a visual gauge that represents a scalar value within a known range, similar to the native HTML \`<meter>\` element but with ARC UI styling and full theme integration. The component renders a rounded track with an animated fill bar whose color changes based on the value's relationship to configurable thresholds. When a \`label\` is provided, a header row displays the label on the left and the current percentage on the right in monospace font.
+  overview: `Meter shows a value within a known range, like the native HTML \`<meter>\` element. It renders a rounded track with a fill bar. With a \`label\`, a header row shows the label on the left and the percentage on the right in monospace.
 
-The color logic mirrors the HTML meter algorithm using three thresholds: \`low\`, \`high\`, and \`optimum\`. When the optimum is in the high segment (e.g. battery level), values above \`high\` render in green (success), values between \`low\` and \`high\` in yellow (warning), and values below \`low\` in red (error). When the optimum is in the low segment (e.g. error count), the logic inverts. Low values are green and high values are red. If thresholds are not set, the component divides the range into thirds.
+In the default \`zones\` mode, the fill color follows the HTML meter algorithm with three thresholds: \`low\`, \`high\` and \`optimum\`. When the optimum is in the high segment (battery level, say), values above \`high\` are green (success), values between \`low\` and \`high\` are yellow (warning), and values below \`low\` are red (error). When the optimum is in the low segment (an error count), it flips: low values are green and high values red. Without thresholds, the range is split into thirds.
 
-Meter uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\` for full accessibility. The fill width and color transitions are animated using the theme's base transition timing, creating smooth visual updates when the value changes programmatically.`,
+\`mode="plain"\` uses one color, for a quantity that's neither good nor bad. \`mode="diverging"\` fills from \`center\` toward the value, each side in its own color, for a lean either way such as −1 to +1. The header then shows the signed value instead of a percentage.`,
 
   features: [
-    '`mode="plain"` for a quantity that is not good or bad, and `mode="diverging"` for a lean either way around `center` (−1 to +1), each side its own colour',
-    'Color-coded fill bar: green (success) when the value is in the optimal zone, yellow (warning) for intermediate, red (error) for critical',
-    'Configurable `low`, `high`, and `optimum` thresholds mirroring the HTML `<meter>` algorithm',
-    'Header row showing label text and current percentage in monospace font when `label` is set',
-    'Animated fill width and color transitions using the theme base timing function',
-    'Automatic zone calculation with third-based defaults when thresholds are omitted',
-    'Semantic `role="meter"` with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax`',
-    'Rounded 8px track with `bg-elevated` background matching the design system surface palette',
-    'Value clamped between `min` and `max`, so out-of-range values are safe',
+    '`role="meter"` with `aria-valuenow`, `aria-valuemin` and `aria-valuemax`',
+    'Fill width and color animate with the theme\'s base transition',
+    '`value` is clamped between `min` and `max`',
   ],
 
   guidelines: {
     do: [
-      'Set `low`, `high`, and `optimum` to match the semantic meaning of your data (e.g. optimum near max for battery level)',
-      'Provide a `label` so users understand what the meter represents and can read the percentage',
-      'Use Meter for known-range scalar values like disk usage, battery level, signal strength, or performance scores',
-      'Update the `value` prop reactively to reflect real-time data changes with smooth animations',
-      'Pair Meter with adjacent text or tooltips to explain what the color zones mean in your context',
+      'Set `low`, `high` and `optimum` to match what good means for your data, such as an optimum near `max` for battery level',
+      'Set a `label` so readers know what the meter measures and can read the percentage',
+      'Use it for values in a known range: disk usage, battery level, signal strength, scores',
+      'Explain what the color zones mean nearby, in text or a tooltip',
     ],
     dont: [
-      'Do not use Meter for indeterminate progress. Use Progress with an indeterminate state instead',
-      'Do not use Meter for task completion tracking. Use Progress for sequential step-based workflows',
-      'Do not set `min` equal to or greater than `max`. The fill calculation returns 0% in that case',
-      'Do not rely on color alone to convey the zone meaning. Always include a label or supplementary text',
-      'Avoid using Meter for binary states (pass/fail). Use a Badge or status indicator instead',
+      'Don\'t use it for indeterminate progress or task completion. Use Progress',
+      'Don\'t set `min` equal to or above `max`. The fill stays at 0%',
+      'Don\'t use it for pass/fail states. Use a Badge or status indicator',
     ],
   },
 
   previewHtml: `<div style="display:flex; flex-direction:column; gap:var(--space-md); width:100%; max-width:400px;">
-  <arc-meter label="Battery Level" value="82" min="0" max="100" low="20" high="60" optimum="100"></arc-meter>
-  <arc-meter label="Error Rate" value="45" min="0" max="100" low="10" high="50" optimum="0"></arc-meter>
+  <arc-meter label="Battery level" value="82" min="0" max="100" low="20" high="60" optimum="100"></arc-meter>
+  <arc-meter label="Error rate" value="45" min="0" max="100" low="10" high="50" optimum="0"></arc-meter>
   <arc-meter label="Lean" mode="diverging" value="0.4" min="-1" max="1"></arc-meter>
 </div>`,
 
