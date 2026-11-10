@@ -7,36 +7,26 @@ export const scrollToTop: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Floating button that appears after scrolling and returns the user to the top of the page.',
+    'A floating button that shows up once you\'ve scrolled down and takes you back to the top of the page.',
 
-  overview: `ScrollToTop renders a fixed-position button that fades into view once the user scrolls past a configurable threshold (default 300px). Clicking it scrolls the page back to the top using the browser's native smooth scroll behavior. The component handles its own visibility state via a throttled passive scroll listener, so you only need to place the element in your page.
+  overview: `ScrollToTop is a round, fixed-position button with an up chevron. It fades and slides in once the window has scrolled past \`threshold\` pixels (300 by default), and clicking it scrolls the window back to the top. It watches the window with its own passive scroll listener, throttled to one check per animation frame, so all you do is put the element on the page.
 
-The button uses a circular design with a chevron-up icon, positioned in the bottom-right corner by default. Both the corner placement and the edge offset are configurable via the \`position\` and \`offset\` properties. The show/hide animation uses opacity and translateY for a fade-and-slide effect.
-
-The button has \`aria-label="Scroll to top"\` and focus styles. The component also respects \`prefers-reduced-motion\`: when the user has opted out of motion, smooth scrolling is replaced with an instant jump and the CSS transition is disabled.`,
+The button is labelled "Scroll to top". With \`prefers-reduced-motion\` set, the scroll is an instant jump and the fade has no transition.`,
 
   features: [
-    'Auto show/hide based on scroll position with configurable threshold',
-    'Smooth scroll to top with `prefers-reduced-motion` fallback to instant',
-    'Passive, throttled scroll listener that avoids layout thrashing',
-    'Configurable corner placement: bottom-right or bottom-left',
-    'Configurable edge offset via CSS length values',
-    'Circular button with chevron-up icon, styled with tokens',
-    'Accessible: `aria-label`, focus-visible glow, keyboard operable',
+    'Sits in the bottom-right corner by default. `position="bottom-left"` moves it',
+    '`offset` sets the distance from the edges and takes any CSS length',
   ],
 
   guidelines: {
     do: [
-      'Place once at the page level, outside scrolling containers',
-      'Use on long pages where scrolling back to the top is common',
-      'Adjust the threshold for pages with different scroll depths',
-      'Pair with ScrollSpy for complete scroll navigation',
+      'Put one at the page level, outside any scrolling container. It only listens to the window',
+      'Raise or lower `threshold` to suit how long the page is',
+      'Pair it with ScrollSpy on long docs pages',
     ],
     dont: [
-      'Do not place inside a scrollable container: it listens to window scroll',
-      'Do not add multiple ScrollToTop instances on the same page',
-      'Do not set the threshold too low: the button should appear after meaningful scrolling',
-      'Do not override the aria-label without providing an equivalent accessible name',
+      'Don\'t put more than one on a page',
+      'Don\'t set `threshold` so low that the button shows up after a flick of the wheel',
     ],
   },
 
