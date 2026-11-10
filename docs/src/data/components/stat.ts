@@ -6,7 +6,7 @@ export const stat: ComponentDef = {
   tag: 'arc-stat',
   tier: 'data',
   interactivity: 'static',
-  description: 'Numeric statistic display with gradient value and label.',
+  description: 'Shows one short number, drawn large in the accent gradient, with a label under it.',
 
   overview: `Stat shows one number with a short uppercase label under it. The value is drawn at weight 200 in the accent gradient with a glow, and a short gradient rule separates it from the label.
 
