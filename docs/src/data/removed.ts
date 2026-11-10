@@ -86,7 +86,7 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A dimming overlay that cut a hole around one highlighted element on the page.',
     why:
-      'It was the highlight half of Guided Tour, and the two were only ever used together. It found its ' +
+      'It was the highlight half of Guided Tour. It found its ' +
       'target by CSS selector, so like Guided Tour it couldn\'t highlight anything inside a shadow root.',
     alternatives: [
       {
@@ -113,7 +113,7 @@ export const removedComponents: RemovedComponent[] = [
       {
         label: 'Dropdown Menu',
         href: '/docs/components/dropdown-menu',
-        note: 'A trigger with a set of actions, with the dismissal and keyboard contracts the fan never had.',
+        note: 'A trigger with a set of actions. It closes on Escape, an outside click or a selection.',
       },
       {
         label: 'Float Bar',
@@ -135,8 +135,7 @@ export const removedComponents: RemovedComponent[] = [
       'phone or from a keyboard the panel and everything in it were unreachable. The documented API was ' +
       'never built: open was documented as reflecting the hover-reveal state and arc-open/arc-close as ' +
       'firing on it, but nothing wrote open on hover, so neither happened. A _hovered state property was ' +
-      'declared, assigned once in the constructor, and never read again. The fix is a trigger, and a ' +
-      'panel with a trigger is Drawer.',
+      'declared, assigned once in the constructor, and never read again.',
     alternatives: [
       {
         label: 'Drawer',
@@ -160,14 +159,13 @@ export const removedComponents: RemovedComponent[] = [
     was: 'A month grid that laid events out across days.',
     why:
       'It had no time-of-day support of any kind: events were whole-day blocks, with no start time, no end ' +
-      'time, no week or day view, and no overlap handling. A calendar that can\'t express "Tuesday at ' +
-      '2pm" can\'t express an appointment. The missing part is the hard part, and building it properly ' +
-      'is a new component, not a fix.',
+      'time, no week or day view, and no overlap handling, so it couldn\'t show an appointment. Adding ' +
+      'those would mean building a new component.',
     alternatives: [
       {
         label: 'Calendar',
         href: '/docs/components/calendar',
-        note: 'For date selection, which is what most reaches for a calendar actually wanted.',
+        note: 'For picking a date.',
       },
       {
         label: 'Activity Heatmap',
@@ -192,8 +190,8 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'The general-purpose focus-trapping overlay, the same component that is now arc-dialog.',
     why:
-      'Renamed. The element is a dialog, the platform calls it a dialog, and "modal" named one of its ' +
-      'behaviors, not what it is. It was removed instead of aliased because v4 hadn\'t shipped yet, so ' +
+      'Renamed to match the platform\'s dialog element it\'s built on. It was removed instead of ' +
+      'aliased because v4 hadn\'t shipped yet, so ' +
       'no consumer could have depended on the old tag.',
     alternatives: [
       {
@@ -331,7 +329,7 @@ export const removedComponents: RemovedComponent[] = [
       {
         label: 'Stack',
         href: '/docs/components/stack',
-        note: 'The migration is four attributes, not two: arc-cluster also defaulted to `gap="sm"` and `align="center"`, where arc-stack defaults to `md` and `stretch`. `justify` spells the edge values `between` and `around`.',
+        note: 'Also set `gap="sm"` and `align="center"` to keep the old spacing and alignment. arc-stack defaults to `md` and `stretch`. `justify` spells the edge values `between` and `around`.',
       },
     ],
     migration: '#the-merges',
@@ -422,7 +420,7 @@ export const removedComponents: RemovedComponent[] = [
     why:
       'It has two replacements, depending on where it was used. Below a form control it duplicated ' +
       'what every control already renders: an `error` with its own part and the aria wiring done, ' +
-      'which a sibling element can\'t do for it. Standing alone, it was an alert in all but name.',
+      'which a sibling element can\'t do for it. Used on its own, it showed the same kind of message arc-alert does.',
     alternatives: [
       {
         label: 'The control’s own error prop',
