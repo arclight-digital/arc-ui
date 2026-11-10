@@ -9,7 +9,7 @@ export const prose: ComponentDef = {
   description:
     'A wrapper that styles the headings, paragraphs, lists, code, tables and images inside it for long-form reading.',
 
-  overview: `Prose styles long-form HTML so you don't have to style each element yourself. Wrap an article, a docs page or rendered Markdown in \`<arc-prose>\` and its contents get spacing, font sizes and colors from the ARC UI tokens. It's for reading content, not for UI like navigation, forms or dashboards.
+  overview: `Prose styles long-form HTML. Wrap an article, a docs page or rendered Markdown in \`<arc-prose>\` and its contents get spacing, font sizes and colors from the ARC UI tokens. It's for reading content, not for UI like navigation, forms or dashboards.
 
 It styles h1 to h4 (not h5 or h6), paragraphs, lists, blockquotes, \`<pre>\` blocks, images, tables and horizontal rules. These get their styles through \`::slotted()\`, which only reaches direct children of \`<arc-prose>\`, so a heading or paragraph inside a wrapper \`<div>\` stays unstyled. Links, list items, inline code, \`<strong>\`, \`<em>\` and table cells are styled at any depth by a stylesheet the component adds to the page.
 
