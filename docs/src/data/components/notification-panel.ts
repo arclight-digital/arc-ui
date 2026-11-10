@@ -6,39 +6,28 @@ export const notificationPanel: ComponentDef = {
   tag: 'arc-notification-panel',
   tier: 'feedback',
   interactivity: 'interactive',
-  description: 'Notification dropdown panel triggered by a button.',
+  description: 'Dropdown panel for notifications. A trigger slot opens a panel with a header, a scrolling body and a footer.',
 
-  overview: `NotificationPanel is a popover-style dropdown for notifications, messages, and activity feeds. It pairs a trigger slot (typically a bell icon or button) with a floating panel that appears on click. The panel includes dedicated header, body, and footer regions, so you can build a notification center with a title row, a scrollable message list, and a "View all" action at the bottom.
+  overview: `Notification Panel puts a list of notifications or activity behind a trigger, usually a bell icon. Put the trigger in the \`trigger\` slot. Clicking it opens a panel with a \`header\` slot, the default slot for the list, and a \`footer\` slot.
 
-The panel opens and closes via click on the trigger element, and automatically dismisses when the user clicks outside the component boundary. It dispatches \`arc-open\` and \`arc-close\` custom events on state changes so you can synchronize badge counts, mark notifications as read, or fetch fresh data when the panel becomes visible.
+The panel closes when you click the trigger again, click outside, or move focus out of it. \`arc-open\` and \`arc-close\` fire when it opens and closes.
 
-Positioning is controlled by the \`position\` prop, which accepts \`top-right\` (default) or \`top-left\` to align the dropdown relative to the trigger. The \`max-height\` prop caps the scrollable body area so long notification lists do not overflow the viewport. The panel fades and slides on open and close.`,
+The panel always opens below the trigger. \`position\` picks which edge lines up with it: \`top-right\` (the default) aligns the right edges and \`top-left\` the left edges. Near a viewport edge, the panel shifts to stay on screen. \`max-height\` (400px by default) caps the body, which scrolls past that.`,
 
   features: [
-    'Click-triggered popover with automatic outside-click dismissal',
-    'Dedicated header, body (default slot), and footer regions for structured content',
-    'Scrollable body with configurable max-height to prevent viewport overflow',
-    'Position prop (top-right, top-left) for trigger-relative alignment',
-    'Opacity and translateY transition on open and close',
-    '`arc-open` and `arc-close` custom events for state synchronization',
-    'Shadow DOM parts (trigger, panel, header, body, footer) for targeted styling',
-    'z-index: 1000 overlay stacking to layer above page content',
+    'Opens and closes with a fade and a short slide',
   ],
 
   guidelines: {
     do: [
-      'Place the trigger button (bell icon, badge) in the trigger slot for consistent click handling',
-      'Use the header slot for a title like "Notifications" and an optional unread count',
-      'Use the footer slot for a "View all notifications" link or "Mark all as read" action',
-      'Set max-height to prevent the panel from exceeding viewport bounds on mobile',
-      'Listen for arc-open to lazy-load or refresh notification data',
+      'Use the `header` slot for a title like "Notifications" and an unread count',
+      'Use the `footer` slot for a "View all notifications" link or a "Mark all as read" action',
+      'Set `max-height` so the panel fits on small screens',
+      'Listen for `arc-open` to load or refresh notifications, and update a badge count or mark items read',
     ],
     dont: [
-      'Do not use NotificationPanel for generic dropdown menus; use DropdownMenu or Select instead',
-      'Do not place complex interactive forms inside the panel; keep it to a list of actionable items',
-      'Do not forget to handle the arc-close event if you need to clean up or reset scroll position',
-      'Do not set position to top-left when the trigger is on the left edge of the screen: the panel may overflow',
-      'Do not nest NotificationPanel inside another popover or modal: stacking contexts will conflict',
+      'Don\'t use it for general dropdown menus. Use Dropdown Menu or Select',
+      'Don\'t put complex forms in the panel. Keep it to a list of items people can act on',
     ],
   },
 
