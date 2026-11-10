@@ -7,11 +7,11 @@ export const sparkline: ComponentDef = {
   tier: 'data',
   interactivity: 'static',
   description:
-    'A small inline SVG line or bar chart for tables, stat cards and dashboards, drawn from a comma-separated data string with no charting library.',
+    'A small inline line or bar chart, drawn as SVG from a comma-separated string of numbers.',
 
   overview: `Sparkline is a small trend chart, 120 by 32 pixels by default. Put it in a table cell next to a metric, beside a stat card, or in a dashboard grid. It has no axes, labels or tooltips. For those, use a full chart.
 
-Pass the values as a comma-separated string in \`data\`. \`type="line"\` draws a line with rounded joins, and \`fill\` adds a shaded area under it. \`type="bar"\` draws evenly spaced bars that fill in more strongly on hover. The line draws itself in over 800ms when it first renders, and not at all under \`prefers-reduced-motion\`.
+Pass the values as a comma-separated string in \`data\`. \`type="line"\` draws a line with rounded joins, and \`fill\` adds a shaded area under it. \`type="bar"\` draws evenly spaced bars that fill in more strongly on hover. The line draws itself in over 800ms when it first renders, and appears at once under \`prefers-reduced-motion\`.
 
 The color is \`--accent-primary\` by default. \`color\` takes another CSS color for the line, such as green for revenue or red for an error rate. The bar and area fills don't use \`color\` correctly yet, so keep the default color for those.`,
 
@@ -24,7 +24,6 @@ The color is \`--accent-primary\` by default. \`color\` takes another CSS color 
 
   guidelines: {
     do: [
-      'Show it next to the number it illustrates: "42 requests" with a trend line says more than either alone',
       'Keep data short, 5 to 20 points. Past about 30 the chart becomes an unreadable blob',
       'Use a line for continuous trends like revenue over time or request latency',
       'Use bars for discrete counts like daily totals or categories',
@@ -32,7 +31,7 @@ The color is \`--accent-primary\` by default. \`color\` takes another CSS color 
     ],
     dont: [
       'Don\'t base important decisions on a sparkline alone. It has no axes, labels or precision',
-      'Don\'t animate dozens of sparklines in a long table. The draw-in is distracting at that count, so turn it off with CSS',
+      'Don\'t put dozens of line sparklines in one table. Each one draws itself in, and there\'s no setting to turn that off',
     ],
   },
 
