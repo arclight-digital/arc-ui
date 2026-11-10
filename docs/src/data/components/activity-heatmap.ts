@@ -10,42 +10,34 @@ export const activityHeatmap: ComponentDef = {
     'GitHub-style contribution calendar: a year of day cells, one column per week, each tinted by intensity on a five-step accent ramp, with hover and keyboard detail.',
   searchKeywords: ['contribution', 'calendar', 'commits', 'punch card', 'github graph', 'streak'],
 
-  overview: `Activity Heatmap is the contribution calendar most developers already know how to read: fifty-two columns of seven cells, one cell per day, tinted deeper as the day gets busier. Month labels run along the top, sparse weekday labels down the side, and a Less to More legend anchors the ramp. Hovering a cell (or focusing the grid and pressing the arrow keys) raises it with the glow and shows its detail (the date and the day's label or value) in a small built-in bubble.
+  overview: `Activity Heatmap draws a contribution calendar: 52 columns of seven cells, one cell per day, tinted deeper as the day gets busier. Month labels run along the top, Mon, Wed and Fri labels down the side, and a Less to More legend sits underneath. Hovering a cell, or focusing the grid and using the arrow keys, raises it with the glow and shows the date and the day's label or value in a small bubble.
 
-The \`data\` property takes one entry per day with activity: an ISO \`date\`, a numeric \`value\`, and an optional \`label\` that replaces the bare number in the hover detail ("7 commits" reads better than "7"). Days without an entry render as empty cells, so sparse data needs no zero-filling. By default the grid ends today and spans back \`weeks\` columns; pin \`end-date\` to show a fixed window. When \`end-date\` is unset and the component renders server-side, the anchor is derived from the newest date in the data instead of the server's clock, so the server output stays a pure function of props. Pin \`end-date\` whenever server and client must agree exactly.
+The \`data\` property takes one entry per day with activity: an ISO \`date\`, a numeric \`value\`, and an optional \`label\` that replaces the bare number in the detail ("7 commits" instead of "7"). Days without an entry render as empty cells, so you don't need to fill in zeros. By default the grid ends today and runs back \`weeks\` columns (52). Set \`end-date\` to show a fixed window. When \`end-date\` is unset, the server render and the first client render anchor on the newest date in the data, and the browser switches to today one render later. Set \`end-date\` when server and client must match exactly.
 
-Intensity is relative by default: the nonzero values are split into quartiles, and each quartile maps to one step of the accent ramp, so a quiet repository and a busy one both use the full range. When absolute comparison matters (two heatmaps side by side, or a known ceiling), set \`max\` and the ramp becomes a linear scale from zero to that value. The ramp itself is composed from \`--accent-primary-rgb\` at five alphas, so overriding one token recolors the whole calendar.
+Intensity is relative by default. The nonzero values are split into quartiles, one per step of the ramp, so a quiet repository and a busy one both use the full range. Set \`max\` to get a linear scale from zero to that value instead. The ramp is built from \`--accent-primary-rgb\` at five alphas, so overriding that one token recolors the calendar.
 
-To assistive technology the grid is a single image with a computed description (day count, end date, total, and active days) instead of three hundred and sixty-four tab stops. Keyboard users still get per-day detail: the grid takes focus once, up and down move a day, left and right move a week, Home and End jump to the ends, and a live region announces each cell.`,
+Screen readers get the grid as one image with a summary label (day count, end date, total and active days), not 364 tab stops. The grid takes focus once: up and down move a day, left and right move a week, Home and End jump to the first and last day, and a live region reads out each cell.`,
 
   features: [
-    'One cell per day in week columns, the layout every contribution graph has taught readers',
-    'Five-step intensity ramp composed from `--accent-primary-rgb`, so one token override recolors it all',
-    'Quartile mapping by default, so sparse and busy datasets both use the full range',
-    'Linear scale via `max` when absolute comparison across heatmaps matters',
-    'Sparse `data` is fine: days without an entry render as empty cells',
-    'Month labels along the top and Mon/Wed/Fri weekday labels down the side, from `Intl`',
-    'Hover or arrow-key a cell to raise it with the glow and show its detail bubble',
-    'Grid-semantics keyboard inspection: up/down a day, left/right a week, Home/End the span',
-    'Single tab stop with an `aria-label` summary and a live region for keyboard users',
-    'Sunday or Monday week start via `week-start`; deterministic server rendering documented on `end-date`',
-    'Cell size and gap tunable via `--activity-heatmap-cell` and `--activity-heatmap-gap`',
+    'Weeks start on Sunday or Monday via `week-start`',
+    'Month and weekday labels come from `Intl`',
+    'Cell size and gap are set by `--activity-heatmap-cell` and `--activity-heatmap-gap`',
   ],
 
   guidelines: {
     do: [
-      'Use it for daily event counts over months: commits, deploys, workouts, practice sessions',
-      'Give each entry a label ("7 commits"), since the hover detail and screen reader announcement read it out',
-      'Pin end-date when the window is a fixed report ("2025 in review") or when server and client must render identically',
-      'Set max when readers will compare two heatmaps side by side, because quartile ramps are relative and would mislead',
-      'Match week-start to your audience: Sunday is the GitHub convention, Monday the ISO one',
-      'Keep the legend unless the surrounding UI already explains the ramp; it is the only key the colors have',
+      'Use it for daily counts over months: commits, deploys, workouts, practice sessions',
+      'Give each entry a label ("7 commits"). The hover detail and the live region read it out',
+      'Set end-date when the window is a fixed report ("2025 in review") or when server and client must render the same grid',
+      'Set max when readers compare two heatmaps or there\'s a known ceiling. Quartile ramps are relative to each dataset, so side by side they mislead',
+      'Match week-start to your readers: Sunday is the GitHub convention, Monday the ISO one',
+      'Keep the legend unless the page already explains the ramp. It is the only key to the colors',
     ],
     dont: [
-      "Do not use it for a continuous metric like latency or revenue. That trend is Sparkline's job; the heatmap shows daily density",
-      'Do not use it for per-period pass/fail health. Uptime owns discrete status history with its own color semantics',
-      'Do not use it to display scheduled items on dates. Calendar shows what happens when; the heatmap shows how much happened',
-      'Do not encode more than one measure per cell. One value gets one ramp; two measures need two heatmaps',
+      "Don't use it for a continuous metric like latency or revenue. Use Sparkline",
+      "Don't use it for pass/fail history per period. Use Uptime, which has its own status colors",
+      "Don't use it to show scheduled items on dates. Use Calendar",
+      "Don't put more than one measure in a cell. Two measures need two heatmaps",
     ],
   },
 
