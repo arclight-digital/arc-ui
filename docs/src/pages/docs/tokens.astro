@@ -7,13 +7,13 @@ const headings = [
   { id: 'charts', label: 'Charts' },
   { id: 'spacing', label: 'Spacing' },
   { id: 'typography', label: 'Typography' },
-  { id: 'borders', label: 'Borders & Radius' },
+  { id: 'borders', label: 'Borders & radius' },
   { id: 'shadows', label: 'Shadows' },
-  { id: 'z-index', label: 'Z-Index' },
+  { id: 'z-index', label: 'Z-index' },
   { id: 'breakpoints', label: 'Breakpoints' },
   { id: 'opacity', label: 'Opacity' },
   { id: 'motion', label: 'Motion' },
-  { id: 'display-text', label: 'Display & Text Sizing' },
+  { id: 'display-text', label: 'Display & text sizing' },
   { id: 'glows', label: 'Glows' },
   { id: 'gradients', label: 'Gradients' },
   { id: 'focus', label: 'Focus' },
@@ -77,16 +77,16 @@ const spacingTokens = [
 ---
 
 <DocsLayout
-  title="Design Tokens"
-  description="ARC UI design tokens reference: colors, spacing, typography, and more."
+  title="Design tokens"
+  description="Names and values of the CSS custom properties in ARC UI's base.css, by group."
   activeSlug="tokens"
   headings={headings}
-  breadcrumbs={[{ label: 'Design Tokens' }]}
+  breadcrumbs={[{ label: 'Design tokens' }]}
 >
   <div class="tokens-page">
-    <h1 class="page-title">Design Tokens</h1>
+    <h1 class="page-title">Design tokens</h1>
     <p class="page-desc">
-      CSS custom properties that power every ARC UI component. Import
+      The CSS custom properties ARC UI's components read. Import
       <code>@arclux/arc-ui/base.css</code> to use them in your own styles.
     </p>
 
@@ -104,9 +104,9 @@ const spacingTokens = [
         ))}
       </div>
       <p class="docs-text docs-text--footnote">
-        Accents also ship <code>-rgb</code> channel triplets (<code>--accent-primary-rgb</code>,
-        <code>--accent-secondary-rgb</code>) that glows, gradients, and focus rings compose via
-        <code>var()</code>. Override the base pair and the rest follows. See <a href="/docs/theming">Theming</a>.
+        Each accent also has an <code>-rgb</code> channel triplet (<code>--accent-primary-rgb</code>,
+        <code>--accent-secondary-rgb</code>) that glows, gradients and focus rings read through
+        <code>var()</code>. Override an accent and its triplet together and those follow. See <a href="/docs/theming">Theming</a>.
       </p>
     </section>
 
@@ -114,17 +114,17 @@ const spacingTokens = [
       <h2 class="docs-heading">Charts</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        Categorical series palette for <code>arc-chart</code> and data visualization. Assign hues
-        in fixed order by series position. Never cycle or reshuffle them. The set is validated
-        for color-vision-deficiency separation and contrast against <code>--bg-card</code> in both
-        themes (series 1, 4, and 6 shift automatically in light mode). Status colors are reserved
-        for state and are not part of this palette.
+        The series colors for <code>arc-chart</code> and other data visualization. Assign them in
+        order of series position, and don't cycle or reshuffle them. The set is validated for
+        color-vision-deficiency separation and at least 3:1 contrast against <code>--bg-card</code>
+        in both themes. Series 1, 4 and 6 change in light mode. Status colors are for state and
+        aren't part of this palette.
       </p>
       <p class="docs-text">
         Each series also ships its channels, <code>--chart-1-rgb</code> through
         <code>--chart-6-rgb</code>, for tints of the same series (a band, an area fill, a
-        highlighted range): <code>rgba(var(--chart-2-rgb), 0.35)</code>. They follow the light-mode
-        shifts with their solids, so a tint never falls out of step with its line.
+        highlighted range): <code>rgba(var(--chart-2-rgb), 0.35)</code>. They change in light mode
+        along with the solid colors.
       </p>
       <div class="tokens-grid">
         {chartTokens.map((t) => (
@@ -157,9 +157,9 @@ const spacingTokens = [
       <h2 class="docs-heading">Typography</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
-        ARC UI ships no font files, only role slots. Assign a face to each role via
-        <code>--font-&lt;role&gt;-family</code> and every component follows. The samples below
-        render live from the slots; <code>--font-accent</code> is a back-compat alias of
+        ARC UI ships no font files, only role slots. Set a face for each role with
+        <code>--font-&lt;role&gt;-family</code> and every component uses it. The samples below
+        render from the slots. <code>--font-accent</code> is a back-compat alias of
         <code>--font-label</code>.
       </p>
       <div class="type-samples">
@@ -191,14 +191,14 @@ const spacingTokens = [
       </div>
       <p class="docs-text docs-text--footnote">
         <code>--ui-size</code> is for dense interface text such as a chip, a toolbar button or a
-        meta line, where 16px body text is too loud and the 12px label step too small. It is a
-        role rather than a scale step, so there is no <code>.arc-text-ui</code> utility.
+        meta line, where 17px body text is too big and the 12px label step too small. It's a
+        role and not a step on the type scale, so there is no <code>.arc-text-ui</code> utility.
       </p>
     </section>
 
     <!-- Borders & Radius -->
     <section id="borders">
-      <h2 class="docs-heading">Borders & Radius</h2>
+      <h2 class="docs-heading">Borders & radius</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <div class="token-table-wrap">
         <table class="token-table">
@@ -206,6 +206,7 @@ const spacingTokens = [
             <tr><th>Token</th><th>Value</th></tr>
           </thead>
           <tbody>
+            <tr><td><code>--radius-xs</code></td><td>2px</td></tr>
             <tr><td><code>--radius-sm</code></td><td>4px</td></tr>
             <tr><td><code>--radius-md</code></td><td>10px</td></tr>
             <tr><td><code>--radius-lg</code></td><td>14px</td></tr>
@@ -250,7 +251,7 @@ const spacingTokens = [
 
     <!-- Z-Index -->
     <section id="z-index">
-      <h2 class="docs-heading">Z-Index</h2>
+      <h2 class="docs-heading">Z-index</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <div class="token-table-wrap">
         <table class="token-table">
@@ -259,14 +260,12 @@ const spacingTokens = [
           </thead>
           <tbody>
             <tr><td><code>--z-base</code></td><td>0</td><td>Default stacking</td></tr>
-            <tr><td><code>--z-dropdown</code></td><td>100</td><td>Dropdown menus</td></tr>
-            <tr><td><code>--z-sticky</code></td><td>200</td><td>Sticky headers</td></tr>
-            <tr><td><code>--z-drawer</code></td><td>300</td><td>Side drawers</td></tr>
-            <tr><td><code>--z-modal</code></td><td>400</td><td>Modal dialogs</td></tr>
-            <tr><td><code>--z-popover</code></td><td>500</td><td>Popovers</td></tr>
-            <tr><td><code>--z-toast</code></td><td>600</td><td>Toast notifications</td></tr>
-            <tr><td><code>--z-tooltip</code></td><td>700</td><td>Tooltips</td></tr>
-            <tr><td><code>--z-max</code></td><td>9999</td><td>Emergency override</td></tr>
+            <tr><td><code>--z-dropdown</code></td><td>1000</td><td>Dropdown menus, selects, pickers, hover cards</td></tr>
+            <tr><td><code>--z-tooltip</code></td><td>1100</td><td>Tooltips and chart tooltips</td></tr>
+            <tr><td><code>--z-overlay</code></td><td>1200</td><td>Loading overlays, navigation menu panels</td></tr>
+            <tr><td><code>--z-modal</code></td><td>1300</td><td>Dialogs, drawers, sheets, lightbox, command palette</td></tr>
+            <tr><td><code>--z-toast</code></td><td>1400</td><td>Toast notifications</td></tr>
+            <tr><td><code>--z-max</code></td><td>9999</td><td>Skip links, context menus</td></tr>
           </tbody>
         </table>
       </div>
@@ -323,8 +322,7 @@ const spacingTokens = [
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <p class="docs-text">
         Motion is two base scales (four curves and five durations) that the
-        <code>--transition-*</code> tokens compose. The curve carries the meaning:
-        pick it by what the element is doing, not by taste.
+        <code>--transition-*</code> tokens combine. Pick a curve by what the element is doing.
       </p>
       <div class="token-table-wrap">
         <table class="token-table">
@@ -350,7 +348,7 @@ const spacingTokens = [
 
     <!-- Display & Text Sizing -->
     <section id="display-text">
-      <h2 class="docs-heading">Display & Text Sizing</h2>
+      <h2 class="docs-heading">Display & text sizing</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <div class="token-table-wrap">
         <table class="token-table">
@@ -358,22 +356,22 @@ const spacingTokens = [
             <tr><th>Token</th><th>Value</th></tr>
           </thead>
           <tbody>
-            <tr><td><code>--display-xl-size</code></td><td>clamp(36px, 5vw, 52px)</td></tr>
-            <tr><td><code>--display-xl-weight</code></td><td>500</td></tr>
+            <tr><td><code>--display-xl-size</code></td><td>var(--text-3xl)</td></tr>
+            <tr><td><code>--display-xl-weight</code></td><td>var(--font-display-weight) (500)</td></tr>
             <tr><td><code>--display-xl-spacing</code></td><td>-1px</td></tr>
-            <tr><td><code>--text-3xl</code></td><td>clamp(28px, 3vw, 36px)</td></tr>
+            <tr><td><code>--text-3xl</code></td><td>clamp(36px, 5vw, 52px)</td></tr>
             <tr><td><code>--text-lg</code></td><td>clamp(18px, 1.5vw, 20px)</td></tr>
             <tr><td><code>--wordmark-size</code></td><td>clamp(20px, 2.5vw, 28px)</td></tr>
-            <tr><td><code>--wordmark-weight</code></td><td>500</td></tr>
+            <tr><td><code>--wordmark-weight</code></td><td>var(--font-display-weight) (500)</td></tr>
             <tr><td><code>--wordmark-spacing</code></td><td>clamp(8px, 1.2vw, 14px)</td></tr>
-            <tr><td><code>--section-title-size</code></td><td>12px</td></tr>
-            <tr><td><code>--section-title-weight</code></td><td>600</td></tr>
-            <tr><td><code>--section-title-spacing</code></td><td>4px</td></tr>
+            <tr><td><code>--section-title-size</code></td><td>var(--label-size) (12px)</td></tr>
+            <tr><td><code>--section-title-weight</code></td><td>var(--label-weight) (600)</td></tr>
+            <tr><td><code>--section-title-spacing</code></td><td>var(--label-spacing) (2px)</td></tr>
             <tr><td><code>--ui-accent-size</code></td><td>16px</td></tr>
-            <tr><td><code>--ui-accent-weight</code></td><td>600</td></tr>
-            <tr><td><code>--ui-accent-spacing</code></td><td>1px</td></tr>
+            <tr><td><code>--ui-accent-weight</code></td><td>var(--font-label-weight) (600)</td></tr>
+            <tr><td><code>--ui-accent-spacing</code></td><td>0.5px</td></tr>
             <tr><td><code>--label-inline-size</code></td><td>10px</td></tr>
-            <tr><td><code>--label-inline-spacing</code></td><td>3px</td></tr>
+            <tr><td><code>--label-inline-spacing</code></td><td>0.75px</td></tr>
           </tbody>
         </table>
       </div>
@@ -398,7 +396,7 @@ const spacingTokens = [
         </div>
       </div>
 
-      <h3 class="subsection-heading">Glow Lines</h3>
+      <h3 class="subsection-heading">Glow lines</h3>
       <div class="glow-line-samples">
         <div class="glow-line-item">
           <div class="glow-line-bar" style="background: var(--glow-line-white)"></div>
@@ -438,21 +436,21 @@ const spacingTokens = [
           <div class="gradient-bar__preview" style="background: var(--gradient-divider)"></div>
           <div class="gradient-bar__info">
             <code>--gradient-divider</code>
-            <span class="gradient-bar__desc">Subtle content separator</span>
+            <span class="gradient-bar__desc">Border-colored line, faded at both ends</span>
           </div>
         </div>
         <div class="gradient-bar">
           <div class="gradient-bar__preview" style="background: var(--gradient-divider-glow)"></div>
           <div class="gradient-bar__info">
             <code>--gradient-divider-glow</code>
-            <span class="gradient-bar__desc">Accent-tinted divider glow</span>
+            <span class="gradient-bar__desc">Accent-colored line, faded at both ends</span>
           </div>
         </div>
         <div class="gradient-bar">
           <div class="gradient-bar__preview" style="background: var(--gradient-border-glow)"></div>
           <div class="gradient-bar__info">
             <code>--gradient-border-glow</code>
-            <span class="gradient-bar__desc">Subtle border glow effect</span>
+            <span class="gradient-bar__desc">Faint diagonal blend of the two accents</span>
           </div>
         </div>
       </div>
@@ -512,7 +510,7 @@ const spacingTokens = [
           <tbody>
             <tr><td><code>--bg-hover</code></td><td>rgba(255, 255, 255, 0.04)</td><td>Hover background tint</td></tr>
             <tr><td><code>--bg-base</code></td><td>rgb(10, 10, 15)</td><td>Page base background</td></tr>
-            <tr><td><code>--overlay-backdrop</code></td><td>rgba(0, 0, 0, 0.6)</td><td>Modal/drawer overlay</td></tr>
+            <tr><td><code>--overlay-backdrop</code></td><td>rgba(0, 0, 0, 0.6)</td><td>Backdrop behind dialogs, drawers and sheets</td></tr>
             <tr><td><code>--max-width</code></td><td>1120px</td><td>Content max width</td></tr>
             <tr><td><code>--max-width-sm</code></td><td>720px</td><td>Narrow content max width</td></tr>
             <tr><td><code>--nav-height</code></td><td>64px</td><td>Navigation bar height</td></tr>
@@ -522,11 +520,11 @@ const spacingTokens = [
     </section>
 
     <section class="see-also">
-      <h2 class="docs-heading">See Also</h2>
+      <h2 class="docs-heading">See also</h2>
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
       <ul class="see-also__list">
-        <li><a href="/docs/theming">Theming</a>: dark/light mode and custom themes</li>
-        <li><a href="/synth">Theme Synthesizer</a>: visually build a custom theme</li>
+        <li><a href="/docs/theming">Theming</a>: dark, light and auto modes, and custom themes</li>
+        <li><a href="/synth">Theme Synthesizer</a>: build a theme with a live preview</li>
       </ul>
     </section>
   </div>
