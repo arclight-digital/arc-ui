@@ -9,9 +9,9 @@ export const appShell: ComponentDef = {
   description:
     'Full-page layout that puts a TopBar, a Sidebar and a scrolling content area into one frame, with a mobile sidebar toggle and an optional table-of-contents rail.',
 
-  overview: `AppShell is the page frame for an app: a fixed top bar, a collapsible sidebar and a scrolling main area. Put an \`arc-top-bar\` in the \`topbar\` slot, an \`arc-sidebar\` (or any nav markup) in \`sidebar\`, and the page content in the default slot. The shell handles the flex layout, scroll containment and z-index layering.
+  overview: `AppShell is the page frame for an app: a fixed top bar, a collapsible sidebar and a scrolling main area. Put an \`arc-top-bar\` in the \`topbar\` slot, an \`arc-sidebar\` (or any nav markup) in \`sidebar\`, and the page content in the default slot. The sidebar and the toc rail stick below the top bar and scroll on their own.
 
-At 900 px and below (the \`breakpoint\` prop, default \`navCollapse\`), the sidebar collapses out of view, and the \`sidebar-open\` attribute brings it back. A fourth slot, \`toc\`, is a right-hand rail for a table of contents or other side content. It hides below 1280 px.`,
+At 900 px and below (the \`breakpoint\` prop, default \`navCollapse\`), the sidebar collapses out of view, and the \`sidebar-open\` attribute brings it back. A fourth slot, \`toc\`, is a right-hand rail for a table of contents or other side content. It hides at 1280 px and below.`,
 
   features: [
     'At least `100vh` tall by default, so the shell fills the screen',
