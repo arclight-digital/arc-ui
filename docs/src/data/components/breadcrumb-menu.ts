@@ -9,38 +9,26 @@ export const breadcrumbMenu: ComponentDef = {
   description:
     'Each breadcrumb segment doubles as a dropdown showing sibling pages at that hierarchy level. Dropdown panels match dropdown-menu styling.',
 
-  overview: `BreadcrumbMenu extends the standard breadcrumb pattern by turning each segment into a clickable dropdown trigger. When a user hovers or clicks a segment, a dropdown panel appears listing sibling pages at that hierarchy level, so users can move sideways within any tier without going back to a parent page first. The dropdown panels use the same styling as DropdownMenu.
+  overview: `BreadcrumbMenu is a breadcrumb trail where a segment can open a dropdown of its sibling pages, so users can move sideways at any level without going up to the parent first. It's for deep hierarchies where people switch between items at the same depth, like file managers, CMS interfaces and documentation sites. The dropdowns use DropdownMenu's styling.
 
-This pattern is common in file managers, CMS interfaces, and documentation sites where the hierarchy is deep and users frequently need to switch between sibling items at the same depth. Instead of navigating up to a parent and then back down to a sibling, BreadcrumbMenu gives a direct shortcut that saves clicks and keeps context.
+Give an item in \`items\` a \`siblings\` array and its segment becomes a button with a chevron that opens the dropdown on click. Without \`siblings\`, the segment is a plain crumb. A segment with siblings only opens its dropdown, so its own \`href\` is never used.
 
-Each item in the \`items\` array can optionally include a \`siblings\` array. When siblings are present, the segment renders a dropdown trigger with a subtle chevron indicator. When siblings are absent, the segment behaves as a standard breadcrumb link. The component dispatches \`arc-navigate\` with the selected href whenever a dropdown item or breadcrumb link is clicked, so you can hook it into client-side routing.`,
+Segments and dropdown items are buttons, not links. Clicking one fires \`arc-navigate\` with \`{ href }\` and does nothing else, so you need a listener that does the navigation. Tab and Enter reach every button. A click outside closes an open dropdown. There are no arrow keys and no Escape to close.`,
 
   features: [
-    'Breadcrumb segments double as dropdown triggers for sibling navigation',
-    'Dropdown panels match DropdownMenu styling',
-    'Optional siblings array per breadcrumb item',
-    '`arc-navigate` event for client-side routing integration',
-    'Hover and click trigger modes for mouse and touch devices',
-    'Keyboard accessible with arrow keys within dropdowns',
-    'Chevron indicator on segments that have sibling options',
-    'Automatic Escape-to-close and outside-click dismissal',
-    'Token-driven theming via CSS custom properties',
+    'The last segment gets `aria-current="page"`',
   ],
 
   guidelines: {
     do: [
-      'Provide siblings arrays for levels where lateral navigation is useful',
-      'Keep sibling lists to ten items or fewer per dropdown',
-      'Use BreadcrumbMenu in file managers, CMS interfaces, and documentation hubs',
-      'Listen for arc-navigate to integrate with your client-side router',
-      'Highlight the current page in the siblings list for orientation',
+      'Listen for arc-navigate and hand the href to your router',
+      'Add siblings only at levels where moving sideways is useful',
+      'Keep each sibling list to ten items or fewer',
+      'Mark the current page in the sibling list',
     ],
     dont: [
-      'Do not add siblings to every level. Only include them where lateral navigation is meaningful',
-      'Do not use BreadcrumbMenu when the hierarchy is flat (two levels or fewer). Use Breadcrumb instead',
-      'Do not nest dropdown panels within dropdown panels. Keep it to one level of expansion',
-      'Do not omit the href on the final breadcrumb segment; it should link to the current page',
-      'Do not replace primary navigation (TopBar, Sidebar) with BreadcrumbMenu; it is a secondary aid',
+      'Don\'t use it for a flat hierarchy (two levels or fewer). Use Breadcrumb',
+      'Don\'t use it in place of TopBar or Sidebar navigation',
     ],
   },
 
