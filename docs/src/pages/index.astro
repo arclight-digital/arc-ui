@@ -344,8 +344,8 @@ const jsonLd = {
       <div class="prism__inner">
         <div class="prism__header" data-reveal="blur-in">
           <h2 class="statement">
-            <span class="statement__quiet">You write the component.</span>
-            <span class="statement__lit">Prism writes the rest.</span>
+            <span class="statement__quiet">One component,</span>
+            <span class="statement__lit">{frameworkCount} framework targets.</span>
           </h2>
           <p class="section-desc">
             <span class="section-desc__line">Prism imports each Lit class, reads the properties Lit resolved, and writes an idiomatic package for every framework.</span>
@@ -355,7 +355,7 @@ const jsonLd = {
         <div class="prism__rig" id="prism-rig" data-reveal="fade-up">
           <figure class="prism__source">
             <arc-code-block variant="window" filename="toggle.js" language="js" code={prismSource}></arc-code-block>
-            <figcaption class="prism__caption">This declaration is the only part you write.</figcaption>
+            <figcaption class="prism__caption">Every wrapper's API is generated from this declaration.</figcaption>
           </figure>
 
           <!-- The fan: one beam in, a ray to every output row. The rows share
@@ -413,7 +413,7 @@ const jsonLd = {
         <p class="prism__note" data-reveal="fade-up">
           Across all {components.length} components that comes to {generatedFileCount.toLocaleString('en-US')} files
           and {generatedLineCount.toLocaleString('en-US')} lines of framework code, written by Prism {prismVersion}.
-          CI regenerates every one on each push and fails on a single changed character.
+          CI regenerates every one on each pull request and fails on a single changed character.
           <a class="chapter-link" href="/docs/frameworks">Framework guides →</a>
         </p>
       </div>
@@ -580,11 +580,11 @@ const jsonLd = {
       <div class="yours__inner">
         <div class="yours__header" data-reveal="blur-in">
           <h2 class="statement">
-            <span class="statement__quiet">Your theme</span>
+            <span class="statement__quiet">Your accent</span>
             <span class="statement__lit">is four tokens.</span>
           </h2>
           <p class="section-desc">
-            <span class="section-desc__line">Set the two accent colors and every gradient, glow and focus ring follows.</span>
+            <span class="section-desc__line">Set the two accent colors and the glows, focus rings and accent gradients follow.</span>
             <span class="section-desc__line">The utility classes read the same tokens, so your layout follows too.</span>
           </p>
         </div>
@@ -618,8 +618,7 @@ const jsonLd = {
               </figcaption>
               <pre class="theme-file__code"><code><span class="theme-file__line"><span class="tk-t">:root</span> <span class="tk-p">&#123;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-primary</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="p">{defaultAccent.p}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-primary-rgb</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="prgb">{defaultAccent.prgb}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-secondary</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="s">{defaultAccent.s}</span><span class="tk-p">;</span></span><span class="theme-file__line">  <span class="tk-a">--accent-secondary-rgb</span><span class="tk-p">:</span> <span class="tk-s" data-theme-val="srgb">{defaultAccent.srgb}</span><span class="tk-p">;</span></span><span class="theme-file__line"><span class="tk-p">&#125;</span></span></code></pre>
               <p class="theme-file__caption">
-                That file is the whole theme. Pick a swatch and this page repaints,
-                including the light behind the hero.
+                Pick a swatch and this page repaints, including the light behind the hero.
                 <a class="chapter-link" href="/synth">Build a theme in the Synthesizer →</a>
               </p>
             </figure>
@@ -654,7 +653,7 @@ const jsonLd = {
       <div class="gauntlet__inner">
         <div class="gauntlet__header" data-reveal="blur-in">
           <h2 class="statement">
-            <span class="statement__quiet">Every push</span>
+            <span class="statement__quiet">Every pull request</span>
             <span class="statement__lit">runs these checks.</span>
           </h2>
           <p class="section-desc">
@@ -707,12 +706,12 @@ const jsonLd = {
           <li class="gate" data-reveal="fade-up">
             <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="gate__name">Typecheck generated declarations</span>
-            <span class="gate__metric">every subpath</span>
+            <span class="gate__metric">0 errors</span>
           </li>
           <li class="gate" data-reveal="fade-up">
             <span class="gate__check" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 4.5L6 12 2.5 8.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
             <span class="gate__name">Smoke-test packed tarballs</span>
-            <span class="gate__metric">every package</span>
+            <span class="gate__metric">6 packages</span>
           </li>
         </ul>
         <p class="gauntlet__note" data-reveal="fade-up">
