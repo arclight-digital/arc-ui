@@ -7,7 +7,7 @@ export const buttonGroup: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Joins multiple buttons into one visual unit with shared borders and collapsed radii. Supports horizontal and vertical orientations.',
+    'Joins related buttons into one strip, in a row or a column.',
 
   overview: `ButtonGroup joins adjacent buttons into one strip. The inner corners go square, the outer ends keep the buttons' pill shape, and each button still clicks on its own. It works horizontally (the default) or vertically.
 
