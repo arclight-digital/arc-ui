@@ -7,39 +7,28 @@ export const pageIndicator: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Dot-based position indicator for page-level navigation or onboarding flows. Active dot fills with accent-primary and scales up.',
+    'A row of dots showing which page of a sequence is active. The active dot fills with accent-primary and grows from 8px to 10px.',
 
-  overview: `PageIndicator renders a horizontal row of dots that communicate the user's position within a paged sequence: carousels, onboarding flows, slideshow presentations, or any content split into discrete steps. The active dot fills with accent-primary and scales up slightly, so the current position is clear without labels or numbers.
+  overview: `PageIndicator draws one dot per page and marks the active one. Use it under a carousel, an onboarding flow or a slideshow. It shows position only: it doesn't page content itself, so the parent component owns the transitions. \`count\` sets the number of dots and \`value\` sets the active one (zero-based).
 
-The component supports both passive and interactive modes. In passive mode (\`clickable\` is false), the dots serve as read-only indicators driven by an external controller like a Carousel or swipe gesture handler. In interactive mode (\`clickable\` is true), each dot becomes a tap target that dispatches \`arc-change\` with the selected index, letting users jump directly to any page.
-
-PageIndicator is minimal. It shows position and, optionally, lets users jump to a page. Content transitions belong to the parent component. Pair it with Carousel for image galleries, StepperNav for wizard flows, or your own custom swipe container. The \`count\` prop sets the total number of dots and \`value\` controls which one is active, so it syncs with any paging state.`,
+By default the dots are read-only and something else, such as a Carousel or your own swipe handler, sets \`value\`. With \`clickable\`, each dot is a button that sets \`value\` and fires \`arc-change\` with the new index, so readers can jump to any page.`,
 
   features: [
-    'Horizontal dot row for position indication',
-    'Active dot fills with accent-primary and scales up',
-    'Passive (read-only) and interactive (clickable) modes',
-    '`arc-change` event when a dot is clicked in interactive mode',
-    'Controlled count and value props for external synchronisation',
-    'Compact footprint suitable for overlay positioning',
-    'Keyboard accessible in clickable mode with arrow keys',
-    'Token-driven theming via CSS custom properties',
+    'Each dot is a `<button>` labelled "Page 1", "Page 2" and so on. Without `clickable` the buttons are disabled and out of the tab order',
+    'Clickable dots are reached with Tab. There are no arrow-key shortcuts',
+    'Parts: `base`, `dot`',
   ],
 
   guidelines: {
     do: [
-      'Use PageIndicator alongside a Carousel or swipe container for visual context',
-      'Enable clickable mode when users should be able to jump to any page directly',
-      'Keep the count reasonable: five to seven dots maximum for quick scanning',
-      'Position the indicator below or overlaid on the paged content',
-      "Synchronise the value prop with the parent component's active page state",
+      'Set `clickable` when readers should be able to jump straight to a page',
+      'Keep it to seven dots or fewer, so the row stays quick to scan',
+      'Place it below or over the content it pages',
+      'Update `value` whenever the parent\'s active page changes',
     ],
     dont: [
-      'Do not use PageIndicator for progress; use Progress or Stepper instead',
-      'Do not display more than ten dots: the pattern breaks down at high counts',
-      'Do not use PageIndicator without a corresponding paged content area',
-      'Do not rely on PageIndicator as the only navigation mechanism; pair with swipe or buttons',
-      'Do not place multiple PageIndicators for the same content sequence',
+      'Don\'t use it to show progress through a task. Use Progress or Stepper',
+      'Don\'t make it the only way to change pages. Pair it with swipe or previous and next buttons',
     ],
   },
 
