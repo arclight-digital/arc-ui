@@ -7,13 +7,13 @@ export const hotkey: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Invisible keyboard shortcut listener for modifier combos (Ctrl+K) and chord sequences (g i). Fires an event when the keys match.',
+    'An invisible element that fires an event when someone presses a keyboard shortcut, like Ctrl+K or the chord g i.',
 
   overview: `Hotkey listens for a keyboard shortcut and fires \`arc-hotkey-trigger\` when someone presses it. It renders nothing (\`display: none\` is enforced), so you can put it anywhere in your markup.
 
 The \`keys\` prop takes modifier combos like \`"ctrl+k"\`, \`"meta+shift+p"\` and \`"alt+n"\`, or a Vim-style chord of space-separated keys pressed in order: \`"g i"\` means press G, release, then press I within 1 second. Modifier names are normalized: \`cmd\`/\`command\` → \`meta\`, \`option\` → \`alt\`, \`control\` → \`ctrl\`.
 
-By default, Hotkey ignores keys typed into an input, textarea, select or contentEditable element. Setting \`global\` listens on \`window\` instead of \`document\` and drops that filter, so the shortcut also fires while someone is typing.`,
+By default, Hotkey ignores keys typed into a text input, textarea, select or contentEditable element. Inputs you don't type into, like checkboxes and sliders, don't block it. Setting \`global\` listens on \`window\` instead of \`document\` and drops that filter, so the shortcut also fires while someone is typing.`,
 
   features: [
     '`disabled` suspends the shortcut without removing the element',
