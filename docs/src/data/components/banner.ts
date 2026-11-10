@@ -7,7 +7,7 @@ export const banner: ComponentDef = {
   tier: 'feedback',
   interactivity: 'hybrid',
   description:
-    'Full-width strip for page-wide messages, with the same semantic variants as Alert and a gradient wash.',
+    'A full-width message strip for news about the whole app, in four status colors.',
 
   overview: `Banner is a one-line message strip that takes the full width of its container, usually the viewport or a major section. Use it for messages about the whole app: maintenance windows, version updates, cookie consent, account warnings. For feedback about one part of a page, use Alert.
 
