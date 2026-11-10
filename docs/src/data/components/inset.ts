@@ -9,52 +9,41 @@ export const inset: ComponentDef = {
   description:
     'Padding primitive consuming spacing tokens with optional negative-margin bleed mode.',
 
-  overview: `Inset is a spacing primitive that applies consistent padding to its children using design system spacing tokens. It is the padding counterpart to Stack (which handles vertical spacing between siblings), where Stack controls the gaps between elements and Inset controls the space around a block of content.
+  overview: `Inset pads its content on all four sides with one spacing token. Use it for the space around a block of content, and Stack for the gaps between siblings.
 
-The \`space\` prop maps directly to spacing tokens (xs through 2xl), so padding stays in sync with the design system whether the Inset wraps a card body, a section interior, or a dialog content area.
-
-The \`bleed\` prop activates negative-margin mode, which allows the Inset's children to break out of a parent's existing padding. This is useful when you have a padded container but want a specific child, like a full-width image or a divider, to extend edge-to-edge. Bleed applies a negative margin equal to the space value, effectively canceling the parent's padding for that element.`,
+The \`space\` prop picks the token. The \`bleed\` prop adds a negative margin equal to that padding. Inside a parent padded by the same token, the Inset's box (its background and border) reaches the parent's edges while its content stays where it was.`,
 
   features: [
-    'Consistent padding via design system spacing tokens (xs through 2xl)',
-    'Bleed mode with negative margins to break out of parent padding',
-    'Maps directly to `--space-xs`, `--space-sm`, `--space-md`, `--space-lg`, `--space-xl`, `--space-2xl` tokens',
-    'Lightweight wrapper with zero JavaScript overhead',
-    'Composable with Stack, Container, and other layout primitives',
-    'CSS part: `inset` for targeted ::part() styling',
+    'Each `space` value maps to one token: `--space-xs`, `--space-sm`, `--space-md`, `--space-lg`, `--space-xl` or `--space-2xl`',
   ],
 
   guidelines: {
     do: [
-      'Use Inset for card body padding, dialog content areas, and section interiors',
-      'Use space="lg" or space="xl" for primary content areas; space="sm" for compact UI',
-      'Use bleed mode to make full-width images or dividers extend past parent padding',
-      'Combine with Stack for interior layouts: Inset for padding, Stack for vertical spacing',
-      'Prefer Inset over custom padding styles to maintain token-based consistency',
+      'Use it for card bodies, dialog content and section interiors',
+      'Use `space="lg"` or `space="xl"` for main content areas and `space="sm"` for compact UI',
+      'Use `bleed` when a block\'s background should reach past its parent\'s padding',
     ],
     dont: [
-      'Do not use Inset as a substitute for Container. Container constrains width; Inset adds padding',
-      'Do not nest Inset inside Inset unless you intentionally want compound padding',
-      'Do not use bleed mode without a padded parent. Negative margins will misalign content',
-      'Do not use Inset for spacing between sibling elements. Use Stack or gap utilities instead',
-      'Do not hardcode pixel values; adjust the spacing tokens globally instead',
+      'Don\'t use Inset in place of Container. Container limits width, Inset adds padding',
+      'Don\'t use `bleed` without a padded parent. The negative margin pushes the box outside it',
+      'Don\'t hard-code pixel padding. Change the spacing tokens instead',
     ],
   },
 
   previewHtml: `<div style="width:100%;display:flex;flex-direction:column;gap:var(--space-md)">
   <div style="border:1px dashed var(--accent-primary);border-radius:var(--radius-sm)">
     <div style="padding:var(--space-lg);background:rgba(77,126,247,0.06);border-radius:var(--radius-sm)">
-      <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);text-align:center">Inset space="lg" — 24px padding</div>
+      <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);text-align:center">Inset space="lg"</div>
     </div>
   </div>
   <div style="border:1px dashed var(--accent-secondary);border-radius:var(--radius-sm)">
     <div style="padding:var(--space-sm);background:rgba(139,92,246,0.06);border-radius:var(--radius-sm)">
-      <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);text-align:center">Inset space="sm" — 8px padding</div>
+      <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);text-align:center">Inset space="sm"</div>
     </div>
   </div>
   <div style="border:1px dashed var(--accent-primary);border-radius:var(--radius-sm)">
     <div style="padding:var(--space-xl);background:rgba(77,126,247,0.06);border-radius:var(--radius-sm)">
-      <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);text-align:center">Inset space="xl" — 32px padding</div>
+      <div style="color:var(--text-secondary);font-size:13px;font-family:var(--font-body);text-align:center">Inset space="xl"</div>
     </div>
   </div>
 </div>`,
