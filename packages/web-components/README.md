@@ -1,6 +1,6 @@
 # @arclux/arc-ui
 
-Lit web components implementing the Arclight design system. This is the canonical source, and every framework wrapper package is generated from these components by [Prism](https://www.npmjs.com/package/@arclux/prism).
+The [ARC UI](https://arcui.dev) web components, written in Lit. This package is the canonical source: [Prism](https://www.npmjs.com/package/@arclux/prism) generates every framework wrapper package from it.
 
 ## Installation
 
@@ -10,13 +10,13 @@ npm install @arclux/arc-ui lit
 
 ## Usage
 
-Register every component (the simplest option: one import defines all `<arc-*>` elements):
+Register every component with one import. It defines every `<arc-*>` element except `arc-code-block`, which loads a syntax highlighter and is imported on its own (`@arclux/arc-ui/code-block`):
 
 ```js
 import '@arclux/arc-ui/register';
 ```
 
-Or register only what you use for smaller bundles. Each component subpath defines just that element and its required children:
+Or register only what you use. Each component subpath defines that element and the children it needs:
 
 ```js
 import '@arclux/arc-ui/button';
@@ -51,7 +51,7 @@ document.querySelector('arc-input').addEventListener('arc-input', (e) => {
 
 ## Theming
 
-Components read design tokens from CSS custom properties. Compound tokens (gradients, glows, focus rings) reference a small set of base tokens, so overriding just the accents re-themes everything:
+Components read design tokens from CSS custom properties. Gradients, glows and focus rings are built from the two accent colors, so setting those (each with its `-rgb` channel) changes all of them:
 
 ```css
 :root {
@@ -62,7 +62,7 @@ Components read design tokens from CSS custom properties. Compound tokens (gradi
 }
 ```
 
-Dark theme is the default; set `data-theme="light"` (or `"auto"`) on the root element to switch. Per-component fine-tuning is available via `::part()` selectors on most components.
+Dark is the default theme. Set `data-theme="light"` (or `"auto"`) on the root element to switch. Every component has at least a `base` part for `::part()` selectors.
 
 ## Icons
 
@@ -80,7 +80,7 @@ iconRegistry.use('lucide');                   // switch, once both are registere
 iconRegistry.set({ myLogo: '<svg>…</svg>' }); // or register your own icons
 ```
 
-`<arc-icon>` then lazy-loads one module per glyph (~500 bytes), so only the icons a page renders are ever fetched. For an app that uses a dozen, skip the pack and import them directly (`import check from '@arclux/arc-ui-icons/phosphor/check'`), then hand them to `set()`.
+`<arc-icon>` then lazy-loads one module per glyph (about 500 bytes for Lucide and 650 for Phosphor, on average), so only the icons a page renders are fetched. For an app that uses a dozen, skip the pack and import them directly (`import check from '@arclux/arc-ui-icons/phosphor/check'`), then hand them to `set()`.
 
 ```html
 <arc-icon name="magnifying-glass" size="md"></arc-icon>
@@ -139,7 +139,7 @@ attribute values (`variant="primry"`), camelCase property names used as
 attributes (`confirmLabel=` instead of `confirm-label=`), and attribute-name
 typos (`vairant`).
 
-## Framework Wrappers
+## Framework wrappers
 
 If you are using a framework, prefer the dedicated wrapper package:
 
@@ -155,6 +155,6 @@ If you are using a framework, prefer the dedicated wrapper package:
 
 ## Links
 
-- [Documentation & interactive examples](https://arcui.dev)
+- [Documentation](https://arcui.dev)
 - [Repository](https://github.com/arclight-digital/arc-ui)
 - [License (MIT)](https://github.com/arclight-digital/arc-ui/blob/main/LICENSE)
