@@ -6,39 +6,30 @@ export const scrollSpy: ComponentDef = {
   tag: 'arc-scroll-spy',
   tier: 'navigation',
   interactivity: 'interactive',
-  description: 'Tracks scroll position and highlights the active navigation link.',
+  description: 'An "On this page" table of contents that highlights the section you\'re reading.',
 
-  overview: `ScrollSpy is a sticky table-of-contents component that watches the viewport and highlights whichever navigation link corresponds to the currently visible section. It uses an IntersectionObserver, so tracking does not block the main thread even on long pages with dozens of sections. Place it in a sidebar column next to your content.
+  overview: `ScrollSpy builds a table of contents from \`<arc-spy-link>\` children and marks the entry for the section you're reading. Put it in a sticky sidebar or aside next to long content. Each link's \`target\` is the \`id\` of a section, and its text is the label. ScrollSpy hides the links you write and renders its own list under an "On this page" heading. Clicking the heading scrolls back to the top.
 
-Each entry in the table of contents is declared with an \`<arc-spy-link>\` child element whose \`target\` attribute matches the \`id\` of a section on the page. ScrollSpy reads these declarative links from its slot, builds the IntersectionObserver, and renders a compact navigation list in its shadow DOM with an "On this page" heading. When the user scrolls a target section into view, the corresponding link receives an \`aria-current="true"\` attribute and a blue accent background highlight.
+The current section is the last one whose top has scrolled past \`offset\` pixels from the top of the viewport (80 by default). Raise \`offset\` to clear a taller sticky header. When the page reaches the bottom, the last section counts as current even if it's too short to reach that line. ScrollSpy listens for scroll events on the whole document in the capture phase, so sections inside a scrolling container are tracked as well as ones in the window.
 
-Clicking a link smooth-scrolls to the target element and updates the active state immediately. The component dispatches an \`arc-change\` custom event with the active section ID whenever the highlighted link changes, so you can synchronize other UI (like a progress bar or breadcrumb) with the current reading position. The \`offset\` prop adjusts the scroll detection threshold to account for sticky headers of different heights.`,
+The current link gets \`aria-current="location"\` and the accent background, and the component fires \`arc-change\` with \`{ value }\` set to the section id. Clicking a link scrolls its section into view, smoothly unless the reader has asked for reduced motion, and writes \`#id\` to the URL with \`history.replaceState\`.`,
 
   features: [
-    'IntersectionObserver-based scroll tracking with no scroll-event overhead',
-    'Declarative link registration via <arc-spy-link target="id"> children',
-    'Sticky positioning with automatic height capping to prevent overflow',
-    'Smooth-scroll click navigation to target sections',
-    'Active link highlighting with accent-primary background and aria-current="true"',
-    'Configurable offset prop to account for sticky headers of varying heights',
-    '`arc-change` custom event dispatched when the active section changes',
-    'Thin scrollbar styling for long tables of contents',
+    '`level` on a spy link indents it and sets it in a smaller font, for nested headings',
+    'Links whose `target` matches no element on the page are skipped',
   ],
 
   guidelines: {
     do: [
-      'Place ScrollSpy in a sidebar-right or sticky aside column next to the scrollable content',
-      'Give every target section a unique id attribute that matches the spy-link target',
-      'Set the offset prop to match the height of your sticky header or TopBar',
-      'Listen for the arc-change event to synchronize breadcrumbs, analytics, or URL hash updates',
-      'Keep spy-link labels short: they should match or abbreviate section headings',
+      'Give every section a unique `id` that matches a spy link\'s `target`',
+      'Set `offset` to the height of your sticky header or TopBar',
+      'Listen for `arc-change` to update breadcrumbs or analytics',
+      'Keep link labels short, matching or abbreviating the section headings',
     ],
     dont: [
-      'Do not use ScrollSpy for primary site navigation: it is for in-page section tracking only',
-      'Do not forget to import arc-spy-link; ScrollSpy depends on it to collect its link definitions',
-      'Do not place ScrollSpy inside a scrollable container other than the document: the observer watches document-level intersections',
-      'Do not add dozens of spy-links to a single ScrollSpy; more than 10-12 links make the list hard to scan',
-      'Do not omit the target attribute on spy-links: they will be silently ignored by the observer',
+      'Don\'t use it for site navigation. It only tracks sections on the current page',
+      'Don\'t forget to import `arc-spy-link`. ScrollSpy reads its links from it',
+      'Don\'t give it more than 10 to 12 links. A longer list is hard to scan',
     ],
   },
 
@@ -47,7 +38,7 @@ Clicking a link smooth-scrolls to the target element and updates the active stat
     <arc-spy-link target="overview">Overview</arc-spy-link>
     <arc-spy-link target="installation">Installation</arc-spy-link>
     <arc-spy-link target="usage">Usage</arc-spy-link>
-    <arc-spy-link target="api-reference">API Reference</arc-spy-link>
+    <arc-spy-link target="api-reference">API reference</arc-spy-link>
     <arc-spy-link target="examples">Examples</arc-spy-link>
   </arc-scroll-spy>
 </div>`,
@@ -151,7 +142,7 @@ export default function Example() {
     {
       name: 'SpyLink',
       tag: 'arc-spy-link',
-      description: 'Navigation anchor that highlights when its target section is in view.',
+      description: 'One entry in a ScrollSpy. `target` names the section id, `level` sets the indent, and the text is the label.',
     },
   ],
 
