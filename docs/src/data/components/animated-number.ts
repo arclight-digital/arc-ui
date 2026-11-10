@@ -9,37 +9,30 @@ export const animatedNumber: ComponentDef = {
   replayable: true,
   description: 'Count-up/down number animation with formatting options.',
 
-  overview: `AnimatedNumber transitions between numeric values using \`requestAnimationFrame\` with an ease-out-expo curve, the "counting up" effect seen in dashboards, stat cards, and hero metrics. When the \`value\` attribute changes, the component interpolates from the current displayed number to the new target over the specified duration.
+  overview: `AnimatedNumber counts from one number to another when its \`value\` changes. On first render it counts up from 0.
 
-The ease-out-expo easing produces a fast start that decelerates toward the target, which draws attention to the final number. Duration defaults to 1000ms. Use 500ms for small increments in real-time dashboards and 2000ms for hero reveals on landing pages.
-
-Formatting is built in: \`prefix\` and \`suffix\` strings wrap the number (e.g. "$" and "K"), and \`decimals\` controls fixed decimal places. The \`format\` property switches between \`number\`, \`currency\`, and \`percent\` modes, each powered by \`Intl.NumberFormat\` for locale-aware formatting: thousands separators, decimal marks, and grouping all follow the configured \`locale\`. The default locale is \`en-US\`, but you can pass any BCP 47 tag (e.g. \`de-DE\`, \`ja-JP\`) for international formatting. The animation respects \`prefers-reduced-motion\` by snapping directly to the target value without animation.`,
+Each change starts from the previous \`value\`, not from the number on screen. If a new value arrives mid-animation, the running animation stops, the number jumps to the previous target, and counts from there.`,
 
   features: [
-    'Count-up/down animation using requestAnimationFrame',
-    'Ease-out-expo easing',
-    'Configurable duration',
-    'Prefix and suffix strings for currency, units, and labels',
-    'Fixed decimal place control via decimals attribute',
-    'Intl.NumberFormat-powered formatting with currency, percent, and number modes',
-    'Configurable locale for international number formatting',
-    'Respects `prefers-reduced-motion` by snapping to final value',
+    'Runs on `requestAnimationFrame` with an ease-out-expo curve: fast at first, slowing into the final number',
+    '`duration` defaults to 1000ms',
+    'With reduced motion on, it shows the new value straight away',
+    '`prefix` and `suffix` wrap the number (for example "$" and "K"), and `decimals` sets fixed decimal places',
+    '`format` switches between `number`, `currency` and `percent`, formatted with `Intl.NumberFormat`',
+    '`locale` sets separators and decimal marks. It defaults to `en-US` and takes any BCP 47 tag (`de-DE`, `ja-JP`)',
   ],
 
   guidelines: {
     do: [
-      'Use in dashboard stat cards and hero metrics',
-      'Set decimals="2" for currency values and decimals="0" for counts',
-      'Use prefix="$" or suffix="%" for contextual formatting',
-      'Keep duration under 2000ms; longer animations feel sluggish',
-      'Combine with ValueCard or Stat for metric displays',
+      'Use it in stat cards and headline metrics, or inside ValueCard or Stat',
+      'Set decimals="2" for currency and decimals="0" for counts',
+      'Use about 500ms for small changes on a live dashboard and up to 2000ms for a headline number',
     ],
     dont: [
-      'Do not animate more than 4-5 numbers simultaneously; it becomes distracting',
-      'Do not use for rapidly changing real-time values, because the animations queue up and feel laggy',
-      'Do not set duration below 200ms, where the animation becomes imperceptible',
-      'Do not animate between extremely different magnitudes (1 to 1,000,000), where the counting is meaningless',
-      'Do not use for static numbers that never change. Add animation only when values update',
+      'Don\'t animate more than four or five numbers at once',
+      'Don\'t feed it values that change faster than the duration. Each change restarts the count from the previous value, so the number jumps',
+      'Don\'t set duration below 200ms, where the count is too fast to see',
+      'Don\'t animate between very different magnitudes (1 to 1,000,000), where the count means nothing',
     ],
   },
 
