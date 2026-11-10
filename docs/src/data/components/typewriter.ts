@@ -7,13 +7,13 @@ export const typewriter: ComponentDef = {
   tier: 'typography',
   interactivity: 'interactive',
   replayable: true,
-  description: 'Character-by-character text reveal animation with blinking cursor.',
+  description: 'Types out its text one character at a time, with a blinking cursor.',
 
-  overview: `Typewriter reveals its \`text\` one character at a time, for hero headlines, onboarding sequences and conversational UI. A \`setTimeout\` chain drives it.
+  overview: `Typewriter reveals its \`text\` one character at a time. A \`setTimeout\` chain drives it.
 
 \`speed\` is milliseconds per character (50 by default, about 20 characters a second), and \`delay\` holds the start so several typewriters can run in sequence. With \`loop\`, the text clears after \`pause-end\` (2 seconds by default) and types again, for rotating taglines.
 
-\`replay()\` restarts the animation from the beginning. Use it for a "watch again" control, or to run a one-shot reveal again after the content around it changes. It restarts the same sequence, not a second one, so it's safe to call mid-type.
+\`replay()\` restarts the animation from the beginning. Use it for a "watch again" control, or to run a one-shot reveal again after the content around it changes. Called mid-type, it cancels the pending step first, so two sequences never run at once.
 
 A blinking \`|\` cursor in \`--accent-primary\` is on by default, and \`no-cursor\` turns it off. Once typing finishes, the cursor fades out after about 3 seconds, or keeps blinking with \`loop\`. Under \`prefers-reduced-motion\` the full text shows at once.`,
 
