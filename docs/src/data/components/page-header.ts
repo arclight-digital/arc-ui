@@ -1,12 +1,12 @@
 import type { ComponentDef } from './_types';
 
-const previewMarkup = `<arc-page-header heading="Team Settings" description="Manage roles, permissions, and invitations for your team." border>
+const previewMarkup = `<arc-page-header heading="Team settings" description="Manage roles, permissions, and invitations for your team." border>
     <arc-breadcrumb slot="above" label="Example breadcrumb">
       <arc-breadcrumb-item href="/">Home</arc-breadcrumb-item>
       <arc-breadcrumb-item href="/settings">Settings</arc-breadcrumb-item>
       <arc-breadcrumb-item>Team</arc-breadcrumb-item>
     </arc-breadcrumb>
-    <arc-button slot="aside" variant="primary" size="sm">Invite Member</arc-button>
+    <arc-button slot="aside" variant="primary" size="sm">Invite member</arc-button>
   </arc-page-header>`;
 
 export const pageHeader: ComponentDef = {
@@ -16,39 +16,30 @@ export const pageHeader: ComponentDef = {
   tier: 'layout',
   interactivity: 'static',
   description:
-    'Page title area with positional slots for composing breadcrumbs, actions, tabs, or any content around a heading and description.',
+    'The title block at the top of a page: an `<h1>`, an optional description, and slots for breadcrumbs, actions and tabs.',
 
-  overview: `PageHeader is the topmost landmark on a content page. It combines a heading, an optional description, and four positional slots into one layout. Use it on every settings screen, detail view, and dashboard so users always know where they are and what they can do.
+  overview: `PageHeader renders a heading as an \`<h1>\`, an optional description under it, and slots around both. Use one at the top of a settings screen, detail view or dashboard.
 
-The component exposes four positional slots: \`above\` (renders above the heading row), \`aside\` (renders to the right of the heading), \`below\` (renders between the description and default content), and the default slot (renders at the bottom). The slots don't dictate content: put breadcrumbs in \`above\`, action buttons in \`aside\`, a tab strip in \`below\`, or use them for anything else your layout requires.
+\`above\` renders above the heading row, \`aside\` to the right of the heading, \`below\` between the description and the default content, and the default slot at the bottom. A typical page puts breadcrumbs in \`above\`, action buttons in \`aside\` and a tab strip in \`below\`.
 
-Because PageHeader renders a semantic \`<h1>\` for its heading, it establishes the document outline automatically. The \`border\` prop adds a bottom border when you want a visual separator from the page body below.`,
+The \`heading\` and \`description\` props render plain text. To put markup there, leave the prop empty and use the \`heading\` or \`description\` slot. The component doesn't wrap slotted heading content in an \`<h1>\`, so bring your own. The \`border\` prop adds a bottom border between the header and the page body.`,
 
   features: [
-    'Semantic <h1> heading that establishes the document outline',
-    'Four positional slots: above, aside, below, and default content',
-    'Optional description text for additional page context',
-    'Border prop for optional bottom border separator',
-    'Responsive title row that wraps on narrow viewports',
-    'CSS custom property theming via design tokens',
-    'Shadow DOM parts (base, above, title-row, heading, aside, description, below, content) for targeted styling',
+    'The heading row wraps on narrow screens, so `aside` drops under the heading',
+    'Parts: `base`, `above`, `title-row`, `heading`, `aside`, `description`, `below`, `content`',
   ],
 
   guidelines: {
     do: [
-      'Use one PageHeader per page to maintain a single <h1> document landmark',
-      'Always populate the heading prop: it is the primary orientation cue for the page',
-      'Place breadcrumbs in the above slot on pages more than one level deep',
-      'Put the primary page-level action in the aside slot (e.g. "Invite Member", "Create Report")',
-      'Keep the description to one or two short sentences that clarify what the page contains',
-      'Use the below slot for tab strips or secondary controls between the heading and main content',
+      'Use one PageHeader per page, so the page has one `<h1>`',
+      'Put breadcrumbs in `above` on pages more than one level deep',
+      'Put the page\'s main action in `aside`, for example "Invite member"',
+      'Keep the description to one or two short sentences about what the page contains',
+      'Use `below` for tab strips or secondary controls between the heading and the content',
     ],
     dont: [
-      'Do not nest multiple PageHeaders on the same page: this creates duplicate <h1> elements and confuses assistive technology',
-      'Do not use PageHeader as a section divider inside a scrolling page; use Section or Divider instead',
-      'Do not overload the aside slot with more than two or three buttons; move overflow actions into a DropdownMenu',
-      'Do not place lengthy paragraph text in the description; keep it concise and scannable',
-      'Do not hard-code colors or font sizes on slotted children; rely on the token system for consistency',
+      'Don\'t use it as a divider between sections of a long page. Use Section or Divider',
+      'Don\'t put more than two or three buttons in `aside`. Move the rest into a DropdownMenu',
     ],
   },
 
