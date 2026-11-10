@@ -33,12 +33,12 @@ export const docsCards: Record<string, PageCard> = {
   'docs-theming': {
     pills: [{ text: 'Docs' }],
     title: 'Theming',
-    description: 'Override the two accent colors, and every gradient, glow and focus ring built from them follows.',
+    description: 'Set --accent-primary and --accent-secondary to recolor every gradient, glow and focus ring.',
   },
   'docs-typography': {
     pills: [{ text: 'Docs' }],
     title: 'Typography',
-    description: 'ARC UI ships no font files. Assign your own typefaces to five role slots and the whole system follows.',
+    description: 'ARC UI ships no font files. Assign your own typefaces to five role slots: body, label, mono, display and quote.',
   },
   // Keyed `synth`, not `docs-…`: since v3 the synthesizer is an application at
   // /synth rather than a page in the docs tree.
@@ -56,12 +56,12 @@ export const docsCards: Record<string, PageCard> = {
   'docs-accessibility': {
     pills: [{ text: 'Docs' }],
     title: 'Accessibility',
-    description: 'Zero axe violations on every component page and WCAG AA contrast in both themes. Serious and critical violations fail CI.',
+    description: 'Every component page is audited with axe in both themes, and a serious or critical violation fails CI. Text meets WCAG AA contrast in both themes.',
   },
   'docs-browser-support': {
     pills: [{ text: 'Docs' }],
     title: 'Browser support',
-    description: 'Baseline browser targets, the platform features ARC UI needs, and polyfills for older browsers.',
+    description: 'The browsers ARC UI supports and the platform features its components use.',
   },
   'docs-contributing': {
     pills: [{ text: 'Docs' }],
