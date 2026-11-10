@@ -16,44 +16,36 @@ export const maskedInput: ComponentDef = {
     'license key',
   ],
   description:
-    'Text field that enforces a character mask as you type: dates, card numbers, phone numbers, license keys. The mask’s literals are typed for the user; value holds only the raw characters, and the raw value is what forms receive, so the mask stays presentation.',
+    'Text field that types a mask\'s literals for you, for dates, card numbers, phone numbers and license keys. `value` holds only the raw characters.',
 
-  overview: `MaskedInput is a single-line text field that formats fixed-shape values while the user types them. The \`mask\` prop describes the shape with four slot characters (\`#\` for a digit, \`A\` for an uppercase letter (lowercase input is uppercased), \`a\` for any letter, and \`*\` for a letter or digit). Every other character is a literal that the component types for the user. A date mask of \`##/##/####\` means the user types eight digits and the slashes appear on their own, with the caret always landing on the next position that can accept a character.
+  overview: `Masked Input is a single-line text field for values with a fixed shape. The \`mask\` prop describes the shape with four slot characters: \`#\` for a digit, \`A\` for a letter (lowercase input is uppercased), \`a\` for any letter, and \`*\` for a letter or digit. Every other character is a literal the field types for you. With a mask of \`##/##/####\`, the user types eight digits, the slashes appear on their own, and the caret always lands on the next position that takes a character.
 
-\`value\` holds only the raw characters, never the mask's literals. A completed date field reports \`12042026\`, and that raw string is also what the field submits with a form. The formatted string, \`12/04/2026\`, is presentation, available read-only as \`formattedValue\` and in the \`formatted\` key of every event detail. This means switching a card mask from space-grouped to dash-grouped changes nothing downstream, and your backend never has to strip formatting it did not ask for.
+\`value\` holds only the raw characters. A completed date field reports \`12042026\`, and that's also what it submits with a form. The formatted \`12/04/2026\` is in the read-only \`formattedValue\` and in the \`formatted\` key of every event detail. Switching a card mask from spaces to dashes changes nothing downstream, and your backend never strips formatting.
 
-Editing behaves the way users expect from a good mask. Typing inserts at the caret and skips literals forward; Backspace deletes the previous fillable character, skipping literals backward; pasting strips non-conforming characters and fills the remaining positions, so a card number pasted with dashes lands cleanly in a space-grouped mask. A character that does not fit its slot is silently rejected and the caret stays put. Before typing begins, the native placeholder shows the mask shape; once typing starts, the unfilled remainder renders in the field as a muted hint, such as \`12/__/____\`.
+Typing inserts at the caret and skips past literals. Backspace deletes the previous typed character, skipping literals backward. Pasting drops characters that don't fit and fills the remaining positions, so a card number pasted with dashes lands in a space-grouped mask. A character that doesn't fit its slot is rejected and the caret stays put. Before typing starts, the native placeholder shows the mask shape. After that, the unfilled rest shows in the field as a muted hint, such as \`12/__/____\`.
 
-MaskedInput follows the v3 commit contract: \`arc-input\` fires on each accepted edit, and \`arc-change\` fires on blur or Enter when the value changed, and immediately when the last mask position fills, the same fixed-length commit Pin Input uses. Constraint validation is built in: a required empty field fails with \`valueMissing\`, and a partially filled mask fails with an "Incomplete value" pattern error, so a half-typed card number cannot pass a form's validation.`,
+\`arc-input\` fires on each accepted edit. \`arc-change\` fires on blur or Enter when the value changed, and as soon as the last position fills, the same way Pin Input commits. A required empty field fails validation with \`valueMissing\`, and a partly filled one fails with an "Incomplete value" pattern error, so a half-typed card number can't pass a form's validation.`,
 
   features: [
-    'Declarative mask pattern: `#` digit, `A` uppercase letter, `a` any letter, `*` alphanumeric, everything else a literal',
-    'Raw `value` with no literals. The formatted string is exposed separately as read-only `formattedValue`',
-    'Forms receive the raw value, so the presentation format never leaks into submitted data',
-    'Literal skipping in both directions: typing jumps forward past literals, Backspace deletes through them',
-    'Paste support that strips non-conforming characters and fills the remaining positions',
-    'Muted in-field hint for unfilled positions once typing starts, configurable via `placeholder-char`',
-    'Fires `arc-input` per accepted edit and `arc-change` on blur, Enter, or the moment the mask completes',
-    'Built-in validation: required-empty is `valueMissing`, a partial fill is an "Incomplete value" pattern error',
-    'Numeric masks automatically request the numeric keyboard on mobile',
-    'Prefix and suffix slots, label, sizes, and disabled/readonly states matching Input',
+    '`placeholder-char` sets the hint character, `_` by default',
+    'A mask made only of `#` slots sets `inputmode="numeric"`, so phones show the number keyboard',
+    'Prefix and suffix slots, label, sizes, and disabled and readonly states work as they do on Input',
   ],
 
   guidelines: {
     do: [
-      'Use a mask when the value has one fixed, well-known shape: dates, card numbers, phone numbers in a single locale, license or serial keys',
-      'Read `value` (or the form submission) for storage and `formattedValue` only for display. The raw value is the contract',
-      'Listen for `arc-change` to validate or submit. It fires the moment the mask completes, so users need not leave the field first',
-      'Set `autocomplete` to the matching token (for example `cc-number` on a card field) so browser autofill keeps working',
-      'Always provide a `label`; the mask shape in the placeholder is a hint, not a name for the field',
-      'Prefer `A` over `a` for license and product keys so the stored value is case-normalized without the user caring',
+      'Use a mask when the value has one fixed shape: dates, card numbers, phone numbers in a single locale, license or serial keys',
+      'Store `value` and use `formattedValue` only for display',
+      'Listen for `arc-change` to validate or submit. It fires when the mask completes, so the user doesn\'t have to leave the field',
+      'Set `autocomplete` to the matching token, such as `cc-number` on a card field, so browser autofill keeps working',
+      'Always set a `label`. The mask shape in the placeholder is a hint, not a name for the field',
+      'Use `A` over `a` for license and product keys, so the stored value is always uppercase',
     ],
     dont: [
-      'Do not mask free-form values like names, email addresses, or search queries. A mask that fights variable-length input is worse than no mask; use Input instead',
-      'Do not use MaskedInput for short fixed-length verification codes. Pin Input gives each character its own box and auto-advances',
-      'Do not mask international phone numbers with a single pattern. Number lengths vary by country, and a wrong mask locks users out of entering their own number',
-      'Do not parse `formattedValue` on the server. Submit and store the raw value, and format at the display edge',
-      'Do not use the mask as a substitute for validation of meaning. `##/##/####` accepts 99/99/9999; check that a date is real before accepting it',
+      'Don\'t mask free-form values like names, email addresses or search queries. Use Input',
+      'Don\'t use it for short verification codes. Pin Input gives each character its own box and advances on its own',
+      'Don\'t mask international phone numbers with one pattern. Lengths vary by country, and a wrong mask stops people entering their own number',
+      'Don\'t treat the mask as validation. `##/##/####` accepts 99/99/9999, so check that a date is real before accepting it',
     ],
   },
 
