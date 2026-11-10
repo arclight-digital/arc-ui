@@ -7,39 +7,30 @@ export const video: ComponentDef = {
   tier: 'content',
   interactivity: 'interactive',
   description:
-    'House-styled video player with a glowing poster play overlay and minimal custom controls over the native video element.',
+    'Video player with a glowing play button on the poster and a small set of custom controls over the native video element.',
   searchKeywords: ['player', 'media', 'movie', 'playback', 'mp4'],
 
-  overview: `Video wraps the native \`<video>\` element in the house player chrome. Before the first play it shows the poster with a large, glowing play button; once playback starts, a minimal floating control bar takes over: play/pause, a monospace time readout, a scrub bar that seeks directly, a mute toggle, and a fullscreen button. During playback the bar dims after two seconds of idle rather than disappearing. It stays legible and clickable, so the controls never have to be summoned, and it comes back to full strength whenever the pointer is over the player or a control takes focus. Under reduced motion the transition is suppressed but the dimming is not.
+  overview: `Video wraps the native \`<video>\` element in ARC UI's own controls. Before the first play it shows the poster with a large, glowing play button. Once playback starts, a floating control bar takes over with play/pause, a monospace time readout, a scrub bar that seeks where you click, a mute toggle and a fullscreen button. After two seconds without input the bar dims, but it stays visible and clickable, so the reader never has to summon it. It returns to full strength when the pointer is over the player or a control has focus. Under reduced motion the fade is instant, but the bar still dims.
 
-The player answers to the standard keyboard map when focused: Space or K toggles playback, the arrow keys seek five seconds in either direction, M toggles mute, and F toggles fullscreen. Every state change surfaces as a house event: \`arc-play\`, \`arc-pause\`, and \`arc-ended\`, each carrying the current time in seconds on \`detail.value\`.
+When the player has focus, Space or K plays and pauses, the arrow keys seek five seconds back or forward, M mutes and F toggles fullscreen. \`arc-play\`, \`arc-pause\` and \`arc-ended\` fire on each change, with the current time in seconds on \`detail.value\`.
 
-The component takes a single \`src\`, with no \`<source>\` fallback chain for multiple formats. Serve one broadly supported encoding (H.264/MP4 plays everywhere), or drop down to the native element when you need format negotiation or adaptive streaming. For ambient or presentation video, set \`controls="false"\` and pair \`autoplay\` with \`muted\`. Browsers only honor autoplay for muted video, and when autoplay is blocked the play overlay stays up.`,
+It takes a single \`src\`, with no \`<source>\` list for multiple formats. Serve one format your target browsers all play, such as H.264/MP4, or use the native element when you need format negotiation or adaptive streaming. For ambient or presentation video, set \`controls="false"\` and pair \`autoplay\` with \`muted\`. Browsers only honor autoplay for muted video, and when autoplay is blocked the play button stays up.`,
 
   features: [
-    'Poster state with a large centered play button carrying the house glow',
-    'Floating control bar: play/pause, monospace time readout, direct-seek scrub bar, mute, fullscreen',
-    'Controls dim after two seconds of idle playback and return to full strength on hover or focus; never hidden outright',
-    'Standard player keys on the focused player: Space/K, arrow-key seeking, M, F',
-    'House events with the current time on `detail.value`: `arc-play`, `arc-pause`, `arc-ended`',
-    '`controls="false"` ambient mode for presentation and background video',
-    'Native `preload` passthrough, defaulting to `metadata`',
-    'Fullscreen is feature-detected and does nothing where the API is unavailable',
+    '`preload` is passed to the native element and defaults to `metadata`',
+    'The fullscreen button does nothing where the Fullscreen API isn\'t available',
   ],
 
   guidelines: {
     do: [
-      'Provide a `label`. It names the player region for screen readers and the overlay play button',
-      'Set a `poster` so the pre-play frame shows content instead of an empty surface',
-      'Pair `autoplay` with `muted`; browsers block unmuted autoplay',
-      'Use `controls="false"` with `autoplay`, `muted`, and `loop` for ambient background video',
-      'Serve a single broadly supported format such as H.264/MP4',
+      'Set a `label`. It names the player region and the play button for screen readers',
+      'Set a `poster` so the frame before playback shows content, not an empty box',
+      'Use `controls="false"` with `autoplay`, `muted` and `loop` for an ambient background video',
     ],
     dont: [
-      'Do not use arc-video for a still frame. Use arc-image for anything that does not play',
-      'Do not use it to page through a set of clips or mixed media. arc-carousel handles sequenced content',
-      'Do not rely on multiple `<source>` formats. The component takes exactly one `src`',
-      'Do not leave ambient video unmuted; sound without a visible control is hostile',
+      'Don\'t use it for a still frame. Use arc-image for anything that doesn\'t play',
+      'Don\'t use it to page through a set of clips or mixed media. Use arc-carousel',
+      'Don\'t leave ambient video unmuted. With `controls="false"` the reader has no way to turn the sound off',
     ],
   },
 
