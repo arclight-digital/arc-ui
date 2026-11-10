@@ -8,39 +8,33 @@ export const tooltip: ComponentDef = {
   interactivity: 'hybrid',
   searchKeywords: ['hint'],
   description:
-    'Contextual hint that appears on hover or focus, providing supplementary information without cluttering the UI. Supports four placement positions and a configurable show delay.',
+    'Short hint that appears on hover or focus. Supports four placement positions and a configurable show delay.',
 
-  overview: `Tooltip is a non-intrusive disclosure component that surfaces contextual information when a user hovers over or focuses on an element. Use it when a control's purpose is not obvious from its visual alone: icon-only buttons, truncated labels, abbreviated values, and keyboard shortcuts.
+  overview: `Tooltip shows a short plain-text hint when the pointer rests on its trigger or the trigger gets focus. Use it when a control's purpose isn't clear from how it looks, as with icon-only buttons, truncated labels, abbreviations and keyboard shortcuts. For formatted or interactive content, use Popover.
 
-The component supports four placements (top, bottom, left, right), so the tooltip can sit wherever there is space around its trigger. A configurable delay (defaulting to 200 ms) prevents tooltips from firing on casual mouse movement, such as a pointer sweeping across a dense toolbar.
+\`position\` puts it above, below, left or right of the trigger. It waits \`delay\` milliseconds (200 by default) before showing, so a pointer sweeping across a dense toolbar doesn't set off every tooltip.
 
-Tooltip links the popup to its trigger via \`aria-describedby\`, uses the \`role="tooltip"\` semantic, and dismisses on Escape so keyboard and screen-reader users receive the same contextual hints as mouse users. Because the popup is pointer-events-none, it never blocks interaction with surrounding elements.`,
+The trigger points to the popup with \`aria-describedby\`, the popup has \`role="tooltip"\`, and Escape dismisses it. The popup has \`pointer-events: none\`, so it never blocks clicks on what's around it.`,
 
   features: [
-    'Four placement positions (top, bottom, left, right)',
-    'Configurable show delay to avoid accidental activation',
-    'Accessible by default with `aria-describedby` and `role="tooltip"`',
-    'Escape key dismissal for keyboard users',
-    'Automatic show on hover (mouseenter) and focus (focusin)',
-    'Opacity transition using design-token timing',
-    'Directional arrow that points toward the trigger element',
-    'Pointer-events-none popup that never blocks surrounding UI',
+    'Shows on `mouseenter` and `focusin`',
+    'An arrow points at the trigger',
   ],
 
   guidelines: {
     do: [
-      'Use tooltips on icon-only buttons to describe the action (e.g. "Edit", "Delete")',
-      'Keep tooltip text short: one line, ideally under eight words',
-      'Prefer top position as the default; switch only when clipped by viewport edges',
-      'Set a longer delay (400-600 ms) in dense toolbars to reduce visual noise',
-      'Pair with aria-label on the trigger when the tooltip is the only accessible name',
+      'Use tooltips on icon-only buttons to name the action, such as "Edit" or "Delete"',
+      'Keep the text to one line, ideally under eight words',
+      'Start with `top`, and switch only when the tooltip is clipped by the edge of the viewport',
+      'Set a longer delay (400 to 600ms) in dense toolbars',
+      'Give the trigger an `aria-label` when the tooltip is its only name',
     ],
     dont: [
-      'Do not put interactive content (links, buttons) inside a tooltip. Use Popover instead',
-      'Do not duplicate information already visible in the trigger label',
-      'Do not use tooltips for essential information that the user must see to complete a task',
-      'Do not set delay to 0. Instant tooltips are distracting during normal pointer movement',
-      'Do not rely on tooltips for touch-only users; they have no hover event to trigger them',
+      'Don\'t put links or buttons in a tooltip. Use Popover',
+      'Don\'t repeat what the trigger\'s label already says',
+      'Don\'t put information the reader needs to finish a task in a tooltip',
+      'Don\'t set `delay` to 0. Tooltips then flash up during ordinary pointer movement',
+      'Don\'t rely on tooltips for touch users. There\'s no hover to trigger them',
     ],
   },
 
