@@ -115,8 +115,10 @@ for (const file of fs.readdirSync(DIR)) {
 
 // Anti-vacuity: the enum map is built by walking a generated file whose shape
 // could change, and the claim regex reads hand-written prose. Either going
-// quiet would report a clean tree having compared nothing.
-if (pages < 100 || enums.size < 50 || checked < 20) {
+// quiet would report a clean tree having compared nothing. The claim floor is
+// low because most pages now name the values instead of counting them (the
+// prose-refactor branch took the count from 58 claims to 15).
+if (pages < 100 || enums.size < 50 || checked < 10) {
   console.error(
     `check-prose-counts: ${pages} page(s), ${enums.size} enum(s), ${checked} claim(s) ` +
       'compared — the scan is broken, not the tree'
