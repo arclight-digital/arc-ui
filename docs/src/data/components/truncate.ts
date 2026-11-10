@@ -8,33 +8,21 @@ export const truncate: ComponentDef = {
   interactivity: 'interactive',
   description: 'Multi-line text clamping with expandable show-more toggle.',
 
-  overview: `Truncate clamps long text to a specified number of lines and provides a "Show more" / "Show less" toggle to expand and collapse the content. It uses CSS \`-webkit-line-clamp\` for native multi-line truncation, which is widely supported across current browsers and clamps reliably without JavaScript text measurement.
+  overview: `Truncate cuts long text off after \`lines\` lines and adds a "Show more" / "Show less" toggle. The clamp is CSS \`-webkit-line-clamp\`, so no JavaScript measures the text to cut it.
 
-A \`ResizeObserver\` monitors the content container and detects whether the text actually overflows the clamp limit. The toggle button only appears when overflow is detected, so short text that fits within the line limit shows no toggle. When expanded, the component temporarily re-applies the clamp to measure whether the toggle should remain visible.
+A \`ResizeObserver\` checks whether the text overflows the clamp, and the toggle appears only when it does, so short text gets no toggle. It checks again when the container resizes.
 
-The component fires an \`arc-toggle\` event with \`{ expanded }\` detail when toggled, and the \`expanded\` attribute is reflected for CSS targeting. The toggle link is styled with \`var(--accent-primary)\` and uppercase lettering consistent with the design system's action links.`,
-
-  features: [
-    'CSS-native multi-line text clamping via -webkit-line-clamp',
-    'Automatic overflow detection: toggle only appears when text exceeds line limit',
-    'ResizeObserver for responsive re-measurement on container resize',
-    'Configurable line count via lines attribute',
-    'Reflected expanded attribute for CSS-based conditional styling',
-    'Show more / Show less toggle with accent-primary styling',
-  ],
+Clicking the toggle fires \`arc-toggle\` with \`{ expanded }\` in the detail, and the \`expanded\` attribute is reflected for CSS. The toggle is uppercase text in \`--interactive\`.`,
 
   guidelines: {
     do: [
-      'Use for long descriptions, comments, or bio text that would dominate the layout',
-      'Set lines="2" or lines="3" for card descriptions and list item summaries',
-      'Use in combination with cards or list items to keep uniform heights',
-      'Test with varying content lengths to ensure the toggle appears correctly',
+      'Use it for long descriptions, comments or bios that would take over the layout',
+      'Set `lines="2"` or `lines="3"` for card descriptions and list item summaries',
+      'Use it in cards or list items to keep their heights even',
     ],
     dont: [
-      'Do not use Truncate for single-line text. Use CSS text-overflow: ellipsis instead',
-      'Do not set lines to 1. The clamping behavior is designed for multi-line content',
-      'Do not Truncate interactive content like forms or buttons. Use it for text only',
-      'Do not nest Truncate components. Expanding one inside another creates confusing behavior',
+      'Don\'t use it for single-line text, `lines="1"` included. Use CSS `text-overflow: ellipsis`',
+      'Don\'t put forms, buttons or other controls inside it. It\'s for text',
     ],
   },
 
