@@ -13,7 +13,7 @@ export const sparkline: ComponentDef = {
 
 Pass the values as a comma-separated string in \`data\`. \`type="line"\` draws a line with rounded joins, and \`fill\` adds a shaded area under it. \`type="bar"\` draws evenly spaced bars that fill in more strongly on hover. The line draws itself in over 800ms when it first renders, and appears at once under \`prefers-reduced-motion\`.
 
-The color is \`--accent-primary\` by default. \`color\` takes another CSS color for the line, such as green for revenue or red for an error rate. The bar and area fills don't use \`color\` correctly yet, so keep the default color for those.`,
+The color is \`--accent-primary\` by default. \`color\` takes any CSS color, such as \`var(--color-success)\` for revenue or \`#dc2626\` for an error rate, and an \`"r, g, b"\` triplet still works. It sets the line, the area under it at 10% opacity, and the bars at 30% (60% on hover).`,
 
   features: [
     'A baseline rule in `--border-subtle`',

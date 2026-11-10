@@ -3,6 +3,17 @@ import { tokenStyles } from '../shared-styles.js';
 import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
 
 /**
+ * An "r, g, b" triplet, the form `color` documented before it took any CSS
+ * color. Still accepted, so it is wrapped in rgb() to become a color.
+ */
+const TRIPLET = /^\s*\d+(\.\d+)?\s*,\s*\d+(\.\d+)?\s*,\s*\d+(\.\d+)?\s*$/;
+
+function cssColor(value) {
+  if (!value) return '';
+  return TRIPLET.test(value) ? `rgb(${value})` : value;
+}
+
+/**
  * Tiny inline SVG chart for embedding lightweight line or bar visualizations inside tables, stat
  * cards, and dashboards. Renders from a simple comma-separated data string with no external
  * charting dependencies.
@@ -11,10 +22,10 @@ import { DeclaredPropsMixin, flag, oneOf, num } from '../shared/props.js';
  * @status stable
  * @prop {string} data - Comma-separated numeric values that define the chart data points (e.g. "10,25,18,30,22,35,28"). Parsed into a number array at render time. Non-numeric entries are silently dropped.
  * @prop {'line' | 'bar'} type - Chart type. Line renders a polyline with optional area fill; bar renders evenly spaced rectangles.
- * @prop {string} color - CSS color override applied to strokes and fills. Accepts any valid CSS color value. Defaults to var(--accent-primary) when not set.
+ * @prop {string} color - Color for the line, the area under it and the bars. Takes any CSS color (`#16a34a`, `green`, `var(--color-success)`) or an `"r, g, b"` triplet. The area fill is the color at 10% opacity and bars at 30% (60% on hover). Defaults to `var(--accent-primary)` when not set.
  * @prop {number} width - SVG viewport width in pixels.
  * @prop {number} height - SVG viewport height in pixels.
- * @prop {boolean} fill - When true and type is "line", fills the area beneath the curve with a semi-transparent accent color.
+ * @prop {boolean} fill - When true and type is "line", fills the area beneath the curve with `color` at 10% opacity.
  * @slot none
  * @csspart base - The root element.
  * @csspart area
@@ -53,19 +64,21 @@ export class ArcSparkline extends DeclaredPropsMixin(LitElement) {
         fill: none;
       }
 
+      /* color-mix() rather than rgba(var(...), a): the latter is valid only
+         for an "r, g, b" triplet, and \`color\` takes any CSS color. */
       .sparkline-area {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.1);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 10%, transparent);
         stroke: none;
       }
 
       .sparkline-bar {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.3);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 30%, transparent);
         rx: 1;
         transition: fill var(--transition-fast);
       }
 
       .sparkline-bar:hover {
-        fill: rgba(var(--_sparkline-color-rgb, var(--accent-primary-rgb)), 0.6);
+        fill: color-mix(in srgb, var(--_sparkline-color, var(--accent-primary)) 60%, transparent);
       }
 
       .sparkline-baseline {
@@ -214,9 +227,8 @@ export class ArcSparkline extends DeclaredPropsMixin(LitElement) {
 
   render() {
     const values = this._parseData();
-    const colorStyle = this.color
-      ? `--_sparkline-color: ${this.color}; --_sparkline-color-rgb: ${this.color};`
-      : '';
+    const color = cssColor(this.color);
+    const colorStyle = color ? `--_sparkline-color: ${color};` : '';
 
     return html`
       <svg
