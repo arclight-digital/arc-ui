@@ -46,7 +46,7 @@ export const GET: APIRoute = async ({ site }) => {
     <title>ARC UI changelog</title>
     <link>${base}/docs/changelog</link>
     <atom:link href="${base}/rss.xml" rel="self" type="application/rss+xml" />
-    <description>Release notes for ARC UI, a Lit web component library with generated packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML.</description>
+    <description>Release notes for ARC UI, a Lit Web Component library with generated packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML.</description>
     <language>en</language>
     <lastBuildDate>${new Date(`${releases[0].date}T12:00:00Z`).toUTCString()}</lastBuildDate>
 ${items}

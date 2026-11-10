@@ -35,7 +35,7 @@ Switching tabs moves one indicator between them: the underline in the default va
 
   previewHtml: `<div style="width:100%">
   <arc-tabs>
-    <arc-tab label="Overview">ARC UI is a set of Lit web components, with wrapper packages for React, Vue, Svelte, Angular, Solid and Preact.</arc-tab>
+    <arc-tab label="Overview">ARC UI is a set of Lit Web Components, with wrapper packages for React, Vue, Svelte, Angular, Solid and Preact.</arc-tab>
     <arc-tab label="Features">The arrow keys move between tabs. Home and End jump to the first and last tab.</arc-tab>
     <arc-tab label="Changelog">Each release's changes are listed on the GitHub releases page.</arc-tab>
   </arc-tabs>

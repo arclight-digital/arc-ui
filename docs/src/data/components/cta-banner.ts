@@ -1,7 +1,7 @@
 import type { ComponentDef } from './_types';
 
 const previewMarkup = `<arc-cta-banner eyebrow="Ready when you are" headline="Build something that glows.">
-  <p>A package for each of React, Vue, Svelte, Angular, Solid and Preact, and web components for plain HTML. MIT licensed.</p>
+  <p>A package for each of React, Vue, Svelte, Angular, Solid and Preact, and Web Components for plain HTML. MIT licensed.</p>
   <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">Read the install guide</arc-button>
   <arc-button slot="actions" href="/docs/components" variant="secondary" size="md">Browse components</arc-button>
 </arc-cta-banner>`;

@@ -21,7 +21,7 @@ export const GET: APIRoute = async () => {
 
   const body = `# ARC UI
 
-> ARC UI (ARC Radiant Components) is a dark-first web component library built with Lit. Prism generates packages for ${frameworkCount} targets from the one Lit source.
+> ARC UI (ARC Radiant Components) is a dark-first Web Component library built with Lit. Prism generates packages for ${frameworkCount} targets from the one Lit source.
 
 - Version: ${version}
 - Components: ${components.length}

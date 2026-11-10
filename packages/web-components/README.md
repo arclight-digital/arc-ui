@@ -1,6 +1,6 @@
 # @arclux/arc-ui
 
-The [ARC UI](https://arcui.dev) web components, written in Lit. This package is the canonical source: [Prism](https://www.npmjs.com/package/@arclux/prism) generates every framework wrapper package from it.
+The [ARC UI](https://arcui.dev) Web Components, written in Lit. This package is the canonical source: [Prism](https://www.npmjs.com/package/@arclux/prism) generates every framework wrapper package from it.
 
 ## Installation
 

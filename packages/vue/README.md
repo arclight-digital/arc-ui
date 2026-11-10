@@ -1,6 +1,6 @@
 # @arclux/arc-ui-vue
 
-Vue 3 component wrappers for [ARC UI](https://arcui.dev) web components, with typed props and emits.
+Vue 3 component wrappers for [ARC UI](https://arcui.dev) Web Components, with typed props and emits.
 
 > [Prism](https://www.npmjs.com/package/@arclux/prism) generates this package's code from [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). To change a component, edit its source in [`packages/web-components`](https://github.com/arclight-digital/arc-ui/tree/main/packages/web-components). Hand edits here are overwritten the next time `pnpm generate` runs.
 

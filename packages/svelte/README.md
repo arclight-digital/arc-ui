@@ -1,6 +1,6 @@
 # @arclux/arc-ui-svelte
 
-Svelte 5 component wrappers for [ARC UI](https://arcui.dev) web components, using runes (`$props`) and snippets.
+Svelte 5 component wrappers for [ARC UI](https://arcui.dev) Web Components, using runes (`$props`) and snippets.
 
 > [Prism](https://www.npmjs.com/package/@arclux/prism) generates this package's code from [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). To change a component, edit its source in [`packages/web-components`](https://github.com/arclight-digital/arc-ui/tree/main/packages/web-components). Hand edits here are overwritten the next time `pnpm generate` runs.
 

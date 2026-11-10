@@ -82,7 +82,7 @@ shipped bug, add a test that pins the invariant that broke.
 
 ### Conventions
 
-- **Web components**: `arc-component-name` (kebab-case tag), `ArcComponentName` (PascalCase class)
+- **Web Components**: `arc-component-name` (kebab-case tag), `ArcComponentName` (PascalCase class)
 - **React wrappers**: `ComponentName` (no Arc prefix)
 - **Events**: `arc-event-name` with `bubbles: true, composed: true` (checked by `pnpm check event-conventions`)
 - **Child elements**: if a component renders another `arc-*` element, declare it

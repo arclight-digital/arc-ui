@@ -1,5 +1,5 @@
 <h1 align="center">ARC UI</h1>
-<p align="center"><strong>Lit web components, with a native package for each of seven frameworks.</strong></p>
+<p align="center"><strong>Lit Web Components, with a native package for each of seven frameworks.</strong></p>
 
 <p align="center">
   <a href="https://www.npmjs.com/package/@arclux/arc-ui"><img src="https://img.shields.io/npm/v/@arclux/arc-ui?style=flat-square&color=4d7ef7" alt="npm version"></a>
@@ -18,7 +18,7 @@
 
 ---
 
-ARC UI is a set of [Lit](https://lit.dev) web components. **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source, so every framework gets the same elements and the same tokens. Changing framework means changing the import path.
+ARC UI is a set of [Lit](https://lit.dev) Web Components. **Prism**, our generator, produces native packages for React, Vue, Svelte, Angular, Solid, Preact and plain HTML from that one source, so every framework gets the same elements and the same tokens. Changing framework means changing the import path.
 
 It's built AI-first: Claude writes most of the code, and the tests and CI decide what ships. Before anything ships it has to pass 5,196 browser tests (the test runner's count at v4.9.2) and Prism's own suite of about 690 tests, and CI mounts every wrapper package in a real browser on every run. Styling is CSS custom properties throughout, so in dark mode the zero-JS HTML package looks the same as the React one. The HTML package has no light theme.
 

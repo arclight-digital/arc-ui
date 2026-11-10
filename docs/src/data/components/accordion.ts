@@ -38,7 +38,7 @@ Answers are plain text. The item's \`textContent\` is rendered into a paragraph,
   <arc-accordion>
     <arc-accordion-item question="Which frameworks does ARC UI support?">
       React, Vue, Svelte, Angular, Solid and Preact each get a generated package.
-      Plain HTML uses the web components directly.
+      Plain HTML uses the Web Components directly.
     </arc-accordion-item>
     <arc-accordion-item question="How do I theme ARC UI components?">
       Override the tokens on :root to change the whole page, or on a wrapper
