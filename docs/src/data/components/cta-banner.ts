@@ -1,9 +1,9 @@
 import type { ComponentDef } from './_types';
 
 const previewMarkup = `<arc-cta-banner eyebrow="Ready when you are" headline="Build something that glows.">
-  <p>One package for plain HTML, a native one for each of seven frameworks. MIT licensed.</p>
-  <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">Get Started</arc-button>
-  <arc-button slot="actions" href="/docs/components" variant="secondary" size="md">Explore Components</arc-button>
+  <p>A package for each of React, Vue, Svelte, Angular, Solid and Preact, and web components for plain HTML. MIT licensed.</p>
+  <arc-button slot="actions" href="/docs/getting-started" variant="primary" size="md">Read the install guide</arc-button>
+  <arc-button slot="actions" href="/docs/components" variant="secondary" size="md">Browse components</arc-button>
 </arc-cta-banner>`;
 
 export const ctaBanner: ComponentDef = {
@@ -13,37 +13,27 @@ export const ctaBanner: ComponentDef = {
   tier: 'content',
   interactivity: 'static',
   description:
-    'Full-width call-to-action banner with gradient background, eyebrow text, headline, body copy, and action buttons. For landing page CTAs, marketing sections, and page closers.',
+    'Full-width call-to-action banner with an eyebrow, a gradient headline, body copy and action buttons.',
 
-  overview: `CtaBanner is a full-width promotional block for page closers, hero-adjacent CTAs, and marketing sections. It combines an eyebrow label, a gradient-text headline, body copy, and an actions slot in a centered, vertically stacked layout with a subtle radial gradient background.
+  overview: `CtaBanner is a centered block that closes a landing page or a marketing section. From top to bottom it stacks an \`eyebrow\` label, a gradient-text \`headline\`, the default slot for body copy and an \`actions\` slot for buttons, over a radial gradient made from the accent tokens. Set \`nogradient\` to turn the background off.
 
-The gradient background uses the same accent tokens as the rest of ARC UI, so it follows custom themes. Set the \`nogradient\` attribute to disable the background effect for quieter contexts. Both the eyebrow and headline accept slot overrides for rich content beyond simple strings.
-
-On viewports below 768px, padding compresses and action buttons stack vertically. CSS parts are exposed on every semantic region so you can override styles without breaking encapsulation.`,
+The \`eyebrow\` and \`headline\` slots take markup when a plain string isn't enough. Below 768px the padding shrinks and the buttons stack.`,
 
   features: [
-    'Radial gradient background using accent-primary and accent-secondary tokens',
-    'Gradient-text headline with responsive clamped font size (28–40px)',
-    'Eyebrow label with accent gradient text treatment',
-    'Actions slot for buttons with responsive stacking below 768px',
-    'nogradient attribute to disable the background effect',
-    'Slot overrides for eyebrow and headline for rich custom content',
-    'CSS parts on every region: container, background, inner, eyebrow, headline, body, actions',
-    'Follows custom themes through the design token system',
+    'The headline uses `--text-2xl`, which scales from 28px to 36px',
+    'CSS parts: `container`, `background`, `inner`, `eyebrow`, `headline`, `body`, `actions`',
   ],
 
   guidelines: {
     do: [
-      'Use at the bottom of landing pages as a page-closing CTA',
-      'Keep the headline short and action-oriented: 6 words or fewer',
-      'Provide at most two action buttons: one primary, one secondary',
+      'Keep the headline short and about the action, 6 words or fewer',
+      'Use two buttons at most, one primary and one secondary',
       'Use the eyebrow to set context before the headline',
     ],
     dont: [
-      'Do not stack multiple CTA banners on the same page; one is enough',
-      'Do not use for informational content. Use an Alert or Card instead',
-      'Do not omit both headline and eyebrow; the banner needs at least a headline',
-      'Do not add more than two action buttons; too many choices reduce conversion',
+      'Don\'t put more than one on a page',
+      'Don\'t use it for information. Use an Alert or a Card',
+      'Don\'t leave out the headline',
     ],
   },
 
