@@ -15,7 +15,7 @@ It renders with \`role="switch"\` and keeps \`aria-checked\` in step with \`chec
 Set \`checked\` once and let the toggle keep its own state, or drive \`checked\` from your framework's state. With a \`name\`, it takes part in native form submission like a checkbox: it submits "on" when checked and nothing when off.`,
 
   features: [
-    'Space toggles it from the keyboard',
+    'Space or Enter toggles it from the keyboard. Enter inside a form toggles it and does not submit the form',
     'Clicking the `label` text toggles it too',
     'A disabled toggle is dimmed and ignores pointer and keyboard input',
     'Fires `arc-change` with `detail.checked`',

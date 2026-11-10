@@ -4,7 +4,8 @@ import { FormControlMixin } from '../shared/form-control-mixin.js';
 import { DeclaredPropsMixin, flag, oneOf } from '../shared/props.js';
 
 /**
- * On/off switch with smooth animation, glow effect, and ARIA switch role.
+ * On/off switch with smooth animation, glow effect, and ARIA switch role. Space or Enter toggles it
+ * from the keyboard; Enter does not submit a surrounding form.
  *
  * @tag arc-toggle
  * @status stable
@@ -182,8 +183,13 @@ export class ArcToggle extends DeclaredPropsMixin(FormControlMixin(LitElement)) 
     );
   }
 
+  /**
+   * Space, and Enter as the WAI-ARIA switch pattern allows. The track is a
+   * div, so Enter here was never an implicit form submission; claiming it
+   * keeps an ancestor's Enter handler from also acting on the same press.
+   */
   _handleKeydown(e) {
-    if (e.key === ' ') {
+    if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
       this._toggle();
     }
