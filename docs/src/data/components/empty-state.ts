@@ -8,44 +8,34 @@ export const emptyState: ComponentDef = {
   interactivity: 'static',
   description: 'Placeholder for empty lists or search results.',
 
-  overview: `EmptyState is a structured placeholder for screens, sections, or lists that have no content to display. It centralises an icon, heading, description, and action buttons into a clean, centered layout that guides users toward a next step rather than leaving them staring at a blank area. Common use cases include empty search results, first-run experiences, empty data tables, and zero-state dashboards.
+  overview: `EmptyState fills a list, table, search result or dashboard that has nothing to show, and points to a next step. It stacks an \`icon\` slot, a \`heading\`, a \`description\` and an \`actions\` slot for buttons, centered in a box with a dashed border on the raised surface color.
 
-The component uses a dashed border and \`--bg-card\` background to visually distinguish itself from regular content cards. The icon slot (named \`icon\`) accepts any custom icon markup (SVG, emoji, or icon-font), displayed at 40px in \`--text-ghost\` color. The heading and description are set via string properties, keeping the API simple for the most common use cases.
+The icon slot takes an SVG, an icon or an emoji, shown at 40px in \`--text-ghost\` and hidden from screen readers. The heading renders as an \`<h3>\`, and the description is capped at 360px wide. Each is left out when it's empty.
 
-The action slot (named \`action\`) provides a flex container for one or more buttons, enabling patterns like "Create your first item" or "Try a different search". The description text is capped at 360px max-width for comfortable reading. The outer container uses \`role="status"\` so assistive technology announces the empty state to screen reader users.`,
+It's quiet by default. Set \`announce\` to make it a polite live region (\`role="status"\`) when the empty state answers something the user just did, such as a search with no results. Leave it off for a list that's empty on page load, since a live region reads out everything that changes inside it.`,
 
   features: [
-    'Quiet by default; `announce` makes it a polite live region, for an empty result the user just asked for',
-    'Centered layout with icon, heading, description, and action button area',
-    'Dashed border container with `--bg-card` background for visual distinction',
-    'Named icon slot for custom SVG or emoji icons displayed at 40px',
-    'Named action slot with flex layout for one or more CTA buttons',
-    'Description text capped at 360px max-width for readability',
-    '`role="status"` on the container for screen reader announcements',
-    'CSS parts (container, icon, heading, description, actions) for styling',
-    'Heading and description conditionally rendered only when provided',
+    'The `actions` slot lays out several buttons in a row',
+    'CSS parts: `container`, `icon`, `heading`, `description`, `actions`',
   ],
 
   guidelines: {
     do: [
-      'Always provide at least one action button so the user knows what to do next',
-      'Use a relevant icon that hints at the type of missing content (search, folder, etc.)',
-      'Write a clear, specific heading like "No results found" rather than a generic "Empty"',
-      'Include a helpful description that explains why the area is empty or how to populate it',
-      'Use empty state inside data tables, lists, and dashboards that can have zero items',
+      'Give it at least one action, so people know what to do next',
+      'Pick an icon that hints at what\'s missing, such as a search or folder icon',
+      'Write a specific heading, such as "No results found", not "Empty"',
+      'Use the description to say why it\'s empty or how to fill it',
     ],
     dont: [
-      'Do not use empty state as a general-purpose card. It is specifically for zero-content scenarios',
-      'Do not leave out the action slot. An empty state without a next step is a dead end',
-      'Do not write vague descriptions like "Nothing here". Be specific about the cause and solution',
-      'Do not use more than two action buttons. Keep the path forward simple and clear',
-      'Do not show an empty state while data is loading. Use skeletons for loading, empty state for zero results',
+      'Don\'t use it as a general card. It\'s for places with no content',
+      'Don\'t use more than two action buttons',
+      'Don\'t show it while data is loading. Use a skeleton until you know the result is empty',
     ],
   },
 
-  previewHtml: `<arc-empty-state heading="No projects yet" description="Create your first project to get started with ARC UI.">
+  previewHtml: `<arc-empty-state heading="No projects yet" description="Projects you create will show up here.">
   <span slot="icon" style="font-size: 40px;">&#128193;</span>
-  <arc-button slot="actions" variant="primary" size="sm">Create Project</arc-button>
+  <arc-button slot="actions" variant="primary" size="sm">Create project</arc-button>
 </arc-empty-state>`,
 
   tabs: [
