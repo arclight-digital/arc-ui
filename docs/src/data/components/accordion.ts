@@ -7,58 +7,46 @@ export const accordion: ComponentDef = {
   tier: 'content',
   interactivity: 'hybrid',
   description:
-    'Expandable content sections with animated height. Good for FAQs, settings panels, and any UI that uses progressive disclosure.',
+    'Collapsible question-and-answer sections. One stays open at a time unless you set multiple.',
 
-  overview: `Accordion organizes related content into collapsible sections, so users can focus on one topic at a time without leaving the page. Each section header is a toggle that reveals or hides its body with a CSS grid animation, so no JavaScript height calculation is needed.
+  overview: `Accordion stacks \`<arc-accordion-item>\` elements. Each item's \`question\` attribute becomes a button, and the item's text becomes the panel under it. Opening one item closes the others unless you set \`multiple\`.
 
-Use Accordion when you have multiple blocks of content that are individually useful but would overwhelm the user if shown all at once. Common scenarios include FAQ pages, product feature breakdowns, configuration panels, and documentation side-notes. Because each item is a lightweight \`<arc-accordion-item>\` element, content is authored declaratively in markup rather than passed as a data array.
-
-Trigger buttons carry \`aria-expanded\` state, keyboard navigation uses standard focus management, and the chevron rotates to show the state. Animations respect \`prefers-reduced-motion\` when set at the OS level.`,
+Answers are plain text. The item's \`textContent\` is rendered into a paragraph, so links, lists and other markup inside an item are lost. That suits FAQs and short notes. For a single block of rich content, use Collapsible.`,
 
   features: [
-    'CSS grid expand/collapse animation (no JS height calculation)',
-    'Single-open by default (set multiple for multi-open)',
-    'Declarative content via `<arc-accordion-item>` children with a question attribute',
-    'Slotted answer content can be any HTML',
-    'Accessible: `aria-expanded` on triggers, keyboard-focusable, visible focus ring',
-    'Animated chevron rotates 180 degrees to indicate open/closed state',
-    'Respects design tokens for colors, spacing, radii, and transitions',
-    'Rounded container with subtle 1px gap separating items',
+    'Panel height animates with a CSS grid transition, with no JavaScript measuring',
+    'Each trigger is a `<button>` with `aria-expanded` and `aria-controls`, and each panel is a `region` labelled by its trigger',
+    'The chevron turns 180 degrees when an item opens',
+    'Items sit in one bordered, rounded container with a 1px divider between them',
   ],
 
   guidelines: {
     do: [
-      'Use short, scannable headings so users can locate the right section quickly',
-      'Keep answer content concise, and link out to full docs for lengthy topics',
-      'Place the most frequently asked question first to reduce scrolling',
-      'Wrap the accordion in a max-width container for comfortable line lengths',
-      'Use Accordion for content that benefits from progressive disclosure, such as FAQs or settings',
+      'Keep questions short enough to scan',
+      'Keep answers short. They render as plain text, so put long or linked content on its own page',
+      'Put the most-asked question first',
+      'Give the accordion a max width so answers don\'t run edge to edge',
     ],
     dont: [
-      'Do not nest an Accordion inside another Accordion; it harms scannability',
-      'Do not use Accordion as a replacement for Tabs when users need to compare sections side-by-side',
-      'Do not hide critical information (e.g. pricing, legal disclaimers) inside collapsed items, where it may go unseen',
-      'Do not set every item to open by default; that defeats progressive disclosure',
-      'Do not use Accordion for a single item. Use a Disclosure or collapsible card instead',
+      'Don\'t use it for sections readers compare side by side. Use Tabs',
+      'Don\'t put pricing, legal terms or anything else readers must see inside a closed item',
+      'Don\'t use it for a single item. Use Collapsible',
     ],
   },
 
   previewHtml: `<div style="width:100%">
   <arc-accordion>
-    <arc-accordion-item question="What is ARC UI and which frameworks does it support?">
-      ARC UI is a framework-agnostic component library built on Lit web components.
-      It ships first-class wrappers for React, Vue, Svelte, Angular, Solid, and Preact,
-      so you can use the same design system regardless of your framework choice.
+    <arc-accordion-item question="Which frameworks does ARC UI support?">
+      React, Vue, Svelte, Angular, Solid and Preact each get a generated package.
+      Plain HTML uses the web components directly.
     </arc-accordion-item>
     <arc-accordion-item question="How do I theme ARC UI components?">
-      Every component reads from a shared set of CSS custom properties defined in the
-      ARC UI token system. Override the tokens at any scope — :root for global changes,
-      or a wrapper element for localized theming — and all components update automatically.
+      Override the tokens on :root to change the whole page, or on a wrapper
+      element to change one part of it.
     </arc-accordion-item>
-    <arc-accordion-item question="Can I use individual components without importing the whole library?">
-      Yes. Each component is published as a standalone module. Import only what you need —
-      for example, import '@arclux/arc-ui/accordion' — and your bundler
-      will tree-shake everything else away.
+    <arc-accordion-item question="Can I import one component on its own?">
+      Yes. Each component has its own entry point, for example
+      @arclux/arc-ui/accordion.
     </arc-accordion-item>
   </arc-accordion>
 </div>`,
@@ -68,7 +56,7 @@ Trigger buttons carry \`aria-expanded\` state, keyboard navigation uses standard
       name: 'AccordionItem',
       tag: 'arc-accordion-item',
       description:
-        'An individual collapsible section inside an Accordion. The question attribute supplies the clickable header text, and slotted children become the expandable body content.',
+        'One section of an Accordion. The question attribute is the button text, and the item\'s text content is the answer.',
     },
   ],
 
