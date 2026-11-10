@@ -9,38 +9,28 @@ export const authShell: ComponentDef = {
   description:
     'Authentication page layout with centered and split variants for sign-in, sign-up, password-reset, and other credential flows. Provides logo, form card, footer, and optional aside slots.',
 
-  overview: `AuthShell is a page layout for authentication flows. Instead of assembling a centered card with manual CSS every time you need a login page, you get dedicated slots for your logo, form content, footer links, and an optional marketing aside panel.
+  overview: `AuthShell is the page layout for sign-in, sign-up and password reset. It has slots for your logo, the form (default slot), footer links and an optional aside panel.
 
-Two layout variants cover the most common patterns. The \`centered\` variant places a single card in the middle of the viewport, which suits minimal sign-in pages, password-reset screens, and invite-acceptance flows. The \`split\` variant divides the viewport into a form side and an aside panel, with room for a product illustration, testimonial, or feature highlights alongside the credentials form.
-
-Both variants are responsive. On mobile, the split layout collapses to a single column and hides the aside panel, with no media-query work on your part. The card region has a max-width of 420px, which stops inputs getting too wide on large monitors and still leaves room for multi-field forms, social login buttons, and terms-of-service links.`,
+The \`centered\` variant puts one card in the middle of the viewport, for sign-in, password reset and invite acceptance. The \`split\` variant puts the form on one side and the aside on the other, for an illustration, a testimonial or product highlights.`,
 
   features: [
-    'Two layout variants: centered (single card) and split (form + aside panel)',
-    'Dedicated slots for logo, default content (form), footer, and aside',
-    'Responsive split layout collapses to single column on mobile',
-    'Card region has a 420px max-width',
-    'CSS custom property theming via ARC UI design tokens',
-    'Aside panel auto-hides on narrow viewports to keep forms uncluttered',
-    'Exposed CSS parts (shell, logo, card, footer, form-side, aside) for deep customization',
-    'Works with Input, Button, Toggle, and other ARC UI form components',
+    'At 768 px and below, the split layout collapses to one column and hides the aside',
+    'The card is at most 420px wide, so inputs don\'t stretch across a large monitor',
   ],
 
   guidelines: {
     do: [
-      'Use the centered variant for simple flows like sign-in, password reset, and magic-link entry',
-      'Use the split variant when you have marketing content, illustrations, or testimonials to show alongside the form',
-      'Place your brand logo in the logo slot so it appears above the form card consistently',
-      'Include a footer slot with links to terms of service, privacy policy, and support',
-      'Pair with ARC UI Input, Select, and Button components for consistent form styling',
-      'Keep the form short: ask only for credentials and one optional remember-me toggle',
+      'Use the centered variant for short flows like sign-in, password reset and magic-link entry',
+      'Use the split variant when you have an illustration or other content to show next to the form',
+      'Put your logo in the logo slot',
+      'Put links to the terms, privacy policy and support in the footer slot, plus a way to sign up or get back to the main site',
+      'Ask only for credentials, plus an optional remember-me toggle',
     ],
     dont: [
-      'Do not nest AuthShell inside AppShell; auth pages should be standalone, outside the main app chrome',
-      'Do not use the split variant for mobile-only apps where the aside will never be visible',
-      'Do not put navigation bars or sidebars inside AuthShell; it is a single-purpose layout',
-      'Do not overload the form card with too many fields; split long registration forms into multi-step flows instead',
-      'Do not forget to provide a way back to the marketing site or a "sign up" link in the footer',
+      'Don\'t put AuthShell inside AppShell. Auth pages stand on their own, outside the app\'s chrome',
+      'Don\'t use the split variant in a mobile-only app, where the aside never shows',
+      'Don\'t put navigation bars or sidebars inside it',
+      'Don\'t pack the card with fields. Split long registration forms into steps',
     ],
   },
 
@@ -51,7 +41,7 @@ Both variants are responsive. On mobile, the split layout collapses to a single 
   <arc-auth-shell variant="split">
     <div slot="logo" style="font-family: 'Tomorrow', system-ui, sans-serif; font-size: 22px; font-weight: 700; letter-spacing: 1px; color: var(--text-heading);">ARC UI</div>
     <div style="display: flex; flex-direction: column; gap: 16px;">
-      <h2 style="margin: 0 0 4px 0; font-family: 'Tomorrow', system-ui, sans-serif; font-size: 20px; color: var(--text-heading);">Sign In</h2>
+      <h2 style="margin: 0 0 4px 0; font-family: 'Tomorrow', system-ui, sans-serif; font-size: 20px; color: var(--text-heading);">Sign in</h2>
       <p style="margin: 0; font-size: 14px; color: var(--text-muted);">Enter your credentials to continue</p>
       <arc-input label="Email" type="email" placeholder="you@example.com"></arc-input>
       <arc-input label="Password" type="password" placeholder="••••••••"></arc-input>
@@ -59,13 +49,13 @@ Both variants are responsive. On mobile, the split layout collapses to a single 
         <arc-toggle size="sm" label="Remember me"></arc-toggle>
         <arc-link href="#">Forgot password?</arc-link>
       </div>
-      <arc-button variant="primary" style="width: 100%;">Sign In</arc-button>
+      <arc-button variant="primary" style="width: 100%;">Sign in</arc-button>
     </div>
     <div slot="footer">Don't have an account? <arc-link href="#">Sign up</arc-link></div>
     <div slot="aside" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; padding: 40px;">
       <div style="font-size: 48px;">&#128274;</div>
-      <h3 style="margin: 0; font-family: 'Tomorrow', system-ui, sans-serif; font-size: 18px; color: var(--text-heading);">Secure by default</h3>
-      <p style="margin: 0; font-size: 14px; color: var(--text-muted); max-width: 260px;">Your data is encrypted end-to-end with enterprise-grade security built into every layer.</p>
+      <h3 style="margin: 0; font-family: 'Tomorrow', system-ui, sans-serif; font-size: 18px; color: var(--text-heading);">Welcome back</h3>
+      <p style="margin: 0; font-size: 14px; color: var(--text-muted); max-width: 260px;">Sign in to see your projects and recent activity.</p>
     </div>
   </arc-auth-shell>
 </div>`,
