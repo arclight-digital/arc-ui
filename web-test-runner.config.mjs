@@ -1,6 +1,9 @@
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
+import { defaultReporter } from '@web/test-runner';
 import { playwrightLauncher } from '@web/test-runner-playwright';
+
+const FILES = 'packages/web-components/test/**/*.test.js';
 
 /**
  * Server-rendered docs previews for first-paint.test.js, rendered once per run
@@ -47,11 +50,48 @@ function ssrPreviews() {
   };
 }
 
+/**
+ * The test count the docs site quotes (docs/src/data/site-stats.ts), written
+ * to docs/src/data/test-count.json by the runner itself.
+ *
+ * The site used to count `it(` calls in the test sources, which said 2,687
+ * while the runner ran 5,140: a test inside a loop is one `it(` and many
+ * tests. Only the runner knows the real number, and the docs build (Cloudflare
+ * Pages) runs no tests, so the number has to be a committed file. Commit it
+ * when it changes.
+ *
+ * Written only when the run is the whole suite, the configured glob, not
+ * `--files` (which `pnpm test:log <file>` passes), and not in watch mode; and
+ * not when any file failed to load, since its tests never registered. Counts
+ * every test that ran, passed or failed; skipped ones are left out. A stray
+ * `.only` would shrink it, which the diff on the committed file shows.
+ */
+export function testCountReporter({ files = FILES, out = new URL('./docs/src/data/test-count.json', import.meta.url) } = {}) {
+  let wholeSuite = false;
+  return {
+    start({ config }) {
+      wholeSuite = config.files === files && !config.watch;
+    },
+    onTestRunFinished({ sessions }) {
+      if (!wholeSuite || sessions.some((s) => s.errors?.length || !s.testResults)) return;
+      let tests = 0;
+      const walk = (suite) => {
+        for (const t of suite.tests) if (!t.skipped) tests++;
+        for (const child of suite.suites) walk(child);
+      };
+      for (const s of sessions) walk(s.testResults);
+      const body = `${JSON.stringify({ tests }, null, 2)}\n`;
+      if (!fs.existsSync(out) || fs.readFileSync(out, 'utf-8') !== body) fs.writeFileSync(out, body);
+    },
+  };
+}
+
 export default {
-  files: 'packages/web-components/test/**/*.test.js',
+  files: FILES,
   nodeResolve: true,
   browsers: [playwrightLauncher({ product: 'chromium' })],
   plugins: [ssrPreviews()],
+  reporters: [defaultReporter(), testCountReporter()],
   // Before every test file: a failing assertion about a DOM node would
   // otherwise hang the run rather than fail. See the module for why.
   testRunnerHtml: (testFramework) => `<html><body>

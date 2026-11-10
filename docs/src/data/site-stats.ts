@@ -45,14 +45,29 @@ export const buildSteps =
 /** Unique custom properties defined in the generated shared/base.css. */
 export const tokenCount = new Set(baseCss.match(/--[a-z0-9-]+(?=\s*:)/g)).size;
 
-/** Counted from the component test suites so the landing page can't drift from reality. */
 const testDir = new URL('packages/web-components/test/', REPO);
 const testFiles = fs.readdirSync(testDir).filter((f) => f.endsWith('.test.js'));
 export const testSuiteCount = testFiles.length;
-export const testCount = testFiles.reduce(
-  (n, f) => n + (fs.readFileSync(new URL(f, testDir), 'utf-8').match(/\bit\(/g) ?? []).length,
-  0,
-);
+
+/**
+ * Browser tests, as web-test-runner counts them.
+ *
+ * Not countable from the sources: a test written inside a loop is one `it(`
+ * and many tests, so counting `it(` calls said 2,687 while the runner ran
+ * 5,140. The runner writes its own total to test-count.json after a run of the
+ * whole suite (see testCountReporter in web-test-runner.config.mjs), and that
+ * file is committed because the docs build runs no tests. Refresh it with
+ * `pnpm test:log` (no file arguments) and commit the change.
+ *
+ * Without the file, the `it(` count stands in, which undercounts.
+ */
+const testCountFile = new URL('docs/src/data/test-count.json', REPO);
+export const testCount: number = fs.existsSync(testCountFile)
+  ? JSON.parse(fs.readFileSync(testCountFile, 'utf-8')).tests
+  : testFiles.reduce(
+      (n, f) => n + (fs.readFileSync(new URL(f, testDir), 'utf-8').match(/\bit\(/g) ?? []).length,
+      0,
+    );
 
 /** Unique class names in the generated utilities stylesheet. */
 const utilitiesCss = fs.readFileSync(new URL('shared/utilities.css', REPO), 'utf-8');
