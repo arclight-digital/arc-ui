@@ -7,7 +7,7 @@ export const jsonTree: ComponentDef = {
   tier: 'data',
   interactivity: 'interactive',
   description:
-    'Collapsible JSON explorer with syntax coloring, like a dev-tools inspector, for API payloads, configuration objects, and structured state.',
+    'Shows a JSON value as a color-coded tree you expand and collapse, like the object inspector in browser dev tools.',
   searchKeywords: ['json', 'inspector', 'devtools', 'object', 'payload', 'viewer', 'explorer'],
 
   overview: `JSON Tree renders any JSON value as a collapsible tree, like the object inspector in browser dev tools. Unlike CodeBlock, it loads no highlighter and has no dependencies, so it ships in the standard register barrel.
@@ -16,7 +16,7 @@ Pass objects and arrays you already hold through the \`data\` property, or set t
 
 \`expanded\` sets how many levels start open. The default of 1 shows the root's children, and the bare attribute opens every level.
 
-It's an inspector, not a data grid. Branches page at 100 children, and every row you reveal stays in the DOM, so for large data use VirtualList.`,
+Branches page at 100 children, and every row you reveal stays in the DOM, so for large data use VirtualList.`,
 
   features: [
     'Colors use the same tokens as CodeBlock: keys in the secondary accent, strings in the success hue, numbers in the primary accent, booleans and null in the warning hue. A theme that overrides those tokens recolors the tree',
