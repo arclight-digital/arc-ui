@@ -7,47 +7,35 @@ export const popover: ComponentDef = {
   tier: 'feedback',
   interactivity: 'interactive',
   description:
-    'Floating content panel anchored to a trigger element, with four placement positions and automatic outside-click dismissal.',
+    'A floating panel that opens when its trigger is clicked, placed on one of four sides and closed by an outside click or Escape.',
 
-  overview: `Popover is a disclosure component that reveals a floating panel of arbitrary content when the user clicks a trigger element. It is the foundation for building dropdown menus, info cards, filter panels, and other contextual UI that should appear on demand without leaving the current page. The panel is positioned relative to the trigger using the \`position\` prop, which accepts \`top\`, \`bottom\`, \`left\`, or \`right\`.
+  overview: `Popover opens a panel of any content when the reader clicks its trigger, and keeps them on the page. Use it for info cards, filter panels and small forms. For a panel that opens on hover, use HoverCard, and for a short hint, use Tooltip.
 
-The trigger element is placed in the named \`trigger\` slot, and the popover content goes in the default slot. When the popover opens, the panel scales in with a CSS transition driven by \`--transition-base\`. Clicking outside the popover or pressing Escape closes it, and the component fires \`arc-open\` and \`arc-close\` events so you can coordinate side effects like pausing scroll or loading data.
+Put the trigger in the \`trigger\` slot and the content in the default slot. \`position\` (\`top\`, \`bottom\`, \`left\` or \`right\`, default \`bottom\`) picks the preferred side. The panel is drawn in the top layer, so \`overflow: hidden\` ancestors can't clip it, and it flips to the opposite side or shifts along the edge when it doesn't fit in the viewport. It scales in on \`--transition-base\`.
 
-Popover uses \`role="dialog"\` on the panel and sets \`aria-haspopup\` and \`aria-expanded\` on the trigger, following WAI-ARIA patterns for disclosure widgets. The panel is absolutely positioned with \`z-index: 100\` and uses the \`--shadow-overlay\` token for depth. CSS parts are exposed for \`trigger\` and \`panel\` to allow targeted styling without piercing the shadow DOM.`,
+Clicking outside or pressing Escape closes it. The component fires \`arc-open\` and \`arc-close\`, so you can load data on open or clean up on close. The panel has \`role="dialog"\` and the trigger gets \`aria-haspopup\` and \`aria-expanded\`.`,
 
   features: [
-    'Four placement positions: top, bottom (default), left, and right, each with centered alignment',
-    'Open/close animation using CSS scale and opacity transitions',
-    'Automatic outside-click dismissal: clicking anywhere outside the popover closes it',
-    'Escape key closes the popover for keyboard-accessible dismissal',
-    'Named `trigger` slot for the clickable element and default slot for popover content',
-    'Fires `arc-open` and `arc-close` events for coordinating external state',
-    'Accessible `aria-haspopup`, `aria-expanded`, and `role="dialog"` attributes',
-    'CSS parts `trigger` and `panel` for external style customisation',
+    'Escape returns focus to the element that had it when the panel opened',
+    'Parts: `base`, `trigger`, `panel`',
   ],
 
   guidelines: {
     do: [
-      'Use the `trigger` slot with a focusable element like a button for keyboard accessibility',
-      'Choose a `position` that keeps the panel visible within the viewport for your layout',
-      'Keep popover content concise: for complex forms, consider a Dialog or Drawer instead',
-      'Use `arc-close` events to clean up temporary state when the popover dismisses',
-      'Nest interactive content like links, buttons, or small forms inside the default slot',
+      'Use a focusable element, like a button, in the `trigger` slot so keyboard users can open it',
+      'Keep the content short. Use Dialog or Drawer for complex forms, tables or long lists',
+      'Links, buttons and small forms are fine inside the panel',
     ],
     dont: [
-      'Do not use Popover for critical information that the user must see: it can be dismissed accidentally',
-      'Do not nest a Popover inside another Popover: stacking z-index and focus management becomes unreliable',
-      'Do not place very large content (tables, long lists) inside a popover; use a Drawer or Dialog for that',
-      'Do not use Popover as a tooltip; use the Tooltip component for brief hover-triggered hints',
-      'Avoid placing the trigger inside a scrollable container without testing that the panel remains aligned',
+      'Don\'t put information readers must see in a popover. It\'s easy to close by accident',
     ],
   },
 
   previewHtml: `<arc-popover position="bottom">
-  <button slot="trigger" style="padding:8px 16px; border:1px solid var(--border-default); border-radius:var(--radius-md); background:var(--bg-card); color:var(--text-primary); cursor:pointer;">Open Popover</button>
+  <button slot="trigger" style="padding:8px 16px; border:1px solid var(--border-default); border-radius:var(--radius-md); background:var(--bg-card); color:var(--text-primary); cursor:pointer;">Show details</button>
   <div style="min-width:200px;">
-    <p style="margin:0 0 8px; font-weight:600; color:var(--text-primary);">Popover Title</p>
-    <p style="margin:0; font-size:13px; color:var(--text-secondary);">This is popover content. Click outside or press Escape to close.</p>
+    <p style="margin:0 0 8px; font-weight:600; color:var(--text-primary);">Details</p>
+    <p style="margin:0; font-size:13px; color:var(--text-secondary);">Click outside or press Escape to close.</p>
   </div>
 </arc-popover>`,
 
