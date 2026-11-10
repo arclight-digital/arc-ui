@@ -7,45 +7,38 @@ export const topBar: ComponentDef = {
   tier: 'navigation',
   interactivity: 'hybrid',
   description:
-    'Fixed header bar that anchors every page with a brand slot on the left, an optional center navigation area, and a right-aligned actions region for user controls, search, and settings.',
+    'Header bar with a brand slot on the left, an optional center navigation area, and a right-aligned actions region for user controls, search and settings.',
 
-  overview: `TopBar is the persistent horizontal header that sits at the top of every page in an ARC UI application. It has three regions, brand, center and actions: logo on the left, navigation in the middle, user controls on the right.
+  overview: `TopBar is the header across the top of an ARC UI app. The brand on the left is the \`heading\` text with the \`logo\` and \`subtitle\` slots around it, the \`center\` slot holds navigation, and the \`actions\` slot on the right holds user controls.
 
-The component is designed to work hand-in-hand with AppShell and Sidebar. When nested inside an AppShell via the \`top-bar\` slot, it automatically spans the full viewport width and stays fixed at the top of the page while the content below scrolls. On mobile viewports, a hamburger menu button appears automatically, dispatching an \`arc-sidebar-toggle\` event that AppShell listens for to open or close the Sidebar overlay.
+It works with AppShell and Sidebar. In AppShell's \`topbar\` slot it's set to \`fixed\` for you, so it stays at the top of the viewport while the content scrolls. Below 900px a hamburger button appears and fires \`arc-sidebar-toggle\`. AppShell listens for it to open or close the Sidebar.
 
-Use TopBar whenever your application needs a consistent, recognizable header. It handles responsive behavior out of the box: the brand slot collapses gracefully, the center slot hides on narrow screens, and the actions slot remains accessible at every breakpoint. The \`fixed\` property pins the bar to the viewport so content scrolls underneath it, which is the recommended default for most dashboard and documentation layouts.`,
+Outside AppShell, set \`fixed\` yourself to pin it to the viewport, and add top padding to the content below so the bar doesn't cover it. Without \`fixed\` it scrolls away with the page.`,
 
   features: [
-    'Three named slots (logo, center, actions) for flexible header composition',
-    'Fixed positioning mode that pins the bar to the top of the viewport',
-    'A hamburger button below 900px; `mobile-menu="none"` turns it off for a site with nothing to open',
-    'On phones the center column gives way before the brand or actions shrink; `mobile-center="end"` moves it next to the actions, `"hidden"` drops it',
-    'Fires `arc-sidebar-toggle` custom event for Sidebar integration',
-    'Brand region with accent typography, letter-spacing, and uppercase treatment',
-    'Works with AppShell through its top-bar slot',
-    'CSS custom property theming through design tokens (`--bg-deep`, `--border-subtle`, `--nav-height`)',
-    'Shadow DOM part attributes (topbar, brand, center, menu-btn) for external styling',
-    'Accessible `aria-label` and `aria-expanded` on the mobile menu toggle',
+    '`mobile-menu="none"` removes the hamburger for a site with nothing to open',
+    'On phones the center column gives way before the brand or actions shrink. `mobile-center="end"` moves it next to the actions, and `"hidden"` drops it',
+    'The heading is uppercase with wide letter spacing',
+    'The menu button has `aria-label="Toggle menu"` and `aria-expanded`',
   ],
 
   guidelines: {
     do: [
-      'Place TopBar inside an AppShell top-bar slot for automatic fixed positioning and sidebar coordination',
-      'Keep the heading short: one or two words that identify the application',
-      'Use the logo slot to place an SVG or image mark next to the heading text',
-      'Put primary navigation links in the center slot for desktop layouts',
-      'Reserve the actions slot for user-facing controls: avatar, settings, notifications, sign-in',
-      'Set the fixed property when the page content is scrollable and the header should stay visible',
-      'Listen for the arc-sidebar-toggle event to synchronize sidebar open/close state',
+      'Place it in AppShell\'s `topbar` slot to get fixed positioning and sidebar coordination',
+      'Keep the heading to one or two words that name the app',
+      'Use the `logo` slot for an SVG or image mark next to the heading',
+      'Put primary navigation links in the `center` slot',
+      'Keep the `actions` slot for user controls such as an avatar, settings, notifications or sign-in',
+      'Listen for `arc-sidebar-toggle` to keep your sidebar\'s open state in step',
       'If your CSS hides every action at some width, hide `::part(actions)` in the same rule. The bar only notices an empty actions slot after it hydrates, so without it the server render and first paint keep a gap there',
     ],
     dont: [
-      'Do not stack TopBars on one page. Use one per application shell',
-      'Do not put long text or paragraphs in the heading prop; it is meant for a brand name only',
-      'Do not place form elements or search inputs in the brand area; use the center or actions slot instead',
-      'Do not rely on the hamburger for primary navigation on desktop. It is hidden above 900px',
-      'Do not override the z-index without checking that modals and drawers still layer correctly',
-      'Do not leave out both the heading and the logo slot. The brand region should never be empty',
+      'Don\'t put more than one TopBar on a page',
+      'Don\'t put long text in `heading`. It\'s for a brand name',
+      'Don\'t put form fields or search inputs in the brand area. Use the `center` or `actions` slot',
+      'Don\'t rely on the hamburger for primary navigation on desktop. It\'s hidden above 900px',
+      'Don\'t change the z-index without checking that dialogs and drawers still layer above it',
+      'Don\'t leave out both `heading` and the `logo` slot. The brand should never be empty',
     ],
   },
 
