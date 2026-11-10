@@ -7,39 +7,31 @@ export const rating: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'A star-based rating input with hover preview, keyboard navigation, filled/unfilled SVG stars, and configurable max value.',
+    'A row of SVG stars for picking a score from 1 to max, with a hover preview and keyboard control.',
 
-  overview: `Rating renders a row of interactive SVG stars that let users select a numeric score from 1 to a configurable maximum. Filled stars display in accent-primary with a drop-shadow glow, while unfilled stars appear as outlined shapes in the default border color. As the user hovers over stars, a preview highlight scales up the hovered star and fills all stars up to that position, which previews the score before the user commits.
+  overview: `Rating renders \`max\` stars (5 by default) for scores like a product review or a satisfaction survey. Filled stars use the accent color with a glow, and empty stars are outlines. Hovering fills every star up to the one under the pointer, so you see the score before you click.
 
-The component implements a \`slider\` ARIA role with \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\` attributes, so it works with arrow keys, Home, and End. Arrow right/up increments the value, arrow left/down decrements it, and Home/End jump to the minimum (1) and maximum values respectively. The entire star group is a single tab stop, which keeps keyboard navigation short within forms.
+A value of 0 means unrated. It's the starting value, it submits nothing, and screen readers hear "No rating". Clicking the star that's already selected clears the rating back to 0.
 
-Rating supports both \`disabled\` and \`readonly\` modes. Disabled reduces opacity to 40% and blocks all interaction, while readonly blocks interaction but maintains full visual fidelity, which suits displaying existing ratings without allowing changes. The component fires \`arc-change\` with the selected value whenever the user clicks a star or navigates with the keyboard.`,
+The star group is one tab stop with the \`slider\` role. Arrow right or up adds a star, arrow left or down removes one, Home clears to 0, and End jumps to \`max\`. Every change from a click or a key fires \`arc-change\` with \`{ value }\`.
+
+\`disabled\` dims the stars to 50% and blocks input. \`readonly\` blocks input but leaves the stars at full strength, for showing a rating someone already gave.`,
 
   features: [
-    'Filled stars in accent-primary with `drop-shadow` glow; unfilled stars rendered as outlined SVG paths',
-    'Hover preview: stars scale up to 1.15x and fill with accent color up to the hovered position',
-    'Configurable `max` prop to support rating scales beyond the default 5 stars',
-    'ARIA `slider` role with `aria-valuenow`, `aria-valuemin`, and `aria-valuemax` for screen readers',
-    'Full keyboard navigation: Arrow keys step the value, Home/End jump to min/max',
-    'Separate `disabled` (dimmed, no interaction) and `readonly` (full appearance, no interaction) modes',
-    'Single tab stop for the entire star group, with internal arrow-key navigation',
-    'Fires `arc-change` on click or keyboard selection with `{ value }` in the event detail',
+    '`aria-valuetext` reads "3 of 5", or "No rating" at 0',
+    '`label` sets the accessible name, which defaults to "Rating"',
   ],
 
   guidelines: {
     do: [
-      'Use Rating for collecting subjective scores like product reviews, satisfaction, or difficulty levels',
-      'Set `readonly` when displaying an existing rating that the user should not change',
-      'Pair Rating with a numeric label or text description (e.g. "4 out of 5") for added clarity',
-      'Use the default `max="5"` for most use cases: it is the most universally understood scale',
-      'Listen to `arc-change` to update your form state or submit the rating value',
+      'Set `readonly` to show an existing rating',
+      'Show the score as text next to the stars, for example "4 out of 5"',
+      'Give each rating its own `label` when a page has more than one',
     ],
     dont: [
-      'Do not use Rating for binary choices; use Toggle or Checkbox instead',
-      'Do not set `max` higher than 10: too many stars become hard to distinguish at a glance',
-      'Do not use Rating for precise numeric input; use Slider or NumberInput for exact values',
-      'Do not rely on color alone to distinguish filled and unfilled states: the SVG fill style also differs',
-      'Avoid placing Rating components too close together without labels: users may confuse which rating applies to which item',
+      'Don\'t use it for yes-or-no choices. Use Toggle or Checkbox',
+      'Don\'t set `max` above 10. Past that, people can\'t count the stars without reading them one by one',
+      'Don\'t use it for exact numbers. Use Slider or NumberInput',
     ],
   },
 
