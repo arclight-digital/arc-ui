@@ -9,37 +9,32 @@ export const treeView: ComponentDef = {
   description:
     'Hierarchical tree structure with expandable/collapsible nodes, selection tracking, keyboard navigation, and indentation guide lines.',
 
-  overview: `TreeView renders a nested, collapsible tree structure ideal for file browsers, navigation menus, documentation outlines, and any hierarchical data. Nodes are defined declaratively using \`<arc-tree-item>\` child elements, which can be nested to arbitrary depth. Each item can have a label, an optional icon (emoji or text), and an \`expanded\` attribute to control its initial open state.
+  overview: `TreeView shows nested data as a tree whose branches open and close, such as a file browser, a navigation menu or a documentation outline. Each node is an \`<arc-tree-item>\`, nested to any depth, with a \`label\`, an optional \`icon\` (rendered as text) and an \`expanded\` attribute for its starting state.
 
-Clicking a parent node both selects it and toggles its expanded state, revealing or hiding its children. Leaf nodes (those without children) are selected on click. The currently selected node receives an accent-primary highlight, and vertical guide lines appear alongside nested groups to visually communicate the tree's depth structure. Chevron indicators rotate when branches expand or collapse.
+Clicking a branch selects it and opens or closes it. Clicking a leaf selects it. The selected row is tinted and drawn in \`--interactive\`, a vertical guide line runs beside each nested group, and the chevron turns as a branch opens or closes.
 
-TreeView supports full keyboard navigation following the WAI-ARIA tree pattern. ArrowDown/ArrowUp move focus between visible rows, ArrowRight expands a collapsed branch, ArrowLeft collapses an expanded one, and Enter or Space selects the focused node. The component fires \`arc-select\` with the item details and its full path array, and \`arc-toggle\` when a branch is expanded or collapsed.`,
+Keyboard support follows the WAI-ARIA tree pattern. ArrowDown and ArrowUp move between visible rows, ArrowRight opens a branch, ArrowLeft closes it, and Enter or Space selects. \`arc-select\` fires with the item and its \`path\`, the chain of labels from the root, and \`arc-toggle\` fires when a branch opens or closes.`,
 
   features: [
-    'Declarative tree structure using nested `<arc-tree-item>` elements with label, icon, and expanded props',
-    'Selection tracking with accent-primary highlight and `arc-select` event including the full item path',
-    'Animated chevron rotation when branches expand or collapse',
-    'Vertical indentation guide lines using `--border-subtle` for clear depth visualisation',
-    'Full keyboard navigation: ArrowDown/Up to traverse, ArrowRight/Left to expand/collapse, Enter/Space to select',
-    'Proper WAI-ARIA tree roles: `role="tree"`, `role="treeitem"`, `role="group"`, and `aria-expanded`',
-    'Branch toggle event (`arc-toggle`) with item details and expanded state for external state management',
-    'CSS parts for `tree`, `group`, `item`, and `row` enabling external style customisation',
+    'Roles `tree`, `treeitem` and `group`, with `aria-expanded` on branches',
+    'Guide lines are drawn in `--divider`',
+    'Long labels truncate with an ellipsis',
   ],
 
   guidelines: {
     do: [
-      'Use `<arc-tree-item>` elements with descriptive `label` attributes for each node',
-      'Set `expanded` on top-level branches that should be visible by default for discoverability',
-      'Provide meaningful icons to help users scan the tree, e.g. folder/file emojis for file browsers',
-      'Listen to `arc-select` to update the main content area when a tree node is chosen',
-      'Keep tree depth to 3-4 levels maximum for usability. Deeper nesting becomes hard to scan',
+      'Give every node a descriptive `label`',
+      'Set `expanded` on the top-level branches readers should see first',
+      'Add an `icon` when readers scan by type, such as folder and file glyphs in a file browser',
+      'Listen to `arc-select` to update the main content when a node is picked',
+      'Keep the tree to three or four levels. Deeper trees are hard to scan',
     ],
     dont: [
-      'Do not use TreeView for flat lists. Use a simple list or navigation menu instead',
-      'Do not populate the tree with hundreds of top-level nodes without virtualisation or lazy loading',
-      'Do not use TreeView for selection of multiple items simultaneously. It tracks a single selection',
-      'Do not rely solely on icons for meaning. Always include a text label on each tree item',
-      'Avoid extremely long label text. It truncates with text-overflow ellipsis but is then unreadable',
+      'Don\'t use it for flat lists. Use List or NavigationMenu',
+      'Don\'t load hundreds of top-level nodes at once. Load them in pages or on demand',
+      'Don\'t use it to select several items. It tracks one selection',
+      'Don\'t rely on icons alone. Every item needs a text label',
+      'Don\'t use very long labels. They truncate and can\'t be read in full',
     ],
   },
 
