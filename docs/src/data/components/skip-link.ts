@@ -7,39 +7,30 @@ export const skipLink: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Accessible skip-to-content link, invisible until focused. On focus shows as accent-primary filled pill with glow ring above the page.',
+    'A "Skip to content" link that stays off screen until a keyboard user tabs to it, then slides in as an accent pill at the top of the page.',
 
-  overview: `SkipLink is invisible during normal browsing and appears when a keyboard user presses Tab at the top of the page. When focused, it shows as an accent-primary filled pill with a glow ring above all other content, so the user can jump past repetitive navigation to the main content.
+  overview: `SkipLink lets keyboard and screen reader users jump past the navigation to the main content with one keystroke instead of many Tab presses. It stays off screen until it receives keyboard focus, then slides down into view at the top center of the page, above everything else, as an accent-filled pill with a glow ring. When focus moves on, it slides away again, so mouse users never see it.
 
-This pattern is a WCAG 2.1 Level A requirement (Success Criterion 2.4.1) and helps keyboard users, screen-reader users, and anyone navigating with assistive technology. One keystroke takes them to the primary content landmark instead of many Tab presses.
+\`target\` is the link's \`href\`, a fragment like \`#main\` (the default). Put SkipLink first in \`<body>\` or your AppShell so the first Tab reveals it. The default label is "Skip to content", and you can replace it with slotted text.
 
-The component accepts a \`target\` prop, typically an ID selector like \`#main\`, that controls where focus moves when the link is activated. Place SkipLink as the very first focusable element inside your \`<body>\` or AppShell so it is the first thing a Tab keypress reveals. It automatically hides itself once focus moves away, so mouse users never see it.`,
+WCAG 2.1 Success Criterion 2.4.1 (Bypass Blocks, Level A) asks for a way to skip blocks that repeat on every page. A skip link is the usual way to meet it. Landmarks and headings count too.`,
 
   features: [
-    'Invisible by default, revealed only on keyboard focus',
-    'Accent-primary filled pill with glow ring when visible',
-    'Positioned above all content with fixed/absolute placement',
-    'Configurable target selector for the skip destination',
-    'Meets WCAG 2.1 Level A Success Criterion 2.4.1',
-    'Automatically hides when focus moves away',
-    'Works with any ID-based content landmark',
-    'Token-driven theming via CSS custom properties',
+    '`position: fixed` at `--z-max`, the top of the z-index scale',
   ],
 
   guidelines: {
     do: [
-      'Place SkipLink as the very first focusable element in the page',
-      'Point the target at your main content landmark (e.g. #main)',
-      'Ensure the target element has tabindex="-1" so it can receive focus',
-      'Test by pressing Tab immediately after page load',
-      'Include SkipLink on every page for consistent keyboard navigation',
+      'Point `target` at your main content landmark, such as `#main`',
+      'Give the target `tabindex="-1"` so it can take focus',
+      'Test it by pressing Tab right after the page loads',
+      'Include it on every page',
     ],
     dont: [
-      'Do not hide SkipLink with display:none or visibility:hidden: it must remain focusable',
-      'Do not place SkipLink after other interactive elements: it must be first',
-      'Do not use a target that does not exist on the page',
-      'Do not add multiple SkipLinks unless the page has distinct content regions',
-      'Do not remove SkipLink to "simplify" the UI: it is a WCAG requirement',
+      'Don\'t hide it with `display: none` or `visibility: hidden`. It has to stay focusable',
+      'Don\'t put other focusable elements before it',
+      'Don\'t point it at an `id` that isn\'t on the page',
+      'Don\'t add more than one unless the page has separate content regions to skip to',
     ],
   },
 
