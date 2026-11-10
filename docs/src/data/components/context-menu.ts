@@ -8,37 +8,30 @@ export const contextMenu: ComponentDef = {
   interactivity: 'interactive',
   description: 'Right-click context menu with keyboard shortcuts.',
 
-  overview: `ContextMenu replaces the browser's native right-click menu with a styled menu that matches your application's design system. It attaches a \`contextmenu\` event listener to its parent element, so any right-click within that parent opens the custom menu at the cursor position. The menu supports icons, labels, keyboard shortcut hints, disabled items, and visual dividers via \`<arc-menu-item>\` and \`<arc-menu-divider>\` children.
+  overview: `ContextMenu replaces the browser's right-click menu inside one element. It listens for \`contextmenu\` on its parent, so a right-click anywhere in the parent opens the menu at the pointer, flipped away from the viewport edges. Items are \`<arc-menu-item>\` children with an optional \`icon\`, \`shortcut\` hint and \`disabled\`. \`<arc-menu-divider>\` separates them and \`<arc-menu-label>\` heads a named group.
 
-The menu appears with a scale-in animation and flips away from viewport edges so it never renders off-screen. When an item is clicked or activated via keyboard, the component dispatches an \`arc-select\` event with the item's label, shortcut, and icon metadata, then closes itself. Clicking the transparent backdrop or pressing Escape also dismisses the menu.
+Choosing an item fires \`arc-select\` with its \`value\`, or its label if it has none, and closes the menu. Escape or a click outside also closes it. \`arc-open\` and \`arc-close\` fire on each change, and \`arc-close\` is cancelable.
 
-Keyboard navigation follows the standard menu pattern: ArrowDown and ArrowUp move focus through selectable items (skipping dividers and disabled entries), Home and End jump to the first and last items, Enter or Space activate the focused item, and Escape closes the menu. The \`prefers-reduced-motion\` media query disables the entrance animation for users who request it.`,
+The menu takes focus when it opens. Arrow Down and Arrow Up move through the items, skipping dividers and disabled ones, Home and End jump to the first and last, and Enter or Space chooses. Closing from the keyboard returns focus to where it was. A click elsewhere leaves focus where you clicked.`,
 
   features: [
-    'Automatically intercepts contextmenu events on the parent element',
-    'Viewport-aware positioning that flips to avoid off-screen rendering',
-    'Scale-in entrance animation with `prefers-reduced-motion` support',
-    'Keyboard navigation: ArrowUp/Down, Home/End, Enter/Space to select, Escape to close',
-    'Support for icons, labels, shortcut hints, and disabled state on each menu item',
-    'Visual dividers via `<arc-menu-divider>` to group related actions',
-    '`arc-select` event with item metadata (label, shortcut, icon) on activation',
-    'Transparent backdrop click-to-close',
+    'A second right-click while it\'s open moves the menu to the new spot',
+    'The `arc-select` detail also carries the item\'s `label`, `shortcut`, `icon` and `index`',
+    'Opens with a scale-in animation',
   ],
 
   guidelines: {
     do: [
-      'Place ContextMenu as a direct child of the element that should trigger the right-click menu',
-      'Group related items with <arc-menu-divider> to improve scannability (e.g. clipboard actions, then navigation actions)',
-      'Include keyboard shortcut hints on items that have global keybindings for consistency',
-      'Disable items that are contextually unavailable rather than removing them, so users learn the full action set',
-      'Keep the menu under 10 items; use submenus or a CommandPalette for larger action sets',
+      'Make it a direct child of the element that should get the menu',
+      'Group related items with `<arc-menu-divider>` or `<arc-menu-label>`, such as clipboard actions and then navigation',
+      'Show shortcut hints on items that also have a key binding',
+      'Disable items that don\'t apply right now instead of removing them, so people learn what the menu offers',
+      'Give items a `value` when two of them could share a label',
+      'Move long lists of actions to a CommandPalette',
     ],
     dont: [
-      'Do not attach a ContextMenu to the entire document body. Scope it to a specific interactive region',
-      'Do not put complex UI (forms, multi-select lists) inside context menu items',
-      'Do not forget to handle the arc-select event; without it, selecting an item has no effect',
-      'Do not mix ContextMenu with DropdownMenu on the same element; they serve different interaction models',
-      'Do not remove the default Escape-to-close behavior, as keyboard users depend on it',
+      'Don\'t put it on `<body>`. That replaces the browser\'s menu everywhere on the page',
+      'Don\'t put forms or other complex UI in an item. The menu renders its own copy of each item, so only the label, icon and shortcut survive',
     ],
   },
 
@@ -49,7 +42,7 @@ Keyboard navigation follows the standard menu pattern: ArrowDown and ArrowUp mov
     <arc-menu-item shortcut="Ctrl+C" icon="copy">Copy</arc-menu-item>
     <arc-menu-item shortcut="Ctrl+V" icon="clipboard">Paste</arc-menu-item>
     <arc-menu-divider></arc-menu-divider>
-    <arc-menu-item shortcut="Ctrl+A">Select All</arc-menu-item>
+    <arc-menu-item shortcut="Ctrl+A">Select all</arc-menu-item>
     <arc-menu-divider></arc-menu-divider>
     <arc-menu-item disabled>Delete</arc-menu-item>
   </arc-context-menu>
@@ -162,12 +155,12 @@ export default function Example() {
     {
       name: 'MenuItem',
       tag: 'arc-menu-item',
-      description: 'A single action entry inside the context menu.',
+      description: 'One action in the menu. Its label is the `label` attribute or, without one, its text content.',
     },
     {
       name: 'MenuDivider',
       tag: 'arc-menu-divider',
-      description: 'A visual separator between groups of menu items.',
+      description: 'A line between groups of menu items.',
     },
     {
       name: 'MenuLabel',
