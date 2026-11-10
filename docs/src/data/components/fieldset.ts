@@ -7,7 +7,7 @@ export const fieldset: ComponentDef = {
   tier: 'input',
   interactivity: 'static',
   description:
-    'Grouped form section with legend, description, error message, and optional card variant. Wraps related inputs with native fieldset semantics.',
+    'Groups related form controls in a native fieldset with a legend, drawn as a bordered box or a card.',
 
   overview: `Fieldset groups related form controls inside a native \`<fieldset>\` with a \`<legend>\`, so screen readers announce them as one named group. Set the legend with the \`legend\` prop, or with the \`legend\` slot for markup. \`description\` adds helper text under the legend.
 
