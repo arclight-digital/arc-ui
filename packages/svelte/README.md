@@ -2,7 +2,7 @@
 
 Svelte 5 component wrappers for [ARC UI](https://arcui.dev) web components, using runes (`$props`) and snippets.
 
-> **Auto-generated** — this package is produced by [Prism](https://www.npmjs.com/package/@arclux/prism) from the canonical source in [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). Do not edit by hand.
+> [Prism](https://www.npmjs.com/package/@arclux/prism) generates this package's code from [`@arclux/arc-ui`](https://www.npmjs.com/package/@arclux/arc-ui). To change a component, edit its source in [`packages/web-components`](https://github.com/arclight-digital/arc-ui/tree/main/packages/web-components). Hand edits here are overwritten the next time `pnpm generate` runs.
 
 ## Installation
 
@@ -10,7 +10,7 @@ Svelte 5 component wrappers for [ARC UI](https://arcui.dev) web components, usin
 npm install @arclux/arc-ui-svelte @arclux/arc-ui lit
 ```
 
-Requires `svelte >= 5.0.0`.
+Requires `svelte` ^5.0.0.
 
 ## Usage
 
@@ -31,7 +31,7 @@ Requires `svelte >= 5.0.0`.
 <Input label="Email" type="email" placeholder="you@example.com" />
 ```
 
-Components are organized by tier and can be imported from subpaths:
+Each tier also has its own subpath:
 
 ```svelte
 <script>
@@ -51,11 +51,13 @@ Props that aren't declared component props are forwarded to the underlying `<arc
 
 ## Server-side rendering
 
-The wrappers register custom elements on import, which requires a DOM. In SvelteKit, use them from client-rendered code (e.g. behind a `browser` guard or with `ssr = false` for the page).
+To render the components on the server, pass your framework's HTML output through `renderDeclarativeShadowDOM` from `@arclux/arc-ui/ssr`. It renders each `<arc-*>` element into a declarative shadow root and needs the optional peer `@lit-labs/ssr`. On the client, import `@arclux/arc-ui/hydrate` before any component. The [server rendering guide](https://arcui.dev/docs/server-rendering) has the details.
+
+To skip server rendering in SvelteKit, render them behind a `browser` guard or set `ssr = false` for the page.
 
 ## Theming
 
-Components read design tokens from CSS custom properties. Overriding the base accent tokens re-themes every component — see the [theming guide](https://arcui.dev/docs/theming):
+Components read design tokens from CSS custom properties. Gradients, glows and focus rings are built from the accent tokens, so overriding those changes them too. See the [theming guide](https://arcui.dev/docs/theming):
 
 ```css
 :root {
@@ -66,7 +68,7 @@ Components read design tokens from CSS custom properties. Overriding the base ac
 
 ## Links
 
-- [Documentation & interactive examples](https://arcui.dev)
+- [Documentation](https://arcui.dev)
 - [Canonical source (`@arclux/arc-ui`)](https://www.npmjs.com/package/@arclux/arc-ui)
 - [Repository](https://github.com/arclight-digital/arc-ui)
 - [License (MIT)](https://github.com/arclight-digital/arc-ui/blob/main/LICENSE)
