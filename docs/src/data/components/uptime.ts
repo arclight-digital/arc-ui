@@ -7,7 +7,7 @@ export const uptime: ComponentDef = {
   tier: 'data',
   interactivity: 'hybrid',
   description:
-    'Status-page uptime history strip: one slim tick per period, colored by status, with hover and keyboard detail. Accepts plain uptime fractions or explicit status objects and renders the computed overall percentage above the track.',
+    'A status-page strip of slim ticks, one per period, each colored by how that period went.',
   searchKeywords: ['status page', 'availability', 'incident', 'history', 'sla'],
 
   overview: `Uptime is a status-page history strip: a row of slim vertical ticks, one per period, each colored by how that period went. Green is operational, amber is degraded, red is an outage, and a neutral tick means no data. Hovering a tick, or focusing the strip and pressing the arrow keys, raises it with a glow in its status color and shows the period's label, exact percentage and status in a small bubble.
@@ -16,7 +16,7 @@ export const uptime: ComponentDef = {
 
 The summary above the track is the mean of every value, set in the mono font. \`start-label\` and \`end-label\` caption the two ends. An empty array renders an empty track, not an error, so you can bind it before the data arrives.
 
-To assistive technology the strip is one image with a computed description (period count, overall percentage and incident counts), not ninety tab stops. Keyboard users still get each period: the track is a single tab stop, the arrow keys move between ticks, and a live region announces each one.`,
+Assistive technology gets the strip as one image, described by its period count, overall percentage and incident counts. Keyboard users still get each period: the track is a single tab stop, the arrow keys move between ticks, and a live region announces each one.`,
 
   features: [
     'Tick colors come from `--color-success`, `--color-warning` and `--color-error`',
