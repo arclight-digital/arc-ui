@@ -7,11 +7,11 @@ export const topBar: ComponentDef = {
   tier: 'navigation',
   interactivity: 'hybrid',
   description:
-    'Header bar with a brand slot on the left, an optional center navigation area, and a right-aligned actions region for user controls, search and settings.',
+    'The header bar across the top of an app, with the brand on the left and user controls on the right.',
 
   overview: `TopBar is the header across the top of an ARC UI app. The brand on the left is the \`heading\` text with the \`logo\` and \`subtitle\` slots around it, the \`center\` slot holds navigation, and the \`actions\` slot on the right holds user controls.
 
-It works with AppShell and Sidebar. In AppShell's \`topbar\` slot it's set to \`fixed\` for you, so it stays at the top of the viewport while the content scrolls. Below 900px a hamburger button appears and fires \`arc-sidebar-toggle\`. AppShell listens for it to open or close the Sidebar.
+It works with AppShell and Sidebar. In AppShell's \`topbar\` slot it's set to \`fixed\` for you, so it stays at the top of the viewport while the content scrolls. An \`embedded\` AppShell leaves it in the flow. Below 900px a hamburger button appears and fires \`arc-sidebar-toggle\`. AppShell listens for it to open or close the Sidebar.
 
 Outside AppShell, set \`fixed\` yourself to pin it to the viewport, and add top padding to the content below so the bar doesn't cover it. Without \`fixed\` it scrolls away with the page.`,
 
@@ -19,6 +19,7 @@ Outside AppShell, set \`fixed\` yourself to pin it to the viewport, and add top 
     '`mobile-menu="none"` removes the hamburger for a site with nothing to open',
     'On phones the center column gives way before the brand or actions shrink. `mobile-center="end"` moves it next to the actions, and `"hidden"` drops it',
     'The heading is uppercase with wide letter spacing',
+    'The bar is `--nav-height` tall (64px by default). Use that token for the top padding under a fixed bar',
     'The menu button has `aria-label="Toggle menu"` and `aria-expanded`',
   ],
 
