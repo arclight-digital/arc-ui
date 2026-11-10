@@ -8,39 +8,33 @@ export const dropdownMenu: ComponentDef = {
   interactivity: 'interactive',
   description: 'Menu dropdown triggered by a button with keyboard navigation.',
 
-  overview: `DropdownMenu renders a click-triggered menu panel anchored below a customizable trigger element. The trigger is provided via the \`trigger\` named slot, and menu items are declared as \`<arc-menu-item>\` children in the default slot. Clicking the trigger toggles the panel open or closed, and clicking outside the component or pressing Escape dismisses it. The panel slides down with a smooth CSS transition using \`opacity\`, \`visibility\`, and \`transform\`.
+  overview: `DropdownMenu opens a menu from the element in its \`trigger\` slot, which can be an \`<arc-button>\`, a plain \`<button>\` or an icon button. Items are \`<arc-menu-item>\` children with a label and an optional \`shortcut\` hint, \`<arc-menu-divider>\` separates groups, and \`<arc-menu-label>\` names the group after it. Clicking the trigger toggles the menu. A click outside or Escape closes it.
 
-Menu items display a label and an optional keyboard shortcut hint in monospace. Dividers between groups of items are added with \`<arc-menu-divider>\`. When the panel is open, ArrowDown and ArrowUp cycle focus through selectable items (dividers are skipped), and Enter activates the focused item. The component dispatches an \`arc-select\` event with the item's label and shortcut on selection, then closes the panel and fires an \`arc-close\` event.
+Arrow Down and Arrow Up move through the items, skipping dividers and disabled items, Home and End jump to the ends, and Enter chooses. Choosing fires \`arc-select\` with the item's \`value\`, or its label if it has none, then closes the menu. Every close fires a cancelable \`arc-close\`, and focus returns to where it was when the menu opened, unless a click outside closed it.
 
-DropdownMenu is designed for action menus attached to buttons: file menus, "more actions" dots, profile menus, and similar patterns. It differs from ContextMenu (which is triggered by right-click on a parent region) and from Select (which is a form control that captures a value). The trigger slot accepts any element, so you can use an \`<arc-button>\`, a plain \`<button>\`, or an icon as the toggle.`,
+Use it for action menus on a button: a file menu, a "more actions" button or a profile menu. ContextMenu opens on right-click instead, and Select is a form control that keeps a value.`,
 
   features: [
-    'Click-triggered panel anchored below a customizable trigger slot',
-    'Smooth CSS transition with opacity, visibility, and translateY animation',
-    'Full keyboard navigation: ArrowUp/Down cycle items, Enter selects, Escape closes',
-    'Support for `<arc-menu-item>` with label and shortcut hint, `<arc-menu-divider>` for separating groups, and `<arc-menu-label>` for naming them',
-    'Disabled items are drawn muted, skipped by the keyboard, and never selected',
-    'A trigger that fills a full-width host: give `arc-dropdown-menu` a width or `display: block`',
-    '`arc-select` event on item activation with label and shortcut in the detail',
-    '`arc-close` event when the panel is dismissed by any means',
-    'Automatic close on outside click via a document-level event listener',
-    '`aria-haspopup` and `aria-expanded` on the trigger for screen reader accessibility',
+    'The menu renders in the top layer and flips above the trigger when there\'s no room below',
+    'Disabled items are muted and can\'t be chosen',
+    'The trigger is shrink-to-fit. Give the host a width, or `display: block`, and the trigger fills it',
+    'The trigger gets `aria-haspopup` and `aria-expanded`, and the component sets `role="menu"` and `role="menuitem"`',
+    'The `arc-select` detail also carries the item\'s `label`, `shortcut` and `index`',
   ],
 
   guidelines: {
     do: [
-      'Provide a clear, descriptive trigger element. A button with text like "Actions" or a recognizable icon',
-      'Group related items with <arc-menu-divider>, and name a group with <arc-menu-label> rather than a disabled item',
-      'Include shortcut hints on items that have associated keyboard bindings for user education',
-      'Listen to arc-select to execute the chosen action; the event contains the item label and shortcut',
-      'Keep the item count under 10; for larger command sets, use CommandPalette instead',
+      'Make the trigger say what\'s in the menu, such as an "Actions" button or a recognizable icon',
+      'Name groups with `<arc-menu-label>`, not with a disabled item',
+      'Show shortcut hints on items that also have a key binding',
+      'Give items a `value` when two of them could share a label',
+      'Move long lists of commands to a CommandPalette',
     ],
     dont: [
-      'Do not use DropdownMenu as a form Select replacement. It does not track a selected value',
-      'Do not place the trigger element outside the <arc-dropdown-menu> component; it must be in the trigger slot',
-      'Do not nest another DropdownMenu inside a menu item; use a flat list or CommandPalette for complex hierarchies',
-      'Do not add role="menu" or role="menuitem" yourself. The component sets both',
-      'Do not override the z-index of the panel without testing stacking context conflicts with other overlays',
+      'Don\'t use it in place of a Select. It doesn\'t keep a selected value',
+      'Don\'t put the trigger outside the component. It has to be in the `trigger` slot',
+      'Don\'t nest a DropdownMenu inside a menu item. There are no submenus',
+      'Don\'t add `role="menu"` or `role="menuitem"` yourself',
     ],
   },
 
@@ -168,12 +162,12 @@ export default function Example() {
     {
       name: 'MenuItem',
       tag: 'arc-menu-item',
-      description: 'A single action entry inside the context menu.',
+      description: 'One action in the menu. Its label is the `label` attribute or, without one, its text content.',
     },
     {
       name: 'MenuDivider',
       tag: 'arc-menu-divider',
-      description: 'A visual separator between groups of menu items.',
+      description: 'A line between groups of menu items.',
     },
     {
       name: 'MenuLabel',
