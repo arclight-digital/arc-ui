@@ -7,7 +7,7 @@ export const codeBlock: ComponentDef = {
   tier: 'typography',
   interactivity: 'hybrid',
   description:
-    'Syntax-highlighted code with a title, a copy button, line numbers, line emphasis, diff tints, a shell prompt and a collapsed height.',
+    'Shows source code in a framed block with a copy button, and colors it when shiki is installed.',
 
   overview: `CodeBlock shows source code in a framed block. The header has a title (\`label\`, in the body font), an optional \`filename\` in monospace, the \`language\` as a small tag, and an icon-only copy button that copies the code and shows a green check for a moment. Code goes in through the \`code\` property. There is no default slot.
 
@@ -15,7 +15,7 @@ Code renders line by line whether or not it's highlighted, so every reading aid 
 
 **Shell blocks.** Set \`prompt\` to put a \`$\` (or your own prompt, such as \`#\`) before each command. Continuation lines after a trailing backslash and blank lines get none, and the prompt can't be selected or copied. Shell highlighting tells the parts of a command apart: a wrapper like \`sudo\` is muted, the command is bold, its subcommand takes the accent, and paths, URLs and image references read as values. For variants of one command (npm, pnpm and yarn, or two editions of a product), put the blocks in an [arc-code-group](/docs/components/code-group) to get one block with tabs.
 
-**Highlighting is opt-in.** CodeBlock is the one component in ARC UI with a heavy dependency: shiki and its grammars, at TODO(copy): current install size of shiki plus @shikijs/langs (the page said about 13.6 MB, and nothing in the repo measures it). So shiki is an *optional peer dependency*, and the main barrel doesn't re-export CodeBlock. A bundler resolves the dynamic imports of everything it can reach, so a barrel export would have put shiki in everyone's install. (Components in a domain group and experimental components are left out of the barrel too, for other reasons.) Import CodeBlock by its own subpath and install shiki alongside:
+**Highlighting is opt-in.** CodeBlock is the one component in ARC UI with a heavy dependency: shiki and its grammars, at TODO(copy): current install size of shiki plus @shikijs/langs (the page said about 13.6 MB, and nothing in the repo measures it). So shiki is an *optional peer dependency*, and the main barrel doesn't re-export CodeBlock. A bundler resolves the dynamic imports of everything it can reach, so a barrel export would have put shiki in everyone's install. Import CodeBlock by its own subpath and install shiki alongside:
 
 \`\`\`
 npm install shiki @shikijs/langs
