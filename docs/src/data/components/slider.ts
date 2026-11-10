@@ -7,39 +7,31 @@ export const slider: ComponentDef = {
   tier: 'input',
   interactivity: 'hybrid',
   description:
-    'Range input slider with a label, live numeric value display, accent-primary fill track, and customisable min/max/step.',
+    'A range slider with a label, a live value readout, an accent-filled track, and min, max and step.',
 
-  overview: `Slider is a range input for selecting a numeric value within a defined range. When a \`label\` is provided, the component renders a header row with the label on the left and the current numeric value on the right in monospace font, updating as the user drags the thumb. The track uses a gradient fill from accent-primary to the default border color to show the selected proportion.
+  overview: `Slider picks a number from a range by dragging a thumb, for settings like volume or opacity. For an exact number someone types, use NumberInput. With a \`label\`, a header row shows the label on the left and the current value on the right in monospace, updating as the thumb moves. The track fills with the accent color up to the thumb.
 
-The component wraps a native \`<input type="range">\` element, so it keeps the browser's built-in accessibility: keyboard control (arrow keys for stepping) and screen reader announcement of the current value via \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\`. The \`step\` prop controls the increment granularity, which suits both coarse controls (volume 0-100) and fine-grained settings (opacity 0.00-1.00).
+It wraps a native \`<input type="range">\`, so it keeps the browser's keyboard control (arrow keys, Page Up and Page Down, Home and End) and announces the value with \`aria-valuenow\`, \`aria-valuemin\` and \`aria-valuemax\`. \`step\` sets the increment.
 
-Slider fires \`arc-input\` on every movement for real-time UI updates and \`arc-change\` when the user releases the thumb, mirroring the native input/change event distinction. The thumb scales up and gains a blue glow on hover or focus, which signals that it is interactive.`,
+\`arc-input\` fires on every movement and \`arc-change\` when the thumb is released, like the native input and change events. Use \`arc-input\` for a live preview and \`arc-change\` to save the final value.`,
 
   features: [
-    'Visual fill track using a CSS gradient from accent-primary to the border color, proportional to the current value',
-    'Header row displaying the label and current numeric value in monospace font when `label` is set',
-    'Configurable `min`, `max`, and `step` props for precise range and increment control',
-    'Thumb hover and focus effects with scale-up and accent-primary glow shadow',
-    'Native keyboard support via arrow keys, Page Up/Down, and Home/End from the underlying range input',
-    'Dual events: `arc-input` fires continuously during drag, `arc-change` fires on release',
-    'ARIA value attributes: `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and `aria-label`',
-    'Disabled state at 40% opacity with pointer events blocked',
+    'The thumb and track glow in the accent color on hover and focus',
+    '`aria-label` is the `label`, or "Slider" when there isn\'t one',
+    'Disabled drops to 50% opacity and blocks pointer events',
   ],
 
   guidelines: {
     do: [
-      'Provide a `label` so users can see both the purpose and the current value at a glance',
-      'Choose a `step` that matches your data precision; use 1 for integers, 0.01 for percentages',
-      'Use `arc-input` for real-time preview (e.g. adjusting a visual property) and `arc-change` for committing the final value',
-      'Set meaningful `min` and `max` values that reflect the actual valid range for your use case',
-      'Place Slider in a container wide enough for comfortable thumb dragging: at least 200px',
+      'Give it a `label`, so people see what it controls and its current value. Without one the value isn\'t shown',
+      'Match `step` to your data: 1 for integers, 0.01 for fractions',
+      'Set `min` and `max` to the real valid range',
+      'Make it at least 200px wide so the thumb is easy to drag',
     ],
     dont: [
-      'Do not use Slider for exact numeric entry where the user needs to type a specific number; use Input with `type="number"` instead',
-      'Do not set a `step` so small that the slider has thousands of positions: it becomes imprecise with mouse input',
-      'Do not omit `label` when the slider is standalone: without context the value readout is meaningless',
-      'Do not use Slider for binary on/off choices; use Toggle instead',
-      'Avoid placing multiple sliders in a narrow column without sufficient vertical spacing between them',
+      'Don\'t make `step` so small that the track has thousands of positions. A mouse can\'t hit them precisely',
+      'Don\'t use it for an on/off choice. Use Toggle',
+      'Don\'t stack several sliders in a narrow column without vertical space between them',
     ],
   },
 
