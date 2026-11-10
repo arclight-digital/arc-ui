@@ -69,8 +69,8 @@ const interactivityColors: Record<string, string> = {
 };
 
 const interactivityNotes: Record<string, string> = {
-  interactive: 'This component requires JavaScript. No pure HTML/CSS version is available. Use the Web Component directly or a framework wrapper.',
-  hybrid: 'Layout and styling work without JavaScript via the HTML/CSS versions. Interactive features like events and state management require the Web Component or a framework wrapper.',
+  interactive: 'This component needs JavaScript. Use the web component or a framework wrapper.',
+  hybrid: 'Its events and state need JavaScript, so use the web component or a framework wrapper for those.',
 };
 
 // Resolve seeAlso slugs to component data or guide links
@@ -180,14 +180,13 @@ const headings = removed
     {!removed && api.status === 'deprecated' && api.mergedInto && (
       <section id="deprecated" class="deprecation">
         <p>
-          <strong>{component.name} is deprecated.</strong> It still works, is still published, and is
-          still exported from <code>@arclux/arc-ui</code> for all of v4. Nothing about it changed.
-          It is removed in v5. Use{' '}
+          <strong>{component.name} is deprecated.</strong> It works and is exported from
+          <code>@arclux/arc-ui</code> for the rest of v4, and is removed in v5. Use{' '}
           <a href={`/docs/components/${api.mergedInto.replace(/^arc-/, '')}`}>
             <code>&lt;{api.mergedInto}&gt;</code>
           </a>{' '}
-          instead; the mechanical change is in{' '}
-          <a href="https://github.com/arclux/arc-ui/blob/main/MIGRATION.md#the-merges">MIGRATION.md</a>.
+          instead. The change to make is in{' '}
+          <a href="https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md#the-merges">MIGRATION.md</a>.
         </p>
       </section>
     )}
@@ -196,9 +195,9 @@ const headings = removed
     {removed && (
       <section id="removed" class="tombstone">
         <p class="tombstone__lede">
-          <strong>{removed.name} was removed in {removed.removedIn}.</strong> It is not published, and
-          <code>&lt;{removed.tag}&gt;</code> no longer resolves to anything. This page is here so the link
-          still answers.
+          <strong>{removed.name} was removed in {removed.removedIn}.</strong> It isn't published, and
+          <code>&lt;{removed.tag}&gt;</code> no longer resolves to anything. This page keeps old links
+          working.
         </p>
 
         <h2 class="docs-heading">Why</h2>
@@ -222,8 +221,8 @@ const headings = removed
         </ul>
 
         <p class="tombstone__migration">
-          The full entry, with the mechanical fix, is in
-          <a href={`https://github.com/arclux/arc-ui/blob/main/MIGRATION.md${removed.migration}`}>MIGRATION.md</a>.
+          The full entry, with the change to make, is in
+          <a href={`https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md${removed.migration}`}>MIGRATION.md</a>.
         </p>
       </section>
     )}
@@ -246,14 +245,14 @@ const headings = removed
       <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
         <div class="component-page__guidelines">
           <arc-card>
-            <h3 class="guidelines__heading">When to use</h3>
+            <h3 class="guidelines__heading">Do</h3>
             <ul class="guidelines__list guidelines__list--do">
               {component.guidelines.do.map((item: string) => <li>{item}</li>)}
             </ul>
           </arc-card>
           {component.guidelines.dont && component.guidelines.dont.length > 0 && (
             <arc-card>
-              <h3 class="guidelines__heading">When not to use</h3>
+              <h3 class="guidelines__heading">Don't</h3>
               <ul class="guidelines__list guidelines__list--dont">
                 {component.guidelines.dont.map((item: string) => <li>{item}</li>)}
               </ul>
@@ -316,11 +315,10 @@ const headings = removed
       {api.group && (
         <div class="interactivity-note" data-level="group">
           <p>
-            <strong>{component.name}</strong> is in the <code>{api.group}</code> domain group, so it is
-            absent from the default <code>@arclux/arc-ui</code> barrel. Import it from
-            <code>@arclux/arc-ui/{api.group}</code>, or from its own subpath
-            <code>@arclux/arc-ui/{component.slug}</code>. Everything else (the element, the CSS, the
-            framework wrappers, the support it gets) is unchanged.
+            <strong>{component.name}</strong> is in the <code>{api.group}</code> group, so the
+            default <code>@arclux/arc-ui</code> entry point doesn't include it. Import it from
+            <code>@arclux/arc-ui/{api.group}</code> or from its own subpath,
+            <code>@arclux/arc-ui/{component.slug}</code>.
           </p>
         </div>
       )}
@@ -404,7 +402,7 @@ const headings = removed
     {/* See Also */}
     {seeAlsoItems.length > 0 && (
       <section id="see-also">
-        <h2 class="docs-heading">See Also</h2>
+        <h2 class="docs-heading">See also</h2>
         <arc-divider align="left" variant="line-gradient" style="max-width:48px;margin-bottom:var(--space-md)"></arc-divider>
         <ul class="see-also__list">
           {seeAlsoItems.map((item: any) => (
