@@ -10,36 +10,31 @@ export const knob: ComponentDef = {
     'Rotary knob input for continuous parameters, with a glowing 270-degree arc fill, vertical-drag interaction, magnetic detents, and a monospace value readout.',
   searchKeywords: ['dial', 'rotary', 'potentiometer', 'synth', 'gain', 'volume'],
 
-  overview: `Knob is the input a slider cannot be: a rotary control that packs a full parameter range into a compact circular footprint, so a rack of channel strips or a synth panel can put a dozen of them side by side. A 270-degree arc track fills from \`min\` to the current value, a glowing indicator line marks the position, and the readout below renders in the monospace role with tabular digits so it never shifts width while turning.
+  overview: `Knob is a rotary control that fits a full parameter range into a small circle, so a rack of channel strips or a synth panel can put a dozen side by side. A 270-degree arc fills from \`min\` to the current value, a glowing line marks the position, and the readout below uses tabular monospace digits so its width doesn't change as you turn.
 
-Interaction follows audio-software convention. Dragging vertically turns the knob (the full range covers about 150 pixels of travel), and holding Shift slows the drag to a tenth for fine adjustment. The mouse wheel and arrow keys step by \`step\`, Page Up and Page Down jump by ten steps, and Home and End go straight to the rails. The optional \`detents\` prop names snap values (an array from script, or a comma-separated attribute): each renders as a tick mark around the dial, and a drag snaps magnetically when it lands close, as with the centre detent on a pan knob or unity on a gain knob. Keyboard and wheel stepping ignore detents, so precise entry is never fought.
+It works like the knobs in audio software. Drag vertically to turn it: the full range takes about 150 pixels of travel, and holding Shift slows the drag to a tenth. The mouse wheel and arrow keys move by \`step\`, Page Up and Page Down by ten steps, and Home and End go to \`min\` and \`max\`. \`detents\` lists values to snap to. Each gets a tick mark around the dial, and a drag snaps to one when it comes within 2.5% of the range. The wheel and keys ignore detents.
 
-Knob follows the v3 edit/commit contract: \`arc-input\` fires continuously while the knob turns and \`arc-change\` fires once when the turn commits, so a live preview and an expensive save can listen separately. The component participates in forms through ElementInternals, submitting its value under \`name\`, and the dial is a keyboard-operable \`role="slider"\` with the full ARIA value set. \`format\` shapes both the visible readout and the accessible value text, so a screen reader hears "440 Hz" rather than a bare number.`,
+\`arc-input\` fires on every change while the knob turns. \`arc-change\` fires when a drag is released and after each wheel notch or key step, so a live preview and an expensive save can listen separately.`,
 
   features: [
-    'A 270-degree SVG arc track with an accent fill from `min` to the current value and a glowing indicator line',
-    'Synth-style vertical drag with pointer capture; Shift slows the drag to a tenth for fine adjustment',
-    'Mouse wheel and arrow keys step by `step`, Page Up/Down by ten steps, Home/End to the rails',
-    'Optional `detents` render tick marks and snap the drag magnetically to named values',
-    '`format` callback shapes the readout and the ARIA value text, e.g. adding a unit suffix',
-    'The v3 event contract: `arc-input` continuously while turning, `arc-change` once on commit',
-    'Form participation via ElementInternals. The value submits under `name` and restores on `form.reset()`',
-    'Keyboard-operable `role="slider"` dial with `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, and `aria-valuetext`',
+    'Pointer capture keeps a drag going when the pointer leaves the dial',
+    '`format` shapes both the readout and the accessible value text',
+    'Takes part in forms through ElementInternals. The value submits under `name` and is restored on `form.reset()`',
+    'Keyboard-operable `role="slider"` with `aria-valuemin`, `aria-valuemax`, `aria-valuenow` and `aria-valuetext`',
   ],
 
   guidelines: {
     do: [
-      'Use Knob where horizontal space is scarce and controls sit in columns: mixer strips, effect panels, tool palettes',
-      'Provide a `label`; a bare dial gives no clue what parameter it turns',
-      'Set `format` to include the unit, so both the readout and screen readers announce "440 Hz" rather than "440"',
-      'Put a detent at the neutral position of a bipolar parameter: 0 on a pan knob, unity on a gain knob',
-      'Listen to `arc-input` for live audible or visible preview and to `arc-change` for persisting the committed value',
+      'Use it where horizontal space is short and controls stack in columns: mixer strips, effect panels, tool palettes',
+      'Give it a `label`. A bare dial doesn\'t say what it controls',
+      'Set `format` to include the unit, so the readout and screen readers say "440 Hz" and not "440"',
+      'Put a detent at the neutral point of a two-sided parameter: 0 on a pan knob, unity on a gain knob',
     ],
     dont: [
-      'Do not use Knob for a wide-layout single value where a slider fits. A slider shows its whole range at a size a knob cannot',
-      'Do not use Knob for exact numeric entry. Pair it with or replace it by Number Input when users need to type a value',
-      'Do not scatter detents densely across the range; a magnet every few units makes smooth dragging impossible',
-      'Do not rely on the dial alone to convey the value. The readout below it is part of the control, so leave it visible',
+      'Don\'t use a knob for a single value in a wide layout. A slider shows its whole range at a size a knob can\'t',
+      'Don\'t use it for exact numbers. Pair it with Number Input, or use Number Input alone, when people need to type a value',
+      'Don\'t put a detent every few units. Smooth dragging becomes impossible',
+      'Don\'t hide the readout. It\'s part of the control',
     ],
   },
 
