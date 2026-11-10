@@ -133,7 +133,7 @@ export const PRESETS: Preset[] = [
   {
     id: 'monochrome',
     name: 'Monochrome',
-    blurb: 'No hue at all. Everything has to earn its place through contrast.',
+    blurb: 'Neutral grays only, in both themes.',
     swatches: ['#e5e5e5', '#a3a3a3'],
     colors: {
       dark: {
