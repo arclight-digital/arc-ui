@@ -7,7 +7,7 @@ export const dateRangePicker: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Dual-calendar picker for selecting a start/end date range with presets and full keyboard navigation.',
+    'A date field that opens one or more month calendars for picking a start and an end date.',
 
   overview: `DateRangePicker is DatePicker for a start and end date. The read-only field shows the range as "Jan 5 – Feb 2, 2026", while \`start\` and \`end\` hold ISO dates (YYYY-MM-DD). \`value\` joins them as an ISO 8601 interval ("2026-01-05/2026-02-02"), and that string is what submits with the form under \`name\`. \`form.reset()\` restores the initial range.
 
