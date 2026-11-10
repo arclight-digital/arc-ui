@@ -6,7 +6,7 @@ export const toggle: ComponentDef = {
   tag: 'arc-toggle',
   tier: 'input',
   interactivity: 'hybrid',
-  description: 'On/off switch with animation, glow effect, and ARIA switch role.',
+  description: 'An on/off switch for a setting that takes effect at once.',
 
   overview: `Toggle is an on/off switch for a setting that takes effect at once, such as turning on notifications. Use a checkbox when the choice waits for the reader to submit a form.
 
