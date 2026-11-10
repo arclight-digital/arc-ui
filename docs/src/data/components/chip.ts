@@ -7,7 +7,7 @@ export const chip: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'A toggleable pill-shaped element for filters, tags, or multi-select options, with a selected state highlighted in accent-primary.',
+    'A pill that toggles on and off. A row of them lets users pick any number of options.',
 
   overview: `Chip is a pill that toggles between selected and unselected. Use a set of chips to pick zero or more options from a visible list: filters, tag pickers, interest pickers. It renders an \`arc-tag\`, so it has Tag's uppercase label. Unselected, it's a default Tag. Selected, it's a primary Tag: accent-primary border and text on an \`--accent-primary-subtle\` background.
 
