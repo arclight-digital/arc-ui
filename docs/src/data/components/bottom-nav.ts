@@ -7,7 +7,7 @@ export const bottomNav: ComponentDef = {
   tier: 'navigation',
   interactivity: 'interactive',
   description:
-    'Mobile bottom bar with icon and label items on a blurred surface-overlay background. The active item gets an accent-primary glow underline.',
+    'A tab bar fixed to the bottom of a phone screen, one icon and label per destination.',
 
   overview: `BottomNav is a navigation bar fixed to the bottom of the viewport, for phones and other touch screens. Each item is an icon above a short label, for the three to five top-level destinations a mobile app usually has.
 
@@ -17,7 +17,7 @@ Use TopBar on desktop and swap in BottomNav at mobile widths. The bar's backdrop
 
   features: [
     'Items are `<button>` elements, so Tab and Enter reach them. There are no arrow-key bindings',
-    'The active item gets `aria-current="page"`',
+    'The active item gets `aria-current="page"` and a glowing line under it',
   ],
 
   guidelines: {
