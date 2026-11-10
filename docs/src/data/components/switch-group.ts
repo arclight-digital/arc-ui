@@ -7,34 +7,25 @@ export const switchGroup: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Groups multiple toggle switches under a shared label with consistent sizing and disabled state. Supports vertical and horizontal layouts.',
+    'Groups toggle switches under a shared label and gives them one size and disabled state. Lays them out vertically or horizontally.',
 
-  overview: `SwitchGroup wraps multiple \`arc-toggle\` components inside a semantic \`<fieldset>\` with an optional legend label. It cascades the \`size\` and \`disabled\` props down to all child toggles, so you don't set props on each one.
+  overview: `SwitchGroup puts a set of \`arc-toggle\` elements in a native \`<fieldset>\`, with \`label\` as its \`<legend>\`. It copies its \`size\` and \`disabled\` to each toggle, so you set them once.
 
-Two orientation modes control the layout: vertical (default) stacks toggles in a column with compact spacing, while horizontal arranges them in a wrapping row with wider gaps. The vertical layout works well in settings panels, while horizontal suits toolbar-style option rows.
-
-The component renders a native \`<fieldset>\` for proper form semantics and sets \`role="group"\` with \`aria-label\` on the inner container, which tells assistive technology the toggles are a group.`,
+\`orientation="vertical"\` (the default) stacks the toggles in a column, for settings panels and forms. \`horizontal\` puts them in a wrapping row with wider gaps, for a compact row of options.`,
 
   features: [
-    'Groups `arc-toggle` children under a shared label and fieldset',
-    'Cascades `size` and `disabled` props to all child toggles',
-    'Vertical and horizontal orientation modes',
-    'Native `<fieldset>` with `role="group"` for accessible semantics',
-    'Legend label rendered above the toggle group',
-    'Exposed CSS parts: fieldset, legend, group',
+    'The toggles sit in a `role="group"` labelled by `label`',
+    'A disabled group is dimmed to 50% opacity',
   ],
 
   guidelines: {
     do: [
-      'Use for groups of related on/off settings like notification preferences',
-      'Provide a `label` to describe what the group of toggles controls',
-      'Use vertical orientation for settings panels and forms',
-      'Use horizontal orientation for compact toolbar-style layouts',
+      'Use it for related on/off settings, such as notification preferences',
+      'Set `label` to say what the toggles control',
     ],
     dont: [
-      'Do not mix toggle and non-toggle children: the component only cascades props to arc-toggle',
-      'Do not use for mutually exclusive options; use a radio group instead',
-      'Do not nest switch groups inside each other',
+      'Don\'t mix in children other than `arc-toggle`. Only toggles get the shared size and disabled state',
+      'Don\'t use it for mutually exclusive options. Use RadioGroup',
     ],
   },
 
