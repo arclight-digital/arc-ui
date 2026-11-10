@@ -10,7 +10,7 @@ export const emptyState: ComponentDef = {
 
   overview: `EmptyState fills a list, table, search result or dashboard that has nothing to show, and points to a next step. It stacks an \`icon\` slot, a \`heading\`, a \`description\` and an \`actions\` slot for buttons, centered in a box with a dashed border on the raised surface color.
 
-The icon slot takes an SVG, an icon or an emoji, shown at 40px in \`--text-ghost\` and hidden from screen readers. The heading renders as an \`<h3>\`, and the description is capped at 360px wide. Each is left out when it's empty.
+The icon slot takes an SVG, an icon or an emoji, shown at 40px in \`--text-ghost\` and hidden from screen readers. The heading renders as an \`<h3>\`, and the description is capped at 360px wide. Both are left out when they're empty. The icon wrapper always renders, so its \`--space-lg\` bottom margin stays even with no icon.
 
 It's quiet by default. Set \`announce\` to make it a polite live region (\`role="status"\`) when the empty state answers something the user just did, such as a search with no results. Leave it off for a list that's empty on page load, since a live region reads out everything that changes inside it.`,
 
