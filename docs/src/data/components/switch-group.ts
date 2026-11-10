@@ -7,7 +7,7 @@ export const switchGroup: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Groups toggle switches under a shared label and gives them one size and disabled state. Lays them out vertically or horizontally.',
+    'Groups toggle switches under one label and sets their size and disabled state together. Lays them out vertically or horizontally.',
 
   overview: `SwitchGroup puts a set of \`arc-toggle\` elements in a native \`<fieldset>\`, with \`label\` as its \`<legend>\`. It copies its \`size\` and \`disabled\` to each toggle, so you set them once.
 
