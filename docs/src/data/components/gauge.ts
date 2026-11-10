@@ -10,44 +10,40 @@ export const gauge: ComponentDef = {
     'Radial gauge displaying a scalar value on an arc with color-coded zones (success, warning, error) and an animated sweep.',
   searchKeywords: ['radial', 'dial', 'speedometer', 'donut'],
 
-  overview: `Gauge is the radial companion to Meter: the same scalar value, range, and threshold semantics, drawn as an arc instead of a bar. A neutral track arc carries a value arc whose stroke takes the zone color and a soft matching glow, and the current reading sits center-stage in monospace type with an optional \`unit\` suffix and a label beneath it. Two shapes are available through \`variant\`: the default \`full\` renders a 270-degree horseshoe with the readout inside the ring, while \`half\` renders a 180-degree semicircle with the readout resting on the baseline.
+  overview: `Gauge is the radial version of Meter: the same value, range and thresholds, drawn as an arc instead of a bar. A neutral track carries a value arc in the zone color with a matching glow, and the reading is in the middle in mono type, with an optional \`unit\` and a \`label\` under it. \`variant="full"\`, the default, is a 270-degree horseshoe with the reading inside. \`variant="half"\` is a 180-degree semicircle with the reading on the baseline.
 
-The color logic mirrors the HTML meter algorithm using the same three thresholds as Meter: \`low\`, \`high\`, and \`optimum\`. When the optimum is in the high segment (e.g. battery level), values above \`high\` render green (success), values between \`low\` and \`high\` yellow (warning), and values below \`low\` red (error). When the optimum is in the low segment (e.g. error rate), the logic inverts. Low values are green and high values are red. If thresholds are omitted, the range divides into thirds.
+The colors follow the HTML \`<meter>\` rules, with Meter's \`low\`, \`high\` and \`optimum\`. When the optimum is in the high segment, as for battery level, values above \`high\` are green (success), values between \`low\` and \`high\` yellow (warning), and values below \`low\` red (error). When the optimum is in the low segment, as for an error rate, it's the other way round. With no thresholds, the range splits into thirds.
 
-The value arc sweeps into place on first paint and animates smoothly whenever the value changes, honoring the reduced-motion preference. Gauge uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\`, and \`aria-valuemax\`; when a \`unit\` is set, \`aria-valuetext\` reports the reading with its unit so screen readers announce "72%" rather than a bare number.`,
+\`mode\` changes the coloring. \`zones\` is the default described above. \`plain\` draws one color, \`--gauge-fill\` (the accent by default), for a quantity that's neither good nor bad. \`diverging\` draws from \`center\` toward the value, in \`--gauge-below\` on one side and \`--gauge-above\` on the other, for a lean either way, such as -1 to +1. \`center\` defaults to halfway between \`min\` and \`max\`.
+
+The arc sweeps in on first paint and again on every change. It uses \`role="meter"\` with \`aria-valuenow\`, \`aria-valuemin\` and \`aria-valuemax\`, and with a \`unit\` set, \`aria-valuetext\` gives the reading with its unit, so screen readers say "72%" and not a bare number.`,
 
   features: [
-    '`mode="plain"` for a quantity that is not good or bad, and `mode="diverging"` for a lean either way around `center`, each side its own colour',
-    'Color-coded value arc: green (success) in the optimal zone, yellow (warning) for intermediate, red (error) for critical',
-    'Configurable `low`, `high`, and `optimum` thresholds identical to Meter, mirroring the HTML `<meter>` algorithm',
-    'Soft glow on the value arc in the zone color, following the status glow scale',
-    'Animated sweep on first paint and on every value change, disabled under reduced motion',
-    '`full` (270-degree horseshoe) and `half` (180-degree) arc variants',
-    'Center-stage monospace readout with optional `unit` suffix and label, hidden via `showValue`',
-    'Semantic `role="meter"` with `aria-valuenow`, `aria-valuemin`, `aria-valuemax`, and unit-aware `aria-valuetext`',
-    'Value clamped between `min` and `max`, so out-of-range values are safe',
+    '`value` is clamped between `min` and `max`',
+    '`no-value` hides the reading in the middle',
+    'A custom color\'s glow reads the matching `-rgb` property, such as `--gauge-fill-rgb`',
   ],
 
   guidelines: {
     do: [
-      'Use Gauge for a single reading that deserves visual prominence on a dashboard: CPU load, battery, a health score',
-      'Set `low`, `high`, and `optimum` to match the semantic meaning of your data, exactly as you would on Meter',
-      'Provide a `label` so the reading has an accessible name and visible context',
-      'Set `unit` when the raw number is ambiguous: "72" reads differently as %, ms, or GB',
-      'Use the `half` variant when vertical space is tight, such as inside a stat row or card header',
+      'Use it for a single reading that should stand out on a dashboard, such as CPU load, battery or a health score',
+      'Set `low`, `high` and `optimum` to match what your numbers mean, as you would on Meter',
+      'Set a `label`. It\'s shown under the reading and is the accessible name',
+      'Set `unit` when the number alone is ambiguous: "72" means different things as %, ms or GB',
+      'Use the `half` variant when vertical space is tight, as in a stat row or a card header',
     ],
     dont: [
-      'Do not use Gauge where space is dense or readings stack in a list. Meter conveys the same data in a fraction of the height',
-      'Do not use Gauge for a plain number with no meaningful range. Stat presents a standalone figure with trend context instead',
-      'Do not use Gauge for task progress. Progress communicates completion; Gauge communicates where a reading sits in a range',
-      'Do not set `min` equal to or greater than `max`. The sweep renders empty in that case',
-      'Do not rely on color alone to convey the zone meaning. Keep the value and label visible or provide adjacent text',
+      'Don\'t use it in dense layouts or lists of readings. Meter shows the same data in a fraction of the height',
+      'Don\'t use it for a number with no meaningful range. Use Stat',
+      'Don\'t use it for task progress. Use Progress',
+      'Don\'t set `min` equal to or greater than `max`. The arc renders empty',
+      'Don\'t rely on color alone for the zone. Keep the value and label visible, or add text beside it',
     ],
   },
 
   previewHtml: `<div style="display:flex; align-items:flex-end; gap:var(--space-xl); flex-wrap:wrap; justify-content:center;">
   <arc-gauge label="Battery" value="82" unit="%" min="0" max="100" low="20" high="60" optimum="100"></arc-gauge>
-  <arc-gauge label="Error Rate" value="45" unit="%" min="0" max="100" low="10" high="50" optimum="0"></arc-gauge>
+  <arc-gauge label="Error rate" value="45" unit="%" min="0" max="100" low="10" high="50" optimum="0"></arc-gauge>
   <arc-gauge variant="half" label="Load" value="0.64" unit="" min="0" max="1" low="0.5" high="0.8" optimum="0"></arc-gauge>
   <arc-gauge variant="half" label="Lean" mode="diverging" value="-0.3" min="-1" max="1"></arc-gauge>
 </div>`,
