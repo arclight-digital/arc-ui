@@ -6,9 +6,9 @@ export const link: ComponentDef = {
   tag: 'arc-link',
   tier: 'navigation',
   interactivity: 'static',
-  description: 'Styled anchor with nav, muted, and default variants.',
+  description: 'A styled anchor with default, muted and nav variants.',
 
-  overview: `Link styles an anchor in one of three variants. \`default\` uses the accent color and underlines on hover. \`muted\` starts in the muted text color and turns to the primary text color on hover, for footer links and secondary navigation. \`nav\` is 14px with an inline-flex layout and a gap, for menus where links have icons beside them.
+  overview: `Link styles an anchor in one of three variants. \`default\` uses the accent color and underlines on hover. \`muted\` starts in the muted text color and turns to the primary text color on hover, for footer links and secondary navigation. \`nav\` is 16px (the \`--text-sm\` token) with an inline-flex layout and a gap, for menus where links have icons beside them.
 
 Set \`href\` and Link renders its own \`<a>\`. Or put a single \`<a>\` inside it, and Link styles that anchor instead, which works before hydration and without JavaScript. With \`href\`, \`external\` sets \`target="_blank"\` and \`rel="noopener noreferrer"\` and adds a 12px external-link icon at 60% opacity. With your own \`<a>\`, \`external\` adds only the icon, so put \`target\` and \`rel\` on the anchor yourself.
 
