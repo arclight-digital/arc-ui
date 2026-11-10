@@ -10,43 +10,32 @@ export const terminal: ComponentDef = {
   description: 'Animated terminal window that types commands and prints their output line by line.',
   searchKeywords: ['console', 'shell', 'cli', 'command line', 'prompt'],
 
-  overview: `Terminal renders a chrome'd window (orbs, an optional centered title, a monospace body) and plays a transcript through it. Command lines get an accent-colored prompt glyph and type character-by-character; output lines appear whole after a short beat, like a process answering; comment lines render muted. A blinking block cursor follows the typing and settles on a fresh prompt when the sequence ends, at which point the component fires \`arc-complete\`.
+  overview: `Terminal draws a window frame (three orbs, an optional centered \`title\` and a monospace body) and plays a transcript in it. Commands get an accent-colored prompt glyph and type one character at a time. Output lines appear whole after a short pause, and comment lines are muted. A blinking block cursor with an accent glow follows the typing and settles on a fresh prompt at the end, when \`arc-complete\` fires.
 
-The transcript is supplied through the \`lines\` property as an array of \`{ type, text, delay? }\` objects, where \`type\` is \`command\`, \`output\`, or \`comment\`. Arrays do not survive an attribute, so \`lines\` is property-only: set it from JavaScript or pass it through a framework wrapper. The \`speed\` prop is milliseconds per typed character (the same cadence prop Typewriter exposes), and each line's optional \`delay\` overrides the default pause before it starts: 500ms before a command, 150ms before output.
+\`lines\` is an array of \`{ type, text, delay? }\` objects, where \`type\` is \`command\`, \`output\` or \`comment\`. Set it from script, a framework binding or a JSON attribute. \`speed\` is milliseconds per typed character, as on Typewriter. The default pause before a line is 500ms for a command and 150ms for anything else, and a line's \`delay\` replaces it.
 
-By default the animation starts when the element scrolls into view, so a terminal halfway down a landing page types on arrival rather than replaying scrolls nobody saw. Set the \`autoplay\` property to \`false\` to take manual control with \`play()\` and \`reset()\`, and set \`loop\` to replay the transcript indefinitely. Before playback starts, including during server rendering, the full completed transcript is shown, so the content never depends on JavaScript running. Under \`prefers-reduced-motion\` nothing animates: the finished transcript renders immediately, the cursor holds steady instead of blinking, and \`arc-complete\` still fires.`,
+The server renders the complete transcript, so the content never depends on JavaScript. On the client it's blanked before first paint and plays when the element scrolls into view, so a terminal halfway down a page types when the reader gets there. Set the \`autoplay\` property to \`false\` to start it yourself with \`play()\`, and set \`loop\` to replay it with a 2-second pause between cycles. Under \`prefers-reduced-motion\` nothing animates. The finished transcript shows at once, the cursor holds steady, and \`arc-complete\` still fires.`,
 
   features: [
-    'Commands type character-by-character behind an accent-colored prompt glyph',
-    'Output lines appear whole after a short, per-line configurable delay',
-    'Comment lines render muted for annotation inside the transcript',
-    'Window chrome with the house three-orb title bar and optional centered title',
-    'Starts when scrolled into view via IntersectionObserver, or manually with `play()` when `autoplay` is off',
-    '`reset()` returns to the blank pre-animation state without starting playback, so a transcript can be replayed on demand',
-    'Loop mode replays the transcript with a pause between cycles',
-    'Server rendering and `prefers-reduced-motion` both show the completed transcript instantly',
-    'Blinking block cursor with an accent glow that settles on an idle prompt when done',
-    'Fires `arc-complete` when the sequence finishes printing',
+    '`reset()` blanks the transcript without starting playback, so you can replay it on demand',
   ],
 
   guidelines: {
     do: [
-      'Use Terminal for install-and-run sequences on landing and getting-started pages, where the payoff is watching the tool work',
-      'Use arc-code-block when the reader needs to copy the commands. Terminal animates; CodeBlock has the copy button and syntax highlighting',
-      'Use arc-typewriter for a single line of prose, like a headline. Terminal is for multi-line command-and-response transcripts',
-      'Keep transcripts short: five to eight lines reads as a demo, thirty reads as a log file',
-      'Tune per-line delay to fake realistic latency: a build step that "runs" for a beat before its output lands sells the effect',
+      'Use it for install-and-run sequences on landing and getting-started pages',
+      'Put any command the reader needs in a CodeBlock as well. Terminal has no copy button or syntax highlighting',
+      'Use Typewriter for a single line of prose, such as a headline',
+      'Keep transcripts to five to eight lines. Thirty reads as a log file',
+      'Set a line\'s `delay` to stand in for real latency, such as a build step that runs for a beat before its output appears',
     ],
     dont: [
-      'Do not make Terminal the only place a required command appears. Pair it with a copyable code block in documentation',
-      'Do not put critical instructions behind the animation on autoplay pages; readers scrolling fast should not have to wait for typing',
-      'Do not run several terminals animating in the same viewport. One window typing is a demo, three is noise',
-      'Do not use loop on long transcripts. The clear-and-replay is distracting past a few lines',
-      'Do not pass the transcript as an attribute. `lines` is a property, and an attribute string will not parse into an array',
+      'Don\'t put critical instructions behind the animation. A reader scrolling fast shouldn\'t have to wait for the typing',
+      'Don\'t animate several terminals in the same viewport',
+      'Don\'t loop a long transcript. Clearing and replaying more than a few lines is distracting',
     ],
   },
 
-  previewHtml: `<arc-terminal title="arc — zsh" style="width: 100%; max-width: 560px;"></arc-terminal>`,
+  previewHtml: `<arc-terminal title="~/arc" style="width: 100%; max-width: 560px;"></arc-terminal>`,
 
   previewSetup: `{
   const t = el.querySelector('arc-terminal');
@@ -55,9 +44,9 @@ By default the animation starts when the element scrolls into view, so a termina
     { type: 'comment', text: '# Install ARC UI' },
     { type: 'command', text: 'pnpm add @arclux/arc-ui' },
     { type: 'output', text: 'Packages: +1' },
-    { type: 'output', text: '+ @arclux/arc-ui 3.0.0' },
+    { type: 'output', text: '+ @arclux/arc-ui' },
     { type: 'command', text: 'pnpm dev' },
-    { type: 'output', text: 'ready in 312ms — http://localhost:5173/' },
+    { type: 'output', text: 'ready in 312ms at http://localhost:5173/' },
   ];
 }`,
 
