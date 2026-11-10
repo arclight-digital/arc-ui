@@ -7,9 +7,9 @@ export const colorPicker: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   description:
-    'Color picker with a saturation/lightness area, hue slider, hex input, and optional preset swatches.',
+    'Picks any color from a drag area or a typed hex value.',
 
-  overview: `ColorPicker has a saturation/lightness area where users click or drag a crosshair, a hue slider across the full 360 degrees under it, and a hex input with a preview swatch for typing a known color. Pass a \`presets\` array and a row of swatches appears under the hex input, with the active one outlined in the primary color. Use presets for a brand palette or frequent colors. The area still allows any color.
+  overview: `ColorPicker has a saturation/lightness area where users click or drag a crosshair, a hue slider across the full 360 degrees under it, and a hex input with a preview swatch for typing a known color. Pass a \`presets\` array and a row of swatches appears under the hex input, with the active one outlined in the primary text color. Use presets for a brand palette or frequent colors. The area still allows any color.
 
 \`arc-input\` fires on every frame of a drag across the area or the hue slider, so use it for a live preview. \`arc-change\` fires once the color is committed (pointer released, preset clicked, or a valid hex entered), so use it for anything expensive, like a save. Both carry the hex string.`,
 
