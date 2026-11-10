@@ -7,7 +7,7 @@ export const combobox: ComponentDef = {
   tier: 'input',
   interactivity: 'interactive',
   searchKeywords: ['autocomplete', 'typeahead'],
-  description: 'Searchable dropdown with type-ahead filtering.',
+  description: 'A text input that filters a list of options as you type, for picking one value from a long list.',
 
   overview: `Combobox is a text input over a list of \`<arc-option>\` elements. Typing narrows the list to options whose text contains the query, ignoring case. Picking an option, by click or by Enter on the highlighted one, closes the list, puts the option's text in the input and fires \`arc-change\` with its value. Every keystroke fires \`arc-input\` with the query.
 
