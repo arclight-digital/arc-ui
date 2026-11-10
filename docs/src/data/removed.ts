@@ -58,23 +58,22 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A multi-step product tour that dimmed the page and walked a user through a sequence of anchored steps.',
     why:
-      'It shipped as stable while being unusable in the two ways that matter for a tour: a finished tour ' +
-      'resumed at its last step instead of restarting, and the backdrop it drew over the page could not be ' +
-      'dismissed from the keyboard at all. Both were structural rather than incidental — it targeted steps ' +
-      'by CSS selector, which cannot reach into a shadow root, so a tour over this very library could not ' +
-      'point at anything.',
+      'It shipped as stable but couldn\'t do its job: a finished tour resumed at its last step instead of ' +
+      'restarting, and the backdrop it drew over the page couldn\'t be dismissed from the keyboard. It also ' +
+      'targeted steps by CSS selector, which can\'t reach into a shadow root, so a tour over this library ' +
+      'couldn\'t point at any of its components.',
     alternatives: [
       {
         label: 'arc-tour',
         forthcoming: true,
         note:
-          'The rebuild, on the v4 overlay contract and taking element references rather than selectors — ' +
-          'which is the fix for shadow-DOM targeting, by API design rather than by workaround.',
+          'The rebuild, on the v4 overlay contract. It takes element references instead of selectors, so ' +
+          'it can target elements inside shadow roots.',
       },
       {
         label: 'Popover',
         href: '/docs/components/popover',
-        note: 'For a single anchored explanation rather than a sequence.',
+        note: 'For a single anchored explanation instead of a sequence.',
       },
     ],
     migration: '#the-five-cuts',
@@ -87,13 +86,13 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A dimming overlay that cut a hole around one highlighted element on the page.',
     why:
-      'Half of a tour with no tour around it. It found its target by CSS selector, so like Guided Tour it ' +
-      'could not highlight anything inside a shadow root, and the two were only ever used together.',
+      'It was the highlight half of Guided Tour, and the two were only ever used together. It found its ' +
+      'target by CSS selector, so like Guided Tour it couldn\'t highlight anything inside a shadow root.',
     alternatives: [
       {
         label: 'arc-tour',
         forthcoming: true,
-        note: 'Absorbs the highlight: a one-step tour is exactly this, and it takes an element reference.',
+        note: 'Absorbs the highlight as a one-step tour, and takes an element reference.',
       },
     ],
     migration: '#the-five-cuts',
@@ -106,11 +105,10 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A floating action button that fanned out into a set of secondary actions.',
     why:
-      'Three separate defects, all of them in the parts a consumer would hit first. Its closed actions ' +
-      'stayed focusable and clickable — invisible controls a keyboard user could still activate. An ' +
-      'unrecognised position anchored it nowhere at all rather than falling back. And the per-item ' +
-      'value it documented was never emitted, so a handler could not tell which action fired. It also ' +
-      'had no dismissal of any kind: no Escape, no outside click, no controller.',
+      'Its closed actions stayed focusable and clickable, so a keyboard user could activate controls ' +
+      'they couldn\'t see. An unrecognized position anchored it nowhere instead of falling back. The ' +
+      'per-item value it documented was never emitted, so a handler couldn\'t tell which action fired. ' +
+      'And it had no dismissal of any kind: no Escape, no outside click, no controller.',
     alternatives: [
       {
         label: 'Dropdown Menu',
@@ -120,7 +118,7 @@ export const removedComponents: RemovedComponent[] = [
       {
         label: 'Float Bar',
         href: '/docs/components/float-bar',
-        note: 'When the actions should be visible rather than behind a trigger.',
+        note: 'When the actions should stay visible instead of sitting behind a trigger.',
       },
     ],
     migration: '#the-five-cuts',
@@ -133,12 +131,12 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'An edge-snapped panel that auto-hid and slid back into view on hover near the viewport edge.',
     why:
-      'With auto-hide set, the reveal was a bare CSS :hover rule and nothing else — no keyboard path, ' +
-      'no touch path, so on a phone or from a keyboard the panel and everything in it were unreachable. ' +
-      'The API described a component that was never built: open was documented as reflecting the ' +
-      'hover-reveal state and arc-open/arc-close as firing on it, but nothing wrote open on hover, ' +
-      'so neither happened. A _hovered state property was declared, assigned once in the constructor, ' +
-      'and never read again. Fixing it means giving it a trigger, at which point it is a drawer.',
+      'With auto-hide set, the reveal was a bare CSS :hover rule with no keyboard or touch path, so on a ' +
+      'phone or from a keyboard the panel and everything in it were unreachable. The documented API was ' +
+      'never built: open was documented as reflecting the hover-reveal state and arc-open/arc-close as ' +
+      'firing on it, but nothing wrote open on hover, so neither happened. A _hovered state property was ' +
+      'declared, assigned once in the constructor, and never read again. The fix is a trigger, and a ' +
+      'panel with a trigger is Drawer.',
     alternatives: [
       {
         label: 'Drawer',
@@ -148,7 +146,7 @@ export const removedComponents: RemovedComponent[] = [
       {
         label: 'Toolbar',
         href: '/docs/components/toolbar',
-        note: 'When the controls should stay visible rather than hide.',
+        note: 'When the controls should stay visible.',
       },
     ],
     migration: '#the-five-cuts',
@@ -162,10 +160,9 @@ export const removedComponents: RemovedComponent[] = [
     was: 'A month grid that laid events out across days.',
     why:
       'It had no time-of-day support of any kind: events were whole-day blocks, with no start time, no end ' +
-      'time, no week or day view, and no overlap handling. A calendar that cannot express "Tuesday at ' +
-      '2pm" cannot express an appointment, which is what a calendar is for. This is a scope failure rather ' +
-      'than a bug list — the missing 80% is the hard 80%, and building it properly is a component in its ' +
-      'own right rather than a fix.',
+      'time, no week or day view, and no overlap handling. A calendar that can\'t express "Tuesday at ' +
+      '2pm" can\'t express an appointment. The missing part is the hard part, and building it properly ' +
+      'is a new component, not a fix.',
     alternatives: [
       {
         label: 'Calendar',
@@ -179,10 +176,10 @@ export const removedComponents: RemovedComponent[] = [
       },
       {
         label: 'Integration recipe',
-        href: '/docs/components/data-grid',
+        href: 'https://github.com/arclight-digital/arc-ui/blob/main/MIGRATION.md#arc-event-calendar--arc-calendar-or-a-real-scheduler',
         note:
-          'For real scheduling, drive a dedicated calendar library and use ARC for the surrounding UI — ' +
-          'MIGRATION.md carries the recipe. ARC does not intend to ship a scheduler.',
+          'For real scheduling, drive a dedicated calendar library and use ARC UI for the UI around it. ' +
+          'MIGRATION.md has the recipe. ARC UI doesn\'t plan to ship a scheduler.',
       },
     ],
     migration: '#the-five-cuts',
@@ -193,16 +190,16 @@ export const removedComponents: RemovedComponent[] = [
     tag: 'arc-modal',
     tier: 'feedback',
     removedIn: 'v4.0.0',
-    was: 'The general-purpose focus-trapping overlay — the same component that is now arc-dialog.',
+    was: 'The general-purpose focus-trapping overlay, the same component that is now arc-dialog.',
     why:
-      'A pure rename. The element is a dialog, the platform calls it a dialog, and "modal" named one ' +
-      'of its behaviours rather than what it is. Removed rather than aliased because v4 never shipped: ' +
-      'an alias tag would have served consumers who cannot exist yet.',
+      'Renamed. The element is a dialog, the platform calls it a dialog, and "modal" named one of its ' +
+      'behaviors, not what it is. It was removed instead of aliased because v4 hadn\'t shipped yet, so ' +
+      'no consumer could have depended on the old tag.',
     alternatives: [
       {
         label: 'Dialog',
         href: '/docs/components/dialog',
-        note: 'The same component — same props, events, parts and custom properties. Rename the tag and you are done.',
+        note: 'The same component, with the same props, events, parts and custom properties. Rename the tag.',
       },
     ],
     migration: '#arc-modal-is-arc-dialog-and-arc-dialog-is-not-what-it-was',
@@ -215,14 +212,14 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A static table fed positional arrays: `columns: ["A"]` and `rows: [["1"]]`.',
     why:
-      'Merged into arc-data-grid, which took its `density` and `striped` on the way. One column model ' +
-      'for the whole family: named keys rather than positions, so a column can move without every row ' +
+      'Merged into arc-data-grid, which took its `density` and `striped` on the way. The family now has ' +
+      'one column model, with named keys instead of positions, so a column can move without every row ' +
       'moving with it.',
     alternatives: [
       {
         label: 'Data Grid',
         href: '/docs/components/data-grid',
-        note: '`columns` become `[{ key, label }]` and each row an object keyed by them. `striped` defaults on — pass `no-striped` for the plain look.',
+        note: '`columns` become `[{ key, label }]` and each row an object keyed by them. `striped` defaults on, so pass `no-striped` for the plain look.',
       },
     ],
     migration: '#the-merges',
@@ -235,9 +232,9 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A virtual-scrolling table configured by slotted <arc-column> children.',
     why:
-      'Merged into arc-data-grid. The slotted column model was the one thing it had that the survivor ' +
-      'does differently — an array of the same fields — and sorting generalises to the multi-sort ' +
-      '`sort` array, where a single entry behaves exactly as `sort-column`/`sort-direction` did.',
+      'Merged into arc-data-grid. The slotted column model was the one thing the survivor does ' +
+      'differently (it takes an array of the same fields), and sorting moves to the multi-sort `sort` ' +
+      'array, where a single entry behaves as `sort-column`/`sort-direction` did.',
     alternatives: [
       {
         label: 'Data Grid',
@@ -253,10 +250,10 @@ export const removedComponents: RemovedComponent[] = [
     tag: 'arc-column',
     tier: 'content',
     removedIn: 'v4.0.0',
-    was: "arc-data-table's declarative column definition — one element per column.",
+    was: "arc-data-table's declarative column definition, one element per column.",
     why:
-      'Its only consumer was arc-data-table, and arc-data-grid takes its columns as an array rather ' +
-      'than as slotted children, so there is no element for it to migrate to. It goes with its parent.',
+      'Its only consumer was arc-data-table, and arc-data-grid takes its columns as an array, not as ' +
+      'slotted children, so there is no element for it to migrate to. It went with its parent.',
     alternatives: [
       {
         label: 'Data Grid',
@@ -274,8 +271,8 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A horizontal or vertical rule with dashed, dotted and fade variants.',
     why:
-      'Merged into arc-divider, which gained `line`, `dashed`, `dotted` and `fade` to close the gap — ' +
-      'it previously drew only the token gradient.',
+      'Merged into arc-divider, which gained `line`, `dashed`, `dotted` and `fade` alongside its own ' +
+      'gradient, glow and `line-*` styles.',
     alternatives: [
       {
         label: 'Divider',
@@ -299,7 +296,7 @@ export const removedComponents: RemovedComponent[] = [
       {
         label: 'Description List',
         href: '/docs/components/description-list',
-        note: 'Add `layout="horizontal"` to keep this one’s default — the survivor defaults to stacked.',
+        note: 'Add `layout="horizontal"` to keep this one’s default. Description List defaults to stacked.',
       },
     ],
     migration: '#the-merges',
@@ -329,7 +326,7 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A wrapping horizontal group with gap and alignment.',
     why:
-      'Merged into arc-stack: `<arc-stack direction="horizontal" wrap>` is exactly this component.',
+      'Merged into arc-stack. `<arc-stack direction="horizontal" wrap>` does what it did.',
     alternatives: [
       {
         label: 'Stack',
@@ -347,8 +344,8 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A one-time-passcode entry of separated digit boxes.',
     why:
-      'Merged into arc-pin-input — the same control, where `length` covers 4-vs-6 and `mask` covers ' +
-      'the obscured variant.',
+      'Merged into arc-pin-input, the same control, where `length` covers 4 or 6 digits and `mask` ' +
+      'covers the obscured variant.',
     alternatives: [
       {
         label: 'Pin Input',
@@ -364,14 +361,14 @@ export const removedComponents: RemovedComponent[] = [
     tag: 'arc-callout',
     tier: 'content',
     removedIn: 'v4.0.0',
-    was: 'An emphasised aside with a variant accent and a derived uppercase label.',
+    was: 'An emphasized aside with a variant accent and a derived uppercase label.',
     why:
       'Merged into arc-alert, which gained `tip`, an `icon` slot and a `live` prop to absorb it.',
     alternatives: [
       {
         label: 'Alert',
         href: '/docs/components/alert',
-        note: '`variant` carries over, `tip` included. The derived uppercase label has no equivalent — pass `heading` if you want one.',
+        note: '`variant` carries over, `tip` included. The derived uppercase label has no equivalent, so pass `heading` if you want one.',
       },
     ],
     migration: '#the-feedback-family',
@@ -384,9 +381,9 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A bottom-anchored transient message with an action button.',
     why:
-      'Merged into arc-toast, which covers every position this had and now fires `arc-action` beside ' +
-      'calling the `action` callback — because a callback cannot be attached declaratively, and that ' +
-      'is how snackbar consumers were listening.',
+      'Merged into arc-toast, which covers every position this had. Toast now fires `arc-action` as ' +
+      'well as calling the `action` callback, because snackbar consumers listened declaratively and a ' +
+      'callback can\'t be attached that way.',
     alternatives: [
       {
         label: 'Toast',
@@ -423,9 +420,9 @@ export const removedComponents: RemovedComponent[] = [
     removedIn: 'v4.0.0',
     was: 'A small status line placed beside or below another element, usually a form control.',
     why:
-      'No single replacement, on purpose. Below a form control it duplicated what every control ' +
-      'already renders itself — an `error` with its own part and the aria wiring done, which a ' +
-      'sibling element cannot do for it. Standing alone, it was an alert in all but name.',
+      'It has two replacements, depending on where it was used. Below a form control it duplicated ' +
+      'what every control already renders: an `error` with its own part and the aria wiring done, ' +
+      'which a sibling element can\'t do for it. Standing alone, it was an alert in all but name.',
     alternatives: [
       {
         label: 'The control’s own error prop',
