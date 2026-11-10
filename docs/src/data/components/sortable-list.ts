@@ -11,7 +11,7 @@ export const sortableList: ComponentDef = {
 
   overview: `SortableList lets people reorder a short list by drag and drop or from the keyboard. Each child element becomes a bordered row with a six-dot grip on the left and the child's own markup on the right. While dragging, the source row fades to 50% opacity with a large shadow, and an accent line above or below the target row shows where it will land.
 
-From the keyboard, Space selects the focused row (accent border), Enter picks it up (thicker accent ring), and the up and down arrows move it. Space or Enter drops it. Escape ends the move. A polite live region announces each step: selected, picked up, the new position ("Position 2 of 4"), or "Move cancelled."
+From the keyboard, Space selects the focused row (accent border), Enter picks it up (thicker accent ring), and the up and down arrows move it. Space or Enter drops it. A polite live region announces the selection, the pick-up and the drop with the new position ("Position 2 of 4"). Escape announces "Move cancelled." but leaves the row where the arrows put it, and fires no \`arc-change\`.
 
 After every drop, \`arc-change\` fires with \`detail.order\`: the original indices in their new order. Map that back onto your data instead of tracking each move.`,
 
