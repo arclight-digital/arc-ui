@@ -13,27 +13,27 @@ export const docsCards: Record<string, PageCard> = {
   'docs-index': {
     pills: [{ text: 'Docs' }],
     title: 'Documentation',
-    description: `Everything you need to build with ARC UI — setup, theming, tokens, and ${componentCount} component references.`,
+    description: `Setup, theming, tokens, and reference pages for all ${componentCount} ARC UI components.`,
   },
   'docs-getting-started': {
     pills: [{ text: 'Docs' }],
-    title: 'Getting Started',
-    description: `Install ARC UI and render your first component in any of ${frameworkCount} framework targets — no build step required.`,
+    title: 'Getting started',
+    description: `Install ARC UI and render your first component in any of its ${frameworkCount} framework targets.`,
   },
   'docs-components': {
     pills: [{ text: 'Docs' }],
     title: 'Components',
-    description: `${componentCount} dark-first components, written once in Lit and generated natively for seven framework targets.`,
+    description: `${componentCount} dark-first components, written once in Lit and generated natively for ${frameworkCount} framework targets.`,
   },
   'docs-tokens': {
     pills: [{ text: 'Docs' }],
-    title: 'Design Tokens',
-    description: `${tokenCount} design tokens — color, spacing, typography, radii, and glows — every one overridable with plain CSS.`,
+    title: 'Design tokens',
+    description: `${tokenCount} design tokens for color, spacing, typography, radii and glows, each one overridable with plain CSS.`,
   },
   'docs-theming': {
     pills: [{ text: 'Docs' }],
     title: 'Theming',
-    description: 'Override a handful of base tokens and every gradient, glow, and focus ring cascades automatically.',
+    description: 'Override the two accent colors, and every gradient, glow and focus ring built from them follows.',
   },
   'docs-typography': {
     pills: [{ text: 'Docs' }],
@@ -51,27 +51,27 @@ export const docsCards: Record<string, PageCard> = {
   'docs-frameworks': {
     pills: [{ text: 'Docs' }],
     title: 'Frameworks',
-    description: 'Typed, native wrappers for React, Vue, Svelte, Angular, Solid, Preact, and plain HTML — generated from one Lit source by Prism.',
+    description: 'Typed, native wrappers for React, Vue, Svelte, Angular, Solid and Preact, plus plain HTML, generated from one Lit source by Prism.',
   },
   'docs-accessibility': {
     pills: [{ text: 'Docs' }],
     title: 'Accessibility',
-    description: 'Zero axe violations on every component page, WCAG AA contrast in both themes — enforced in CI on every commit.',
+    description: 'Zero axe violations on every component page and WCAG AA contrast in both themes. Serious and critical violations fail CI.',
   },
   'docs-browser-support': {
     pills: [{ text: 'Docs' }],
-    title: 'Browser Support',
-    description: 'Baseline browser targets, required platform features, and the graceful-degradation policy.',
+    title: 'Browser support',
+    description: 'Baseline browser targets, the platform features ARC UI needs, and polyfills for older browsers.',
   },
   'docs-contributing': {
     pills: [{ text: 'Docs' }],
     title: 'Contributing',
-    description: 'How to propose, build, and ship changes to ARC UI.',
+    description: 'How to set up the repo and get a change into ARC UI.',
   },
   'docs-changelog': {
     pills: [{ text: 'Docs' }],
     title: 'Changelog',
-    description: `What's new in ARC UI ${versionShort} — release notes for every version.`,
+    description: `Release notes for every ARC UI version, up to ${versionShort}.`,
   },
 };
 
